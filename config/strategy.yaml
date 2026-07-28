@@ -1,0 +1,397 @@
+# ---------------------------------------------------------------------------
+# BCS — Bitcoin Cycle Score / LRS — Liquidity Regime Score
+#
+# 이 파일 하나가 전략의 단일 진실 공급원(single source of truth)이다.
+# 코드에는 임계값을 하드코딩하지 않는다. 생각이 바뀌면 여기만 고친다.
+#
+# 근거 문서: docs/01-핵심-추출.md, docs/02-핵심지표-정의.md, docs/03-스코어-엔진.md
+# ---------------------------------------------------------------------------
+
+meta:
+  name: "BCS/LRS — 나만의 비트코인 핵심 지표"
+  version: "1.0.0"
+  # 원문 12개 지표를 4개 독립 계열(BCS) + 1개 거시 축(LRS) + 3개 바닥선으로 압축했다.
+  # 압축 원칙: "계산 재료가 같으면 한 개로 센다" (원문 6.1)
+
+# ===========================================================================
+# 1. 정규화 — 원시값 → [-1, +1]
+#    -1 = 극단 저평가/항복,  0 = 중립,  +1 = 극단 과열
+#    anchors 는 (원시값, 정규화값) 꺾은선. 사이 값은 선형보간, 바깥은 클램프.
+# ===========================================================================
+indicators:
+
+  # --- 밸류에이션 계열 -----------------------------------------------------
+  mvrv_z:
+    label: "MVRV Z-Score"
+    family: valuation
+    source: auto            # 시총·실현시총에서 계산 가능
+    unit: "z"
+    # 사이클마다 고점 수치가 낮아진다(원문 3.2 실전 팁, 7.1).
+    # 그래서 +1.0 을 과거 최고치(7~10)가 아니라 최근 사이클 고점대(3.2~4.0)에 맞췄다.
+    anchors:
+      - [-0.50, -1.00]
+      - [ 0.00, -0.75]
+      - [ 0.50, -0.50]
+      - [ 1.00, -0.25]
+      - [ 1.80,  0.00]
+      - [ 2.50,  0.35]
+      - [ 3.20,  0.70]
+      - [ 4.00,  0.90]
+      - [ 6.00,  1.00]
+
+  nupl:
+    label: "NUPL"
+    family: valuation
+    source: auto
+    unit: "ratio"
+    anchors:
+      - [-0.25, -1.00]
+      - [ 0.00, -0.75]
+      - [ 0.15, -0.45]
+      - [ 0.25, -0.30]
+      - [ 0.40,  0.00]
+      - [ 0.55,  0.40]
+      - [ 0.65,  0.70]
+      - [ 0.75,  0.90]
+      - [ 0.85,  1.00]
+
+  # --- 보유자 행동 계열 ----------------------------------------------------
+  rhodl:
+    label: "RHODL Ratio"
+    family: holder
+    source: manual          # 무료 API 없음 → BM Pro 차트에서 밴드 위치로 읽는다
+    unit: "band"            # 0 = 하단 초록 밴드 바닥, 1 = 상단 빨간 밴드
+    input_mode: band_position
+    anchors:
+      - [0.00, -1.00]
+      - [0.15, -0.70]
+      - [0.35, -0.25]
+      - [0.50,  0.00]
+      - [0.70,  0.40]
+      - [0.85,  0.75]
+      - [1.00,  1.00]
+
+  reserve_risk:
+    label: "Reserve Risk"
+    family: holder
+    source: manual
+    unit: "ratio"
+    # 초록 <0.002, 빨강 >0.02 (원문 3.5). 최근 사이클 고점은 그보다 낮게 나온다.
+    anchors:
+      - [0.0008, -1.00]
+      - [0.0015, -0.70]
+      - [0.0025, -0.35]
+      - [0.0040,  0.00]
+      - [0.0060,  0.40]
+      - [0.0100,  0.75]
+      - [0.0200,  1.00]
+
+  lth_mvrv:
+    label: "LTH 실현가격 대비 배수 (가격 ÷ LTH Realized Price)"
+    family: holder
+    source: manual
+    unit: "x"
+    # 1.0 미만 = 장기 보유자 평균 원가 아래 (역사적으로 드물고 짧음, 원문 4.5)
+    anchors:
+      - [0.70, -1.00]
+      - [0.90, -0.70]
+      - [1.10, -0.35]
+      - [1.50,  0.00]
+      - [2.20,  0.40]
+      - [3.00,  0.75]
+      - [3.50,  1.00]
+
+  # --- 가격·추세 계열 ------------------------------------------------------
+  pi_cycle:
+    label: "Pi Cycle 근접도 (111DMA ÷ 350DMA×2)"
+    family: price
+    source: auto
+    unit: "ratio"
+    # 1.0 도달 = 교차 = 고점 경보. 그 자체가 매도 명령은 아니다(원문 3.1 주의).
+    anchors:
+      - [0.50, -1.00]
+      - [0.65, -0.60]
+      - [0.80, -0.20]
+      - [0.88,  0.00]
+      - [0.94,  0.45]
+      - [0.98,  0.80]
+      - [1.00,  1.00]
+
+  grm:
+    label: "Golden Ratio 배수 (가격 ÷ 350DMA)"
+    family: price
+    source: auto
+    unit: "x"
+    # 고점 배수가 21→8→5→3→2 로 내려왔다(원문 3.7). 상단 앵커를 낮게 잡았다.
+    anchors:
+      - [0.60, -1.00]
+      - [0.85, -0.60]
+      - [1.00, -0.30]
+      - [1.30,  0.00]
+      - [1.60,  0.35]
+      - [2.00,  0.65]
+      - [3.00,  0.90]
+      - [5.00,  1.00]
+
+  ma200w_mult:
+    label: "200주 MA 배수 (가격 ÷ 200WMA)"
+    family: price
+    source: auto
+    unit: "x"
+    anchors:
+      - [0.85, -1.00]
+      - [1.00, -0.80]
+      - [1.30, -0.40]
+      - [1.80,  0.00]
+      - [2.40,  0.40]
+      - [3.20,  0.75]
+      - [5.00,  1.00]
+
+  ma2y_mult:
+    label: "2년 MA 배수 (Bitcoin Investor Tool)"
+    family: price
+    source: auto
+    unit: "x"
+    # 원문 4.3: 초록선(2Y MA) 아래 매집, 빨간선(×5) 근접 익절.
+    # ×5 는 초기 사이클 기준이라 상단 앵커를 현실화했다.
+    anchors:
+      - [0.75, -1.00]
+      - [1.00, -0.70]
+      - [1.40, -0.30]
+      - [1.90,  0.00]
+      - [2.60,  0.35]
+      - [3.50,  0.70]
+      - [5.00,  1.00]
+
+  # --- 공급·채굴 계열 ------------------------------------------------------
+  puell:
+    label: "Puell Multiple"
+    family: supply
+    source: auto
+    unit: "x"
+    anchors:
+      - [0.30, -1.00]
+      - [0.50, -0.75]
+      - [0.80, -0.35]
+      - [1.10,  0.00]
+      - [1.60,  0.35]
+      - [2.20,  0.70]
+      - [3.00,  0.90]
+      - [4.00,  1.00]
+
+  hash_ribbons:
+    label: "Hash Ribbons 상태"
+    family: supply
+    source: auto
+    unit: "state"
+    input_mode: categorical
+    # 연속값이 아니라 상태 기계다. 채굴자 항복의 '끝'이 신호(원문 4.4).
+    states:
+      recovery:     -1.00   # 30일선이 60일선을 재돌파 → 가장 강한 매수 신호
+      capitulation: -0.55   # 30일선 < 60일선 → 항복 진행 중, 아직 신호 아님
+      normal:        0.00
+      expansion:     0.30   # 해시레이트 급팽창 → 강세 후반 동행
+
+# ===========================================================================
+# 2. BCS — 사이클 위치 점수 (-100 극단 저평가 ~ +100 극단 과열)
+#    거시는 여기 들어가지 않는다. 별도 축(LRS)이다. 이유는 docs/03 참조.
+# ===========================================================================
+bcs:
+  families:
+    valuation:
+      label: "밸류에이션"
+      weight: 30
+      members: [mvrv_z, nupl]
+      # 두 지표는 계산 재료가 거의 같다(원문 3.4 말미).
+      # 합산하면 한 번의 확인을 두 번으로 세는 셈 → 더 극단인 쪽 하나만 채택.
+      aggregate: max_abs
+
+    holder:
+      label: "보유자 행동"
+      weight: 25
+      members: [rhodl, reserve_risk, lth_mvrv]
+      aggregate: mean
+
+    price:
+      label: "가격·추세 극단"
+      weight: 25
+      members: [pi_cycle, grm, ma200w_mult, ma2y_mult]
+      # 4개 차트지만 전부 '이동평균 대비 배수'라는 한 아이디어의 변형이다.
+      # 그래서 합산이 아니라 평균, 그리고 계열 가중치를 30 이상으로 올리지 않는다.
+      aggregate: mean
+
+    supply:
+      label: "공급·채굴"
+      weight: 20
+      members: [puell, hash_ribbons]
+      aggregate: mean
+
+  # 결측 처리: 사용 가능한 계열끼리 가중치를 재정규화하고 커버리지를 함께 보고한다.
+  coverage:
+    min_family_members: 1     # 계열이 살아있다고 인정할 최소 지표 수
+    min_coverage_for_action: 0.60   # 가중치 커버리지 60% 미만이면 실행 금지(관망)
+
+# ===========================================================================
+# 3. LRS — 유동성 레짐 점수 (-100 긴축 ~ +100 완화)
+#    "지금 신호를 믿을 것인가"를 판단하는 배경축 (원문 5장).
+# ===========================================================================
+lrs:
+  weight_note: "합 100. BCS와 섞지 않는다."
+  components:
+    m2_impulse:
+      label: "글로벌 M2 임펄스 (전년비 %)"
+      weight: 40
+      source: manual
+      anchors:
+        - [-2.0, -1.00]
+        - [ 0.0, -0.60]
+        - [ 2.0, -0.20]
+        - [ 4.0,  0.10]
+        - [ 6.0,  0.50]
+        - [ 8.0,  0.80]
+        - [12.0,  1.00]
+    dxy_trend:
+      label: "DXY 추세 (13주 변화율 %, 부호 반전)"
+      weight: 25
+      source: manual
+      invert: true            # 달러 약세가 BTC에 우호적(원문 5장)
+      anchors:
+        - [-6.0, -1.00]
+        - [-3.0, -0.60]
+        - [-1.0, -0.20]
+        - [ 0.0,  0.00]
+        - [ 1.0,  0.20]
+        - [ 3.0,  0.60]
+        - [ 6.0,  1.00]
+    fed_stance:
+      label: "연준 스탠스"
+      weight: 15
+      source: manual
+      input_mode: categorical
+      states:
+        qt_hiking:    -1.00
+        qt_hold:      -0.50
+        neutral:       0.00
+        pause_easing:  0.50
+        cutting_qe:    1.00
+    etf_flow:
+      label: "현물 ETF 30일 누적 순유입 (십억 달러)"
+      weight: 20
+      source: manual
+      # 2024년 이후 새로 생긴 구조적 수요(원문 5장, 7.2)
+      anchors:
+        - [-6.0, -1.00]
+        - [-2.0, -0.60]
+        - [-0.5, -0.20]
+        - [ 0.5,  0.10]
+        - [ 3.0,  0.50]
+        - [ 6.0,  0.80]
+        - [12.0,  1.00]
+
+  bands:
+    - {min:  40, max:  100, key: easing,   label: "완화 — 유동성 순풍"}
+    - {min:  10, max:   40, key: mild_easing, label: "완만한 완화"}
+    - {min: -10, max:   10, key: neutral,  label: "중립"}
+    - {min: -40, max:  -10, key: mild_tightening, label: "완만한 긴축"}
+    - {min: -100, max: -40, key: tightening, label: "긴축 — 유동성 역풍"}
+
+# ===========================================================================
+# 4. 합의 게이트 — 원문 6.1을 기계화한 것
+#    "계산 원리가 다른 지표들이 동시에 같은 방향을 가리킬 때만 신뢰한다"
+# ===========================================================================
+consensus:
+  min_family_abs: 0.30        # 계열이 '방향을 가리킨다'고 인정할 최소 절대값
+  min_agreeing_families: 3    # 4개 계열 중 최소 3개가 같은 방향
+  min_non_price_agreeing: 2   # 그중 최소 2개는 가격 계열이 아니어야 한다
+  # 가격 계열만 몰려서 신호가 나는 상황(가장 흔한 착시)을 구조적으로 차단한다.
+
+# ===========================================================================
+# 5. 실행 밴드와 분할 사다리 — 원문 6.3 "한 번에 전부 하지 않는다"
+# ===========================================================================
+bands:
+  - {min:  70, max:  100, key: euphoria,     label: "극단 과열",   stance: "분배 가속"}
+  - {min:  45, max:   70, key: distribution, label: "과열",       stance: "분배 시작"}
+  - {min:  20, max:   45, key: upper_neutral,label: "상단 중립",   stance: "신규 매수 중단, DCA만"}
+  - {min: -20, max:   20, key: neutral,      label: "중립",       stance: "기본 DCA 유지"}
+  - {min: -45, max:  -20, key: accumulation, label: "저평가",     stance: "DCA 증액"}
+  - {min: -70, max:  -45, key: deep_value,   label: "깊은 저평가", stance: "예비현금 투입 시작"}
+  - {min: -100, max: -70, key: capitulation, label: "극단 항복",   stance: "예비현금 집중 투입"}
+
+ladders:
+  # 매도 사다리: 보유 BTC 대비 비율. 코어 지분은 절대 건드리지 않는다.
+  distribute:
+    core_hold_pct: 40         # 이 아래로는 어떤 신호가 와도 팔지 않는다
+    steps:
+      - {trigger_bcs: 45, pct_of_holdings: 10}
+      - {trigger_bcs: 55, pct_of_holdings: 10}
+      - {trigger_bcs: 65, pct_of_holdings: 10}
+      - {trigger_bcs: 75, pct_of_holdings: 15}
+      - {trigger_bcs: 85, pct_of_holdings: 15}
+    # 누적 최대 60% → core_hold_pct 40% 와 정확히 맞물린다.
+
+  # 매수 사다리: 따로 떼어둔 '예비 현금' 대비 비율. 정기 DCA와는 별개 예산.
+  accumulate:
+    steps:
+      - {trigger_bcs: -30, pct_of_reserve: 15}
+      - {trigger_bcs: -45, pct_of_reserve: 20}
+      - {trigger_bcs: -58, pct_of_reserve: 20}
+      - {trigger_bcs: -70, pct_of_reserve: 20}
+      - {trigger_bcs: -82, pct_of_reserve: 25}
+
+  # 정기 DCA 배수: 밴드별로 평소 적립액에 곱한다.
+  dca_multiplier:
+    euphoria:      0.0
+    distribution:  0.0
+    upper_neutral: 0.5
+    neutral:       1.0
+    accumulation:  1.5
+    deep_value:    2.0
+    capitulation:  2.5
+
+# 히스테리시스 — 같은 계단을 신호 흔들림으로 반복 실행하지 않기 위한 장치
+hysteresis:
+  reset_margin: 8             # 임계값에서 8p 이상 되돌아가야 해당 계단이 다시 살아난다
+  min_days_between_steps: 14  # 서로 다른 계단이라도 최소 14일 간격
+  confirm_days: 3             # 임계 돌파가 3일 연속 유지돼야 인정
+
+# LRS가 실행 크기를 조절한다 (신호의 방향이 아니라 '속도'만 바꾼다)
+lrs_modifier:
+  enabled: true
+  bounds: [0.75, 1.25]        # 트랜치 배수는 이 범위를 벗어나지 않는다
+  rules:
+    # 매도 중 유동성 완화 = 더 갈 수 있다 → 천천히
+    - {action: distribute, lrs_min:  40, multiplier: 0.75}
+    - {action: distribute, lrs_max: -40, multiplier: 1.25}
+    # 매수 중 유동성 완화 = 회복이 빠르다 → 더 크게
+    - {action: accumulate, lrs_min:  40, multiplier: 1.25}
+    - {action: accumulate, lrs_max: -40, multiplier: 0.75}
+
+# ===========================================================================
+# 6. 바닥선 — 점수가 아니라 '가격'으로 답하는 지표들 (원문 4.1 활용법)
+#    "언제 팔까"가 아니라 "어디까지 떨어질 수 있나"에 답한다.
+# ===========================================================================
+floors:
+  lines:
+    - {key: ma200w,  label: "200주 이동평균",     source: auto,   weight: 0.35}
+    - {key: lth_rp,  label: "LTH 실현가격",       source: manual, weight: 0.35}
+    - {key: cvdd,    label: "CVDD",              source: manual, weight: 0.30}
+  # 세 선의 가중평균을 '기준 바닥'으로 삼고, 그 위아래로 분할 매수 구간을 깐다.
+  buy_zones:
+    - {ratio_to_floor: 1.30, pct_of_reserve: 10, label: "1차 — 기준 바닥 +30%"}
+    - {ratio_to_floor: 1.15, pct_of_reserve: 15, label: "2차 — 기준 바닥 +15%"}
+    - {ratio_to_floor: 1.00, pct_of_reserve: 25, label: "3차 — 기준 바닥 도달"}
+    - {ratio_to_floor: 0.88, pct_of_reserve: 25, label: "4차 — 기준 바닥 -12%"}
+    - {ratio_to_floor: 0.75, pct_of_reserve: 25, label: "5차 — 기준 바닥 -25% (역사적 극단)"}
+
+# ===========================================================================
+# 7. 반증 조건 — 이 전략을 폐기해야 하는 조건을 미리 못 박아 둔다 (원문 7장)
+# ===========================================================================
+invalidation:
+  - id: INV-1
+    text: "한 사이클 동안 BCS +70 밴드에 한 번도 진입하지 못한 채 -45 밴드로 내려간 경우 → 과열 앵커가 현실과 어긋난 것. 상단 앵커 전면 재조정."
+  - id: INV-2
+    text: "BCS -70 이하에서 매집한 뒤 2년이 지나도 원가 회복이 안 된 경우 → 4년 사이클 구조 자체의 붕괴 가능성. 전략 중단 후 재설계."
+  - id: INV-3
+    text: "가격 계열과 나머지 3계열이 두 사이클 연속 반대 방향을 가리킨 경우 → 가격 계열 가중치 0으로."
+  - id: INV-4
+    text: "ETF/기관 순유입이 온체인 지표를 6개월 이상 무력화(지표 극단인데 가격 무반응)한 경우 → LRS를 배경축에서 BCS 구성 계열로 승격 검토."

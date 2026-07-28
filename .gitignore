@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+*.egg-info/
+build/
+dist/
+
+# 개인 데이터는 커밋하지 않는다
+data/market.csv
+data/state.json
+data/manual_input.yaml
+journal/20*.md
+!journal/TEMPLATE.md
