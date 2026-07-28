@@ -176,8 +176,6 @@ def evaluate_consensus(
     """
     rules = cfg.consensus
     min_abs = float(rules.get("min_family_abs", 0.30))
-    need_total = int(rules.get("min_agreeing_families", 3))
-    need_non_price = int(rules.get("min_non_price_agreeing", 2))
 
     if bcs is None:
         return Consensus(False, "neutral", (), (), "BCS 산출 불가 — 데이터 부족")
@@ -187,10 +185,10 @@ def evaluate_consensus(
         return Consensus(False, "neutral", (), (), "BCS 중립 — 방향 없음")
 
     want_positive = direction == "overheated"
+    available = [f for f in families if f.available]
     agreeing = [
-        f for f in families
-        if f.available
-        and abs(f.score) >= min_abs
+        f for f in available
+        if abs(f.score) >= min_abs
         and ((f.score > 0) if want_positive else (f.score < 0))
     ]
     non_price = [f for f in agreeing if f.key != PRICE_FAMILY]
@@ -198,18 +196,53 @@ def evaluate_consensus(
     keys = tuple(f.key for f in agreeing)
     np_keys = tuple(f.key for f in non_price)
 
+    need_total, need_non_price, scaled = _requirements(cfg, rules, available)
+
     if len(agreeing) < need_total:
         return Consensus(
             False, direction, keys, np_keys,
-            f"같은 방향 계열 {len(agreeing)}개 < 필요 {need_total}개 — 합의 미달, 관망",
+            f"같은 방향 계열 {len(agreeing)}개 < 필요 {need_total}개{scaled} — 합의 미달, 관망",
         )
     if len(non_price) < need_non_price:
         return Consensus(
             False, direction, keys, np_keys,
-            f"비가격 계열 {len(non_price)}개 < 필요 {need_non_price}개 — "
+            f"비가격 계열 {len(non_price)}개 < 필요 {need_non_price}개{scaled} — "
             f"가격 이동평균에만 의존한 신호, 관망",
         )
     return Consensus(
         True, direction, keys, np_keys,
-        f"계열 {len(agreeing)}개 합의(비가격 {len(non_price)}개) — 실행 조건 충족",
+        f"계열 {len(agreeing)}개 합의(비가격 {len(non_price)}개){scaled} — 실행 조건 충족",
+    )
+
+
+def _requirements(cfg, rules, available: Sequence[FamilyScore]) -> tuple[int, int, str]:
+    """필요 동의 계열 수. 결측이 있으면 남은 계열 수에 비례해 낮춘다.
+
+    설정값(4계열 중 3개, 그중 비가격 2개)은 모든 계열이 살아 있을 때의 기준이다.
+    이걸 그대로 두면 계열이 3개만 남았을 때 만장일치를 요구하게 되는데,
+    **데이터가 적을수록 기준이 엄해지는 것은 거꾸로다.** 결측은 이미 커버리지
+    하한(min_coverage_for_action)이 따로 막고 있으므로, 여기서는 비율만 지킨다.
+    """
+    need_total = int(rules.get("min_agreeing_families", 3))
+    need_non_price = int(rules.get("min_non_price_agreeing", 2))
+    if not rules.get("scale_with_available", True):
+        return need_total, need_non_price, ""
+
+    total = len(cfg.bcs_families)
+    total_non_price = sum(1 for k in cfg.bcs_families if k != PRICE_FAMILY)
+    n = len(available)
+    n_non_price = sum(1 for f in available if f.key != PRICE_FAMILY)
+    if n >= total:
+        return need_total, need_non_price, ""
+
+    floor_total = int(rules.get("min_agreeing_floor", 2))
+    scaled_total = max(floor_total, round(need_total * n / total)) if total else need_total
+    scaled_np = (
+        max(1, round(need_non_price * n_non_price / total_non_price))
+        if total_non_price else need_non_price
+    )
+    return (
+        min(scaled_total, n),
+        min(scaled_np, n_non_price),
+        f" [계열 {n}/{total} 기준 완화]",
     )

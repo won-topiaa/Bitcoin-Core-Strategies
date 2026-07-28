@@ -5,8 +5,8 @@
 
 형식 — 헤더 필수, 첫 열은 date(YYYY-MM-DD):
 
-    date,price,market_cap,realized_cap,issuance_btc,supply,hashrate
-    2020-01-01,7200.17,130800000000,90100000000,1800.0,18100000,110000000
+    date,price,market_cap,realized_cap,issuance_btc,issuance_usd,supply,hashrate
+    2020-01-01,7200.17,130800000000,90100000000,1800.0,12960306,18100000,1.1e20
 
 price 외의 열은 없어도 된다. 빈 칸은 결측으로 처리한다.
 """
@@ -22,7 +22,8 @@ from ..indicators import MarketData
 from ..series import Series
 from .base import DataBundle, FetchError, coverage_warnings, optional_series
 
-COLUMNS = ("price", "market_cap", "realized_cap", "issuance_btc", "supply", "hashrate")
+COLUMNS = ("price", "market_cap", "realized_cap", "issuance_btc", "issuance_usd",
+           "supply", "hashrate")
 
 
 def load_csv_bundle(path: str | Path) -> DataBundle:
@@ -56,6 +57,7 @@ def load_csv_bundle(path: str | Path) -> DataBundle:
         market_cap=optional_series(buckets["market_cap"], "market_cap"),
         realized_cap=optional_series(buckets["realized_cap"], "realized_cap"),
         issuance_btc=optional_series(buckets["issuance_btc"], "issuance_btc"),
+        issuance_usd=optional_series(buckets["issuance_usd"], "issuance_usd"),
         supply=optional_series(buckets["supply"], "supply"),
         hashrate=optional_series(buckets["hashrate"], "hashrate"),
     )
@@ -76,6 +78,7 @@ def save_csv_bundle(bundle: DataBundle, path: str | Path) -> Path:
         "market_cap": _lookup(m.market_cap),
         "realized_cap": _lookup(m.realized_cap),
         "issuance_btc": _lookup(m.issuance_btc),
+        "issuance_usd": _lookup(m.issuance_usd),
         "supply": _lookup(m.supply),
         "hashrate": _lookup(m.hashrate),
     }

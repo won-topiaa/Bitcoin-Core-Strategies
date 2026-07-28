@@ -13,3 +13,5 @@ data/state.json
 data/manual_input.yaml
 journal/20*.md
 !journal/TEMPLATE.md
+
+# 백테스트 보고서는 커밋한다 (reports/ 자체는 유지)

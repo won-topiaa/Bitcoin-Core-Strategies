@@ -49,6 +49,7 @@ class MarketData:
     market_cap: Optional[Series] = None
     realized_cap: Optional[Series] = None
     issuance_btc: Optional[Series] = None      # 일간 신규 발행량(BTC)
+    issuance_usd: Optional[Series] = None      # 그 발행량의 달러 가치 (있으면 우선)
     hashrate: Optional[Series] = None
     supply: Optional[Series] = None            # issuance 가 없을 때 차분으로 대체
 
@@ -62,6 +63,7 @@ class MarketData:
             market_cap=_r(self.market_cap),
             realized_cap=_r(self.realized_cap),
             issuance_btc=_r(self.issuance_btc),
+            issuance_usd=_r(self.issuance_usd),
             hashrate=_r(self.hashrate),
             supply=_r(self.supply),
         )
@@ -241,16 +243,24 @@ def puell_multiple(
     price: Series,
     issuance_btc: Optional[Series] = None,
     supply: Optional[Series] = None,
+    issuance_usd: Optional[Series] = None,
 ) -> IndicatorValue:
-    """일간 신규 발행의 달러 가치 ÷ 그 값의 365일 이동평균."""
-    issuance = issuance_btc
-    if issuance is None and supply is not None:
-        issuance = supply.diff()          # 유통량 차분 = 그날 발행량
-    if issuance is None:
-        return IndicatorValue("puell", None, price.last_date, note="발행량 데이터 없음")
+    """일간 신규 발행의 달러 가치 ÷ 그 값의 365일 이동평균.
 
-    revenue = issuance.map_with(price, lambda i, p: i * p if i and i > 0 else None)
-    revenue = Series(revenue.dates, revenue.values, "issuance_usd")
+    달러 값을 직접 받았으면 그쪽을 쓴다. 데이터 제공자가 블록별 시점 가격으로
+    계산한 값이라, 코인 수량에 종가를 곱하는 것보다 정확하다.
+    """
+    if issuance_usd is not None and issuance_usd.last is not None:
+        revenue = Series(issuance_usd.dates, issuance_usd.values, "issuance_usd")
+    else:
+        issuance = issuance_btc
+        if issuance is None and supply is not None:
+            issuance = supply.diff()      # 유통량 차분 = 그날 발행량
+        if issuance is None:
+            return IndicatorValue("puell", None, price.last_date, note="발행량 데이터 없음")
+        revenue = issuance.map_with(price, lambda i, p: i * p if i and i > 0 else None)
+        revenue = Series(revenue.dates, revenue.values, "issuance_usd")
+
     avg = sma(revenue, PUELL_WINDOW)
     cur, base = revenue.last, avg.last
     if cur is None or base in (None, 0):
@@ -329,6 +339,6 @@ def compute_all(data: MarketData) -> dict[str, IndicatorValue]:
         "ma2y_mult": investor_tool_multiple(p),
         "mvrv_z": mvrv_zscore(d.market_cap, d.realized_cap),
         "nupl": nupl(d.market_cap, d.realized_cap),
-        "puell": puell_multiple(p, d.issuance_btc, d.supply),
+        "puell": puell_multiple(p, d.issuance_btc, d.supply, d.issuance_usd),
         "hash_ribbons": hash_ribbons(d.hashrate),
     }

@@ -140,33 +140,89 @@ def test_min_days_between_steps_is_enforced(cfg):
     assert "간격 미충족" in action.blocked_by
 
 
-def test_a_step_rearms_after_a_deep_enough_pullback(cfg):
-    """45 를 밟은 뒤 37(=45-8) 이하로 되돌았다면 다시 밟을 수 있다."""
+def test_a_step_rearms_only_after_visiting_the_opposite_band(cfg):
+    """분배 계단은 BCS 가 -20 이하까지 내려갔다 와야 다시 살아난다."""
     st = ExecutionState()
-    st.steps.append(ExecutedStep("distribute", 45, TODAY - timedelta(days=60), 46.0, 10.0))
-    for i, v in enumerate([46.0, 30.0, 30.0, 48.0, 49.0, 50.0]):
+    st.steps.append(ExecutedStep("distribute", 45, TODAY - timedelta(days=200), 46.0, 10.0))
+    for i, v in enumerate([46.0, -30.0, -30.0, 48.0, 49.0, 50.0]):
         st.record_bcs(TODAY - timedelta(days=5 - i), v)
     action = next_ladder_step(cfg, "distribute", 50.0, None, st, TODAY)
     assert action.trigger == 45
 
 
-def test_a_shallow_pullback_does_not_rearm(cfg):
-    """45 를 밟고 42 까지만 되돌았다면(45−8=37 미달) 그 계단은 죽어 있다."""
+def test_a_pullback_that_stays_positive_does_not_rearm(cfg):
+    """이게 16년 실측이 잡아낸 결함이다.
+
+    임계에서 몇 점 되돌린 것을 재무장으로 인정하면, BCS 의 일상적 변동만으로
+    같은 계단이 2주마다 무한히 재발동한다.
+    """
     st = ExecutionState()
-    st.steps.append(ExecutedStep("distribute", 45, TODAY - timedelta(days=60), 46.0, 10.0))
-    for i, v in enumerate([46.0, 42.0, 42.0, 48.0, 49.0, 50.0]):   # 42 > 45-8
+    st.steps.append(ExecutedStep("distribute", 45, TODAY - timedelta(days=200), 46.0, 10.0))
+    for i, v in enumerate([46.0, 30.0, 30.0, 48.0, 49.0, 50.0]):   # 양수 구간에 머묾
         st.record_bcs(TODAY - timedelta(days=5 - i), v)
-    # 45 는 재무장 안 됐고 55 는 아직 도달 전 → 밟을 계단이 없다
     assert next_ladder_step(cfg, "distribute", 50.0, None, st, TODAY) is None
+
+
+def test_accumulate_rearms_only_after_visiting_the_upper_band(cfg):
+    st = ExecutionState()
+    st.steps.append(ExecutedStep("accumulate", -30, TODAY - timedelta(days=200), -32.0, 15.0))
+    for i, v in enumerate([-32.0, -25.0, -28.0, -35.0]):           # 음수 구간에 머묾
+        st.record_bcs(TODAY - timedelta(days=3 - i), v)
+    assert next_ladder_step(cfg, "accumulate", -35.0, None, st, TODAY) is None
+
+    for i, v in enumerate([25.0, 25.0, -35.0, -36.0, -37.0]):      # +20 이상 방문
+        st.record_bcs(TODAY - timedelta(days=10 - i), v)
+    action = next_ladder_step(cfg, "accumulate", -37.0, None, st, TODAY)
+    assert action is not None and action.trigger == -30
 
 
 def test_the_next_rung_still_fires_while_a_lower_one_stays_disarmed(cfg):
     st = ExecutionState()
-    st.steps.append(ExecutedStep("distribute", 45, TODAY - timedelta(days=60), 46.0, 10.0))
+    st.steps.append(ExecutedStep("distribute", 45, TODAY - timedelta(days=200), 46.0, 10.0))
     for i, v in enumerate([46.0, 42.0, 56.0, 57.0, 58.0]):
         st.record_bcs(TODAY - timedelta(days=4 - i), v)
     action = next_ladder_step(cfg, "distribute", 58.0, None, st, TODAY)
     assert action.trigger == 55
+
+
+# --- 사이클 예산 한도 ------------------------------------------------------
+
+def test_distribution_stops_at_the_core_holding(cfg):
+    """설정 검증만으로는 부족하다 — 재무장이 겹치면 실행 합계가 한도를 넘는다.
+
+    16년 실측에서 2017 사이클 분배 누적이 70%까지 가서 코어 40% 를 침범했다.
+    """
+    core = float(cfg.ladders["distribute"]["core_hold_pct"])
+    cap = 100.0 - core
+    st = steady(90.0, days=400)
+    # 이번 사이클에 이미 한도만큼 팔았다고 기록 (반대편 방문 없음)
+    st.steps.append(ExecutedStep("distribute", 85, TODAY - timedelta(days=30), 90.0, cap))
+
+    action = next_ladder_step(cfg, "distribute", 90.0, None, st, TODAY)
+    assert action is not None
+    assert not action.executable
+    assert "한도 소진" in action.blocked_by
+    assert "코어 지분 보호" in action.blocked_by
+
+
+def test_the_budget_resets_after_the_opposite_band(cfg):
+    cap = 100.0 - float(cfg.ladders["distribute"]["core_hold_pct"])
+    st = ExecutionState()
+    st.steps.append(ExecutedStep("distribute", 85, TODAY - timedelta(days=200), 90.0, cap))
+    # 그 뒤로 BCS 가 저평가 구간까지 내려갔다 돌아왔다 → 새 사이클
+    for i, v in enumerate([-40.0, -40.0, 88.0, 89.0, 90.0]):
+        st.record_bcs(TODAY - timedelta(days=4 - i), v)
+    action = next_ladder_step(cfg, "distribute", 90.0, None, st, TODAY)
+    assert action is not None and action.executable
+
+
+def test_accumulation_stops_at_a_full_reserve(cfg):
+    st = steady(-90.0, days=400)
+    st.steps.append(ExecutedStep("accumulate", -82, TODAY - timedelta(days=30), -90.0, 100.0))
+    action = next_ladder_step(cfg, "accumulate", -90.0, None, st, TODAY)
+    assert action is not None
+    assert not action.executable
+    assert "한도 소진" in action.blocked_by
 
 
 # --- LRS 조정 --------------------------------------------------------------

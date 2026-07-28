@@ -74,8 +74,22 @@ class ExecutionState:
             return None
         return max(s.executed_on for s in self.steps)
 
-    def cumulative(self, ladder: str) -> float:
-        return sum(s.size_pct for s in self.steps if s.ladder == ladder)
+    def cumulative(self, ladder: str, since: Optional[date] = None) -> float:
+        return sum(
+            s.size_pct for s in self.steps
+            if s.ladder == ladder and (since is None or s.executed_on >= since)
+        )
+
+    def last_visit(self, *, at_or_below: Optional[float] = None,
+                   at_or_above: Optional[float] = None) -> Optional[date]:
+        """BCS 가 지정한 수준을 마지막으로 통과한 날. 사이클 경계를 잡는 데 쓴다."""
+        found = None
+        for d, v in sorted(self.bcs_history):
+            if at_or_below is not None and v <= at_or_below:
+                found = d
+            if at_or_above is not None and v >= at_or_above:
+                found = d
+        return found
 
     def min_bcs_since(self, since: date) -> Optional[float]:
         vals = [v for d, v in self.bcs_history if d >= since]
@@ -159,7 +173,26 @@ def _confirmed(cfg: StrategyConfig, state: ExecutionState, as_of: date,
 
 def _rearmed(cfg: StrategyConfig, state: ExecutionState, step: ExecutedStep,
              trigger: float, want_above: bool) -> bool:
-    """이미 밟은 계단이 되돌림으로 다시 살아났는지."""
+    """이미 밟은 계단이 다시 살아났는지.
+
+    재무장은 **사이클을 넘나드는 장치**다. 한 사이클 안에서 같은 계단을 다시
+    밟게 하려는 것이 아니다. 그래서 조건은 "임계에서 조금 되돌아왔는가"가
+    아니라 **"반대편 구간까지 갔다 왔는가"** 여야 한다.
+
+    16년 실측에서 확인된 것: 임계 근처 몇 점의 되돌림을 재무장으로 인정하면
+    BCS의 일상적 변동만으로 계단이 2주마다 무한히 재발동한다. 2017년 강세장
+    한 번에 +45 계단이 4번, 매집 사다리는 누적 795%까지 실행됐다.
+    분배 사다리를 판 만큼 다시 살 코인이 없는데도 계속 파는 셈이다.
+    """
+    opposite = float(cfg.hysteresis.get("rearm_opposite_bcs", 0))
+    if opposite > 0:
+        if want_above:
+            low = state.min_bcs_since(step.executed_on)
+            return low is not None and low <= -opposite
+        high = state.max_bcs_since(step.executed_on)
+        return high is not None and high >= opposite
+
+    # 구버전 설정 호환 — 단순 되돌림 폭. 위 이유로 권장하지 않는다.
     margin = float(cfg.hysteresis.get("reset_margin", 0))
     if margin <= 0:
         return False
@@ -168,6 +201,39 @@ def _rearmed(cfg: StrategyConfig, state: ExecutionState, step: ExecutedStep,
         return low is not None and low <= trigger - margin
     high = state.max_bcs_since(step.executed_on)
     return high is not None and high >= trigger + margin
+
+
+def _budget_exceeded(cfg: StrategyConfig, state: ExecutionState,
+                     ladder: str, size: float) -> Optional[str]:
+    """이번 사이클에 남은 한도를 넘는지.
+
+    설정 검증은 사다리 **계단의 합**이 한도를 넘지 않는지만 본다. 그런데
+    재무장으로 같은 계단이 다시 살아나면 실제 실행 합계는 그 한도를 넘을 수
+    있다. 16년 실측에서 2017 사이클 분배 누적이 70%까지 가서 코어 40% 를
+    침범했다. "코어는 어떤 신호에도 팔지 않는다"는 약속을 지키려면 설정
+    검증만으로는 부족하고 실행 시점에 막아야 한다.
+
+    사이클 경계는 BCS 가 마지막으로 반대편 구간을 방문한 시점으로 잡는다.
+    재무장 규칙과 같은 기준이라 둘이 어긋나지 않는다.
+    """
+    opposite = float(cfg.hysteresis.get("rearm_opposite_bcs", 0))
+    if ladder == "distribute":
+        cap = 100.0 - float(cfg.ladders.get("distribute", {}).get("core_hold_pct", 0))
+        since = state.last_visit(at_or_below=-opposite) if opposite > 0 else None
+        label = "분배"
+    else:
+        cap = 100.0
+        since = state.last_visit(at_or_above=opposite) if opposite > 0 else None
+        label = "매집"
+
+    used = state.cumulative(ladder, since=since)
+    if used + size > cap + 1e-9:
+        scope = "이번 사이클" if since else "누적"
+        return (
+            f"{scope} {label} 한도 소진 — 이미 {used:.0f}%, 한도 {cap:.0f}%"
+            + (" (코어 지분 보호)" if ladder == "distribute" else "")
+        )
+    return None
 
 
 def next_ladder_step(
@@ -208,6 +274,8 @@ def next_ladder_step(
         size = round(base * mult, 2)
 
         reason = blocked_by
+        if reason is None:
+            reason = _budget_exceeded(cfg, state, ladder, size)
         if reason is None:
             ok, why = _confirmed(cfg, state, as_of, trigger, want_above)
             if not ok:

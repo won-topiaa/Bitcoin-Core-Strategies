@@ -1,13 +1,23 @@
 """CoinMetrics 커뮤니티 API 어댑터.
 
-API 키 없이 쓸 수 있고, 밸류에이션 계열에 필요한 실현시총(CapRealUSD)을
-무료로 주는 거의 유일한 소스다. 여기 하나로 자동 계산 지표 8개 중 8개가
-전부 채워진다.
+API 키 없이 자동 계산 지표 8개를 전부 채운다.
 
     https://docs.coinmetrics.io/api/v4
 
-주의: 커뮤니티 티어는 요청 빈도 제한이 있고, 최신 데이터가 하루 정도
-늦게 들어온다. 사이클 타이밍용으로는 아무 문제가 없다.
+**실현시총은 직접 주지 않는다.** 커뮤니티 티어에서 ``CapRealUSD`` 를 요청하면
+403이 돌아온다. 대신 ``CapMVRVCur`` (= 시가총액 ÷ 실현시총) 가 2010-07-18부터
+전 구간 열려 있어서 여기서 역산한다.
+
+    실현시총 = 시가총액 ÷ MVRV
+
+나눗셈 한 번이라 정보 손실이 없다. MVRV 자체가 CoinMetrics가 산출한 값이라
+실현시총을 직접 받는 것과 결과가 같다.
+
+발행량도 ``IssTotUSD`` 로 달러 값을 직접 받는다. 코인 수량에 종가를 곱하는
+것보다 정확하다.
+
+주의: 커뮤니티 티어는 요청 빈도 제한이 있고 최신 데이터가 하루 정도 늦다.
+사이클 타이밍용으로는 문제가 되지 않는다.
 """
 
 from __future__ import annotations
@@ -25,12 +35,15 @@ from .base import DataBundle, FetchError, coverage_warnings, optional_series
 
 BASE_URL = "https://community-api.coinmetrics.io/v4/timeseries/asset-metrics"
 
-# 필요한 지표와 우리 쪽 이름의 대응
+# 커뮤니티 티어에서 실제로 열려 있는 지표만 요청한다.
+# 하나라도 권한이 없으면 요청 전체가 403으로 죽으므로 목록을 넓히지 말 것.
+# (확인 방법: /v4/catalog-v2/asset-metrics?assets=btc)
 METRICS: Mapping[str, str] = {
     "PriceUSD": "price",
     "CapMrktCurUSD": "market_cap",
-    "CapRealUSD": "realized_cap",
-    "IssContNtv": "issuance_btc",
+    "CapMVRVCur": "mvrv",              # 실현시총을 역산하는 데 쓴다
+    "IssTotUSD": "issuance_usd",
+    "IssTotNtv": "issuance_btc",
     "SplyCur": "supply",
     "HashRate": "hashrate",
 }
@@ -71,8 +84,9 @@ def fetch(
     market = MarketData(
         price=Series.from_pairs(buckets["price"], name="price"),
         market_cap=optional_series(buckets["market_cap"], "market_cap"),
-        realized_cap=optional_series(buckets["realized_cap"], "realized_cap"),
+        realized_cap=derive_realized_cap(buckets["market_cap"], buckets["mvrv"]),
         issuance_btc=optional_series(buckets["issuance_btc"], "issuance_btc"),
+        issuance_usd=optional_series(buckets["issuance_usd"], "issuance_usd"),
         supply=optional_series(buckets["supply"], "supply"),
         hashrate=optional_series(buckets["hashrate"], "hashrate"),
     )
@@ -81,6 +95,24 @@ def fetch(
         origin=f"CoinMetrics community API ({start} ~ {end})",
         warnings=coverage_warnings(market),
     )
+
+
+def derive_realized_cap(
+    market_cap: list[tuple[date, Optional[float]]],
+    mvrv: list[tuple[date, Optional[float]]],
+) -> Optional[Series]:
+    """실현시총 = 시가총액 ÷ MVRV.
+
+    커뮤니티 티어는 CapRealUSD 를 주지 않지만 CapMVRVCur 는 준다.
+    MVRV 의 정의가 곧 시총/실현시총이므로 나눗셈 한 번으로 되돌릴 수 있다.
+    """
+    ratios = {d: v for d, v in mvrv if v not in (None, 0)}
+    pairs = [
+        (d, cap / ratios[d])
+        for d, cap in market_cap
+        if cap is not None and d in ratios
+    ]
+    return optional_series(pairs, "realized_cap")
 
 
 def _fetch_all_pages(metrics: list[str], start: date, end: date, timeout: int) -> list[dict]:

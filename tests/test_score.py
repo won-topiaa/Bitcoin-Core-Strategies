@@ -29,9 +29,21 @@ def build(cfg, **scores):
 # --- 지표 점수화 -----------------------------------------------------------
 
 def test_score_indicator_uses_the_configured_anchors(cfg):
+    # 앵커에 [0.70, 0.92] 와 [0.80, 1.00] 이 있으므로 0.75 는 그 중간
     r = score_indicator(cfg, "nupl", 0.75)
-    assert r.score == pytest.approx(0.90)
+    assert r.score == pytest.approx(0.96)
     assert r.available
+
+
+def test_score_indicator_hits_every_anchor_exactly(cfg):
+    """설정의 앵커 좌표가 그대로 점수로 나오는지 — 전 지표 전 좌표."""
+    for key, spec in cfg.indicators.items():
+        if spec.get("input_mode") == "categorical":
+            continue
+        for raw, expected in spec["anchors"]:
+            got = score_indicator(cfg, key, raw, spec=spec).score
+            want = -expected if spec.get("invert") else expected
+            assert got == pytest.approx(want), f"{key} @ {raw}"
 
 
 def test_score_indicator_marks_missing_input(cfg):
