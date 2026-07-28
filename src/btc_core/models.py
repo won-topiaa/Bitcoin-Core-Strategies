@@ -126,6 +126,59 @@ class BuyZone:
 
 
 @dataclass(frozen=True)
+class BottomCondition:
+    """저점 프로파일 조건 하나."""
+
+    key: str
+    label: str
+    op: str
+    threshold: float
+    unit: str
+    value: Optional[float]
+    met: bool
+    observed: str = ""
+
+    def as_dict(self) -> dict[str, Any]:
+        return {
+            "key": self.key, "label": self.label, "op": self.op,
+            "threshold": self.threshold, "unit": self.unit,
+            "value": self.value, "met": self.met, "observed": self.observed,
+        }
+
+
+@dataclass(frozen=True)
+class BottomProfile:
+    """사이클 저점의 공통 조건 대비 현재 상태.
+
+    **점수에 들어가지 않는다.** 임계값이 과거 저점을 보고 정해진 것이라
+    순환논리 위험이 있어서, 바닥선과 같이 '보여주되 실행하지 않는' 취급이다.
+    """
+
+    conditions: tuple[BottomCondition, ...] = ()
+    label: str = ""
+    detail: str = ""
+
+    @property
+    def hits(self) -> int:
+        return sum(1 for c in self.conditions if c.met)
+
+    @property
+    def total(self) -> int:
+        return len(self.conditions)
+
+    @property
+    def evaluable(self) -> bool:
+        return any(c.value is not None for c in self.conditions)
+
+    def as_dict(self) -> dict[str, Any]:
+        return {
+            "hits": self.hits, "total": self.total,
+            "label": self.label, "detail": self.detail,
+            "conditions": [c.as_dict() for c in self.conditions],
+        }
+
+
+@dataclass(frozen=True)
 class Action:
     """지금 실행할 한 단계."""
 
@@ -164,6 +217,7 @@ class Plan:
     floors: tuple[FloorLevel, ...] = ()
     reference_floor: Optional[float] = None
     buy_zones: tuple[BuyZone, ...] = ()
+    bottom_profile: Optional["BottomProfile"] = None
     notes: tuple[str, ...] = ()
 
     def as_dict(self) -> dict[str, Any]:
@@ -176,6 +230,7 @@ class Plan:
             "floors": [f.as_dict() for f in self.floors],
             "reference_floor": self.reference_floor,
             "buy_zones": [z.as_dict() for z in self.buy_zones],
+            "bottom_profile": self.bottom_profile.as_dict() if self.bottom_profile else None,
             "notes": list(self.notes),
         }
 

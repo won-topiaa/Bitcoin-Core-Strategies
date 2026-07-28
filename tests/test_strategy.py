@@ -412,3 +412,96 @@ def test_recording_the_same_day_twice_overwrites(cfg):
     st.record_bcs(TODAY, 10.0)
     st.record_bcs(TODAY, 20.0)
     assert st.bcs_history == [(TODAY, 20.0)]
+
+
+# --- 저점 프로파일 ---------------------------------------------------------
+
+def bottom_values(**over):
+    """2018-12-15 저점의 실측값. 6개 조건을 모두 만족한다."""
+    base = dict(drawdown_pct=-83.8, days_since_ath=364.0, mvrv=0.69,
+                nupl=-0.448, puell=0.39, ma200w_mult=1.00)
+    base.update(over)
+    return base
+
+
+def test_historical_bottoms_match_every_condition(cfg):
+    """2015/2018/2022 저점 실측값이 6/6 이어야 한다.
+
+    하나라도 안 맞으면 그 조건은 저점의 공통점이 아니므로 조건 자체가 틀린 것이다.
+    """
+    from btc_core.strategy import build_bottom_profile
+
+    observed = [
+        dict(drawdown_pct=-84.5, days_since_ath=406.0, mvrv=0.56,
+             nupl=-0.774, puell=0.31, ma200w_mult=0.91),   # 2015-01-14
+        dict(drawdown_pct=-83.8, days_since_ath=364.0, mvrv=0.69,
+             nupl=-0.448, puell=0.39, ma200w_mult=1.00),   # 2018-12-15
+        dict(drawdown_pct=-76.6, days_since_ath=378.0, mvrv=0.78,
+             nupl=-0.286, puell=0.43, ma200w_mult=0.66),   # 2022-11-21
+    ]
+    for vals in observed:
+        profile = build_bottom_profile(cfg, vals)
+        assert profile.hits == profile.total == 6, vals
+        assert "바닥권" in profile.label
+
+
+def test_a_bull_market_matches_almost_nothing(cfg):
+    from btc_core.strategy import build_bottom_profile
+
+    # 2021-11-08 고점 부근의 값
+    profile = build_bottom_profile(
+        cfg,
+        dict(drawdown_pct=-0.5, days_since_ath=2.0, mvrv=2.6,
+             nupl=0.650, puell=1.47, ma200w_mult=3.97),
+    )
+    assert profile.hits == 0
+
+
+def test_partial_match_is_labelled_accordingly(cfg):
+    from btc_core.strategy import build_bottom_profile
+
+    profile = build_bottom_profile(cfg, bottom_values(drawdown_pct=-40.0, puell=0.9))
+    assert profile.hits == 4
+    assert profile.label and "바닥권" not in profile.label
+
+
+def test_missing_inputs_leave_the_profile_unevaluable(cfg):
+    from btc_core.strategy import build_bottom_profile
+
+    profile = build_bottom_profile(cfg, {})
+    assert not profile.evaluable
+    assert profile.hits == 0
+
+
+def test_the_profile_never_touches_the_score(cfg):
+    """저점 프로파일은 표시 전용이다. BCS 도 사다리도 바꾸면 안 된다."""
+    from btc_core.models import Consensus
+
+    args = dict(
+        cfg=cfg, bcs=-50.0, lrs=None, coverage=1.0,
+        families=[fam("valuation", "밸류에이션", 30, -0.9)],
+        consensus=Consensus(True, "undervalued", ("a", "b", "c"), ("a", "b"), "ok"),
+        price=50_000.0, floor_prices={}, state=steady(-50.0), as_of=TODAY,
+    )
+    without = build_plan(**args)
+    with_profile = build_plan(**args, bottom_inputs=bottom_values())
+
+    assert with_profile.bottom_profile.hits == 6
+    assert without.bottom_profile.hits == 0
+    # 실행 계획은 동일해야 한다
+    assert [a.as_dict() for a in without.actions] == [a.as_dict() for a in with_profile.actions]
+    assert without.dca_multiplier == with_profile.dca_multiplier
+    assert without.band_key == with_profile.band_key
+
+
+def test_profile_note_appears_only_when_cheap(cfg):
+    """비쌀 때 저점 프로파일을 메모로 띄우는 건 소음이다."""
+    args = dict(
+        cfg=cfg, lrs=None, coverage=1.0, families=[], consensus=None,
+        price=50_000.0, floor_prices={}, as_of=TODAY,
+        bottom_inputs=bottom_values(),
+    )
+    cheap = build_plan(bcs=-50.0, state=steady(-50.0), **args)
+    rich = build_plan(bcs=50.0, state=steady(50.0), **args)
+    assert any("저점 프로파일" in n for n in cheap.notes)
+    assert not any("저점 프로파일" in n for n in rich.notes)

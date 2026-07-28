@@ -17,7 +17,10 @@ from pathlib import Path
 from typing import Any, Mapping, Optional, Sequence
 
 from .config import StrategyConfig
-from .models import Action, BuyZone, Consensus, FamilyScore, FloorLevel, Plan
+from .models import (
+    Action, BottomCondition, BottomProfile, BuyZone, Consensus, FamilyScore,
+    FloorLevel, Plan,
+)
 
 
 # ---------------------------------------------------------------------------
@@ -352,6 +355,53 @@ def build_floors(
 
 
 # ---------------------------------------------------------------------------
+# 저점 프로파일
+# ---------------------------------------------------------------------------
+
+_OPS = {
+    "<": lambda a, b: a < b,
+    "<=": lambda a, b: a <= b,
+    ">": lambda a, b: a > b,
+    ">=": lambda a, b: a >= b,
+}
+
+
+def build_bottom_profile(cfg: StrategyConfig, values: Mapping[str, Optional[float]]) -> Optional[BottomProfile]:
+    """사이클 저점의 공통 조건 대비 현재 상태.
+
+    점수에 들어가지 않는다. 조건 임계값이 과거 저점을 보고 정해진 것이라
+    정밀도가 과대평가돼 있고, 표본도 세 사이클뿐이다. 그래도 "BCS 는 싸다고
+    하는데 역사적 바닥 조건은 몇 개나 맞나"는 실전에서 서로 다른 질문이라
+    함께 보여줄 가치가 있다.
+    """
+    spec = cfg.bottom_profile
+    if not spec.get("enabled"):
+        return None
+
+    conditions: list[BottomCondition] = []
+    for c in spec.get("conditions", []):
+        raw = values.get(c["key"])
+        val = float(raw) if raw is not None else None
+        op = _OPS.get(c.get("op", "<"))
+        met = bool(val is not None and op and op(val, float(c["threshold"])))
+        conditions.append(
+            BottomCondition(
+                key=c["key"], label=c.get("label", c["key"]), op=c.get("op", "<"),
+                threshold=float(c["threshold"]), unit=c.get("unit", ""),
+                value=val, met=met, observed=c.get("observed", ""),
+            )
+        )
+
+    hits = sum(1 for c in conditions if c.met)
+    label, detail = "", ""
+    for r in sorted(spec.get("readings", []), key=lambda x: -int(x["min_hits"])):
+        if hits >= int(r["min_hits"]):
+            label, detail = r.get("label", ""), r.get("detail", "")
+            break
+    return BottomProfile(conditions=tuple(conditions), label=label, detail=detail)
+
+
+# ---------------------------------------------------------------------------
 # 계획 조립
 # ---------------------------------------------------------------------------
 
@@ -367,8 +417,10 @@ def build_plan(
     floor_prices: Mapping[str, Optional[float]],
     state: ExecutionState,
     as_of: date,
+    bottom_inputs: Optional[Mapping[str, Optional[float]]] = None,
 ) -> Plan:
     notes: list[str] = []
+    profile = build_bottom_profile(cfg, bottom_inputs or {})
 
     if bcs is None:
         levels, ref, zones = build_floors(cfg, price, floor_prices)
@@ -382,6 +434,7 @@ def build_plan(
             floors=levels,
             reference_floor=ref,
             buy_zones=zones,
+            bottom_profile=profile,
             notes=("사용 가능한 계열이 없습니다. config 의 지표 중 최소 한 계열은 채워야 합니다.",),
         )
 
@@ -449,6 +502,13 @@ def build_plan(
         downside = (ref / price - 1.0) * 100.0
         notes.append(f"기준 바닥 {ref:,.0f} — 현재가 대비 {downside:+.1f}%")
 
+    if profile is not None and profile.evaluable and bcs is not None and bcs < 0:
+        # BCS 가 싸다고 말할 때, 역사적 바닥 조건은 몇 개나 맞는지 함께 본다.
+        # 둘은 다른 질문이고 갈릴 때가 있다.
+        notes.append(
+            f"저점 프로파일 {profile.hits}/{profile.total} — {profile.label} (점수에는 반영되지 않음)"
+        )
+
     return Plan(
         band_key=band_key,
         band_label=band.get("label", band_key),
@@ -458,6 +518,7 @@ def build_plan(
         floors=levels,
         reference_floor=ref,
         buy_zones=zones,
+        bottom_profile=profile,
         notes=tuple(notes),
     )
 

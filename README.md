@@ -156,6 +156,12 @@ btc-core score --csv data/market.csv
 **LRS 조정** 트랜치 크기를 0.75 ~ 1.25배 사이에서만 조절한다. 매수를 매도로
 바꾸지 못한다.
 
+**저점 프로파일** 과거 사이클 저점 네 곳의 공통 조건 6가지와 현재 상태를 대조해
+보여준다. **점수에는 들어가지 않는다** — 임계값이 그 저점들을 보고 정해진 것이라
+순환논리 위험이 있고, 절반은 이미 다른 지표가 세고 있기 때문이다. BCS가 "싸다"고
+할 때 "역사적 바닥과 같은 상태인가"는 다른 질문이라 함께 본다 —
+[09 저점 프로파일](docs/09-저점-프로파일.md).
+
 ---
 
 ## 문서
@@ -171,6 +177,7 @@ btc-core score --csv data/market.csv
 | [06. 한계와 반증 조건](docs/06-한계와-반증조건.md) | **언제 이 전략을 폐기하나** |
 | [07. 실측 검증](docs/07-실측-검증.md) | **16년 데이터가 설계를 반박한 지점** |
 | [08. 지표 선별](docs/08-지표-선별.md) | **무엇을 넣고 무엇을 버렸나 (후보 6개 중 1개 편입)** |
+| [09. 저점 프로파일](docs/09-저점-프로파일.md) | **사이클 저점의 공통점 6가지 (표시 전용)** |
 
 ---
 
@@ -213,17 +220,18 @@ src/btc_core/
   report.py                 콘솔 / 마크다운 / JSON
   cli.py
   datasources/              CoinMetrics · CSV · 수동입력
-docs/                       설계 문서 9편
+docs/                       설계 문서 10편
 journal/TEMPLATE.md         판단 기록 템플릿 (원문 6.4)
-tests/                      221개
+tests/                      229개
 tools/backtest.py           16년 이력 백테스트
 tools/screen_indicator.py   신규 지표 선별 검정
+tools/bottom_study.py       사이클 저점 공통점 연구
 ```
 
 **의존성은 PyYAML 하나뿐이다.** 나머지는 표준 라이브러리로 구현했다.
 
 ```bash
-python3 -m pytest tests/ -q      # 221 passed
+python3 -m pytest tests/ -q      # 229 passed
 ```
 
 네트워크 없이 전부 통과한다. 합성 시계열로 사이클 전 구간을 훑는 회귀 테스트가
@@ -238,6 +246,7 @@ python3 -m pytest tests/ -q      # 221 passed
 ```bash
 python3 tools/backtest.py --csv data/market.csv --out reports/backtest.md
 python3 tools/screen_indicator.py --csv data/market.csv --out reports/screen.md
+python3 tools/bottom_study.py --csv data/market.csv --out reports/bottoms.md
 ```
 
 지표를 새로 넣으려면 먼저 `screen_indicator.py` 를 통과해야 한다. 선행 수익률과의

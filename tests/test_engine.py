@@ -308,3 +308,34 @@ def test_scores_stay_inside_the_declared_range_across_the_whole_cycle(cfg):
         assert snap.bcs is None or -100.0 <= snap.bcs <= 100.0
         for f in snap.families:
             assert f.score is None or -1.0 <= f.score <= 1.0
+
+
+def test_bottom_profile_reaches_the_reports(cfg, bundle, manual_path):
+    ref = bundle.market.price.last_date
+    snap, _ = evaluate(cfg, bundle=bundle,
+                       manual=load_manual(manual_path, reference=ref), as_of=ref)
+    bp = snap.plan.bottom_profile
+    assert bp is not None and bp.evaluable
+    assert bp.total == 6
+
+    console = render_console(snap, cfg)
+    assert "저점 프로파일" in console
+    assert "점수에 반영되지 않습니다" in console
+
+    md = render_markdown(snap, cfg)
+    assert "저점 프로파일" in md
+
+    import json
+    data = json.loads(render_json(snap))
+    assert data["plan"]["bottom_profile"]["total"] == 6
+
+
+def test_bottom_profile_inputs_from_price_only_data(cfg):
+    """가격만 있어도 낙폭·경과일 두 조건은 평가된다."""
+    from btc_core.indicators import bottom_profile_inputs
+
+    md = MarketData(price=fixtures.price_series())
+    vals = bottom_profile_inputs(md)
+    assert vals["drawdown_pct"] is not None
+    assert vals["days_since_ath"] is not None
+    assert vals["mvrv"] is None

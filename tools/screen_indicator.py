@@ -142,6 +142,44 @@ def candidate_series(market) -> dict[str, Series]:
                     g[i] = (a / b - 1.0) * 100.0
             out[key] = Series(rcap.dates, tuple(g), key)
 
+    # --- 저점 특성 후보 -----------------------------------------------------
+    # 사이클 저점의 공통점에서 뽑았다. 저점 4곳에서 관측된 값:
+    #   ATH 대비 낙폭   -92.7% / -84.5% / -83.8% / -76.6%
+    #   ATH 이후 경과일   163 / 406 / 364 / 378
+    #   MVRV < 1 여부     전부 해당 (0.42 / 0.56 / 0.69 / 0.78)
+    price = m.price
+
+    # 1) 역대 최고가 대비 낙폭. 이동평균이 아니라 '단일 과거 극값' 기준이라
+    #    가격 계열 4종과 계산 원리가 다르다.
+    peak = 0.0
+    dd, since = [], []
+    days_since_peak = 0
+    for v in price.values:
+        if v is not None and v > peak:
+            peak, days_since_peak = v, 0
+        else:
+            days_since_peak += 1
+        dd.append((v / peak - 1.0) * 100.0 if v is not None and peak else None)
+        since.append(float(days_since_peak) if peak else None)
+    out["drawdown_from_ath"] = Series(price.dates, tuple(dd), "drawdown_from_ath")
+
+    # 2) 최고가 이후 경과일. 시스템에 시간 축이 하나도 없어서 후보로 넣는다.
+    out["days_since_ath"] = Series(price.dates, tuple(since), "days_since_ath")
+
+    # 3) 시장 전체가 원가 아래인 기간의 누적 일수.
+    #    수준(NUPL)이 아니라 '얼마나 오래'를 본다.
+    if m.realized_cap is not None and m.supply is not None:
+        sup = dict(zip(m.supply.dates, m.supply.values))
+        run, uw = 0, []
+        for d, rc in zip(m.realized_cap.dates, m.realized_cap.values):
+            s, px = sup.get(d), dict(zip(price.dates, price.values)).get(d)
+            if rc and s and px:
+                run = run + 1 if px < rc / s else 0
+                uw.append(float(run))
+            else:
+                uw.append(None)
+        out["underwater_days"] = Series(m.realized_cap.dates, tuple(uw), "underwater_days")
+
     # 서멀캡 배수 — 누적 채굴 수익 대비 시가총액.
     # 밸류에이션 후보. 실현시총과 달리 '지금까지 네트워크에 투입된 비용'이 분모다.
     if m.issuance_usd is not None and m.market_cap is not None:

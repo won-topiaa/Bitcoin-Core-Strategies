@@ -383,6 +383,55 @@ def ma200w_price(price: Series) -> Optional[float]:
     return sma(price, MA_200W).last
 
 
+def drawdown_from_ath(price: Series) -> tuple[Optional[float], Optional[int], Optional[float]]:
+    """역대 최고가 대비 낙폭(%), 그 이후 경과일, 최고가.
+
+    이동평균이 아니라 **단일 과거 극값**을 기준으로 삼는다는 점에서 가격 계열
+    4종과 계산 원리가 다르다. 다만 실측 결과 MVRV Z·NUPL 과 순위상관이 +0.92 라
+    점수 지표로는 쓰지 않는다(중복). 저점 프로파일 표시용이다.
+    """
+    peak = 0.0
+    since = 0
+    last = None
+    for v in price.values:
+        if v is not None and v > peak:
+            peak, since = v, 0
+        else:
+            since += 1
+        if v is not None:
+            last = v
+    if not peak or last is None:
+        return None, None, None
+    return (last / peak - 1.0) * 100.0, since, peak
+
+
+def bottom_profile_inputs(data: MarketData) -> dict[str, Optional[float]]:
+    """저점 프로파일 조건 평가에 필요한 원시값들.
+
+    사이클 저점의 공통점을 재는 값이다. **점수에는 들어가지 않는다.**
+    이유는 docs/09-저점-프로파일.md 에 적어 뒀다.
+    """
+    d = data.normalized()
+    p = d.price
+    dd, since, _ = drawdown_from_ath(p)
+
+    mvrv = None
+    if d.market_cap is not None and d.realized_cap is not None:
+        mc, rc = d.market_cap.last, d.realized_cap.last
+        if mc and rc:
+            mvrv = mc / rc
+
+    computed = compute_all(data)
+    return {
+        "drawdown_pct": dd,
+        "days_since_ath": float(since) if since is not None else None,
+        "mvrv": mvrv,
+        "nupl": computed["nupl"].value,
+        "puell": computed["puell"].value,
+        "ma200w_mult": computed["ma200w_mult"].value,
+    }
+
+
 def compute_all(data: MarketData) -> dict[str, IndicatorValue]:
     """자동 계산 가능한 지표를 한 번에 산출한다."""
     d = data.normalized()

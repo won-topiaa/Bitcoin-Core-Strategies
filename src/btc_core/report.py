@@ -46,6 +46,17 @@ def pad(s: str, width: int, align: str = "<") -> str:
     return s + gap if align == "<" else gap + s
 
 
+def fmt_condition_value(value: Optional[float], unit: str) -> str:
+    """저점 프로파일 값 표기. 일수는 정수, 나머지는 소수 둘째 자리."""
+    if value is None:
+        return "—"
+    if unit == "일":
+        return f"{value:,.0f}일"
+    if unit == "%":
+        return f"{value:,.1f}%"
+    return f"{value:,.2f}{unit}"
+
+
 def short_label(label: str) -> str:
     """괄호 안 계산식은 표에서 떼어낸다. 'MVRV Z-Score (…)' → 'MVRV Z-Score'"""
     return label.split(" (")[0].strip()
@@ -144,6 +155,19 @@ def render_console(snap: Snapshot, cfg: StrategyConfig) -> str:
                     f"{z.distance_pct:+7.1f}%  →  {z.pct_of_reserve:>3.0f}%")
             add("")
 
+        bp = p.bottom_profile
+        if bp is not None and bp.evaluable:
+            add(f"  저점 프로파일  {bp.hits}/{bp.total} — {bp.label}")
+            add("  (사이클 저점의 공통 조건. 참고용이며 점수에 반영되지 않습니다)")
+            for c in bp.conditions:
+                mark = "O" if c.met else "X"
+                shown = fmt_condition_value(c.value, c.unit)
+                target = f"{c.op} {c.threshold:g}{c.unit}"
+                add(f"    {mark} {pad(short_label(c.label), 30)} {shown:>11}   기준 {target}")
+            if bp.detail:
+                add(f"    → {bp.detail}")
+            add("")
+
         if p.notes:
             add("  메모")
             for n in p.notes:
@@ -233,6 +257,24 @@ def render_markdown(snap: Snapshot, cfg: StrategyConfig) -> str:
                 add(f"| {z.label} | ${z.price:,.0f} | {z.distance_pct:+.1f}% | "
                     f"{z.pct_of_reserve:.0f}% | {'◆' if z.reached else ''} |")
             add("")
+
+        bp = p.bottom_profile
+        if bp is not None and bp.evaluable:
+            add(f"### 저점 프로파일 — {bp.hits}/{bp.total} ({bp.label})")
+            add("")
+            add("사이클 저점의 공통 조건. **점수에 반영되지 않는 참고 정보다.**")
+            add("")
+            add("| | 조건 | 현재값 | 기준 | 과거 저점 관측값 |")
+            add("|:--:|---|---:|---|---|")
+            for c in bp.conditions:
+                mark = "O" if c.met else "X"
+                shown = fmt_condition_value(c.value, c.unit)
+                add(f"| {mark} | {c.label} | {shown} | {c.op} {c.threshold:g}{c.unit} "
+                    f"| {c.observed} |")
+            add("")
+            if bp.detail:
+                add(f"> {bp.detail}")
+                add("")
 
         if p.notes:
             add("### 메모")
