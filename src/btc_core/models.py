@@ -112,7 +112,9 @@ class BuyZone:
     label: str
     price: float
     pct_of_reserve: float
-    distance_pct: float             # 현재가 대비 (-30.0 = 30% 아래)
+    # 현재가 대비 (-30.0 = 30% 아래). 현재가를 모르면 None —
+    # 0.0 으로 채우면 "지금 가격과 같다"로 읽혀서 정반대 의미가 된다.
+    distance_pct: Optional[float]
     reached: bool
 
     def as_dict(self) -> dict[str, Any]:

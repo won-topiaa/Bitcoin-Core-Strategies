@@ -14,7 +14,7 @@ RHODL Ratio, Reserve Risk, LTH 실현가격, CVDD, 그리고 거시 지표 전�
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from datetime import date
+from datetime import date, datetime
 from pathlib import Path
 from typing import Any, Mapping, Optional
 
@@ -78,10 +78,14 @@ def load_manual(path: str | Path | None, *, reference: Optional[date] = None) ->
         warns.append(f"{p}: as_of 가 없습니다. 값의 신선도를 검증할 수 없습니다.")
 
     # 오래된 값 처리
-    for bucket_name, bucket in (("indicators", indicators), ("macro", macro), ("floors", floors)):
+    undated: list[str] = []
+    for bucket in (indicators, macro, floors):
         for key in list(bucket):
             observed = dated.get(key) or as_of
             if observed is None:
+                # as_of 도 없고 observed_on 도 없는 항목. 일부 항목만 날짜를
+                # 달아 두면 as_of 누락 경고가 뜨지 않아 이 구멍이 조용해진다.
+                undated.append(key)
                 continue
             age = (ref - observed).days
             if age >= EXPIRE_AFTER_DAYS:
@@ -89,6 +93,12 @@ def load_manual(path: str | Path | None, *, reference: Optional[date] = None) ->
                 bucket[key] = None
             elif age >= STALE_AFTER_DAYS:
                 warns.append(f"{key}: 관측 {age}일 경과 — 갱신을 권합니다.")
+
+    if undated:
+        warns.append(
+            f"{p}: 관측일을 알 수 없는 항목 {len(undated)}개 — 신선도 검증에서 빠집니다 "
+            f"({', '.join(sorted(undated))})"
+        )
 
     return ManualInput(
         as_of=as_of,
@@ -101,8 +111,17 @@ def load_manual(path: str | Path | None, *, reference: Optional[date] = None) ->
 
 
 def _as_date(v: Any) -> Optional[date]:
+    """날짜로 정규화한다.
+
+    YAML 은 ``as_of: 2026-07-28 10:00:00`` 을 datetime 으로 파싱하는데,
+    datetime 은 date 의 하위 클래스라 isinstance 검사를 그냥 통과한다.
+    그대로 두면 나중에 ``date - datetime`` 에서 TypeError 로 죽는다.
+    시각은 이 시스템에서 아무 의미가 없으므로 날짜만 남긴다.
+    """
     if v is None:
         return None
+    if isinstance(v, datetime):
+        return v.date()
     if isinstance(v, date):
         return v
     try:

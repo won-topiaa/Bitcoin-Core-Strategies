@@ -36,6 +36,12 @@ HASH_SLOW = 60
 HASH_RECOVERY_WINDOW = 45     # 재돌파 후 이 기간까지를 '회복' 신호로 본다
 HASH_EXPANSION_RATIO = 1.08   # 30일선이 60일선을 8% 이상 웃돌면 '팽창'
 
+# 서멀캡은 '창세 이래' 누적이라야 의미가 있다. 발행액 시계열이 이 날짜보다
+# 늦게 시작하면 분모가 그만큼 작아져 배수가 부풀려진다.
+# 실측(2026-07-28): 8년 창이면 +10.1%, 4년 창이면 +84.4% 과대평가된다.
+# 밸류에이션 계열은 max_abs 라 부풀려진 값 하나가 30% 지분을 통째로 가져간다.
+THERMOCAP_ORIGIN_CUTOFF = date(2011, 1, 1)
+
 
 @dataclass(frozen=True)
 class MarketData:
@@ -259,6 +265,17 @@ def thermocap_multiple(
     if revenue is None:
         return IndicatorValue("thermocap", None, market_cap.last_date, note="발행액 데이터 없음")
 
+    # 분모가 창세부터 누적된 것이 아니면 배수 자체가 다른 숫자다.
+    # 그럴듯한 값을 조용히 내주는 대신 결측으로 둔다 — 이 계열은 max_abs 라
+    # 부풀려진 값 하나가 밸류에이션 30% 를 전부 끌고 가기 때문이다.
+    first = next((d for d, v in zip(revenue.dates, revenue.values) if v is not None), None)
+    if first is None or first > THERMOCAP_ORIGIN_CUTOFF:
+        return IndicatorValue(
+            "thermocap", None, market_cap.last_date,
+            note=f"발행액이 {first} 부터라 누적 채굴수익이 창세부터가 아닙니다 "
+                 f"— 배수가 과대평가됩니다 (fetch --years 를 늘리세요)",
+        )
+
     cumulative: list[Optional[float]] = []
     total = 0.0
     for v in revenue.values:
@@ -304,26 +321,36 @@ def puell_multiple(
 
     달러 값을 직접 받았으면 그쪽을 쓴다. 데이터 제공자가 블록별 시점 가격으로
     계산한 값이라, 코인 수량에 종가를 곱하는 것보다 정확하다.
-    """
-    if issuance_usd is not None and issuance_usd.last is not None:
-        revenue = Series(issuance_usd.dates, issuance_usd.values, "issuance_usd")
-    else:
-        issuance = issuance_btc
-        if issuance is None and supply is not None:
-            issuance = supply.diff()      # 유통량 차분 = 그날 발행량
-        if issuance is None:
-            return IndicatorValue("puell", None, price.last_date, note="발행량 데이터 없음")
-        revenue = issuance.map_with(price, lambda i, p: i * p if i and i > 0 else None)
-        revenue = Series(revenue.dates, revenue.values, "issuance_usd")
 
-    avg = sma(revenue, PUELL_WINDOW)
-    cur, base = revenue.last, avg.last
-    if cur is None or base in (None, 0):
-        return IndicatorValue("puell", None, price.last_date, note="365일 평균 산출 불가")
-    return IndicatorValue(
-        "puell", cur / base, price.last_date,
-        detail={"issuance_usd": cur, "avg365_usd": base, "history_4y": history_of(ratio(revenue, avg), years=4.0)},
-    )
+    다만 **우선순위가 곧 배타는 아니다.** 달러 시계열이 최근 몇 달치뿐이면
+    365일 평균이 나오지 않는데, 그것 때문에 온전한 BTC 시계열까지 못 쓰게 되면
+    있는 데이터를 버리는 셈이다. 그래서 계산이 되는 첫 후보를 쓴다.
+    """
+    candidates: list[Series] = []
+    if issuance_usd is not None and issuance_usd.last is not None:
+        candidates.append(Series(issuance_usd.dates, issuance_usd.values, "issuance_usd"))
+
+    issuance = issuance_btc
+    if issuance is None and supply is not None:
+        issuance = supply.diff()          # 유통량 차분 = 그날 발행량
+    if issuance is not None:
+        r = issuance.map_with(price, lambda i, p: i * p if i and i > 0 else None)
+        candidates.append(Series(r.dates, r.values, "issuance_usd"))
+
+    if not candidates:
+        return IndicatorValue("puell", None, price.last_date, note="발행량 데이터 없음")
+
+    for revenue in candidates:
+        avg = sma(revenue, PUELL_WINDOW)
+        cur, base = revenue.last, avg.last
+        if cur is None or base in (None, 0):
+            continue
+        return IndicatorValue(
+            "puell", cur / base, price.last_date,
+            detail={"issuance_usd": cur, "avg365_usd": base,
+                    "history_4y": history_of(ratio(revenue, avg), years=4.0)},
+        )
+    return IndicatorValue("puell", None, price.last_date, note="365일 평균 산출 불가")
 
 
 def hash_ribbons(hashrate: Optional[Series]) -> IndicatorValue:

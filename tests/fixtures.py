@@ -79,6 +79,17 @@ def market_data(days: int = DAYS, start: date = START) -> MarketData:
     )
 
 
+def issuance_usd_series(days: int = DAYS, start: date = START) -> Series:
+    """달러 표시 발행량 (CoinMetrics IssTotUSD 를 흉내 낸다).
+
+    market_data() 는 이걸 넣지 않는다 — Puell 이 BTC 경로로 계산되는 기본 상황을
+    유지해야 폴백 경로를 따로 검증할 수 있기 때문이다.
+    """
+    md = market_data(days, start)
+    paired = md.issuance_btc.map_with(md.price, lambda i, p: i * p)
+    return Series(paired.dates, paired.values, "issuance_usd")
+
+
 def truncated(md: MarketData, days: int) -> MarketData:
     """앞에서부터 days 일만 남긴다. 특정 사이클 국면을 재현할 때 쓴다."""
     def cut(s):

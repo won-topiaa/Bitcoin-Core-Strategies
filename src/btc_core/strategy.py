@@ -206,6 +206,21 @@ def _rearmed(cfg: StrategyConfig, state: ExecutionState, step: ExecutedStep,
     return high is not None and high >= trigger + margin
 
 
+def cycle_start(cfg: StrategyConfig, state: ExecutionState, ladder: str) -> Optional[date]:
+    """이번 사이클의 시작점 — BCS 가 마지막으로 반대편 구간을 방문한 날.
+
+    한도 계산과 화면에 찍는 누적치가 **같은 경계**를 써야 한다. 한쪽은
+    사이클 기준인데 다른 쪽이 전 기간 누적이면, 한도에 여유가 있는데도
+    "이미 200% 분배했다"고 표시되어 약속이 깨진 것처럼 읽힌다.
+    """
+    opposite = float(cfg.hysteresis.get("rearm_opposite_bcs", 0))
+    if opposite <= 0:
+        return None
+    if ladder == "distribute":
+        return state.last_visit(at_or_below=-opposite)
+    return state.last_visit(at_or_above=opposite)
+
+
 def _budget_exceeded(cfg: StrategyConfig, state: ExecutionState,
                      ladder: str, size: float) -> Optional[str]:
     """이번 사이클에 남은 한도를 넘는지.
@@ -219,14 +234,12 @@ def _budget_exceeded(cfg: StrategyConfig, state: ExecutionState,
     사이클 경계는 BCS 가 마지막으로 반대편 구간을 방문한 시점으로 잡는다.
     재무장 규칙과 같은 기준이라 둘이 어긋나지 않는다.
     """
-    opposite = float(cfg.hysteresis.get("rearm_opposite_bcs", 0))
+    since = cycle_start(cfg, state, ladder)
     if ladder == "distribute":
         cap = 100.0 - float(cfg.ladders.get("distribute", {}).get("core_hold_pct", 0))
-        since = state.last_visit(at_or_below=-opposite) if opposite > 0 else None
         label = "분배"
     else:
         cap = 100.0
-        since = state.last_visit(at_or_above=opposite) if opposite > 0 else None
         label = "매집"
 
     used = state.cumulative(ladder, since=since)
@@ -341,13 +354,13 @@ def build_floors(
     zones: list[BuyZone] = []
     for z in cfg.floors.get("buy_zones", []):
         zp = reference * float(z["ratio_to_floor"])
-        dist = ((zp / price - 1.0) * 100.0) if price else 0.0
+        dist = round((zp / price - 1.0) * 100.0, 1) if price else None
         zones.append(
             BuyZone(
                 label=z.get("label", ""),
                 price=round(zp, 2),
                 pct_of_reserve=float(z["pct_of_reserve"]),
-                distance_pct=round(dist, 1),
+                distance_pct=dist,
                 reached=bool(price is not None and price <= zp),
             )
         )
@@ -469,21 +482,25 @@ def build_plan(
     if step is not None:
         actions.append(step)
     else:
-        cum = state.cumulative(ladder)
+        since = cycle_start(cfg, state, ladder)
+        cum = state.cumulative(ladder, since=since)
         if cum > 0:
+            scope = "이번 사이클" if since else "누적"
             notes.append(
-                f"{'분배' if ladder == 'distribute' else '매집'} 사다리 누적 {cum:.0f}% 실행됨 — "
+                f"{'분배' if ladder == 'distribute' else '매집'} 사다리 {scope} {cum:.0f}% 실행됨 — "
                 f"현재 BCS 에서 밟을 새 계단 없음"
             )
 
     if not any(a.kind in ("distribute", "accumulate") for a in actions):
         actions.append(Action("hold", "사다리 대기 — 다음 계단 임계 미도달", 0.0, None))
 
-    # 코어 지분 안내
+    # 코어 지분 안내 — 한도와 같은 사이클 경계를 써야 숫자가 서로 어긋나지 않는다
     core = float(cfg.ladders.get("distribute", {}).get("core_hold_pct", 0))
     if core:
-        sold = state.cumulative("distribute")
-        notes.append(f"코어 보유 {core:.0f}% 는 어떤 신호에도 매도하지 않음 (현재 누적 분배 {sold:.0f}%)")
+        since = cycle_start(cfg, state, "distribute")
+        sold = state.cumulative("distribute", since=since)
+        scope = "이번 사이클" if since else "누적"
+        notes.append(f"코어 보유 {core:.0f}% 는 어떤 신호에도 매도하지 않음 ({scope} 분배 {sold:.0f}%)")
 
     # 계열이 서로 갈리는 상황은 그 자체로 정보다
     live = [f for f in families if f.available]

@@ -18,6 +18,7 @@ from typing import Optional, Sequence
 
 from .config import ConfigError, load_config
 from .datasources import FetchError, load_manual
+from .datasources.coinmetrics import DEFAULT_YEARS
 from .datasources.csv_source import load_csv_bundle, save_csv_bundle
 from .datasources.manual import write_template
 from .engine import evaluate
@@ -38,7 +39,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     # fetch
     f = sub.add_parser("fetch", help="CoinMetrics 에서 시계열을 받는다")
-    f.add_argument("--years", type=float, default=8.0)
+    f.add_argument("--years", type=float, default=DEFAULT_YEARS)
     f.add_argument("--save", default="data/market.csv", help="CSV 저장 경로")
     f.add_argument("--timeout", type=int, default=60)
 
@@ -53,7 +54,7 @@ def build_parser() -> argparse.ArgumentParser:
     s.add_argument("--adaptive-weight", type=float, default=0.35,
                    help="퍼센타일 척도 혼합 비율 (0=고정 앵커만)")
     s.add_argument("--no-record", action="store_true", help="BCS 이력에 기록하지 않는다")
-    s.add_argument("--years", type=float, default=8.0)
+    s.add_argument("--years", type=float, default=DEFAULT_YEARS)
 
     # init
     i = sub.add_parser("init", help="수동 입력 템플릿을 만든다")
@@ -115,7 +116,8 @@ def _dispatch(args, cfg) -> int:
     return 1
 
 
-def _load_bundle(csv_path: Optional[str], years: float = 8.0, timeout: int = 60):
+def _load_bundle(csv_path: Optional[str], years: float = DEFAULT_YEARS,
+                 timeout: int = 60):
     if csv_path:
         return load_csv_bundle(csv_path)
     from .datasources import coinmetrics
@@ -211,6 +213,16 @@ def _cmd_commit(args, cfg) -> int:
         return 1
 
     if args.force and not action.executable:
+        # --force 는 확정 대기·간격 같은 '타이밍' 제약을 넘기라는 뜻이다.
+        # 사이클 예산 한도는 타이밍이 아니라 약속이므로, 넘길 때 눈에 띄게 알린다.
+        # (그래도 기록은 한다 — 실제로 판 것을 장부에서 빼면 이후 계산이 전부 틀어진다)
+        if "한도 소진" in (action.blocked_by or ""):
+            print("!! 경고: 이번 사이클 실행 한도를 넘겨 기록합니다.", file=sys.stderr)
+            print(f"   {action.blocked_by}", file=sys.stderr)
+            if action.kind == "distribute":
+                core = float(cfg.ladders["distribute"]["core_hold_pct"])
+                print(f"   코어 보유 {core:.0f}% 를 침범합니다 — 문서가 약속한 불가침 지분입니다.",
+                      file=sys.stderr)
         from .models import Action
         action = Action(action.kind, action.label, action.size_pct,
                         action.trigger, action.lrs_multiplier, blocked_by=None)

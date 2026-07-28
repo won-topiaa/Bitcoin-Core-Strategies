@@ -339,3 +339,75 @@ def test_bottom_profile_inputs_from_price_only_data(cfg):
     assert vals["drawdown_pct"] is not None
     assert vals["days_since_ath"] is not None
     assert vals["mvrv"] is None
+
+
+# --- 정독으로 찾은 결함들 --------------------------------------------------
+
+def test_yaml_datetime_does_not_crash_the_manual_loader(tmp_path):
+    """YAML 은 'as_of: 2026-07-28 10:00:00' 을 datetime 으로 파싱한다.
+
+    datetime 은 date 의 하위 클래스라 isinstance 검사를 통과해 버리고,
+    나중에 date - datetime 에서 TypeError 로 죽었다.
+    """
+    p = tmp_path / "m.yaml"
+    p.write_text(
+        "as_of: 2026-07-28 10:00:00\n"
+        "indicators:\n  rhodl: 0.5\n"
+        "floors:\n  cvdd:\n    value: 41000\n    observed_on: 2026-07-01 09:30:00\n",
+        encoding="utf-8",
+    )
+    m = load_manual(p, reference=date(2026, 7, 28))
+    assert m.as_of == date(2026, 7, 28)
+    assert type(m.as_of) is date            # datetime 이 아니라 date 여야 한다
+    assert m.dated["cvdd"] == date(2026, 7, 1)
+    assert m.floors["cvdd"] == 41000
+
+
+def test_coverage_warning_knows_about_the_usd_issuance_fallback(cfg):
+    """Puell 은 issuance_usd 로도 계산된다. 그런데 경고는 그걸 몰랐다."""
+    from btc_core.datasources.base import coverage_warnings
+    from btc_core.indicators import compute_all
+
+    md = MarketData(price=fixtures.price_series(),
+                    issuance_usd=fixtures.issuance_usd_series())
+    assert compute_all(md)["puell"].value is not None
+    assert not any("Puell" in w for w in coverage_warnings(md))
+
+
+def test_coverage_warning_flags_a_missing_market_cap(cfg):
+    from btc_core.datasources.base import coverage_warnings
+
+    md = MarketData(price=fixtures.price_series())
+    assert any("시가총액 없음" in w for w in coverage_warnings(md))
+
+
+def test_gauge_shows_missing_rather_than_neutral(cfg):
+    """'산출 불가' 라고 써놓고 바늘이 중립을 가리키면 안 된다."""
+    from btc_core.report import gauge
+
+    snap, _ = evaluate(cfg)
+    assert snap.bcs is None
+    out = render_console(snap, cfg)
+    assert gauge(None) in out
+    assert gauge(0.0) not in out
+
+
+def test_partially_dated_manual_input_does_not_hide_undated_entries(tmp_path):
+    """일부 항목에만 observed_on 을 달면 as_of 누락 경고가 사라진다.
+
+    그러면 날짜 없는 나머지 항목들이 신선도 검증에서 조용히 빠진다.
+    """
+    p = tmp_path / "m.yaml"
+    p.write_text(
+        "indicators:\n"
+        "  rhodl:\n    value: 0.5\n    observed_on: 2026-07-20\n"
+        "  reserve_risk: 0.003\n"
+        "floors:\n  cvdd: 41000\n",
+        encoding="utf-8",
+    )
+    m = load_manual(p, reference=date(2026, 7, 28))
+    assert m.as_of is None
+    flagged = [w for w in m.warnings if "관측일을 알 수 없는" in w]
+    assert flagged, m.warnings
+    assert "reserve_risk" in flagged[0] and "cvdd" in flagged[0]
+    assert "rhodl" not in flagged[0]      # 얘는 날짜가 있다

@@ -88,12 +88,15 @@ def render_console(snap: Snapshot, cfg: StrategyConfig) -> str:
 
     # --- 점수 ---
     bcs_txt = f"{snap.bcs:+.1f}" if snap.bcs is not None else "산출 불가"
-    add(f"  BCS  사이클 위치   {bcs_txt:>10}   {gauge((snap.bcs or 0) / 100)}")
+    # 결측을 0 으로 바꿔 넘기면 "산출 불가"라고 써놓고 바늘은 중립을 가리킨다.
+    add(f"  BCS  사이클 위치   {bcs_txt:>10}   "
+        f"{gauge(snap.bcs / 100 if snap.bcs is not None else None)}")
     if snap.plan:
         add(f"       {snap.plan.band_label} — {snap.plan.stance}")
     lrs_txt = f"{snap.lrs:+.1f}" if snap.lrs is not None else "산출 불가"
     lrs_label = cfg.lrs_band_for(snap.lrs).get("label", "") if snap.lrs is not None else ""
-    add(f"  LRS  유동성 레짐   {lrs_txt:>10}   {gauge((snap.lrs or 0) / 100)}")
+    add(f"  LRS  유동성 레짐   {lrs_txt:>10}   "
+        f"{gauge(snap.lrs / 100 if snap.lrs is not None else None)}")
     if lrs_label:
         add(f"       {lrs_label}")
     add("")
@@ -151,8 +154,9 @@ def render_console(snap: Snapshot, cfg: StrategyConfig) -> str:
             for z in p.buy_zones:
                 mark = "◆" if z.reached else " "
                 shown = f"${z.price:,.0f}"
+                dist = f"{z.distance_pct:+7.1f}%" if z.distance_pct is not None else "      —"
                 add(f"    {mark} {pad(z.label, 34)} {shown:>12}  "
-                    f"{z.distance_pct:+7.1f}%  →  {z.pct_of_reserve:>3.0f}%")
+                    f"{dist}  →  {z.pct_of_reserve:>3.0f}%")
             add("")
 
         bp = p.bottom_profile
@@ -254,7 +258,8 @@ def render_markdown(snap: Snapshot, cfg: StrategyConfig) -> str:
             add("| 구간 | 가격 | 현재가 대비 | 예비현금 배분 | 도달 |")
             add("|---|---:|---:|---:|:--:|")
             for z in p.buy_zones:
-                add(f"| {z.label} | ${z.price:,.0f} | {z.distance_pct:+.1f}% | "
+                dist = f"{z.distance_pct:+.1f}%" if z.distance_pct is not None else "—"
+                add(f"| {z.label} | ${z.price:,.0f} | {dist} | "
                     f"{z.pct_of_reserve:.0f}% | {'◆' if z.reached else ''} |")
             add("")
 

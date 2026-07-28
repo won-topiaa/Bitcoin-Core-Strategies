@@ -230,7 +230,9 @@ def _select_band(bands: list[Mapping[str, Any]], value: float) -> Mapping[str, A
                 return band
         elif lo < value <= hi:
             return band
-    return ordered[0]      # 도달 불가 — 밴드 커버리지는 validate 가 보장한다
+    # 밴드 커버리지는 validate 가 보장하므로 여기 오는 값은 NaN 뿐이다.
+    # 조용히 첫 밴드를 돌려주면 그건 '항복'(전량 매수) 밴드다 — 최악의 오답.
+    raise ConfigError(f"밴드를 정할 수 없는 점수입니다: {value!r}")
 
 
 def _check_band_cover(bands: list[Mapping[str, Any]], name: str) -> None:

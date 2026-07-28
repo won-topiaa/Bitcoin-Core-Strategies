@@ -195,12 +195,31 @@ def test_hash_ribbons_missing_without_enough_data():
 # --- 통합 ------------------------------------------------------------------
 
 def test_compute_all_returns_every_auto_indicator():
-    out = ind.compute_all(fixtures.market_data())
+    # 서멀캡은 창세부터의 누적 채굴수익이 있어야 한다. 기본 픽스처는 2018 시작이라
+    # 일부러 결측이 되고, 창세부터 깔아주면 계산된다.
+    out = ind.compute_all(fixtures.market_data(start=date(2010, 1, 1)))
     assert set(out) == {
         "pi_cycle", "grm", "ma200w_mult", "ma2y_mult",
         "mvrv_z", "nupl", "thermocap", "puell", "hash_ribbons",
     }
-    assert all(v.value is not None for v in out.values())
+    missing = [k for k, v in out.items() if v.value is None]
+    assert not missing, missing
+
+
+def test_thermocap_refuses_a_window_that_does_not_reach_genesis():
+    """분모가 창세부터의 누적이 아니면 배수가 부풀려진다.
+
+    실측(2026-07-28, 실제 CoinMetrics 데이터): 2018년부터 자른 8년 창은 배수를
+    +10.1%, 4년 창은 +84.4% 과대평가했다. 밸류에이션 계열은 max_abs 라
+    부풀려진 값 하나가 30% 지분을 통째로 가져간다. 그럴듯한 숫자를 조용히
+    내주느니 결측이 낫다.
+    """
+    late = ind.compute_all(fixtures.market_data(start=date(2018, 1, 1)))["thermocap"]
+    assert late.value is None
+    assert "창세" in late.note
+
+    early = ind.compute_all(fixtures.market_data(start=date(2010, 1, 1)))["thermocap"]
+    assert early.value is not None
 
 
 def test_compute_all_degrades_gracefully_with_price_only():
@@ -226,3 +245,24 @@ def test_synthetic_cycle_sweeps_from_cheap_to_hot_and_back():
 def test_ma200w_price_is_the_moving_average_itself():
     p = const(50_000.0, days=1600)
     assert ind.ma200w_price(p) == pytest.approx(50_000.0)
+
+
+def test_puell_falls_back_when_the_usd_series_is_too_short():
+    """달러 시계열을 우선한다고 해서 그것만 쓰라는 뜻은 아니다.
+
+    최근 몇 달치뿐인 달러 시계열 때문에 온전한 BTC 시계열까지 못 쓰게 되면
+    있는 데이터를 버리는 셈이다.
+    """
+    md = fixtures.market_data()
+    short = md.issuance_usd
+    assert short is None                       # 픽스처는 BTC 만 갖고 있다
+
+    full_usd = fixtures.issuance_usd_series()
+    stub = Series(full_usd.dates[-60:], full_usd.values[-60:], "issuance_usd")
+
+    both = ind.MarketData(price=md.price, issuance_btc=md.issuance_btc,
+                          issuance_usd=stub)
+    usd_only = ind.MarketData(price=md.price, issuance_usd=stub)
+
+    assert ind.compute_all(usd_only)["puell"].value is None      # 365일 평균 불가
+    assert ind.compute_all(both)["puell"].value is not None      # BTC 경로로 넘어간다

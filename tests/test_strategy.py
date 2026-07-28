@@ -515,3 +515,56 @@ def test_profile_note_appears_only_when_cheap(cfg):
     rich = build_plan(bcs=50.0, state=steady(50.0), **args)
     assert any("저점 프로파일" in n for n in cheap.notes)
     assert not any("저점 프로파일" in n for n in rich.notes)
+
+
+# --- 정독 2회차로 찾은 결함들 ----------------------------------------------
+
+def test_core_holding_note_uses_the_same_cycle_boundary_as_the_budget(cfg):
+    """한도는 사이클 기준인데 화면 숫자만 전 기간 누적이면 약속이 깨진 것처럼 읽힌다.
+
+    이전 사이클에서 60% 를 다 팔았어도, BCS 가 반대편 구간을 다녀왔으면
+    이번 사이클 분배는 0% 다. 그런데 메모는 "누적 분배 60%" 라고 찍었다.
+    """
+    st = ExecutionState()
+    old = TODAY - timedelta(days=900)
+    # 지난 사이클에 한도를 전부 소진
+    st.steps.append(ExecutedStep("distribute", 45.0, old, 46.0, 60.0))
+    # 그 뒤 BCS 가 반대편(-20 이하)까지 다녀왔다 → 새 사이클
+    st.record_bcs(old, 46.0)
+    for i, v in enumerate([-55.0] * 5):
+        st.record_bcs(TODAY - timedelta(days=400 - i), v)
+    for i in range(10):
+        st.record_bcs(TODAY - timedelta(days=9 - i), 50.0)
+
+    plan = build_plan(
+        cfg=cfg, bcs=50.0, lrs=None, coverage=1.0, families=[], consensus=None,
+        price=100_000.0, floor_prices={}, state=st, as_of=TODAY,
+    )
+    core_note = next(n for n in plan.notes if "코어 보유" in n)
+    assert "이번 사이클" in core_note
+    assert "분배 0%" in core_note
+
+    # 한도도 같은 경계를 쓰므로 새 계단이 실제로 열려야 한다
+    step = next_ladder_step(cfg, "distribute", 50.0, None, st, TODAY)
+    assert step is not None
+    assert "한도 소진" not in (step.blocked_by or "")
+
+
+def test_buy_zone_distance_is_unknown_rather_than_zero_without_a_price(cfg):
+    """현재가를 모를 때 거리 0.0% 는 '지금 가격과 같다'로 읽힌다 — 정반대 의미다."""
+    floors = {"ma200w": 60_000.0, "lth_rp": 55_000.0, "cvdd": 40_000.0}
+    _, ref, zones = build_floors(cfg, None, floors)
+    assert ref is not None and zones
+    assert all(z.distance_pct is None for z in zones)
+    assert all(not z.reached for z in zones)
+
+    _, _, priced = build_floors(cfg, 100_000.0, floors)
+    assert all(z.distance_pct is not None and z.distance_pct < 0 for z in priced)
+
+
+def test_band_selection_refuses_a_nan_score(cfg):
+    """조용히 첫 밴드를 돌려주면 그건 '항복'(전량 매수) 밴드다 — 최악의 오답."""
+    from btc_core.config import ConfigError
+
+    with pytest.raises(ConfigError):
+        cfg.band_for(float("nan"))
