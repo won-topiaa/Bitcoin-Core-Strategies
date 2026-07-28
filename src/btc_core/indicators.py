@@ -52,6 +52,9 @@ class MarketData:
     issuance_usd: Optional[Series] = None      # 그 발행량의 달러 가치 (있으면 우선)
     hashrate: Optional[Series] = None
     supply: Optional[Series] = None            # issuance 가 없을 때 차분으로 대체
+    exchange_supply: Optional[Series] = None   # 거래소 보유량 (BTC)
+    exchange_inflow: Optional[Series] = None   # 일간 거래소 유입 (BTC)
+    exchange_outflow: Optional[Series] = None  # 일간 거래소 유출 (BTC)
 
     def normalized(self) -> "MarketData":
         """모든 시계열을 일간 연속으로 맞춘다."""
@@ -66,6 +69,9 @@ class MarketData:
             issuance_usd=_r(self.issuance_usd),
             hashrate=_r(self.hashrate),
             supply=_r(self.supply),
+            exchange_supply=_r(self.exchange_supply),
+            exchange_inflow=_r(self.exchange_inflow),
+            exchange_outflow=_r(self.exchange_outflow),
         )
 
 
@@ -222,6 +228,55 @@ def nupl(market_cap: Optional[Series], realized_cap: Optional[Series]) -> Indica
     )
 
 
+def thermocap_multiple(
+    market_cap: Optional[Series],
+    issuance_usd: Optional[Series],
+    issuance_btc: Optional[Series] = None,
+    price: Optional[Series] = None,
+) -> IndicatorValue:
+    """시가총액 ÷ 누적 채굴 수익(서멀캡).
+
+    분모는 비트코인이 만들어진 이래 채굴자에게 지급된 달러의 총합이다.
+    "이 네트워크를 만드는 데 지금까지 얼마가 들었나" 대비 "시장이 얼마로
+    평가하나"를 보는 셈이다.
+
+    MVRV 와 분자는 같지만 분모가 다르다(실현시총 vs 누적 채굴수익). 실측
+    순위상관은 +0.77 로, 같은 방향을 보되 같은 것을 보지는 않는다.
+
+    **고정 앵커를 쓰면 안 된다.** 분모가 단조증가하고 반감기마다 증가
+    속도가 느려지므로 비율에 구조적 상승 추세가 있다. 사이클 저점 값이
+    2.11(2015) → 5.57(2018) → 6.85(2022) 로 계속 올라갔다.
+    그래서 config 에서 이 지표만 퍼센타일 전용으로 정규화한다.
+    """
+    if market_cap is None:
+        return IndicatorValue("thermocap", None, None, note="시총 데이터 없음")
+
+    revenue = issuance_usd
+    if revenue is None and issuance_btc is not None and price is not None:
+        # 달러 값이 없으면 수량 × 종가로 대신한다. 데이터 제공자가 블록별
+        # 시점 가격으로 계산한 값보다는 부정확하지만 누적하면 차이가 묻힌다.
+        revenue = issuance_btc.map_with(price, lambda i, p: i * p if i else None)
+    if revenue is None:
+        return IndicatorValue("thermocap", None, market_cap.last_date, note="발행액 데이터 없음")
+
+    cumulative: list[Optional[float]] = []
+    total = 0.0
+    for v in revenue.values:
+        if v is not None:
+            total += v
+        cumulative.append(total if total > 0 else None)
+    thermocap = Series(revenue.dates, tuple(cumulative), "thermocap")
+
+    mult = ratio(market_cap, thermocap)
+    if mult.last is None:
+        return IndicatorValue("thermocap", None, market_cap.last_date,
+                              note="누적 채굴수익 산출 불가")
+    return IndicatorValue(
+        "thermocap", mult.last, market_cap.last_date,
+        detail={"thermocap_usd": thermocap.last, "history_4y": history_of(mult, years=4.0)},
+    )
+
+
 def nupl_phase(value: float) -> str:
     """원문 3.4 의 심리 단계 구분."""
     if value > 0.75:
@@ -339,6 +394,7 @@ def compute_all(data: MarketData) -> dict[str, IndicatorValue]:
         "ma2y_mult": investor_tool_multiple(p),
         "mvrv_z": mvrv_zscore(d.market_cap, d.realized_cap),
         "nupl": nupl(d.market_cap, d.realized_cap),
+        "thermocap": thermocap_multiple(d.market_cap, d.issuance_usd, d.issuance_btc, p),
         "puell": puell_multiple(p, d.issuance_btc, d.supply, d.issuance_usd),
         "hash_ribbons": hash_ribbons(d.hashrate),
     }

@@ -30,7 +30,7 @@ Bitcoin Magazine Pro의 사이클 타이밍 지표 12개에서 핵심을 뽑아,
 
 | 실제 정보원 | 원문 지표 | BCS 지분 |
 |---|---|---:|
-| 시장 전체의 미실현 손익 | MVRV Z-Score, NUPL | **30%** |
+| 시장 전체의 미실현 손익 | MVRV Z-Score, NUPL, 서멀캡 배수 | **30%** |
 | 코인의 나이 분포 | RHODL, Reserve Risk, LTH 실현가격 | **25%** |
 | 가격 ÷ 이동평균 | Pi Cycle, Golden Ratio, 200주 MA, 2년 MA | **25%** |
 | 채굴 부문 | Puell Multiple, Hash Ribbons | **20%** |
@@ -170,6 +170,7 @@ btc-core score --csv data/market.csv
 | [05. 운영 루틴](docs/05-운영-루틴.md) | 주 1회 15분 / 월 1회 40분 |
 | [06. 한계와 반증 조건](docs/06-한계와-반증조건.md) | **언제 이 전략을 폐기하나** |
 | [07. 실측 검증](docs/07-실측-검증.md) | **16년 데이터가 설계를 반박한 지점** |
+| [08. 지표 선별](docs/08-지표-선별.md) | **무엇을 넣고 무엇을 버렸나 (후보 6개 중 1개 편입)** |
 
 ---
 
@@ -212,16 +213,17 @@ src/btc_core/
   report.py                 콘솔 / 마크다운 / JSON
   cli.py
   datasources/              CoinMetrics · CSV · 수동입력
-docs/                       설계 문서 8편
+docs/                       설계 문서 9편
 journal/TEMPLATE.md         판단 기록 템플릿 (원문 6.4)
-tests/                      216개
+tests/                      221개
 tools/backtest.py           16년 이력 백테스트
+tools/screen_indicator.py   신규 지표 선별 검정
 ```
 
 **의존성은 PyYAML 하나뿐이다.** 나머지는 표준 라이브러리로 구현했다.
 
 ```bash
-python3 -m pytest tests/ -q      # 216 passed
+python3 -m pytest tests/ -q      # 221 passed
 ```
 
 네트워크 없이 전부 통과한다. 합성 시계열로 사이클 전 구간을 훑는 회귀 테스트가
@@ -235,7 +237,13 @@ python3 -m pytest tests/ -q      # 216 passed
 
 ```bash
 python3 tools/backtest.py --csv data/market.csv --out reports/backtest.md
+python3 tools/screen_indicator.py --csv data/market.csv --out reports/screen.md
 ```
+
+지표를 새로 넣으려면 먼저 `screen_indicator.py` 를 통과해야 한다. 선행 수익률과의
+순위상관, 사분위 분리도, 기존 지표와의 중복도, 절대 수준의 안정성 네 가지를 본다.
+이 관문으로 후보 6개 중 5개를 걸러냈다 —
+자세한 내용은 [08 지표 선별](docs/08-지표-선별.md).
 
 ---
 
@@ -266,7 +274,9 @@ python3 tools/backtest.py --csv data/market.csv --out reports/backtest.md
   사이클이 네 번뿐인 상황에서 최적화하면 과적합이 된다. 논리로 정하고
   [반증 조건](docs/06-한계와-반증조건.md#3-반증-조건)을 붙이는 쪽을 택했다.
 - **보유자 행동 계열(가중치 25%)은 아직 실측으로 검증되지 않았다.** 수동 입력이라
-  과거 이력이 없다.
+  과거 이력이 없다. 무료로 대체할 수 있는지 찾아봤지만 후보 5개가 전부 탈락했다
+  (거래소 지표는 신호 없음, 실현시총 증가율은 기존과 중복). 자동화하려면 유료
+  데이터가 필요하다 — [08 지표 선별](docs/08-지표-선별.md#보유자-행동-계열은-여전히-미검증이다).
 - **거래소 API 연동이 없다.** 의도적이다. 실행 버튼은 사람이 누른다.
 
 ---

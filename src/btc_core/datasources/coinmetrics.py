@@ -46,6 +46,9 @@ METRICS: Mapping[str, str] = {
     "IssTotNtv": "issuance_btc",
     "SplyCur": "supply",
     "HashRate": "hashrate",
+    "SplyExNtv": "exchange_supply",
+    "FlowInExNtv": "exchange_inflow",
+    "FlowOutExNtv": "exchange_outflow",
 }
 
 PAGE_SIZE = 10000
@@ -89,6 +92,9 @@ def fetch(
         issuance_usd=optional_series(buckets["issuance_usd"], "issuance_usd"),
         supply=optional_series(buckets["supply"], "supply"),
         hashrate=optional_series(buckets["hashrate"], "hashrate"),
+        exchange_supply=optional_series(buckets["exchange_supply"], "exchange_supply"),
+        exchange_inflow=optional_series(buckets["exchange_inflow"], "exchange_inflow"),
+        exchange_outflow=optional_series(buckets["exchange_outflow"], "exchange_outflow"),
     )
     return DataBundle(
         market=market,

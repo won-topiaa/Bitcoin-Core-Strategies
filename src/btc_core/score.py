@@ -43,6 +43,8 @@ def score_indicator(
     if raw is None or (isinstance(raw, str) and not raw.strip()):
         return Reading(key, label, family, None, None, source, note="결측")
 
+    requires_history = bool(spec.get("requires_history"))
+
     mode = spec.get("input_mode", "anchors")
 
     if mode == "categorical":
@@ -66,14 +68,25 @@ def score_indicator(
 
     # 절대 수치는 사이클마다 낮아진다(원문 3.2, 7.1). 과거 분포가 충분히
     # 있으면 퍼센타일 척도를 섞어서 고정 앵커의 노후화를 완충한다.
+    # 지표가 자기 몫의 혼합 비율을 지정할 수 있다. 절대 수준에 구조적 추세가
+    # 있는 지표(서멀캡 등)는 1.0 으로 두어 퍼센타일만 쓴다.
+    weight = spec.get("adaptive_weight")
+    weight = adaptive_weight if weight is None else float(weight)
+
     if history and len(history) >= 90:
         adaptive = percentile_rank(value, history)
-        score = blend(fixed, adaptive, adaptive_weight)
-        if abs(fixed - adaptive) > 0.45:
+        score = blend(fixed, adaptive, weight)
+        if weight < 1.0 and abs(fixed - adaptive) > 0.45:
             note = (
                 f"고정 앵커({fixed:+.2f})와 과거분포({adaptive:+.2f})가 크게 갈립니다 "
                 f"— 앵커 재조정 검토"
             )
+
+    if requires_history and not (history and len(history) >= 90):
+        # 퍼센타일 전용 지표는 이력 없이 고정 앵커만으로 쓰면 안 된다.
+        # 절대 수준에 구조적 추세가 있어서 앵커 자체가 의미를 갖지 못한다.
+        return Reading(key, label, family, raw, None, source,
+                       note="과거 이력 부족 — 퍼센타일 정규화가 필요한 지표입니다")
 
     return Reading(key, label, family, float(raw) if not isinstance(raw, str) else raw,
                    clamp(score), source, note=note)

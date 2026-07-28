@@ -36,14 +36,62 @@ def test_score_indicator_uses_the_configured_anchors(cfg):
 
 
 def test_score_indicator_hits_every_anchor_exactly(cfg):
-    """설정의 앵커 좌표가 그대로 점수로 나오는지 — 전 지표 전 좌표."""
+    """설정의 앵커 좌표가 그대로 점수로 나오는지 — 전 지표 전 좌표.
+
+    퍼센타일 전용 지표(requires_history)는 앵커를 쓰지 않으므로 제외한다.
+    """
     for key, spec in cfg.indicators.items():
-        if spec.get("input_mode") == "categorical":
+        if spec.get("input_mode") == "categorical" or spec.get("requires_history"):
             continue
         for raw, expected in spec["anchors"]:
             got = score_indicator(cfg, key, raw, spec=spec).score
             want = -expected if spec.get("invert") else expected
             assert got == pytest.approx(want), f"{key} @ {raw}"
+
+
+# --- 퍼센타일 전용 지표 ----------------------------------------------------
+
+def test_history_only_indicator_is_missing_without_history(cfg):
+    """서멀캡은 절대 수준에 구조적 추세가 있어서 앵커 단독 사용을 막아야 한다."""
+    r = score_indicator(cfg, "thermocap", 20.0)
+    assert not r.available
+    assert "이력 부족" in r.note
+
+
+def test_history_only_indicator_ignores_its_anchors(cfg):
+    """같은 원시값이라도 과거 분포에 따라 점수가 완전히 달라져야 한다."""
+    low = score_indicator(cfg, "thermocap", 20.0, history=[50.0] * 200)
+    high = score_indicator(cfg, "thermocap", 20.0, history=[5.0] * 200)
+    assert low.score == pytest.approx(-1.0)
+    assert high.score == pytest.approx(1.0)
+
+
+def test_per_indicator_adaptive_weight_overrides_the_global(cfg):
+    """지표가 지정한 혼합 비율이 호출 인자보다 우선한다."""
+    spec = cfg.indicators["thermocap"]
+    assert spec["adaptive_weight"] == 1.0
+    # 전역 인자를 0 으로 줘도 퍼센타일 100% 가 유지된다
+    r = score_indicator(cfg, "thermocap", 20.0, history=[5.0] * 200, adaptive_weight=0.0)
+    assert r.score == pytest.approx(1.0)
+
+
+def test_thermocap_does_not_weaken_the_valuation_family_at_bottoms(cfg):
+    """max_abs 라서 바닥에서는 더 극단인 MVRV 가 선택된다.
+
+    서멀캡은 고점 탐지에 강하고 바닥 탐지에 약한데(4년 퍼센타일 기준 저점
+    평균 -0.56), 집계 방식이 이 약점을 무해하게 만든다.
+    """
+    readings = build(cfg, mvrv_z=-0.99, nupl=-0.95, thermocap=-0.12)
+    _, families, _ = compute_bcs(cfg, readings)
+    valuation = next(f for f in families if f.key == "valuation")
+    assert valuation.score == pytest.approx(-0.99)
+
+
+def test_thermocap_can_lift_the_valuation_family_at_tops(cfg):
+    readings = build(cfg, mvrv_z=0.71, nupl=0.63, thermocap=0.91)
+    _, families, _ = compute_bcs(cfg, readings)
+    valuation = next(f for f in families if f.key == "valuation")
+    assert valuation.score == pytest.approx(0.91)
 
 
 def test_score_indicator_marks_missing_input(cfg):

@@ -198,7 +198,7 @@ def test_compute_all_returns_every_auto_indicator():
     out = ind.compute_all(fixtures.market_data())
     assert set(out) == {
         "pi_cycle", "grm", "ma200w_mult", "ma2y_mult",
-        "mvrv_z", "nupl", "puell", "hash_ribbons",
+        "mvrv_z", "nupl", "thermocap", "puell", "hash_ribbons",
     }
     assert all(v.value is not None for v in out.values())
 

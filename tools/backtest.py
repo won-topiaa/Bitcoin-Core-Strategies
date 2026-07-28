@@ -50,7 +50,7 @@ CYCLES = [
 ]
 
 # 퍼센타일 혼합을 적용할 지표 (4년치 이력을 만들 수 있는 것들)
-ADAPTIVE_KEYS = {"mvrv_z", "puell"}
+ADAPTIVE_KEYS = {"mvrv_z", "puell", "thermocap"}
 
 
 @dataclass
@@ -93,6 +93,15 @@ def build_indicator_series(market) -> dict[str, Series]:
         revenue = m.issuance_btc.map_with(p, lambda i, q: i * q if i else None)
     if revenue is not None:
         out["puell"] = ratio(revenue, sma(revenue, PUELL_WINDOW))
+
+    if m.issuance_usd is not None and m.market_cap is not None:
+        cum, total = [], 0.0
+        for v in m.issuance_usd.values:
+            if v is not None:
+                total += v
+            cum.append(total if total > 0 else None)
+        thermo = Series(m.issuance_usd.dates, tuple(cum), "thermocap")
+        out["thermocap"] = ratio(m.market_cap, thermo)
 
     if m.hashrate is not None:
         out["hash_ribbons"] = hash_ribbon_states(m.hashrate)
