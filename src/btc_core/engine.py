@@ -55,7 +55,7 @@ def evaluate(
         price = market.price.last
         data_date = market.price.last_date
         auto_floor_ma200w = ma200w_price(market.price)
-        bottom_inputs = bottom_profile_inputs(market)
+        bottom_inputs = bottom_profile_inputs(market, computed)
 
     resolved_date = as_of or data_date or manual.as_of or date.today()
 

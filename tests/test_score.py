@@ -5,7 +5,7 @@ from __future__ import annotations
 import pytest
 
 from btc_core.config import load_config
-from btc_core.models import Reading
+from btc_core.models import FamilyScore, Reading
 from btc_core.score import compute_bcs, compute_lrs, evaluate_consensus, score_indicator
 
 
@@ -327,3 +327,84 @@ def test_lrs_is_none_without_any_input(cfg):
     assert lrs is None
     assert band == "unknown"
     assert all(not r.available for r in readings)
+
+
+# --- 비유한값 방어 ---------------------------------------------------------
+
+@pytest.mark.parametrize("bad", [float("nan"), float("inf"), float("-inf")])
+def test_non_finite_input_becomes_missing_not_a_crash(cfg, bad):
+    """NaN 은 꺾은선 보간을 IndexError 로 터뜨렸고 ±inf 는 조용히 ±1.00 이 됐다.
+
+    CSV 의 'nan' 문자열과 YAML 의 .nan/.inf 이 float() 를 통과해 여기까지 온다.
+    """
+    r = score_indicator(cfg, "mvrv_z", bad)
+    assert not r.available
+    assert "유한한 숫자가 아닙니다" in r.note
+
+
+def test_non_finite_history_does_not_poison_the_percentile(cfg):
+    r = score_indicator(cfg, "mvrv_z", 2.0, history=[float("nan")] * 5 + [0.0] * 200)
+    assert r.available
+
+
+# --- 합의 게이트의 안전 속성 -----------------------------------------------
+
+def price_only_families(score=0.9):
+    """가격 계열만 살아 있고 나머지는 전부 결측인 상태."""
+    return [
+        FamilyScore("price", "가격", 25, 100, score),
+        FamilyScore("valuation", "밸류에이션", 30, 0, None),
+        FamilyScore("holder", "보유자", 25, 0, None),
+        FamilyScore("supply", "공급", 20, 0, None),
+    ]
+
+
+def test_price_family_alone_can_never_pass_the_gate(cfg):
+    """이 게이트의 존재 이유가 정확히 이 상황을 막는 것이다.
+
+    결측 비례 완화가 비가격 요구까지 0으로 낮춰서, 가격 계열 단독으로
+    게이트를 통과하는 구멍이 있었다. 커버리지 하한이 가려주고 있었을 뿐
+    안전 속성이 코드에 보장돼 있지 않았다.
+    """
+    for direction in (0.9, -0.9):
+        c = evaluate_consensus(cfg, price_only_families(direction), 22.5 * (1 if direction > 0 else -1))
+        assert not c.passed
+        assert "가격 이동평균에만 의존" in c.reason
+
+
+def test_requirements_never_ask_for_more_non_price_than_exist(cfg):
+    """가격 계열이 없는 조합이 오히려 더 엄격해지는 역전이 있었다."""
+    import itertools
+
+    from btc_core.score import _requirements
+
+    keys = list(cfg.bcs_families)
+    for r in range(1, len(keys) + 1):
+        for combo in itertools.combinations(keys, r):
+            avail = [FamilyScore(k, k, cfg.bcs_families[k]["weight"], 0, 0.5) for k in combo]
+            need, need_np, _ = _requirements(cfg, cfg.consensus, avail)
+            n_np = sum(1 for k in combo if k != "price")
+            assert need <= len(combo), combo
+            if "price" not in combo:
+                assert need_np == 0, f"{combo}: 가격 계열이 없는데 비가격을 요구한다"
+            elif n_np == 0:
+                assert need_np >= 1, f"{combo}: 가격 단독인데 통과 가능하다"
+            else:
+                assert 1 <= need_np <= n_np, combo
+
+
+def test_relaxation_never_makes_the_gate_stricter(cfg):
+    """결측이 늘어날수록 기준이 엄해지면 방향이 거꾸로다."""
+    import itertools
+
+    from btc_core.score import _requirements
+
+    keys = list(cfg.bcs_families)
+    full = [FamilyScore(k, k, cfg.bcs_families[k]["weight"], 0, 0.5) for k in keys]
+    base_total, base_np, _ = _requirements(cfg, cfg.consensus, full)
+    for r in range(1, len(keys)):
+        for combo in itertools.combinations(keys, r):
+            avail = [FamilyScore(k, k, cfg.bcs_families[k]["weight"], 0, 0.5) for k in combo]
+            need, need_np, _ = _requirements(cfg, cfg.consensus, avail)
+            assert need <= base_total, combo
+            assert need_np <= base_np, combo

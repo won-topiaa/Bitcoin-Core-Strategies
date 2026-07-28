@@ -417,11 +417,21 @@ def test_recording_the_same_day_twice_overwrites(cfg):
 # --- 저점 프로파일 ---------------------------------------------------------
 
 def bottom_values(**over):
-    """2018-12-15 저점의 실측값. 6개 조건을 모두 만족한다."""
+    """2018-12-15 저점의 실측값. 모든 조건을 만족한다."""
     base = dict(drawdown_pct=-83.8, days_since_ath=364.0, mvrv=0.69,
                 nupl=-0.448, puell=0.39, ma200w_mult=1.00)
     base.update(over)
     return base
+
+
+def test_bottom_profile_has_no_mathematically_equivalent_conditions(cfg):
+    """MVRV < 1 과 NUPL < 0 은 완전히 같은 조건이다 (NUPL = 1 - 1/MVRV).
+
+    둘 다 넣으면 하나의 사실이 두 표를 행사한다. 이 저장소의 최상위 원칙과
+    정면으로 충돌하므로 하나만 남아 있어야 한다.
+    """
+    keys = {c["key"] for c in cfg.bottom_profile["conditions"]}
+    assert not ({"mvrv", "nupl"} <= keys), "MVRV<1 과 NUPL<0 이 함께 들어 있습니다"
 
 
 def test_historical_bottoms_match_every_condition(cfg):
@@ -441,7 +451,7 @@ def test_historical_bottoms_match_every_condition(cfg):
     ]
     for vals in observed:
         profile = build_bottom_profile(cfg, vals)
-        assert profile.hits == profile.total == 6, vals
+        assert profile.hits == profile.total, vals
         assert "바닥권" in profile.label
 
 
@@ -461,7 +471,7 @@ def test_partial_match_is_labelled_accordingly(cfg):
     from btc_core.strategy import build_bottom_profile
 
     profile = build_bottom_profile(cfg, bottom_values(drawdown_pct=-40.0, puell=0.9))
-    assert profile.hits == 4
+    assert profile.hits == profile.total - 2
     assert profile.label and "바닥권" not in profile.label
 
 
@@ -486,7 +496,7 @@ def test_the_profile_never_touches_the_score(cfg):
     without = build_plan(**args)
     with_profile = build_plan(**args, bottom_inputs=bottom_values())
 
-    assert with_profile.bottom_profile.hits == 6
+    assert with_profile.bottom_profile.hits == with_profile.bottom_profile.total
     assert without.bottom_profile.hits == 0
     # 실행 계획은 동일해야 한다
     assert [a.as_dict() for a in without.actions] == [a.as_dict() for a in with_profile.actions]

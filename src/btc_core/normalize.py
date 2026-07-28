@@ -18,6 +18,7 @@
 from __future__ import annotations
 
 import bisect
+import math
 from typing import Mapping, Sequence
 
 
@@ -56,6 +57,13 @@ def piecewise(value: float, anchors: Sequence[Anchor], *, name: str = "indicator
     ys = [p[1] for p in pairs]
 
     v = float(value)
+    # NaN 은 모든 비교가 False 라서 위아래 클램프를 둘 다 빠져나간 뒤
+    # bisect 가 범위 밖 인덱스를 돌려준다. 막지 않으면 IndexError 로 죽는다.
+    # ±inf 는 클램프에 걸려 ±1.0 이 나오지만, 그건 데이터 오류를 극단 신호로
+    # 둔갑시키는 것이라 역시 거부한다.
+    if not math.isfinite(v):
+        raise NormalizationError(f"{name}: 유한한 숫자가 아닙니다 ({value!r})")
+
     if v <= xs[0]:
         return ys[0]
     if v >= xs[-1]:
@@ -91,11 +99,13 @@ def percentile_rank(value: float, history: Sequence[float]) -> float:
     사이클마다 지표의 절대 수치가 낮아지는 문제(원문 3.2, 7.1)에 대한 대안 척도.
     고정 앵커와 함께 보고, 둘이 크게 갈리면 그 자체가 경고 신호다.
     """
-    vals = [float(v) for v in history if v is not None]
+    vals = [float(v) for v in history if v is not None and math.isfinite(float(v))]
     if len(vals) < 2:
-        raise NormalizationError("percentile_rank: 과거값이 최소 2개 필요합니다.")
+        raise NormalizationError("percentile_rank: 유한한 과거값이 최소 2개 필요합니다.")
     vals.sort()
     v = float(value)
+    if not math.isfinite(v):
+        raise NormalizationError(f"percentile_rank: 유한한 숫자가 아닙니다 ({value!r})")
     # 동일값을 절반으로 세는 표준 정의 (mid-rank)
     below = bisect.bisect_left(vals, v)
     equal = bisect.bisect_right(vals, v) - below

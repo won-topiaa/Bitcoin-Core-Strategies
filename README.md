@@ -35,8 +35,14 @@ Bitcoin Magazine Pro의 사이클 타이밍 지표 12개에서 핵심을 뽑아,
 | 가격 ÷ 이동평균 | Pi Cycle, Golden Ratio, 200주 MA, 2년 MA | **25%** |
 | 채굴 부문 | Puell Multiple, Hash Ribbons | **20%** |
 
-**어떤 단일 지표도 최종 지분 30%를 넘지 못한다.** 밴드 하나를 넘기려면 보통
-25점이 필요하므로, 지표 하나가 극단으로 가는 것만으로는 행동이 바뀌지 않는다.
+**어떤 단일 지표도 최종 지분 30%를 넘지 못한다.** 다만 밸류에이션 계열은
+집계가 `max_abs` 라, 그 안의 한 지표가 30% 전부를 끌고 갈 수 있다.
+실제로 MVRV Z 하나만 0 → +1 로 가면 나머지가 전부 중립이어도 BCS 가 +30 이 되어
+밴드가 '중립'에서 '상단 중립'으로 넘어가고 DCA 배수가 1.0 → 0.5 로 줄어든다.
+
+**즉 지표 하나로 밴드와 DCA 는 바뀔 수 있다.** 바뀌지 않는 것은 사다리 실행이다 —
+분배·매집 계단은 아래 합의 게이트를 통과해야만 열리고, 계열 하나로는 절대
+통과하지 못한다.
 
 거기에 원문 6.1을 기계적으로 강제하는 **합의 게이트**를 걸었다.
 
@@ -222,16 +228,17 @@ src/btc_core/
   datasources/              CoinMetrics · CSV · 수동입력
 docs/                       설계 문서 10편
 journal/TEMPLATE.md         판단 기록 템플릿 (원문 6.4)
-tests/                      229개
+tests/                      239개
 tools/backtest.py           16년 이력 백테스트
 tools/screen_indicator.py   신규 지표 선별 검정
 tools/bottom_study.py       사이클 저점 공통점 연구
+tools/audit_config.py       기준 간 상호 모순 감사
 ```
 
 **의존성은 PyYAML 하나뿐이다.** 나머지는 표준 라이브러리로 구현했다.
 
 ```bash
-python3 -m pytest tests/ -q      # 229 passed
+python3 -m pytest tests/ -q      # 239 passed
 ```
 
 네트워크 없이 전부 통과한다. 합성 시계열로 사이클 전 구간을 훑는 회귀 테스트가
@@ -247,6 +254,7 @@ python3 -m pytest tests/ -q      # 229 passed
 python3 tools/backtest.py --csv data/market.csv --out reports/backtest.md
 python3 tools/screen_indicator.py --csv data/market.csv --out reports/screen.md
 python3 tools/bottom_study.py --csv data/market.csv --out reports/bottoms.md
+python3 tools/audit_config.py                     # 기준 간 모순 감사
 ```
 
 지표를 새로 넣으려면 먼저 `screen_indicator.py` 를 통과해야 한다. 선행 수익률과의
@@ -265,6 +273,17 @@ python3 tools/bottom_study.py --csv data/market.csv --out reports/bottoms.md
 없이 덮는지, 매도 사다리 누적이 코어 지분을 침범하지 않는지 등. 하나라도 어긋나면
 프로그램이 시작하지 않는다. 가중치를 손으로 고치다 합이 97이 되는 실수는 언젠가
 반드시 일어나고, 그때 조용히 잘못된 점수가 나오는 것보다 멈추는 편이 낫다.
+
+그 검사는 **한 항목 안의 형식**만 본다. **항목들 사이의 관계**는 별도 도구가 본다.
+
+```bash
+python3 tools/audit_config.py
+```
+
+커버리지 하한 때문에 도달 불가능한 계열 조합이 있는지, 저점 프로파일 조건 중
+수학적으로 같은 것이 있는지, 합의 게이트가 데이터가 적을수록 오히려 엄해지지는
+않는지를 확인한다. 값을 하나 고칠 때 조용히 깨지는 것들이라 설정을 손볼 때마다
+돌리는 편이 좋다.
 
 ---
 

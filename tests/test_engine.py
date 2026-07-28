@@ -316,7 +316,7 @@ def test_bottom_profile_reaches_the_reports(cfg, bundle, manual_path):
                        manual=load_manual(manual_path, reference=ref), as_of=ref)
     bp = snap.plan.bottom_profile
     assert bp is not None and bp.evaluable
-    assert bp.total == 6
+    assert bp.total == len(cfg.bottom_profile["conditions"])
 
     console = render_console(snap, cfg)
     assert "저점 프로파일" in console
@@ -327,7 +327,7 @@ def test_bottom_profile_reaches_the_reports(cfg, bundle, manual_path):
 
     import json
     data = json.loads(render_json(snap))
-    assert data["plan"]["bottom_profile"]["total"] == 6
+    assert data["plan"]["bottom_profile"]["total"] == bp.total
 
 
 def test_bottom_profile_inputs_from_price_only_data(cfg):

@@ -405,11 +405,18 @@ def drawdown_from_ath(price: Series) -> tuple[Optional[float], Optional[int], Op
     return (last / peak - 1.0) * 100.0, since, peak
 
 
-def bottom_profile_inputs(data: MarketData) -> dict[str, Optional[float]]:
+def bottom_profile_inputs(
+    data: MarketData,
+    computed: Optional[dict[str, "IndicatorValue"]] = None,
+) -> dict[str, Optional[float]]:
     """저점 프로파일 조건 평가에 필요한 원시값들.
 
     사이클 저점의 공통점을 재는 값이다. **점수에는 들어가지 않는다.**
     이유는 docs/09-저점-프로파일.md 에 적어 뒀다.
+
+    ``computed`` 로 이미 계산된 지표를 넘기면 재계산하지 않는다. 호출부가
+    보통 compute_all 을 이미 돌린 뒤라, 안 넘기면 확장창 표준편차까지 통째로
+    두 번 계산하게 된다(16년 데이터에서 평가 시간이 두 배가 됐다).
     """
     d = data.normalized()
     p = d.price
@@ -421,7 +428,7 @@ def bottom_profile_inputs(data: MarketData) -> dict[str, Optional[float]]:
         if mc and rc:
             mvrv = mc / rc
 
-    computed = compute_all(data)
+    computed = computed if computed is not None else compute_all(data)
     return {
         "drawdown_pct": dd,
         "days_since_ath": float(since) if since is not None else None,

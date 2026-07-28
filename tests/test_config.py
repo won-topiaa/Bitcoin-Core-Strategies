@@ -186,3 +186,44 @@ def test_load_config_reads_an_alternate_file(cfg, tmp_path):
     p.write_text(yaml.safe_dump(dict(cfg.raw), allow_unicode=True), encoding="utf-8")
     alt = load_config(p)
     assert alt.bcs_families.keys() == cfg.bcs_families.keys()
+
+
+# --- 기준 간 상호 모순 (tools/audit_config.py 와 같은 불변식) --------------
+
+def test_config_audit_finds_no_contradictions():
+    """설정 항목들 사이의 관계가 서로 모순되지 않아야 한다.
+
+    validate() 는 한 항목 안의 형식만 본다. 이 검사는 항목 사이의 관계를 본다 —
+    도달 불가능한 계열 조합, 수학적으로 동치인 저점 프로파일 조건,
+    결측일수록 엄해지는 합의 게이트 같은 것들이다.
+    """
+    import subprocess
+    import sys
+    from pathlib import Path
+
+    root = Path(__file__).resolve().parents[1]
+    r = subprocess.run(
+        [sys.executable, str(root / "tools" / "audit_config.py")],
+        capture_output=True, text=True,
+    )
+    assert r.returncode == 0, r.stdout + r.stderr
+
+
+def test_ladder_triggers_never_contradict_their_dca_multiplier(cfg):
+    """분배 구간에서 적립하거나 매집 구간에서 적립을 멈추면 앞뒤가 안 맞는다."""
+    dca = cfg.ladders["dca_multiplier"]
+    for step in cfg.ladders["distribute"]["steps"]:
+        band = cfg.band_for(float(step["trigger_bcs"]))
+        assert dca[band["key"]] == 0.0, f"분배 {step['trigger_bcs']} — {band['label']}"
+    for step in cfg.ladders["accumulate"]["steps"]:
+        band = cfg.band_for(float(step["trigger_bcs"]))
+        assert dca[band["key"]] > 0.0, f"매집 {step['trigger_bcs']} — {band['label']}"
+
+
+def test_rearm_threshold_sits_between_the_two_ladders(cfg):
+    """재무장 임계가 사다리 첫 계단 바깥이면 영원히 재무장되지 않거나 너무 쉽게 된다."""
+    opp = float(cfg.hysteresis["rearm_opposite_bcs"])
+    first_dist = min(float(s["trigger_bcs"]) for s in cfg.ladders["distribute"]["steps"])
+    first_acc = max(float(s["trigger_bcs"]) for s in cfg.ladders["accumulate"]["steps"])
+    assert -opp >= first_acc, "분배 재무장 임계가 매집 첫 계단보다 아래여야 한다"
+    assert opp <= first_dist, "매집 재무장 임계가 분배 첫 계단보다 위여야 한다"

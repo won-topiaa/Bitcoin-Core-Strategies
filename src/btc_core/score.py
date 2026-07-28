@@ -16,6 +16,7 @@
 
 from __future__ import annotations
 
+import math
 from typing import Mapping, Optional, Sequence
 
 from .config import StrategyConfig
@@ -58,6 +59,13 @@ def score_indicator(
         value = float(raw)
     except (TypeError, ValueError):
         return Reading(key, label, family, raw, None, source, note="숫자로 해석할 수 없음")
+
+    # NaN·무한대는 결측으로 돌린다. CSV 의 'nan' 문자열이나 YAML 의 .nan/.inf 이
+    # float() 를 통과해 여기까지 오는데, 그대로 두면 NaN 은 꺾은선 보간을
+    # 터뜨리고 ±inf 는 조용히 ±1.00 점이 되어 데이터 오류가 극단 신호로 둔갑한다.
+    if not math.isfinite(value):
+        return Reading(key, label, family, raw, None, source,
+                       note="유한한 숫자가 아닙니다 — 데이터 오류로 보고 결측 처리했습니다")
 
     if spec.get("invert"):
         value = -value
@@ -235,27 +243,42 @@ def _requirements(cfg, rules, available: Sequence[FamilyScore]) -> tuple[int, in
     이걸 그대로 두면 계열이 3개만 남았을 때 만장일치를 요구하게 되는데,
     **데이터가 적을수록 기준이 엄해지는 것은 거꾸로다.** 결측은 이미 커버리지
     하한(min_coverage_for_action)이 따로 막고 있으므로, 여기서는 비율만 지킨다.
+
+    다만 비가격 요구는 단순 비례로 낮추면 안 된다. 이 조건의 존재 이유는
+    **가격 계열만으로 신호가 나는 것을 막는 것**이므로, 가격 계열의 생존 여부에
+    따라 다르게 다뤄야 한다.
+
+    - 가격 계열이 없다  → 막으려던 위험 자체가 없으므로 요구를 0으로 푼다.
+      (단순 비례로 계산하면 비가격 계열이 많을수록 요구가 커져서, 가격 계열이
+       아예 없는 조합이 오히려 더 엄격해지는 역전이 일어난다.)
+    - 가격 계열만 있다  → 이 게이트가 막으려던 바로 그 상황이므로 무조건 미달.
+      (비례식대로면 요구가 0이 되어 가격 단독으로 통과해 버린다.)
     """
     need_total = int(rules.get("min_agreeing_families", 3))
     need_non_price = int(rules.get("min_non_price_agreeing", 2))
+
+    n = len(available)
+    n_non_price = sum(1 for f in available if f.key != PRICE_FAMILY)
+    price_alive = any(f.key == PRICE_FAMILY for f in available)
+
     if not rules.get("scale_with_available", True):
         return need_total, need_non_price, ""
 
     total = len(cfg.bcs_families)
-    total_non_price = sum(1 for k in cfg.bcs_families if k != PRICE_FAMILY)
-    n = len(available)
-    n_non_price = sum(1 for f in available if f.key != PRICE_FAMILY)
     if n >= total:
         return need_total, need_non_price, ""
 
     floor_total = int(rules.get("min_agreeing_floor", 2))
-    scaled_total = max(floor_total, round(need_total * n / total)) if total else need_total
-    scaled_np = (
-        max(1, round(need_non_price * n_non_price / total_non_price))
-        if total_non_price else need_non_price
-    )
-    return (
-        min(scaled_total, n),
-        min(scaled_np, n_non_price),
-        f" [계열 {n}/{total} 기준 완화]",
-    )
+    scaled_total = min(max(floor_total, round(need_total * n / total)) if total else need_total, n)
+
+    total_non_price = sum(1 for k in cfg.bcs_families if k != PRICE_FAMILY)
+    if not price_alive:
+        scaled_np = 0                       # 가격 편중 위험이 없다
+    elif n_non_price == 0:
+        scaled_np = 1                       # 가격 계열 단독 — 충족 불가능하게 둔다
+    else:
+        # 가격 계열이 있을 때만 비례 완화. need_total 과 같은 취지다.
+        scaled_np = max(1, round(need_non_price * n_non_price / total_non_price))
+        scaled_np = min(scaled_np, n_non_price)
+
+    return scaled_total, scaled_np, f" [계열 {n}/{total} 기준 완화]"
