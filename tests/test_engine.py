@@ -50,7 +50,7 @@ def test_full_evaluation_produces_a_complete_snapshot(cfg, bundle, manual_path):
     assert snap.plan is not None
     assert snap.consensus is not None
     assert snap.price == pytest.approx(bundle.market.price.last)
-    assert len(snap.families) == 4
+    assert len(snap.families) == 3
     assert all(f.available for f in snap.families)
 
 
@@ -58,7 +58,7 @@ def test_price_only_data_still_scores_but_flags_coverage(cfg):
     md = MarketData(price=fixtures.price_series())
     snap, _ = evaluate(cfg, bundle=DataBundle(market=md, origin="price-only"))
     assert snap.bcs is not None
-    assert snap.coverage == pytest.approx(0.25)     # 가격 계열(25) 만 살아남는다
+    assert snap.coverage == pytest.approx(0.33)     # 가격 계열(33) 만 살아남는다
     price = next(f for f in snap.families if f.key == "price")
     assert price.effective_weight == pytest.approx(100.0)
     assert any("커버리지" in w for w in snap.warnings)
@@ -74,7 +74,11 @@ def test_low_coverage_blocks_the_ladder(cfg):
         assert "커버리지" in ladder[0].blocked_by
 
 
-def test_manual_only_evaluation_works_without_any_time_series(cfg, tmp_path):
+def test_manual_only_input_can_no_longer_score_bcs(cfg, tmp_path):
+    """BCS 지표가 전부 자동 계산이 된 뒤로, 수동 입력만으로는 점수가 나오지 않는다.
+
+    수동 입력이 채우는 것은 거시 축(LRS)과 바닥선 두 개뿐이다.
+    """
     ref = date(2026, 7, 28)
     m = dict(fixtures.MANUAL_FULL)
     m["as_of"] = ref.isoformat()
@@ -82,11 +86,10 @@ def test_manual_only_evaluation_works_without_any_time_series(cfg, tmp_path):
     p.write_text(yaml.safe_dump(m, allow_unicode=True), encoding="utf-8")
 
     snap, _ = evaluate(cfg, bundle=None, manual=load_manual(p, reference=ref), as_of=ref)
-    assert snap.bcs is not None
-    holder = next(f for f in snap.families if f.key == "holder")
-    assert holder.available
-    assert holder.effective_weight == pytest.approx(100.0)   # 유일하게 살아있는 계열
-    assert next(f for f in snap.families if f.key == "price").available is False
+    assert snap.bcs is None
+    assert all(not f.available for f in snap.families)
+    assert snap.lrs is not None                      # 거시는 살아 있다
+    assert snap.plan.reference_floor is not None     # 바닥선도 살아 있다
 
 
 def test_no_data_at_all_yields_no_score(cfg):
@@ -105,7 +108,7 @@ def test_stale_manual_values_are_warned_about(cfg, tmp_path, bundle):
     p.write_text(yaml.safe_dump(m, allow_unicode=True), encoding="utf-8")
     manual = load_manual(p, reference=date(2026, 7, 28))
     assert any("갱신을 권합니다" in w for w in manual.warnings)
-    assert manual.indicators["rhodl"] is not None       # 경고만, 값은 살아 있다
+    assert manual.floors["cvdd"] is not None            # 경고만, 값은 살아 있다
 
 
 def test_expired_manual_values_are_dropped(cfg, tmp_path):
@@ -114,7 +117,7 @@ def test_expired_manual_values_are_dropped(cfg, tmp_path):
     p = tmp_path / "expired.yaml"
     p.write_text(yaml.safe_dump(m, allow_unicode=True), encoding="utf-8")
     manual = load_manual(p, reference=date(2026, 7, 28))
-    assert manual.indicators["rhodl"] is None
+    assert manual.floors["cvdd"] is None
     assert any("만료" in w for w in manual.warnings)
 
 
@@ -257,7 +260,7 @@ def test_json_report_round_trips(cfg, bundle, manual_path):
     snap, _ = evaluate(cfg, bundle=bundle, manual=load_manual(manual_path, reference=ref), as_of=ref)
     data = json.loads(render_json(snap))
     assert data["bcs"] == snap.bcs
-    assert len(data["families"]) == 4
+    assert len(data["families"]) == 3
     assert data["plan"]["band_key"] == snap.plan.band_key
 
 

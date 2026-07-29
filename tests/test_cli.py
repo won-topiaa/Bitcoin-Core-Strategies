@@ -64,7 +64,7 @@ def test_score_emits_parseable_json(market_csv, manual_file, tmp_path, capsys):
     assert code == 0
     data = json.loads(capsys.readouterr().out)
     assert "bcs" in data and "plan" in data
-    assert len(data["families"]) == 4
+    assert len(data["families"]) == 3
 
 
 def test_score_persists_state_between_runs(market_csv, manual_file, tmp_path):
@@ -100,7 +100,7 @@ def test_init_creates_a_template(tmp_path, capsys):
     assert run("init", "--path", str(p)) == 0
     assert p.exists()
     data = yaml.safe_load(p.read_text(encoding="utf-8"))
-    assert "indicators" in data and "macro" in data and "floors" in data
+    assert "macro" in data and "floors" in data
 
 
 def test_init_refuses_to_clobber_without_force(tmp_path):
@@ -116,7 +116,7 @@ def test_generated_template_is_a_valid_manual_input(tmp_path):
     p = tmp_path / "m.yaml"
     run("init", "--path", str(p))
     manual = load_manual(p, reference=date(2026, 7, 28))
-    assert manual.indicators.get("rhodl") is not None
+    assert manual.floors.get("cvdd") is not None
     assert manual.macro.get("fed_stance") == "pause_easing"
 
 
@@ -137,7 +137,7 @@ def test_explain_prints_categorical_states(capsys):
 def test_explain_lists_everything_by_default(capsys):
     assert run("explain") == 0
     out = capsys.readouterr().out
-    assert "Puell Multiple" in out and "Reserve Risk" in out
+    assert "Puell Multiple" in out and "MVRV Z-Score" in out
 
 
 def test_explain_rejects_an_unknown_indicator(capsys):

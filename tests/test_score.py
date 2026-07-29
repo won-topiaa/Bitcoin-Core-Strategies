@@ -157,7 +157,6 @@ def test_price_family_averages_its_four_moving_average_variants(cfg):
 def test_bcs_is_the_weighted_sum_of_family_scores(cfg):
     readings = build(
         cfg, mvrv_z=1.0, nupl=1.0,
-        rhodl=1.0, reserve_risk=1.0, lth_mvrv=1.0,
         pi_cycle=1.0, grm=1.0, ma200w_mult=1.0, ma2y_mult=1.0,
         puell=1.0, hash_ribbons=1.0,
     )
@@ -181,15 +180,14 @@ def test_all_neutral_gives_zero(cfg):
 # --- 결측과 재정규화 -------------------------------------------------------
 
 def test_missing_family_redistributes_its_weight(cfg):
-    """밸류에이션(30) 이 빠지면 나머지 70 이 100 으로 늘어난다."""
+    """밸류에이션(40) 이 빠지면 나머지 60 이 100 으로 늘어난다."""
     readings = build(
         cfg,
-        rhodl=1.0, reserve_risk=1.0, lth_mvrv=1.0,
         pi_cycle=1.0, grm=1.0, ma200w_mult=1.0, ma2y_mult=1.0,
         puell=1.0, hash_ribbons=1.0,
     )
     bcs, families, coverage = compute_bcs(cfg, readings)
-    assert coverage == pytest.approx(0.70)
+    assert coverage == pytest.approx(0.60)
     assert bcs == pytest.approx(100.0)     # 남은 계열이 모두 +1 이므로 여전히 100
 
     valuation = next(f for f in families if f.key == "valuation")
@@ -198,16 +196,17 @@ def test_missing_family_redistributes_its_weight(cfg):
 
     live = [f for f in families if f.available]
     assert sum(f.effective_weight for f in live) == pytest.approx(100.0)
-    holder = next(f for f in live if f.key == "holder")
-    assert holder.effective_weight == pytest.approx(25 / 70 * 100)
+    price = next(f for f in live if f.key == "price")
+    assert price.effective_weight == pytest.approx(33 / 60 * 100)
 
 
 def test_a_family_survives_on_a_single_member(cfg):
-    readings = build(cfg, reserve_risk=-0.8)
+    """공급 계열은 지표가 2개인데 하나만 있어도 살아 있어야 한다."""
+    readings = build(cfg, puell=-0.8)
     _, families, _ = compute_bcs(cfg, readings)
-    holder = next(f for f in families if f.key == "holder")
-    assert holder.available
-    assert holder.score == pytest.approx(-0.8)
+    supply = next(f for f in families if f.key == "supply")
+    assert supply.available
+    assert supply.score == pytest.approx(-0.8)
 
 
 def test_everything_missing_yields_no_score(cfg):
@@ -219,23 +218,24 @@ def test_everything_missing_yields_no_score(cfg):
 
 # --- 합의 게이트 -----------------------------------------------------------
 
-def test_consensus_passes_when_three_families_including_two_non_price_agree(cfg):
+def test_consensus_passes_when_both_non_price_families_agree(cfg):
+    """3계열 체제의 기준: 비가격 두 계열(밸류에이션·공급)이 모두 같은 방향."""
     readings = build(
-        cfg, mvrv_z=0.8, reserve_risk=0.5, rhodl=0.5, lth_mvrv=0.5,
+        cfg, mvrv_z=0.8, puell=0.6, hash_ribbons=0.3,
         pi_cycle=0.6, grm=0.6, ma200w_mult=0.6, ma2y_mult=0.6,
     )
     bcs, families, _ = compute_bcs(cfg, readings)
     c = evaluate_consensus(cfg, families, bcs)
     assert c.passed
     assert c.direction == "overheated"
-    assert len(c.non_price_agreeing) >= 2
+    assert set(c.non_price_agreeing) == {"valuation", "supply"}
 
 
 def test_consensus_blocks_a_price_only_signal(cfg):
     """가격 이동평균 4종만 빨개진 상황 — 가장 흔한 착시를 걸러내야 한다."""
     readings = build(
         cfg, pi_cycle=0.9, grm=0.9, ma200w_mult=0.9, ma2y_mult=0.9,
-        mvrv_z=0.05, nupl=0.05, reserve_risk=0.05, rhodl=0.05, lth_mvrv=0.05,
+        mvrv_z=0.05, nupl=0.05,
         puell=0.05, hash_ribbons=0.0,
     )
     bcs, families, _ = compute_bcs(cfg, readings)
@@ -245,9 +245,10 @@ def test_consensus_blocks_a_price_only_signal(cfg):
     assert c.agreeing == ("price",)
 
 
-def test_consensus_blocks_when_only_two_families_agree(cfg):
+def test_consensus_blocks_when_only_one_family_agrees(cfg):
+    """밸류에이션 혼자 극단이고 나머지가 중립이면 통과하지 못한다."""
     readings = build(
-        cfg, mvrv_z=0.9, reserve_risk=0.9, rhodl=0.9, lth_mvrv=0.9,
+        cfg, mvrv_z=0.9,
         pi_cycle=0.0, grm=0.0, ma200w_mult=0.0, ma2y_mult=0.0,
         puell=0.0, hash_ribbons=0.0,
     )
@@ -259,7 +260,7 @@ def test_consensus_blocks_when_only_two_families_agree(cfg):
 
 def test_weak_families_below_threshold_do_not_count_as_agreement(cfg):
     readings = build(
-        cfg, mvrv_z=0.9, reserve_risk=0.2, rhodl=0.2, lth_mvrv=0.2, puell=0.2,
+        cfg, mvrv_z=0.9, puell=0.2,
         hash_ribbons=0.2, pi_cycle=0.2, grm=0.2, ma200w_mult=0.2, ma2y_mult=0.2,
     )
     _, families, _ = compute_bcs(cfg, readings)
@@ -285,7 +286,7 @@ def test_consensus_handles_a_missing_bcs(cfg):
 
 def test_consensus_works_in_the_undervalued_direction(cfg):
     readings = build(
-        cfg, mvrv_z=-0.8, reserve_risk=-0.6, rhodl=-0.6, lth_mvrv=-0.6,
+        cfg, mvrv_z=-0.8,
         puell=-0.7, hash_ribbons=-1.0,
         pi_cycle=-0.5, grm=-0.5, ma200w_mult=-0.5, ma2y_mult=-0.5,
     )
@@ -408,3 +409,18 @@ def test_relaxation_never_makes_the_gate_stricter(cfg):
             need, need_np, _ = _requirements(cfg, cfg.consensus, avail)
             assert need <= base_total, combo
             assert need_np <= base_np, combo
+
+
+def test_price_family_can_never_pass_the_gate_alone(cfg):
+    """3계열 체제에서 이 성질은 산술적으로 보장된다 — 가격은 한 계열뿐이다.
+
+    비가격 요구를 1로 낮춰도 "2계열 동의"가 가격 단독을 구조적으로 막는다.
+    설정을 바꿔도 이 성질이 깨지지 않는지 여기서 지킨다.
+    """
+    for level in (0.5, 0.9, 1.0):
+        readings = build(cfg, pi_cycle=level, grm=level,
+                         ma200w_mult=level, ma2y_mult=level)
+        bcs, families, _ = compute_bcs(cfg, readings)
+        c = evaluate_consensus(cfg, families, bcs)
+        assert c.agreeing == ("price",)
+        assert not c.passed, f"가격 계열 단독 {level} 이 게이트를 통과했다"

@@ -40,9 +40,21 @@ def test_every_indicator_belongs_to_exactly_one_family(cfg):
     assert len(members) == len(set(members)) == len(cfg.indicators)
 
 
-def test_no_single_family_dominates(cfg):
-    """어떤 계열도 30을 넘지 않는다 — 한 아이디어가 판단을 독점하지 못하게."""
-    assert max(f["weight"] for f in cfg.bcs_families.values()) <= 30
+def test_no_single_family_holds_a_majority(cfg):
+    """어떤 계열도 과반(50)을 넘지 않는다 — 한 아이디어가 단독으로 밴드를 정하지 못하게.
+
+    4계열 시절 기준은 30 이었다. 계열이 3개가 되면서 그 기준은 산술적으로
+    불가능해졌다(3 × 30 = 90 < 100). 그래서 '독점 금지'의 의미를 다시 정의했다:
+    **한 계열이 나머지 전부를 합친 것보다 커서는 안 된다.**
+
+    밸류에이션이 40 이고 집계가 max_abs 라, 그 안의 한 지표가 BCS 의 40% 를
+    혼자 끌고 갈 수 있다. 이건 이번에 새로 생긴 위험이 아니라 **원래부터
+    그랬던 것이 드러난 것**이다 — 보유자 행동은 자동 수집이 불가능해서 16년
+    백테스트에서 한 번도 채워진 적이 없고, 그때 실효 가중치가 이미 40 이었다.
+    """
+    weights = [f["weight"] for f in cfg.bcs_families.values()]
+    assert max(weights) < sum(weights) - max(weights) + 1e-9 or max(weights) <= 50
+    assert max(weights) <= 50
 
 
 def test_valuation_family_does_not_double_count_correlated_members(cfg):

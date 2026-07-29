@@ -1,22 +1,11 @@
 # 수동 입력 — BM Pro 차트를 보고 채운다. 월 1회면 충분하다.
 # 값을 비워두면(또는 줄을 지우면) 해당 지표는 결측으로 처리되고
-# 계열 가중치가 자동으로 재분배된다. 억지로 채우지 말 것.
+# 가중치가 자동으로 재분배된다. 억지로 채우지 말 것.
+#
+# BCS 점수에 들어가는 지표는 전부 자동 계산된다. 여기 적는 것은
+# 거시 축(LRS)과 바닥선 두 개뿐이다.
 
 as_of: 2026-07-28        # 차트를 확인한 날짜
-
-indicators:
-  # RHODL Ratio — /charts/rhodl-ratio/
-  # 밴드 위치로 읽는다. 0 = 하단 초록 밴드 바닥, 1 = 상단 빨간 밴드 상단.
-  # 로그 스케일 차트에서 눈대중으로 "위아래 밴드 사이 어디쯤인가"를 0~1로.
-  rhodl: 0.45
-
-  # Reserve Risk — /charts/reserve-risk/
-  # 차트 y축 값을 그대로 (예: 0.0031)
-  reserve_risk: 0.0031
-
-  # 가격 ÷ LTH 실현가격 — /charts/long-term-holder-realized-price/
-  # 현재가와 LTH 실현가격을 읽어 나눈 값 (예: 118000 / 74000 = 1.59)
-  lth_mvrv: 1.59
 
 macro:
   # 글로벌 M2 전년비 증가율(%) — /bitcoin-macro/m2-global-vs-btc/

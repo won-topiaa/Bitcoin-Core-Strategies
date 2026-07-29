@@ -107,7 +107,6 @@ def truncated(md: MarketData, days: int) -> MarketData:
 
 MANUAL_FULL = {
     "as_of": date.today().isoformat(),
-    "indicators": {"rhodl": 0.45, "reserve_risk": 0.0031, "lth_mvrv": 1.59},
     "macro": {
         "m2_impulse": 5.2,
         "dxy_trend": -2.1,
