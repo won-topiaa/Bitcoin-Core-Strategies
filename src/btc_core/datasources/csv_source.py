@@ -33,6 +33,9 @@ def load_csv_bundle(path: str | Path) -> DataBundle:
         raise FetchError(f"CSV 파일이 없습니다: {p}")
 
     buckets: dict[str, list[tuple[date, Optional[float]]]] = {c: [] for c in COLUMNS}
+    # 숫자로 읽히지 않은 칸. 조용히 결측으로 넘기면 천 단위 쉼표 하나가
+    # 시계열 전체를 소리 없이 갉아먹는다.
+    bad: dict[str, list[str]] = {}
     with p.open("r", encoding="utf-8", newline="") as fh:
         reader = csv.DictReader(fh)
         if reader.fieldnames is None or "date" not in reader.fieldnames:
@@ -47,8 +50,13 @@ def load_csv_bundle(path: str | Path) -> DataBundle:
             except ValueError as exc:
                 raise FetchError(f"{p}:{row_no} 날짜 형식 오류 {raw_date!r} (YYYY-MM-DD)") from exc
             for col in COLUMNS:
-                if col in row:
-                    buckets[col].append((d, _as_float(row[col])))
+                if col not in row:
+                    continue
+                cell = row[col]
+                v = _as_float(cell)
+                if v is None and str(cell or "").strip():
+                    bad.setdefault(col, []).append(f"{row_no}행 {str(cell).strip()!r}")
+                buckets[col].append((d, v))
 
     if not [v for _, v in buckets["price"] if v is not None]:
         raise FetchError(f"{p}: price 열에 유효한 값이 없습니다.")
@@ -68,6 +76,11 @@ def load_csv_bundle(path: str | Path) -> DataBundle:
     warns = list(coverage_warnings(market))
     if unknown:
         warns.append(f"알 수 없는 열 무시됨: {sorted(unknown)}")
+    for col, samples in sorted(bad.items()):
+        warns.append(
+            f"{col}: 숫자로 읽히지 않은 칸 {len(samples)}개를 결측 처리했습니다 "
+            f"(예: {', '.join(samples[:3])})"
+        )
     return DataBundle(market=market, origin=f"CSV {p}", warnings=tuple(warns))
 
 

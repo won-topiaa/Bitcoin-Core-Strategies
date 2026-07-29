@@ -418,18 +418,20 @@ def drawdown_from_ath(price: Series) -> tuple[Optional[float], Optional[int], Op
     점수 지표로는 쓰지 않는다(중복). 저점 프로파일 표시용이다.
     """
     peak = 0.0
-    since = 0
+    peak_on: Optional[date] = None
     last = None
-    for v in price.values:
-        if v is not None and v > peak:
-            peak, since = v, 0
-        else:
-            since += 1
-        if v is not None:
-            last = v
-    if not peak or last is None:
+    last_on: Optional[date] = None
+    for d, v in zip(price.dates, price.values):
+        if v is None:
+            continue
+        if v > peak:
+            peak, peak_on = v, d
+        last, last_on = v, d
+    if not peak or last is None or peak_on is None or last_on is None:
         return None, None, None
-    return (last / peak - 1.0) * 100.0, since, peak
+    # 행 수가 아니라 달력 일수로 센다. 결측이 있거나 주간 데이터가 섞이면
+    # 행 수와 일수가 갈라지는데, 이 값의 임계(저점 프로파일)는 '일' 단위다.
+    return (last / peak - 1.0) * 100.0, (last_on - peak_on).days, peak
 
 
 def bottom_profile_inputs(

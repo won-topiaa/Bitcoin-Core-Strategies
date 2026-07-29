@@ -90,17 +90,29 @@ def evaluate(
     consensus = evaluate_consensus(cfg, families, bcs)
 
     # ---- 바닥선 -----------------------------------------------------------
+    # 숫자로 안 읽히는 값을 조용히 버리면 바닥선 하나가 소리 없이 빠지고
+    # 나머지 둘로 가중평균이 다시 매겨진다 — 기준 바닥이 통째로 달라진다.
+    def _floor(key: str) -> Optional[float]:
+        raw = manual.floors.get(key)
+        v = _as_float(raw)
+        if v is None and raw not in (None, ""):
+            warnings.append(f"바닥선 {key}: {raw!r} 을 숫자로 읽지 못해 제외했습니다")
+        elif v is not None and v <= 0:
+            warnings.append(f"바닥선 {key}: {v} 는 가격이 될 수 없어 제외했습니다")
+            return None
+        return v
+
     floor_prices: dict[str, Optional[float]] = {
         "ma200w": auto_floor_ma200w,
-        "lth_rp": _as_float(manual.floors.get("lth_rp")),
-        "cvdd": _as_float(manual.floors.get("cvdd")),
+        "lth_rp": _floor("lth_rp"),
+        "cvdd": _floor("cvdd"),
     }
     # 수동 입력이 200주선을 직접 적었다면 그쪽을 존중한다
     if manual.floors.get("ma200w") is not None:
-        floor_prices["ma200w"] = _as_float(manual.floors.get("ma200w"))
+        floor_prices["ma200w"] = _floor("ma200w")
 
     if price is None:
-        price = _as_float(manual.floors.get("price"))
+        price = _floor("price")
 
     plan = build_plan(
         cfg,

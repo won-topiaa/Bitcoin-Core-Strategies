@@ -568,3 +568,54 @@ def test_band_selection_refuses_a_nan_score(cfg):
 
     with pytest.raises(ConfigError):
         cfg.band_for(float("nan"))
+
+
+def test_confirmation_counts_elapsed_time_not_number_of_runs(cfg):
+    """운영 문서는 주 1회를 권한다. 횟수로 세면 그 사람은 영원히 실행 못 한다.
+
+    수정 전: BCS 가 1년 내내 -55 여도 주 1회 사용자는 "임계 유지 1/3일" 로
+    계속 보류됐다. 최근 3일 안의 기록이 항상 1개뿐이기 때문이다.
+    """
+    for cadence in (1, 7, 30):
+        st = ExecutionState()
+        for i in range(365 // cadence + 1):
+            st.record_bcs(TODAY - timedelta(days=i * cadence), -55.0)
+        step = next_ladder_step(cfg, "accumulate", -55.0, None, st, TODAY)
+        assert step is not None and step.executable, f"{cadence}일 주기: {step and step.blocked_by}"
+
+
+@pytest.mark.parametrize(
+    "records, why",
+    [
+        ([(0, -55.0)], "기록 하나로는 유지를 증명할 수 없다"),
+        ([(2, -10.0), (1, -10.0), (0, -55.0)], "하루짜리 스파이크"),
+        ([(7, -55.0), (3, -10.0), (0, -55.0)], "중간에 임계가 깨졌다"),
+        ([(1, -55.0), (0, -55.0)], "이틀은 confirm_days=3 에 못 미친다"),
+    ],
+)
+def test_confirmation_still_blocks_what_it_was_meant_to_block(cfg, records, why):
+    """기간 기준으로 바꿔도 막으려던 것은 그대로 막혀야 한다."""
+    st = ExecutionState()
+    for ago, v in records:
+        st.record_bcs(TODAY - timedelta(days=ago), v)
+    step = next_ladder_step(cfg, "accumulate", records[-1][1], None, st, TODAY)
+    assert step is not None and not step.executable, why
+    assert "확정 대기" in step.blocked_by
+
+
+@pytest.mark.parametrize(
+    "records, why",
+    [
+        ([(0, -55.0), (531, -71.5)], "17개월 공백은 유지의 증거가 아니다"),
+        ([(0, -55.0), (40, -55.0), (80, -55.0)], "40일 간격 > confirm_max_gap_days"),
+        ([(40, -55.0), (80, -55.0)], "가장 최근 기록이 40일 전"),
+    ],
+)
+def test_confirmation_rejects_sparse_records_masquerading_as_persistence(cfg, records, why):
+    """기간만 보면 희소한 기록이 '유지' 로 둔갑한다. 사이의 공백은 증거가 아니다."""
+    st = ExecutionState()
+    for ago, v in records:
+        st.record_bcs(TODAY - timedelta(days=ago), v)
+    step = next_ladder_step(cfg, "accumulate", -55.0, None, st, TODAY)
+    assert step is not None and not step.executable, why
+    assert "확정 대기" in step.blocked_by

@@ -88,7 +88,15 @@ def load_manual(path: str | Path | None, *, reference: Optional[date] = None) ->
                 undated.append(key)
                 continue
             age = (ref - observed).days
-            if age >= EXPIRE_AFTER_DAYS:
+            if age < 0:
+                # 미래 날짜. 오타가 아니면 백테스트 기준일이 잘못 잡힌 것이다.
+                # 어느 쪽이든 이 값으로 그 날짜를 판단하면 미래 참조가 된다.
+                warns.append(
+                    f"{key}: 관측일 {observed} 이 기준일 {ref} 보다 미래입니다 "
+                    f"— 미래 참조를 막기 위해 결측 처리했습니다."
+                )
+                bucket[key] = None
+            elif age >= EXPIRE_AFTER_DAYS:
                 warns.append(f"{key}: 관측 {age}일 경과 — 만료로 간주해 결측 처리했습니다.")
                 bucket[key] = None
             elif age >= STALE_AFTER_DAYS:

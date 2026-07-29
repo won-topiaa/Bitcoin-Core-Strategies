@@ -161,16 +161,56 @@ def lrs_multiplier(cfg: StrategyConfig, action_kind: str, lrs: Optional[float]) 
 
 def _confirmed(cfg: StrategyConfig, state: ExecutionState, as_of: date,
                trigger: float, want_above: bool) -> tuple[bool, str]:
-    """임계 돌파가 confirm_days 만큼 유지됐는지 확인한다."""
+    """임계 돌파가 confirm_days 만큼 **유지됐는지** 확인한다.
+
+    세는 것은 실행 횟수가 아니라 **기간**이다. 예전에는 "최근 3일 안에 기록이
+    3개 있고 전부 임계를 넘었는가"였는데, 그러면 매일 돌리지 않는 사람은
+    영원히 확정되지 않는다. 운영 문서는 주 1회를 권하는데 주 1회로 돌리면
+    최근 3일 안의 기록이 항상 1개뿐이라, BCS 가 1년 내내 −55 여도 매집
+    사다리가 한 번도 열리지 않았다.
+
+    그래서 "연속으로 임계를 유지한 구간이 confirm_days 만큼 뻗어 있는가"로
+    바꿨다. 막으려던 것(하루짜리 스파이크)은 그대로 막힌다 — 일주일 간격의
+    두 관측이 모두 임계를 넘으려면 스파이크로는 안 되기 때문이다.
+
+    다만 기간만 보면 **희소한 기록이 유지의 증거로 둔갑한다.** 17개월 전
+    기록 하나와 오늘 기록 하나로 "531일 유지" 가 되어 버리는데, 그 사이에
+    사이클이 통째로 하나 지나갔을 수 있다. 그래서 구간 안의 관측 간격이
+    confirm_max_gap_days 를 넘으면 거기서 구간을 끊는다.
+    """
     need = int(cfg.hysteresis.get("confirm_days", 0))
     if need <= 0:
         return True, ""
-    recent = state.recent_bcs(need, as_of)
-    if len(recent) < need:
-        return False, f"확정 대기 — 임계 유지 {len(recent)}/{need}일 (기록이 더 필요합니다)"
-    ok = all((v >= trigger) if want_above else (v <= trigger) for v in recent[-need:])
-    if not ok:
-        return False, f"확정 대기 — 최근 {need}일 연속 임계 유지 실패"
+    max_gap = int(cfg.hysteresis.get("confirm_max_gap_days", 35))
+
+    holds = lambda v: (v >= trigger) if want_above else (v <= trigger)
+    history = [(d, v) for d, v in sorted(state.bcs_history) if d <= as_of]
+    if not history:
+        return False, "확정 대기 — BCS 기록이 없습니다"
+
+    # 최신부터 거슬러 올라가며 임계가 깨지지 않은 구간을 찾는다.
+    # 관측이 너무 띄엄띄엄하면 그 지점에서 끊는다 — 사이의 공백은 증거가 아니다.
+    run: list[tuple[date, float]] = []
+    for d, v in reversed(history):
+        if not holds(v):
+            break
+        if run and (run[-1][0] - d).days > max_gap:
+            break
+        run.append((d, v))
+    if not run:
+        return False, "확정 대기 — 가장 최근 기록이 임계를 넘지 못했습니다"
+    if (as_of - run[0][0]).days > max_gap:
+        return False, (
+            f"확정 대기 — 가장 최근 기록이 {(as_of - run[0][0]).days}일 전입니다 "
+            f"(최대 {max_gap}일)"
+        )
+
+    span = (run[0][0] - run[-1][0]).days
+    if span < need - 1:
+        return False, (
+            f"확정 대기 — 임계 유지 {span + 1}/{need}일 "
+            f"(관측 {len(run)}개, 기록이 더 필요합니다)"
+        )
     return True, ""
 
 
@@ -275,7 +315,7 @@ def next_ladder_step(
     want_above = ladder == "distribute"
     size_key = "pct_of_holdings" if want_above else "pct_of_reserve"
 
-    for raw in steps:
+    for idx, raw in enumerate(steps, start=1):
         trigger = float(raw["trigger_bcs"])
         reached = bcs >= trigger if want_above else bcs <= trigger
         if not reached:
@@ -305,7 +345,7 @@ def next_ladder_step(
 
         unit = "보유 BTC" if want_above else "예비 현금"
         label = (
-            f"{'분배' if want_above else '매집'} {steps.index(raw) + 1}단 "
+            f"{'분배' if want_above else '매집'} {idx}단 "
             f"(BCS {trigger:+.0f} 돌파) — {unit}의 {size:.1f}%"
         )
         if abs(mult - 1.0) > 1e-9:

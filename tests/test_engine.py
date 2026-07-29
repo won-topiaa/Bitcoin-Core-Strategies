@@ -411,3 +411,66 @@ def test_partially_dated_manual_input_does_not_hide_undated_entries(tmp_path):
     assert flagged, m.warnings
     assert "reserve_risk" in flagged[0] and "cvdd" in flagged[0]
     assert "rhodl" not in flagged[0]      # 얘는 날짜가 있다
+
+
+def test_malformed_csv_cells_are_reported_rather_than_silently_dropped(tmp_path):
+    """천 단위 쉼표 하나가 시계열을 소리 없이 갉아먹으면 안 된다."""
+    p = tmp_path / "m.csv"
+    p.write_text(
+        "date,price,market_cap\n"
+        "2020-01-01,7200,130800000000\n"
+        "2020-01-02,7300,\"1,308,000,000\"\n"     # 쉼표 → float() 실패
+        "2020-01-03,7400,131000000000\n",
+        encoding="utf-8",
+    )
+    b = load_csv_bundle(p)
+    flagged = [w for w in b.warnings if "숫자로 읽히지 않은" in w]
+    assert flagged, b.warnings
+    assert "market_cap" in flagged[0] and "2행" not in flagged[0]
+
+
+def test_unreadable_manual_floor_is_reported_rather_than_silently_dropped(cfg):
+    """바닥선 하나가 조용히 빠지면 남은 둘로 가중평균이 다시 매겨진다."""
+    from btc_core.datasources.manual import ManualInput
+
+    manual = ManualInput(as_of=None, floors={"lth_rp": "74,000", "cvdd": 41_000})
+    snap, _ = evaluate(cfg, manual=manual)
+    assert any("lth_rp" in w and "숫자로 읽지 못해" in w for w in snap.warnings)
+    lth = next(f for f in snap.plan.floors if f.key == "lth_rp")
+    assert lth.price is None
+
+
+def test_negative_floor_price_is_rejected(cfg):
+    from btc_core.datasources.manual import ManualInput
+
+    snap, _ = evaluate(cfg, manual=ManualInput(as_of=None, floors={"cvdd": -100.0}))
+    assert any("가격이 될 수 없어" in w for w in snap.warnings)
+
+
+def test_future_dated_manual_values_are_dropped(tmp_path):
+    """관측일이 기준일보다 미래면 그 값으로 그 날짜를 판단할 수 없다."""
+    p = tmp_path / "m.yaml"
+    p.write_text(
+        "as_of: 2026-08-15\nindicators:\n  rhodl: 0.5\n", encoding="utf-8"
+    )
+    m = load_manual(p, reference=date(2026, 7, 28))
+    assert m.indicators["rhodl"] is None
+    assert any("미래" in w for w in m.warnings)
+
+
+def test_days_since_ath_is_measured_in_calendar_days_not_rows(cfg):
+    """저점 프로파일의 임계는 '일' 단위다. 결측이 섞이면 행 수와 갈라진다."""
+    from btc_core.indicators import drawdown_from_ath
+    from btc_core.series import Series
+
+    start = date(2020, 1, 1)
+    # 100일 간격으로 3개 관측: 고점 → 하락 → 하락 (행은 3개, 일수는 200일)
+    s = Series.from_pairs([
+        (start, 100.0),
+        (start + timedelta(days=100), 60.0),
+        (start + timedelta(days=200), 40.0),
+    ])
+    dd, since, peak = drawdown_from_ath(s)
+    assert peak == 100.0
+    assert dd == pytest.approx(-60.0)
+    assert since == 200          # 행 수(2)가 아니라 달력 일수
