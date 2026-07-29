@@ -23,7 +23,7 @@ from ..series import Series
 from .base import DataBundle, FetchError, coverage_warnings, optional_series
 
 COLUMNS = ("price", "market_cap", "realized_cap", "issuance_btc", "issuance_usd",
-           "supply", "hashrate",
+           "supply", "hashrate", "active_addresses",
            "exchange_supply", "exchange_inflow", "exchange_outflow")
 
 
@@ -69,6 +69,7 @@ def load_csv_bundle(path: str | Path) -> DataBundle:
         issuance_usd=optional_series(buckets["issuance_usd"], "issuance_usd"),
         supply=optional_series(buckets["supply"], "supply"),
         hashrate=optional_series(buckets["hashrate"], "hashrate"),
+        active_addresses=optional_series(buckets["active_addresses"], "active_addresses"),
         exchange_supply=optional_series(buckets["exchange_supply"], "exchange_supply"),
         exchange_inflow=optional_series(buckets["exchange_inflow"], "exchange_inflow"),
         exchange_outflow=optional_series(buckets["exchange_outflow"], "exchange_outflow"),
@@ -98,6 +99,7 @@ def save_csv_bundle(bundle: DataBundle, path: str | Path) -> Path:
         "issuance_usd": _lookup(m.issuance_usd),
         "supply": _lookup(m.supply),
         "hashrate": _lookup(m.hashrate),
+        "active_addresses": _lookup(m.active_addresses),
         "exchange_supply": _lookup(m.exchange_supply),
         "exchange_inflow": _lookup(m.exchange_inflow),
         "exchange_outflow": _lookup(m.exchange_outflow),

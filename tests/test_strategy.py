@@ -619,3 +619,52 @@ def test_confirmation_rejects_sparse_records_masquerading_as_persistence(cfg, re
     step = next_ladder_step(cfg, "accumulate", -55.0, None, st, TODAY)
     assert step is not None and not step.executable, why
     assert "확정 대기" in step.blocked_by
+
+
+# --- 고점 프로파일 ----------------------------------------------------------
+
+def test_top_profile_is_display_only_and_never_changes_the_plan(cfg):
+    """저점 프로파일과 같은 원칙 — 보여주되 실행하지 않는다."""
+    from btc_core.models import Consensus
+
+    hot = {"mcap_per_active_pct": 1.0, "thermocap_pct": 0.95, "mvrv_z_pct": 0.9,
+           "days_since_halving": 534.0, "days_since_ath": 0.0}
+    args = dict(
+        cfg=cfg, bcs=50.0, lrs=None, coverage=1.0,
+        families=[fam("valuation", "밸류에이션", 40, 0.9)],
+        consensus=Consensus(True, "overheated", ("a", "b"), ("a",), "ok"),
+        price=100_000.0, floor_prices={}, state=steady(50.0), as_of=TODAY,
+    )
+    without = build_plan(**args)
+    with_top = build_plan(**args, top_inputs=hot)
+
+    assert with_top.top_profile.hits == with_top.top_profile.total == 5
+    assert without.top_profile.hits == 0
+    assert [a.as_dict() for a in without.actions] == [a.as_dict() for a in with_top.actions]
+    assert without.band_key == with_top.band_key
+    assert without.dca_multiplier == with_top.dca_multiplier
+
+
+def test_between_operator_reads_a_range(cfg):
+    """반감기 경과일은 위아래가 모두 있는 유일한 조건이다."""
+    from btc_core.strategy import build_top_profile
+
+    def hits(days):
+        p = build_top_profile(cfg, {"days_since_halving": days})
+        return next(c for c in p.conditions if c.key == "days_since_halving").met
+
+    assert not hits(449.0)
+    assert hits(450.0) and hits(534.0) and hits(620.0)
+    assert not hits(621.0)
+
+
+def test_top_profile_note_appears_only_when_expensive(cfg):
+    """쌀 때 고점 프로파일을 메모로 띄우는 건 소음이다."""
+    hot = {"mcap_per_active_pct": 1.0, "thermocap_pct": 0.95, "mvrv_z_pct": 0.9,
+           "days_since_halving": 534.0, "days_since_ath": 0.0}
+    args = dict(cfg=cfg, lrs=None, coverage=1.0, families=[], consensus=None,
+                price=100_000.0, floor_prices={}, as_of=TODAY, top_inputs=hot)
+    rich = build_plan(bcs=50.0, state=steady(50.0), **args)
+    cheap = build_plan(bcs=-50.0, state=steady(-50.0), **args)
+    assert any("고점 프로파일" in n for n in rich.notes)
+    assert not any("고점 프로파일" in n for n in cheap.notes)

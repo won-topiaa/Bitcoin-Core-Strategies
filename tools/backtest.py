@@ -8,11 +8,9 @@
     python3 tools/backtest.py --csv data/market.csv --adaptive 0.6
     python3 tools/backtest.py --csv data/market.csv --out reports/backtest.md
 
-**중요한 한계** — 보유자 행동 계열(RHODL / Reserve Risk / LTH 배수)은 수동
-입력이라 과거 이력이 없다. 따라서 이 백테스트는 4계열 중 3계열(밸류에이션 30,
-가격 25, 공급 20 → 재정규화 후 40/33.3/26.7)만 쓴다. 커버리지 75%다.
-실전 BCS와 정확히 같은 값이 아니라는 뜻이고, 앵커의 상대적 위치를 보는
-용도로만 써야 한다.
+BCS 3계열(밸류에이션 40 / 가격 33 / 공급 27)을 전부 쓴다 — 점수 지표가 모두
+자동 계산이 된 뒤로 커버리지 100% 다. 수동 입력이 채우는 거시 축(LRS)과
+바닥선은 BCS 에 들어가지 않으므로 이 백테스트에 빠질 것이 없다.
 """
 
 from __future__ import annotations
@@ -31,6 +29,7 @@ sys.path.insert(0, str(ROOT / "src"))
 from btc_core.config import load_config                      # noqa: E402
 from btc_core.datasources.csv_source import load_csv_bundle   # noqa: E402
 from btc_core.indicators import (                             # noqa: E402
+    ACTIVE_ADDR_WINDOW,
     GRM_BASE, HASH_EXPANSION_RATIO, HASH_FAST, HASH_RECOVERY_WINDOW, HASH_SLOW,
     MA_2Y, MA_200W, PI_FAST, PI_SLOW, PUELL_WINDOW,
 )
@@ -50,7 +49,7 @@ CYCLES = [
 ]
 
 # 퍼센타일 혼합을 적용할 지표 (4년치 이력을 만들 수 있는 것들)
-ADAPTIVE_KEYS = {"mvrv_z", "puell", "thermocap"}
+ADAPTIVE_KEYS = {"mvrv_z", "puell", "thermocap", "mcap_per_active"}
 
 
 @dataclass
@@ -102,6 +101,9 @@ def build_indicator_series(market) -> dict[str, Series]:
             cum.append(total if total > 0 else None)
         thermo = Series(m.issuance_usd.dates, tuple(cum), "thermocap")
         out["thermocap"] = ratio(m.market_cap, thermo)
+
+    if m.active_addresses is not None and m.market_cap is not None:
+        out["mcap_per_active"] = ratio(m.market_cap, sma(m.active_addresses, ACTIVE_ADDR_WINDOW))
 
     if m.hashrate is not None:
         out["hash_ribbons"] = hash_ribbon_states(m.hashrate)

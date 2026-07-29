@@ -416,18 +416,36 @@ _OPS = {
     "<=": lambda a, b: a <= b,
     ">": lambda a, b: a > b,
     ">=": lambda a, b: a >= b,
+    # 반감기 경과일처럼 위아래가 모두 있는 구간 조건
+    "between": lambda a, b: b[0] <= a <= b[1],
 }
 
 
-def build_bottom_profile(cfg: StrategyConfig, values: Mapping[str, Optional[float]]) -> Optional[BottomProfile]:
-    """사이클 저점의 공통 조건 대비 현재 상태.
+def _threshold(raw) -> float | tuple[float, float]:
+    if isinstance(raw, (list, tuple)):
+        return (float(raw[0]), float(raw[1]))
+    return float(raw)
 
-    점수에 들어가지 않는다. 조건 임계값이 과거 저점을 보고 정해진 것이라
-    정밀도가 과대평가돼 있고, 표본도 세 사이클뿐이다. 그래도 "BCS 는 싸다고
-    하는데 역사적 바닥 조건은 몇 개나 맞나"는 실전에서 서로 다른 질문이라
-    함께 보여줄 가치가 있다.
+
+def build_bottom_profile(cfg: StrategyConfig, values: Mapping[str, Optional[float]]) -> Optional[BottomProfile]:
+    """사이클 저점의 공통 조건 대비 현재 상태."""
+    return _build_profile(cfg.bottom_profile, values, default_op="<")
+
+
+def build_top_profile(cfg: StrategyConfig, values: Mapping[str, Optional[float]]) -> Optional[BottomProfile]:
+    """사이클 고점의 공통 조건 대비 현재 상태."""
+    return _build_profile(cfg.top_profile, values, default_op=">=")
+
+
+def _build_profile(spec: Mapping[str, Any], values: Mapping[str, Optional[float]],
+                   *, default_op: str) -> Optional[BottomProfile]:
+    """조건 목록을 현재값과 대조한다. 저점·고점 프로파일이 같은 코드를 쓴다.
+
+    **점수에 들어가지 않는다.** 조건 임계값이 과거 전환점을 보고 정해진
+    것이라 정밀도가 과대평가돼 있고, 표본도 네 사이클뿐이다. 그래도
+    "BCS 는 싸다고 하는데 역사적 바닥 조건은 몇 개나 맞나"는 실전에서
+    서로 다른 질문이라 함께 보여줄 가치가 있다.
     """
-    spec = cfg.bottom_profile
     if not spec.get("enabled"):
         return None
 
@@ -435,12 +453,14 @@ def build_bottom_profile(cfg: StrategyConfig, values: Mapping[str, Optional[floa
     for c in spec.get("conditions", []):
         raw = values.get(c["key"])
         val = float(raw) if raw is not None else None
-        op = _OPS.get(c.get("op", "<"))
-        met = bool(val is not None and op and op(val, float(c["threshold"])))
+        op_name = c.get("op", default_op)
+        op = _OPS.get(op_name)
+        th = _threshold(c["threshold"])
+        met = bool(val is not None and op and op(val, th))
         conditions.append(
             BottomCondition(
-                key=c["key"], label=c.get("label", c["key"]), op=c.get("op", "<"),
-                threshold=float(c["threshold"]), unit=c.get("unit", ""),
+                key=c["key"], label=c.get("label", c["key"]), op=op_name,
+                threshold=th, unit=c.get("unit", ""),
                 value=val, met=met, observed=c.get("observed", ""),
             )
         )
@@ -471,9 +491,11 @@ def build_plan(
     state: ExecutionState,
     as_of: date,
     bottom_inputs: Optional[Mapping[str, Optional[float]]] = None,
+    top_inputs: Optional[Mapping[str, Optional[float]]] = None,
 ) -> Plan:
     notes: list[str] = []
     profile = build_bottom_profile(cfg, bottom_inputs or {})
+    top = build_top_profile(cfg, top_inputs or {})
 
     if bcs is None:
         levels, ref, zones = build_floors(cfg, price, floor_prices)
@@ -488,6 +510,7 @@ def build_plan(
             reference_floor=ref,
             buy_zones=zones,
             bottom_profile=profile,
+            top_profile=top,
             notes=("사용 가능한 계열이 없습니다. config 의 지표 중 최소 한 계열은 채워야 합니다.",),
         )
 
@@ -559,6 +582,12 @@ def build_plan(
         downside = (ref / price - 1.0) * 100.0
         notes.append(f"기준 바닥 {ref:,.0f} — 현재가 대비 {downside:+.1f}%")
 
+    if top is not None and top.evaluable and bcs is not None and bcs > 0:
+        # BCS 가 비싸다고 말할 때, 역사적 고점 조건은 몇 개나 맞는지 함께 본다.
+        notes.append(
+            f"고점 프로파일 {top.hits}/{top.total} — {top.label} (점수에는 반영되지 않음)"
+        )
+
     if profile is not None and profile.evaluable and bcs is not None and bcs < 0:
         # BCS 가 싸다고 말할 때, 역사적 바닥 조건은 몇 개나 맞는지 함께 본다.
         # 둘은 다른 질문이고 갈릴 때가 있다.
@@ -576,6 +605,7 @@ def build_plan(
         reference_floor=ref,
         buy_zones=zones,
         bottom_profile=profile,
+        top_profile=top,
         notes=tuple(notes),
     )
 

@@ -85,6 +85,10 @@ class StrategyConfig:
         return self.raw.get("bottom_profile", {"enabled": False})
 
     @property
+    def top_profile(self) -> Mapping[str, Any]:
+        return self.raw.get("top_profile", {"enabled": False})
+
+    @property
     def invalidation(self) -> list[Mapping[str, Any]]:
         return list(self.raw.get("invalidation", []))
 

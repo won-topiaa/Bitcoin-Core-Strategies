@@ -200,10 +200,11 @@ def test_compute_all_returns_every_auto_indicator():
     out = ind.compute_all(fixtures.market_data(start=date(2010, 1, 1)))
     assert set(out) == {
         "pi_cycle", "grm", "ma200w_mult", "ma2y_mult",
-        "mvrv_z", "nupl", "thermocap", "puell", "hash_ribbons",
+        "mvrv_z", "nupl", "thermocap", "mcap_per_active", "puell", "hash_ribbons",
     }
+    # 활성주소는 픽스처에 없다 — 나머지는 전부 값이 나와야 한다
     missing = [k for k, v in out.items() if v.value is None]
-    assert not missing, missing
+    assert missing == ["mcap_per_active"], missing
 
 
 def test_thermocap_refuses_a_window_that_does_not_reach_genesis():
@@ -266,3 +267,31 @@ def test_puell_falls_back_when_the_usd_series_is_too_short():
 
     assert ind.compute_all(usd_only)["puell"].value is None      # 365일 평균 불가
     assert ind.compute_all(both)["puell"].value is not None      # BTC 경로로 넘어간다
+
+
+# --- 고점 프로파일 입력 ----------------------------------------------------
+
+def test_days_since_halving_is_measured_from_the_previous_halving():
+    assert ind.days_since_halving(date(2024, 4, 20)) == 0.0
+    assert ind.days_since_halving(date(2025, 10, 6)) == 534.0    # 2025 고점
+    assert ind.days_since_halving(date(2021, 11, 10)) == 548.0   # 2021 고점
+    assert ind.days_since_halving(date(2009, 1, 3)) is None      # 첫 반감기 이전
+
+
+def test_top_profile_inputs_are_all_percentiles_or_calendar():
+    """레벨 기반 조건은 사이클마다 붕괴한다 — 그래서 넣지 않았다.
+
+    2년 MA 배수는 고점에서 17.18 → 9.63 → 2.48 → 1.63,
+    Puell 은 9.14 → 6.62 → 1.55 → 1.07 로 무너졌다.
+    """
+    vals = ind.top_profile_inputs(fixtures.market_data(start=date(2010, 1, 1)))
+    assert set(vals) == {"mcap_per_active_pct", "thermocap_pct", "mvrv_z_pct",
+                         "days_since_halving", "days_since_ath"}
+    for key in ("thermocap_pct", "mvrv_z_pct"):
+        assert vals[key] is None or -1.0 <= vals[key] <= 1.0
+
+
+def test_mcap_per_active_needs_active_addresses():
+    md = fixtures.market_data()
+    assert md.active_addresses is None
+    assert ind.mcap_per_active_address(md.market_cap, None).value is None

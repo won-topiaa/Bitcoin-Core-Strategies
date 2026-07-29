@@ -129,12 +129,13 @@ class BuyZone:
 
 @dataclass(frozen=True)
 class BottomCondition:
-    """저점 프로파일 조건 하나."""
+    """프로파일 조건 하나 (저점·고점 공용)."""
 
     key: str
     label: str
     op: str
-    threshold: float
+    # between 연산자는 [하한, 상한] 두 값을 받는다
+    threshold: float | tuple[float, float]
     unit: str
     value: Optional[float]
     met: bool
@@ -143,7 +144,9 @@ class BottomCondition:
     def as_dict(self) -> dict[str, Any]:
         return {
             "key": self.key, "label": self.label, "op": self.op,
-            "threshold": self.threshold, "unit": self.unit,
+            "threshold": (list(self.threshold) if isinstance(self.threshold, tuple)
+                          else self.threshold),
+            "unit": self.unit,
             "value": self.value, "met": self.met, "observed": self.observed,
         }
 
@@ -220,6 +223,7 @@ class Plan:
     reference_floor: Optional[float] = None
     buy_zones: tuple[BuyZone, ...] = ()
     bottom_profile: Optional["BottomProfile"] = None
+    top_profile: Optional["BottomProfile"] = None
     notes: tuple[str, ...] = ()
 
     def as_dict(self) -> dict[str, Any]:
@@ -233,6 +237,7 @@ class Plan:
             "reference_floor": self.reference_floor,
             "buy_zones": [z.as_dict() for z in self.buy_zones],
             "bottom_profile": self.bottom_profile.as_dict() if self.bottom_profile else None,
+            "top_profile": self.top_profile.as_dict() if self.top_profile else None,
             "notes": list(self.notes),
         }
 

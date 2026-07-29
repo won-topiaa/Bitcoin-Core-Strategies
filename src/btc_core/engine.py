@@ -13,7 +13,7 @@ from typing import Optional
 from .config import StrategyConfig
 from .datasources.base import DataBundle
 from .datasources.manual import ManualInput
-from .indicators import bottom_profile_inputs, compute_all, ma200w_price
+from .indicators import bottom_profile_inputs, compute_all, ma200w_price, top_profile_inputs
 from .models import Reading, Snapshot
 from .score import compute_bcs, compute_lrs, evaluate_consensus, score_indicator
 from .strategy import ExecutionState, build_plan
@@ -41,6 +41,7 @@ def evaluate(
     auto_floor_ma200w: Optional[float] = None
     data_date: Optional[date] = None
     bottom_inputs: dict[str, Optional[float]] = {}
+    top_inputs: dict[str, Optional[float]] = {}
 
     if bundle is not None:
         warnings.extend(bundle.warnings)
@@ -56,6 +57,7 @@ def evaluate(
         data_date = market.price.last_date
         auto_floor_ma200w = ma200w_price(market.price)
         bottom_inputs = bottom_profile_inputs(market, computed)
+        top_inputs = top_profile_inputs(market, computed, as_of=as_of or data_date)
 
     resolved_date = as_of or data_date or manual.as_of or date.today()
 
@@ -126,6 +128,7 @@ def evaluate(
         state=state,
         as_of=resolved_date,
         bottom_inputs=bottom_inputs,
+        top_inputs=top_inputs,
     )
 
     missing = [r.label for r in readings.values() if not r.available]

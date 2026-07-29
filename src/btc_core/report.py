@@ -47,7 +47,7 @@ def pad(s: str, width: int, align: str = "<") -> str:
 
 
 def fmt_condition_value(value: Optional[float], unit: str) -> str:
-    """저점 프로파일 값 표기. 일수는 정수, 나머지는 소수 둘째 자리."""
+    """프로파일 값 표기. 일수는 정수, 나머지는 소수 둘째 자리."""
     if value is None:
         return "—"
     if unit == "일":
@@ -55,6 +55,14 @@ def fmt_condition_value(value: Optional[float], unit: str) -> str:
     if unit == "%":
         return f"{value:,.1f}%"
     return f"{value:,.2f}{unit}"
+
+
+def fmt_condition_target(cond) -> str:
+    """기준 표기. between 은 구간이라 두 값을 함께 보여준다."""
+    th, unit = cond.threshold, cond.unit
+    if cond.op == "between" and isinstance(th, (list, tuple)):
+        return f"{th[0]:g}~{th[1]:g}{unit}"
+    return f"{cond.op} {th:g}{unit}"
 
 
 def short_label(label: str) -> str:
@@ -159,17 +167,18 @@ def render_console(snap: Snapshot, cfg: StrategyConfig) -> str:
                     f"{dist}  →  {z.pct_of_reserve:>3.0f}%")
             add("")
 
-        bp = p.bottom_profile
-        if bp is not None and bp.evaluable:
-            add(f"  저점 프로파일  {bp.hits}/{bp.total} — {bp.label}")
-            add("  (사이클 저점의 공통 조건. 참고용이며 점수에 반영되지 않습니다)")
-            for c in bp.conditions:
+        for prof, title in ((p.bottom_profile, "저점"), (p.top_profile, "고점")):
+            if prof is None or not prof.evaluable:
+                continue
+            add(f"  {title} 프로파일  {prof.hits}/{prof.total} — {prof.label}")
+            add(f"  (사이클 {title}의 공통 조건. 참고용이며 점수에 반영되지 않습니다)")
+            for c in prof.conditions:
                 mark = "O" if c.met else "X"
                 shown = fmt_condition_value(c.value, c.unit)
-                target = f"{c.op} {c.threshold:g}{c.unit}"
-                add(f"    {mark} {pad(short_label(c.label), 30)} {shown:>11}   기준 {target}")
-            if bp.detail:
-                add(f"    → {bp.detail}")
+                add(f"    {mark} {pad(short_label(c.label), 30)} {shown:>11}   "
+                    f"기준 {fmt_condition_target(c)}")
+            if prof.detail:
+                add(f"    → {prof.detail}")
             add("")
 
         if p.notes:
@@ -263,22 +272,23 @@ def render_markdown(snap: Snapshot, cfg: StrategyConfig) -> str:
                     f"{z.pct_of_reserve:.0f}% | {'◆' if z.reached else ''} |")
             add("")
 
-        bp = p.bottom_profile
-        if bp is not None and bp.evaluable:
-            add(f"### 저점 프로파일 — {bp.hits}/{bp.total} ({bp.label})")
+        for prof, title in ((p.bottom_profile, "저점"), (p.top_profile, "고점")):
+            if prof is None or not prof.evaluable:
+                continue
+            add(f"### {title} 프로파일 — {prof.hits}/{prof.total} ({prof.label})")
             add("")
-            add("사이클 저점의 공통 조건. **점수에 반영되지 않는 참고 정보다.**")
+            add(f"사이클 {title}의 공통 조건. **점수에 반영되지 않는 참고 정보다.**")
             add("")
-            add("| | 조건 | 현재값 | 기준 | 과거 저점 관측값 |")
+            add(f"| | 조건 | 현재값 | 기준 | 과거 {title} 관측값 |")
             add("|:--:|---|---:|---|---|")
-            for c in bp.conditions:
+            for c in prof.conditions:
                 mark = "O" if c.met else "X"
                 shown = fmt_condition_value(c.value, c.unit)
-                add(f"| {mark} | {c.label} | {shown} | {c.op} {c.threshold:g}{c.unit} "
+                add(f"| {mark} | {c.label} | {shown} | {fmt_condition_target(c)} "
                     f"| {c.observed} |")
             add("")
-            if bp.detail:
-                add(f"> {bp.detail}")
+            if prof.detail:
+                add(f"> {prof.detail}")
                 add("")
 
         if p.notes:

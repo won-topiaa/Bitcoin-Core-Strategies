@@ -58,6 +58,7 @@ class MarketData:
     issuance_usd: Optional[Series] = None      # 그 발행량의 달러 가치 (있으면 우선)
     hashrate: Optional[Series] = None
     supply: Optional[Series] = None            # issuance 가 없을 때 차분으로 대체
+    active_addresses: Optional[Series] = None  # 일간 활성 주소 수
     exchange_supply: Optional[Series] = None   # 거래소 보유량 (BTC)
     exchange_inflow: Optional[Series] = None   # 일간 거래소 유입 (BTC)
     exchange_outflow: Optional[Series] = None  # 일간 거래소 유출 (BTC)
@@ -75,6 +76,7 @@ class MarketData:
             issuance_usd=_r(self.issuance_usd),
             hashrate=_r(self.hashrate),
             supply=_r(self.supply),
+            active_addresses=_r(self.active_addresses),
             exchange_supply=_r(self.exchange_supply),
             exchange_inflow=_r(self.exchange_inflow),
             exchange_outflow=_r(self.exchange_outflow),
@@ -294,6 +296,77 @@ def thermocap_multiple(
     )
 
 
+ACTIVE_ADDR_WINDOW = 90       # 활성주소는 요일 효과가 커서 평활이 필요하다
+
+# 반감기 날짜. 사이클 진행도를 재는 유일한 시간 축이다.
+# 미래 반감기는 대략값이라 사이클이 끝날 무렵 다시 확인해야 한다.
+HALVINGS = (
+    date(2012, 11, 28),
+    date(2016, 7, 9),
+    date(2020, 5, 11),
+    date(2024, 4, 20),
+    date(2028, 4, 1),      # 추정
+)
+
+
+def days_since_halving(as_of: date) -> Optional[float]:
+    """직전 반감기 이후 경과일.
+
+    온체인 지표가 아니라 달력이다. 그래서 점수에 넣지 않는다. 다만 실측된
+    규칙성이 상당하다 — 사이클 고점이 반감기 이후 367 / 526 / 548 / 534일에
+    나왔다. 최근 세 사이클만 보면 편차가 22일이다.
+
+    **4년 리듬이 깨지면 이 값은 즉시 무의미해진다.** 그래서 참고 정보로만 쓴다.
+    """
+    past = [h for h in HALVINGS if h <= as_of]
+    return float((as_of - max(past)).days) if past else None
+
+
+def mcap_per_active_address(
+    market_cap: Optional[Series],
+    active_addresses: Optional[Series],
+) -> IndicatorValue:
+    """시가총액 ÷ 활성주소 수(90일 평균) — '유저 1명당 시장가치'.
+
+    2026-07-29 선별 검정으로 편입. 편입 이유는 하나다. **기존 지표들의 고점
+    탐지력이 사이클마다 무너지고 있는데 이 지표만 무너지지 않는다.**
+
+    네 사이클 고점에서의 4년 퍼센타일:
+
+        Pi Cycle   +0.47 / +0.86 / -0.02 / -0.00
+        Puell      +0.99 / +1.00 / +0.46 / -0.00
+        2년 MA     +0.99 / +1.00 / +0.60 / +0.28
+        MVRV Z     +0.94 / +0.99 / +0.69 / +0.71
+        이 지표    +1.00 / +1.00 / +0.99 / +1.00
+
+    십분위 검정에서도 최하위 십분위 이후 1년 +158%, 최상위 -4% 로 MVRV Z
+    (+121% / +13%)보다 분리도가 좋았다. 기존 지표와의 최대 순위상관은
+    서멀캡 +0.74 로 중복 관문(0.85)을 통과한다.
+
+    **저점은 못 잡는다.** 사이클 저점에서 4년 퍼센타일이 +0.07 / +0.33 /
+    -0.00 / +0.19 로 사실상 중립이다. 밸류에이션 계열이 max_abs 라 이 약점은
+    무해하다 — 바닥에서는 더 극단인 MVRV Z 가 선택되고 이 지표는 무시된다.
+    서멀캡을 편입할 때와 같은 논리다.
+
+    **퍼센타일 전용이다.** 시가총액은 지수적으로 늘고 활성주소는 거의 평평해서
+    비율에 강한 구조적 상승 추세가 있다(2015 저점 11,021 → 2026 1,939,735).
+    고정 앵커는 의미가 없다.
+    """
+    if market_cap is None or active_addresses is None:
+        return IndicatorValue("mcap_per_active", None, None, note="시총/활성주소 데이터 없음")
+
+    smoothed = sma(active_addresses, ACTIVE_ADDR_WINDOW)
+    mult = ratio(market_cap, smoothed)
+    if mult.last is None:
+        return IndicatorValue("mcap_per_active", None, market_cap.last_date,
+                              note=f"활성주소 {ACTIVE_ADDR_WINDOW}일 평균 산출 불가")
+    return IndicatorValue(
+        "mcap_per_active", mult.last, market_cap.last_date,
+        detail={"active_addresses_90d": smoothed.last,
+                "history_4y": history_of(mult, years=4.0)},
+    )
+
+
 def nupl_phase(value: float) -> str:
     """원문 3.4 의 심리 단계 구분."""
     if value > 0.75:
@@ -468,6 +541,58 @@ def bottom_profile_inputs(
     }
 
 
+def _percentile_now(iv: IndicatorValue) -> Optional[float]:
+    """지표의 현재값이 자기 4년 이력 안에서 갖는 위치 [-1, +1]."""
+    from .normalize import percentile_rank      # 지역 import: 순환 방지
+
+    hist = iv.detail.get("history_4y")
+    if iv.value is None or not isinstance(iv.value, (int, float)) or not hist or len(hist) < 90:
+        return None
+    return percentile_rank(float(iv.value), hist)
+
+
+def top_profile_inputs(
+    data: MarketData,
+    computed: Optional[dict[str, "IndicatorValue"]] = None,
+    as_of: Optional[date] = None,
+) -> dict[str, Optional[float]]:
+    """사이클 고점 프로파일 조건에 필요한 값들.
+
+    저점 프로파일과 같은 취급이다 — **점수에 들어가지 않는다.**
+
+    조건이 전부 퍼센타일이거나 달력인 데는 이유가 있다. 레벨 기반 조건은
+    사이클마다 붕괴한다. 네 고점에서의 관측값을 보면 명확하다.
+
+        2년 MA 배수   17.18 → 9.63 → 2.48 → 1.63
+        Puell         9.14 → 6.62 → 1.55 → 1.07
+
+    2013 년 기준으로 임계를 잡으면 최근 두 고점을 통째로 놓친다. 반면
+    퍼센타일 형태는 네 고점에서 같은 값을 낸다.
+    """
+    d = data.normalized()
+    computed = computed if computed is not None else compute_all(d)
+    ref = as_of or d.price.last_date
+
+    peak = 0.0
+    peak_on: Optional[date] = None
+    for dd, v in zip(d.price.dates, d.price.values):
+        if v is not None and v > peak:
+            peak, peak_on = v, dd
+
+    return {
+        "mcap_per_active_pct": _percentile_now(
+            mcap_per_active_address(d.market_cap, d.active_addresses)
+        ),
+        "thermocap_pct": _percentile_now(computed["thermocap"]),
+        "mvrv_z_pct": _percentile_now(computed["mvrv_z"]),
+        "days_since_halving": days_since_halving(ref) if ref else None,
+        "days_since_ath": (
+            float((d.price.last_date - peak_on).days)
+            if peak_on and d.price.last_date else None
+        ),
+    }
+
+
 def compute_all(data: MarketData) -> dict[str, IndicatorValue]:
     """자동 계산 가능한 지표를 한 번에 산출한다."""
     d = data.normalized()
@@ -480,6 +605,7 @@ def compute_all(data: MarketData) -> dict[str, IndicatorValue]:
         "mvrv_z": mvrv_zscore(d.market_cap, d.realized_cap),
         "nupl": nupl(d.market_cap, d.realized_cap),
         "thermocap": thermocap_multiple(d.market_cap, d.issuance_usd, d.issuance_btc, p),
+        "mcap_per_active": mcap_per_active_address(d.market_cap, d.active_addresses),
         "puell": puell_multiple(p, d.issuance_btc, d.supply, d.issuance_usd),
         "hash_ribbons": hash_ribbons(d.hashrate),
     }
