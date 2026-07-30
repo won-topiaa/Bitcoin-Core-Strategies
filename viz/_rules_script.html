@@ -1,0 +1,58 @@
+<script>
+(function(){
+"use strict";
+const D = window.__BCS__;
+const FAMC = ["--s1","--s2","--s3"];
+const esc = s => String(s).replace(/[&<>"]/g, c =>
+  ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]));
+const nf = (v, d) => (v === null || v === undefined) ? "—"
+  : (v >= 0 ? "+" : "") + v.toFixed(d);
+
+document.getElementById("src-span").textContent = D.span[0] + " → " + D.span[1];
+document.getElementById("src-days").textContent =
+  D.nDays.toLocaleString("en-US") + "일 · 지표 9개";
+
+// --- 구간 표 -------------------------------------------------------------
+const tb = document.querySelector("#band-table tbody");
+D.bands.slice().sort((a, b) => b.min - a.min).forEach(b => {
+  const dca = D.dca[b.key];
+  const tr = document.createElement("tr");
+  tr.innerHTML =
+    `<td>${nf(b.min,0)} ~ ${nf(b.max,0)}</td>` +
+    `<td class="lbl" style="text-align:left">${esc(b.label)}</td>` +
+    `<td class="sub" style="min-width:0">${esc(D.bandStances[b.key] || "")}</td>` +
+    `<td>${dca === 0 ? "안 함" : "×" + dca.toFixed(1)}</td>`;
+  if (b.key === D.current.band) tr.className = "hi";
+  tb.appendChild(tr);
+});
+
+// --- 사다리 --------------------------------------------------------------
+function steps(host, list, unit, dir){
+  const el = document.getElementById(host);
+  if (!el) return;
+  // 단계마다 "점수 얼마에서 얼마를" 두 줄로. 표보다 읽기 쉽다.
+  el.innerHTML = list.map((s, i) =>
+    `<div class="step">` +
+    `<span class="n">${i + 1}</span>` +
+    `<span class="w">점수 <b>${nf(s.bcs,0)}</b> ${dir}</span>` +
+    `<span class="v">${unit} <b>${s.pct}%</b></span>` +
+    `</div>`).join("") +
+    `<div class="steptot">합계 ${list.reduce((a, s) => a + s.pct, 0)}%</div>`;
+}
+steps("acc-steps", D.ladders.accumulate, "예비 현금의", "아래로");
+steps("dist-steps", D.ladders.distribute, "보유량의", "위로");
+
+const core = D.ladders.core_hold_pct;
+document.getElementById("core-note").textContent =
+  `단계를 다 밟아도 ${100 - core}% 까지만 줄어듭니다.`;
+document.getElementById("core-hold").innerHTML =
+  `보유분의 <strong>${core}%</strong> 는 점수가 아무리 높아도 팔지 않습니다. ` +
+  `4년 리듬이 언젠가 깨질 수 있다는 것을 인정하는 규칙이고, ` +
+  `<strong>이 시스템에서 유일하게 데이터로 뒷받침되지 않는 조항</strong>입니다.`;
+
+const notes = D.deriveNotes || [];
+document.getElementById("derive-now").textContent = notes.length
+  ? "이번 산출에서는 — " + notes.join(" / ") + "."
+  : "이번 산출에서는 계산으로 채운 값이 없습니다. 전부 실제 데이터입니다.";
+})();
+</script>

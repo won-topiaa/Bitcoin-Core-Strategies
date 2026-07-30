@@ -199,6 +199,21 @@ def build(cfg: StrategyConfig, csv: str, *, derive: bool = True) -> dict:
             tps.append({"phase": phase,
                         **{k: v for k, v in r.items() if k not in ("miss", "ind")}})
 
+    cur = _last_full(rows)
+    deltas = {}
+    for label, n in (("d1", 1), ("d7", 7), ("d30", 30)):
+        prev = _at_offset(rows, cur["d"], n)
+        deltas[label] = None if prev is None else {
+            "d": prev["d"],
+            "bcs": round(cur["bcs"] - prev["bcs"], 1),
+            "price_pct": (round((cur["price"] / prev["price"] - 1) * 100, 1)
+                          if prev["price"] else None),
+        }
+    similar = {
+        k: last_similar(rows, k, v["pct"], cur["d"])
+        for k, v in (cur.get("ind") or {}).items() if v.get("pct") is not None
+    }
+
     return {
         "generated_from": csv,
         "derive_notes": list(notes),
@@ -258,8 +273,12 @@ def build(cfg: StrategyConfig, csv: str, *, derive: bool = True) -> dict:
         # 상태의 점수를 헤드라인으로 쓰면 하루 지연 때문에 위치가 십수 점
         # 움직인 것을 "위치가 바뀌었다"로 읽게 된다. 온전한 날을 기준으로 삼고
         # 마지막 날은 따로 실어 둔다.
-        "current": _last_full(rows),
+        "current": cur,
         "latest": rows[-1],
+        # 어제·지난주·지난달 대비 얼마나 움직였는가. 매일 보는 사람에게는
+        # 절대값보다 변화가 더 궁금하다.
+        "deltas": deltas,
+        "last_similar": similar,
         "series": thin(rows),
     }
 
@@ -270,6 +289,48 @@ def _last_full(rows: list[dict]) -> dict:
         if r["nmiss"] == 0:
             return r
     return rows[-1]
+
+
+def _at_offset(rows: list[dict], anchor: str, days: int) -> Optional[dict]:
+    """기준일에서 N일 전에 가장 가까운 행. 없으면 None."""
+    target = date.fromisoformat(anchor) - timedelta(days=days)
+    best, gap = None, 10**9
+    for r in rows:
+        d = date.fromisoformat(r["d"])
+        if d > target:
+            break
+        g = (target - d).days
+        if g < gap:
+            best, gap = r, g
+    return best if best is not None and gap <= 10 else None
+
+
+LOOKBACK_MIN_GAP = 180
+
+
+def last_similar(rows: list[dict], key: str, cur_pct: float,
+                 anchor: str) -> Optional[str]:
+    """지금과 같은 방향으로 이만큼(이상) 극단이었던 **직전** 시기.
+
+    "MVRV 가 지금 18%" 만으로는 손에 잡히지 않는다. "직전에 이만큼 쌌던 게
+    2022년 11월" 이 붙으면 비로소 감이 온다.
+
+    바로 어제도 조건을 만족하는 게 보통이라, **최소 {gap}일 이전**만 본다.
+    지금 이어지고 있는 구간이 아니라 **별개의 이전 시기**를 찾는 것이 목적이다.
+    """.format(gap=LOOKBACK_MIN_GAP)
+    cutoff = date.fromisoformat(anchor) - timedelta(days=LOOKBACK_MIN_GAP)
+    low_side = cur_pct < 0.5
+    found = None
+    for r in rows:
+        d = date.fromisoformat(r["d"])
+        if d > cutoff:
+            break
+        v = (r.get("ind") or {}).get(key, {}).get("pct")
+        if v is None:
+            continue
+        if (v <= cur_pct) if low_side else (v >= cur_pct):
+            found = r["d"]
+    return found
 
 
 def print_stats(payload: dict) -> None:

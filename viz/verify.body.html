@@ -1,0 +1,147 @@
+<div class="wrap">
+
+<nav class="pages" aria-label="페이지">
+  <a href="__INDEX_URL__"><span class="n">01</span>지금 위치</a>
+  <a href="__VERIFY_URL__" aria-current="page"><span class="n">02</span>믿어도 되나</a>
+  <a href="__RULES_URL__"><span class="n">03</span>규칙과 한계</a>
+</nav>
+<header class="top">
+  <p class="eyebrow">검증</p>
+  <h1>이 숫자를 믿어도 되나</h1>
+  <p class="lead">앞 장의 눈금이 <strong>과거에 실제로 맞았는지</strong>, 어떻게 계산되는지,
+  그리고 왜 숫자 하나가 아니라 범위로 나오는지를 봅니다.</p>
+  <div class="srcline">
+    <span id="src-span"></span>
+    <span id="src-days"></span>
+  </div>
+</header>
+
+<!-- ============ 03 성적표 ============ -->
+<section id="scorecard">
+  <div class="sechead">
+    <p class="eyebrow"><em>01</em> — 성적표</p>
+    <h2>과거 여덟 번의 전환점에서 뭐라고 했나</h2>
+    <p>이건 언제 사고팔라는 도구가 아니니 수익률로 채점하지 않습니다. 물어야 할 것은
+    하나입니다 — <strong>가격이 실제로 꼭대기였던 네 번에 "비싸다"고 했는가, 바닥이었던
+    네 번에 "싸다"고 했는가.</strong></p>
+  </div>
+
+  <div class="panel readbox">
+    <h3>이 그림에서 볼 것 세 가지</h3>
+    <ol>
+      <li><b>가로 막대 하나가 전환점 하나</b>입니다. 막대의 길이가 범위, 가운데 점이 대표값,
+      오른쪽 숫자가 그 값입니다.</li>
+      <li><b>붉은 막대(과거 고점)는 전부 오른쪽에, 푸른 막대(과거 바닥)는 전부 왼쪽에</b>
+      몰려 있어야 합니다. 여덟 개가 그렇습니다.</li>
+      <li>가운데 <b>테두리로 표시된 빈 공간</b>이 핵심입니다. 여기에는 <b>어떤 전환점도 들어오지
+      않았습니다.</b> 고점과 바닥이 한 번도 헷갈리지 않았다는 뜻입니다.</li>
+    </ol>
+    <p style="margin:14px 0 0"><b>세로로 지나가는 회색 선이 지금 위치</b>입니다.
+    과거 여덟 번 중 어느 쪽에 더 가까운지 보시면 됩니다.</p>
+  </div>
+
+  <figure class="panel">
+    <div class="chart" id="tp-host">
+      <svg id="tp"></svg>
+    </div>
+    <figcaption id="tp-cap"></figcaption>
+  </figure>
+
+  <div class="tblwrap" style="margin-top:16px">
+    <table id="tp-table">
+      <caption>같은 내용을 표로 — 갈래별 점수까지</caption>
+      <thead><tr>
+        <th>국면</th><th>날짜</th><th>그때 가격</th><th>위치 범위</th><th>대표값</th>
+        <th>폭</th><th>원가 대비</th><th>평균가 대비</th><th>채굴 상황</th>
+      </tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ 04 구성 ============ -->
+<section id="composition">
+  <div class="sechead">
+    <p class="eyebrow"><em>02</em> — 어떻게 계산하나</p>
+    <h2>아홉 개를 세 갈래로 묶습니다</h2>
+  </div>
+
+  <div class="panel readbox">
+    <h3>−1 부터 +1 까지가 무슨 뜻인가</h3>
+    <p>지표 하나하나를 먼저 <strong>같은 자로 잽니다.</strong> 값이 몇이든 상관없이
+    <strong>"최근 4년 안에서 몇 등쯤인가"</strong>로 바꿉니다.</p>
+    <div class="scalekey" id="scalekey"></div>
+    <p style="margin-top:16px">그래야 지표끼리 더할 수 있습니다. MVRV는 0~10 사이를 오가고
+    200주 MA 배수는 0.5~5 사이를 오가는데, 그냥 더하면 큰 쪽이 이깁니다.
+    <strong>등수로 바꾸면 둘이 같은 무게가 됩니다.</strong></p>
+    <p style="margin-top:10px">고정 기준을 쓰지 않는 이유도 있습니다. "MVRV가 7을 넘으면 비싸다"는
+    2013년에는 맞았지만 <strong>2025년에는 한 번도 7에 닿지 않았습니다.</strong> 사이클마다
+    수치가 낮아지기 때문입니다. 등수는 그 영향을 덜 받습니다.</p>
+  </div>
+
+  <div class="cols" id="famcards" style="margin-top:16px"></div>
+
+  <div class="panel" style="margin-top:16px">
+    <h3 style="margin-bottom:10px">셋을 합쳐서 −100 ~ +100 으로</h3>
+    <div id="mixbar"></div>
+    <p style="margin:16px 0 0">갈래마다 비중이 다른 이유는 <strong>정보의 독립성</strong>입니다.
+    '평균가 대비'는 네 지표가 전부 "가격 ÷ 어떤 평균"이라 사실상 한 가지 사실을 네 번 보는 것이고,
+    그래서 비중이 가장 크지 않습니다.</p>
+  </div>
+
+  <figure class="panel" style="margin-top:16px">
+    <div class="chart-head">
+      <h3>세 갈래가 각각 뭐라고 하고 있나 — 최근 4년</h3>
+      <div class="legend" id="fam-legend"></div>
+    </div>
+    <div class="chart" id="fam-host">
+      <svg id="fam"></svg>
+      <div class="tt" id="fam-tt"></div>
+    </div>
+    <figcaption>세 선이 <strong>같이 아래로 내려가 있으면</strong> 세 가지 서로 다른 근거가 모두
+    "싸다"고 말하는 상태입니다. 반대로 <strong>한 선만 튀어 있으면</strong> 그 근거 하나에
+    매달린 판단이라는 뜻이고, 그럴 때 위의 범위가 넓어집니다.</figcaption>
+  </figure>
+</section>
+
+<!-- ============ 05 범위 ============ -->
+<section id="spread">
+  <div class="sechead">
+    <p class="eyebrow"><em>03</em> — 왜 범위로 나오나</p>
+    <h2>이 숫자를 어디까지 믿어도 되나</h2>
+    <p>지표 아홉 개 중 하나를 빼고 다시 계산합니다. 아홉 번 다 해 보면 값이 아래위로 흩어지는데,
+    <strong>그 흩어진 폭이 곧 범위</strong>입니다. 답하는 질문은 하나입니다 —
+    <strong>"지표 하나가 틀렸거나 없었다면 판단이 달라졌을까?"</strong></p>
+    <p>이렇게 하면 <strong>새로 정한 숫자가 하나도 없습니다.</strong> "±10 정도로 보세요" 같은
+    상수를 정해 두면 그 10이 또 하나의 임의값이 되니까, 데이터가 스스로 폭을 정하게 했습니다.</p>
+  </div>
+
+  <figure class="panel">
+    <div class="chart-head"><h3>16년 동안 범위가 얼마나 넓었나</h3></div>
+    <div class="chart" id="width-host"><svg id="width"></svg></div>
+    <figcaption id="width-cap"></figcaption>
+  </figure>
+
+  <div class="callout">
+    <p><strong>절반이 조금 안 되는 날만 범위가 한 구간 안에 온전히 들어옵니다.</strong>
+    나머지 날은 "싼 편"과 "저점 부근" 사이처럼 두 구간에 걸쳐 있습니다. 소수점을 보고 판단을
+    바꾸면 안 된다는 경고가 숫자로 나온 셈이고, 그래서 애초에 범위로 보여주기로 했습니다.</p>
+  </div>
+
+  <div class="nextlink">
+    <a href="__RULES_URL__">
+      <span class="k">다음</span>
+      <span class="t">규칙과 한계</span>
+      <span class="d">이 점수로 실제로 무엇을 하는지, 그리고 이 방식이 무엇을 못 하는지</span>
+    </a>
+  </div>
+</section>
+
+
+<footer>
+  <p id="foot-derive"></p>
+  <p style="margin-top:10px">이 페이지는 개인 기록과 정보 제공을 위한 것이고 투자 권유가 아닙니다.
+  여기 있는 어떤 숫자도 앞으로의 가격을 말하지 않습니다. 투자 판단과 그 결과는 본인의 몫입니다.</p>
+</footer>
+
+</div>

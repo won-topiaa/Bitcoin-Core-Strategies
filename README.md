@@ -186,30 +186,40 @@ btc-core score --csv data/market.csv
 `--format markdown`으로 저널에 붙일 문서를, `--format json`으로 다른 도구에
 넘길 데이터를 뽑을 수 있다.
 
-### 시각화 — 페이지 두 장
+### 시각화 — 페이지 세 장
 
 ```bash
-python3 tools/build_viz.py --csv data/market.csv          # viz/site/ 에 생성
+python3 tools/build_viz.py --csv data/market.csv     # viz/site/ 에 세 장
 python3 tools/build_viz.py --csv data/market.csv \
-    --rules-url https://... --index-url https://...       # 호스팅용 절대 링크
+    --index-url https://... --verify-url https://... --rules-url https://...
 ```
 
-| 페이지 | 내용 |
-|---|---|
-| `index.html` (166KB) | 계기판 · **지표 9개 요약 표** · 16년 이력 · 전환점 성적표 · 계산 방법 · 범위 |
-| `rules.html` (126KB) | 실행 규칙 · 한계 · 데이터 출처 |
+| 페이지 | 내용 | 높이 |
+|---|---|---:|
+| `index.html` | 계기판 · 변화량 · **지표 9개 요약** · 16년 이력 | 3,544px |
+| `verify.html` | 전환점 성적표 · 계산 방법 · 범위가 나오는 이유 | 4,834px |
+| `rules.html` | 실행 규칙 · 한계 · 데이터 출처 | 4,028px |
 
-**한 장에 다 넣지 않는다.** 실행 규칙과 한계는 "지금 어디쯤인가"를 보러 온
-사람에게 당장 필요한 정보가 아니라서 두 번째 장으로 뺐다. 첫 장은 위치 판단만
-한다.
+**한 장에 다 넣지 않는다.** 처음에 한 장이었을 때 7,500px 였고, 그러니까
+"무엇을 봐야 하는가"가 사라졌다. 세 장으로 나누고 각 장 맨 위에 이동 막대를 뒀다.
 
-**지표 9개 요약 표**가 첫 장의 핵심이다. 아홉 개를 싼 쪽부터 정렬해 각각의
-현재값과 "최근 4년 중 몇 %"를 막대로 보여준다. 점수 하나가 어디서 왔는지가
-표 하나로 보인다.
+**지표 9개 요약**이 첫 장의 핵심이다. 아홉 개를 싼 쪽부터 정렬해 각각의 현재값,
+"최근 4년 중 몇 %", **직전에 이만큼 극단이었던 시기**를 보여준다. 점수 하나가
+어디서 왔는지가 이 하나로 보인다. **720px 아래에서는 표 대신 카드**로 바뀐다 —
+가로로 잘린 표는 핵심을 못 보는 화면이 된다.
+
+`@media print` 가 있어서 인쇄하면 접힌 설명이 전부 펴지고 이동 막대가 사라진다.
+
+#### 조각을 합쳐 굽는다
+
+    viz/_head.html        스타일 (세 장 공용)
+    viz/_script.html      차트 엔진 (세 장 공용, 없는 요소는 건너뛴다)
+    viz/*.body.html       페이지별 본문 셋
 
 CSS·JS·데이터를 한 파일에 굽는 자기완결 HTML 이다. **외부 요청이 하나도 없다** —
 요청이 막힌 환경에서 빈 화면이 나오면 무료 데이터로 돌아가는 시스템에서 그건
-"안 보인다"와 같다.
+"안 보인다"와 같다. `tests/test_viz.py` 가 그것을 포함해 네 가지를 지킨다:
+node 파서로 구문, 정적 검사로 가드 누락, 빌드 결과로 자리표시자와 외부 의존.
 
 설명 문구는 `config/strategy.yaml` 의 `explain` / `explain_long` 이 소유한다 —
 페이지에 따로 적어 두면 지표를 고칠 때 둘이 어긋나고, **어긋난 설명은 없는
@@ -326,7 +336,7 @@ src/btc_core/
     derive.py               반감기 스케줄로 유통량·발행량·시총 계산 (API 불필요)
 docs/                       설계 문서 21편
 journal/TEMPLATE.md         판단 기록 템플릿 (원문 6.4)
-tests/                      315개
+tests/                      321개
 tools/backtest.py           16년 이력 백테스트
 tools/screen_candidate.py   신규 지표 6관문 검정
 tools/screen_indicator.py   신규 지표 선별 검정 (1세대)
@@ -338,15 +348,16 @@ tools/lppls.py              LPPLS 거품 모형 적합 (표준 라이브러리�
 tools/export_viz.py         하루씩 구간·계열 계산 → JSON
 tools/build_viz.py          자기완결 시각화 페이지 굽기
 tools/audit_config.py       기준 간 상호 모순 감사
-viz/template.html           첫 페이지 틀 (구조 + 스타일 + 차트 엔진)
-viz/rules.template.html     규칙 페이지 틀
-viz/site/                   생성된 페이지 두 장
+viz/_head.html              스타일 (세 장 공용)
+viz/_script.html            차트 엔진 (세 장 공용)
+viz/*.body.html             페이지별 본문 셋
+viz/site/                   생성된 페이지 세 장
 ```
 
 **의존성은 PyYAML 하나뿐이다.** 나머지는 표준 라이브러리로 구현했다.
 
 ```bash
-python3 -m pytest tests/ -q      # 315 passed
+python3 -m pytest tests/ -q      # 321 passed
 ```
 
 네트워크 없이 전부 통과한다. 합성 시계열로 사이클 전 구간을 훑는 회귀 테스트가

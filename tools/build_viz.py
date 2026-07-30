@@ -1,15 +1,17 @@
 #!/usr/bin/env python3
 """시각화 페이지를 만든다 — 데이터를 페이지 안에 굽는다.
 
-    python3 tools/build_viz.py --csv data/market.csv --out viz/bcs-gauge.html
+    python3 tools/build_viz.py --csv data/market.csv    # viz/site/ 에 세 장
 
 페이지는 **자기완결이어야 한다.** 외부 요청이 하나라도 있으면 그 요청이 막힌
 환경에서 빈 화면이 나오고, 무료 데이터로 돌아가는 시스템에서 그건 곧 "안 보인다"
 와 같다. 그래서 CSS·JS·데이터를 전부 한 파일에 넣는다.
 
-    viz/template.html   구조 + 스타일 + 차트 엔진 (데이터 자리만 비워 둠)
-    tools/export_viz.py 하루씩 계산해 JSON 을 만든다
-    이 파일              둘을 합쳐 하나의 HTML 로 굽는다
+    viz/_head.html        스타일 (세 장 공용)
+    viz/_script.html      차트 엔진 (세 장 공용, 없는 요소는 건너뛴다)
+    viz/*.body.html       페이지별 본문 셋
+    tools/export_viz.py   하루씩 계산해 JSON 을 만든다
+    이 파일                조각을 합쳐 자기완결 HTML 세 장으로 굽는다
 
 데이터는 주 단위로 추리고(전환점 주변·최근 400일은 일 단위) 좌표를 배열로
 눕혀 담는다. 그렇게 해야 16년치가 100KB 안쪽에 들어온다.
@@ -32,11 +34,23 @@ import export_viz  # noqa: E402
 
 from btc_core.config import load_config  # noqa: E402
 
-# 페이지는 둘이고 데이터는 하나다. 같은 payload 를 두 틀에 굽는다 —
-# 규칙 페이지가 오래된 숫자를 보여주는 일이 없게.
+# 페이지는 셋이고 데이터는 하나다. 같은 payload 를 세 조각에 굽는다 —
+# 어느 한 장이 오래된 숫자를 보여주는 일이 없게.
+#
+# 머리(스타일)와 차트 엔진은 조각으로 빼서 세 장이 공유한다. 예전에는 틀마다
+# 스타일 블록을 통째로 복제하고 있었고, 한쪽만 고치면 두 장의 생김새가
+# 갈라졌다.
+HEAD = "viz/_head.html"
+SCRIPT = "viz/_script.html"
+
 PAGES = (
-    ("viz/template.html", "index.html"),
-    ("viz/rules.template.html", "rules.html"),
+    # (본문 조각, 파일명, <title>, 추가 스크립트)
+    ("viz/index.body.html",  "index.html",
+     "지금 어디쯤인가 — 비트코인 사이클 위치", None),
+    ("viz/verify.body.html", "verify.html",
+     "이 숫자를 믿어도 되나 — 비트코인 사이클 위치", None),
+    ("viz/rules.body.html",  "rules.html",
+     "규칙과 한계 — 비트코인 사이클 위치", "viz/_rules_script.html"),
 )
 MARKER = "/*__DATA__*/"
 
@@ -96,24 +110,37 @@ def compact(payload: dict) -> dict:
         "tps": [tp(t) for t in payload["turning_points"]],
         "stats": payload["interval_stats"],
         "current": point(payload["current"]), "latest": point(payload["latest"]),
+        "deltas": payload["deltas"], "lastSimilar": payload["last_similar"],
         "deriveNotes": payload["derive_notes"],
         "S": rows,
     }
 
 
-def _bake(tpl_path: Path, data: str, out: Path, links: dict[str, str]) -> Path:
-    if not tpl_path.exists():
-        raise SystemExit(f"틀을 찾을 수 없습니다: {tpl_path}")
-    tpl = tpl_path.read_text(encoding="utf-8")
-    a = tpl.find(MARKER)
-    b = tpl.find(MARKER, a + len(MARKER))
-    if a < 0 or b < 0:
-        raise SystemExit(f"{tpl_path}: {MARKER} 자리표시자가 두 개 있어야 합니다.")
-    page = tpl[:a] + MARKER + data + tpl[b:]
-    # 두 페이지는 서로를 링크한다. 로컬에서는 파일 이름이면 되지만, 각각 다른
+def _read(rel: str) -> str:
+    p = ROOT / rel
+    if not p.exists():
+        raise SystemExit(f"조각을 찾을 수 없습니다: {p}")
+    return p.read_text(encoding="utf-8")
+
+
+def _bake(body_rel: str, title: str, extra_script: Optional[str],
+          data: str, out: Path, links: dict[str, str]) -> Path:
+    page = (
+        _read(HEAD).replace("__TITLE__", title)
+        + _read(body_rel)
+        + f"\n<script>window.__BCS__ = {MARKER}{data}{MARKER};</script>\n"
+        + _read(SCRIPT)
+        + (_read(extra_script) if extra_script else "")
+    )
+    # 세 장이 서로를 링크한다. 로컬에서는 파일 이름이면 되지만, 각각 다른
     # 주소로 올릴 때는 절대 주소여야 해서 빌드 시점에 갈아 끼운다.
     for k, v in links.items():
         page = page.replace(k, v)
+    if "__" in page.replace("__BCS__", "").replace("__DATA__", ""):
+        leftover = [w for w in ("__INDEX_URL__", "__VERIFY_URL__",
+                                "__RULES_URL__", "__TITLE__") if w in page]
+        if leftover:
+            raise SystemExit(f"{out.name}: 치환되지 않은 자리표시자 {leftover}")
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(page, encoding="utf-8")
     return out
@@ -121,12 +148,15 @@ def _bake(tpl_path: Path, data: str, out: Path, links: dict[str, str]) -> Path:
 
 def build(csv: str, outdir: Path, *, config: Optional[str] = None,
           derive: bool = True, index_url: str = "index.html",
+          verify_url: str = "verify.html",
           rules_url: str = "rules.html") -> list[Path]:
     cfg = load_config(config) if config else load_config()
     payload = export_viz.build(cfg, csv, derive=derive)
     data = json.dumps(compact(payload), ensure_ascii=False, separators=(",", ":"))
-    links = {"__INDEX_URL__": index_url, "__RULES_URL__": rules_url}
-    return [_bake(ROOT / tpl, data, outdir / name, links) for tpl, name in PAGES]
+    links = {"__INDEX_URL__": index_url, "__VERIFY_URL__": verify_url,
+             "__RULES_URL__": rules_url}
+    return [_bake(body, title, extra, data, outdir / name, links)
+            for body, name, title, extra in PAGES]
 
 
 def main(argv: Optional[list[str]] = None) -> int:
@@ -136,15 +166,16 @@ def main(argv: Optional[list[str]] = None) -> int:
     ap.add_argument("--out-dir", default="viz/site", help="페이지를 내보낼 디렉터리")
     ap.add_argument("--no-derive", action="store_true",
                     help="빠진 유통량·시총을 반감기 스케줄로 채우지 않는다")
-    ap.add_argument("--index-url", default="index.html",
-                    help="규칙 페이지에서 첫 페이지로 거는 링크 (호스팅 시 절대 주소)")
-    ap.add_argument("--rules-url", default="rules.html",
-                    help="첫 페이지에서 규칙 페이지로 거는 링크")
+    # 세 장이 서로를 링크한다. 로컬 파일로 볼 때는 기본값(파일 이름)이면 되고,
+    # 각각 다른 주소로 올릴 때만 절대 주소를 넘긴다.
+    ap.add_argument("--index-url", default="index.html")
+    ap.add_argument("--verify-url", default="verify.html")
+    ap.add_argument("--rules-url", default="rules.html")
     args = ap.parse_args(argv)
 
     paths = build(args.csv, Path(args.out_dir), config=args.config,
-                  derive=not args.no_derive,
-                  index_url=args.index_url, rules_url=args.rules_url)
+                  derive=not args.no_derive, index_url=args.index_url,
+                  verify_url=args.verify_url, rules_url=args.rules_url)
     for p in paths:
         kb = p.stat().st_size / 1024
         print(f"생성: {p}  ({kb:.0f} KB)")

@@ -1,539 +1,3 @@
-<title>BCS — 비트코인 사이클 위치 게이지</title>
-<style>
-:root{
-  color-scheme: light;
-  --plane:#f6f7f9; --surface:#fbfbfc; --surface-2:#f1f3f6;
-  --ink:#101317; --ink-2:#4e535b; --muted:#868c96;
-  --grid:#e3e6eb; --axis:#c8cdd5; --rule:rgba(16,19,23,.10);
-  --warm-3:#c0322f; --warm-2:#d6624a; --warm-1:#e4a68f;
-  --cool-1:#93b6df; --cool-2:#3f7fc4; --cool-3:#1d5091;
-  --zero:#b9bec7;
-  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a;
-  --good:#0ca30c; --crit:#d03b3b;
-  --wash-warm-3:rgba(192,50,47,.14); --wash-warm-2:rgba(214,98,74,.10); --wash-warm-1:rgba(228,166,143,.09);
-  --wash-neutral:rgba(134,140,150,.07);
-  --wash-cool-1:rgba(147,182,223,.11); --wash-cool-2:rgba(63,127,196,.13); --wash-cool-3:rgba(29,80,145,.17);
-  --sans:system-ui,-apple-system,"Segoe UI","Noto Sans KR",sans-serif;
-  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
-}
-@media (prefers-color-scheme: dark){
-  :root:where(:not([data-theme="light"])){
-    color-scheme: dark;
-    --plane:#0b0c0e; --surface:#121316; --surface-2:#191b1f;
-    --ink:#f3f4f6; --ink-2:#b7bcc5; --muted:#7d838d;
-    --grid:#24262b; --axis:#383b41; --rule:rgba(255,255,255,.10);
-    --warm-3:#e8615c; --warm-2:#d0705a; --warm-1:#8d5e51;
-    --cool-1:#5c7da4; --cool-2:#4a8ce0; --cool-3:#7ba7de;
-    --zero:#4a4e55;
-    --s1:#3987e5; --s2:#d95926; --s3:#199e70;
-    --good:#0ca30c; --crit:#e66767;
-    --wash-warm-3:rgba(232,97,92,.16); --wash-warm-2:rgba(208,112,90,.11); --wash-warm-1:rgba(141,94,81,.12);
-    --wash-neutral:rgba(125,131,141,.08);
-    --wash-cool-1:rgba(92,125,164,.13); --wash-cool-2:rgba(74,140,224,.13); --wash-cool-3:rgba(123,167,222,.16);
-  }
-}
-:root[data-theme="dark"]{
-  color-scheme: dark;
-  --plane:#0b0c0e; --surface:#121316; --surface-2:#191b1f;
-  --ink:#f3f4f6; --ink-2:#b7bcc5; --muted:#7d838d;
-  --grid:#24262b; --axis:#383b41; --rule:rgba(255,255,255,.10);
-  --warm-3:#e8615c; --warm-2:#d0705a; --warm-1:#8d5e51;
-  --cool-1:#5c7da4; --cool-2:#4a8ce0; --cool-3:#7ba7de;
-  --zero:#4a4e55;
-  --s1:#3987e5; --s2:#d95926; --s3:#199e70;
-  --good:#0ca30c; --crit:#e66767;
-  --wash-warm-3:rgba(232,97,92,.16); --wash-warm-2:rgba(208,112,90,.11); --wash-warm-1:rgba(141,94,81,.12);
-  --wash-neutral:rgba(125,131,141,.08);
-  --wash-cool-1:rgba(92,125,164,.13); --wash-cool-2:rgba(74,140,224,.13); --wash-cool-3:rgba(123,167,222,.16);
-}
-
-*{box-sizing:border-box}
-body{
-  margin:0; background:var(--plane); color:var(--ink);
-  font-family:var(--sans); font-size:15px; line-height:1.62;
-  -webkit-font-smoothing:antialiased;
-  word-break:keep-all; overflow-wrap:break-word;
-}
-.wrap{max-width:1160px; margin:0 auto; padding:clamp(28px,5vw,64px) clamp(16px,4vw,40px) 88px}
-.eyebrow{
-  font-size:11.5px; font-weight:640; letter-spacing:.09em;
-  color:var(--muted); margin:0 0 10px
-}
-.eyebrow em{font-family:var(--mono); font-style:normal; letter-spacing:.12em}
-h1{
-  font-size:clamp(30px,5.2vw,52px); line-height:1.05; letter-spacing:-.022em;
-  font-weight:650; margin:0 0 18px; text-wrap:balance; max-width:22ch
-}
-h2{
-  font-size:clamp(19px,2.6vw,25px); line-height:1.24; letter-spacing:-.014em;
-  font-weight:640; margin:0 0 6px; text-wrap:balance
-}
-h3{font-size:15px; font-weight:640; letter-spacing:-.005em; margin:0 0 4px}
-p{margin:0 0 14px; max-width:66ch; color:var(--ink-2)}
-p.lead{font-size:17px; color:var(--ink); max-width:60ch}
-strong{color:var(--ink); font-weight:620}
-a{color:var(--s1)}
-hr{border:0; border-top:1px solid var(--rule); margin:0}
-.mono{font-family:var(--mono); font-variant-numeric:tabular-nums}
-.num{font-variant-numeric:tabular-nums}
-
-header.top{border-bottom:1px solid var(--rule); padding-bottom:30px; margin-bottom:34px}
-.srcline{
-  font-family:var(--mono); font-size:11.5px; letter-spacing:.04em; color:var(--muted);
-  display:flex; flex-wrap:wrap; gap:6px 20px; margin-top:20px
-}
-.srcline span{white-space:nowrap}
-
-section{margin-top:52px}
-.sechead{margin-bottom:20px}
-.sechead .eyebrow{margin-bottom:8px}
-
-.panel{
-  background:var(--surface); border:1px solid var(--rule); border-radius:3px;
-  padding:clamp(16px,2.4vw,26px)
-}
-.panel + .panel{margin-top:16px}
-
-/* ---- 게이지 ---- */
-.gauge-wrap{padding:clamp(18px,3vw,32px) clamp(16px,3vw,30px) clamp(12px,2vw,20px)}
-.readout{display:flex; flex-wrap:wrap; align-items:flex-end; gap:8px 26px; margin-bottom:26px}
-.readout .big{
-  font-family:var(--mono); font-variant-numeric:tabular-nums;
-  font-size:clamp(34px,6.4vw,58px); line-height:1; letter-spacing:-.02em; font-weight:600
-}
-.readout .band{
-  font-size:clamp(15px,2vw,19px); font-weight:640; letter-spacing:-.01em; padding-bottom:5px
-}
-.readout .asof{font-family:var(--mono); font-size:11.5px; color:var(--muted); padding-bottom:7px; letter-spacing:.04em}
-.gauge-svg{display:block; width:100%; height:auto; overflow:visible}
-
-/* ---- 스탯 ---- */
-/* 타일이 6개다. auto-fit 으로 두면 폭에 따라 5+1 이 되어 빈 칸이 남고,
-   그 칸에 배경(구분선 색)이 그대로 비친다. 6을 나누어떨어지는 열 수만 쓴다. */
-.tiles{display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--rule);
-  border:1px solid var(--rule); border-radius:3px; margin-top:16px; overflow:hidden}
-@media (min-width:560px){.tiles{grid-template-columns:repeat(3,1fr)}}
-@media (min-width:1060px){.tiles{grid-template-columns:repeat(6,1fr)}}
-.tile{background:var(--surface); padding:16px 18px 15px}
-.tile .k{font-size:11.5px; font-weight:620; letter-spacing:.03em; color:var(--muted)}
-.tile .v{font-family:var(--mono); font-variant-numeric:tabular-nums; font-size:23px; font-weight:600; letter-spacing:-.01em; margin-top:7px; line-height:1.15}
-.tile .n{font-size:12px; color:var(--muted); margin-top:3px; line-height:1.4}
-.chip{display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:600;
-  font-family:var(--sans); padding:2px 8px; border-radius:2px; border:1px solid var(--rule)}
-.chip .dot{width:7px; height:7px; border-radius:50%}
-
-/* ---- 차트 ---- */
-figure{margin:0}
-figcaption{font-size:12.5px; color:var(--muted); margin-top:12px; max-width:74ch; line-height:1.55}
-.chart-head{display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:8px 20px; margin-bottom:14px}
-.legend{display:flex; flex-wrap:wrap; gap:6px 18px; font-size:12.5px; color:var(--ink-2)}
-.legend i{display:inline-block; width:11px; height:11px; border-radius:2px; margin-right:6px; vertical-align:-1px}
-.legend b{font-weight:600; color:var(--ink)}
-.chart{position:relative; width:100%}
-.chart svg{display:block; width:100%; height:auto; overflow:visible}
-.tt{
-  position:absolute; pointer-events:none; opacity:0; transition:opacity .09s linear;
-  background:var(--surface); border:1px solid var(--axis); border-radius:3px;
-  padding:9px 11px; font-family:var(--mono); font-size:11.5px; line-height:1.6;
-  font-variant-numeric:tabular-nums; box-shadow:0 4px 14px rgba(0,0,0,.10); z-index:5; min-width:150px
-}
-.tt .d{color:var(--muted); letter-spacing:.04em; margin-bottom:4px}
-.tt .r{display:flex; justify-content:space-between; gap:14px; white-space:nowrap}
-.tt .r span:last-child{font-weight:600}
-@media (prefers-reduced-motion: reduce){.tt{transition:none}}
-
-/* ---- 표 ---- */
-.tblwrap{overflow-x:auto; border:1px solid var(--rule); border-radius:3px; background:var(--surface)}
-table{border-collapse:collapse; width:100%; font-size:12.5px}
-caption{text-align:left; font-size:12.5px; color:var(--muted); padding:12px 14px 0; caption-side:top}
-th,td{padding:8px 12px; text-align:right; white-space:nowrap; border-bottom:1px solid var(--rule)}
-th:first-child,td:first-child{text-align:left}
-thead th{
-  font-size:11.5px; letter-spacing:.02em;
-  color:var(--muted); font-weight:620; border-bottom:1px solid var(--axis)
-}
-tbody td{font-family:var(--mono); font-variant-numeric:tabular-nums; color:var(--ink-2)}
-tbody td:first-child{font-family:var(--sans); color:var(--ink); font-weight:600}
-tbody tr:last-child td{border-bottom:0}
-tbody tr.hi td{background:var(--surface-2)}
-
-/* ---- 구조 설명 ---- */
-.cols{display:grid; grid-template-columns:repeat(auto-fit,minmax(266px,1fr)); gap:16px}
-.famcard{background:var(--surface); border:1px solid var(--rule); border-radius:3px; padding:18px 20px;
-  display:flex; flex-direction:column}
-.famcard ul{flex:1}
-.famcard .score{margin-top:14px; padding-top:12px; border-top:1px solid var(--axis);
-  font-size:12px; color:var(--muted); display:flex; justify-content:space-between; align-items:baseline}
-.famcard .score b{font-family:var(--mono); font-variant-numeric:tabular-nums; font-size:15px; color:var(--ink)}
-.famcard .top{display:flex; justify-content:space-between; align-items:baseline; gap:12px}
-.famcard .w{font-family:var(--mono); font-variant-numeric:tabular-nums; font-size:26px; font-weight:600; line-height:1}
-.famcard h3{display:flex; align-items:center; gap:8px}
-.famcard .sw{width:10px; height:10px; border-radius:2px; flex:none}
-.famcard ul{margin:12px 0 0; padding:0; list-style:none; font-size:12.5px; color:var(--ink-2)}
-.famcard li{padding:5px 0; border-top:1px solid var(--rule); display:flex; justify-content:space-between; gap:12px}
-.famcard .agg{font-size:11.5px; letter-spacing:.01em; color:var(--muted); margin-top:10px}
-.famcard .agg b{font-family:var(--mono); font-weight:500; letter-spacing:.06em}
-/* 설명 토글 — 궁금한 사람만 펴 본다. 기본은 접힌 상태다. */
-.why{
-  appearance:none; border:1px solid var(--rule); background:var(--surface-2);
-  color:var(--ink-2); font-family:var(--sans); font-size:11.5px; font-weight:600;
-  padding:2px 9px 3px; border-radius:2px; cursor:pointer; line-height:1.5;
-  display:inline-flex; align-items:center; gap:5px; white-space:nowrap;
-  transition:background .12s, color .12s
-}
-.why:hover{background:var(--surface); color:var(--ink); border-color:var(--axis)}
-.why[aria-expanded="true"]{background:var(--ink); color:var(--surface); border-color:var(--ink)}
-.why .mk{font-family:var(--mono); font-size:10px; opacity:.7}
-.why[aria-expanded="true"] .mk{opacity:1}
-.panelbody{display:none; margin-top:10px; padding:13px 15px; border-radius:2px;
-  background:var(--surface-2); border:1px solid var(--rule);
-  font-size:13.5px; line-height:1.68; color:var(--ink-2)}
-.panelbody.open{display:block}
-.panelbody b{color:var(--ink)}
-.panelbody .formula{font-family:var(--mono); font-size:12px; color:var(--muted);
-  margin-top:9px; display:block}
-.bandlist{margin-top:13px; border-top:1px solid var(--rule); padding-top:4px;
-  max-width:320px}
-.bandrow{display:flex; justify-content:space-between; gap:20px; padding:4px 0;
-  font-size:12.5px; border-bottom:1px solid var(--rule)}
-.bandrow:last-child{border-bottom:0}
-.bandrow span:first-child{font-family:var(--mono); font-variant-numeric:tabular-nums;
-  color:var(--muted)}
-.bandrow span:last-child{font-weight:600; color:var(--ink)}
-@media (prefers-reduced-motion: reduce){.why{transition:none}}
-
-.indi{border-top:1px solid var(--rule); padding:13px 0 14px}
-.indi:first-of-type{border-top:0}
-.indi .nm{font-size:13.5px; font-weight:620; color:var(--ink); line-height:1.45}
-.indi .one{font-size:13px; color:var(--ink-2); margin:3px 0 9px; line-height:1.55}
-.indi .why{font-size:11px; padding:1px 8px 2px}
-
-dl.defs{margin:0; display:grid; grid-template-columns:auto 1fr; gap:0}
-dl.defs dt{font-size:12px; font-weight:640; letter-spacing:.02em; color:var(--muted);
-  padding:11px 22px 11px 0; border-top:1px solid var(--rule); white-space:nowrap}
-dl.defs dd{margin:0; padding:11px 0; border-top:1px solid var(--rule); color:var(--ink-2); font-size:13.5px}
-dl.defs dt:first-of-type,dl.defs dd:first-of-type{border-top:0}
-ul.notes{margin:0; padding-left:20px; color:var(--ink-2); font-size:13.5px}
-ul.notes li{margin-bottom:9px; max-width:70ch}
-.callout{border-left:2px solid var(--s1); padding:2px 0 2px 18px; margin:20px 0}
-.callout p{margin-bottom:0}
-footer{margin-top:64px; padding-top:26px; border-top:1px solid var(--rule); font-size:12.5px; color:var(--muted)}
-footer p{color:var(--muted); font-size:12.5px; max-width:70ch}
-
-/* 그림 읽는 법 — 범례를 글이 아니라 그림으로 */
-.howto{display:grid; grid-template-columns:auto 1fr; gap:clamp(16px,3vw,30px); align-items:start}
-.howto-key svg{width:200px; height:96px; display:block}
-.howto-txt h3{margin-bottom:8px}
-.howto-txt ol{margin:0; padding-left:20px; font-size:13.5px; color:var(--ink-2); line-height:1.66}
-.howto-txt li{margin-bottom:8px; max-width:64ch}
-.howto-txt li:last-child{margin-bottom:0}
-.howto-txt b{color:var(--ink); font-weight:620}
-@media (max-width:640px){.howto{grid-template-columns:1fr}}
-
-/* 무엇을 봐야 하는지 짚어 주는 상자 */
-.readbox h3{margin-bottom:10px; font-size:15px}
-.readbox ol{margin:0; padding-left:20px; font-size:13.5px; color:var(--ink-2); line-height:1.66}
-.readbox li{margin-bottom:7px; max-width:70ch}
-.readbox li:last-child{margin-bottom:0}
-.readbox b{color:var(--ink); font-weight:620}
-.readbox p{font-size:13.5px}
-
-/* 지표 요약 표의 위치 막대 */
-.posbar{position:relative; height:16px; border-radius:2px; background:var(--surface-2);
-  min-width:150px; overflow:hidden}
-.posbar .mid{position:absolute; left:50%; top:0; bottom:0; width:1px; background:var(--axis)}
-.posbar .fill{position:absolute; top:3px; bottom:3px; border-radius:1px; opacity:.85}
-.poscell{display:flex; align-items:center; gap:10px; justify-content:flex-end}
-.poscell .pct{font-variant-numeric:tabular-nums; min-width:38px; text-align:right}
-.tblnote{font-size:12.5px; color:var(--muted); margin-top:10px; max-width:74ch}
-td .famdot{display:inline-block; width:8px; height:8px; border-radius:2px; margin-right:6px;
-  vertical-align:0}
-tbody td.lbl{font-family:var(--sans); color:var(--ink); font-weight:620}
-tbody td.sub{font-family:var(--sans); color:var(--muted); font-weight:400; text-align:left;
-  white-space:normal; min-width:210px; font-size:12.5px; line-height:1.5}
-
-/* −1 ~ +1 눈금 설명 */
-.scalekey{margin-top:14px}
-.scalekey .bar{height:26px; border-radius:2px; position:relative; overflow:hidden;
-  background:linear-gradient(90deg, var(--wash-cool-3), var(--wash-neutral), var(--wash-warm-3));
-  border:1px solid var(--rule)}
-.scalekey .ticks{display:flex; justify-content:space-between; margin-top:6px;
-  font-family:var(--mono); font-size:11px; color:var(--muted)}
-.scalekey .ticks b{display:block; font-family:var(--sans); font-size:12px; color:var(--ink-2);
-  font-weight:600; margin-top:2px}
-.scalekey .ticks > span{text-align:center; flex:1}
-.scalekey .ticks > span:first-child{text-align:left}
-.scalekey .ticks > span:last-child{text-align:right}
-
-/* 갈래 비중 막대 */
-.mix{display:flex; gap:2px; height:38px; border-radius:2px; overflow:hidden}
-.mix > div{display:flex; align-items:center; justify-content:center; color:#fff;
-  font-size:12.5px; font-weight:620; letter-spacing:.01em}
-.mixlabels{display:flex; gap:2px; margin-top:7px; font-size:11.5px; color:var(--muted)}
-.mixlabels > div{text-align:center}
-
-/* 다음 페이지로 */
-.nextlink{margin-top:26px}
-.nextlink a{display:block; text-decoration:none; background:var(--surface);
-  border:1px solid var(--rule); border-radius:3px; padding:18px 22px;
-  transition:border-color .12s, background .12s}
-.nextlink a:hover{border-color:var(--axis); background:var(--surface-2)}
-.nextlink .k{display:block; font-size:11.5px; font-weight:640; letter-spacing:.08em;
-  color:var(--muted)}
-.nextlink .t{display:block; font-size:19px; font-weight:640; color:var(--ink); margin-top:5px;
-  letter-spacing:-.012em}
-.nextlink .t::after{content:" \203A"; color:var(--muted)}
-.nextlink .d{display:block; font-size:13px; color:var(--ink-2); margin-top:4px}
-@media (prefers-reduced-motion: reduce){.nextlink a{transition:none}}
-.srcline a{color:var(--ink-2); text-decoration:none; border-bottom:1px solid var(--rule)}
-.srcline a:hover{color:var(--ink); border-color:var(--axis)}
-:focus-visible{outline:2px solid var(--s1); outline-offset:2px}
-</style>
-
-<div class="wrap">
-
-<header class="top">
-  <p class="eyebrow">비트코인 사이클 위치</p>
-  <h1>지금은 싼 편인가, 비싼 편인가</h1>
-  <p class="lead">비트코인의 오늘 가격이 <strong>지난 16년에 비춰 어디쯤인지</strong>만 알려주는
-  눈금자입니다. 앞으로 오를지 내릴지는 말하지 않습니다.</p>
-  <div class="srcline">
-    <span id="src-span"></span>
-    <span id="src-days"></span>
-    <span><a href="__RULES_URL__">규칙과 한계 &rsaquo;</a></span>
-  </div>
-</header>
-
-<!-- ============ 01 지금 위치 ============ -->
-<section id="now" style="margin-top:0">
-  <div class="sechead">
-    <p class="eyebrow"><em>01</em> — 지금 위치</p>
-    <h2>오늘은 여기쯤입니다</h2>
-    <p>−100에 가까울수록 지난 16년에 비해 싼 편, +100에 가까울수록 비싼 편입니다.
-    숫자 하나가 아니라 <strong>범위</strong>로 나오는 이유는 <a href="#spread">05</a>에 있습니다.</p>
-  </div>
-
-  <div class="panel gauge-wrap">
-    <div class="readout">
-      <div class="big" id="ro-range"></div>
-      <div class="band" id="ro-band"></div>
-      <div class="asof" id="ro-asof"></div>
-    </div>
-    <div class="chart" id="gauge-host">
-      <svg class="gauge-svg" id="gauge"></svg>
-    </div>
-    <div id="gauge-why" style="margin-top:16px"></div>
-  </div>
-
-  <div class="tiles" id="tiles"></div>
-  <div id="tiles-why" style="margin-top:14px"></div>
-
-  <!-- 지표 전체 요약 — 이 페이지에서 가장 중요한 표 -->
-  <div class="sechead" style="margin-top:42px">
-    <h2 style="font-size:19px">지표 아홉 개가 각각 어디에 있나</h2>
-    <p>위의 점수 하나는 아래 아홉 개를 합친 결과입니다. 막대가 <strong>왼쪽에 있을수록 싼 쪽,
-    오른쪽에 있을수록 비싼 쪽</strong>이고, 퍼센트는 <strong>최근 4년 중 몇 %에 해당하는가</strong>입니다.
-    예를 들어 18%면 최근 4년 동안 이보다 낮았던 날이 18%뿐이었다는 뜻입니다.</p>
-  </div>
-
-  <div class="tblwrap">
-    <table id="ind-table">
-      <thead><tr>
-        <th>지표</th><th>재는 것</th><th>지금 값</th>
-        <th style="min-width:210px">최근 4년 중 위치</th><th>갈래</th>
-      </tr></thead>
-      <tbody></tbody>
-    </table>
-  </div>
-  <p class="tblnote" id="ind-note"></p>
-</section>
-
-<!-- ============ 02 16년 이력 ============ -->
-<section id="history">
-  <div class="sechead">
-    <p class="eyebrow"><em>02</em> — 지난 16년</p>
-    <h2>같은 자리에 네 번 갔고, 네 번 돌아왔습니다</h2>
-    <p>위 눈금을 매일 계산해서 시간 순으로 쭉 이어 놓은 그림입니다. 세로가 위치 점수,
-    가로가 시간입니다.</p>
-  </div>
-
-  <!-- 읽는 법을 글이 아니라 그림으로 -->
-  <div class="panel howto">
-    <div class="howto-key">
-      <svg id="key-svg" viewBox="0 0 200 96" aria-hidden="true"></svg>
-    </div>
-    <div class="howto-txt">
-      <h3>그림 읽는 법</h3>
-      <ol>
-        <li><b>파란 띠</b>는 <b>범위</b>입니다. 지표 아홉 개 중 하나를 빼고 다시 계산해 보면
-        값이 조금씩 달라지는데, 그렇게 나온 값들이 위아래로 흩어진 폭입니다.
-        <b>띠가 얇으면</b> 아홉 개가 서로 같은 이야기를 하고 있다는 뜻이고,
-        <b>두꺼우면</b> 한두 개가 판단을 끌고 있다는 뜻입니다.</li>
-        <li><b>검은 선</b>은 아홉 개를 <b>전부 써서 계산한 대표값</b>입니다. 띠의 한가운데가
-        아니라 따로 계산한 값이라 가운데에서 벗어나 있을 수 있습니다.</li>
-        <li><b>배경색</b>은 구간입니다. 위쪽 붉은 영역이 비싼 쪽, 아래쪽 푸른 영역이 싼 쪽입니다.</li>
-      </ol>
-    </div>
-  </div>
-
-  <figure class="panel">
-    <div class="chart-head">
-      <div class="legend">
-        <span><i style="background:var(--cool-2);opacity:.45"></i>범위 (띠)</span>
-        <span><i style="background:var(--ink);height:2px;border-radius:0;margin-bottom:3px"></i>대표값 (선)</span>
-        <span><i style="background:var(--warm-3);border-radius:50%"></i>과거 고점</span>
-        <span><i style="background:var(--cool-3);border-radius:50%"></i>과거 바닥</span>
-      </div>
-    </div>
-    <div class="chart" id="hist-host">
-      <svg id="hist"></svg>
-      <div class="tt" id="hist-tt"></div>
-    </div>
-    <figcaption id="hist-cap"></figcaption>
-  </figure>
-
-  <figure class="panel">
-    <div class="chart-head"><h3>같은 기간의 실제 가격</h3></div>
-    <div class="chart" id="price-host">
-      <svg id="price"></svg>
-      <div class="tt" id="price-tt"></div>
-    </div>
-    <figcaption>위 그림과 가로축이 같습니다. 위아래로 나란히 놓고 보시면 됩니다 —
-    <strong>위 그림이 아래로 내려갔을 때 실제로 가격이 바닥이었는지</strong>가 이 지표의 전부입니다.
-    같은 그림에 겹쳐 그리지 않은 이유는, 세로축이 두 개가 되면 두 선을 어디에 맞추느냐에 따라
-    없던 관계가 있는 것처럼 보이기 때문입니다.</figcaption>
-  </figure>
-</section>
-
-<!-- ============ 03 성적표 ============ -->
-<section id="scorecard">
-  <div class="sechead">
-    <p class="eyebrow"><em>03</em> — 성적표</p>
-    <h2>과거 여덟 번의 전환점에서 뭐라고 했나</h2>
-    <p>이건 언제 사고팔라는 도구가 아니니 수익률로 채점하지 않습니다. 물어야 할 것은
-    하나입니다 — <strong>가격이 실제로 꼭대기였던 네 번에 "비싸다"고 했는가, 바닥이었던
-    네 번에 "싸다"고 했는가.</strong></p>
-  </div>
-
-  <div class="panel readbox">
-    <h3>이 그림에서 볼 것 세 가지</h3>
-    <ol>
-      <li><b>가로 막대 하나가 전환점 하나</b>입니다. 막대의 길이가 범위, 가운데 점이 대표값,
-      오른쪽 숫자가 그 값입니다.</li>
-      <li><b>붉은 막대(과거 고점)는 전부 오른쪽에, 푸른 막대(과거 바닥)는 전부 왼쪽에</b>
-      몰려 있어야 합니다. 여덟 개가 그렇습니다.</li>
-      <li>가운데 <b>테두리로 표시된 빈 공간</b>이 핵심입니다. 여기에는 <b>어떤 전환점도 들어오지
-      않았습니다.</b> 고점과 바닥이 한 번도 헷갈리지 않았다는 뜻입니다.</li>
-    </ol>
-    <p style="margin:14px 0 0"><b>세로로 지나가는 회색 선이 지금 위치</b>입니다.
-    과거 여덟 번 중 어느 쪽에 더 가까운지 보시면 됩니다.</p>
-  </div>
-
-  <figure class="panel">
-    <div class="chart" id="tp-host">
-      <svg id="tp"></svg>
-    </div>
-    <figcaption id="tp-cap"></figcaption>
-  </figure>
-
-  <div class="tblwrap" style="margin-top:16px">
-    <table id="tp-table">
-      <caption>같은 내용을 표로 — 갈래별 점수까지</caption>
-      <thead><tr>
-        <th>국면</th><th>날짜</th><th>그때 가격</th><th>위치 범위</th><th>대표값</th>
-        <th>폭</th><th>원가 대비</th><th>평균가 대비</th><th>채굴 상황</th>
-      </tr></thead>
-      <tbody></tbody>
-    </table>
-  </div>
-</section>
-
-<!-- ============ 04 구성 ============ -->
-<section id="composition">
-  <div class="sechead">
-    <p class="eyebrow"><em>04</em> — 어떻게 계산하나</p>
-    <h2>아홉 개를 세 갈래로 묶습니다</h2>
-  </div>
-
-  <div class="panel readbox">
-    <h3>−1 부터 +1 까지가 무슨 뜻인가</h3>
-    <p>지표 하나하나를 먼저 <strong>같은 자로 잽니다.</strong> 값이 몇이든 상관없이
-    <strong>"최근 4년 안에서 몇 등쯤인가"</strong>로 바꿉니다.</p>
-    <div class="scalekey" id="scalekey"></div>
-    <p style="margin-top:16px">그래야 지표끼리 더할 수 있습니다. MVRV는 0~10 사이를 오가고
-    200주 MA 배수는 0.5~5 사이를 오가는데, 그냥 더하면 큰 쪽이 이깁니다.
-    <strong>등수로 바꾸면 둘이 같은 무게가 됩니다.</strong></p>
-    <p style="margin-top:10px">고정 기준을 쓰지 않는 이유도 있습니다. "MVRV가 7을 넘으면 비싸다"는
-    2013년에는 맞았지만 <strong>2025년에는 한 번도 7에 닿지 않았습니다.</strong> 사이클마다
-    수치가 낮아지기 때문입니다. 등수는 그 영향을 덜 받습니다.</p>
-  </div>
-
-  <div class="cols" id="famcards" style="margin-top:16px"></div>
-
-  <div class="panel" style="margin-top:16px">
-    <h3 style="margin-bottom:10px">셋을 합쳐서 −100 ~ +100 으로</h3>
-    <div id="mixbar"></div>
-    <p style="margin:16px 0 0">갈래마다 비중이 다른 이유는 <strong>정보의 독립성</strong>입니다.
-    '평균가 대비'는 네 지표가 전부 "가격 ÷ 어떤 평균"이라 사실상 한 가지 사실을 네 번 보는 것이고,
-    그래서 비중이 가장 크지 않습니다.</p>
-  </div>
-
-  <figure class="panel" style="margin-top:16px">
-    <div class="chart-head">
-      <h3>세 갈래가 각각 뭐라고 하고 있나 — 최근 4년</h3>
-      <div class="legend" id="fam-legend"></div>
-    </div>
-    <div class="chart" id="fam-host">
-      <svg id="fam"></svg>
-      <div class="tt" id="fam-tt"></div>
-    </div>
-    <figcaption>세 선이 <strong>같이 아래로 내려가 있으면</strong> 세 가지 서로 다른 근거가 모두
-    "싸다"고 말하는 상태입니다. 반대로 <strong>한 선만 튀어 있으면</strong> 그 근거 하나에
-    매달린 판단이라는 뜻이고, 그럴 때 위의 범위가 넓어집니다.</figcaption>
-  </figure>
-</section>
-
-<!-- ============ 05 범위 ============ -->
-<section id="spread">
-  <div class="sechead">
-    <p class="eyebrow"><em>05</em> — 왜 범위로 나오나</p>
-    <h2>이 숫자를 어디까지 믿어도 되나</h2>
-    <p>지표 아홉 개 중 하나를 빼고 다시 계산합니다. 아홉 번 다 해 보면 값이 아래위로 흩어지는데,
-    <strong>그 흩어진 폭이 곧 범위</strong>입니다. 답하는 질문은 하나입니다 —
-    <strong>"지표 하나가 틀렸거나 없었다면 판단이 달라졌을까?"</strong></p>
-    <p>이렇게 하면 <strong>새로 정한 숫자가 하나도 없습니다.</strong> "±10 정도로 보세요" 같은
-    상수를 정해 두면 그 10이 또 하나의 임의값이 되니까, 데이터가 스스로 폭을 정하게 했습니다.</p>
-  </div>
-
-  <figure class="panel">
-    <div class="chart-head"><h3>16년 동안 범위가 얼마나 넓었나</h3></div>
-    <div class="chart" id="width-host"><svg id="width"></svg></div>
-    <figcaption id="width-cap"></figcaption>
-  </figure>
-
-  <div class="callout">
-    <p><strong>절반이 조금 안 되는 날만 범위가 한 구간 안에 온전히 들어옵니다.</strong>
-    나머지 날은 "싼 편"과 "저점 부근" 사이처럼 두 구간에 걸쳐 있습니다. 소수점을 보고 판단을
-    바꾸면 안 된다는 경고가 숫자로 나온 셈이고, 그래서 애초에 범위로 보여주기로 했습니다.</p>
-  </div>
-
-  <div class="nextlink">
-    <a href="__RULES_URL__">
-      <span class="k">이어서 읽기</span>
-      <span class="t">규칙과 한계</span>
-      <span class="d">이 점수로 실제로 무엇을 하는지, 그리고 이 방식이 무엇을 못 하는지</span>
-    </a>
-  </div>
-</section>
-
-<footer>
-  <p id="foot-derive"></p>
-  <p style="margin-top:10px">이 페이지는 개인 기록과 정보 제공을 위한 것이고 투자 권유가 아닙니다.
-  여기 있는 어떤 숫자도 앞으로의 가격을 말하지 않습니다. 투자 판단과 그 결과는 본인의 몫입니다.</p>
-</footer>
-
-</div>
-<script>window.__BCS__ = /*__DATA__*/null/*__DATA__*/;</script>
 <script>
 (function(){
 "use strict";
@@ -588,12 +52,19 @@ function txt(parent, x, y, s, o){
 }
 function clear(svg){ while (svg.firstChild) svg.removeChild(svg.firstChild); }
 
+/* 이 스크립트 한 벌이 세 장을 모두 그린다. 어느 장에 어떤 요소가 있는지
+   스크립트가 알 필요는 없다 — 없으면 건너뛰면 그만이다. 대신 그 판단을
+   호출부마다 흩어 놓으면 하나 빠뜨렸을 때 페이지 전체가 죽는다. */
+function $(id){ return document.getElementById(id); }
+function setText(id, s){ const e = $(id); if (e) e.textContent = s; return !!e; }
+function setHTML(id, s){ const e = $(id); if (e) e.innerHTML = s; return !!e; }
+
 /* =====================================================================
    01. 계기판 — 눈금이 그려진 자
    ===================================================================== */
 function drawGauge(){
-  const host = document.getElementById("gauge-host");
-  const svg = document.getElementById("gauge");
+  const host = $("gauge-host"), svg = $("gauge");
+  if (!host || !svg) return;
   const W = host.clientWidth || 900;
   const H = 132;
   const PL = 4, PR = 4;
@@ -745,8 +216,8 @@ function yearTicks(){
 }
 
 function drawHist(){
-  const host = document.getElementById("hist-host");
-  const svg = document.getElementById("hist");
+  const host = $("hist-host"), svg = $("hist");
+  if (!host || !svg) return;
   const W = host.clientWidth || 900;
   const H = Math.max(300, Math.min(400, W * 0.40));
   const PL = 40, PR = 16, PT = 12, PB = 30;
@@ -810,16 +281,16 @@ function drawHist(){
   ]));
 
   const st = D.stats;
-  document.getElementById("hist-cap").textContent =
+  setText("hist-cap",
     `점 ${S.length}개로 그렸습니다 (주 1회, 전환점 주변과 최근 400일은 하루 단위). ` +
     `띠의 폭은 16년 전체에서 보통 ${st.median}점, 평균 ${st.mean}점입니다. ` +
     `띠가 유난히 두꺼운 구간은 지표들이 서로 다른 이야기를 하던 때이고, ` +
-    `얇은 구간은 아홉 개가 한목소리를 내던 때입니다.`;
+    `얇은 구간은 아홉 개가 한목소리를 내던 때입니다.`);
 }
 
 function drawPrice(){
-  const host = document.getElementById("price-host");
-  const svg = document.getElementById("price");
+  const host = $("price-host"), svg = $("price");
+  if (!host || !svg) return;
   const W = host.clientWidth || 900;
   const H = Math.max(150, Math.min(220, W * 0.20));
   const PL = 40, PR = 16, PT = 10, PB = 26;
@@ -860,8 +331,8 @@ function drawPrice(){
    03. 전환점 성적표
    ===================================================================== */
 function drawTP(){
-  const host = document.getElementById("tp-host");
-  const svg = document.getElementById("tp");
+  const host = $("tp-host"), svg = $("tp");
+  if (!host || !svg) return;
   const W = host.clientWidth || 900;
   const rowH = W < 520 ? 34 : 30;
   // 라벨은 전용 칼럼에 넣는다. 구간 끝 옆에 붙이면 저점 쪽 값이 왼쪽 행 라벨과
@@ -945,14 +416,15 @@ function drawTP(){
 
   const mean = a => a.reduce((s,v)=>s+v,0)/a.length;
   const sd = a => Math.sqrt(mean(a.map(v=>Math.pow(v-mean(a),2))));
-  document.getElementById("tp-cap").textContent =
+  setText("tp-cap",
     `고점 네 번의 평균이 ${nf(mean(tops),1)}, 바닥 네 번의 평균이 ${nf(mean(bots),1)} 입니다. ` +
     `가장 낮았던 고점(${nf(gapHi,1)})과 가장 높았던 바닥(${nf(gapLo,1)}) 사이가 ` +
     `${(gapHi-gapLo).toFixed(0)}점 비어 있습니다. ` +
     `다만 오른쪽 위 두 개(2021·2025 고점)를 보시면 막대가 길고 왼쪽으로 처져 있습니다 — ` +
-    `최근 두 번의 고점은 예전만큼 뚜렷하게 잡히지 않았다는 뜻이고, 이 지표의 알려진 약점입니다.`;
+    `최근 두 번의 고점은 예전만큼 뚜렷하게 잡히지 않았다는 뜻이고, 이 지표의 알려진 약점입니다.`);
 
   const tb = document.querySelector("#tp-table tbody");
+  if (!tb) return;
   tb.innerHTML = "";
   const byDate = {};
   S.forEach(r => { byDate[iso(dateOf(r[0]))] = r; });
@@ -995,6 +467,7 @@ function toggle(label, body){
 }
 
 function wireToggles(root){
+  if (!root) return;
   root.querySelectorAll(".why").forEach(btn => {
     if (btn.dataset.wired) return;
     btn.dataset.wired = "1";
@@ -1007,11 +480,19 @@ function wireToggles(root){
   });
 }
 
+/** 날짜를 "2023년 3월" 처럼. 정확한 일자는 이 맥락에서 필요 없다. */
+function ym(iso){
+  if (!iso) return null;
+  return iso.slice(0, 4) + "년 " + parseInt(iso.slice(5, 7), 10) + "월";
+}
+
 /** 지표 아홉 개를 한 표로. 이 페이지에서 가장 먼저 읽히는 부분이다. */
 function indicatorTable(){
   const tb = document.querySelector("#ind-table tbody");
+  const cardHost = document.getElementById("ind-cards");
   if (!tb) return;
   tb.innerHTML = "";
+  if (cardHost) cardHost.innerHTML = "";
   const cur = D.current.ind || {};
   const famIdx = {};
   D.families.forEach((f, i) => { famIdx[f.key] = i; });
@@ -1047,26 +528,48 @@ function indicatorTable(){
       : (typeof v.raw === "number"
           ? (Math.abs(v.raw) >= 100 ? v.raw.toFixed(1) : v.raw.toFixed(2))
           : STATE_KO[v.raw] || v.raw);
+    const side = v.pct == null ? "" : (v.pct < 0.5 ? "이만큼 쌌던" : "이만큼 비쌌던");
+    const when = ym((D.lastSimilar || {})[m.key]);
+    const prev = when ? `직전에 ${side} 때 — ${when}` : "최근 4년 안에는 없음";
+
     const tr = document.createElement("tr");
     tr.innerHTML =
       `<td class="lbl">${esc(m.short)}</td>` +
       `<td class="sub">${esc(m.explain)}</td>` +
       `<td>${esc(raw)}</td>` +
       `<td>${cell}</td>` +
+      `<td class="sub" style="min-width:0;white-space:nowrap">${esc(when || "—")}</td>` +
       `<td class="sub" style="min-width:0;white-space:nowrap">` +
       `<span class="famdot" style="background:${col}"></span>${esc(famLabel[m.family] || "")}</td>`;
     tb.appendChild(tr);
+
+    if (cardHost){
+      const card = document.createElement("div");
+      card.className = "indcard";
+      card.innerHTML =
+        `<div class="top"><span class="nm">${esc(m.short)}</span>` +
+        `<span class="pct" style="color:${col}">${v.pct == null ? "—"
+          : (v.pct*100).toFixed(0) + "%"}</span></div>` +
+        `<div class="one">${esc(m.explain)}</div>` +
+        (v.pct == null ? "" :
+          `<span class="posbar" style="display:block;min-width:0"><span class="mid"></span>` +
+          `<span class="fill" style="left:${Math.min(0.5,v.pct)*100}%;` +
+          `width:${Math.max(1.2,Math.abs(v.pct-0.5)*100)}%;background:${col}"></span></span>`) +
+        `<div class="meta"><span>지금 값 <b>${esc(raw)}</b></span>` +
+        `<span>${esc(prev)}</span></div>`;
+      cardHost.appendChild(card);
+    }
   });
 
   const vals = D.indMeta.map(m => cur[m.key] && cur[m.key].pct).filter(v => v != null);
   if (vals.length){
     const lo = Math.min.apply(null, vals), hi = Math.max.apply(null, vals);
     const below = vals.filter(v => v < 0.5).length;
-    document.getElementById("ind-note").textContent =
+    setText("ind-note",
       `아홉 개 중 ${below}개가 한가운데(50%)보다 싼 쪽에 있습니다. ` +
       `가장 싼 쪽이 ${(lo*100).toFixed(0)}%, 가장 비싼 쪽이 ${(hi*100).toFixed(0)}% 로 ` +
       `${((hi-lo)*100).toFixed(0)}%p 벌어져 있습니다. ` +
-      `이 벌어짐이 곧 위 눈금의 범위 폭으로 이어집니다.`;
+      `이 벌어짐이 곧 위 눈금의 범위 폭으로 이어집니다.`);
   }
 }
 
@@ -1106,7 +609,8 @@ function mixBar(){
 }
 
 function famCards(){
-  const host = document.getElementById("famcards");
+  const host = $("famcards");
+  if (!host) return;
   host.innerHTML = "";
   const cur = D.current.fam;
   D.families.forEach((f, i) => {
@@ -1137,13 +641,13 @@ function famCards(){
     host.appendChild(div);
   });
   wireToggles(host);
-  document.getElementById("fam-legend").innerHTML = D.families.map((f,i) =>
-    `<span><i style="background:var(${FAMC[i]})"></i>${esc(f.label)} <b>${nf(cur[f.key],2)}</b></span>`).join("");
+  setHTML("fam-legend", D.families.map((f,i) =>
+    `<span><i style="background:var(${FAMC[i]})"></i>${esc(f.label)} <b>${nf(cur[f.key],2)}</b></span>`).join(""));
 }
 
 function drawFam(){
-  const host = document.getElementById("fam-host");
-  const svg = document.getElementById("fam");
+  const host = $("fam-host"), svg = $("fam");
+  if (!host || !svg) return;
   const W = host.clientWidth || 900;
   const H = Math.max(200, Math.min(280, W * 0.26));
   const PL = 40, PR = 88, PT = 14, PB = 26;
@@ -1207,8 +711,8 @@ function drawFam(){
    05. 구간 폭 분포
    ===================================================================== */
 function drawWidth(){
-  const host = document.getElementById("width-host");
-  const svg = document.getElementById("width");
+  const host = $("width-host"), svg = $("width");
+  if (!host || !svg) return;
   const W = host.clientWidth || 900;
   const H = 168;
   const PL = 16, PR = 16, PT = 40, PB = 46;
@@ -1251,12 +755,12 @@ function drawWidth(){
   txt(svg, PL+iw, H-8, `축은 ${maxW} 까지 · 드물게 ${st.p99} 이상(최대 ${st.max})`,
     {anchor:"end", size:10, fill:"var(--muted)"});
 
-  document.getElementById("width-cap").textContent =
+  setText("width-cap",
     `보통은 ${st.median}점입니다. 네 날 중 하루는 ${st.p25}점보다 좁고, ` +
     `또 하루는 ${st.p75}점보다 넓습니다. ` +
     `진한 상자가 가운데 절반(p25~p75), 연한 상자가 열에 여덟(p10~p90), ` +
     `세로선이 한가운데 값입니다. ` +
-    `범위가 한 구간 안에 온전히 들어온 날은 16년 중 ${st.stable_pct}% 뿐입니다.`;
+    `범위가 한 구간 안에 온전히 들어온 날은 16년 중 ${st.stable_pct}% 뿐입니다.`);
 }
 
 /* =====================================================================
@@ -1307,17 +811,35 @@ function attachCrosshair(svg, ttId, host, X, PL, iw, PT, ih, rowsFn, rowsIn){
    헤더 · 스탯
    ===================================================================== */
 function fillText(){
-  document.getElementById("src-span").textContent = D.span[0] + " → " + D.span[1];
-  document.getElementById("src-days").textContent =
-    D.nDays.toLocaleString("en-US") + "일 · 지표 " + D.indMeta.length + "개";
+  setText("src-span", D.span[0] + " → " + D.span[1]);
+  setText("src-days", D.nDays.toLocaleString("en-US") + "일 · 지표 " + D.indMeta.length + "개");
 
   const c = D.current;
-  document.getElementById("ro-range").textContent = nf(c.low,0) + " ~ " + nf(c.high,0);
+  setText("ro-range", nf(c.low,0) + " ~ " + nf(c.high,0));
   const bl = labelOf(c.band);
   const bLo = labelOf(bandOf(c.low).key), bHi = labelOf(bandOf(c.high).key);
-  document.getElementById("ro-band").textContent = c.stable ? bl : bLo + " ~ " + bHi;
-  document.getElementById("ro-band").style.color = c.bcs >= 0 ? "var(--warm-3)" : "var(--cool-3)";
-  document.getElementById("ro-asof").textContent = "기준 " + c.d + " · " + money(c.price);
+  if (setText("ro-band", c.stable ? bl : bLo + " ~ " + bHi))
+    $("ro-band").style.color = c.bcs >= 0 ? "var(--warm-3)" : "var(--cool-3)";
+  setText("ro-asof", "기준 " + c.d + " · " + money(c.price));
+
+  // 어제·지난주·지난달 대비. 매일 보는 사람에게는 절대값보다 변화가 궁금하다.
+  // 값이 올라가면 "비싼 쪽으로", 내려가면 "싼 쪽으로" 움직인 것이다.
+  const dEl = document.getElementById("ro-deltas");
+  if (dEl && D.deltas){
+    const rows = [["어제", "d1"], ["지난주", "d7"], ["지난달", "d30"]]
+      .map(([label, k]) => {
+        const v = D.deltas[k];
+        if (!v) return "";
+        const up = v.bcs > 0;
+        const col = Math.abs(v.bcs) < 0.05 ? "var(--muted)"
+          : (up ? "var(--warm-3)" : "var(--cool-3)");
+        const px = v.price_pct == null ? ""
+          : `<i>가격 ${v.price_pct >= 0 ? "+" : ""}${v.price_pct.toFixed(1)}%</i>`;
+        return `<span>${label} 대비<b style="color:${col}">` +
+               `${v.bcs >= 0 ? "+" : ""}${v.bcs.toFixed(1)}점</b>${px}</span>`;
+      }).filter(Boolean);
+    dEl.innerHTML = rows.join("");
+  }
 
   const st = D.stats;
   const gate = c.gate;
@@ -1334,18 +856,18 @@ function fillText(){
     {k:"반감기 이후", v:c.dsh ? Math.round(c.dsh) + "일" : "—",
       n:"과거 고점은 367·526·548·534일에 나왔습니다"}
   ];
-  document.getElementById("tiles").innerHTML = tiles.map(t => {
+  setHTML("tiles", tiles.map(t => {
     const col = t.chip === undefined ? "" :
       ` style="color:${t.chip ? "var(--good)" : "var(--crit)"}"`;
     return `<div class="tile"><div class="k">${t.k}</div>` +
       `<div class="v"${col}>${t.v}</div><div class="n">${t.n}</div></div>`;
-  }).join("");
+  }).join(""));
 
   // --- 접었다 펴는 설명들 -------------------------------------------------
   const bandRows = D.bands.slice().sort((a, b) => b.min - a.min).map(b =>
     `<div class="bandrow"><span>${nf(b.min,0)} ~ ${nf(b.max,0)}</span>` +
     `<span>${esc(b.label)}</span></div>`).join("");
-  document.getElementById("gauge-why").innerHTML =
+  setHTML("gauge-why",
     toggle("눈금 읽는 법",
       `<p style="margin:0">가운데 0이 "과거 16년의 한가운데"입니다. 왼쪽으로 갈수록 그때에 비해 싼 편, ` +
       `오른쪽으로 갈수록 비싼 편이라는 뜻입니다. <b>−100이 바닥, +100이 천장</b>이 아니라 ` +
@@ -1360,10 +882,10 @@ function fillText(){
       `−100 ~ +100 으로 폅니다.</p>` +
       `<p style="margin:10px 0 0"><b>고정된 기준선을 쓰지 않는 이유</b>가 있습니다. ` +
       `"MVRV가 7을 넘으면 과열" 같은 기준은 2013년에는 맞았지만 2025년에는 한 번도 닿지 않았습니다. ` +
-      `사이클마다 값이 점점 낮아지기 때문입니다. 등수로 바꾸면 그 영향을 덜 받습니다.</p>`);
-  wireToggles(document.getElementById("gauge-why"));
+      `사이클마다 값이 점점 낮아지기 때문입니다. 등수로 바꾸면 그 영향을 덜 받습니다.</p>`));
+  wireToggles($("gauge-why"));
 
-  document.getElementById("tiles-why").innerHTML =
+  setHTML("tiles-why",
     toggle("위 숫자들이 뭔가요",
       `<p style="margin:0"><b>대표값</b> — 지표 아홉 개를 전부 써서 계산한 값입니다. ` +
       `범위의 한가운데가 아니라 별도로 계산한 값이라 가운데에서 벗어나 있을 수 있습니다.</p>` +
@@ -1377,8 +899,8 @@ function fillText(){
       `그중 하나는 반드시 '평균가 대비'가 아니어야 합니다.</p>` +
       `<p style="margin:8px 0 0"><b>반감기 이후</b> — 마지막 반감기로부터 며칠 지났는지입니다. ` +
       `과거 네 번의 고점이 반감기 이후 367·526·548·534일에 나왔습니다. 다만 이건 온체인 지표가 ` +
-      `아니라 달력일 뿐이라 <b>점수에는 넣지 않습니다.</b></p>`);
-  wireToggles(document.getElementById("tiles-why"));
+      `아니라 달력일 뿐이라 <b>점수에는 넣지 않습니다.</b></p>`));
+  wireToggles($("tiles-why"));
 
   const notes = D.deriveNotes || [];
   const lat = D.latest;
@@ -1388,7 +910,7 @@ function fillText(){
   if (lat && lat.d !== D.current.d)
     foot += ` 가장 마지막 날(${lat.d})은 원가 데이터가 하루 늦어 지표 ${lat.nmiss}개가 ` +
       `빠져 있어서, 기준일에서 제외했습니다.`;
-  document.getElementById("foot-derive").textContent = foot;
+  setText("foot-derive", foot);
 }
 
 /* ===================================================================== */
@@ -1398,9 +920,11 @@ function drawAll(){
 fillText(); famCards(); indicatorTable(); scaleKey(); mixBar(); drawAll();
 
 let t = null;
-new ResizeObserver(() => {
+const ro = new ResizeObserver(() => {
   clearTimeout(t); t = setTimeout(drawAll, 120);
-}).observe(document.querySelector(".wrap"));
+});
+const wrapEl = document.querySelector(".wrap");
+if (wrapEl) ro.observe(wrapEl);
 
 // 테마 토글 시 SVG 안의 var() 는 자동 반영되지만, 계산된 색을 쓴 곳이 없어도
 // 밴드 wash 가 바뀌므로 다시 그려 준다.

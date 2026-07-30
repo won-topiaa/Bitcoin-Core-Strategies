@@ -1,0 +1,203 @@
+<div class="wrap">
+
+<nav class="pages" aria-label="페이지">
+  <a href="__INDEX_URL__"><span class="n">01</span>지금 위치</a>
+  <a href="__VERIFY_URL__"><span class="n">02</span>믿어도 되나</a>
+  <a href="__RULES_URL__" aria-current="page"><span class="n">03</span>규칙과 한계</a>
+</nav>
+<header class="top">
+  <p class="eyebrow">규칙</p>
+  <h1>규칙과 한계</h1>
+  <p class="lead">이 점수로 <strong>실제로 무엇을 하는지</strong>, 그리고 이 방식이
+  <strong>무엇을 못 하는지</strong>를 적어 둡니다.</p>
+  <div class="srcline">
+    <span id="src-span"></span>
+    <span id="src-days"></span>
+  </div>
+</header>
+
+<!-- ============ 무엇이 점수를 만드나 ============ -->
+<section id="what" style="margin-top:0">
+  <div class="sechead">
+    <p class="eyebrow"><em>01</em> — 경계</p>
+    <h2>점수 안에 있는 것과 밖에 있는 것</h2>
+    <p>믿을 수 없는 숫자를 점수에 섞으면 점수 전체가 못 믿을 것이 됩니다. 그래서 무엇이
+    점수를 만들고 무엇이 화면에만 뜨는지를 분명히 갈라 놨습니다.</p>
+  </div>
+
+  <div class="panel">
+    <dl class="defs">
+      <dt>점수를 만드는 것</dt>
+      <dd>지표 아홉 개. 각 지표를 <strong>최근 4년 안에서 몇 등쯤인가</strong>로 바꿔서 씁니다.
+      "MVRV가 3이면 비싸다" 같은 고정 기준을 쓰지 않는 이유는, 사이클마다 그 절대 수치가 계속
+      낮아져 왔기 때문입니다.</dd>
+
+      <dt>둘 이상 동의</dt>
+      <dd>세 갈래 중 둘 이상이 같은 방향, <strong>그중 하나는 반드시 '평균가 대비'가 아닐 것.</strong>
+      이 조건을 못 채우면 매매 단계가 열리지 않습니다. 가격 평균선끼리는 서로를 확인해 주지
+      못하니까요.</dd>
+
+      <dt>빠진 데이터</dt>
+      <dd>지표 몇 개가 빠지면 남은 것들로 비중을 다시 나눠 계산하되, 절반 넘게 빠지면 아예
+      실행을 막습니다. 반쪽짜리 데이터로 나온 점수는 점수가 아닙니다.</dd>
+
+      <dt>화면에만 뜨는 것</dt>
+      <dd>바닥 조건 다섯 · 천장 조건 다섯 · 기준 바닥 가격 네 개 · 반감기 이후 경과일.
+      전부 <strong>과거 네 번의 사이클을 보고 정한 기준</strong>이라 그대로 믿기 어렵습니다.
+      그래서 참고로만 띄우고 점수에는 넣지 않습니다.</dd>
+
+      <dt>따로 노는 축</dt>
+      <dd>금리·달러·유동성 같은 거시 지표는 이 점수에 섞지 않습니다. 대신 별도 축으로 두고
+      실행할 <em>방향</em>이 아니라 <em>크기</em>만 0.75~1.25배로 조절합니다. 거시 데이터가
+      없어도 "지금 어디쯤인가"는 그대로 나옵니다.</dd>
+    </dl>
+  </div>
+</section>
+
+<!-- ============ 실행 규칙 ============ -->
+<section id="exec">
+  <div class="sechead">
+    <p class="eyebrow"><em>02</em> — 실행</p>
+    <h2>점수가 어디에 오면 무엇을 하나</h2>
+    <p><strong>이 부분은 본체가 아닙니다.</strong> 위치 판단이 본체이고, 아래는 그 판단을
+    행동으로 옮길 때 <strong>한 번에 다 하지 않게</strong> 만드는 안전장치입니다. 각자 사정에
+    맞게 바꿔도 됩니다.</p>
+  </div>
+
+  <div class="tblwrap">
+    <table id="band-table">
+      <caption>구간별 태도와 적립 배수</caption>
+      <thead><tr>
+        <th>점수</th><th style="text-align:left">구간</th>
+        <th style="text-align:left">태도</th><th>적립 배수</th>
+      </tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <div class="cols" style="margin-top:16px">
+    <div class="panel">
+      <h3 style="margin-bottom:4px">나눠 사기</h3>
+      <p style="font-size:13px;margin-bottom:12px">점수가 아래로 내려갈수록 예비 현금을
+      단계별로 넣습니다.</p>
+      <div id="acc-steps"></div>
+    </div>
+    <div class="panel">
+      <h3 style="margin-bottom:4px">나눠 팔기</h3>
+      <p style="font-size:13px;margin-bottom:12px">점수가 위로 올라갈수록 보유량을 단계별로
+      줄입니다. <strong id="core-note"></strong></p>
+      <div id="dist-steps"></div>
+    </div>
+  </div>
+
+  <div class="panel" style="margin-top:16px">
+    <h3 style="margin-bottom:10px">한 번에 다 하지 않게 만드는 장치들</h3>
+    <dl class="defs">
+      <dt>3일 확정</dt>
+      <dd>점수가 단계 기준선을 넘어도 <strong>3일은 그 아래/위에 머물러야</strong> 실행이
+      열립니다. 하루 스치고 되돌아오는 것을 실행으로 세지 않기 위해서입니다.</dd>
+      <dt>14일 간격</dt>
+      <dd>단계와 단계 사이에 최소 14일. 점수가 갑자기 튀어도 다섯 단계가 한꺼번에 실행되지
+      않습니다. 다섯 단계를 다 밟는 데 최소 8주가 걸립니다.</dd>
+      <dt>반대편 방문</dt>
+      <dd>한 방향 단계를 다 쓰고 나면, <strong>반대편 구간(∓20)까지 다녀와야</strong> 다시
+      쓸 수 있습니다. 같은 구간에서 왔다 갔다 하며 계속 실행되는 것을 막습니다.</dd>
+      <dt>안 파는 몫</dt>
+      <dd id="core-hold"></dd>
+    </dl>
+  </div>
+</section>
+
+<!-- ============ 한계 ============ -->
+<section id="limits">
+  <div class="sechead">
+    <p class="eyebrow"><em>03</em> — 한계</p>
+    <h2>고쳐지지 않는 약점</h2>
+    <p>숨기지 않고 적어 둡니다. 아래 다섯 가지는 더 노력하면 해결되는 문제가 아니라,
+    이 방식이 원래 안고 있는 한계입니다.</p>
+  </div>
+
+  <div class="panel">
+    <ul class="notes">
+      <li><strong>겪어 본 사이클이 네 번뿐입니다.</strong> 비트코인은 2009년에 시작했고 큰
+      오르내림은 아직 네 번밖에 없었습니다. 반면 이 시스템에서 사람이 정한 숫자는 269개입니다.
+      네 번의 경험에 269개를 맞춘 셈이라, 다섯 번째가 지금까지와 다르면 안 맞을 수 있습니다.
+      <br><br>그래서 <strong>같은 설정을 라이트코인과 이더리움에 그대로 적용해</strong> 봤습니다.
+      두 자산의 전환점 21곳 중 16곳(76%)을 맞혔습니다. 비트코인만 보고 맞춘 숫자놀음이었다면
+      그렇게 되지 않습니다.</li>
+
+      <li><strong>고점을 잡는 힘이 사이클마다 약해지고 있습니다.</strong> 예를 들어 Puell은 네
+      번의 고점에서 각각 최상위권 → 최상위권 → 중간 → 평범 순으로 밀렸습니다. 가격이 예전만큼
+      과격하게 오르지 않게 되면서 생긴 일입니다.
+      <br><br>대신할 지표를 22개 검정했지만 쓸 만한 것은 없었습니다. 마지막으로 남았던 후보
+      하나(LPPLS, 거품 모형)까지 적합시켜 보고 나서 알게 된 것은 이겁니다 —
+      <strong>2013년 고점과 2025년 고점은 구조 자체가 다릅니다.</strong> 같은 모형으로 설명하면
+      오차가 3.5배 벌어집니다. 지표를 바꿔서 해결할 문제가 아니라는 뜻입니다.</li>
+
+      <li><strong>세 갈래가 완전히 따로 놀지는 않습니다.</strong> '원가 대비'와 '평균가 대비'가
+      +0.83으로 같이 움직입니다. 둘 이상 동의를 요구하는 규칙은 갈래끼리 독립이라는 전제 위에
+      서 있는데, 그 전제가 완벽하지는 않습니다.</li>
+
+      <li><strong>딱 하나, 대체할 수 없는 데이터가 있습니다.</strong> 유통량·발행량·시가총액은
+      비트코인 규칙만 알면 직접 계산할 수 있습니다. 그런데 '시장 전체가 산 원가'만은 블록체인
+      전체를 훑어야 나오고, 무료로 받을 수 있는 곳이 두 군데뿐입니다. 둘 다 막히면 세 갈래 중
+      하나가 크게 부실해집니다.</li>
+
+      <li><strong>지난 15년이 특별한 시기였을 수 있습니다.</strong> 비트코인이 존재한 기간은
+      대체로 금리가 낮고 돈이 많이 풀린 시기와 겹칩니다. 그런 배경 없이도 4년 리듬이 유지될지는
+      어떤 데이터로도 답할 수 없습니다. <strong>보유분의 40%는 어떤 신호가 나와도 팔지 않는
+      규칙</strong>을 둔 이유가 이겁니다.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ 데이터 ============ -->
+<section id="data">
+  <div class="sechead">
+    <p class="eyebrow"><em>04</em> — 데이터</p>
+    <h2>어디서 받아서 어떻게 계산하나</h2>
+    <p>전부 무료로 구할 수 있는 데이터만 씁니다. 유료 구독이 필요한 지표는 아무리 좋아 보여도
+    넣지 않았습니다.</p>
+  </div>
+
+  <div class="panel">
+    <p style="margin-bottom:14px">지표 아홉 개를 만드는 데 쓰는 원재료는 일곱 가지인데,
+    <strong>그중 넷은 아예 받아올 필요가 없습니다.</strong> 비트코인의 발행 규칙이 코드에 박혀
+    있어서 직접 계산되기 때문입니다.</p>
+    <div class="tblwrap" style="border:0">
+      <table>
+        <thead><tr><th>원재료</th><th>조달</th><th>설명</th></tr></thead>
+        <tbody>
+          <tr><td class="lbl">가격</td><td>받아옴</td><td class="sub">대체 불가</td></tr>
+          <tr><td class="lbl">시장 전체의 원가</td><td>받아옴</td>
+              <td class="sub">블록체인 전체를 훑어야 나옵니다 — 계산 불가</td></tr>
+          <tr><td class="lbl">유통량</td><td>계산</td><td class="sub">반감기 일정으로</td></tr>
+          <tr><td class="lbl">시가총액</td><td>계산</td><td class="sub">가격 × 유통량</td></tr>
+          <tr><td class="lbl">발행량</td><td>계산</td><td class="sub">유통량의 하루 차이</td></tr>
+          <tr><td class="lbl">발행액</td><td>계산</td><td class="sub">발행량 × 가격</td></tr>
+          <tr><td class="lbl">해시레이트</td><td>선택</td>
+              <td class="sub">없으면 지표 하나만 빠집니다</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:14px">계산으로 채운 값의 정확도는 <strong>2015년 이후 평균 0.079%,
+    2020년 이후 0.011%</strong> 입니다. 실제 데이터로 계산한 점수와 비교하면 과거 전환점 여덟
+    곳에서 <strong>평균 1.2점</strong> 차이가 나고, 방향이 뒤집히는 곳은 없습니다.</p>
+    <p style="margin-top:10px" id="derive-now"></p>
+  </div>
+
+  <div class="nextlink">
+    <a href="__INDEX_URL__">
+      <span class="k">처음으로</span>
+      <span class="t">지금 위치 보기</span>
+      <span class="d">오늘 비트코인이 지난 16년에 비춰 어디쯤인지</span>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <p>이 페이지는 개인 기록과 정보 제공을 위한 것이고 투자 권유가 아닙니다.
+  여기 있는 어떤 숫자도 앞으로의 가격을 말하지 않습니다. 투자 판단과 그 결과는 본인의 몫입니다.</p>
+</footer>
+
+</div>
