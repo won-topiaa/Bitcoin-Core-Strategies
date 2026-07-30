@@ -233,6 +233,12 @@ def build(cfg: StrategyConfig, csv: str, *, derive: bool = True,
                         **{k: v for k, v in r.items() if k not in ("miss", "ind")}})
 
     cur = _last_full(rows)
+    # 오늘 점수가 16년 이력에서 몇 번째쯤인가. **이 시스템이 낼 수 있는 가장
+    # 읽기 쉬운 문장**이 여기서 나온다 — "아래에서 12% 지점" 은 −61.3 보다
+    # 훨씬 빨리 이해된다. 추린 시계열이 아니라 **일 단위 전체**로 센다.
+    # 추린 쪽은 최근 400일이 일 단위라 최근 구간이 과대 대표된다.
+    for r in (cur, rows[-1]):
+        r["rank_pct"] = rank_of(rows, r["bcs"])
     deltas = {}
     for label, n in (("d1", 1), ("d7", 7), ("d30", 30)):
         prev = _at_offset(rows, cur["d"], n)
@@ -336,6 +342,13 @@ def build(cfg: StrategyConfig, csv: str, *, derive: bool = True,
         "last_similar": similar,
         "series": thin(rows),
     }
+
+
+def rank_of(rows: list[dict], bcs: float) -> float:
+    """이 점수보다 낮았던 날의 비율. 0 이면 역대 최저, 1 이면 역대 최고."""
+    if not rows:
+        return 0.0
+    return round(sum(1 for r in rows if r["bcs"] < bcs) / len(rows), 4)
 
 
 def _last_full(rows: list[dict]) -> dict:

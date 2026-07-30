@@ -92,6 +92,7 @@ def compact(payload: dict) -> dict:
             "band": c["band"], "stable": c["stable"], "cov": c["cov"],
             "gate": c["gate"], "nmiss": c["nmiss"], "miss": c.get("miss", []),
             "fam": {k: _n(v, 2) for k, v in c["fam"].items()}, "dsh": c["dsh"],
+            "rank": c.get("rank_pct"),
             "ind": c.get("ind", {}),
         }
 

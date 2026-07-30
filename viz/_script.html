@@ -36,6 +36,13 @@ const pick = (o, f) => (EN() && o && o[f + "_en"]) ? o[f + "_en"] : ((o && o[f])
 
 const MON_EN = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 
+/** 12 → "th", 21 → "st". 백분위를 영어로 읽을 때만 쓴다. */
+function ordinal(n){
+  const v = Math.abs(Math.round(n)) % 100;
+  if (v >= 11 && v <= 13) return "th";
+  return {1:"st", 2:"nd", 3:"rd"}[v % 10] || "th";
+}
+
 /* 화면에서 만들어지는 문자열. 본문 산문은 _i18n.html 이 맡고, 여기 있는 것은
    숫자가 끼어드는 문장들이다 — 그래서 문장이 아니라 함수로 둔다. */
 const TX = {
@@ -44,12 +51,17 @@ ko: {
   now: "지금",
   ladderAcc: "◀ 나눠 사는 5단계",
   ladderDist: "나눠 파는 5단계 ▶",
+  // 큰 숫자를 사람 말로. 이 한 줄이 첫 화면에서 가장 먼저 읽힌다.
+  rankLine: (pct, days) =>
+    `지난 16년을 통틀어 <b>아래에서 <span class="pin">${pct}%</span> 지점</b>입니다 — ` +
+    `${days}일 가운데 오늘보다 싼 쪽이었던 날이 ${pct}% 뿐이라는 뜻입니다.`,
   // -- 읽는 법 그림
   keyExpensive: "비싼 쪽", keyCheap: "싼 쪽",
   keyBandIs: "띠 = 범위", keyLineIs: "선 = 대표값",
   // -- 이력
   halving: "반감기",
   legRange: "범위 (띠)", legPoint: "대표값 (선)",
+  legNow: "오늘 수준 (점선)",
   legTop: "과거 고점", legBottom: "과거 바닥",
   ttRange: "BCS 구간", ttPoint: "대표값", ttBand: "구간", ttPrice: "가격",
   ttGate: "둘 이상 동의", gatePass: "충족", gateFail: "미달",
@@ -188,16 +200,38 @@ ko: {
   toKorean: "한국어", toEnglish: "English",
   langAria: "영어로 보기",
   themeDark: "어둡게", themeLight: "밝게",
-  themeDarkAria: "어두운 화면으로 바꾸기", themeLightAria: "밝은 화면으로 바꾸기"
+  themeDarkAria: "어두운 화면으로 바꾸기", themeLightAria: "밝은 화면으로 바꾸기",
+  // -- 그림 대신 읽을 글. 이 페이지는 그림이 본체라 설명이 없으면 낭독기로는
+  //    빈 페이지나 다름없다.
+  altGauge: (lo, hi, band) =>
+    `−100 부터 +100 까지의 눈금 위에 현재 위치를 표시한 그림. 지금은 ${lo} 에서 ` +
+    `${hi} 사이, 구간으로는 '${band}' 입니다.`,
+  altHist: (from, to, bcs, band) =>
+    `${from} 부터 ${to} 까지 위치 점수를 이어 놓은 선 그래프. 띠는 지표 하나를 뺐을 ` +
+    `때의 범위입니다. 오늘 값 ${bcs}, 구간 '${band}' 수준에 가로선을 그어 두었습니다.`,
+  altPrice: (from, to, now) =>
+    `${from} 부터 ${to} 까지 비트코인 가격을 로그 눈금으로 그린 선 그래프. ` +
+    `지금 ${now} 입니다.`,
+  altTP: (mt, mb, gap, now) =>
+    `과거 전환점 여덟 곳의 위치 점수를 가로 막대로 늘어놓은 그림. 고점 네 번 평균 ` +
+    `${mt}, 바닥 네 번 평균 ${mb}, 그 사이 ${gap}점이 비어 있습니다. 지금은 ${now} 입니다.`,
+  altFam: list => `세 갈래의 최근 4년 점수를 그린 선 그래프. 지금 값은 ${list} 입니다.`,
+  altWidth: (med, p25, p75, stable) =>
+    `범위 폭의 분포를 그린 상자 그림. 중위 ${med}점, 가운데 절반이 ${p25}점에서 ` +
+    `${p75}점 사이이고, 범위가 한 구간에 온전히 들어온 날은 ${stable}% 입니다.`
 },
 en: {
   now: "NOW",
   ladderAcc: "◀ 5 buy-in steps",
   ladderDist: "5 sell-down steps ▶",
+  rankLine: (pct, days) =>
+    `That is <b>the <span class="pin">${pct}</span>${ordinal(pct)} percentile</b> of the last ` +
+    `16 years — of ${days} days, only ${pct}% were cheaper than today.`,
   keyExpensive: "expensive", keyCheap: "cheap",
   keyBandIs: "band = range", keyLineIs: "line = headline",
   halving: "halving",
   legRange: "range (band)", legPoint: "headline (line)",
+  legNow: "today's level (dashed)",
   legTop: "past peak", legBottom: "past bottom",
   ttRange: "BCS range", ttPoint: "headline", ttBand: "band", ttPrice: "price",
   ttGate: "two agree", gatePass: "met", gateFail: "not met",
@@ -330,7 +364,25 @@ en: {
   toKorean: "한국어", toEnglish: "English",
   langAria: "Switch to Korean",
   themeDark: "Dark", themeLight: "Light",
-  themeDarkAria: "Switch to a dark screen", themeLightAria: "Switch to a light screen"
+  themeDarkAria: "Switch to a dark screen", themeLightAria: "Switch to a light screen",
+  altGauge: (lo, hi, band) =>
+    `A ruler from −100 to +100 with the current position marked. Today sits between ` +
+    `${lo} and ${hi}, in the '${band}' band.`,
+  altHist: (from, to, bcs, band) =>
+    `A line chart of the position score from ${from} to ${to}. The band around the line is ` +
+    `the range left when any one indicator is dropped. Today's value ${bcs}, band '${band}', ` +
+    `is marked with a horizontal line.`,
+  altPrice: (from, to, now) =>
+    `A line chart of the Bitcoin price from ${from} to ${to} on a log scale. ` +
+    `It is ${now} now.`,
+  altTP: (mt, mb, gap, now) =>
+    `Horizontal bars showing the position score at eight past turning points. The four peaks ` +
+    `average ${mt}, the four bottoms ${mb}, and ${gap} points between them are empty. ` +
+    `Today is ${now}.`,
+  altFam: list => `A line chart of the three families over the last four years. Now: ${list}.`,
+  altWidth: (med, p25, p75, stable) =>
+    `A box plot of the range width. Median ${med} points, the middle half between ${p25} and ` +
+    `${p75}, and the range fits inside one band on ${stable}% of days.`
 }
 };
 
@@ -381,6 +433,14 @@ function txt(parent, x, y, s, o){
   return n;
 }
 function clear(svg){ while (svg.firstChild) svg.removeChild(svg.firstChild); }
+
+/** 그림을 읽을 수 없는 사람에게 같은 내용을 글로 준다. 이 페이지는 그림이
+    본체라, 그림에 설명이 없으면 화면 낭독기로는 빈 페이지나 다름없다. */
+function describe(svg, text){
+  if (!svg || !text) return;
+  svg.setAttribute("role", "img");
+  svg.setAttribute("aria-label", text);
+}
 
 /* 이 스크립트 한 벌이 세 장을 모두 그린다. 어느 장에 어떤 요소가 있는지
    스크립트가 알 필요는 없다 — 없으면 건너뛰면 그만이다. 대신 그 판단을
@@ -469,8 +529,13 @@ function drawGauge(){
   });
   el("line", {x1:gx0, y1:bTop, x2:gx1, y2:bTop, stroke:accent, "stroke-width":2}, svg);
   el("circle", {cx:gp, cy:barY+barH/2, r:5.5, fill:accent, stroke:"var(--surface)", "stroke-width":2}, svg);
-  txt(svg, (gx0+gx1)/2, bTop-9, t("now"),
+  // 범위가 좁으면(오늘은 3.4점 = 자 전체의 1.7%) 브래킷이 실오라기만 해서
+  // 눈에 안 들어온다. 폭은 사실대로 두되 **위에 삼각형을 얹어** 위치를 찍는다.
+  el("path", {d:`M${gp-5.5},${bTop-4} L${gp+5.5},${bTop-4} L${gp},${bTop+2} Z`,
+    fill:accent}, svg);
+  txt(svg, gp, bTop-9, t("now"),
     {anchor:"middle", size:10.5, fill:accent, weight:600, ls:".14em", mono:false});
+  describe(svg, t("altGauge", nf(c.low,1), nf(c.high,1), labelOf(c.band)));
 }
 
 /* =====================================================================
@@ -548,10 +613,16 @@ function yearTicks(){
 }
 
 function histLegend(){
+  // 새 점선을 범례에 넣지 않으면 "이 점선은 뭐지"가 남는다 — 설명 없는 선은
+  // 없는 선보다 나쁘다.
+  const cur = D.current;
+  const curCol = cur.bcs >= 0 ? "var(--warm-3)" : "var(--cool-3)";
   setHTML("hist-legend",
     `<span><i style="background:var(--cool-2);opacity:.45"></i>${t("legRange")}</span>` +
     `<span><i style="background:var(--ink);height:2px;border-radius:0;margin-bottom:3px"></i>` +
     `${t("legPoint")}</span>` +
+    `<span><i style="width:17px;height:0;border-top:2px dashed ${curCol};` +
+    `border-radius:0;margin-bottom:3px"></i>${t("legNow")}</span>` +
     `<span><i style="background:var(--warm-3);border-radius:50%"></i>${t("legTop")}</span>` +
     `<span><i style="background:var(--cool-3);border-radius:50%"></i>${t("legBottom")}</span>`);
 }
@@ -616,12 +687,34 @@ function drawHist(){
       stroke:"var(--surface)", "stroke-width":2}, svg);
     // 값은 고점 위·저점 아래에 붙이되, 그 자리가 그림 밖이면 반대편으로 넘긴다.
     // 2015 저점은 −98.9 라서 아래에 두면 연도 눈금 위에 올라탄다.
+    // 점 반지름 4.5 에 테두리 2 라 위아래로 최소 6.5px 는 비켜야 한다.
     let ly = Y(k.bcs) + (top ? -12 : 18);
-    if (ly > PT + ih - 3) ly = Y(k.bcs) - 10;
-    else if (ly < PT + 9) ly = Y(k.bcs) + 17;
+    if (ly > PT + ih - 3) ly = Y(k.bcs) - 11;
+    else if (ly < PT + 9) ly = Y(k.bcs) + 19;
     txt(svg, X(off), ly, nf(k.bcs,0),
       {anchor:"middle", size:10.5, fill:col, weight:600});
   });
+
+  // 오늘 수준을 가로로 그어 준다. **이 한 줄이 "지금이 과거 어디쯤인가"를
+  // 그림 하나로 답한다** — 선이 지나는 곳이 전부 오늘과 같은 수준이던 때다.
+  // 이게 없으면 16년 그림에서 오늘이 어디인지 표시가 아예 없었다.
+  const cur = D.current;
+  const curCol = cur.bcs >= 0 ? "var(--warm-3)" : "var(--cool-3)";
+  el("line", {x1:PL, y1:Y(cur.bcs), x2:PL+iw, y2:Y(cur.bcs), stroke:curCol,
+    "stroke-width":1.5, "stroke-dasharray":"5 4", "stroke-opacity":.85}, svg);
+  const nowLabel = t("nowAt", nf(cur.bcs, 0));
+  const lw = nowLabel.length * (EN() ? 5.8 : 7.2) + 12;
+  el("rect", {x:PL+5, y:Y(cur.bcs)-16, width:lw, height:14, rx:2,
+    fill:"var(--surface)", "fill-opacity":.92}, svg);
+  txt(svg, PL+11, Y(cur.bcs)-5, nowLabel,
+    {size:10.5, fill:curCol, weight:640, mono:false});
+
+  // 위아래가 무슨 뜻인지 그림 안에서 답한다. 색만 두면 위 설명 상자를 읽고
+  // 돌아와야 한다.
+  txt(svg, PL+iw-6, PT+13, t("keyExpensive"),
+    {anchor:"end", size:10, fill:"var(--muted)", mono:false});
+  txt(svg, PL+iw-6, PT+ih-6, t("keyCheap"),
+    {anchor:"end", size:10, fill:"var(--muted)", mono:false});
 
   attachCrosshair(svg, "hist-tt", host, X, PL, iw, PT, ih, r => ([
     [t("ttRange"), nf(r[3],1) + " ~ " + nf(r[4],1)],
@@ -632,6 +725,8 @@ function drawHist(){
 
   const st = D.stats;
   setText("hist-cap", t("histCap", S.length, st.median, st.mean));
+  describe(svg, t("altHist", D.span[0], D.span[1], nf(cur.bcs, 1),
+    labelOf(cur.band)));
 }
 
 function drawPrice(){
@@ -671,6 +766,7 @@ function drawPrice(){
   attachCrosshair(svg, "price-tt", host, X, PL, iw, PT, ih, r => ([
     [t("ttPrice"), money(r[1])], ["BCS", nf(r[2],1)]
   ]));
+  describe(svg, t("altPrice", D.span[0], D.span[1], money(D.current.price)));
 }
 
 /* =====================================================================
@@ -770,6 +866,8 @@ function drawTP(){
   const mean = a => a.reduce((s,v)=>s+v,0)/a.length;
   setText("tp-cap", t("tpCap", nf(mean(tops),1), nf(mean(bots),1),
     nf(gapHi,1), nf(gapLo,1), gapPts));
+  describe(svg, t("altTP", nf(mean(tops),1), nf(mean(bots),1), gapPts,
+    nf(c.bcs,1)));
 
   // 표의 마지막 세 열은 갈래 이름이다. 설정에서 가져온다 — 페이지에 적어 두면
   // 갈래 이름을 바꿀 때 표와 나머지가 갈라진다(실제로 갈라져 있었다).
@@ -1055,6 +1153,8 @@ function drawFam(){
       {size:11, fill:e.color, weight:600, mono:false}));
   }
 
+  describe(svg, t("altFam", D.families.map(f =>
+    `${pick(f, "label")} ${nf(D.current.fam[f.key], 2)}`).join(", ")));
   attachCrosshair(svg, "fam-tt", host, X, PL, iw, PT, ih, r => (
     D.families.map((f, i) => [pick(f, "label"), nf(r[5+i], 2)]).concat([
       ["BCS", nf(r[2],1)],
@@ -1115,6 +1215,7 @@ function drawWidth(){
     {anchor:"end", size:10, fill:"var(--muted)", mono:false});
 
   setText("width-cap", t("widthCap", st));
+  describe(svg, t("altWidth", st.median, st.p25, st.p75, st.stable_pct));
 }
 
 /* =====================================================================
@@ -1191,6 +1292,9 @@ function fillText(){
   if (setText("ro-band", c.stable ? labelOf(c.band) : bLo + " ~ " + bHi))
     $("ro-band").style.color = c.bcs >= 0 ? "var(--warm-3)" : "var(--cool-3)";
   setText("ro-asof", t("asOf", c.d, money(c.price)));
+  if (c.rank != null)
+    setHTML("ro-rank", t("rankLine", Math.round(c.rank * 100),
+      D.nDays.toLocaleString("en-US")));
 
   // 어제·지난주·지난달 대비. 매일 보는 사람에게는 절대값보다 변화가 궁금하다.
   // 값이 올라가면 "비싼 쪽으로", 내려가면 "싼 쪽으로" 움직인 것이다.

@@ -134,6 +134,25 @@ def test_every_placeholder_gets_replaced():
             assert "<title>" in html and "__TITLE__" not in html
 
 
+def test_rank_is_measured_over_every_day_not_the_thinned_series():
+    """첫 화면의 "아래에서 14% 지점" 이 이 함수에서 나온다.
+
+    추린 시계열로 세면 최근 400일이 일 단위라 최근 구간이 과대 대표되고,
+    그러면 그 한 줄이 조용히 틀린다. 전체 일 단위로 세는지 못 박는다.
+    """
+    sys.path.insert(0, str(ROOT / "tools"))
+    import export_viz
+
+    rows = [{"bcs": v} for v in range(100)]       # 0 … 99
+    assert export_viz.rank_of(rows, -1) == 0.0    # 역대 최저보다 낮다
+    assert export_viz.rank_of(rows, 100) == 1.0   # 역대 최고보다 높다
+    assert export_viz.rank_of(rows, 50) == 0.5
+    assert export_viz.rank_of([], 0.0) == 0.0     # 빈 입력에 죽지 않는다
+
+    # 같은 값이 여럿이어도 "이보다 낮았던 날" 이라는 정의를 지킨다
+    assert export_viz.rank_of([{"bcs": 5}] * 4 + [{"bcs": 9}], 5) == 0.0
+
+
 def test_pages_are_self_contained():
     """외부 요청이 하나라도 있으면 막힌 환경에서 빈 화면이 된다."""
     import tempfile
