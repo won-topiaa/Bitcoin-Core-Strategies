@@ -197,9 +197,19 @@ def build(cfg: StrategyConfig, csv: str, *, derive: bool = True) -> dict:
         "families": [
             {"key": k, "label": f.get("label", k), "weight": float(f["weight"]),
              "aggregate": f.get("aggregate", "mean"),
-             "members": [cfg.indicator(m).get("label", m) for m in f["members"]]}
+             "explain": f.get("explain", ""),
+             # 설명은 설정이 소유한다. 페이지에 따로 적어 두면 지표를 고칠 때
+             # 둘이 어긋나고, 어긋난 설명은 없는 설명보다 나쁘다.
+             "members": [
+                 {"key": m,
+                  "label": cfg.indicator(m).get("label", m),
+                  "explain": cfg.indicator(m).get("explain", ""),
+                  "explain_long": cfg.indicator(m).get("explain_long", "")}
+                 for m in f["members"]
+             ]}
             for k, f in cfg.bcs_families.items()
         ],
+        "band_stances": {b["key"]: b.get("stance", "") for b in cfg.bands},
         "ladders": {
             "distribute": [
                 {"bcs": float(s["trigger_bcs"]), "pct": float(s["pct_of_holdings"])}

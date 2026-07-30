@@ -169,6 +169,41 @@ tbody tr.hi td{background:var(--surface-2)}
 .famcard li{padding:5px 0; border-top:1px solid var(--rule); display:flex; justify-content:space-between; gap:12px}
 .famcard .agg{font-size:11.5px; letter-spacing:.01em; color:var(--muted); margin-top:10px}
 .famcard .agg b{font-family:var(--mono); font-weight:500; letter-spacing:.06em}
+/* 설명 토글 — 궁금한 사람만 펴 본다. 기본은 접힌 상태다. */
+.why{
+  appearance:none; border:1px solid var(--rule); background:var(--surface-2);
+  color:var(--ink-2); font-family:var(--sans); font-size:11.5px; font-weight:600;
+  padding:2px 9px 3px; border-radius:2px; cursor:pointer; line-height:1.5;
+  display:inline-flex; align-items:center; gap:5px; white-space:nowrap;
+  transition:background .12s, color .12s
+}
+.why:hover{background:var(--surface); color:var(--ink); border-color:var(--axis)}
+.why[aria-expanded="true"]{background:var(--ink); color:var(--surface); border-color:var(--ink)}
+.why .mk{font-family:var(--mono); font-size:10px; opacity:.7}
+.why[aria-expanded="true"] .mk{opacity:1}
+.panelbody{display:none; margin-top:10px; padding:13px 15px; border-radius:2px;
+  background:var(--surface-2); border:1px solid var(--rule);
+  font-size:13.5px; line-height:1.68; color:var(--ink-2)}
+.panelbody.open{display:block}
+.panelbody b{color:var(--ink)}
+.panelbody .formula{font-family:var(--mono); font-size:12px; color:var(--muted);
+  margin-top:9px; display:block}
+.bandlist{margin-top:13px; border-top:1px solid var(--rule); padding-top:4px;
+  max-width:320px}
+.bandrow{display:flex; justify-content:space-between; gap:20px; padding:4px 0;
+  font-size:12.5px; border-bottom:1px solid var(--rule)}
+.bandrow:last-child{border-bottom:0}
+.bandrow span:first-child{font-family:var(--mono); font-variant-numeric:tabular-nums;
+  color:var(--muted)}
+.bandrow span:last-child{font-weight:600; color:var(--ink)}
+@media (prefers-reduced-motion: reduce){.why{transition:none}}
+
+.indi{border-top:1px solid var(--rule); padding:13px 0 14px}
+.indi:first-of-type{border-top:0}
+.indi .nm{font-size:13.5px; font-weight:620; color:var(--ink); line-height:1.45}
+.indi .one{font-size:13px; color:var(--ink-2); margin:3px 0 9px; line-height:1.55}
+.indi .why{font-size:11px; padding:1px 8px 2px}
+
 dl.defs{margin:0; display:grid; grid-template-columns:auto 1fr; gap:0}
 dl.defs dt{font-size:12px; font-weight:640; letter-spacing:.02em; color:var(--muted);
   padding:11px 22px 11px 0; border-top:1px solid var(--rule); white-space:nowrap}
@@ -187,13 +222,13 @@ footer p{color:var(--muted); font-size:12.5px; max-width:70ch}
 
 <header class="top">
   <p class="eyebrow">BCS · Bitcoin Cycle Score</p>
-  <h1>지금은 저점 부근인가, 고점 부근인가</h1>
-  <p class="lead">비트코인의 현재 가격이 <strong>과거 16년 데이터에 비교해 어디쯤인지</strong>를
-  오늘 기준으로 다시 세워 보여주는 게이지다. 언제 사고팔라는 신호가 아니다 —
-  <strong>위치값이지 예측값이 아니다.</strong></p>
-  <p>점수는 서로 계산 재료가 다른 지표 9개를 3개 계열로 묶어 만든다. 그리고 점 하나가 아니라
-  <strong>구간</strong>으로 표시한다 — 지표를 하나씩 빼고 다시 계산해 보면 판정이 얼마나 흔들리는지가
-  나오고, 그 폭이 곧 이 숫자를 어디까지 믿어도 되는지다.</p>
+  <h1>지금은 싼 편인가, 비싼 편인가</h1>
+  <p class="lead">비트코인의 오늘 가격이 <strong>지난 16년에 비춰 어디쯤인지</strong>를 알려주는
+  눈금자입니다. 앞으로 오를지 내릴지는 말하지 않습니다. <strong>지금 위치만</strong> 말합니다.</p>
+  <p>서로 다른 것을 재는 지표 아홉 개를 세 갈래로 묶어 하나의 점수로 합칩니다. 그리고 점수를
+  숫자 하나가 아니라 <strong>범위</strong>로 보여줍니다. 지표를 하나씩 빼고 다시 계산해 보면
+  판단이 얼마나 흔들리는지가 나오는데, 그 흔들리는 폭이 곧 이 숫자를 어디까지 믿어도 되는지이기
+  때문입니다.</p>
   <div class="srcline">
     <span id="src-span"></span>
     <span id="src-days"></span>
@@ -206,7 +241,9 @@ footer p{color:var(--muted); font-size:12.5px; max-width:70ch}
 <section id="now" style="margin-top:0">
   <div class="sechead">
     <p class="eyebrow"><em>01</em> — 지금 위치</p>
-    <h2>계기판</h2>
+    <h2>오늘은 여기쯤입니다</h2>
+    <p>−100에 가까울수록 과거 16년에 비춰 싼 편이고, +100에 가까울수록 비싼 편입니다.
+    숫자 하나가 아니라 <strong>범위</strong>로 나오는 이유는 아래 05에서 설명합니다.</p>
   </div>
 
   <div class="panel gauge-wrap">
@@ -218,27 +255,30 @@ footer p{color:var(--muted); font-size:12.5px; max-width:70ch}
     <div class="chart" id="gauge-host">
       <svg class="gauge-svg" id="gauge"></svg>
     </div>
+    <div id="gauge-why" style="margin-top:16px"></div>
   </div>
 
   <div class="tiles" id="tiles"></div>
+  <div id="tiles-why" style="margin-top:14px"></div>
 </section>
 
 <!-- ============ 16년 이력 ============ -->
 <section id="history">
   <div class="sechead">
     <p class="eyebrow"><em>02</em> — 16년 이력</p>
-    <h2>같은 자리에 네 번 갔고, 네 번 돌아왔다</h2>
-    <p>세로축이 사이클 위치다. 띠의 두께가 곧 불확실성이고, 가는 선이 대표값이다.
-    배경색은 밴드 — 위로 갈수록 따뜻하고(과열) 아래로 갈수록 차갑다(항복).</p>
+    <h2>같은 자리에 네 번 갔고, 네 번 돌아왔습니다</h2>
+    <p>세로축이 위치 점수입니다. 띠가 두꺼울수록 "잘 모르겠다"는 뜻이고, 가운데 가는 선이
+    대표값입니다. 배경색은 구간 이름을 색으로 옮긴 것으로, 위로 갈수록 따뜻하고(비싼 쪽)
+    아래로 갈수록 차갑습니다(싼 쪽).</p>
   </div>
 
   <figure class="panel">
     <div class="chart-head">
       <div class="legend">
-        <span><i style="background:var(--cool-2);opacity:.45"></i>BCS 구간 (지표 하나 제외 시 범위)</span>
-        <span><i style="background:var(--ink);height:2px;border-radius:0;margin-bottom:3px"></i>대표값</span>
-        <span><i style="background:var(--warm-3);border-radius:50%"></i>사이클 고점</span>
-        <span><i style="background:var(--cool-3);border-radius:50%"></i>사이클 저점</span>
+        <span><i style="background:var(--cool-2);opacity:.45"></i>위치 범위 (지표 하나 뺐을 때)</span>
+        <span><i style="background:var(--ink);height:2px;border-radius:0;margin-bottom:3px"></i>대표값 (아홉 개 전부)</span>
+        <span><i style="background:var(--warm-3);border-radius:50%"></i>과거 고점</span>
+        <span><i style="background:var(--cool-3);border-radius:50%"></i>과거 바닥</span>
       </div>
     </div>
     <div class="chart" id="hist-host">
@@ -254,8 +294,9 @@ footer p{color:var(--muted); font-size:12.5px; max-width:70ch}
       <svg id="price"></svg>
       <div class="tt" id="price-tt"></div>
     </div>
-    <figcaption>위 차트와 같은 가로축이다. 가격을 같은 그림에 겹치지 않는 이유는
-    축이 둘이 되면 없는 상관을 만들어 내기 때문이다 — 눈으로 위아래를 비교하는 것이 맞다.</figcaption>
+    <figcaption>위 차트와 가로축이 같습니다. 가격을 같은 그림에 겹쳐 그리지 않은 이유가 있습니다.
+    세로축이 두 개가 되면 두 선을 어디에 맞추느냐에 따라 없던 관계가 있는 것처럼 보입니다.
+    위아래로 나란히 놓고 눈으로 비교하는 편이 정직합니다.</figcaption>
   </figure>
 </section>
 
@@ -263,9 +304,10 @@ footer p{color:var(--muted); font-size:12.5px; max-width:70ch}
 <section id="scorecard">
   <div class="sechead">
     <p class="eyebrow"><em>03</em> — 성적표</p>
-    <h2>이 지표의 성적은 수익률이 아니다</h2>
-    <p>위치 게이지의 성적은 하나뿐이다. <strong>네 번의 사이클 고점에서 고점 쪽을 가리켰는가,
-    네 번의 저점에서 저점 쪽을 가리켰는가.</strong> 여덟 번 중 한 번도 뒤집히지 않았다.</p>
+    <h2>이 지표의 성적은 수익률이 아닙니다</h2>
+    <p>이건 언제 사고팔라는 도구가 아니니, 성적도 수익률로 매기지 않습니다. 물어야 할 것은
+    하나입니다 — <strong>과거 네 번의 큰 고점에서 실제로 비싼 쪽을 가리켰는가, 네 번의
+    바닥에서 싼 쪽을 가리켰는가.</strong> 여덟 번 중 한 번도 반대로 말하지 않았습니다.</p>
   </div>
 
   <figure class="panel">
@@ -278,10 +320,10 @@ footer p{color:var(--muted); font-size:12.5px; max-width:70ch}
 
   <div class="tblwrap" style="margin-top:16px">
     <table id="tp-table">
-      <caption>전환점 8곳의 계열별 점수 — 위 차트와 같은 데이터의 표 보기</caption>
+      <caption>과거 전환점 8곳의 갈래별 점수 — 위 그림과 같은 내용을 표로</caption>
       <thead><tr>
-        <th>국면</th><th>날짜</th><th>가격</th><th>BCS 구간</th><th>대표값</th>
-        <th>폭</th><th>밸류에이션</th><th>가격·추세</th><th>공급·채굴</th>
+        <th>국면</th><th>날짜</th><th>가격</th><th>위치 범위</th><th>대표값</th>
+        <th>폭</th><th>원가 대비</th><th>평균가 대비</th><th>채굴 상황</th>
       </tr></thead>
       <tbody></tbody>
     </table>
@@ -292,104 +334,135 @@ footer p{color:var(--muted); font-size:12.5px; max-width:70ch}
 <section id="composition">
   <div class="sechead">
     <p class="eyebrow"><em>04</em> — 구성</p>
-    <h2>계열 3개로 접었다</h2>
-    <p>원문 12개 지표를 <strong>"계산 재료가 같으면 한 개로 센다"</strong>는 규칙으로 접으면
-    정보원이 3개만 남는다. 각 계열이 −1 ~ +1 을 내고, 가중합이 BCS 다.</p>
+    <h2>무엇을 보고 이 숫자가 나오나</h2>
+    <p>흔히 쓰이는 지표 12개를 모아 놓고 <strong>"계산에 쓰는 재료가 같으면 하나로 센다"</strong>는
+    규칙을 적용하면, 실제로 서로 다른 이야기를 하는 것은 세 갈래뿐입니다. 각 갈래가
+    −1(싸다) ~ +1(비싸다) 사이의 값을 내고, 아래 가중치대로 합쳐서 점수가 됩니다.</p>
+    <p>지표마다 한 줄 설명이 붙어 있고, <strong>좀 더 자세히</strong>를 누르면 그게 왜 의미가
+    있는지까지 풀어서 나옵니다.</p>
   </div>
 
   <div class="cols" id="famcards"></div>
 
   <figure class="panel" style="margin-top:16px">
     <div class="chart-head">
-      <h3>계열별 점수 — 최근 4년</h3>
+      <h3>세 갈래가 각각 뭐라고 하고 있나 — 최근 4년</h3>
       <div class="legend" id="fam-legend"></div>
     </div>
     <div class="chart" id="fam-host">
       <svg id="fam"></svg>
       <div class="tt" id="fam-tt"></div>
     </div>
-    <figcaption>세 계열이 한꺼번에 같은 방향으로 가야 실행이 열린다(합의 게이트).
-    가격 계열은 하나뿐이라 <strong>혼자서는 절대 2개를 채울 수 없다</strong> — 가격 이동평균 4종이
-    강세장 후반에 함께 붉어지는 착시를 산술적으로 막는다.</figcaption>
+    <figcaption>세 갈래 중 둘 이상이 같은 방향을 가리켜야 실제 매매 단계가 열립니다. 그중 하나는
+    반드시 '평균가 대비'가 아니어야 합니다. 이건 흔한 오판을 막으려는 장치입니다 —
+    상승장 후반에는 가격 평균선 네 개가 한꺼번에 빨개지는데, 그건 네 번의 확인이 아니라
+    <strong>같은 사실을 네 번 본 것</strong>이기 때문입니다.</figcaption>
   </figure>
 </section>
 
 <!-- ============ 불확실성 ============ -->
 <section id="uncertainty">
   <div class="sechead">
-    <p class="eyebrow"><em>05</em> — 불확실성</p>
-    <h2>이 숫자를 어디까지 믿어도 되는가</h2>
-    <p>구간의 폭은 지표를 하나씩 빼고 다시 계산한 값들의 범위다.
-    <strong>새 파라미터가 하나도 없다</strong> — "±10 정도로 보라"는 상수를 박으면 그 10이 또 하나의
-    조정 숫자가 되기 때문에, 데이터가 스스로 폭을 정하게 했다.</p>
+    <p class="eyebrow"><em>05</em> — 왜 범위로 나오나</p>
+    <h2>이 숫자를 어디까지 믿어도 되나</h2>
+    <p>지표 아홉 개 중 하나를 빼고 다시 계산해 봅니다. 아홉 번 다 해 보면 값이 아래위로
+    흩어지는데, <strong>그 흩어진 폭이 곧 범위</strong>입니다. 답하는 질문은 이겁니다 —
+    <strong>"지표 하나가 틀렸거나 없었다면 판단이 달라졌을까?"</strong></p>
+    <p>이렇게 하면 <strong>새로 정한 숫자가 하나도 없습니다.</strong> "±10 정도로 보세요" 같은
+    상수를 정해 두면 그 10이 또 하나의 임의값이 되니까, 데이터가 스스로 폭을 정하게 했습니다.</p>
   </div>
 
   <figure class="panel">
-    <div class="chart-head"><h3>16년 전 구간의 구간 폭 분포</h3></div>
+    <div class="chart-head"><h3>16년 동안 범위가 얼마나 넓었나</h3></div>
     <div class="chart" id="width-host"><svg id="width"></svg></div>
     <figcaption id="width-cap"></figcaption>
   </figure>
 
   <div class="callout">
-    <p><strong>절반이 조금 안 되는 날만 구간이 한 밴드 안에 들어온다.</strong>
-    나머지 날은 "저평가"와 "깊은 저평가" 사이처럼 두 국면에 걸쳐 있다. 소수점을 근거로 행동을 바꾸면
-    안 된다는 경고가 숫자로 나온 것이고, 그게 이 표시 방식을 고른 이유다.</p>
+    <p><strong>절반이 조금 안 되는 날만 범위가 한 구간 안에 온전히 들어옵니다.</strong>
+    나머지 날은 "싼 편"과 "저점 부근" 사이처럼 두 구간에 걸쳐 있습니다. 소수점을 보고 판단을
+    바꾸면 안 된다는 경고가 숫자로 나온 셈이고, 그래서 애초에 범위로 보여주기로 했습니다.</p>
   </div>
 </section>
 
 <!-- ============ 구조 ============ -->
 <section id="structure">
   <div class="sechead">
-    <p class="eyebrow"><em>06</em> — 구조</p>
+    <p class="eyebrow"><em>06</em> — 규칙</p>
     <h2>점수 안에 있는 것과 밖에 있는 것</h2>
-    <p>못 믿을 숫자를 점수에 넣으면 위치값이 오염된다. 그래서 경계를 분명히 그었다.</p>
+    <p>믿을 수 없는 숫자를 점수에 섞으면 점수 전체가 못 믿을 것이 됩니다. 그래서 무엇이
+    점수를 만들고 무엇이 화면에만 뜨는지를 분명히 갈라 놨습니다.</p>
   </div>
 
   <div class="panel">
     <dl class="defs">
-      <dt>점수 안</dt>
-      <dd>지표 9개 · 계열 3개 · 4년 퍼센타일 정규화. 이것만이 BCS 를 만든다.</dd>
-      <dt>합의 게이트</dt>
-      <dd>계열 2개 이상이 같은 방향, 그중 <strong>최소 1개는 가격 계열이 아닐 것.</strong>
-      통과하지 못하면 사다리 실행이 열리지 않는다.</dd>
-      <dt>커버리지</dt>
-      <dd>결측이 있으면 남은 계열로 가중치를 재정규화하고, 60% 미만이면 실행을 금지한다.</dd>
-      <dt>표시 전용</dt>
-      <dd>저점 프로파일 5개 · 고점 프로파일 5개 · 바닥선 4개 · 반감기 이후 경과일.
-      4개 사이클에서 뽑은 임계라 신뢰할 수 없어서 <strong>화면에만 띄우고 점수에 넣지 않는다.</strong></dd>
-      <dt>별도 축</dt>
-      <dd>LRS(유동성 레짐)는 BCS 에 섞지 않는다. 실행의 <em>방향</em>이 아니라
-      <em>크기</em>만 0.75 ~ 1.25배로 조절한다.</dd>
-      <dt>실행 껍데기</dt>
+      <dt>점수를 만드는 것</dt>
+      <dd>지표 아홉 개. 그리고 각 지표를 <strong>최근 4년 안에서 몇 등쯤인가</strong>로 바꿔서
+      씁니다. "MVRV가 3이면 비싸다" 같은 고정 기준을 쓰지 않는 이유는, 사이클마다 그 절대
+      수치가 계속 낮아져 왔기 때문입니다. 등수는 그 영향을 덜 받습니다.</dd>
+
+      <dt>둘 이상 동의</dt>
+      <dd>세 갈래 중 둘 이상이 같은 방향, <strong>그중 하나는 반드시 '평균가 대비'가 아닐 것.</strong>
+      이 조건을 못 채우면 매매 단계가 열리지 않습니다. 가격 평균선끼리는 서로를 확인해 주지
+      못하니까요.</dd>
+
+      <dt>빠진 데이터</dt>
+      <dd>지표 몇 개가 빠지면 남은 것들로 비중을 다시 나눠 계산하되, 절반 넘게 빠지면 아예
+      실행을 막습니다. 반쪽짜리 데이터로 나온 점수는 점수가 아닙니다.</dd>
+
+      <dt>화면에만 뜨는 것</dt>
+      <dd>바닥 조건 다섯 · 천장 조건 다섯 · 기준 바닥 가격 네 개 · 반감기 이후 경과일.
+      전부 <strong>과거 네 번의 사이클을 보고 정한 기준</strong>이라 그대로 믿기 어렵습니다.
+      그래서 참고로만 띄우고 점수에는 넣지 않습니다.</dd>
+
+      <dt>따로 노는 축</dt>
+      <dd>금리·달러·유동성 같은 거시 지표는 이 점수에 섞지 않습니다. 대신 별도 축으로 두고
+      실행할 <em>방향</em>이 아니라 <em>크기</em>만 0.75~1.25배로 조절합니다. 거시 데이터가
+      없어도 "지금 어디쯤인가"는 그대로 나옵니다.</dd>
+
+      <dt>실행 규칙</dt>
       <dd id="def-ladder"></dd>
     </dl>
   </div>
 
   <div class="panel" style="margin-top:16px">
-    <h3 style="margin-bottom:12px">고쳐지지 않는 한계</h3>
+    <h3 style="margin-bottom:6px">고쳐지지 않는 약점</h3>
+    <p style="margin-bottom:16px">숨기지 않고 적어 둡니다. 아래 다섯 가지는 더 노력하면
+    해결되는 문제가 아니라, 이 방식이 원래 안고 있는 한계입니다.</p>
     <ul class="notes">
-      <li><strong>조정 가능한 숫자 269개 대 유효 사이클 4개.</strong> 파라미터를 줄여도 사이클이
-      네 번뿐이라는 사실은 바뀌지 않는다. 그래서 표본을 실제로 늘리는 유일한 방법 —
-      라이트코인·이더리움에 같은 설정을 적용해 전환점 21곳을 봤고 76.2% 를 잡았다.</li>
-      <li><strong>고점 탐지력이 사이클마다 약해진다.</strong> 네 고점에서의 4년 퍼센타일이
-      Puell +0.99 → +1.00 → +0.46 → −0.00 으로 무너졌다. 대체 후보 21개를 검정했지만
-      점수 지표로 쓸 만한 것은 없었다.</li>
-      <li><strong>계열이 완전히 독립은 아니다.</strong> 밸류에이션↔가격 상관 +0.83.
-      합의 게이트가 계열 독립을 전제하므로 이 값이 0.85 를 넘으면 게이트를 다시 설계해야 한다.</li>
-      <li><strong>실현시총이 유일한 단일 장애점이다.</strong> 유통량·발행량·시가총액은 반감기
-      스케줄로 계산되지만, 실현시총만은 체인 전체를 훑어야 나오고 무료 경로가 2개뿐이다.
-      막히면 밸류에이션 계열 40 중 서멀캡만 남는다.</li>
-      <li><strong>세 자산 모두 같은 15년의 같은 거시 환경을 겪었다.</strong> 제로금리 없는 세계에서
-      4년 사이클이 유지될지는 어떤 데이터도 말해 주지 않는다. 그래서 코어 40% 는 어떤 신호에도
-      팔지 않는다.</li>
+      <li><strong>겪어 본 사이클이 네 번뿐입니다.</strong> 비트코인은 2009년에 시작했고 큰
+      오르내림은 아직 네 번밖에 없었습니다. 반면 이 시스템에서 사람이 정한 숫자는 269개입니다.
+      네 번의 경험에 269개를 맞춘 셈이라, 다섯 번째가 지금까지와 다르면 안 맞을 수 있습니다.
+      그래서 <strong>같은 설정을 라이트코인과 이더리움에 그대로 적용해</strong> 봤고, 그 두
+      자산의 전환점 21곳 중 16곳(76%)을 맞혔습니다. 비트코인만 보고 맞춘 숫자놀음이었다면
+      그렇게 되지 않습니다.</li>
+
+      <li><strong>고점을 잡는 힘이 사이클마다 약해지고 있습니다.</strong> 예를 들어 Puell은 네
+      번의 고점에서 각각 최상위권 → 최상위권 → 중간 → 평범 순으로 밀렸습니다. 가격이 예전만큼
+      과격하게 오르지 않게 되면서 생긴 일입니다. 대신할 지표를 22개 검정했지만 쓸 만한 것은
+      없었습니다.</li>
+
+      <li><strong>세 갈래가 완전히 따로 놀지는 않습니다.</strong> '원가 대비'와 '평균가 대비'가
+      +0.83으로 같이 움직입니다. 둘 이상 동의를 요구하는 규칙은 갈래끼리 독립이라는 전제 위에
+      서 있는데, 그 전제가 완벽하지는 않습니다.</li>
+
+      <li><strong>딱 하나, 대체할 수 없는 데이터가 있습니다.</strong> 유통량·발행량·시가총액은
+      비트코인 규칙만 알면 직접 계산할 수 있습니다. 그런데 '시장 전체가 산 원가'만은 블록체인
+      전체를 훑어야 나오고, 무료로 받을 수 있는 곳이 두 군데뿐입니다. 둘 다 막히면 세 갈래 중
+      하나가 크게 부실해집니다.</li>
+
+      <li><strong>지난 15년이 특별한 시기였을 수 있습니다.</strong> 비트코인이 존재한 기간은
+      대체로 금리가 낮고 돈이 많이 풀린 시기와 겹칩니다. 그런 배경 없이도 4년 리듬이 유지될지는
+      어떤 데이터로도 답할 수 없습니다. <strong>보유분의 40%는 어떤 신호가 나와도 팔지 않는
+      규칙</strong>을 둔 이유가 이겁니다.</li>
     </ul>
   </div>
 </section>
 
 <footer>
   <p id="foot-derive"></p>
-  <p style="margin-top:10px">이 페이지는 개인 기록과 정보 제공을 목적으로 하며 투자 자문이 아닙니다.
-  모든 투자 판단과 그 결과에 대한 책임은 투자자 본인에게 있습니다.</p>
+  <p style="margin-top:10px">이 페이지는 개인 기록과 정보 제공을 위한 것이고 투자 권유가 아닙니다.
+  여기 있는 어떤 숫자도 앞으로의 가격을 말하지 않습니다. 투자 판단과 그 결과는 본인의 몫입니다.</p>
 </footer>
 
 </div>
@@ -513,8 +586,8 @@ function drawGauge(){
     el("path", {d:`M${x(s.v)-3.5},${barY+barH+31} L${x(s.v)+3.5},${barY+barH+31} L${x(s.v)},${barY+barH+26} Z`,
       fill:s.kind==="acc" ? "var(--cool-2)" : "var(--warm-2)", opacity:.55}, svg);
   });
-  txt(svg, x(-100), barY+barH+45, "◀ 매집 계단 5", {size:10, fill:"var(--muted)", ls:".05em"});
-  txt(svg, x(100), barY+barH+45, "분배 계단 5 ▶", {size:10, fill:"var(--muted)", ls:".05em", anchor:"end"});
+  txt(svg, x(-100), barY+barH+45, "◀ 나눠 사는 5단계", {size:10, fill:"var(--muted)", ls:".05em"});
+  txt(svg, x(100), barY+barH+45, "나눠 파는 5단계 ▶", {size:10, fill:"var(--muted)", ls:".05em", anchor:"end"});
 
   // 현재 구간 — 자 위에 놓인 브래킷
   const gx0 = x(c.low), gx1 = x(c.high), gp = x(c.bcs);
@@ -769,25 +842,65 @@ function drawTP(){
 /* =====================================================================
    04. 계열
    ===================================================================== */
+let _uid = 0;
+
+function esc(s){
+  return String(s).replace(/[&<>"]/g, c =>
+    ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]));
+}
+
+/** 접었다 펴는 설명 한 덩어리. 기본은 접힘 — 궁금한 사람만 연다. */
+function toggle(label, body){
+  const id = "why-" + (++_uid);
+  return `<button class="why" type="button" aria-expanded="false" aria-controls="${id}" ` +
+         `data-target="${id}"><span class="mk">+</span>${label}</button>` +
+         `<div class="panelbody" id="${id}">${body}</div>`;
+}
+
+function wireToggles(root){
+  root.querySelectorAll(".why").forEach(btn => {
+    if (btn.dataset.wired) return;
+    btn.dataset.wired = "1";
+    btn.addEventListener("click", () => {
+      const body = document.getElementById(btn.dataset.target);
+      const open = body.classList.toggle("open");
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+      btn.querySelector(".mk").textContent = open ? "−" : "+";
+    });
+  });
+}
+
 function famCards(){
   const host = document.getElementById("famcards");
   host.innerHTML = "";
   const cur = D.current.fam;
   D.families.forEach((f, i) => {
     const v = cur[f.key];
+    const agg = f.aggregate === "max_abs"
+      ? "셋 중 <b>가장 극단인 하나</b>만 채택합니다. 재료가 겹쳐서 더하면 같은 사실을 두 번 세는 셈이라서요."
+      : "구성 지표의 <b>평균</b>을 냅니다.";
     const div = document.createElement("div");
     div.className = "famcard";
     div.innerHTML =
-      `<div class="top"><h3><span class="sw" style="background:var(${FAMC[i]})"></span>${f.label}</h3>` +
+      `<div class="top"><h3><span class="sw" style="background:var(${FAMC[i]})"></span>${esc(f.label)}</h3>` +
       `<span class="w">${f.weight}</span></div>` +
-      `<div class="agg">집계 <b>${f.aggregate === "max_abs" ? "MAX_ABS" : "MEAN"}</b> — ` +
-      `${f.aggregate === "max_abs" ? "가장 극단인 하나만" : "구성 지표의 평균"}</div>` +
-      `<ul>${f.members.map(m => `<li><span>${m}</span></li>`).join("")}</ul>` +
-      `<div class="score"><span>지금 점수</span><b>${nf(v,2)}</b></div>`;
+      `<div class="agg">점수에서 차지하는 비중 ${f.weight}%</div>` +
+      (f.explain ? toggle("이 갈래는 뭔가요?",
+          `<p style="margin:0">${esc(f.explain)}</p>` +
+          `<p style="margin:10px 0 0">합치는 방식 — ${agg}</p>`) : "") +
+      `<ul>${f.members.map(m => `<li style="display:block">` +
+        `<div class="indi">` +
+        `<div class="nm">${esc(m.label)}</div>` +
+        (m.explain ? `<div class="one">${esc(m.explain)}</div>` : "") +
+        (m.explain_long ? toggle("좀 더 자세히",
+            `<p style="margin:0">${esc(m.explain_long)}</p>`) : "") +
+        `</div></li>`).join("")}</ul>` +
+      `<div class="score"><span>지금 값</span><b>${nf(v,2)}</b></div>`;
     host.appendChild(div);
   });
+  wireToggles(host);
   document.getElementById("fam-legend").innerHTML = D.families.map((f,i) =>
-    `<span><i style="background:var(${FAMC[i]})"></i>${f.label} <b>${nf(cur[f.key],2)}</b></span>`).join("");
+    `<span><i style="background:var(${FAMC[i]})"></i>${esc(f.label)} <b>${nf(cur[f.key],2)}</b></span>`).join("");
 }
 
 function drawFam(){
@@ -967,16 +1080,17 @@ function fillText(){
   const st = D.stats;
   const gate = c.gate;
   const tiles = [
-    {k:"대표값", v:nf(c.bcs,1), n:"구간 중심이 아니라 지표 9개 전부로 계산한 값"},
-    {k:"구간 폭", v:(c.high-c.low).toFixed(1) + "점", n:`16년 중위 ${st.median}점 · ` +
-      (c.high-c.low < st.median ? "평소보다 좁다" : "평소보다 넓다")},
-    {k:"밴드 안정", v:c.stable ? "한 밴드" : "두 밴드", n:c.stable
-      ? "구간이 한 국면 안에 들어온다" : "구간이 국면 경계를 걸친다"},
-    {k:"커버리지", v:(c.cov*100).toFixed(0) + "%", n:c.nmiss ? `결측 ${c.nmiss}개` : "지표 9개 전부 산출"},
-    {k:"합의 게이트", v:gate ? "통과" : "미달", n:gate
-      ? "계열 2개 이상 동의, 비가격 포함" : "가격 계열 단독 — 실행 금지", chip:gate},
+    {k:"대표값", v:nf(c.bcs,1), n:"지표 아홉 개를 전부 써서 계산한 값"},
+    {k:"범위 폭", v:(c.high-c.low).toFixed(1) + "점", n:`16년 보통값 ${st.median}점 · ` +
+      (c.high-c.low < st.median ? "평소보다 좁습니다" : "평소보다 넓습니다")},
+    {k:"구간 안정", v:c.stable ? "한 구간" : "두 구간", n:c.stable
+      ? "범위가 한 구간 안에 들어옵니다" : "범위가 두 구간에 걸쳐 있습니다"},
+    {k:"데이터 상태", v:c.nmiss ? `${9-c.nmiss}/9` : "9/9",
+      n:c.nmiss ? `지표 ${c.nmiss}개가 빠졌습니다` : "지표 아홉 개 전부 계산됨"},
+    {k:"둘 이상 동의", v:gate ? "충족" : "미달", n:gate
+      ? "두 갈래 이상이 같은 방향입니다" : "가격 평균선 하나뿐 — 실행 막힘", chip:gate},
     {k:"반감기 이후", v:c.dsh ? Math.round(c.dsh) + "일" : "—",
-      n:"고점은 반감기 후 367·526·548·534일에 나왔다"}
+      n:"과거 고점은 367·526·548·534일에 나왔습니다"}
   ];
   document.getElementById("tiles").innerHTML = tiles.map(t => {
     const col = t.chip === undefined ? "" :
@@ -992,6 +1106,45 @@ function fillText(){
     `매집 ${L.accumulate.map(s=>nf(s.bcs,0)).join(" / ")} 에서 예비현금의 ` +
     `${L.accumulate.map(s=>s.pct).join("/")}%. 14일 간격, 확정 3일. ` +
     `이건 위치값을 행동으로 옮길 때 한 번에 다 하지 않게 만드는 안전장치이고, 본체가 아니다.`;
+
+  // --- 접었다 펴는 설명들 -------------------------------------------------
+  const bandRows = D.bands.slice().sort((a, b) => b.min - a.min).map(b =>
+    `<div class="bandrow"><span>${nf(b.min,0)} ~ ${nf(b.max,0)}</span>` +
+    `<span>${esc(b.label)}</span></div>`).join("");
+  document.getElementById("gauge-why").innerHTML =
+    toggle("눈금 읽는 법",
+      `<p style="margin:0">가운데 0이 "과거 16년의 한가운데"입니다. 왼쪽으로 갈수록 그때에 비해 싼 편, ` +
+      `오른쪽으로 갈수록 비싼 편이라는 뜻입니다. <b>−100이 바닥, +100이 천장</b>이 아니라 ` +
+      `<b>과거 분포에서의 위치</b>라는 점이 중요합니다 — 값이 −90이어도 더 떨어질 수 있습니다.</p>` +
+      `<p style="margin:10px 0 0">굵은 세로 막대 두 개가 <b>범위</b>이고 그 안의 점이 대표값입니다. ` +
+      `막대 아래 작은 삼각형은 미리 정해 둔 매매 단계의 위치입니다.</p>` +
+      `<div class="bandlist">${bandRows}</div>`) +
+    toggle("이 점수는 어떻게 나오나",
+      `<p style="margin:0">지표 아홉 개를 각각 <b>"최근 4년 안에서 몇 등쯤인가"</b>로 바꿔 ` +
+      `−1(가장 싼 축) ~ +1(가장 비싼 축) 사이의 값으로 만듭니다. 그 아홉 개를 세 갈래로 묶고, ` +
+      `갈래마다 정해진 비중(${D.families.map(f => f.weight + "%").join(" / ")})으로 합쳐서 ` +
+      `−100 ~ +100 으로 폅니다.</p>` +
+      `<p style="margin:10px 0 0"><b>고정된 기준선을 쓰지 않는 이유</b>가 있습니다. ` +
+      `"MVRV가 7을 넘으면 과열" 같은 기준은 2013년에는 맞았지만 2025년에는 한 번도 닿지 않았습니다. ` +
+      `사이클마다 값이 점점 낮아지기 때문입니다. 등수로 바꾸면 그 영향을 덜 받습니다.</p>`);
+  wireToggles(document.getElementById("gauge-why"));
+
+  document.getElementById("tiles-why").innerHTML =
+    toggle("위 숫자들이 뭔가요",
+      `<p style="margin:0"><b>대표값</b> — 지표 아홉 개를 전부 써서 계산한 값입니다. ` +
+      `범위의 한가운데가 아니라 별도로 계산한 값이라 가운데에서 벗어나 있을 수 있습니다.</p>` +
+      `<p style="margin:8px 0 0"><b>범위 폭</b> — 지표를 하나씩 빼며 다시 계산했을 때 값이 흩어지는 폭입니다. ` +
+      `좁으면 아홉 개가 서로 동의한다는 뜻이고, 넓으면 한두 개가 판단을 끌고 있다는 뜻입니다.</p>` +
+      `<p style="margin:8px 0 0"><b>구간 안정</b> — 범위가 한 구간 안에 온전히 들어오는지입니다. ` +
+      `"두 구간"이면 예컨대 '싼 편'과 '저점 부근' 사이에 걸쳐 있어서 하나로 잘라 말하기 어렵다는 뜻입니다.</p>` +
+      `<p style="margin:8px 0 0"><b>데이터 상태</b> — 지표 아홉 개가 전부 계산됐는지입니다. ` +
+      `절반 넘게 빠지면 점수는 나와도 실행은 막습니다.</p>` +
+      `<p style="margin:8px 0 0"><b>둘 이상 동의</b> — 세 갈래 중 둘 이상이 같은 방향인지입니다. ` +
+      `그중 하나는 반드시 '평균가 대비'가 아니어야 합니다.</p>` +
+      `<p style="margin:8px 0 0"><b>반감기 이후</b> — 마지막 반감기로부터 며칠 지났는지입니다. ` +
+      `과거 네 번의 고점이 반감기 이후 367·526·548·534일에 나왔습니다. 다만 이건 온체인 지표가 ` +
+      `아니라 달력일 뿐이라 <b>점수에는 넣지 않습니다.</b></p>`);
+  wireToggles(document.getElementById("tiles-why"));
 
   const notes = D.deriveNotes || [];
   const lat = D.latest;

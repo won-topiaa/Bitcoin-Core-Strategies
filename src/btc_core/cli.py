@@ -283,7 +283,17 @@ def _cmd_explain(args, cfg) -> int:
             return 1
         spec = cfg.indicators[key]
         print(f"\n{spec.get('label', key)}  [{key}]")
-        print(f"  계열: {spec.get('family')}   소스: {spec.get('source')}")
+        if spec.get("explain"):
+            print(f"  {spec['explain']}")
+        fam = cfg.bcs_families.get(spec.get("family"), {})
+        print(f"  계열: {fam.get('label', spec.get('family'))}   "
+              f"소스: {spec.get('source')}")
+        if spec.get("explain_long"):
+            import textwrap as _tw
+            print()
+            for line in _tw.wrap(spec["explain_long"], width=72):
+                print(f"  {line}")
+            print()
         if spec.get("input_mode") == "categorical":
             print("  상태 → 점수")
             for st, sc in spec["states"].items():

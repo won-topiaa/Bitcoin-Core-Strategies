@@ -83,6 +83,7 @@ def compact(payload: dict) -> dict:
     return {
         "base": payload["span"][0], "span": payload["span"], "nDays": payload["n_days"],
         "bands": payload["bands"], "families": payload["families"],
+        "bandStances": payload["band_stances"],
         "ladders": payload["ladders"], "dca": payload["dca"],
         "halvings": payload["halvings"],
         "tps": [tp(t) for t in payload["turning_points"]],

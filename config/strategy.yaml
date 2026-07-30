@@ -23,6 +23,11 @@ indicators:
   # --- 밸류에이션 계열 -----------------------------------------------------
   mvrv_z:
     label: "MVRV Z-Score"
+    explain: "시장 전체가 이 코인을 산 평균 가격 대비, 지금 값이 얼마나 위인가"
+    explain_long: >-
+      지갑 안의 코인 하나하나가 "마지막으로 움직인 날의 가격"을 기억한다고 보고, 그 값을 다 더한 것이 시장 전체의 원가입니다. 지금
+      시가총액이 그 원가보다 크게 위로 벌어져 있으면 사람들이 앉아 있는 평가이익이 크다는 뜻이고, 그 상태는 오래간 적이 없습니다. Z
+      는 벌어진 정도를 "역사적으로 몇 배쯤 되는가"로 바꾼 값입니다.
     family: valuation
     source: auto            # 시총·실현시총에서 계산 가능
     unit: "z"
@@ -43,6 +48,10 @@ indicators:
 
   nupl:
     label: "NUPL"
+    explain: "시장 전체가 앉아 있는 평가이익이 시가총액의 몇 퍼센트인가"
+    explain_long: >-
+      MVRV 와 재료는 같은데 나누는 방식이 다릅니다. 0.75 면 시가총액의 75퍼센트가 아직 팔지 않은 이익이라는 뜻입니다. 위가
+      1.0 으로 막혀 있어서, 사이클마다 값이 낮아지는 정도가 다른 지표보다 덜합니다.
     family: valuation
     source: auto
     unit: "ratio"
@@ -63,6 +72,11 @@ indicators:
 
   thermocap:
     label: "서멀캡 배수 (시가총액 ÷ 누적 채굴수익)"
+    explain: "채굴자에게 지금까지 지급된 총액 대비, 시가총액이 몇 배인가"
+    explain_long: >-
+      비트코인이 세상에 나온 날부터 채굴자가 받아 간 돈을 전부 더한 것이 서멀캡입니다. 말하자면 "이 네트워크를 만드는 데 들어간 누적
+      비용"이죠. 시가총액이 그 비용의 몇 배인지를 봅니다. 계속 쌓이기만 하고 줄지 않는 값이라 다른 지표보다 천천히 움직이고, 그만큼
+      덜 흔들립니다.
     family: valuation
     source: auto
     unit: "x"
@@ -90,6 +104,11 @@ indicators:
   # --- 가격·추세 계열 ------------------------------------------------------
   pi_cycle:
     label: "Pi Cycle 근접도 (111DMA ÷ 350DMA×2)"
+    explain: "짧은 이동평균이 긴 이동평균의 2배선에 얼마나 다가갔나"
+    explain_long: >-
+      111일 평균이 350일 평균의 2배를 넘어선 날이 과거 세 번의 큰 고점과 며칠 차이로 겹쳤습니다. 1.0 에 가까울수록 그 교차에
+      가깝다는 뜻입니다. 다만 최근 두 사이클에서는 이 교차가 아예 일어나지 않았습니다. 가격이 벌어지는 폭이 사이클마다 줄고
+      있어서입니다.
     family: price
     source: auto
     unit: "ratio"
@@ -112,6 +131,10 @@ indicators:
 
   grm:
     label: "Golden Ratio 배수 (가격 ÷ 350DMA)"
+    explain: "지금 가격이 350일 평균의 몇 배인가"
+    explain_long: >-
+      350이라는 숫자에는 황금비에서 나왔다는 설명이 붙어 다니지만, 실제로 하는 일은 단순합니다. "1년 조금 못 되는 평균에 비해 지금
+      몇 배인가"입니다. 유래가 어떻든 중장기로 얼마나 달아올랐는지 보는 데는 쓸 만합니다.
     family: price
     source: auto
     unit: "x"
@@ -130,6 +153,10 @@ indicators:
 
   ma200w_mult:
     label: "200주 MA 배수 (가격 ÷ 200WMA)"
+    explain: "지금 가격이 200주(약 4년) 평균의 몇 배인가"
+    explain_long: >-
+      4년이면 반감기 한 주기입니다. 비트코인 역사에서 가격이 이 선 아래로 내려간 기간은 전체의 5퍼센트도 안 되고, 그때가 매번 바닥
+      근처였습니다. 1.0 이면 딱 그 선 위에 있다는 뜻입니다. 이 선은 점수뿐 아니라 "기준 바닥" 가격을 잡는 데도 씁니다.
     family: price
     source: auto
     unit: "x"
@@ -147,6 +174,10 @@ indicators:
 
   ma2y_mult:
     label: "2년 MA 배수 (Bitcoin Investor Tool)"
+    explain: "지금 가격이 2년 평균의 몇 배인가"
+    explain_long: >-
+      200주보다 짧고 350일보다 깁니다. 200주선이 너무 느리게 움직이고 350일선이 너무 자주 흔들릴 때 그 사이를 메웁니다.
+      Bitcoin Investor Tool 이라는 이름으로 알려진 지표와 재료가 같습니다.
     family: price
     source: auto
     unit: "x"
@@ -166,6 +197,11 @@ indicators:
   # --- 공급·채굴 계열 ------------------------------------------------------
   puell:
     label: "Puell Multiple (발행액 ÷ 4년 평균)"
+    explain: "채굴자가 오늘 번 돈이 평소의 몇 배인가"
+    explain_long: >-
+      하루에 새로 발행된 코인에 그날 가격을 곱하면 채굴자의 하루 수입이 됩니다. 그걸 자기 4년 평균으로 나눕니다. 값이 크면 채굴이
+      아주 남는 장사라는 뜻이고, 그런 시기는 대개 가격 고점 근처였습니다. 기준선을 흔히 쓰는 1년이 아니라 4년으로 둔 이유가
+      있습니다. 1년으로 두면 반감기 효과가 약분돼서 사실상 가격 지표가 되어 버립니다.
     family: supply
     source: auto
     unit: "x"
@@ -195,6 +231,10 @@ indicators:
 
   hash_ribbons:
     label: "Hash Ribbons 상태"
+    explain: "채굴자들이 지금 힘들어하고 있는가"
+    explain_long: >-
+      해시레이트(네트워크 전체의 채굴 연산량)의 30일 평균이 60일 평균 아래로 내려가면, 채굴기를 끄는 사람이 늘고 있다는 뜻입니다.
+      그 상태가 깊어졌다가 다시 올라오는 모양이 과거 바닥마다 나타났습니다. 아홉 개 중 숫자가 아니라 상태로 읽는 유일한 지표입니다.
     family: supply
     source: auto
     unit: "state"
@@ -213,7 +253,10 @@ indicators:
 bcs:
   families:
     valuation:
-      label: "밸류에이션"
+      label: "원가 대비"
+      explain: >-
+        시가총액을 "무엇으로 나누는가"를 보는 갈래입니다. 시장이 산 원가로 나누면 MVRV·NUPL 이 되고, 채굴에 들어간 누적
+        비용으로 나누면 서멀캡이 됩니다. 셋 다 재료가 겹쳐서, 더하지 않고 그때그때 가장 극단인 하나만 씁니다.
       weight: 40
       members: [mvrv_z, nupl, thermocap]
       # MVRV Z 와 NUPL 은 계산 재료가 거의 같다(원문 3.4 말미).
@@ -232,7 +275,11 @@ bcs:
       aggregate: max_abs
 
     price:
-      label: "가격·추세 극단"
+      label: "평균가 대비"
+      explain: >-
+        전부 "지금 가격 ÷ 어떤 기간의 평균가"의 변형입니다. 기간만 다릅니다(111일·350일·2년·200주). 재료가 같으니 평균을
+        냅니다. 이 갈래 하나만으로는 실행이 열리지 않게 막아 뒀습니다. 상승장 후반에 가격 평균선 네 개가 한꺼번에 빨개지는 것은 네
+        번의 확인이 아니라 같은 사실을 네 번 본 것이기 때문입니다.
       weight: 33
       members: [pi_cycle, grm, ma200w_mult, ma2y_mult]
       # 4개 차트지만 전부 '이동평균 대비 배수'라는 한 아이디어의 변형이다.
@@ -240,7 +287,10 @@ bcs:
       aggregate: mean
 
     supply:
-      label: "공급·채굴"
+      label: "채굴 상황"
+      explain: >-
+        코인을 만들어 내는 쪽 사정을 봅니다. 채굴이 얼마나 남는 장사인지, 채굴자가 기계를 끄고 있는지. 가격이나 시가총액을 직접 쓰지
+        않는 유일한 갈래라서 다른 둘과 잘 겹치지 않습니다.
       weight: 27
       members: [puell, hash_ribbons]
       aggregate: mean
@@ -378,14 +428,18 @@ consensus:
 # ===========================================================================
 # 5. 실행 밴드와 분할 사다리 — 원문 6.3 "한 번에 전부 하지 않는다"
 # ===========================================================================
+# 이름은 **본 그대로**를 말한다. '항복'·'도취' 같은 심리 용어는 뺐다 —
+# 이 지표는 사람들의 감정을 재는 게 아니라 지금 가격이 과거 대비 어디쯤인지를
+# 잰다. 화면에 뜨는 이름이 그 사실과 어긋나면 읽는 사람이 다른 것을 기대한다.
+# (key 는 그대로다. 코드·테스트·설정이 전부 key 로 참조한다.)
 bands:
-  - {min:  70, max:  100, key: euphoria,     label: "극단 과열",   stance: "분배 가속"}
-  - {min:  45, max:   70, key: distribution, label: "과열",       stance: "분배 시작"}
-  - {min:  20, max:   45, key: upper_neutral,label: "상단 중립",   stance: "신규 매수 중단, DCA만"}
-  - {min: -20, max:   20, key: neutral,      label: "중립",       stance: "기본 DCA 유지"}
-  - {min: -45, max:  -20, key: accumulation, label: "저평가",     stance: "DCA 증액"}
-  - {min: -70, max:  -45, key: deep_value,   label: "깊은 저평가", stance: "예비현금 투입 시작"}
-  - {min: -100, max: -70, key: capitulation, label: "극단 항복",   stance: "예비현금 집중 투입"}
+  - {min:  70, max:  100, key: euphoria,     label: "천장권",     stance: "나눠 팔기 가속"}
+  - {min:  45, max:   70, key: distribution, label: "고점 부근",   stance: "나눠 팔기 시작"}
+  - {min:  20, max:   45, key: upper_neutral,label: "비싼 편",     stance: "새로 사지 않고 적립만"}
+  - {min: -20, max:   20, key: neutral,      label: "중간",       stance: "평소대로 적립"}
+  - {min: -45, max:  -20, key: accumulation, label: "싼 편",      stance: "적립액 늘리기"}
+  - {min: -70, max:  -45, key: deep_value,   label: "저점 부근",   stance: "예비 현금 넣기 시작"}
+  - {min: -100, max: -70, key: capitulation, label: "바닥권",     stance: "예비 현금 집중 투입"}
 
 ladders:
   # 매도 사다리: 보유 BTC 대비 비율. 코어 지분은 절대 건드리지 않는다.
