@@ -25,8 +25,9 @@ from datetime import date, timedelta
 from pathlib import Path
 from typing import Optional
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
-sys.path.insert(0, str(Path(__file__).resolve().parent))
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "src"))
+sys.path.insert(0, str(ROOT / "tools"))
 
 import backtest as bt  # noqa: E402
 
@@ -54,6 +55,36 @@ TURNING_POINTS = tuple(
 WEEKLY_STRIDE = 7
 NEAR_TURNING_DAYS = 45      # 전환점 주변은 일 단위로 남긴다
 RECENT_DAILY_DAYS = 400     # 최근 구간도 일 단위
+
+STRINGS_EN = ROOT / "config" / "strings.en.yaml"
+
+
+def load_en(path: Optional[str] = None) -> dict:
+    """지표·갈래·구간 라벨의 영어 판. 없으면 빈 사전 — 페이지는 한국어로 뜬다.
+
+    영어를 strategy.yaml 에 나란히 넣지 않은 이유는 그 파일이 **임계값 설정**이라
+    산문으로 두 배가 되면 못 읽게 되기 때문이다. 대신 키가 어긋나는 위험이 생기고,
+    그건 tests/test_i18n.py 가 막는다.
+    """
+    import yaml
+
+    p = Path(path) if path else STRINGS_EN
+    if not p.exists():
+        return {}
+    data = yaml.safe_load(p.read_text(encoding="utf-8"))
+    return data if isinstance(data, dict) else {}
+
+
+def _en(table: dict, group: str, key: str, field: str) -> str:
+    return ((table.get(group) or {}).get(key) or {}).get(field, "") or ""
+
+
+def _state_labels(cfg: StrategyConfig) -> dict:
+    """상태로 읽는 지표들의 한국어 화면 이름을 모은다."""
+    out: dict = {}
+    for spec in cfg.indicators.values():
+        out.update(spec.get("state_labels") or {})
+    return out
 
 
 def daily_rows(cfg: StrategyConfig, market) -> list[dict]:
@@ -172,17 +203,22 @@ def interval_stats(rows: list[dict]) -> dict:
     }
 
 
-def build(cfg: StrategyConfig, csv: str, *, derive: bool = True) -> dict:
+def build(cfg: StrategyConfig, csv: str, *, derive: bool = True,
+          strings_en: Optional[str] = None) -> dict:
+    en = load_en(strings_en)
     bundle = load_csv_bundle(csv)
-    notes: tuple[str, ...] = ()
+    notes: tuple[tuple[str, str], ...] = ()
     if derive:
         # CoinMetrics 는 최신 하루가 늦다 — 마지막 행에 시총·유통량이 비어 있다.
         # 그대로 두면 마지막 날 커버리지가 60% 로 떨어져 "지금 위치"가 반쪽이 된다.
         # 파생으로 채우면 서멀캡이 살아나 밸류에이션 계열이 유지된다
         # (실현시총은 계산 불가라 MVRV·NUPL 은 여전히 결측).
-        before = bundle.warnings
-        bundle = backfill_bundle(bundle)
-        notes = tuple(w for w in bundle.warnings if w not in before)
+        #
+        # 메모는 (한국어, 영어) 짝으로 받는다. 페이지가 두 언어를 띄우기 때문에
+        # 완성된 한국어 문장에서 영어를 만들어 낼 방법이 없다.
+        info: dict = {}
+        bundle = backfill_bundle(bundle, out=info)
+        notes = tuple(info.get("notes", ()))
     market = bundle.market
     rows = daily_rows(cfg, market)
     if not rows:
@@ -213,39 +249,61 @@ def build(cfg: StrategyConfig, csv: str, *, derive: bool = True) -> dict:
 
     return {
         "generated_from": csv,
-        "derive_notes": list(notes),
+        "generated": date.today().isoformat(),
+        # 만든 시점의 지연. 페이지는 이 값을 쓰지 않고 **보는 시점에** 다시
+        # 계산한다 — 구워 넣은 "1일 전"은 하루만 지나면 거짓이 된다.
+        "age_days": (date.today() - date.fromisoformat(rows[-1]["d"])).days,
+        # [한국어, 영어] 짝의 목록. 페이지가 언어에 맞는 쪽을 고른다.
+        "derive_notes": [list(p) for p in notes],
         "span": [rows[0]["d"], rows[-1]["d"]],
         "n_days": len(rows),
         "bands": [
             {"key": b["key"], "label": b["label"],
+             "label_en": _en(en, "bands", b["key"], "label"),
              "min": float(b["min"]), "max": float(b["max"])}
             for b in cfg.bands
         ],
         "families": [
             {"key": k, "label": f.get("label", k), "weight": float(f["weight"]),
+             "label_en": _en(en, "families", k, "label"),
              "aggregate": f.get("aggregate", "mean"),
              "explain": f.get("explain", ""),
+             "explain_en": _en(en, "families", k, "explain"),
              # 설명은 설정이 소유한다. 페이지에 따로 적어 두면 지표를 고칠 때
              # 둘이 어긋나고, 어긋난 설명은 없는 설명보다 나쁘다.
              "members": [
                  {"key": m,
                   "label": cfg.indicator(m).get("label", m),
+                  "label_en": _en(en, "indicators", m, "label"),
                   "explain": cfg.indicator(m).get("explain", ""),
-                  "explain_long": cfg.indicator(m).get("explain_long", "")}
+                  "explain_en": _en(en, "indicators", m, "explain"),
+                  "explain_long": cfg.indicator(m).get("explain_long", ""),
+                  "explain_long_en": _en(en, "indicators", m, "explain_long")}
                  for m in f["members"]
              ]}
             for k, f in cfg.bcs_families.items()
         ],
         "band_stances": {b["key"]: b.get("stance", "") for b in cfg.bands},
+        "band_stances_en": {b["key"]: _en(en, "bands", b["key"], "stance")
+                            for b in cfg.bands},
+        # 상태로 읽는 지표(Hash Ribbons)의 화면 이름. 두 언어 다 설정이
+        # 소유한다 — 페이지에 적어 두면 상태를 하나 추가할 때 어긋난다.
+        "states": {k: str(v) for k, v in
+                   (_state_labels(cfg) or {}).items()},
+        "states_en": dict(en.get("states") or {}),
         "indicator_meta": [
             {"key": k,
              "label": s.get("label", k),
+             "label_en": _en(en, "indicators", k, "label"),
              "short": s.get("label", k).split(" (")[0],
+             "short_en": _en(en, "indicators", k, "label").split(" (")[0],
              "family": s.get("family", ""),
              "unit": s.get("unit", ""),
              "categorical": s.get("input_mode") == "categorical",
              "explain": s.get("explain", ""),
-             "explain_long": s.get("explain_long", "")}
+             "explain_en": _en(en, "indicators", k, "explain"),
+             "explain_long": s.get("explain_long", ""),
+             "explain_long_en": _en(en, "indicators", k, "explain_long")}
             for k, s in cfg.indicators.items()
         ],
         "ladders": {
@@ -355,8 +413,8 @@ def print_stats(payload: dict) -> None:
         print(f"  마지막 행 {latest['d']} 은 지표 {latest['nmiss']}개 결측 "
               f"({', '.join(latest['miss'])}) — BCS {latest['bcs']:+.1f}, "
               f"헤드라인에서 제외")
-    for n in payload["derive_notes"]:
-        print(f"  파생: {n}")
+    for ko, _en in payload["derive_notes"]:
+        print(f"  파생: {ko}")
 
 
 def main(argv: Optional[list[str]] = None) -> int:

@@ -1,0 +1,78 @@
+# 데이터를 매일 받아 사이트를 다시 굽는다.
+#
+# data/market.csv 는 .gitignore 에 있다 — 매일 1MB 짜리 CSV 를 커밋하면 1년에
+# 100MB 가 쌓인다. 그래서 저장소에 남기는 것은 **다 구운 페이지 세 장**이고,
+# CSV 는 매 실행에서 전 구간을 새로 받는다(1.7초). 증분으로 이어 온 파일과
+# 바이트 단위로 같은 결과가 나오는 것은 tests/test_refresh.py 가 지킨다.
+#
+# 주의: GitHub Actions 의 schedule 은 **기본 브랜치의 워크플로만** 실행한다.
+# 이 파일이 작업 브랜치에 있는 동안에는 자동으로 돌지 않고, 수동 실행
+# (workflow_dispatch) 으로만 돈다. 병합된 뒤부터 매일 돈다.
+name: 데이터 갱신
+
+on:
+  schedule:
+    # 매일 02:20 UTC (한국 11:20). CoinMetrics 커뮤니티 티어가 전날 데이터를
+    # 채우고 난 뒤여야 해서 자정 직후를 피한다.
+    - cron: "20 2 * * *"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "받아서 검사만 하고 커밋하지 않는다"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  # 앞 실행이 아직 커밋하지 않았는데 다음이 시작하면 서로를 덮어쓴다.
+  group: refresh-data
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: 의존성
+        run: pip install -r requirements.txt
+
+      - name: 받아서 병합
+        run: python3 tools/refresh_data.py --full
+
+      - name: 신선도 확인
+        # 받았는데도 오래됐으면 원본이 늦은 것이다. 실패시키지 않고 기록만
+        # 남긴다 — 커뮤니티 티어는 하루 늦는 것이 정상이다.
+        run: python3 tools/refresh_data.py --check --max-age 4 || true
+
+      - name: 테스트
+        # 데이터가 바뀌어 계산이 깨졌으면 사이트를 굽기 전에 멈춰야 한다.
+        run: python3 -m pytest -q
+
+      - name: 사이트 재생성
+        run: |
+          python3 tools/build_viz.py --csv data/market.csv --out-dir viz/site \
+            | tee build.log
+          # 출력이 "기준일: 2026-07-29  (데이터 1일 전)" 이라 날짜만 떼어낸다.
+          echo "ASOF=$(sed -n 's/^기준일: \([0-9-]*\).*/\1/p' build.log)" >> "$GITHUB_ENV"
+          rm -f build.log
+
+      - name: 커밋
+        if: ${{ inputs.dry_run != true }}
+        run: |
+          if git diff --quiet -- viz/site; then
+            echo "바뀐 페이지가 없습니다."
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add viz/site
+          git commit -m "데이터 갱신 — 기준일 ${ASOF:-미확인}"
+          git push

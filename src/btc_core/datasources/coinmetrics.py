@@ -63,13 +63,22 @@ DEFAULT_YEARS = 20
 def fetch(
     *,
     years: float = DEFAULT_YEARS,
+    start: Optional[date] = None,
     end: Optional[date] = None,
     timeout: int = 60,
     metrics: Optional[Iterable[str]] = None,
 ) -> DataBundle:
-    """CoinMetrics 에서 시계열을 받아 MarketData 로 조립한다."""
+    """CoinMetrics 에서 시계열을 받아 MarketData 로 조립한다.
+
+    ``start`` 를 주면 ``years`` 는 무시한다. 증분 갱신은 "최근 N일"만 받으면
+    되는데, 그걸 ``years`` 로 표현하려면 호출부에서 365.25 를 나누게 된다 —
+    날짜를 날짜로 넘기는 게 맞다.
+    """
     end = end or date.today()
-    start = end - timedelta(days=int(years * 365.25) + 60)
+    if start is None:
+        start = end - timedelta(days=int(years * 365.25) + 60)
+    if start > end:
+        raise FetchError(f"시작일이 종료일보다 늦습니다: {start} > {end}")
     wanted = list(metrics) if metrics else list(METRICS)
 
     rows = _fetch_all_pages(wanted, start, end, timeout)

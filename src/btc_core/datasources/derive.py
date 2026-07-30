@@ -172,14 +172,40 @@ def _fill(
     return Series.from_pairs(pairs, name=name), filled
 
 
-def _note(what: str, filled: int, total: int, detail: str) -> str:
-    """전 구간을 계산했는지, 구멍만 메웠는지 구분해 적는다."""
+# 메모에 쓰는 이름. 화면이 한국어·영어를 모두 띄우므로 짝으로 들고 있는다 —
+# 한국어 문장을 나중에 기계로 번역하려 들면 숫자와 단위가 어긋난다.
+NOTE_WORDS: dict[str, tuple[str, str]] = {
+    "supply": ("유통량", "circulating supply"),
+    "issuance_btc": ("발행량", "daily issuance"),
+    "issuance_usd": ("발행액", "issuance in USD"),
+    "market_cap": ("시가총액", "market cap"),
+}
+
+
+def _note(key: str, filled: int, total: int,
+          detail_ko: str, detail_en: str) -> tuple[str, str]:
+    """전 구간을 계산했는지, 구멍만 메웠는지 구분해 적는다. (한국어, 영어)"""
+    ko, en = NOTE_WORDS[key]
     if filled >= total:
-        return f"{what}을 반감기 스케줄로 계산했습니다 ({detail})"
-    return f"{what} {filled}일이 비어 있어 반감기 스케줄로 채웠습니다 ({detail})"
+        return (f"{ko}을 반감기 스케줄로 계산했습니다 ({detail_ko})",
+                f"{en} computed from the halving schedule ({detail_en})")
+    return (f"{ko} {filled}일이 비어 있어 반감기 스케줄로 채웠습니다 ({detail_ko})",
+            f"{filled} day(s) of {en} were missing and filled from the "
+            f"halving schedule ({detail_en})")
 
 
-def backfill(market: MarketData) -> tuple[MarketData, tuple[str, ...]]:
+NO_PRICE_NOTE = ("가격이 없어 파생 계산을 건너뜁니다.",
+                 "no price series — skipped derived values.")
+NO_REALIZED_NOTE = (
+    "실현시총은 계산으로 대체할 수 없습니다 — MVRV Z / NUPL 결측 "
+    "(밸류에이션 계열 가중치 40 중 서멀캡만 남습니다)",
+    "realized cap cannot be derived — MVRV Z and NUPL are missing "
+    "(of the valuation family's weight of 40, only thermocap survives)",
+)
+
+
+def backfill(market: MarketData, *,
+             out: Optional[dict] = None) -> tuple[MarketData, tuple[str, ...]]:
     """결측을 계산으로 채운다. 실측이 있는 날은 손대지 않는다.
 
     채울 수 있는 것: supply, issuance_btc, issuance_usd, market_cap.
@@ -187,11 +213,22 @@ def backfill(market: MarketData) -> tuple[MarketData, tuple[str, ...]]:
 
     돌려주는 메모는 리포트에 그대로 실린다. **파생값을 쓰고 있다는 사실이
     화면에서 사라지면 안 된다** — 오차가 0.08% 라도 실측과 파생은 다른 것이다.
+
+    ``out`` 을 주면 ``out["notes"]`` 에 (한국어, 영어) 짝을 담는다. 반환값은
+    한국어 그대로다 — 콘솔과 리포트가 그 형태를 쓰고 있고, 화면에만 필요한
+    영어 때문에 그쪽 타입을 바꿀 이유는 없다.
     """
-    notes: list[str] = []
+    pairs: list[tuple[str, str]] = []
+
+    def done(m: MarketData) -> tuple[MarketData, tuple[str, ...]]:
+        if out is not None:
+            out["notes"] = tuple(pairs)
+        return m, tuple(ko for ko, _ in pairs)
+
     price = market.price
     if not len(price):
-        return market, ("가격이 없어 파생 계산을 건너뜁니다.",)
+        pairs.append(NO_PRICE_NOTE)
+        return done(market)
 
     dates = price.dates
     total = len(dates)
@@ -199,16 +236,20 @@ def backfill(market: MarketData) -> tuple[MarketData, tuple[str, ...]]:
 
     supply, n_sup = _fill(market.supply, dates, derive_supply, "supply")
     if n_sup:
-        notes.append(_note("유통량", n_sup, total,
-                           "2015년 이후 실측 대비 평균오차 0.08%"))
+        pairs.append(_note("supply", n_sup, total,
+                           "2015년 이후 실측 대비 평균오차 0.08%",
+                           "mean error 0.08% against observed data since 2015"))
 
     issuance_btc, n_iss = _fill(market.issuance_btc, dates,
                                 derive_daily_issuance, "issuance_btc")
     if n_iss:
-        notes.append(_note(
-            "발행량", n_iss, total,
+        pairs.append(_note(
+            "issuance_btc", n_iss, total,
             f"끝난 반감기 구간은 ±0.05%, 진행 구간은 "
             f"{DERIVED_ISSUANCE_BIAS * 100:+.1f}% — 다음 반감기 날짜가 추정이라서",
+            f"±0.05% in completed halving eras, "
+            f"{DERIVED_ISSUANCE_BIAS * 100:+.1f}% in the era underway, "
+            f"because the next halving date is an estimate",
         ))
 
     iss_lookup = dict(zip(issuance_btc.dates, issuance_btc.values))
@@ -219,7 +260,8 @@ def backfill(market: MarketData) -> tuple[MarketData, tuple[str, ...]]:
 
     issuance_usd, n_iu = _fill(market.issuance_usd, dates, _iss_usd, "issuance_usd")
     if n_iu:
-        notes.append(_note("발행액", n_iu, total, "발행량 × 가격"))
+        pairs.append(_note("issuance_usd", n_iu, total,
+                           "발행량 × 가격", "daily issuance × price"))
 
     sup_lookup = dict(zip(supply.dates, supply.values))
 
@@ -229,7 +271,8 @@ def backfill(market: MarketData) -> tuple[MarketData, tuple[str, ...]]:
 
     market_cap, n_mc = _fill(market.market_cap, dates, _mcap, "market_cap")
     if n_mc:
-        notes.append(_note("시가총액", n_mc, total, "가격 × 유통량"))
+        pairs.append(_note("market_cap", n_mc, total,
+                           "가격 × 유통량", "price × circulating supply"))
 
     filled = MarketData(
         price=price,
@@ -245,22 +288,19 @@ def backfill(market: MarketData) -> tuple[MarketData, tuple[str, ...]]:
         exchange_outflow=market.exchange_outflow,
     )
     if market.realized_cap is None:
-        notes.append(
-            "실현시총은 계산으로 대체할 수 없습니다 — MVRV Z / NUPL 결측 "
-            "(밸류에이션 계열 가중치 40 중 서멀캡만 남습니다)"
-        )
-    return filled, tuple(notes)
+        pairs.append(NO_REALIZED_NOTE)
+    return done(filled)
 
 
-def backfill_bundle(bundle):
+def backfill_bundle(bundle, *, out: Optional[dict] = None):
     """DataBundle 을 받아 파생값을 채운 새 번들을 돌려준다.
 
     메모는 경고 목록에 합쳐진다 — 리포트 상단에 그대로 뜨므로 파생값을 쓰는
-    중이라는 사실이 화면에서 사라지지 않는다.
+    중이라는 사실이 화면에서 사라지지 않는다. ``out`` 은 ``backfill`` 과 같다.
     """
     from .base import DataBundle, coverage_warnings
 
-    market, notes = backfill(bundle.market)
+    market, notes = backfill(bundle.market, out=out)
     if not notes:
         return bundle
     return DataBundle(

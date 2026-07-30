@@ -239,12 +239,19 @@ indicators:
     source: auto
     unit: "state"
     input_mode: categorical
-    # 연속값이 아니라 상태 기계다. 채굴자 항복의 '끝'이 신호(원문 4.4).
+    # 연속값이 아니라 상태 기계다. 채굴자 이탈이 '끝나는' 지점이 신호(원문 4.4).
     states:
       recovery:     -1.00   # 30일선이 60일선을 재돌파 → 가장 강한 매수 신호
-      capitulation: -0.55   # 30일선 < 60일선 → 항복 진행 중, 아직 신호 아님
+      capitulation: -0.55   # 30일선 < 60일선 → 이탈 진행 중, 아직 신호 아님
       normal:        0.00
       expansion:     0.30   # 해시레이트 급팽창 → 강세 후반 동행
+    # 화면에 뜨는 이름. 상태 키를 그대로 보여주면 "expansion" 이라고 적힌다 —
+    # 실제로 그랬다. 영어는 config/strings.en.yaml 이 갖는다.
+    state_labels:
+      recovery: "회복 중"
+      capitulation: "채굴자 이탈"
+      normal: "정상"
+      expansion: "채굴 확장세"
 
 # ===========================================================================
 # 2. BCS — 사이클 위치 점수 (-100 극단 저평가 ~ +100 극단 과열)

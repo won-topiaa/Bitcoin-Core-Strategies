@@ -2,18 +2,347 @@
 (function(){
 "use strict";
 const D = window.__BCS__;
+const I18N = window.__I18N__ || {};
 const S = D.S;                                   // [dayOffset, price, bcs, low, high, fv, fp, fs, gate, nmiss]
 const BASE = new Date(D.base + "T00:00:00Z");
 const DAY = 86400000;
 const dateOf = o => new Date(BASE.getTime() + o * DAY);
 const iso = d => d.toISOString().slice(0, 10);
-const fmtD = s => s.slice(0, 7).replace("-", ".");
 const nf = (v, d) => (v === null || v === undefined) ? "—"
   : (v >= 0 ? "+" : "") + v.toFixed(d);
 const money = v => "$" + Math.round(v).toLocaleString("en-US");
-const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 
-// 밴드 → 배경 washes. 0 위는 따뜻하게, 아래는 차갑게 (과열 ↔ 항복).
+/* =====================================================================
+   언어 — 한국어가 원본이고 영어는 사전에서 온다
+   ===================================================================== */
+const LS_LANG = "bcs.lang", LS_THEME = "bcs.theme";
+const store = {
+  get(k){ try { return localStorage.getItem(k); } catch(e){ return null; } },
+  set(k, v){ try { localStorage.setItem(k, v); } catch(e){} }
+};
+let LANG = (function(){
+  const saved = store.get(LS_LANG);
+  if (saved === "ko" || saved === "en") return saved;
+  // 저장된 선택이 없으면 브라우저 설정을 따른다. 한국어 화면을 영어권
+  // 방문자에게 그대로 내미는 것도, 반대도 둘 다 불친절하다.
+  const nav = ((navigator.languages && navigator.languages[0]) ||
+               navigator.language || "").toLowerCase();
+  return nav.indexOf("ko") === 0 ? "ko" : "en";
+})();
+const EN = () => LANG === "en";
+
+/** 설정에서 온 문자열(지표·갈래·구간 이름과 설명)의 언어별 선택. */
+const pick = (o, f) => (EN() && o && o[f + "_en"]) ? o[f + "_en"] : ((o && o[f]) || "");
+
+const MON_EN = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+/* 화면에서 만들어지는 문자열. 본문 산문은 _i18n.html 이 맡고, 여기 있는 것은
+   숫자가 끼어드는 문장들이다 — 그래서 문장이 아니라 함수로 둔다. */
+const TX = {
+ko: {
+  // -- 계기판
+  now: "지금",
+  ladderAcc: "◀ 나눠 사는 5단계",
+  ladderDist: "나눠 파는 5단계 ▶",
+  // -- 읽는 법 그림
+  keyExpensive: "비싼 쪽", keyCheap: "싼 쪽",
+  keyBandIs: "띠 = 범위", keyLineIs: "선 = 대표값",
+  // -- 이력
+  halving: "반감기",
+  legRange: "범위 (띠)", legPoint: "대표값 (선)",
+  legTop: "과거 고점", legBottom: "과거 바닥",
+  ttRange: "BCS 구간", ttPoint: "대표값", ttBand: "구간", ttPrice: "가격",
+  ttGate: "둘 이상 동의", gatePass: "충족", gateFail: "미달",
+  histCap: (n, med, mean) =>
+    `점 ${n}개로 그렸습니다 (주 1회, 전환점 주변과 최근 400일은 하루 단위). ` +
+    `띠의 폭은 16년 전체에서 보통 ${med}점, 평균 ${mean}점입니다. ` +
+    `띠가 유난히 두꺼운 구간은 지표들이 서로 다른 이야기를 하던 때이고, ` +
+    `얇은 구간은 아홉 개가 한목소리를 내던 때입니다.`,
+  // -- 성적표
+  phaseTop: "고점", phaseBottom: "저점",
+  gapShort: g => `빈 공간 ${g}점`,
+  gapLong: g => `전환점이 한 번도 들어오지 않은 ${g}점`,
+  nowAt: v => `지금 ${v}`,
+  tpCap: (mt, mb, hi, lo, gap) =>
+    `고점 네 번의 평균이 ${mt}, 바닥 네 번의 평균이 ${mb} 입니다. ` +
+    `가장 낮았던 고점(${hi})과 가장 높았던 바닥(${lo}) 사이가 ${gap}점 비어 있습니다. ` +
+    `다만 오른쪽 위 두 개(2021·2025 고점)를 보시면 막대가 길고 왼쪽으로 처져 있습니다 — ` +
+    `최근 두 번의 고점은 예전만큼 뚜렷하게 잡히지 않았다는 뜻이고, 이 지표의 알려진 약점입니다.`,
+  // -- 지표 표
+  notComputed: "계산 안 됨",
+  sideCheap: "이만큼 쌌던", sideRich: "이만큼 비쌌던",
+  prevAt: (side, when) => `직전에 ${side} 때 — ${when}`,
+  prevNone: "최근 4년 안에는 없음",
+  valueNow: "지금 값",
+  indNote: (below, total, lo, hi, spread) =>
+    (below === total ? `${total}개가 전부` : `${total}개 중 ${below}개가`) +
+    ` 한가운데(50%)보다 싼 쪽에 있습니다. ` +
+    `가장 싼 쪽이 ${lo}%, 가장 비싼 쪽이 ${hi}% 로 ${spread}%p 벌어져 있습니다. ` +
+    `이 벌어짐이 곧 위 눈금의 범위 폭으로 이어집니다.`,
+  ym: (y, m) => y + "년 " + m + "월",
+  // -- −1 ~ +1 눈금
+  scaleTicks: [
+    ["−1.0", "최근 4년 중 가장 쌌던 때"], ["−0.5", "아래에서 25%"],
+    ["0", "한가운데"], ["+0.5", "위에서 25%"], ["+1.0", "가장 비쌌던 때"]
+  ],
+  // -- 비중
+  mixTail: total =>
+    `각 갈래가 −1 ~ +1 을 내면, 위 비중대로 가중평균한 뒤 100을 곱해 ` +
+    `<b>−100 ~ +100</b> 으로 폅니다. 합이 ${total}% 입니다.`,
+  // -- 갈래 카드
+  aggMaxAbs: "셋 중 <b>가장 극단인 하나</b>만 채택합니다. 재료가 겹쳐서 더하면 같은 사실을 두 번 세는 셈이라서요.",
+  aggMean: "구성 지표의 <b>평균</b>을 냅니다.",
+  famWhy: "이 갈래는 뭔가요?",
+  famHow: agg => `합치는 방식 — ${agg}`,
+  moreDetail: "좀 더 자세히",
+  famShare: w => `점수에서 차지하는 비중 ${w}%`,
+  fromBottom: p => `아래에서 ${p}%`,
+  // -- 폭 분포
+  widthAxis: "범위의 폭 (점수 단위)",
+  widthMedian: v => `중위 ${v}`,
+  widthTail: (max, p99, worst) => `축은 ${max} 까지 · 드물게 ${p99} 이상(최대 ${worst})`,
+  widthCap: st =>
+    `보통은 ${st.median}점입니다. 네 날 중 하루는 ${st.p25}점보다 좁고, ` +
+    `또 하루는 ${st.p75}점보다 넓습니다. ` +
+    `진한 상자가 가운데 절반(p25~p75), 연한 상자가 열에 여덟(p10~p90), ` +
+    `세로선이 한가운데 값입니다. ` +
+    `범위가 한 구간 안에 온전히 들어온 날은 16년 중 ${st.stable_pct}% 뿐입니다.`,
+  // -- 머리글
+  srcDays: (n, k) => `${n}일 · 지표 ${k}개`,
+  freshToday: "데이터 오늘 기준",
+  freshDays: n => `데이터 ${n}일 전`,
+  freshStale: n => `데이터 ${n}일 전 — 갱신이 멈췄을 수 있습니다`,
+  asOf: (d, p) => `기준 ${d} · ${p}`,
+  dLabels: {d1: "어제", d7: "지난주", d30: "지난달"},
+  deltaVs: label => `${label} 대비`,
+  deltaPts: v => `${v}점`,
+  deltaPrice: v => `가격 ${v}%`,
+  // -- 타일
+  tPoint: "대표값", tPointNote: "지표 아홉 개를 전부 써서 계산한 값",
+  tWidth: "범위 폭", tWidthVal: w => `${w}점`,
+  tWidthNote: (med, narrow) =>
+    `16년 보통값 ${med}점 · ` + (narrow ? "평소보다 좁습니다" : "평소보다 넓습니다"),
+  tStable: "구간 안정", tStableOne: "한 구간", tStableTwo: "두 구간",
+  tStableNoteOne: "범위가 한 구간 안에 들어옵니다",
+  tStableNoteTwo: "범위가 두 구간에 걸쳐 있습니다",
+  tData: "데이터 상태", tDataNoteAll: "지표 아홉 개 전부 계산됨",
+  tDataNoteSome: n => `지표 ${n}개가 빠졌습니다`,
+  tGate: "둘 이상 동의",
+  tGateNoteOk: "두 갈래 이상이 같은 방향입니다",
+  tGateNoteNo: "가격 평균선 하나뿐 — 실행 막힘",
+  tHalving: "반감기 이후", tHalvingVal: n => `${n}일`,
+  tHalvingNote: "과거 고점은 367·526·548·534일에 나왔습니다",
+  // -- 접어 둔 설명
+  whyScale: "눈금 읽는 법",
+  whyScaleBody: bandRows =>
+    `<p style="margin:0">가운데 0이 "과거 16년의 한가운데"입니다. 왼쪽으로 갈수록 그때에 비해 싼 편, ` +
+    `오른쪽으로 갈수록 비싼 편이라는 뜻입니다. <b>−100이 바닥, +100이 천장</b>이 아니라 ` +
+    `<b>과거 분포에서의 위치</b>라는 점이 중요합니다 — 값이 −90이어도 더 떨어질 수 있습니다.</p>` +
+    `<p style="margin:10px 0 0">굵은 세로 막대 두 개가 <b>범위</b>이고 그 안의 점이 대표값입니다. ` +
+    `막대 아래 작은 삼각형은 미리 정해 둔 매매 단계의 위치입니다.</p>` +
+    `<div class="bandlist">${bandRows}</div>`,
+  whyScore: "이 점수는 어떻게 나오나",
+  whyScoreBody: weights =>
+    `<p style="margin:0">지표 아홉 개를 각각 <b>"최근 4년 안에서 몇 등쯤인가"</b>로 바꿔 ` +
+    `−1(가장 싼 축) ~ +1(가장 비싼 축) 사이의 값으로 만듭니다. 그 아홉 개를 세 갈래로 묶고, ` +
+    `갈래마다 정해진 비중(${weights})으로 합쳐서 −100 ~ +100 으로 폅니다.</p>` +
+    `<p style="margin:10px 0 0"><b>고정된 기준선을 쓰지 않는 이유</b>가 있습니다. ` +
+    `"MVRV가 7을 넘으면 과열" 같은 기준은 2013년에는 맞았지만 2025년에는 한 번도 닿지 않았습니다. ` +
+    `사이클마다 값이 점점 낮아지기 때문입니다. 등수로 바꾸면 그 영향을 덜 받습니다.</p>`,
+  whyTiles: "위 숫자들이 뭔가요",
+  whyTilesBody:
+    `<p style="margin:0"><b>대표값</b> — 지표 아홉 개를 전부 써서 계산한 값입니다. ` +
+    `범위의 한가운데가 아니라 별도로 계산한 값이라 가운데에서 벗어나 있을 수 있습니다.</p>` +
+    `<p style="margin:8px 0 0"><b>범위 폭</b> — 지표를 하나씩 빼며 다시 계산했을 때 값이 흩어지는 폭입니다. ` +
+    `좁으면 아홉 개가 서로 동의한다는 뜻이고, 넓으면 한두 개가 판단을 끌고 있다는 뜻입니다.</p>` +
+    `<p style="margin:8px 0 0"><b>구간 안정</b> — 범위가 한 구간 안에 온전히 들어오는지입니다. ` +
+    `"두 구간"이면 예컨대 '싼 편'과 '저점 부근' 사이에 걸쳐 있어서 하나로 잘라 말하기 어렵다는 뜻입니다.</p>` +
+    `<p style="margin:8px 0 0"><b>데이터 상태</b> — 지표 아홉 개가 전부 계산됐는지입니다. ` +
+    `절반 넘게 빠지면 점수는 나와도 실행은 막습니다.</p>` +
+    `<p style="margin:8px 0 0"><b>둘 이상 동의</b> — 세 갈래 중 둘 이상이 같은 방향인지입니다. ` +
+    `그중 하나는 반드시 '평균가 대비'가 아니어야 합니다.</p>` +
+    `<p style="margin:8px 0 0"><b>반감기 이후</b> — 마지막 반감기로부터 며칠 지났는지입니다. ` +
+    `과거 네 번의 고점이 반감기 이후 367·526·548·534일에 나왔습니다. 다만 이건 온체인 지표가 ` +
+    `아니라 달력일 뿐이라 <b>점수에는 넣지 않습니다.</b></p>`,
+  // -- 꼬리말
+  footBase:
+    "데이터는 CoinMetrics 커뮤니티 API 에서 매일 자동으로 받습니다. 밖에서 꼭 받아와야 하는 것은 " +
+    "가격과 '시장 전체의 원가' 둘뿐이고, 나머지는 비트코인 발행 규칙으로 직접 계산합니다.",
+  footNotes: s => ` 이번 계산에서는 — ${s}.`,
+  footLate: (d, n) =>
+    ` 가장 마지막 날(${d})은 원가 데이터가 하루 늦어 지표 ${n}개가 빠져 있어서, 기준일에서 제외했습니다.`,
+  // -- 규칙 페이지
+  bandDcaNone: "안 함",
+  stepScore: v => `점수 <b>${v}</b>`,
+  stepDown: "아래로", stepUp: "위로",
+  stepOfReserve: "예비 현금의", stepOfHoldings: "보유량의",
+  stepTotal: p => `합계 ${p}%`,
+  coreNote: sold => `단계를 다 밟아도 보유량의 ${sold}% 까지만 팝니다.`,
+  coreHold: core =>
+    `보유분의 <strong>${core}%</strong> 는 점수가 아무리 높아도 팔지 않습니다. ` +
+    `4년 리듬이 언젠가 깨질 수 있다는 것을 인정하는 규칙이고, ` +
+    `<strong>이 시스템에서 유일하게 데이터로 뒷받침되지 않는 조항</strong>입니다.`,
+  deriveNow: s => `이번 산출에서는 — ${s}.`,
+  deriveNone: "이번 산출에서는 계산으로 채운 값이 없습니다. 전부 실제 데이터입니다.",
+  // -- 조작 버튼
+  toKorean: "한국어", toEnglish: "English",
+  langAria: "영어로 보기",
+  themeDark: "어둡게", themeLight: "밝게",
+  themeDarkAria: "어두운 화면으로 바꾸기", themeLightAria: "밝은 화면으로 바꾸기"
+},
+en: {
+  now: "NOW",
+  ladderAcc: "◀ 5 buy-in steps",
+  ladderDist: "5 sell-down steps ▶",
+  keyExpensive: "expensive", keyCheap: "cheap",
+  keyBandIs: "band = range", keyLineIs: "line = headline",
+  halving: "halving",
+  legRange: "range (band)", legPoint: "headline (line)",
+  legTop: "past peak", legBottom: "past bottom",
+  ttRange: "BCS range", ttPoint: "headline", ttBand: "band", ttPrice: "price",
+  ttGate: "two agree", gatePass: "met", gateFail: "not met",
+  histCap: (n, med, mean) =>
+    `Drawn from ${n} points (weekly, daily around turning points and for the last 400 days). ` +
+    `Across the 16 years the band is typically ${med} points wide, ${mean} on average. ` +
+    `Stretches where it is unusually thick are where the indicators disagreed; ` +
+    `thin stretches are where the nine spoke with one voice.`,
+  phaseTop: "peak", phaseBottom: "bottom",
+  gapShort: g => `${g} points empty`,
+  gapLong: g => `${g} points no turning point ever entered`,
+  nowAt: v => `now ${v}`,
+  tpCap: (mt, mb, hi, lo, gap) =>
+    `The four peaks average ${mt}, the four bottoms ${mb}. ` +
+    `Between the lowest peak (${hi}) and the highest bottom (${lo}) lie ${gap} empty points. ` +
+    `Look at the top two on the right, though (the 2021 and 2025 peaks): the bars are long and sag ` +
+    `leftward — the last two peaks were not caught as sharply as the earlier ones, and that is this ` +
+    `indicator's known weakness.`,
+  notComputed: "not computed",
+  sideCheap: "this cheap", sideRich: "this expensive",
+  prevAt: (side, when) => `last ${side} — ${when}`,
+  prevNone: "not within the last four years",
+  valueNow: "value now",
+  indNote: (below, total, lo, hi, spread) =>
+    (below === total ? `All ${total}` : `${below} of the ${total}`) +
+    ` sit on the cheap side of the midpoint (50%). ` +
+    `The cheapest is at ${lo}%, the most expensive at ${hi}% — ${spread} percentage points apart. ` +
+    `That spread is what becomes the width of the range on the ruler above.`,
+  ym: (y, m) => MON_EN[m - 1] + " " + y,
+  scaleTicks: [
+    ["−1.0", "cheapest in four years"], ["−0.5", "bottom 25%"],
+    ["0", "midpoint"], ["+0.5", "top 25%"], ["+1.0", "most expensive"]
+  ],
+  mixTail: total =>
+    `Each family produces a value from −1 to +1; those are averaged by the weights above and ` +
+    `multiplied by 100 to spread out into <b>−100 to +100</b>. The weights sum to ${total}%.`,
+  aggMaxAbs: "Only <b>the single most extreme</b> of the three is taken. They share raw material, so adding them would count the same fact twice.",
+  aggMean: "The <b>average</b> of its member indicators.",
+  famWhy: "What is this family?",
+  famHow: agg => `How they combine — ${agg}`,
+  moreDetail: "A little more",
+  famShare: w => `${w}% of the score`,
+  fromBottom: p => `${p}% from the bottom`,
+  widthAxis: "width of the range (score points)",
+  widthMedian: v => `median ${v}`,
+  widthTail: (max, p99, worst) => `axis to ${max} · rarely past ${p99} (max ${worst})`,
+  widthCap: st =>
+    `Typically ${st.median} points. One day in four is narrower than ${st.p25} points, ` +
+    `and another is wider than ${st.p75}. ` +
+    `The dark box is the middle half (p25–p75), the light box eight days in ten (p10–p90), ` +
+    `and the vertical line the midpoint. ` +
+    `The range fits entirely inside one band on only ${st.stable_pct}% of the 16 years.`,
+  srcDays: (n, k) => `${n} days · ${k} indicators`,
+  freshToday: "data as of today",
+  freshDays: n => `data ${n} day${n === 1 ? "" : "s"} old`,
+  freshStale: n => `data ${n} days old — the refresh may have stopped`,
+  asOf: (d, p) => `as of ${d} · ${p}`,
+  dLabels: {d1: "yesterday", d7: "last week", d30: "last month"},
+  deltaVs: label => `vs ${label}`,
+  deltaPts: v => `${v} pts`,
+  deltaPrice: v => `price ${v}%`,
+  tPoint: "headline", tPointNote: "computed using all nine indicators",
+  tWidth: "range width", tWidthVal: w => `${w} pts`,
+  tWidthNote: (med, narrow) =>
+    `16-year typical ${med} pts · ` + (narrow ? "narrower than usual" : "wider than usual"),
+  tStable: "band fit", tStableOne: "one band", tStableTwo: "two bands",
+  tStableNoteOne: "the range fits inside one band",
+  tStableNoteTwo: "the range straddles two bands",
+  tData: "data state", tDataNoteAll: "all nine indicators computed",
+  tDataNoteSome: n => `${n} indicator${n === 1 ? "" : "s"} missing`,
+  tGate: "two agree",
+  tGateNoteOk: "two or more families point the same way",
+  tGateNoteNo: "price averages only — execution blocked",
+  tHalving: "since halving", tHalvingVal: n => `${n} days`,
+  tHalvingNote: "past peaks came at 367 · 526 · 548 · 534 days",
+  whyScale: "How to read the ruler",
+  whyScaleBody: bandRows =>
+    `<p style="margin:0">The 0 in the middle is "the midpoint of the last 16 years". Further left ` +
+    `means cheaper against that history, further right means more expensive. What matters is that ` +
+    `<b>−100 is not the floor and +100 is not the ceiling</b> — it is a ` +
+    `<b>position within the past distribution</b>. At −90 it can still fall further.</p>` +
+    `<p style="margin:10px 0 0">The two thick vertical bars are the <b>range</b> and the dot inside ` +
+    `is the headline value. The small triangles below the bar mark the pre-set trade steps.</p>` +
+    `<div class="bandlist">${bandRows}</div>`,
+  whyScore: "How this score is produced",
+  whyScoreBody: weights =>
+    `<p style="margin:0">Each of the nine indicators is turned into <b>"roughly what rank is this ` +
+    `within the last four years"</b>, giving a value between −1 (cheapest end) and +1 (most ` +
+    `expensive end). Those nine are grouped into three families and combined at fixed weights ` +
+    `(${weights}), then spread out into −100 to +100.</p>` +
+    `<p style="margin:10px 0 0">There is <b>a reason for not using fixed thresholds</b>. ` +
+    `"MVRV above 7 means overheated" held in 2013 but was never once reached in 2025, because the ` +
+    `readings fall from cycle to cycle. Ranks are less exposed to that.</p>`,
+  whyTiles: "What are these numbers",
+  whyTilesBody:
+    `<p style="margin:0"><b>Headline</b> — the value computed using all nine indicators. It is a ` +
+    `separate calculation rather than the middle of the range, so it can sit off-centre.</p>` +
+    `<p style="margin:8px 0 0"><b>Range width</b> — how far the values scatter when each indicator ` +
+    `is dropped in turn. Narrow means the nine agree; wide means one or two are carrying the call.</p>` +
+    `<p style="margin:8px 0 0"><b>Band fit</b> — whether the range sits entirely inside one band. ` +
+    `"Two bands" means it straddles, say, 'cheap side' and 'near a bottom', so it cannot be stated ` +
+    `as one thing.</p>` +
+    `<p style="margin:8px 0 0"><b>Data state</b> — whether all nine indicators were computed. If more ` +
+    `than half are missing, the score still appears but execution is blocked.</p>` +
+    `<p style="margin:8px 0 0"><b>Two agree</b> — whether two or more of the three families point the ` +
+    `same way, at least one of which must not be 'Against average price'.</p>` +
+    `<p style="margin:8px 0 0"><b>Since halving</b> — days since the last halving. The four past peaks ` +
+    `came 367, 526, 548 and 534 days after one. But this is a calendar, not an on-chain measure, so ` +
+    `<b>it is kept out of the score.</b></p>`,
+  footBase:
+    "Data is fetched automatically every day from the CoinMetrics community API. Only two things have " +
+    "to come from outside — price and 'what the whole market paid'. The rest is computed directly " +
+    "from Bitcoin's issuance rules.",
+  footNotes: s => ` In this run — ${s}.`,
+  footLate: (d, n) =>
+    ` The final day (${d}) is missing ${n} indicator${n === 1 ? "" : "s"} because the cost-basis data ` +
+    `runs a day late, so it was excluded from the as-of date.`,
+  bandDcaNone: "none",
+  stepScore: v => `score <b>${v}</b>`,
+  stepDown: "and below", stepUp: "and above",
+  stepOfReserve: "of reserve cash", stepOfHoldings: "of the holding",
+  stepTotal: p => `total ${p}%`,
+  coreNote: sold => `Walking every step sells at most ${sold}% of the holding.`,
+  coreHold: core =>
+    `<strong>${core}%</strong> of the holding is never sold, however high the score goes. ` +
+    `It is a rule that concedes the four-year rhythm may break one day, and ` +
+    `<strong>the one provision in this system with no data behind it</strong>.`,
+  deriveNow: s => `In this run — ${s}.`,
+  deriveNone: "Nothing was filled by computation in this run. It is all observed data.",
+  toKorean: "한국어", toEnglish: "English",
+  langAria: "Switch to Korean",
+  themeDark: "Dark", themeLight: "Light",
+  themeDarkAria: "Switch to a dark screen", themeLightAria: "Switch to a light screen"
+}
+};
+
+function t(key){
+  const tab = TX[LANG] || TX.ko;
+  const v = (tab[key] !== undefined) ? tab[key] : TX.ko[key];
+  if (typeof v === "function")
+    return v.apply(null, Array.prototype.slice.call(arguments, 1));
+  return v;
+}
+
+/** 밴드 → 배경 washes. 0 위는 따뜻하게, 아래는 차갑게. */
 const WASH = {
   euphoria:"--wash-warm-3", distribution:"--wash-warm-2", upper_neutral:"--wash-warm-1",
   neutral:"--wash-neutral",
@@ -21,8 +350,9 @@ const WASH = {
 };
 const BANDS = D.bands.slice().sort((a,b)=>a.min-b.min);
 const bandOf = v => D.bands.find(b => v >= b.min && v < b.max) || D.bands[0];
-const labelOf = k => (D.bands.find(b=>b.key===k)||{}).label || k;
+const labelOf = k => pick(D.bands.find(b=>b.key===k) || {}, "label") || k;
 const FAMC = ["--s1","--s2","--s3"];
+const famLabel = k => pick(D.families.find(f=>f.key===k) || {}, "label") || k;
 
 // 눈금 라벨은 폭에 맞춰 줄인다. 라벨끼리 붙어 버리면 축을 못 읽는다 —
 // 겹친 라벨은 없는 라벨보다 나쁘다.
@@ -42,13 +372,13 @@ function el(tag, attrs, parent){
 }
 function txt(parent, x, y, s, o){
   o = o || {};
-  const t = el("text", {x:x, y:y, fill:o.fill || "var(--muted)",
+  const n = el("text", {x:x, y:y, fill:o.fill || "var(--muted)",
     "font-size":o.size || 10.5, "font-weight":o.weight || 400,
     "text-anchor":o.anchor || "start", "font-family":o.mono===false?"var(--sans)":"var(--mono)",
     "letter-spacing":o.ls || 0, "dominant-baseline":o.base || "auto"}, parent);
-  t.textContent = s;
-  if (o.tabular !== false) t.style.fontVariantNumeric = "tabular-nums";
-  return t;
+  n.textContent = s;
+  if (o.tabular !== false) n.style.fontVariantNumeric = "tabular-nums";
+  return n;
 }
 function clear(svg){ while (svg.firstChild) svg.removeChild(svg.firstChild); }
 
@@ -77,7 +407,6 @@ function drawGauge(){
   const barY = 34, barH = 40;
   const c = D.current;
 
-
   // 밴드 구획 — 사이에 2px 표면 간격.
   // 현재 구간이 덮는 구획의 라벨은 지운다. 안 지우면 브래킷과 점이 글자 위에
   // 얹혀 "●은 저평가" 처럼 읽힌다 — 잘린 라벨은 없는 라벨보다 나쁘다.
@@ -86,11 +415,12 @@ function drawGauge(){
     const x0 = x(b.min), x1 = x(b.max);
     el("rect", {x:x0+1, y:barY, width:Math.max(0,x1-x0-2), height:barH,
       fill:`var(${WASH[b.key]})`}, svg);
+    const label = pick(b, "label");
     const w = x1 - x0 - 12;
-    const cx = (x0+x1)/2, half = b.label.length * 6.2;
+    const cx = (x0+x1)/2, half = label.length * (EN() ? 3.6 : 6.2);
     const hidden = (cx + half > x(ivLo) - 4) && (cx - half < x(ivHi) + 4);
-    if (w > 52 && !hidden)
-      txt(svg, cx, barY+barH/2+1, b.label,
+    if (w > half * 2 + 10 && !hidden)
+      txt(svg, cx, barY+barH/2+1, label,
         {anchor:"middle", size:11, fill:"var(--ink-2)", weight:600, mono:false, base:"middle"});
   });
   el("rect", {x:x(-100)+1, y:barY, width:iw-2, height:barH, fill:"none",
@@ -123,8 +453,10 @@ function drawGauge(){
     el("path", {d:`M${x(s.v)-3.5},${barY+barH+31} L${x(s.v)+3.5},${barY+barH+31} L${x(s.v)},${barY+barH+26} Z`,
       fill:s.kind==="acc" ? "var(--cool-2)" : "var(--warm-2)", opacity:.55}, svg);
   });
-  txt(svg, x(-100), barY+barH+45, "◀ 나눠 사는 5단계", {size:10, fill:"var(--muted)", ls:".05em"});
-  txt(svg, x(100), barY+barH+45, "나눠 파는 5단계 ▶", {size:10, fill:"var(--muted)", ls:".05em", anchor:"end"});
+  txt(svg, x(-100), barY+barH+45, t("ladderAcc"),
+    {size:10, fill:"var(--muted)", ls:".05em", mono:false});
+  txt(svg, x(100), barY+barH+45, t("ladderDist"),
+    {size:10, fill:"var(--muted)", ls:".05em", anchor:"end", mono:false});
 
   // 현재 구간 — 자 위에 놓인 브래킷
   const gx0 = x(c.low), gx1 = x(c.high), gp = x(c.bcs);
@@ -137,14 +469,15 @@ function drawGauge(){
   });
   el("line", {x1:gx0, y1:bTop, x2:gx1, y2:bTop, stroke:accent, "stroke-width":2}, svg);
   el("circle", {cx:gp, cy:barY+barH/2, r:5.5, fill:accent, stroke:"var(--surface)", "stroke-width":2}, svg);
-  txt(svg, (gx0+gx1)/2, bTop-9, "지금", {anchor:"middle", size:10.5, fill:accent, weight:600, ls:".14em"});
+  txt(svg, (gx0+gx1)/2, bTop-9, t("now"),
+    {anchor:"middle", size:10.5, fill:accent, weight:600, ls:".14em", mono:false});
 }
 
 /* =====================================================================
    02-a. 읽는 법 — 띠와 선이 뭔지 그림으로 보여준다
    ===================================================================== */
 function drawKey(){
-  const svg = document.getElementById("key-svg");
+  const svg = $("key-svg");
   if (!svg) return;
   clear(svg);
   // 그림은 왼쪽에, 설명 글은 오른쪽 고정 위치에. 라벨을 곡선 근처에 두면
@@ -173,8 +506,8 @@ function drawKey(){
   for (let i=0;i<n;i++) m += (i?" L":"M") + X(i) + "," + mid(i);
   el("path", {d:m, fill:"none", stroke:"var(--ink)", "stroke-width":1.7}, svg);
 
-  txt(svg, PX+4, PT+11, "비싼 쪽", {size:8.5, fill:"var(--muted)", mono:false});
-  txt(svg, PX+4, PT+PH-4, "싼 쪽", {size:8.5, fill:"var(--muted)", mono:false});
+  txt(svg, PX+4, PT+11, t("keyExpensive"), {size:8.5, fill:"var(--muted)", mono:false});
+  txt(svg, PX+4, PT+PH-4, t("keyCheap"), {size:8.5, fill:"var(--muted)", mono:false});
 
   // 오른쪽 고정 위치의 라벨 두 개 + 지시선.
   // 두 지시선의 시작점을 가로로 떨어뜨린다 — 같은 x 에서 출발하면 둘이
@@ -182,8 +515,8 @@ function drawKey(){
   const LX = PX + PW + 14;
   const kA = Math.round(n * 0.40), kB = Math.round(n * 0.78);
   const rows = [
-    {y:PT+14,    px:X(kA), py:mid(kA)-half(kA), text:"띠 = 범위",   dot:"var(--cool-2)"},
-    {y:PT+PH-10, px:X(kB), py:mid(kB),          text:"선 = 대표값", dot:"var(--ink)"},
+    {y:PT+14,    px:X(kA), py:mid(kA)-half(kA), text:t("keyBandIs"), dot:"var(--cool-2)"},
+    {y:PT+PH-10, px:X(kB), py:mid(kB),          text:t("keyLineIs"), dot:"var(--ink)"},
   ];
   rows.forEach(r => {
     el("path", {d:`M${r.px},${r.py} L${LX-8},${r.y-4}`, fill:"none",
@@ -198,7 +531,6 @@ function drawKey(){
 /* =====================================================================
    02. 16년 이력 — 구간 리본
    ===================================================================== */
-const xsShared = {};      // 이력·가격 차트가 같은 가로축을 쓴다
 function timeScale(iw, PL){
   const d0 = S[0][0], d1 = S[S.length-1][0];
   return v => PL + (v - d0) / (d1 - d0) * iw;
@@ -215,6 +547,15 @@ function yearTicks(){
   return out;
 }
 
+function histLegend(){
+  setHTML("hist-legend",
+    `<span><i style="background:var(--cool-2);opacity:.45"></i>${t("legRange")}</span>` +
+    `<span><i style="background:var(--ink);height:2px;border-radius:0;margin-bottom:3px"></i>` +
+    `${t("legPoint")}</span>` +
+    `<span><i style="background:var(--warm-3);border-radius:50%"></i>${t("legTop")}</span>` +
+    `<span><i style="background:var(--cool-3);border-radius:50%"></i>${t("legBottom")}</span>`);
+}
+
 function drawHist(){
   const host = $("hist-host"), svg = $("hist");
   if (!host || !svg) return;
@@ -225,7 +566,7 @@ function drawHist(){
   svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.setAttribute("height", H);
   clear(svg);
 
-  const X = timeScale(iw, PL);  xsShared.X = X; xsShared.iw = iw; xsShared.PL = PL; xsShared.PR = PR;
+  const X = timeScale(iw, PL);
   const Y = v => PT + (100 - v) / 200 * ih;
 
   // 밴드 배경
@@ -238,17 +579,21 @@ function drawHist(){
   [-100,-70,-45,-20,0,20,45,70,100].forEach(v =>
     txt(svg, PL-7, Y(v)+3, (v>0?"+":"")+v, {anchor:"end", size:10}));
 
-  // 반감기 세로선
+  // 반감기 세로선. 좁은 화면에서는 글자를 빼고 선만 남긴다 — 위쪽에 2013 고점의
+  // 값 라벨이 있어서 둘이 올라탄다. 겹친 라벨은 없는 라벨보다 나쁘다.
+  const showHalvingText = iw >= 560;
   D.halvings.forEach(h => {
     const off = (new Date(h+"T00:00:00Z").getTime() - BASE.getTime()) / DAY;
     if (off < S[0][0] || off > S[S.length-1][0]) return;
     el("line", {x1:X(off), y1:PT, x2:X(off), y2:PT+ih, stroke:"var(--axis)",
       "stroke-width":1, "stroke-opacity":.5}, svg);
-    txt(svg, X(off)+4, PT+11, "반감기", {size:9.5, fill:"var(--muted)", ls:".08em"});
+    if (showHalvingText)
+      txt(svg, X(off)+4, PT+11, t("halving"),
+        {size:9.5, fill:"var(--muted)", ls:".08em", mono:false});
   });
 
   // 연도 눈금
-  yearTicks().forEach(t => txt(svg, X(t.off), H-9, String(t.y), {anchor:"middle", size:10}));
+  yearTicks().forEach(k => txt(svg, X(k.off), H-9, String(k.y), {anchor:"middle", size:10}));
 
   // 구간 리본
   let up = "", dn = "";
@@ -263,29 +608,30 @@ function drawHist(){
     "stroke-linejoin":"round"}, svg);
 
   // 전환점
-  D.tps.forEach(t => {
-    const off = (new Date(t.d+"T00:00:00Z").getTime() - BASE.getTime()) / DAY;
-    const top = t.phase === "top";
+  D.tps.forEach(k => {
+    const off = (new Date(k.d+"T00:00:00Z").getTime() - BASE.getTime()) / DAY;
+    const top = k.phase === "top";
     const col = top ? "var(--warm-3)" : "var(--cool-3)";
-    el("circle", {cx:X(off), cy:Y(t.bcs), r:4.5, fill:col,
+    el("circle", {cx:X(off), cy:Y(k.bcs), r:4.5, fill:col,
       stroke:"var(--surface)", "stroke-width":2}, svg);
-    txt(svg, X(off), Y(t.bcs) + (top ? -12 : 18), nf(t.bcs,0),
+    // 값은 고점 위·저점 아래에 붙이되, 그 자리가 그림 밖이면 반대편으로 넘긴다.
+    // 2015 저점은 −98.9 라서 아래에 두면 연도 눈금 위에 올라탄다.
+    let ly = Y(k.bcs) + (top ? -12 : 18);
+    if (ly > PT + ih - 3) ly = Y(k.bcs) - 10;
+    else if (ly < PT + 9) ly = Y(k.bcs) + 17;
+    txt(svg, X(off), ly, nf(k.bcs,0),
       {anchor:"middle", size:10.5, fill:col, weight:600});
   });
 
   attachCrosshair(svg, "hist-tt", host, X, PL, iw, PT, ih, r => ([
-    ["BCS 구간", nf(r[3],1) + " ~ " + nf(r[4],1)],
-    ["대표값", nf(r[2],1)],
-    ["밴드", labelOf(bandOf(r[2]).key)],
-    ["가격", money(r[1])]
+    [t("ttRange"), nf(r[3],1) + " ~ " + nf(r[4],1)],
+    [t("ttPoint"), nf(r[2],1)],
+    [t("ttBand"), labelOf(bandOf(r[2]).key)],
+    [t("ttPrice"), money(r[1])]
   ]));
 
   const st = D.stats;
-  setText("hist-cap",
-    `점 ${S.length}개로 그렸습니다 (주 1회, 전환점 주변과 최근 400일은 하루 단위). ` +
-    `띠의 폭은 16년 전체에서 보통 ${st.median}점, 평균 ${st.mean}점입니다. ` +
-    `띠가 유난히 두꺼운 구간은 지표들이 서로 다른 이야기를 하던 때이고, ` +
-    `얇은 구간은 아홉 개가 한목소리를 내던 때입니다.`);
+  setText("hist-cap", t("histCap", S.length, st.median, st.mean));
 }
 
 function drawPrice(){
@@ -309,21 +655,21 @@ function drawPrice(){
     txt(svg, PL-7, Y(Math.pow(10,e))+3,
       e>=3 ? "$"+Math.pow(10,e-3)+"k" : "$"+Math.pow(10,e), {anchor:"end", size:10});
   }
-  yearTicks().forEach(t => txt(svg, X(t.off), H-8, String(t.y), {anchor:"middle", size:10}));
+  yearTicks().forEach(k => txt(svg, X(k.off), H-8, String(k.y), {anchor:"middle", size:10}));
 
   let p = "";
   S.forEach((r,i) => { p += (i?" L":"M") + X(r[0]) + "," + Y(r[1]); });
   el("path", {d:p, fill:"none", stroke:"var(--ink-2)", "stroke-width":1.4,
     "stroke-linejoin":"round"}, svg);
 
-  D.tps.forEach(t => {
-    const off = (new Date(t.d+"T00:00:00Z").getTime() - BASE.getTime()) / DAY;
-    el("circle", {cx:X(off), cy:Y(t.price), r:4, fill:t.phase==="top"?"var(--warm-3)":"var(--cool-3)",
+  D.tps.forEach(k => {
+    const off = (new Date(k.d+"T00:00:00Z").getTime() - BASE.getTime()) / DAY;
+    el("circle", {cx:X(off), cy:Y(k.price), r:4, fill:k.phase==="top"?"var(--warm-3)":"var(--cool-3)",
       stroke:"var(--surface)", "stroke-width":2}, svg);
   });
 
   attachCrosshair(svg, "price-tt", host, X, PL, iw, PT, ih, r => ([
-    ["가격", money(r[1])], ["BCS", nf(r[2],1)]
+    [t("ttPrice"), money(r[1])], ["BCS", nf(r[2],1)]
   ]));
 }
 
@@ -339,7 +685,9 @@ function drawTP(){
   // 겹쳐 "저점 15.01" 과 "-98.2" 가 한 덩어리로 읽힌다 — 겹친 라벨은 없는
   // 라벨보다 나쁘다.
   const narrow = W < 520;
-  const PL = narrow ? 74 : 96, PR = narrow ? 62 : 78;
+  // 행 라벨은 "고점 13.12" / "peak 13.12" 다. 영어가 길어서 같은 여백을 쓰면
+  // 왼쪽으로 삐져나간다.
+  const PL = narrow ? (EN() ? 94 : 74) : 96, PR = narrow ? 62 : 78;
   const PT = 54, PB = 56;
   const H = PT + PB + rowH * D.tps.length;
   const iw = W - PL - PR;
@@ -364,8 +712,8 @@ function drawTP(){
     txt(svg, x(v), H-14, (v>0?"+":"")+v, {anchor:"middle", size:10});
   });
 
-  const tops = D.tps.filter(t=>t.phase==="top").map(t=>t.bcs);
-  const bots = D.tps.filter(t=>t.phase==="bottom").map(t=>t.bcs);
+  const tops = D.tps.filter(k=>k.phase==="top").map(k=>k.bcs);
+  const bots = D.tps.filter(k=>k.phase==="bottom").map(k=>k.bcs);
   const gapLo = Math.max.apply(null, bots), gapHi = Math.min.apply(null, tops);
 
   // 고점 최저와 저점 최고 사이의 빈 공간 — 이 지표의 핵심 증거다.
@@ -377,30 +725,35 @@ function drawTP(){
       "stroke-width":1.5, "stroke-opacity":.45}, svg));
   el("line", {x1:gx0, y1:gy, x2:gx1, y2:gy, stroke:"var(--ink)",
     "stroke-width":1.5, "stroke-opacity":.45}, svg);
-  [[gx0, 1], [gx1, -1]].forEach(([px, dir]) =>
-    el("path", {d:`M${px},${gy} l${dir*7},-4 l0,8 Z`, fill:"var(--ink)",
+  [[gx0, 1], [gx1, -1]].forEach(pair =>
+    el("path", {d:`M${pair[0]},${gy} l${pair[1]*7},-4 l0,8 Z`, fill:"var(--ink)",
       "fill-opacity":.45}, svg));
-  const gapTxt = narrow ? `빈 공간 ${(gapHi-gapLo).toFixed(0)}점`
-                        : `전환점이 한 번도 들어오지 않은 ${(gapHi-gapLo).toFixed(0)}점`;
-  const gw = gapTxt.length * (narrow ? 6.4 : 6.8) + 14;
+  const gapPts = (gapHi-gapLo).toFixed(0);
+  // 좁은 화면에서는 짧은 문구로. 다만 영어는 같은 뜻이 길어져서, 상자가
+  // 치수선을 넘어가면 짧은 쪽으로 내린다.
+  const glyph = EN() ? 5.9 : 6.8;
+  let gapTxt = narrow ? t("gapShort", gapPts) : t("gapLong", gapPts);
+  if (gapTxt.length * glyph + 14 > gx1 - gx0) gapTxt = t("gapShort", gapPts);
+  const gw = gapTxt.length * glyph + 14;
   el("rect", {x:(gx0+gx1)/2 - gw/2, y:gy-11, width:gw, height:17,
     fill:"var(--surface)"}, svg);
   txt(svg, (gx0+gx1)/2, gy+3, gapTxt,
     {anchor:"middle", size:11.5, fill:"var(--ink)", weight:640, ls:".01em", mono:false});
 
-  D.tps.forEach((t,i) => {
+  D.tps.forEach((k,i) => {
     const y = PT + rowH*i + rowH/2;
-    const top = t.phase==="top";
+    const top = k.phase==="top";
     const col = top ? "var(--warm-3)" : "var(--cool-3)";
-    txt(svg, PL-14, y+3.5, (top?"고점":"저점") + "  " + t.d.slice(2,7).replace("-","."),
-      {anchor:"end", size:narrow?10.5:11, fill:"var(--ink-2)", weight:600});
-    el("line", {x1:x(t.low), y1:y, x2:x(t.high), y2:y, stroke:col, "stroke-width":6,
+    txt(svg, PL-14, y+3.5,
+      t(top ? "phaseTop" : "phaseBottom") + "  " + k.d.slice(2,7).replace("-","."),
+      {anchor:"end", size:narrow?10.5:11, fill:"var(--ink-2)", weight:600, mono:false});
+    el("line", {x1:x(k.low), y1:y, x2:x(k.high), y2:y, stroke:col, "stroke-width":6,
       "stroke-linecap":"butt", opacity:.34}, svg);
-    [t.low, t.high].forEach(v =>
+    [k.low, k.high].forEach(v =>
       el("line", {x1:x(v), y1:y-7, x2:x(v), y2:y+7, stroke:col, "stroke-width":2}, svg));
-    el("circle", {cx:x(t.bcs), cy:y, r:4.5, fill:col, stroke:"var(--surface)", "stroke-width":2}, svg);
+    el("circle", {cx:x(k.bcs), cy:y, r:4.5, fill:col, stroke:"var(--surface)", "stroke-width":2}, svg);
     // 값 칼럼
-    txt(svg, W-6, y+3.5, nf(t.bcs,1),
+    txt(svg, W-6, y+3.5, nf(k.bcs,1),
       {anchor:"end", size:narrow?11:11.5, fill:col, weight:600});
   });
 
@@ -411,40 +764,41 @@ function drawTP(){
     stroke:nowCol, "stroke-width":2}, svg);
   el("path", {d:`M${x(c.bcs)-5},${bandBot+5} L${x(c.bcs)+5},${bandBot+5} ` +
     `L${x(c.bcs)},${bandBot-1} Z`, fill:nowCol}, svg);
-  txt(svg, x(c.bcs), bandBot + 20, "지금 " + nf(c.bcs,0),
-    {anchor:"middle", size:11, fill:nowCol, weight:640, ls:".02em"});
+  txt(svg, x(c.bcs), bandBot + 20, t("nowAt", nf(c.bcs,0)),
+    {anchor:"middle", size:11, fill:nowCol, weight:640, ls:".02em", mono:false});
 
   const mean = a => a.reduce((s,v)=>s+v,0)/a.length;
-  const sd = a => Math.sqrt(mean(a.map(v=>Math.pow(v-mean(a),2))));
-  setText("tp-cap",
-    `고점 네 번의 평균이 ${nf(mean(tops),1)}, 바닥 네 번의 평균이 ${nf(mean(bots),1)} 입니다. ` +
-    `가장 낮았던 고점(${nf(gapHi,1)})과 가장 높았던 바닥(${nf(gapLo,1)}) 사이가 ` +
-    `${(gapHi-gapLo).toFixed(0)}점 비어 있습니다. ` +
-    `다만 오른쪽 위 두 개(2021·2025 고점)를 보시면 막대가 길고 왼쪽으로 처져 있습니다 — ` +
-    `최근 두 번의 고점은 예전만큼 뚜렷하게 잡히지 않았다는 뜻이고, 이 지표의 알려진 약점입니다.`);
+  setText("tp-cap", t("tpCap", nf(mean(tops),1), nf(mean(bots),1),
+    nf(gapHi,1), nf(gapLo,1), gapPts));
+
+  // 표의 마지막 세 열은 갈래 이름이다. 설정에서 가져온다 — 페이지에 적어 두면
+  // 갈래 이름을 바꿀 때 표와 나머지가 갈라진다(실제로 갈라져 있었다).
+  D.families.forEach((f, i) => setText("tp-th-f" + (i+1), pick(f, "label")));
 
   const tb = document.querySelector("#tp-table tbody");
   if (!tb) return;
   tb.innerHTML = "";
   const byDate = {};
   S.forEach(r => { byDate[iso(dateOf(r[0]))] = r; });
-  D.tps.forEach(t => {
-    const r = byDate[t.d] || [];
+  D.tps.forEach(k => {
+    const r = byDate[k.d] || [];
     const tr = document.createElement("tr");
     tr.innerHTML =
-      `<td>${t.phase==="top"?"고점":"저점"}</td><td>${t.d}</td><td>${money(t.price)}</td>` +
-      `<td>${nf(t.low,1)} ~ ${nf(t.high,1)}</td><td>${nf(t.bcs,1)}</td>` +
-      `<td>${(t.high-t.low).toFixed(1)}</td>` +
+      `<td>${t(k.phase==="top" ? "phaseTop" : "phaseBottom")}</td><td>${k.d}</td>` +
+      `<td>${money(k.price)}</td>` +
+      `<td>${nf(k.low,1)} ~ ${nf(k.high,1)}</td><td>${nf(k.bcs,1)}</td>` +
+      `<td>${(k.high-k.low).toFixed(1)}</td>` +
       `<td>${nf(r[5],2)}</td><td>${nf(r[6],2)}</td><td>${nf(r[7],2)}</td>`;
     tb.appendChild(tr);
   });
   const c2 = D.current;
   const tr = document.createElement("tr");
   tr.className = "hi";
-  tr.innerHTML = `<td>지금</td><td>${c2.d}</td><td>${money(c2.price)}</td>` +
+  tr.innerHTML = `<td>${t("now")}</td><td>${c2.d}</td><td>${money(c2.price)}</td>` +
     `<td>${nf(c2.low,1)} ~ ${nf(c2.high,1)}</td><td>${nf(c2.bcs,1)}</td>` +
     `<td>${(c2.high-c2.low).toFixed(1)}</td>` +
-    `<td>${nf(c2.fam.valuation,2)}</td><td>${nf(c2.fam.price,2)}</td><td>${nf(c2.fam.supply,2)}</td>`;
+    `<td>${nf(c2.fam.valuation,2)}</td><td>${nf(c2.fam.price,2)}</td>` +
+    `<td>${nf(c2.fam.supply,2)}</td>`;
   tb.appendChild(tr);
 }
 
@@ -472,32 +826,40 @@ function wireToggles(root){
     if (btn.dataset.wired) return;
     btn.dataset.wired = "1";
     btn.addEventListener("click", () => {
-      const body = document.getElementById(btn.dataset.target);
+      const body = $(btn.dataset.target);
+      if (!body) return;
       const open = body.classList.toggle("open");
       btn.setAttribute("aria-expanded", open ? "true" : "false");
-      btn.querySelector(".mk").textContent = open ? "−" : "+";
+      const mk = btn.querySelector(".mk");
+      if (mk) mk.textContent = open ? "−" : "+";
     });
   });
 }
 
-/** 날짜를 "2023년 3월" 처럼. 정확한 일자는 이 맥락에서 필요 없다. */
-function ym(iso){
-  if (!iso) return null;
-  return iso.slice(0, 4) + "년 " + parseInt(iso.slice(5, 7), 10) + "월";
+/** 날짜를 "2023년 3월" / "Mar 2023" 처럼. 정확한 일자는 이 맥락에서 필요 없다. */
+function ym(isoDate){
+  if (!isoDate) return null;
+  return t("ym", isoDate.slice(0, 4), parseInt(isoDate.slice(5, 7), 10));
+}
+
+/** 상태로 읽는 지표(Hash Ribbons)의 화면 이름. 두 언어 다 설정에서 온다 —
+    여기에 표를 두면 상태를 하나 추가할 때 설정과 어긋나고, 실제로 어긋나
+    화면에 "expansion" 이라고 적혀 있었다. */
+function stateLabel(v){
+  const tab = (EN() ? D.statesEn : D.states) || {};
+  return tab[v] || v;
 }
 
 /** 지표 아홉 개를 한 표로. 이 페이지에서 가장 먼저 읽히는 부분이다. */
 function indicatorTable(){
   const tb = document.querySelector("#ind-table tbody");
-  const cardHost = document.getElementById("ind-cards");
+  const cardHost = $("ind-cards");
   if (!tb) return;
   tb.innerHTML = "";
   if (cardHost) cardHost.innerHTML = "";
   const cur = D.current.ind || {};
   const famIdx = {};
   D.families.forEach((f, i) => { famIdx[f.key] = i; });
-  const famLabel = {};
-  D.families.forEach(f => { famLabel[f.key] = f.label; });
 
   // 싼 쪽부터 정렬한다. 그래야 "무엇이 가장 극단인가"가 위에서 바로 보인다.
   const rows = D.indMeta.slice().sort((a, b) => {
@@ -513,7 +875,7 @@ function indicatorTable(){
     const col = `var(${FAMC[i]})`;
     let cell;
     if (v.pct == null){
-      cell = `<span style="color:var(--muted)">계산 안 됨</span>`;
+      cell = `<span style="color:var(--muted)">${t("notComputed")}</span>`;
     } else {
       const pctTxt = (v.pct * 100).toFixed(0) + "%";
       // 막대는 가운데(50%)에서 현재 위치까지 채운다. 방향이 곧 싼 쪽/비싼 쪽이다.
@@ -527,35 +889,35 @@ function indicatorTable(){
     const raw = v.raw == null ? "—"
       : (typeof v.raw === "number"
           ? (Math.abs(v.raw) >= 100 ? v.raw.toFixed(1) : v.raw.toFixed(2))
-          : STATE_KO[v.raw] || v.raw);
-    const side = v.pct == null ? "" : (v.pct < 0.5 ? "이만큼 쌌던" : "이만큼 비쌌던");
+          : stateLabel(v.raw));
+    const side = v.pct == null ? "" : t(v.pct < 0.5 ? "sideCheap" : "sideRich");
     const when = ym((D.lastSimilar || {})[m.key]);
-    const prev = when ? `직전에 ${side} 때 — ${when}` : "최근 4년 안에는 없음";
+    const prev = when ? t("prevAt", side, when) : t("prevNone");
 
     const tr = document.createElement("tr");
     tr.innerHTML =
-      `<td class="lbl">${esc(m.short)}</td>` +
-      `<td class="sub">${esc(m.explain)}</td>` +
+      `<td class="lbl">${esc(pick(m, "short"))}</td>` +
+      `<td class="sub">${esc(pick(m, "explain"))}</td>` +
       `<td>${esc(raw)}</td>` +
       `<td>${cell}</td>` +
       `<td class="sub" style="min-width:0;white-space:nowrap">${esc(when || "—")}</td>` +
       `<td class="sub" style="min-width:0;white-space:nowrap">` +
-      `<span class="famdot" style="background:${col}"></span>${esc(famLabel[m.family] || "")}</td>`;
+      `<span class="famdot" style="background:${col}"></span>${esc(famLabel(m.family))}</td>`;
     tb.appendChild(tr);
 
     if (cardHost){
       const card = document.createElement("div");
       card.className = "indcard";
       card.innerHTML =
-        `<div class="top"><span class="nm">${esc(m.short)}</span>` +
+        `<div class="top"><span class="nm">${esc(pick(m, "short"))}</span>` +
         `<span class="pct" style="color:${col}">${v.pct == null ? "—"
           : (v.pct*100).toFixed(0) + "%"}</span></div>` +
-        `<div class="one">${esc(m.explain)}</div>` +
+        `<div class="one">${esc(pick(m, "explain"))}</div>` +
         (v.pct == null ? "" :
           `<span class="posbar" style="display:block;min-width:0"><span class="mid"></span>` +
           `<span class="fill" style="left:${Math.min(0.5,v.pct)*100}%;` +
           `width:${Math.max(1.2,Math.abs(v.pct-0.5)*100)}%;background:${col}"></span></span>`) +
-        `<div class="meta"><span>지금 값 <b>${esc(raw)}</b></span>` +
+        `<div class="meta"><span>${t("valueNow")} <b>${esc(raw)}</b></span>` +
         `<span>${esc(prev)}</span></div>`;
       cardHost.appendChild(card);
     }
@@ -565,84 +927,69 @@ function indicatorTable(){
   if (vals.length){
     const lo = Math.min.apply(null, vals), hi = Math.max.apply(null, vals);
     const below = vals.filter(v => v < 0.5).length;
-    setText("ind-note",
-      `아홉 개 중 ${below}개가 한가운데(50%)보다 싼 쪽에 있습니다. ` +
-      `가장 싼 쪽이 ${(lo*100).toFixed(0)}%, 가장 비싼 쪽이 ${(hi*100).toFixed(0)}% 로 ` +
-      `${((hi-lo)*100).toFixed(0)}%p 벌어져 있습니다. ` +
-      `이 벌어짐이 곧 위 눈금의 범위 폭으로 이어집니다.`);
+    setText("ind-note", t("indNote", below, D.indMeta.length, (lo*100).toFixed(0),
+      (hi*100).toFixed(0), ((hi-lo)*100).toFixed(0)));
   }
 }
 
-const STATE_KO = {
-  capitulation: "채굴자 이탈", recovery: "회복 중", normal: "정상",
-  buy: "회복 신호", neutral: "보통",
-};
-
 /** −1 ~ +1 눈금이 무슨 뜻인지 보여주는 띠. */
 function scaleKey(){
-  const host = document.getElementById("scalekey");
+  const host = $("scalekey");
   if (!host) return;
   host.innerHTML =
-    `<div class="bar"></div>` +
-    `<div class="ticks">` +
-    `<span>−1.0<b>최근 4년 중 가장 쌌던 때</b></span>` +
-    `<span>−0.5<b>아래에서 25%</b></span>` +
-    `<span>0<b>한가운데</b></span>` +
-    `<span>+0.5<b>위에서 25%</b></span>` +
-    `<span>+1.0<b>가장 비쌌던 때</b></span>` +
+    `<div class="bar"></div><div class="ticks">` +
+    t("scaleTicks").map(p => `<span>${p[0]}<b>${esc(p[1])}</b></span>`).join("") +
     `</div>`;
 }
 
 /** 세 갈래의 비중을 눈에 보이게. */
 function mixBar(){
-  const host = document.getElementById("mixbar");
+  const host = $("mixbar");
   if (!host) return;
   const total = D.families.reduce((s, f) => s + f.weight, 0);
   host.innerHTML =
     `<div class="mix">` + D.families.map((f, i) =>
       `<div style="flex:${f.weight};background:var(${FAMC[i]})">${f.weight}%</div>`).join("") +
     `</div><div class="mixlabels">` + D.families.map(f =>
-      `<div style="flex:${f.weight}">${esc(f.label)}</div>`).join("") + `</div>` +
-    `<p style="margin:14px 0 0;font-size:13.5px;color:var(--ink-2)">` +
-    `각 갈래가 −1 ~ +1 을 내면, 위 비중대로 가중평균한 뒤 100을 곱해 ` +
-    `<b>−100 ~ +100</b> 으로 폅니다. 합이 ${total}% 입니다.</p>`;
+      `<div style="flex:${f.weight}">${esc(pick(f, "label"))}</div>`).join("") + `</div>` +
+    `<p style="margin:14px 0 0;font-size:13.5px;color:var(--ink-2)">${t("mixTail", total)}</p>`;
 }
 
 function famCards(){
   const host = $("famcards");
-  if (!host) return;
-  host.innerHTML = "";
   const cur = D.current.fam;
-  D.families.forEach((f, i) => {
-    const v = cur[f.key];
-    const agg = f.aggregate === "max_abs"
-      ? "셋 중 <b>가장 극단인 하나</b>만 채택합니다. 재료가 겹쳐서 더하면 같은 사실을 두 번 세는 셈이라서요."
-      : "구성 지표의 <b>평균</b>을 냅니다.";
-    const div = document.createElement("div");
-    div.className = "famcard";
-    div.innerHTML =
-      `<div class="top"><h3><span class="sw" style="background:var(${FAMC[i]})"></span>${esc(f.label)}</h3>` +
-      `<span class="w">${f.weight}</span></div>` +
-      `<div class="agg">점수에서 차지하는 비중 ${f.weight}%</div>` +
-      (f.explain ? toggle("이 갈래는 뭔가요?",
-          `<p style="margin:0">${esc(f.explain)}</p>` +
-          `<p style="margin:10px 0 0">합치는 방식 — ${agg}</p>`) : "") +
-      `<ul>${f.members.map(m => `<li style="display:block">` +
-        `<div class="indi">` +
-        `<div class="nm">${esc(m.label)}</div>` +
-        (m.explain ? `<div class="one">${esc(m.explain)}</div>` : "") +
-        (m.explain_long ? toggle("좀 더 자세히",
-            `<p style="margin:0">${esc(m.explain_long)}</p>`) : "") +
-        `</div></li>`).join("")}</ul>` +
-      `<div class="score"><span>지금 값</span>` +
-      `<span><b>${nf(v,2)}</b>${v == null ? "" :
-        `<i style="font-style:normal;color:var(--muted);font-size:12px;margin-left:8px">` +
-        `아래에서 ${Math.round((v+1)/2*100)}%</i>`}</span></div>`;
-    host.appendChild(div);
-  });
-  wireToggles(host);
+  if (host){
+    host.innerHTML = "";
+    D.families.forEach((f, i) => {
+      const v = cur[f.key];
+      const agg = t(f.aggregate === "max_abs" ? "aggMaxAbs" : "aggMean");
+      const div = document.createElement("div");
+      div.className = "famcard";
+      div.innerHTML =
+        `<div class="top"><h3><span class="sw" style="background:var(${FAMC[i]})"></span>` +
+        `${esc(pick(f, "label"))}</h3><span class="w">${f.weight}</span></div>` +
+        `<div class="agg">${t("famShare", f.weight)}</div>` +
+        (pick(f, "explain") ? toggle(t("famWhy"),
+            `<p style="margin:0">${esc(pick(f, "explain"))}</p>` +
+            `<p style="margin:10px 0 0">${t("famHow", agg)}</p>`) : "") +
+        `<ul>${f.members.map(m => `<li style="display:block">` +
+          `<div class="indi">` +
+          `<div class="nm">${esc(pick(m, "label"))}</div>` +
+          (pick(m, "explain") ? `<div class="one">${esc(pick(m, "explain"))}</div>` : "") +
+          (pick(m, "explain_long") ? toggle(t("moreDetail"),
+              `<p style="margin:0">${esc(pick(m, "explain_long"))}</p>`) : "") +
+          `</div></li>`).join("")}</ul>` +
+        `<div class="score"><span>${t("valueNow")}</span>` +
+        `<span><b>${nf(v,2)}</b>${v == null ? "" :
+          `<i style="font-style:normal;color:var(--muted);font-size:12px;margin-left:8px">` +
+          `${t("fromBottom", Math.round((v+1)/2*100))}</i>`}</span></div>`;
+      host.appendChild(div);
+    });
+    wireToggles(host);
+  }
   setHTML("fam-legend", D.families.map((f,i) =>
-    `<span><i style="background:var(${FAMC[i]})"></i>${esc(f.label)} <b>${nf(cur[f.key],2)}</b></span>`).join(""));
+    `<span><i style="background:var(${FAMC[i]})"></i>${esc(pick(f, "label"))} ` +
+    `<b>${nf(cur[f.key],2)}</b></span>`).join(""));
 }
 
 function drawFam(){
@@ -650,7 +997,13 @@ function drawFam(){
   if (!host || !svg) return;
   const W = host.clientWidth || 900;
   const H = Math.max(200, Math.min(280, W * 0.26));
-  const PL = 40, PR = 88, PT = 14, PB = 26;
+  // 선 끝의 갈래 이름은 자리가 있을 때만 붙인다. 이름 길이가 언어마다 두 배
+  // 차이 나서 고정 여백으로는 영어에서 그림 밖으로 나간다. 자리가 없으면
+  // 빼도 되는 라벨이다 — 바로 위 범례에 세 이름과 현재 값이 이미 있다.
+  const labels = D.families.map(f => pick(f, "label"));
+  const wide = Math.max.apply(null, labels.map(s => s.length)) * (EN() ? 6.4 : 11.5) + 14;
+  const showEnds = W - 40 - wide >= 260;
+  const PL = 40, PR = showEnds ? wide : 16, PT = 14, PB = 26;
   const iw = W - PL - PR, ih = H - PT - PB;
   svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.setAttribute("height", H);
   clear(svg);
@@ -689,22 +1042,25 @@ function drawFam(){
     if (lastPt){
       el("circle", {cx:lastPt[0], cy:lastPt[1], r:3.5, fill:`var(${FAMC[i]})`,
         stroke:"var(--surface)", "stroke-width":2}, svg);
-      ends.push({y:lastPt[1], label:f.label, color:`var(${FAMC[i]})`});
+      ends.push({y:lastPt[1], label:pick(f, "label"), color:`var(${FAMC[i]})`});
     }
   });
   // 끝 라벨을 최소 15px 간격으로 밀어낸다. 세 계열이 −0.59 / −0.65 처럼 붙어
   // 있으면 그냥 그리면 글자가 서로 올라탄다.
-  ends.sort((a,b) => a.y - b.y);
-  for (let i = 1; i < ends.length; i++)
-    if (ends[i].y - ends[i-1].y < 15) ends[i].y = ends[i-1].y + 15;
-  ends.forEach(e => txt(svg, PL+iw+10, e.y+3.5, e.label,
-    {size:11, fill:e.color, weight:600, mono:false}));
+  if (showEnds){
+    ends.sort((a,b) => a.y - b.y);
+    for (let i = 1; i < ends.length; i++)
+      if (ends[i].y - ends[i-1].y < 15) ends[i].y = ends[i-1].y + 15;
+    ends.forEach(e => txt(svg, PL+iw+10, e.y+3.5, e.label,
+      {size:11, fill:e.color, weight:600, mono:false}));
+  }
 
-  attachCrosshair(svg, "fam-tt", host, X, PL, iw, PT, ih, r => ([
-    ["밸류에이션", nf(r[5],2)], ["가격·추세", nf(r[6],2)],
-    ["공급·채굴", nf(r[7],2)], ["BCS", nf(r[2],1)],
-    ["합의 게이트", r[8] ? "통과" : "미달"]
-  ]), rows);
+  attachCrosshair(svg, "fam-tt", host, X, PL, iw, PT, ih, r => (
+    D.families.map((f, i) => [pick(f, "label"), nf(r[5+i], 2)]).concat([
+      ["BCS", nf(r[2],1)],
+      [t("ttGate"), r[8] ? t("gatePass") : t("gateFail")]
+    ])
+  ), rows);
 }
 
 /* =====================================================================
@@ -714,8 +1070,10 @@ function drawWidth(){
   const host = $("width-host"), svg = $("width");
   if (!host || !svg) return;
   const W = host.clientWidth || 900;
-  const H = 168;
-  const PL = 16, PR = 16, PT = 40, PB = 46;
+  // 축 이름(가운데)과 꼬리 설명(오른쪽)을 **두 줄로** 나눈다. 한 줄에 두면
+  // 좁은 화면에서 둘이 겹치는데, 그건 한국어에서도 그랬다.
+  const H = 182;
+  const PL = 16, PR = 16, PT = 40, PB = 60;
   const iw = W - PL - PR;
   svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.setAttribute("height", H);
   clear(svg);
@@ -731,7 +1089,8 @@ function drawWidth(){
     el("line", {x1:x(v), y1:y+h, x2:x(v), y2:y+h+5, stroke:"var(--axis)", "stroke-width":1}, svg);
     txt(svg, x(v), y+h+19, String(v), {anchor:"middle", size:10});
   }
-  txt(svg, PL+iw/2, H-8, "범위의 폭 (점수 단위)", {anchor:"middle", size:10.5, ls:".02em", mono:false});
+  txt(svg, PL+iw/2, H-26, t("widthAxis"),
+    {anchor:"middle", size:10.5, ls:".02em", mono:false});
 
   // p10–p90 상자, p25–p75 진한 상자, 중위선
   el("rect", {x:x(st.p10), y:y+h*0.30, width:x(st.p90)-x(st.p10), height:h*0.40,
@@ -749,18 +1108,13 @@ function drawWidth(){
   mark(st.p25, "p25 " + st.p25, -13);
   mark(st.p75, "p75 " + st.p75, -13);
   mark(st.p90, "p90 " + st.p90, 0);
-  txt(svg, x(st.median), y+h*0.10-9, "중위 " + st.median,
-    {anchor:"middle", size:11, fill:"var(--ink)", weight:600});
-  // 축 오른쪽 끝에 붙이면 눈금 숫자와 겹친다. 아래 한 줄을 통째로 쓴다.
-  txt(svg, PL+iw, H-8, `축은 ${maxW} 까지 · 드물게 ${st.p99} 이상(최대 ${st.max})`,
-    {anchor:"end", size:10, fill:"var(--muted)"});
+  txt(svg, x(st.median), y+h*0.10-9, t("widthMedian", st.median),
+    {anchor:"middle", size:11, fill:"var(--ink)", weight:600, mono:false});
+  // 축 오른쪽 끝에 붙이면 눈금 숫자와 겹친다. 축 이름 아래 한 줄을 통째로 쓴다.
+  txt(svg, PL+iw, H-8, t("widthTail", maxW, st.p99, st.max),
+    {anchor:"end", size:10, fill:"var(--muted)", mono:false});
 
-  setText("width-cap",
-    `보통은 ${st.median}점입니다. 네 날 중 하루는 ${st.p25}점보다 좁고, ` +
-    `또 하루는 ${st.p75}점보다 넓습니다. ` +
-    `진한 상자가 가운데 절반(p25~p75), 연한 상자가 열에 여덟(p10~p90), ` +
-    `세로선이 한가운데 값입니다. ` +
-    `범위가 한 구간 안에 온전히 들어온 날은 16년 중 ${st.stable_pct}% 뿐입니다.`);
+  setText("width-cap", t("widthCap", st));
 }
 
 /* =====================================================================
@@ -768,7 +1122,8 @@ function drawWidth(){
    ===================================================================== */
 function attachCrosshair(svg, ttId, host, X, PL, iw, PT, ih, rowsFn, rowsIn){
   const rows = rowsIn || S;
-  const tt = document.getElementById(ttId);
+  const tt = $(ttId);
+  if (!tt) return;
   const line = el("line", {x1:0, y1:PT, x2:0, y2:PT+ih, stroke:"var(--ink)",
     "stroke-width":1, "stroke-opacity":0}, svg);
   const hit = el("rect", {x:PL, y:PT, width:iw, height:ih, fill:"transparent",
@@ -791,7 +1146,8 @@ function attachCrosshair(svg, ttId, host, X, PL, iw, PT, ih, rowsFn, rowsIn){
     line.setAttribute("stroke-opacity", .35);
     tt.style.opacity = 1;
     tt.innerHTML = `<div class="d">${iso(dateOf(r[0]))}</div>` +
-      rowsFn(r).map(p => `<div class="r"><span>${p[0]}</span><span>${p[1]}</span></div>`).join("");
+      rowsFn(r).map(p => `<div class="r"><span>${esc(p[0])}</span>` +
+        `<span>${esc(p[1])}</span></div>`).join("");
     const hb = host.getBoundingClientRect();
     let left = ev.clientX - hb.left + 14;
     if (left + tt.offsetWidth > hb.width) left = ev.clientX - hb.left - tt.offsetWidth - 14;
@@ -810,129 +1166,203 @@ function attachCrosshair(svg, ttId, host, X, PL, iw, PT, ih, rowsFn, rowsIn){
 /* =====================================================================
    헤더 · 스탯
    ===================================================================== */
+/** 마지막 데이터가 며칠 전인가 — **보는 시점에** 센다.
+    구워 넣은 "1일 전"은 하루만 지나면 거짓이 된다. */
+function freshness(){
+  const lat = (D.latest || D.current || {}).d;
+  const host = $("src-fresh");
+  if (!host || !lat) return;
+  const days = Math.max(0, Math.floor(
+    (Date.now() - Date.parse(lat + "T00:00:00Z")) / DAY));
+  const stale = days > 3;
+  host.className = stale ? "stale" : "";
+  host.textContent = days === 0 ? t("freshToday")
+    : (stale ? t("freshStale", days) : t("freshDays", days));
+}
+
 function fillText(){
   setText("src-span", D.span[0] + " → " + D.span[1]);
-  setText("src-days", D.nDays.toLocaleString("en-US") + "일 · 지표 " + D.indMeta.length + "개");
+  setText("src-days", t("srcDays", D.nDays.toLocaleString("en-US"), D.indMeta.length));
+  freshness();
 
   const c = D.current;
   setText("ro-range", nf(c.low,0) + " ~ " + nf(c.high,0));
-  const bl = labelOf(c.band);
   const bLo = labelOf(bandOf(c.low).key), bHi = labelOf(bandOf(c.high).key);
-  if (setText("ro-band", c.stable ? bl : bLo + " ~ " + bHi))
+  if (setText("ro-band", c.stable ? labelOf(c.band) : bLo + " ~ " + bHi))
     $("ro-band").style.color = c.bcs >= 0 ? "var(--warm-3)" : "var(--cool-3)";
-  setText("ro-asof", "기준 " + c.d + " · " + money(c.price));
+  setText("ro-asof", t("asOf", c.d, money(c.price)));
 
   // 어제·지난주·지난달 대비. 매일 보는 사람에게는 절대값보다 변화가 궁금하다.
   // 값이 올라가면 "비싼 쪽으로", 내려가면 "싼 쪽으로" 움직인 것이다.
-  const dEl = document.getElementById("ro-deltas");
-  if (dEl && D.deltas){
-    const rows = [["어제", "d1"], ["지난주", "d7"], ["지난달", "d30"]]
-      .map(([label, k]) => {
-        const v = D.deltas[k];
-        if (!v) return "";
-        const up = v.bcs > 0;
-        const col = Math.abs(v.bcs) < 0.05 ? "var(--muted)"
-          : (up ? "var(--warm-3)" : "var(--cool-3)");
-        const px = v.price_pct == null ? ""
-          : `<i>가격 ${v.price_pct >= 0 ? "+" : ""}${v.price_pct.toFixed(1)}%</i>`;
-        return `<span>${label} 대비<b style="color:${col}">` +
-               `${v.bcs >= 0 ? "+" : ""}${v.bcs.toFixed(1)}점</b>${px}</span>`;
-      }).filter(Boolean);
-    dEl.innerHTML = rows.join("");
+  if (D.deltas){
+    const labels = t("dLabels");
+    setHTML("ro-deltas", ["d1", "d7", "d30"].map(k => {
+      const v = D.deltas[k];
+      if (!v) return "";
+      const col = Math.abs(v.bcs) < 0.05 ? "var(--muted)"
+        : (v.bcs > 0 ? "var(--warm-3)" : "var(--cool-3)");
+      const px = v.price_pct == null ? ""
+        : `<i>${t("deltaPrice", (v.price_pct >= 0 ? "+" : "") + v.price_pct.toFixed(1))}</i>`;
+      return `<span>${t("deltaVs", labels[k])}<b style="color:${col}">` +
+             `${t("deltaPts", (v.bcs >= 0 ? "+" : "") + v.bcs.toFixed(1))}</b>${px}</span>`;
+    }).filter(Boolean).join(""));
   }
 
   const st = D.stats;
   const gate = c.gate;
+  const width = c.high - c.low;
   const tiles = [
-    {k:"대표값", v:nf(c.bcs,1), n:"지표 아홉 개를 전부 써서 계산한 값"},
-    {k:"범위 폭", v:(c.high-c.low).toFixed(1) + "점", n:`16년 보통값 ${st.median}점 · ` +
-      (c.high-c.low < st.median ? "평소보다 좁습니다" : "평소보다 넓습니다")},
-    {k:"구간 안정", v:c.stable ? "한 구간" : "두 구간", n:c.stable
-      ? "범위가 한 구간 안에 들어옵니다" : "범위가 두 구간에 걸쳐 있습니다"},
-    {k:"데이터 상태", v:c.nmiss ? `${9-c.nmiss}/9` : "9/9",
-      n:c.nmiss ? `지표 ${c.nmiss}개가 빠졌습니다` : "지표 아홉 개 전부 계산됨"},
-    {k:"둘 이상 동의", v:gate ? "충족" : "미달", n:gate
-      ? "두 갈래 이상이 같은 방향입니다" : "가격 평균선 하나뿐 — 실행 막힘", chip:gate},
-    {k:"반감기 이후", v:c.dsh ? Math.round(c.dsh) + "일" : "—",
-      n:"과거 고점은 367·526·548·534일에 나왔습니다"}
+    {k:t("tPoint"), v:nf(c.bcs,1), n:t("tPointNote")},
+    {k:t("tWidth"), v:t("tWidthVal", width.toFixed(1)),
+     n:t("tWidthNote", st.median, width < st.median)},
+    {k:t("tStable"), v:t(c.stable ? "tStableOne" : "tStableTwo"),
+     n:t(c.stable ? "tStableNoteOne" : "tStableNoteTwo")},
+    {k:t("tData"), v:c.nmiss ? `${D.indMeta.length-c.nmiss}/${D.indMeta.length}`
+       : `${D.indMeta.length}/${D.indMeta.length}`,
+     n:c.nmiss ? t("tDataNoteSome", c.nmiss) : t("tDataNoteAll")},
+    {k:t("tGate"), v:t(gate ? "gatePass" : "gateFail"),
+     n:t(gate ? "tGateNoteOk" : "tGateNoteNo"), chip:gate},
+    {k:t("tHalving"), v:c.dsh ? t("tHalvingVal", Math.round(c.dsh)) : "—",
+     n:t("tHalvingNote")}
   ];
-  setHTML("tiles", tiles.map(t => {
-    const col = t.chip === undefined ? "" :
-      ` style="color:${t.chip ? "var(--good)" : "var(--crit)"}"`;
-    return `<div class="tile"><div class="k">${t.k}</div>` +
-      `<div class="v"${col}>${t.v}</div><div class="n">${t.n}</div></div>`;
+  setHTML("tiles", tiles.map(k => {
+    const col = k.chip === undefined ? "" :
+      ` style="color:${k.chip ? "var(--good)" : "var(--crit)"}"`;
+    return `<div class="tile"><div class="k">${esc(k.k)}</div>` +
+      `<div class="v"${col}>${k.v}</div><div class="n">${esc(k.n)}</div></div>`;
   }).join(""));
 
   // --- 접었다 펴는 설명들 -------------------------------------------------
   const bandRows = D.bands.slice().sort((a, b) => b.min - a.min).map(b =>
     `<div class="bandrow"><span>${nf(b.min,0)} ~ ${nf(b.max,0)}</span>` +
-    `<span>${esc(b.label)}</span></div>`).join("");
-  setHTML("gauge-why",
-    toggle("눈금 읽는 법",
-      `<p style="margin:0">가운데 0이 "과거 16년의 한가운데"입니다. 왼쪽으로 갈수록 그때에 비해 싼 편, ` +
-      `오른쪽으로 갈수록 비싼 편이라는 뜻입니다. <b>−100이 바닥, +100이 천장</b>이 아니라 ` +
-      `<b>과거 분포에서의 위치</b>라는 점이 중요합니다 — 값이 −90이어도 더 떨어질 수 있습니다.</p>` +
-      `<p style="margin:10px 0 0">굵은 세로 막대 두 개가 <b>범위</b>이고 그 안의 점이 대표값입니다. ` +
-      `막대 아래 작은 삼각형은 미리 정해 둔 매매 단계의 위치입니다.</p>` +
-      `<div class="bandlist">${bandRows}</div>`) +
-    toggle("이 점수는 어떻게 나오나",
-      `<p style="margin:0">지표 아홉 개를 각각 <b>"최근 4년 안에서 몇 등쯤인가"</b>로 바꿔 ` +
-      `−1(가장 싼 축) ~ +1(가장 비싼 축) 사이의 값으로 만듭니다. 그 아홉 개를 세 갈래로 묶고, ` +
-      `갈래마다 정해진 비중(${D.families.map(f => f.weight + "%").join(" / ")})으로 합쳐서 ` +
-      `−100 ~ +100 으로 폅니다.</p>` +
-      `<p style="margin:10px 0 0"><b>고정된 기준선을 쓰지 않는 이유</b>가 있습니다. ` +
-      `"MVRV가 7을 넘으면 과열" 같은 기준은 2013년에는 맞았지만 2025년에는 한 번도 닿지 않았습니다. ` +
-      `사이클마다 값이 점점 낮아지기 때문입니다. 등수로 바꾸면 그 영향을 덜 받습니다.</p>`));
-  wireToggles($("gauge-why"));
+    `<span>${esc(pick(b, "label"))}</span></div>`).join("");
+  if (setHTML("gauge-why",
+    toggle(t("whyScale"), t("whyScaleBody", bandRows)) +
+    toggle(t("whyScore"), t("whyScoreBody",
+      D.families.map(f => f.weight + "%").join(" / ")))))
+    wireToggles($("gauge-why"));
 
-  setHTML("tiles-why",
-    toggle("위 숫자들이 뭔가요",
-      `<p style="margin:0"><b>대표값</b> — 지표 아홉 개를 전부 써서 계산한 값입니다. ` +
-      `범위의 한가운데가 아니라 별도로 계산한 값이라 가운데에서 벗어나 있을 수 있습니다.</p>` +
-      `<p style="margin:8px 0 0"><b>범위 폭</b> — 지표를 하나씩 빼며 다시 계산했을 때 값이 흩어지는 폭입니다. ` +
-      `좁으면 아홉 개가 서로 동의한다는 뜻이고, 넓으면 한두 개가 판단을 끌고 있다는 뜻입니다.</p>` +
-      `<p style="margin:8px 0 0"><b>구간 안정</b> — 범위가 한 구간 안에 온전히 들어오는지입니다. ` +
-      `"두 구간"이면 예컨대 '싼 편'과 '저점 부근' 사이에 걸쳐 있어서 하나로 잘라 말하기 어렵다는 뜻입니다.</p>` +
-      `<p style="margin:8px 0 0"><b>데이터 상태</b> — 지표 아홉 개가 전부 계산됐는지입니다. ` +
-      `절반 넘게 빠지면 점수는 나와도 실행은 막습니다.</p>` +
-      `<p style="margin:8px 0 0"><b>둘 이상 동의</b> — 세 갈래 중 둘 이상이 같은 방향인지입니다. ` +
-      `그중 하나는 반드시 '평균가 대비'가 아니어야 합니다.</p>` +
-      `<p style="margin:8px 0 0"><b>반감기 이후</b> — 마지막 반감기로부터 며칠 지났는지입니다. ` +
-      `과거 네 번의 고점이 반감기 이후 367·526·548·534일에 나왔습니다. 다만 이건 온체인 지표가 ` +
-      `아니라 달력일 뿐이라 <b>점수에는 넣지 않습니다.</b></p>`));
-  wireToggles($("tiles-why"));
+  if (setHTML("tiles-why", toggle(t("whyTiles"), t("whyTilesBody"))))
+    wireToggles($("tiles-why"));
 
-  const notes = D.deriveNotes || [];
+  const notes = (D.deriveNotes || []).map(p => EN() ? p[1] : p[0]);
   const lat = D.latest;
-  let foot = "데이터는 CoinMetrics 커뮤니티 API 에서 받습니다. 밖에서 꼭 받아와야 하는 것은 " +
-    "가격과 '시장 전체의 원가' 둘뿐이고, 나머지는 비트코인 발행 규칙으로 직접 계산합니다.";
-  if (notes.length) foot += " 이번 계산에서는 — " + notes.join(" / ") + ".";
-  if (lat && lat.d !== D.current.d)
-    foot += ` 가장 마지막 날(${lat.d})은 원가 데이터가 하루 늦어 지표 ${lat.nmiss}개가 ` +
-      `빠져 있어서, 기준일에서 제외했습니다.`;
+  let foot = t("footBase");
+  if (notes.length) foot += t("footNotes", notes.join(" / "));
+  if (lat && lat.d !== D.current.d) foot += t("footLate", lat.d, lat.nmiss);
   setText("foot-derive", foot);
+}
+
+/* =====================================================================
+   테마 — 처음에는 OS 설정, 한 번 고르면 그 선택을 기억한다
+   ===================================================================== */
+const ICON = {
+  sun: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" ' +
+       'stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.1"/>' +
+       '<path d="M12 2.2v2.4M12 19.4v2.4M2.2 12h2.4M19.4 12h2.4' +
+       'M5.1 5.1l1.7 1.7M17.2 17.2l1.7 1.7M18.9 5.1l-1.7 1.7M6.8 17.2l-1.7 1.7"/></svg>',
+  moon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" ' +
+        'stroke-linejoin="round" aria-hidden="true">' +
+        '<path d="M20.5 14.6A8.6 8.6 0 1 1 9.4 3.5a6.9 6.9 0 0 0 11.1 11.1Z"/></svg>',
+  globe: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" ' +
+         'aria-hidden="true"><circle cx="12" cy="12" r="8.8"/><path d="M3.2 12h17.6"/>' +
+         '<path d="M12 3.2a13.6 13.6 0 0 1 0 17.6a13.6 13.6 0 0 1 0-17.6Z"/></svg>'
+};
+
+function themeNow(){
+  const set = document.documentElement.getAttribute("data-theme");
+  if (set === "dark" || set === "light") return set;
+  return (window.matchMedia &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light";
+}
+
+function paintControls(){
+  const lb = $("lang-btn");
+  if (lb){
+    // 버튼에는 **바뀔 언어**를 적는다. 지금 언어를 적으면 누르면 무엇이 되는지
+    // 알 수 없다.
+    lb.innerHTML = ICON.globe +
+      `<span class="lbl" lang="${EN() ? "ko" : "en"}">${t(EN() ? "toKorean" : "toEnglish")}</span>`;
+    lb.setAttribute("aria-label", t("langAria"));
+  }
+  const tb = $("theme-btn");
+  if (tb){
+    const dark = themeNow() === "dark";
+    tb.innerHTML = (dark ? ICON.sun : ICON.moon) +
+      `<span class="lbl">${t(dark ? "themeLight" : "themeDark")}</span>`;
+    tb.setAttribute("aria-label", t(dark ? "themeLightAria" : "themeDarkAria"));
+  }
+}
+
+/* =====================================================================
+   언어 적용 — 한국어 원본을 기억해 두고 갈아 끼운다
+   ===================================================================== */
+const ORIG = new Map();
+function applyLang(){
+  document.documentElement.setAttribute("lang", EN() ? "en" : "ko");
+  document.querySelectorAll("[data-t]").forEach(n => {
+    // data-t 는 절대 겹쳐 쓰지 않는다. 부모의 innerHTML 을 갈면 자식 노드가
+    // 사라져서 되돌릴 원본을 잃는다. tests/test_i18n.py 가 중첩을 막는다.
+    if (!ORIG.has(n)) ORIG.set(n, n.innerHTML);
+    const en = I18N[n.getAttribute("data-t")];
+    n.innerHTML = (EN() && en != null) ? en : ORIG.get(n);
+  });
 }
 
 /* ===================================================================== */
 function drawAll(){
   drawGauge(); drawKey(); drawHist(); drawPrice(); drawTP(); drawFam(); drawWidth();
 }
-fillText(); famCards(); indicatorTable(); scaleKey(); mixBar(); drawAll();
+// 규칙 페이지의 스크립트가 여기에 자기 렌더러를 밀어 넣는다. 언어를 바꿀 때
+// 이 스크립트가 그것도 같이 다시 그려야 한다.
+const HOOKS = window.__BCS_HOOKS__ = window.__BCS_HOOKS__ || [];
+function renderAll(){
+  fillText(); famCards(); indicatorTable(); scaleKey(); mixBar(); histLegend(); drawAll();
+  for (let i = 0; i < HOOKS.length; i++) HOOKS[i]();
+}
+// 페이지별 스크립트가 쓸 최소한의 창구. 문자열 표를 두 벌 두면 언어를 하나
+// 고칠 때 한쪽만 고쳐지고, 그러면 같은 화면에 두 문장이 섞인다.
+window.__BCS_API__ = {t:t, pick:pick, en:EN, esc:esc, nf:nf, render:renderAll};
 
-let t = null;
+// 현재 페이지 표시. 세 장이 같은 머리띠를 쓰므로 어느 장인지는 속성으로 온다.
+const bar = document.querySelector(".topbar");
+if (bar && bar.getAttribute("data-current")){
+  const cur = bar.querySelector('a[data-page="' + bar.getAttribute("data-current") + '"]');
+  if (cur) cur.setAttribute("aria-current", "page");
+}
+
+applyLang();
+renderAll();
+paintControls();
+
+const langBtn = $("lang-btn");
+if (langBtn) langBtn.addEventListener("click", () => {
+  LANG = EN() ? "ko" : "en";
+  store.set(LS_LANG, LANG);
+  applyLang(); renderAll(); paintControls();
+});
+const themeBtn = $("theme-btn");
+if (themeBtn) themeBtn.addEventListener("click", () => {
+  const next = themeNow() === "dark" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", next);
+  store.set(LS_THEME, next);
+  paintControls();                 // 다시 그리기는 아래 MutationObserver 가 맡는다
+});
+
+let timer = null;
 const ro = new ResizeObserver(() => {
-  clearTimeout(t); t = setTimeout(drawAll, 120);
+  clearTimeout(timer); timer = setTimeout(drawAll, 120);
 });
 const wrapEl = document.querySelector(".wrap");
 if (wrapEl) ro.observe(wrapEl);
 
-// 테마 토글 시 SVG 안의 var() 는 자동 반영되지만, 계산된 색을 쓴 곳이 없어도
-// 밴드 wash 가 바뀌므로 다시 그려 준다.
+// 테마가 바뀌면 밴드 wash 색이 바뀌므로 다시 그린다.
 const mo = new MutationObserver(() => setTimeout(drawAll, 30));
 mo.observe(document.documentElement, {attributes:true, attributeFilter:["data-theme"]});
 if (window.matchMedia) {
   const mq = window.matchMedia("(prefers-color-scheme: dark)");
-  if (mq.addEventListener) mq.addEventListener("change", () => setTimeout(drawAll, 30));
+  const onScheme = () => { setTimeout(drawAll, 30); paintControls(); };
+  if (mq.addEventListener) mq.addEventListener("change", onScheme);
 }
 })();
 </script>

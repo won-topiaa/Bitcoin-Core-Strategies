@@ -85,12 +85,14 @@ def load_csv_bundle(path: str | Path) -> DataBundle:
     return DataBundle(market=market, origin=f"CSV {p}", warnings=tuple(warns))
 
 
-def save_csv_bundle(bundle: DataBundle, path: str | Path) -> Path:
-    """받아온 시계열을 CSV로 떨궈 둔다. 다음부터는 오프라인으로 돌릴 수 있다."""
-    p = Path(path)
-    p.parent.mkdir(parents=True, exist_ok=True)
-    m = bundle.market
+def bundle_cells(bundle: DataBundle) -> dict[date, dict[str, float]]:
+    """번들을 ``date → {열: 값}`` 로 눕힌다.
 
+    CSV 쓰기와 증분 병합(``tools/refresh_data.py``)이 **같은 표현**을 쓰게 하려고
+    따로 뺐다. 두 곳이 각자 열 목록을 엮으면 열을 하나 추가할 때 한쪽만 고쳐지고,
+    그러면 새 열이 저장은 되는데 갱신은 안 되는 상태가 된다.
+    """
+    m = bundle.market
     lookups = {
         "price": dict(zip(m.price.dates, m.price.values)),
         "market_cap": _lookup(m.market_cap),
@@ -104,16 +106,90 @@ def save_csv_bundle(bundle: DataBundle, path: str | Path) -> Path:
         "exchange_inflow": _lookup(m.exchange_inflow),
         "exchange_outflow": _lookup(m.exchange_outflow),
     }
-    all_dates = sorted(set().union(*[set(l) for l in lookups.values() if l]))
+    missing = set(COLUMNS) - set(lookups)
+    if missing:                                  # 열을 추가하고 여기를 잊었을 때
+        raise FetchError(f"CSV 열을 채우는 규칙이 없습니다: {sorted(missing)}")
+
+    out: dict[date, dict[str, float]] = {}
+    for col, table in lookups.items():
+        for d, v in table.items():
+            if v is not None:
+                out.setdefault(d, {})[col] = float(v)
+    return out
+
+
+def save_csv_bundle(bundle: DataBundle, path: str | Path) -> Path:
+    """받아온 시계열을 CSV로 떨궈 둔다. 다음부터는 오프라인으로 돌릴 수 있다."""
+    p = Path(path)
+    p.parent.mkdir(parents=True, exist_ok=True)
+    cells = bundle_cells(bundle)
 
     with p.open("w", encoding="utf-8", newline="") as fh:
         writer = csv.writer(fh)
         writer.writerow(("date",) + COLUMNS)
-        for d in all_dates:
-            writer.writerow(
-                [d.isoformat()] + [_fmt(lookups[c].get(d)) for c in COLUMNS]
-            )
+        for d in sorted(cells):
+            row = cells[d]
+            writer.writerow([d.isoformat()] + [_fmt(row.get(c)) for c in COLUMNS])
     return p
+
+
+def write_cells(cells: dict[date, dict[str, float]], path: str | Path) -> Path:
+    """``date → {열: 값}`` 를 CSV 로 쓴다. 병합 결과를 저장할 때 쓴다."""
+    p = Path(path)
+    p.parent.mkdir(parents=True, exist_ok=True)
+    with p.open("w", encoding="utf-8", newline="") as fh:
+        writer = csv.writer(fh)
+        writer.writerow(("date",) + COLUMNS)
+        for d in sorted(cells):
+            row = cells[d]
+            writer.writerow([d.isoformat()] + [_fmt(row.get(c)) for c in COLUMNS])
+    return p
+
+
+def read_cells(path: str | Path, *,
+               out: Optional[dict] = None) -> dict[date, dict[str, float]]:
+    """CSV 를 ``date → {열: 값}`` 로 읽는다. 빈 칸은 키 자체가 없다.
+
+    ``load_csv_bundle`` 과 달리 Series 로 조립하지 않는다. 증분 병합은 **칸 단위**로
+    해야 하기 때문이다 — 시계열로 바꿔 놓고 합치면 "이 날 이 열이 원래 비어 있었는지"
+    가 사라진다.
+
+    ``out`` 을 주면 ``out["unknown"]`` 에 모르는 열 이름을, ``out["unparsed"]`` 에
+    숫자로 읽히지 않은 칸을 담는다. **둘 다 무시하면 안 된다.** 이 함수로 읽고
+    ``write_cells`` 로 쓰면 그것들이 조용히 사라진다 — 모르는 열은 열째로,
+    ``"60,000.0"`` 같은 칸은 빈 칸으로. 손으로 고쳐 둔 것이 갱신 한 번에 날아간다.
+    """
+    p = Path(path)
+    if out is not None:
+        out["unknown"] = []
+        out["unparsed"] = []
+    if not p.exists():
+        return {}
+    result: dict[date, dict[str, float]] = {}
+    with p.open("r", encoding="utf-8", newline="") as fh:
+        reader = csv.DictReader(fh)
+        if reader.fieldnames is None or "date" not in reader.fieldnames:
+            raise FetchError(f"{p}: 첫 열은 'date' 여야 합니다. 현재 헤더: {reader.fieldnames}")
+        if out is not None:
+            out["unknown"] = sorted(set(reader.fieldnames) - {"date"} - set(COLUMNS))
+        for row_no, row in enumerate(reader, start=2):
+            raw = (row.get("date") or "").strip()
+            if not raw:
+                continue
+            try:
+                d = date.fromisoformat(raw)
+            except ValueError as exc:
+                raise FetchError(f"{p}:{row_no} 날짜 형식 오류 {raw!r} (YYYY-MM-DD)") from exc
+            cells = {}
+            for col in COLUMNS:
+                raw_cell = row.get(col)
+                v = _as_float(raw_cell)
+                if v is not None:
+                    cells[col] = v
+                elif out is not None and str(raw_cell or "").strip():
+                    out["unparsed"].append(f"{row_no}행 {col}={str(raw_cell).strip()!r}")
+            result[d] = cells
+    return result
 
 
 def _lookup(s: Optional[Series]) -> dict:

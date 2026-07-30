@@ -108,6 +108,21 @@ btc-core init                              # 수동 입력 템플릿 생성
 btc-core score --csv data/market.csv
 ```
 
+두 번째부터는 `refresh_data.py` 로 **증분 갱신**한다. `fetch` 는 파일을 통째로
+갈아 끼우지만, 이쪽은 검증을 통과한 뒤에만 쓰고 **이미 있는 값을 빈 값으로
+덮지 않는다.**
+
+```bash
+python3 tools/refresh_data.py --check      # 지금 데이터가 며칠 전 것인가
+python3 tools/refresh_data.py --dry-run    # 무엇이 바뀌는지만
+python3 tools/refresh_data.py --build      # 받아서 병합하고 사이트까지
+```
+
+겹치는 구간의 가격이 2% 넘게 다르면 다른 자산·다른 단위를 받은 것으로 보고
+**아무것도 쓰지 않고 멈춘다.** `.github/workflows/refresh-data.yml` 이 매일
+02:20 UTC 에 이 과정을 돌리고, **테스트를 통과한 뒤에만** 페이지를 다시 굽는다
+([22](docs/22-자동갱신과-두-언어.md)).
+
 ### 무료 데이터만으로 돈다 — 외부 필수 시계열은 2개다
 
 지표 9개에 쓰는 시계열은 7개인데, **4개는 API 없이 계산된다.** 비트코인의
@@ -196,9 +211,9 @@ python3 tools/build_viz.py --csv data/market.csv \
 
 | 페이지 | 내용 | 높이 |
 |---|---|---:|
-| `index.html` | 계기판 · 변화량 · **지표 9개 요약** · 16년 이력 | 3,544px |
-| `verify.html` | 전환점 성적표 · 계산 방법 · 범위가 나오는 이유 | 4,834px |
-| `rules.html` | 실행 규칙 · 한계 · 데이터 출처 | 4,028px |
+| `index.html` | 계기판 · 변화량 · **지표 9개 요약** · 16년 이력 | 3,483px |
+| `verify.html` | 전환점 성적표 · 계산 방법 · 범위가 나오는 이유 | 4,788px |
+| `rules.html` | 실행 규칙 · 한계 · 데이터 출처 · 자동 갱신 | 4,306px |
 
 **한 장에 다 넣지 않는다.** 처음에 한 장이었을 때 7,500px 였고, 그러니까
 "무엇을 봐야 하는가"가 사라졌다. 세 장으로 나누고 각 장 맨 위에 이동 막대를 뒀다.
@@ -210,16 +225,29 @@ python3 tools/build_viz.py --csv data/market.csv \
 
 `@media print` 가 있어서 인쇄하면 접힌 설명이 전부 펴지고 이동 막대가 사라진다.
 
+머리띠에 버튼이 두 개 있다 — **한국어/English** 와 **밝게/어둡게**. 선택은
+기억되고, 처음 오는 사람에게는 브라우저·OS 설정을 따른다. 테마는 `<style>` 바로
+뒤 인라인 스크립트가 첫 페인트 전에 적용한다 — 본 스크립트에서 하면 흰 화면이
+한 번 번쩍인다.
+
 #### 조각을 합쳐 굽는다
 
     viz/_head.html        스타일 (세 장 공용)
+    viz/_nav.html         머리띠 — 페이지 이동 + 언어·테마 버튼
     viz/_script.html      차트 엔진 (세 장 공용, 없는 요소는 건너뛴다)
+    viz/_i18n.html        본문 산문의 영어 판 (data-t 키와 1:1)
     viz/*.body.html       페이지별 본문 셋
 
 CSS·JS·데이터를 한 파일에 굽는 자기완결 HTML 이다. **외부 요청이 하나도 없다** —
 요청이 막힌 환경에서 빈 화면이 나오면 무료 데이터로 돌아가는 시스템에서 그건
-"안 보인다"와 같다. `tests/test_viz.py` 가 그것을 포함해 네 가지를 지킨다:
+"안 보인다"와 같다. `tests/test_viz.py` 가 그것을 포함해 지킨다:
 node 파서로 구문, 정적 검사로 가드 누락, 빌드 결과로 자리표시자와 외부 의존.
+
+두 언어의 유일한 위험은 **어긋남**이다. 지표를 추가하고 영어를 잊으면 영어 화면
+한가운데에 한국어가 남고, 그건 번역하지 않은 화면보다 나쁘다. `tests/test_i18n.py`
+가 세 곳의 키 집합을 **양방향으로** 대조한다 — 본문 `data-t` ↔ `_i18n.html`,
+`TX.ko` ↔ `TX.en`, `strategy.yaml` ↔ `strings.en.yaml`. 빠진 것도 남는 것도
+실패다 ([22](docs/22-자동갱신과-두-언어.md)).
 
 설명 문구는 `config/strategy.yaml` 의 `explain` / `explain_long` 이 소유한다 —
 페이지에 따로 적어 두면 지표를 고칠 때 둘이 어긋나고, **어긋난 설명은 없는
@@ -292,6 +320,7 @@ node 파서로 구문, 정적 검사로 가드 누락, 빌드 결과로 자리�
 | [19. BCS 구간 표시](docs/19-BCS-구간-표시.md) | **점 하나 대신 범위 — 파라미터 0개로 불확실성 표시, 시각화** |
 | [20. LPPLS 검정](docs/20-LPPLS-검정.md) | **가장 유망하던 미심사 후보 — 표시 전용으로도 기각** |
 | [21. 전수 코드 점검](docs/21-전수-코드점검.md) | **`--as-of` 가 거짓말하고 있었다 · 전환점을 고르지 않고 재게 바꿈** |
+| [22. 자동 갱신과 두 언어](docs/22-자동갱신과-두-언어.md) | **매일 자동 갱신 — 문제는 잇기가 아니라 잘못 잇지 않기 · 한국어/영어 · 밝게/어둡게** |
 
 ---
 
@@ -348,11 +377,15 @@ tools/probe_sources.py      무료 데이터 경로 진단
 tools/lppls.py              LPPLS 거품 모형 적합 (표준 라이브러리만)
 tools/export_viz.py         하루씩 구간·계열 계산 → JSON
 tools/build_viz.py          자기완결 시각화 페이지 굽기
+tools/refresh_data.py       CSV 증분 갱신 (검증 후에만 쓴다)
 tools/audit_config.py       기준 간 상호 모순 감사
 viz/_head.html              스타일 (세 장 공용)
+viz/_nav.html               머리띠 (페이지 이동 + 언어·테마)
 viz/_script.html            차트 엔진 (세 장 공용)
+viz/_i18n.html              본문 산문의 영어 판
 viz/*.body.html             페이지별 본문 셋
 viz/site/                   생성된 페이지 세 장
+config/strings.en.yaml      지표·갈래·구간 이름의 영어 판
 ```
 
 **의존성은 PyYAML 하나뿐이다.** 나머지는 표준 라이브러리로 구현했다.

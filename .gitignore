@@ -9,6 +9,8 @@ dist/
 
 # 개인 데이터는 커밋하지 않는다
 data/market.csv
+data/*.bak
+data/*.tmp
 data/state.json
 data/manual_input.yaml
 journal/20*.md

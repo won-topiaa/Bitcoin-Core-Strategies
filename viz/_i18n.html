@@ -1,0 +1,258 @@
+<script>
+/* 본문 산문의 영어 판. 키는 body 조각의 data-t 와 1:1 이다.
+   빠지거나 남는 키는 tests/test_i18n.py 가 실패로 잡는다 — 반쯤 번역된 화면은
+   번역하지 않은 화면보다 나쁘다.
+
+   값은 HTML 이다. 원래 문장에 들어 있는 <strong>·<b>·<em> 강조를 그대로 옮긴다.
+   강조가 사라지면 "어디를 보라"는 신호가 사라진다. */
+window.__I18N__ = {
+
+/* ---------------- 공용 ---------------- */
+"nav.now": "Where we are",
+"nav.verify": "Can you trust it",
+"nav.rules": "Rules and limits",
+"foot.disclaimer": `This page exists for personal record-keeping and information, not as investment advice.
+  None of the numbers here say anything about future prices. What you decide, and what follows from it, is yours.`,
+
+/* ---------------- 01 지금 위치 ---------------- */
+"idx.eyebrow": "Bitcoin cycle position",
+"idx.h1": "Cheap side, or expensive side?",
+"idx.lead": `A ruler that tells you one thing only — <strong>where today's Bitcoin price sits against
+  the last 16 years</strong>. It says nothing about whether the price goes up or down from here.`,
+"idx.s1.eyebrow": "<em>01</em> — Where we are",
+"idx.s1.h2": "Today lands about here",
+"idx.s1.p": `The closer to −100, the cheaper against the last 16 years; the closer to +100, the more
+  expensive. Why it comes out as a <strong>range</strong> rather than a single number is
+  <a href="__VERIFY_URL__">on the next page</a>.`,
+"idx.s2.h2": "Where each of the nine indicators sits",
+"idx.s2.p": `The single score above is these nine combined. The further <strong>left</strong> a bar
+  reaches the cheaper the side, the further <strong>right</strong> the more expensive, and the
+  percentage is <strong>where it falls within the last four years</strong>. 18%, for instance, means
+  only 18% of days in the last four years were lower than this. The far right column is
+  <strong>the most recent time it was this extreme</strong> (at least six months ago).`,
+"idx.th.ind": "Indicator",
+"idx.th.what": "What it measures",
+"idx.th.value": "Value now",
+"idx.th.pos": "Position within four years",
+"idx.th.prev": "Last time it was here",
+"idx.th.fam": "Family",
+"idx.s3.eyebrow": "<em>02</em> — The last 16 years",
+"idx.s3.h2": "Four visits to the same place, four returns",
+"idx.s3.p": `The ruler above, computed every day and strung out in time order. Vertical is the position
+  score, horizontal is time.`,
+"idx.howto.h3": "How to read the picture",
+"idx.howto.ol": `<li>The <b>blue band</b> is the <b>range</b>. Drop any one of the nine indicators and
+        recompute, and the value shifts a little; the band is how far apart those recomputed values
+        spread. <b>A thin band</b> means the nine agree with each other; <b>a thick one</b> means one
+        or two of them are carrying the call.</li>
+        <li>The <b>black line</b> is the <b>headline value, computed using all nine</b>. It is a
+        separate calculation rather than the middle of the band, so it can sit off-centre.</li>
+        <li><b>Background colour</b> marks the bands. Warm above is the expensive side, cool below is
+        the cheap side.</li>`,
+"idx.price.h3": "The actual price over the same period",
+"idx.price.cap": `Same horizontal axis as the chart above — read them stacked. <strong>Whether price
+  was actually at a bottom when the chart above went low</strong> is the whole of what this indicator
+  claims. They are not drawn on top of each other because two vertical axes let you slide the lines
+  until a relationship appears that was never there.`,
+"idx.next.k": "Next",
+"idx.next.t": "Can you trust this number",
+"idx.next.d": "What it said at eight past turning points, and why it comes out as a range",
+
+/* ---------------- 02 검증 ---------------- */
+"vfy.eyebrow": "Verification",
+"vfy.h1": "Can you trust this number",
+"vfy.lead": `Whether the ruler on the previous page <strong>actually got it right in the past</strong>,
+  how it is computed, and why it comes out as a range instead of a single number.`,
+"vfy.s1.eyebrow": "<em>01</em> — Scorecard",
+"vfy.s1.h2": "What it said at eight past turning points",
+"vfy.s1.p": `This is not a tool for timing trades, so it is not graded on returns. There is one
+  question to ask — <strong>did it say "expensive" on the four occasions price really was at a top,
+  and "cheap" on the four it was at a bottom?</strong>`,
+"vfy.read.h3": "Three things to look for",
+"vfy.read.ol": `<li><b>One horizontal bar is one turning point.</b> The bar's length is the range, the
+      dot in it is the headline value, and the number on the right is that value.</li>
+      <li><b>Red bars (past peaks) should all be on the right, blue bars (past bottoms) all on the
+      left.</b> All eight are.</li>
+      <li>The <b>empty space marked out in the middle</b> is the point. <b>Not one turning point
+      landed in it.</b> Tops and bottoms were never once confused for each other.</li>`,
+"vfy.read.p": `<b>The vertical line running through is where we are now.</b> Look at which of the
+  eight it sits closer to.`,
+"vfy.tp.caption": "The same thing as a table — including per-family scores",
+"vfy.tp.th1": "Phase",
+"vfy.tp.th2": "Date",
+"vfy.tp.th3": "Price then",
+"vfy.tp.th4": "Position range",
+"vfy.tp.th5": "Headline",
+"vfy.tp.th6": "Width",
+"vfy.s2.eyebrow": "<em>02</em> — How it is computed",
+"vfy.s2.h2": "Nine indicators, grouped into three families",
+"vfy.scale.h3": "What −1 to +1 means",
+"vfy.scale.p1": `Every indicator is first <strong>measured with the same ruler.</strong> Whatever its
+  raw value, it becomes <strong>"roughly what rank is this within the last four years"</strong>.`,
+"vfy.scale.p2": `That is what makes them addable. MVRV wanders between 0 and 10 while the 200-week MA
+  multiple wanders between 0.5 and 5 — add those directly and the bigger one wins.
+  <strong>Turned into ranks, the two weigh the same.</strong>`,
+"vfy.scale.p3": `There is a reason for not using fixed thresholds. "MVRV above 7 is expensive" held in
+  2013, but <strong>2025 never once touched 7.</strong> The absolute readings fall from cycle to
+  cycle. Ranks are less exposed to that.`,
+"vfy.mix.h3": "The three combined into −100 to +100",
+"vfy.mix.p": `The weights differ because of <strong>how independent the information is</strong>. In
+  'Against average price' all four indicators are "price ÷ some average", which is really one fact
+  seen four times — which is why it does not carry the largest weight.`,
+"vfy.fam.h3": "What each family is saying — the last four years",
+"vfy.fam.cap": `When the three lines are <strong>all low together</strong>, three different kinds of
+  evidence are all saying "cheap". When <strong>only one line is out on its own</strong>, the call
+  hangs on that single piece of evidence — and that is when the range above widens.`,
+"vfy.s3.eyebrow": "<em>03</em> — Why a range",
+"vfy.s3.h2": "How far can you trust this number",
+"vfy.s3.p1": `Drop one of the nine indicators and recompute. Do that all nine times and the values
+  scatter; <strong>the width of that scatter is the range</strong>. It answers one question —
+  <strong>"if one indicator were wrong or missing, would the call have changed?"</strong>`,
+"vfy.s3.p2": `Done this way, <strong>not one new number had to be chosen.</strong> Fixing a constant
+  like "read it as ±10" would make that 10 one more arbitrary value, so the data sets the width
+  itself.`,
+"vfy.width.h3": "How wide the range ran over 16 years",
+"vfy.callout": `<strong>On slightly fewer than half of all days the range fits entirely inside one
+  band.</strong> The rest of the time it straddles two — "cheap side" and "near a bottom", say. That
+  is the warning against reading the decimals, put into a number, and it is why the range is what
+  gets shown in the first place.`,
+"vfy.next.k": "Next",
+"vfy.next.t": "Rules and limits",
+"vfy.next.d": "What is actually done with this score, and what this approach cannot do",
+
+/* ---------------- 03 규칙 ---------------- */
+"rul.eyebrow": "Rules",
+"rul.h1": "Rules and limits",
+"rul.lead": `What is <strong>actually done</strong> with this score, and what this approach
+  <strong>cannot do</strong>.`,
+"rul.s1.eyebrow": "<em>01</em> — The boundary",
+"rul.s1.h2": "What is inside the score and what is outside it",
+"rul.s1.p": `Mix a number you cannot trust into the score and the whole score becomes untrustworthy.
+  So what makes the score and what merely appears on screen are kept firmly apart.`,
+"rul.s1.dl": `<dt>What makes the score</dt>
+      <dd>Nine indicators. Each is converted into <strong>roughly what rank it holds within the last
+      four years</strong>. Fixed thresholds like "MVRV of 3 is expensive" are avoided because those
+      absolute readings have kept falling from cycle to cycle.</dd>
+
+      <dt>Two must agree</dt>
+      <dd>Two or more of the three families pointing the same way, <strong>and at least one of them
+      must not be 'Against average price'.</strong> Fail that and no trade step opens. Price averages
+      cannot confirm each other.</dd>
+
+      <dt>Missing data</dt>
+      <dd>If a few indicators drop out, the weights are redistributed across what remains — but if
+      more than half are gone, execution is blocked outright. A score from half the data is not a
+      score.</dd>
+
+      <dt>Display only</dt>
+      <dd>Five bottom conditions, five ceiling conditions, four reference floor prices, days since the
+      halving. All of them are <strong>thresholds set by looking at four past cycles</strong>, so they
+      are hard to take at face value. They are shown for reference and kept out of the score.</dd>
+
+      <dt>A separate axis</dt>
+      <dd>Macro measures — rates, the dollar, liquidity — are not mixed into this score. They sit on
+      their own axis and adjust only the <em>size</em> of what gets executed, never the
+      <em>direction</em>, within 0.75× to 1.25×. Without any macro data at all, "where are we now"
+      still comes out.</dd>`,
+"rul.s2.eyebrow": "<em>02</em> — Execution",
+"rul.s2.h2": "What happens when the score lands where",
+"rul.s2.p": `<strong>This part is not the main body.</strong> Judging position is the main body; what
+  follows is scaffolding that stops the judgement from being <strong>acted on all at once</strong>.
+  Change it to suit your own situation.`,
+"rul.band.caption": "Stance and contribution multiplier by band",
+"rul.band.th1": "Score",
+"rul.band.th2": "Band",
+"rul.band.th3": "Stance",
+"rul.band.th4": "Contribution",
+"rul.acc.h3": "Buying in steps",
+"rul.acc.p": "The lower the score goes, the more reserve cash goes in, one step at a time.",
+"rul.dist.h3": "Selling in steps",
+"rul.dist.p": "The higher the score goes, the more of the holding is reduced, one step at a time.",
+"rul.guard.h3": "What keeps it from happening all at once",
+"rul.guard.dt1": "Three-day confirmation",
+"rul.guard.dd1": `Crossing a step's threshold is not enough — the score has to <strong>stay past it
+      for three days</strong> before execution opens. A one-day brush that reverses does not count as
+      an execution.`,
+"rul.guard.dt2": "Fourteen days apart",
+"rul.guard.dd2": `At least 14 days between steps. Even on a sudden jump, five steps cannot fire at
+      once. Walking all five takes a minimum of eight weeks.`,
+"rul.guard.dt3": "Visit the other side",
+"rul.guard.dd3": `Once the steps in one direction are used up, the score has to <strong>travel to the
+      opposite band (∓20)</strong> before they can be used again. This stops repeated firing while it
+      oscillates in the same band.`,
+"rul.guard.dt4": "The part that is never sold",
+"rul.s3.eyebrow": "<em>03</em> — Limits",
+"rul.s3.h2": "Weaknesses that do not get fixed",
+"rul.s3.p": `Written down rather than hidden. The five below are not problems that more effort
+  solves — they are limits this approach carries by construction.`,
+"rul.s3.ul": `<li><strong>Only four cycles have been lived through.</strong> Bitcoin started in 2009
+      and there have been only four large swings so far. Against that, the number of values a human
+      chose in this system is 269. That is 269 knobs fitted to four experiences, so if the fifth
+      differs from everything so far, it may not hold.
+      <br><br>So <strong>the same configuration was applied unchanged to Litecoin and
+      Ethereum</strong>. It called 16 of the 21 turning points across the two assets (76%). Pure
+      number-fitting to Bitcoin would not survive that.</li>
+
+      <li><strong>Its grip on tops is weakening cycle by cycle.</strong> Puell, for instance, ranked
+      top-tier, top-tier, mid, then ordinary across the four peaks. This follows from price no longer
+      rising as violently as it once did.
+      <br><br>Twenty-two replacement indicators were tested and none was usable. Fitting the last
+      remaining candidate (LPPLS, a bubble model) led to this —
+      <strong>the 2013 top and the 2025 top are structurally different things.</strong> Explained by
+      the same model, the error spreads by a factor of 3.5. It is not a problem a change of indicator
+      solves.</li>
+
+      <li><strong>The three families are not fully independent.</strong> 'Against cost basis' and
+      'Against average price' move together at +0.83. The rule requiring two to agree rests on the
+      families being independent, and that premise is not perfect.</li>
+
+      <li><strong>Exactly one piece of data has no substitute.</strong> Circulating supply, issuance
+      and market cap can all be computed from Bitcoin's own rules. But 'what the whole market paid'
+      only comes out of scanning the entire blockchain, and there are just two places to get it free.
+      If both close, one of the three families is badly thinned.</li>
+
+      <li><strong>The last 15 years may have been an unusual period.</strong> Bitcoin's existence
+      largely overlaps with an era of low rates and abundant money. Whether the four-year rhythm holds
+      without that backdrop is not something any data can answer. That is the reason for the rule that
+      <strong>40% of the holding is never sold, whatever the signal.</strong></li>`,
+"rul.s4.eyebrow": "<em>04</em> — Data",
+"rul.s4.h2": "Where it comes from and how it is computed",
+"rul.s4.p": `Only data available free is used. Indicators that need a paid subscription were left out
+  however good they looked.`,
+"rul.data.p1": `Nine indicators are built from seven raw inputs — and <strong>four of those need not
+  be fetched at all.</strong> Bitcoin's issuance rules are fixed in code, so they can be computed
+  directly.`,
+"rul.data.table": `<thead><tr><th>Raw input</th><th>Source</th><th>Note</th></tr></thead>
+        <tbody>
+          <tr><td class="lbl">Price</td><td>Fetched</td><td class="sub">No substitute</td></tr>
+          <tr><td class="lbl">What the market paid</td><td>Fetched</td>
+              <td class="sub">Requires scanning the whole blockchain — cannot be computed</td></tr>
+          <tr><td class="lbl">Circulating supply</td><td>Computed</td>
+              <td class="sub">From the halving schedule</td></tr>
+          <tr><td class="lbl">Market cap</td><td>Computed</td>
+              <td class="sub">Price × supply</td></tr>
+          <tr><td class="lbl">Daily issuance</td><td>Computed</td>
+              <td class="sub">One-day difference in supply</td></tr>
+          <tr><td class="lbl">Issuance in USD</td><td>Computed</td>
+              <td class="sub">Issuance × price</td></tr>
+          <tr><td class="lbl">Hashrate</td><td>Optional</td>
+              <td class="sub">Without it, one indicator drops out</td></tr>
+        </tbody>`,
+"rul.data.p2": `The computed values are accurate to <strong>0.079% on average since 2015 and 0.011%
+  since 2020</strong>. Compared against scores computed from real data, the eight past turning points
+  differ by <strong>1.2 points on average</strong>, and none of them flips direction.`,
+"rul.auto.h3": "The data refreshes automatically every day",
+"rul.auto.p1": `It used to be a fetched file, frozen in place. Now it is <strong>re-fetched
+  automatically once a day</strong> and this page is rebuilt. The header above says how many days old
+  the last data point is, and past three days it is marked there conspicuously.`,
+"rul.auto.p2": `Since this means leaving code that overwrites the file unattended, most of the care
+  went into not overwriting it wrongly. New values are <strong>checked against the dates already
+  held</strong> first — if prices in the overlapping stretch differ by more than 2%, that is taken as
+  a different asset or different units, and it <strong>stops without writing anything.</strong>
+  An existing value is never overwritten with a blank. And the new file is written to a temporary path
+  and read back to confirm it parses before being moved into place.`,
+"rul.next.k": "Back to the start",
+"rul.next.t": "See where we are",
+"rul.next.d": "Where Bitcoin sits today against the last 16 years"
+};
+</script>

@@ -311,8 +311,29 @@ tbody td.sub{font-family:var(--sans); color:var(--muted); font-weight:400; text-
 .deltas i{font-style:normal; font-family:var(--mono); font-variant-numeric:tabular-nums;
   color:var(--ink-2); margin-left:6px}
 
+/* 머리띠 — 페이지 이동 + 언어·테마 */
+.topbar{display:flex; align-items:center; gap:10px 16px; flex-wrap:wrap; margin-bottom:26px}
+.ctl{display:flex; gap:2px; margin-left:auto}
+.ctlbtn{
+  appearance:none; display:inline-flex; align-items:center; gap:6px;
+  font-family:var(--sans); font-size:12.5px; font-weight:600; color:var(--ink-2);
+  background:var(--surface); border:1px solid var(--rule); border-radius:2px;
+  padding:7px 12px; cursor:pointer; line-height:1.2; white-space:nowrap;
+  transition:border-color .12s, color .12s, background .12s
+}
+.ctlbtn:hover{border-color:var(--axis); color:var(--ink); background:var(--surface-2)}
+.ctlbtn svg{width:14px; height:14px; flex:none; display:block}
+/* 글자는 좁은 화면에서도 남긴다. 아이콘만 두면 폭은 줄지만 지구 모양 하나로
+   "언어"를 알아내라는 뜻이 되고, 어차피 두 버튼을 합쳐 175px 라 390px 화면의
+   한 줄에 들어간다. */
+@media (max-width:400px){.ctlbtn{padding:7px 9px; font-size:12px}}
+@media (prefers-reduced-motion: reduce){.ctlbtn{transition:none}}
+
+/* 데이터 신선도 — 오래되면 눈에 띄어야 한다 */
+.srcline .stale{color:var(--crit); font-weight:600}
+
 /* 페이지 사이 이동 */
-nav.pages{display:flex; gap:2px; margin-bottom:26px; flex-wrap:wrap}
+nav.pages{display:flex; gap:2px; margin-bottom:0; flex-wrap:wrap}
 nav.pages a{
   text-decoration:none; font-size:13px; font-weight:600; color:var(--ink-2);
   padding:7px 14px; border:1px solid var(--rule); border-radius:2px;
@@ -351,7 +372,7 @@ nav.pages .n{font-family:var(--mono); font-size:11px; opacity:.6; margin-right:7
   }
   body{background:#fff; font-size:11pt}
   .wrap{max-width:none; padding:0}
-  nav.pages, .why, .nextlink, .srcline a{display:none !important}
+  nav.pages, .ctl, .why, .nextlink, .srcline a{display:none !important}
   .panelbody{display:block !important; border:0; padding:0; background:none;
     margin-top:6px}          /* 접힌 설명도 인쇄에서는 전부 편다 */
   .panel, .tblwrap, .famcard, figure, .tiles{
@@ -367,4 +388,14 @@ nav.pages .n{font-family:var(--mono); font-size:11px; opacity:.6; margin-right:7
 }
 :focus-visible{outline:2px solid var(--s1); outline-offset:2px}
 </style>
+<script>
+/* 저장된 테마를 **첫 페인트 전에** 적용한다. 본 스크립트에서 하면 OS 가 밝은데
+   어둡게 골라 둔 사람은 흰 화면이 한 번 번쩍인 뒤 어두워진다. */
+(function(){
+  try {
+    var v = localStorage.getItem("bcs.theme");
+    if (v === "dark" || v === "light") document.documentElement.setAttribute("data-theme", v);
+  } catch (e) {}
+})();
+</script>
 

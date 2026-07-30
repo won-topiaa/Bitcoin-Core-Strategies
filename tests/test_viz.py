@@ -25,8 +25,8 @@ import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 VIZ = ROOT / "viz"
-PIECES = ("_head.html", "_script.html", "_rules_script.html",
-          "index.body.html", "verify.body.html", "rules.body.html")
+PIECES = ("_head.html", "_script.html", "_rules_script.html", "_i18n.html",
+          "_nav.html", "index.body.html", "verify.body.html", "rules.body.html")
 
 
 def test_all_pieces_exist():
@@ -56,7 +56,7 @@ def node_check(js: str) -> subprocess.CompletedProcess | None:
         return None
 
 
-@pytest.mark.parametrize("name", ["_script.html", "_rules_script.html"])
+@pytest.mark.parametrize("name", ["_script.html", "_rules_script.html", "_i18n.html"])
 def test_script_parses(name):
     """진짜 파서로 구문을 검사한다.
 
@@ -71,19 +71,38 @@ def test_script_parses(name):
     assert r.returncode == 0, r.stderr[:800]
 
 
-@pytest.mark.parametrize("name", ["_script.html", "_rules_script.html"])
+@pytest.mark.parametrize("name", ["_script.html", "_rules_script.html", "_i18n.html"])
 def test_no_unguarded_element_access(name):
     """`getElementById(...).무엇` 을 직접 쓰지 않는다.
 
     페이지마다 있는 요소가 다르므로 반드시 setText/setHTML 이나 null 검사를
     거쳐야 한다. 이 한 줄을 어기면 나머지 두 장이 그리다 만다.
     """
+    if name != "_script.html":
+        pytest.skip("세 장을 공유하는 것은 _script.html 뿐이다")
     js = read(name)
     bad = re.findall(r'getElementById\("[^"]+"\)\s*\.\s*(?!textContent\b)\w+', js)
-    # rules 스크립트는 자기 페이지 전용이라 예외로 둔다.
-    if name == "_rules_script.html":
-        pytest.skip("규칙 스크립트는 그 페이지에서만 실행된다")
     assert not bad, f"가드 없는 접근: {bad[:5]}"
+
+
+def test_the_nav_is_not_duplicated_in_the_bodies():
+    """머리띠는 조각 하나가 소유한다. 세 본문에 복제되면 버튼을 하나 붙일 때
+    세 곳을 똑같이 고쳐야 하고, 실제로 한 곳을 빠뜨린다."""
+    for name in ("index.body.html", "verify.body.html", "rules.body.html"):
+        body = read(name)
+        assert "__NAV__" in body, f"{name}: 머리띠 자리표시자가 없습니다"
+        assert 'class="pages"' not in body, f"{name}: 머리띠가 복제돼 있습니다"
+
+
+def test_every_page_marks_which_page_it_is():
+    """머리띠가 공용이라 '지금 어느 장인지'는 속성으로 와야 한다."""
+    nav = read("_nav.html")
+    assert "__PAGE__" in nav
+    keys = set(re.findall(r'data-page="(\w+)"', nav))
+    sys.path.insert(0, str(ROOT / "tools"))
+    import build_viz
+
+    assert {k for _, _, k, _, _ in build_viz.PAGES} == keys
 
 
 def test_every_placeholder_gets_replaced():
@@ -104,9 +123,14 @@ def test_every_placeholder_gets_replaced():
         assert len(paths) == 3
         for p in paths:
             html = p.read_text(encoding="utf-8")
-            leftover = re.findall(r"__[A-Z_]+__", html.replace("__BCS__", "")
-                                  .replace("__DATA__", ""))
-            assert not leftover, f"{p.name}: 남은 자리표시자 {set(leftover)}"
+            # 등록된 자리표시자가 남았는가 — 빌드가 이미 막지만 여기서 한 번 더.
+            left = [w for w in build_viz.PLACEHOLDERS if w in html]
+            assert not left, f"{p.name}: 남은 자리표시자 {left}"
+            # 등록하지 않은 __XXX__ 를 본문에 새로 쓴 경우. 자바스크립트 전역은
+            # __BCS 로 시작하는 것만 쓴다는 약속이라 그것만 빼고 본다.
+            stray = {w for w in re.findall(r"__[A-Z_]+__", html)
+                     if not w.startswith("__BCS") and w != "__DATA__"}
+            assert not stray, f"{p.name}: 등록되지 않은 자리표시자 {stray}"
             assert "<title>" in html and "__TITLE__" not in html
 
 

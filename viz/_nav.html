@@ -1,0 +1,18 @@
+<!-- 세 장이 공유하는 머리띠. 예전에는 각 본문에 복제돼 있었고, 버튼을 하나
+     붙이려면 세 곳을 똑같이 고쳐야 했다. build_viz.py 가 __PAGE__ 를 현재 페이지
+     키로 갈아 끼우고, 스크립트가 그 키로 aria-current 를 붙인다.
+
+     두 버튼의 글자는 스크립트가 채운다 — 언어에 따라 바뀌어야 하는 것을
+     HTML 에 적어 두면 두 곳이 어긋난다. 여기 있는 것은 스크립트가 죽었을 때
+     남는 기본값이다. -->
+<div class="topbar" data-current="__PAGE__">
+  <nav class="pages" aria-label="페이지">
+    <a href="__INDEX_URL__" data-page="index"><span class="n">01</span><span data-t="nav.now">지금 위치</span></a>
+    <a href="__VERIFY_URL__" data-page="verify"><span class="n">02</span><span data-t="nav.verify">믿어도 되나</span></a>
+    <a href="__RULES_URL__" data-page="rules"><span class="n">03</span><span data-t="nav.rules">규칙과 한계</span></a>
+  </nav>
+  <div class="ctl">
+    <button class="ctlbtn" id="lang-btn" type="button">English</button>
+    <button class="ctlbtn" id="theme-btn" type="button">어둡게</button>
+  </div>
+</div>

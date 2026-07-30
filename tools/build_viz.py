@@ -42,14 +42,16 @@ from btc_core.config import load_config  # noqa: E402
 # 갈라졌다.
 HEAD = "viz/_head.html"
 SCRIPT = "viz/_script.html"
+I18N = "viz/_i18n.html"
+NAV = "viz/_nav.html"
 
 PAGES = (
-    # (본문 조각, 파일명, <title>, 추가 스크립트)
-    ("viz/index.body.html",  "index.html",
+    # (본문 조각, 파일명, 페이지 키, <title>, 추가 스크립트)
+    ("viz/index.body.html",  "index.html",  "index",
      "지금 어디쯤인가 — 비트코인 사이클 위치", None),
-    ("viz/verify.body.html", "verify.html",
+    ("viz/verify.body.html", "verify.html", "verify",
      "이 숫자를 믿어도 되나 — 비트코인 사이클 위치", None),
-    ("viz/rules.body.html",  "rules.html",
+    ("viz/rules.body.html",  "rules.html",  "rules",
      "규칙과 한계 — 비트코인 사이클 위치", "viz/_rules_script.html"),
 )
 MARKER = "/*__DATA__*/"
@@ -102,8 +104,11 @@ def compact(payload: dict) -> dict:
 
     return {
         "base": payload["span"][0], "span": payload["span"], "nDays": payload["n_days"],
+        "generated": payload["generated"],
         "bands": payload["bands"], "families": payload["families"],
         "bandStances": payload["band_stances"],
+        "bandStancesEn": payload["band_stances_en"],
+        "states": payload["states"], "statesEn": payload["states_en"],
         "indMeta": payload["indicator_meta"],
         "ladders": payload["ladders"], "dca": payload["dca"],
         "halvings": payload["halvings"],
@@ -123,12 +128,20 @@ def _read(rel: str) -> str:
     return p.read_text(encoding="utf-8")
 
 
-def _bake(body_rel: str, title: str, extra_script: Optional[str],
+PLACEHOLDERS = ("__INDEX_URL__", "__VERIFY_URL__", "__RULES_URL__",
+                "__TITLE__", "__NAV__", "__PAGE__")
+
+
+def _bake(body_rel: str, page_key: str, title: str, extra_script: Optional[str],
           data: str, out: Path, links: dict[str, str]) -> Path:
+    # 머리띠는 세 장이 공유한다. 예전에는 본문마다 복제돼 있었고, 버튼을 하나
+    # 붙이려면 세 곳을 똑같이 고쳐야 했다.
+    nav = _read(NAV).replace("__PAGE__", page_key)
     page = (
         _read(HEAD).replace("__TITLE__", title)
-        + _read(body_rel)
+        + _read(body_rel).replace("__NAV__", nav)
         + f"\n<script>window.__BCS__ = {MARKER}{data}{MARKER};</script>\n"
+        + _read(I18N)
         + _read(SCRIPT)
         + (_read(extra_script) if extra_script else "")
     )
@@ -136,11 +149,9 @@ def _bake(body_rel: str, title: str, extra_script: Optional[str],
     # 주소로 올릴 때는 절대 주소여야 해서 빌드 시점에 갈아 끼운다.
     for k, v in links.items():
         page = page.replace(k, v)
-    if "__" in page.replace("__BCS__", "").replace("__DATA__", ""):
-        leftover = [w for w in ("__INDEX_URL__", "__VERIFY_URL__",
-                                "__RULES_URL__", "__TITLE__") if w in page]
-        if leftover:
-            raise SystemExit(f"{out.name}: 치환되지 않은 자리표시자 {leftover}")
+    leftover = [w for w in PLACEHOLDERS if w in page]
+    if leftover:
+        raise SystemExit(f"{out.name}: 치환되지 않은 자리표시자 {leftover}")
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(page, encoding="utf-8")
     return out
@@ -148,15 +159,26 @@ def _bake(body_rel: str, title: str, extra_script: Optional[str],
 
 def build(csv: str, outdir: Path, *, config: Optional[str] = None,
           derive: bool = True, index_url: str = "index.html",
-          verify_url: str = "verify.html",
-          rules_url: str = "rules.html") -> list[Path]:
+          verify_url: str = "verify.html", rules_url: str = "rules.html",
+          info: Optional[dict] = None) -> list[Path]:
+    """세 장을 굽고 경로를 돌려준다.
+
+    ``info`` 를 주면 기준일·데이터 지연 같은 부수 정보를 그 딕셔너리에 담는다.
+    반환형을 바꾸면 ``for p in build(...)`` 로 쓰는 호출부가 전부 깨지는데,
+    커밋 메시지에 기준일을 넣으려고 그럴 이유는 없다.
+    """
     cfg = load_config(config) if config else load_config()
     payload = export_viz.build(cfg, csv, derive=derive)
     data = json.dumps(compact(payload), ensure_ascii=False, separators=(",", ":"))
     links = {"__INDEX_URL__": index_url, "__VERIFY_URL__": verify_url,
              "__RULES_URL__": rules_url}
-    return [_bake(body, title, extra, data, outdir / name, links)
-            for body, name, title, extra in PAGES]
+    paths = [_bake(body, key, title, extra, data, outdir / name, links)
+             for body, name, key, title, extra in PAGES]
+    if info is not None:
+        info["as_of"] = payload["current"]["d"]
+        info["latest"] = payload["latest"]["d"]
+        info["age_days"] = payload["age_days"]
+    return paths
 
 
 def main(argv: Optional[list[str]] = None) -> int:
@@ -173,14 +195,19 @@ def main(argv: Optional[list[str]] = None) -> int:
     ap.add_argument("--rules-url", default="rules.html")
     args = ap.parse_args(argv)
 
+    info: dict = {}
     paths = build(args.csv, Path(args.out_dir), config=args.config,
                   derive=not args.no_derive, index_url=args.index_url,
-                  verify_url=args.verify_url, rules_url=args.rules_url)
+                  verify_url=args.verify_url, rules_url=args.rules_url,
+                  info=info)
     for p in paths:
         kb = p.stat().st_size / 1024
         print(f"생성: {p}  ({kb:.0f} KB)")
         if kb > 400:
             print("  ! 400KB 를 넘었습니다 — export_viz.py 의 추리기 간격을 넓히세요")
+    # 갱신 워크플로가 이 줄을 읽어 커밋 메시지에 쓴다. 형식을 바꾸면
+    # .github/workflows/refresh-data.yml 의 sed 도 같이 고쳐야 한다.
+    print(f"기준일: {info['as_of']}  (데이터 {info['age_days']}일 전)")
     return 0
 
 

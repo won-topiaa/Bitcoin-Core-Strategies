@@ -1,27 +1,24 @@
 <div class="wrap">
 
-<nav class="pages" aria-label="페이지">
-  <a href="__INDEX_URL__" aria-current="page"><span class="n">01</span>지금 위치</a>
-  <a href="__VERIFY_URL__"><span class="n">02</span>믿어도 되나</a>
-  <a href="__RULES_URL__"><span class="n">03</span>규칙과 한계</a>
-</nav>
+__NAV__
 <header class="top">
-  <p class="eyebrow">비트코인 사이클 위치</p>
-  <h1>지금은 싼 편인가, 비싼 편인가</h1>
-  <p class="lead">비트코인의 오늘 가격이 <strong>지난 16년에 비춰 어디쯤인지</strong>만 알려주는
+  <p class="eyebrow" data-t="idx.eyebrow">비트코인 사이클 위치</p>
+  <h1 data-t="idx.h1">지금은 싼 편인가, 비싼 편인가</h1>
+  <p class="lead" data-t="idx.lead">비트코인의 오늘 가격이 <strong>지난 16년에 비춰 어디쯤인지</strong>만 알려주는
   눈금자입니다. 앞으로 오를지 내릴지는 말하지 않습니다.</p>
   <div class="srcline">
     <span id="src-span"></span>
     <span id="src-days"></span>
+    <span id="src-fresh"></span>
   </div>
 </header>
 
 <!-- ============ 01 지금 위치 ============ -->
 <section id="now" style="margin-top:0">
   <div class="sechead">
-    <p class="eyebrow"><em>01</em> — 지금 위치</p>
-    <h2>오늘은 여기쯤입니다</h2>
-    <p>−100에 가까울수록 지난 16년에 비해 싼 편, +100에 가까울수록 비싼 편입니다.
+    <p class="eyebrow" data-t="idx.s1.eyebrow"><em>01</em> — 지금 위치</p>
+    <h2 data-t="idx.s1.h2">오늘은 여기쯤입니다</h2>
+    <p data-t="idx.s1.p">−100에 가까울수록 지난 16년에 비해 싼 편, +100에 가까울수록 비싼 편입니다.
     숫자 하나가 아니라 <strong>범위</strong>로 나오는 이유는 <a href="__VERIFY_URL__">다음 장</a>에 있습니다.</p>
   </div>
 
@@ -43,8 +40,8 @@
 
   <!-- 지표 전체 요약 — 이 페이지에서 가장 중요한 표 -->
   <div class="sechead" style="margin-top:42px">
-    <h2 style="font-size:19px">지표 아홉 개가 각각 어디에 있나</h2>
-    <p>위의 점수 하나는 아래 아홉 개를 합친 결과입니다. 막대가 <strong>왼쪽에 있을수록 싼 쪽,
+    <h2 style="font-size:19px" data-t="idx.s2.h2">지표 아홉 개가 각각 어디에 있나</h2>
+    <p data-t="idx.s2.p">위의 점수 하나는 아래 아홉 개를 합친 결과입니다. 막대가 <strong>왼쪽에 있을수록 싼 쪽,
     오른쪽에 있을수록 비싼 쪽</strong>이고, 퍼센트는 <strong>최근 4년 중 몇 %에 해당하는가</strong>입니다.
     예를 들어 18%면 최근 4년 동안 이보다 낮았던 날이 18%뿐이었다는 뜻입니다.
     맨 오른쪽은 <strong>직전에 이만큼 극단이었던 시기</strong>입니다 (최소 6개월 전).</p>
@@ -54,9 +51,10 @@
   <div class="tblwrap indtable">
     <table id="ind-table">
       <thead><tr>
-        <th>지표</th><th>재는 것</th><th>지금 값</th>
-        <th style="min-width:210px">최근 4년 중 위치</th>
-        <th>직전에 이만큼이던 때</th><th>갈래</th>
+        <th data-t="idx.th.ind">지표</th><th data-t="idx.th.what">재는 것</th>
+        <th data-t="idx.th.value">지금 값</th>
+        <th style="min-width:210px" data-t="idx.th.pos">최근 4년 중 위치</th>
+        <th data-t="idx.th.prev">직전에 이만큼이던 때</th><th data-t="idx.th.fam">갈래</th>
       </tr></thead>
       <tbody></tbody>
     </table>
@@ -68,9 +66,9 @@
 <!-- ============ 02 16년 이력 ============ -->
 <section id="history">
   <div class="sechead">
-    <p class="eyebrow"><em>02</em> — 지난 16년</p>
-    <h2>같은 자리에 네 번 갔고, 네 번 돌아왔습니다</h2>
-    <p>위 눈금을 매일 계산해서 시간 순으로 쭉 이어 놓은 그림입니다. 세로가 위치 점수,
+    <p class="eyebrow" data-t="idx.s3.eyebrow"><em>02</em> — 지난 16년</p>
+    <h2 data-t="idx.s3.h2">같은 자리에 네 번 갔고, 네 번 돌아왔습니다</h2>
+    <p data-t="idx.s3.p">위 눈금을 매일 계산해서 시간 순으로 쭉 이어 놓은 그림입니다. 세로가 위치 점수,
     가로가 시간입니다.</p>
   </div>
 
@@ -80,8 +78,8 @@
       <svg id="key-svg" viewBox="0 0 200 96" aria-hidden="true"></svg>
     </div>
     <div class="howto-txt">
-      <h3>그림 읽는 법</h3>
-      <ol>
+      <h3 data-t="idx.howto.h3">그림 읽는 법</h3>
+      <ol data-t="idx.howto.ol">
         <li><b>파란 띠</b>는 <b>범위</b>입니다. 지표 아홉 개 중 하나를 빼고 다시 계산해 보면
         값이 조금씩 달라지는데, 그렇게 나온 값들이 위아래로 흩어진 폭입니다.
         <b>띠가 얇으면</b> 아홉 개가 서로 같은 이야기를 하고 있다는 뜻이고,
@@ -95,12 +93,7 @@
 
   <figure class="panel">
     <div class="chart-head">
-      <div class="legend">
-        <span><i style="background:var(--cool-2);opacity:.45"></i>범위 (띠)</span>
-        <span><i style="background:var(--ink);height:2px;border-radius:0;margin-bottom:3px"></i>대표값 (선)</span>
-        <span><i style="background:var(--warm-3);border-radius:50%"></i>과거 고점</span>
-        <span><i style="background:var(--cool-3);border-radius:50%"></i>과거 바닥</span>
-      </div>
+      <div class="legend" id="hist-legend"></div>
     </div>
     <div class="chart" id="hist-host">
       <svg id="hist"></svg>
@@ -110,31 +103,30 @@
   </figure>
 
   <figure class="panel">
-    <div class="chart-head"><h3>같은 기간의 실제 가격</h3></div>
+    <div class="chart-head"><h3 data-t="idx.price.h3">같은 기간의 실제 가격</h3></div>
     <div class="chart" id="price-host">
       <svg id="price"></svg>
       <div class="tt" id="price-tt"></div>
     </div>
-    <figcaption>위 그림과 가로축이 같습니다. 위아래로 나란히 놓고 보시면 됩니다 —
+    <figcaption data-t="idx.price.cap">위 그림과 가로축이 같습니다. 위아래로 나란히 놓고 보시면 됩니다 —
     <strong>위 그림이 아래로 내려갔을 때 실제로 가격이 바닥이었는지</strong>가 이 지표의 전부입니다.
     같은 그림에 겹쳐 그리지 않은 이유는, 세로축이 두 개가 되면 두 선을 어디에 맞추느냐에 따라
     없던 관계가 있는 것처럼 보이기 때문입니다.</figcaption>
   </figure>
-</section>
 
 
   <div class="nextlink">
     <a href="__VERIFY_URL__">
-      <span class="k">다음</span>
-      <span class="t">이 숫자를 믿어도 되나</span>
-      <span class="d">과거 여덟 번의 전환점에서 뭐라고 했는지, 그리고 왜 범위로 나오는지</span>
+      <span class="k" data-t="idx.next.k">다음</span>
+      <span class="t" data-t="idx.next.t">이 숫자를 믿어도 되나</span>
+      <span class="d" data-t="idx.next.d">과거 여덟 번의 전환점에서 뭐라고 했는지, 그리고 왜 범위로 나오는지</span>
     </a>
   </div>
 </section>
 
 <footer>
   <p id="foot-derive"></p>
-  <p style="margin-top:10px">이 페이지는 개인 기록과 정보 제공을 위한 것이고 투자 권유가 아닙니다.
+  <p style="margin-top:10px" data-t="foot.disclaimer">이 페이지는 개인 기록과 정보 제공을 위한 것이고 투자 권유가 아닙니다.
   여기 있는 어떤 숫자도 앞으로의 가격을 말하지 않습니다. 투자 판단과 그 결과는 본인의 몫입니다.</p>
 </footer>
 
