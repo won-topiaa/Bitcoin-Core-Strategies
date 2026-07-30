@@ -143,18 +143,44 @@ def issuance_series(dates: tuple[date, ...]) -> Series:
     return Series(dates, tuple(derive_daily_issuance(d) for d in dates), "issuance_btc(파생)")
 
 
-def _times(a: Series, b: Series, name: str) -> Series:
-    """두 시계열의 곱. a 의 날짜를 기준으로 하고 b 는 그 날짜에서 조회한다."""
-    lookup = dict(zip(b.dates, b.values))
-    out: list[Optional[float]] = []
-    for d, v in zip(a.dates, a.values):
-        w = lookup.get(d)
-        out.append(None if v is None or w is None else v * w)
-    return Series(a.dates, tuple(out), name)
+def _fill(
+    measured: Optional[Series],
+    dates: tuple[date, ...],
+    compute,
+    name: str,
+) -> tuple[Series, int]:
+    """가격 날짜 전 구간을 덮는 시계열. 실측이 없는 날만 계산값으로 채운다.
+
+    **비어 있는 날 단위로 채우는 것이 핵심이다.** 시계열 전체가 없을 때만
+    채우면 현실에서 가장 흔한 경우를 놓친다 — CoinMetrics 커뮤니티 티어는
+    최신 하루가 늦어서 마지막 행의 시총·유통량이 비어 있고, 그 하루 때문에
+    "지금 위치"의 커버리지가 60% 로 떨어진다. 오늘 값을 보려고 만든 지표에서
+    가장 중요한 하루가 빠지는 셈이다.
+
+    돌려주는 두 번째 값은 채운 날 수다. 0 이면 손대지 않았다는 뜻이다.
+    """
+    have = dict(zip(measured.dates, measured.values)) if measured is not None else {}
+    pairs: list[tuple[date, Optional[float]]] = []
+    filled = 0
+    for d in dates:
+        v = have.get(d)
+        if v is None:
+            v = compute(d)
+            if v is not None:
+                filled += 1
+        pairs.append((d, v))
+    return Series.from_pairs(pairs, name=name), filled
+
+
+def _note(what: str, filled: int, total: int, detail: str) -> str:
+    """전 구간을 계산했는지, 구멍만 메웠는지 구분해 적는다."""
+    if filled >= total:
+        return f"{what}을 반감기 스케줄로 계산했습니다 ({detail})"
+    return f"{what} {filled}일이 비어 있어 반감기 스케줄로 채웠습니다 ({detail})"
 
 
 def backfill(market: MarketData) -> tuple[MarketData, tuple[str, ...]]:
-    """결측 시계열을 계산으로 채운다. 실측이 있으면 손대지 않는다.
+    """결측을 계산으로 채운다. 실측이 있는 날은 손대지 않는다.
 
     채울 수 있는 것: supply, issuance_btc, issuance_usd, market_cap.
     채울 수 없는 것: realized_cap, hashrate, active_addresses, 거래소 계열.
@@ -168,33 +194,42 @@ def backfill(market: MarketData) -> tuple[MarketData, tuple[str, ...]]:
         return market, ("가격이 없어 파생 계산을 건너뜁니다.",)
 
     dates = price.dates
+    total = len(dates)
+    px = dict(zip(price.dates, price.values))
 
-    supply = market.supply
-    if supply is None or supply.last is None:
-        supply = supply_series(dates)
-        notes.append(
-            "유통량을 반감기 스케줄로 계산했습니다 "
-            "(2015년 이후 실측 대비 평균오차 0.08%)"
-        )
+    supply, n_sup = _fill(market.supply, dates, derive_supply, "supply")
+    if n_sup:
+        notes.append(_note("유통량", n_sup, total,
+                           "2015년 이후 실측 대비 평균오차 0.08%"))
 
-    issuance_btc = market.issuance_btc
-    if issuance_btc is None or issuance_btc.last is None:
-        issuance_btc = issuance_series(dates)
-        notes.append(
-            "발행량을 반감기 스케줄로 계산했습니다 "
-            f"(끝난 구간은 ±0.05%, 진행 구간은 {DERIVED_ISSUANCE_BIAS * 100:+.1f}% — "
-            "다음 반감기 날짜가 추정이라서)"
-        )
+    issuance_btc, n_iss = _fill(market.issuance_btc, dates,
+                                derive_daily_issuance, "issuance_btc")
+    if n_iss:
+        notes.append(_note(
+            "발행량", n_iss, total,
+            f"끝난 반감기 구간은 ±0.05%, 진행 구간은 "
+            f"{DERIVED_ISSUANCE_BIAS * 100:+.1f}% — 다음 반감기 날짜가 추정이라서",
+        ))
 
-    issuance_usd = market.issuance_usd
-    if issuance_usd is None or issuance_usd.last is None:
-        issuance_usd = _times(issuance_btc, price, "issuance_usd(파생)")
-        notes.append("발행액을 발행량 × 가격으로 계산했습니다")
+    iss_lookup = dict(zip(issuance_btc.dates, issuance_btc.values))
 
-    market_cap = market.market_cap
-    if market_cap is None or market_cap.last is None:
-        market_cap = _times(price, supply, "market_cap(파생)")
-        notes.append("시가총액을 가격 × 유통량으로 계산했습니다")
+    def _iss_usd(d: date) -> Optional[float]:
+        p, i = px.get(d), iss_lookup.get(d)
+        return None if p is None or i is None else p * i
+
+    issuance_usd, n_iu = _fill(market.issuance_usd, dates, _iss_usd, "issuance_usd")
+    if n_iu:
+        notes.append(_note("발행액", n_iu, total, "발행량 × 가격"))
+
+    sup_lookup = dict(zip(supply.dates, supply.values))
+
+    def _mcap(d: date) -> Optional[float]:
+        p, s = px.get(d), sup_lookup.get(d)
+        return None if p is None or s is None else p * s
+
+    market_cap, n_mc = _fill(market.market_cap, dates, _mcap, "market_cap")
+    if n_mc:
+        notes.append(_note("시가총액", n_mc, total, "가격 × 유통량"))
 
     filled = MarketData(
         price=price,

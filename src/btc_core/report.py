@@ -28,6 +28,33 @@ def gauge(score: Optional[float], width: int = BAR_WIDTH) -> str:
     return "".join(cells)
 
 
+def range_gauge(low: Optional[float], high: Optional[float], point: Optional[float],
+                width: int = BAR_WIDTH) -> str:
+    """구간을 막대로. 양 끝이 ├ ┤ 이고 점이 ● 다.
+
+    점 하나만 찍으면 사람은 그 소수점을 믿는다. 구간을 그리면 못 믿는다 —
+    그게 이 함수가 존재하는 이유다.
+    """
+    if low is None or high is None:
+        return "·" * width
+
+    def cell(v: float) -> int:
+        return max(0, min(width - 1, int(round((v + 1.0) / 2.0 * (width - 1)))))
+
+    lo, hi = cell(low), cell(high)
+    if lo > hi:
+        lo, hi = hi, lo
+    cells = ["─"] * width
+    cells[width // 2] = "┼"
+    for i in range(lo, hi + 1):
+        cells[i] = "━"
+    cells[lo] = "├"
+    cells[hi] = "┤"
+    if point is not None:
+        cells[cell(point)] = "●"
+    return "".join(cells)
+
+
 def display_width(s: str) -> int:
     """한글·한자는 터미널에서 두 칸을 먹는다. str.ljust 는 그걸 모른다."""
     return sum(2 if unicodedata.east_asian_width(c) in ("W", "F") else 1 for c in s)
@@ -95,12 +122,31 @@ def render_console(snap: Snapshot, cfg: StrategyConfig) -> str:
     add("")
 
     # --- 점수 ---
-    bcs_txt = f"{snap.bcs:+.1f}" if snap.bcs is not None else "산출 불가"
-    # 결측을 0 으로 바꿔 넘기면 "산출 불가"라고 써놓고 바늘은 중립을 가리킨다.
-    add(f"  BCS  사이클 위치   {bcs_txt:>10}   "
-        f"{gauge(snap.bcs / 100 if snap.bcs is not None else None)}")
-    if snap.plan:
-        add(f"       {snap.plan.band_label} — {snap.plan.stance}")
+    # BCS 는 점이 아니라 구간으로 쓴다. 지표 하나를 빼고 다시 계산한 값들의
+    # 범위이고, 16년 실측 중위 폭이 16.6점이다 — 소수점을 믿을 수 없다는 뜻이
+    # 아니라 **믿으면 안 된다는 뜻**이다.
+    iv = snap.bcs_interval
+    if iv is not None:
+        bcs_txt = f"{iv.low:+.0f} ~ {iv.high:+.0f}"
+        bar = range_gauge(iv.low / 100, iv.high / 100, iv.point / 100)
+    else:
+        bcs_txt = f"{snap.bcs:+.1f}" if snap.bcs is not None else "산출 불가"
+        # 결측을 0 으로 바꿔 넘기면 "산출 불가"라고 써놓고 바늘은 중립을 가리킨다.
+        bar = gauge(snap.bcs / 100 if snap.bcs is not None else None)
+    add(f"  BCS  사이클 위치   {bcs_txt:>10}   {bar}")
+
+    if iv is not None and not iv.stable:
+        lo_label = cfg.band_for(iv.low).get("label", "")
+        hi_label = cfg.band_for(iv.high).get("label", "")
+        add(f"       {lo_label} ~ {hi_label} — 두 국면 사이 (점 {iv.point:+.1f})")
+        if snap.plan:
+            add(f"       실행은 {snap.plan.band_label} 기준 — {snap.plan.stance}")
+    elif snap.plan:
+        point_txt = f" (점 {iv.point:+.1f})" if iv is not None else ""
+        add(f"       {snap.plan.band_label} — {snap.plan.stance}{point_txt}")
+    if iv is not None and iv.dropped_low and iv.dropped_high:
+        add(f"       폭 {iv.width:.0f}점 — 하단은 '{short_label(iv.dropped_low)}' 제외 시, "
+            f"상단은 '{short_label(iv.dropped_high)}' 제외 시")
     lrs_txt = f"{snap.lrs:+.1f}" if snap.lrs is not None else "산출 불가"
     lrs_label = cfg.lrs_band_for(snap.lrs).get("label", "") if snap.lrs is not None else ""
     add(f"  LRS  유동성 레짐   {lrs_txt:>10}   "
@@ -211,8 +257,19 @@ def render_markdown(snap: Snapshot, cfg: StrategyConfig) -> str:
     add(f"# BCS 스냅샷 — {snap.as_of}")
     add("")
     add(f"- 현재가: **{('$' + format(snap.price, ',.0f')) if snap.price else '—'}**")
-    add(f"- **BCS {snap.bcs:+.1f}**" if snap.bcs is not None else "- **BCS 산출 불가**")
-    if snap.plan:
+    iv = snap.bcs_interval
+    if iv is not None:
+        add(f"- **BCS {iv.low:+.0f} ~ {iv.high:+.0f}** (점 {iv.point:+.1f}, 폭 {iv.width:.0f})")
+    elif snap.bcs is not None:
+        add(f"- **BCS {snap.bcs:+.1f}**")
+    else:
+        add("- **BCS 산출 불가**")
+    if iv is not None and not iv.stable:
+        add(f"- 밴드: **{cfg.band_for(iv.low).get('label','')} ~ "
+            f"{cfg.band_for(iv.high).get('label','')}** — 두 국면 사이")
+        if snap.plan:
+            add(f"  - 실행은 {snap.plan.band_label} 기준 — {snap.plan.stance}")
+    elif snap.plan:
         add(f"- 밴드: **{snap.plan.band_label}** — {snap.plan.stance}")
     if snap.lrs is not None:
         add(f"- LRS {snap.lrs:+.1f} — {cfg.lrs_band_for(snap.lrs).get('label','')}")

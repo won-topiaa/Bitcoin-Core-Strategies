@@ -18,7 +18,13 @@ from .indicators import (
     top_profile_inputs,
 )
 from .models import Reading, Snapshot
-from .score import compute_bcs, compute_lrs, evaluate_consensus, score_indicator
+from .score import (
+    compute_bcs,
+    compute_bcs_interval,
+    compute_lrs,
+    evaluate_consensus,
+    score_indicator,
+)
 from .strategy import ExecutionState, build_plan
 
 
@@ -88,6 +94,10 @@ def evaluate(
             warnings.append(f"{r.label}: {r.note}")
 
     bcs, families, coverage = compute_bcs(cfg, readings)
+    # 구간은 표시 전용이다. 실행 규칙은 점수(bcs)로만 판단한다 — 구간으로
+    # 게이트를 걸면 "구간이 걸치면 보류" 같은 새 규칙이 생기고, 그건 자유도를
+    # 늘리는 일이다. 구간은 사람이 소수점을 믿지 않게 만드는 장치일 뿐이다.
+    interval = compute_bcs_interval(cfg, readings)
 
     if bcs is not None and record:
         state.record_bcs(resolved_date, bcs)
@@ -145,6 +155,13 @@ def evaluate(
         warnings.append(f"결측 지표 {len(missing)}개: {', '.join(missing)}")
     if coverage < 1.0:
         warnings.append(f"계열 커버리지 {coverage:.0%} — 남은 계열로 가중치를 재정규화했습니다.")
+    if interval is not None and not interval.stable:
+        lo = cfg.band_for(interval.low).get("label", "")
+        hi = cfg.band_for(interval.high).get("label", "")
+        warnings.append(
+            f"BCS 구간 {interval.low:+.1f} ~ {interval.high:+.1f} 이 밴드 경계를 걸칩니다 "
+            f"({lo} ~ {hi}) — 점수 하나로 국면을 단정하지 마세요"
+        )
 
     snapshot = Snapshot(
         as_of=resolved_date,
@@ -158,6 +175,7 @@ def evaluate(
         consensus=consensus,
         plan=plan,
         warnings=tuple(dict.fromkeys(warnings)),   # 순서 유지 중복 제거
+        bcs_interval=interval,
     )
     return snapshot, state
 

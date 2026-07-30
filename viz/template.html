@@ -1,0 +1,1028 @@
+<title>BCS — 비트코인 사이클 위치 게이지</title>
+<style>
+:root{
+  color-scheme: light;
+  --plane:#f6f7f9; --surface:#fbfbfc; --surface-2:#f1f3f6;
+  --ink:#101317; --ink-2:#4e535b; --muted:#868c96;
+  --grid:#e3e6eb; --axis:#c8cdd5; --rule:rgba(16,19,23,.10);
+  --warm-3:#c0322f; --warm-2:#d6624a; --warm-1:#e4a68f;
+  --cool-1:#93b6df; --cool-2:#3f7fc4; --cool-3:#1d5091;
+  --zero:#b9bec7;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a;
+  --good:#0ca30c; --crit:#d03b3b;
+  --wash-warm-3:rgba(192,50,47,.14); --wash-warm-2:rgba(214,98,74,.10); --wash-warm-1:rgba(228,166,143,.09);
+  --wash-neutral:rgba(134,140,150,.07);
+  --wash-cool-1:rgba(147,182,223,.11); --wash-cool-2:rgba(63,127,196,.13); --wash-cool-3:rgba(29,80,145,.17);
+  --sans:system-ui,-apple-system,"Segoe UI","Noto Sans KR",sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:where(:not([data-theme="light"])){
+    color-scheme: dark;
+    --plane:#0b0c0e; --surface:#121316; --surface-2:#191b1f;
+    --ink:#f3f4f6; --ink-2:#b7bcc5; --muted:#7d838d;
+    --grid:#24262b; --axis:#383b41; --rule:rgba(255,255,255,.10);
+    --warm-3:#e8615c; --warm-2:#d0705a; --warm-1:#8d5e51;
+    --cool-1:#5c7da4; --cool-2:#4a8ce0; --cool-3:#7ba7de;
+    --zero:#4a4e55;
+    --s1:#3987e5; --s2:#d95926; --s3:#199e70;
+    --good:#0ca30c; --crit:#e66767;
+    --wash-warm-3:rgba(232,97,92,.16); --wash-warm-2:rgba(208,112,90,.11); --wash-warm-1:rgba(141,94,81,.12);
+    --wash-neutral:rgba(125,131,141,.08);
+    --wash-cool-1:rgba(92,125,164,.13); --wash-cool-2:rgba(74,140,224,.13); --wash-cool-3:rgba(123,167,222,.16);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --plane:#0b0c0e; --surface:#121316; --surface-2:#191b1f;
+  --ink:#f3f4f6; --ink-2:#b7bcc5; --muted:#7d838d;
+  --grid:#24262b; --axis:#383b41; --rule:rgba(255,255,255,.10);
+  --warm-3:#e8615c; --warm-2:#d0705a; --warm-1:#8d5e51;
+  --cool-1:#5c7da4; --cool-2:#4a8ce0; --cool-3:#7ba7de;
+  --zero:#4a4e55;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70;
+  --good:#0ca30c; --crit:#e66767;
+  --wash-warm-3:rgba(232,97,92,.16); --wash-warm-2:rgba(208,112,90,.11); --wash-warm-1:rgba(141,94,81,.12);
+  --wash-neutral:rgba(125,131,141,.08);
+  --wash-cool-1:rgba(92,125,164,.13); --wash-cool-2:rgba(74,140,224,.13); --wash-cool-3:rgba(123,167,222,.16);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--plane); color:var(--ink);
+  font-family:var(--sans); font-size:15px; line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+  word-break:keep-all; overflow-wrap:break-word;
+}
+.wrap{max-width:1160px; margin:0 auto; padding:clamp(28px,5vw,64px) clamp(16px,4vw,40px) 88px}
+.eyebrow{
+  font-size:11.5px; font-weight:640; letter-spacing:.09em;
+  color:var(--muted); margin:0 0 10px
+}
+.eyebrow em{font-family:var(--mono); font-style:normal; letter-spacing:.12em}
+h1{
+  font-size:clamp(30px,5.2vw,52px); line-height:1.05; letter-spacing:-.022em;
+  font-weight:650; margin:0 0 18px; text-wrap:balance; max-width:22ch
+}
+h2{
+  font-size:clamp(19px,2.6vw,25px); line-height:1.24; letter-spacing:-.014em;
+  font-weight:640; margin:0 0 6px; text-wrap:balance
+}
+h3{font-size:15px; font-weight:640; letter-spacing:-.005em; margin:0 0 4px}
+p{margin:0 0 14px; max-width:66ch; color:var(--ink-2)}
+p.lead{font-size:17px; color:var(--ink); max-width:60ch}
+strong{color:var(--ink); font-weight:620}
+a{color:var(--s1)}
+hr{border:0; border-top:1px solid var(--rule); margin:0}
+.mono{font-family:var(--mono); font-variant-numeric:tabular-nums}
+.num{font-variant-numeric:tabular-nums}
+
+header.top{border-bottom:1px solid var(--rule); padding-bottom:30px; margin-bottom:34px}
+.srcline{
+  font-family:var(--mono); font-size:11.5px; letter-spacing:.04em; color:var(--muted);
+  display:flex; flex-wrap:wrap; gap:6px 20px; margin-top:20px
+}
+.srcline span{white-space:nowrap}
+
+section{margin-top:52px}
+.sechead{margin-bottom:20px}
+.sechead .eyebrow{margin-bottom:8px}
+
+.panel{
+  background:var(--surface); border:1px solid var(--rule); border-radius:3px;
+  padding:clamp(16px,2.4vw,26px)
+}
+.panel + .panel{margin-top:16px}
+
+/* ---- 게이지 ---- */
+.gauge-wrap{padding:clamp(18px,3vw,32px) clamp(16px,3vw,30px) clamp(12px,2vw,20px)}
+.readout{display:flex; flex-wrap:wrap; align-items:flex-end; gap:8px 26px; margin-bottom:26px}
+.readout .big{
+  font-family:var(--mono); font-variant-numeric:tabular-nums;
+  font-size:clamp(34px,6.4vw,58px); line-height:1; letter-spacing:-.02em; font-weight:600
+}
+.readout .band{
+  font-size:clamp(15px,2vw,19px); font-weight:640; letter-spacing:-.01em; padding-bottom:5px
+}
+.readout .asof{font-family:var(--mono); font-size:11.5px; color:var(--muted); padding-bottom:7px; letter-spacing:.04em}
+.gauge-svg{display:block; width:100%; height:auto; overflow:visible}
+
+/* ---- 스탯 ---- */
+.tiles{display:grid; grid-template-columns:repeat(auto-fit,minmax(158px,1fr)); gap:1px; background:var(--rule);
+  border:1px solid var(--rule); border-radius:3px; margin-top:16px; overflow:hidden}
+.tile{background:var(--surface); padding:16px 18px 15px}
+.tile .k{font-size:11.5px; font-weight:620; letter-spacing:.03em; color:var(--muted)}
+.tile .v{font-family:var(--mono); font-variant-numeric:tabular-nums; font-size:23px; font-weight:600; letter-spacing:-.01em; margin-top:7px; line-height:1.15}
+.tile .n{font-size:12px; color:var(--muted); margin-top:3px; line-height:1.4}
+.chip{display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:600;
+  font-family:var(--sans); padding:2px 8px; border-radius:2px; border:1px solid var(--rule)}
+.chip .dot{width:7px; height:7px; border-radius:50%}
+
+/* ---- 차트 ---- */
+figure{margin:0}
+figcaption{font-size:12.5px; color:var(--muted); margin-top:12px; max-width:74ch; line-height:1.55}
+.chart-head{display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:8px 20px; margin-bottom:14px}
+.legend{display:flex; flex-wrap:wrap; gap:6px 18px; font-size:12.5px; color:var(--ink-2)}
+.legend i{display:inline-block; width:11px; height:11px; border-radius:2px; margin-right:6px; vertical-align:-1px}
+.legend b{font-weight:600; color:var(--ink)}
+.chart{position:relative; width:100%}
+.chart svg{display:block; width:100%; height:auto; overflow:visible}
+.tt{
+  position:absolute; pointer-events:none; opacity:0; transition:opacity .09s linear;
+  background:var(--surface); border:1px solid var(--axis); border-radius:3px;
+  padding:9px 11px; font-family:var(--mono); font-size:11.5px; line-height:1.6;
+  font-variant-numeric:tabular-nums; box-shadow:0 4px 14px rgba(0,0,0,.10); z-index:5; min-width:150px
+}
+.tt .d{color:var(--muted); letter-spacing:.04em; margin-bottom:4px}
+.tt .r{display:flex; justify-content:space-between; gap:14px; white-space:nowrap}
+.tt .r span:last-child{font-weight:600}
+@media (prefers-reduced-motion: reduce){.tt{transition:none}}
+
+/* ---- 표 ---- */
+.tblwrap{overflow-x:auto; border:1px solid var(--rule); border-radius:3px; background:var(--surface)}
+table{border-collapse:collapse; width:100%; font-size:12.5px}
+caption{text-align:left; font-size:12.5px; color:var(--muted); padding:12px 14px 0; caption-side:top}
+th,td{padding:8px 12px; text-align:right; white-space:nowrap; border-bottom:1px solid var(--rule)}
+th:first-child,td:first-child{text-align:left}
+thead th{
+  font-size:11.5px; letter-spacing:.02em;
+  color:var(--muted); font-weight:620; border-bottom:1px solid var(--axis)
+}
+tbody td{font-family:var(--mono); font-variant-numeric:tabular-nums; color:var(--ink-2)}
+tbody td:first-child{font-family:var(--sans); color:var(--ink); font-weight:600}
+tbody tr:last-child td{border-bottom:0}
+tbody tr.hi td{background:var(--surface-2)}
+
+/* ---- 구조 설명 ---- */
+.cols{display:grid; grid-template-columns:repeat(auto-fit,minmax(266px,1fr)); gap:16px}
+.famcard{background:var(--surface); border:1px solid var(--rule); border-radius:3px; padding:18px 20px;
+  display:flex; flex-direction:column}
+.famcard ul{flex:1}
+.famcard .score{margin-top:14px; padding-top:12px; border-top:1px solid var(--axis);
+  font-size:12px; color:var(--muted); display:flex; justify-content:space-between; align-items:baseline}
+.famcard .score b{font-family:var(--mono); font-variant-numeric:tabular-nums; font-size:15px; color:var(--ink)}
+.famcard .top{display:flex; justify-content:space-between; align-items:baseline; gap:12px}
+.famcard .w{font-family:var(--mono); font-variant-numeric:tabular-nums; font-size:26px; font-weight:600; line-height:1}
+.famcard h3{display:flex; align-items:center; gap:8px}
+.famcard .sw{width:10px; height:10px; border-radius:2px; flex:none}
+.famcard ul{margin:12px 0 0; padding:0; list-style:none; font-size:12.5px; color:var(--ink-2)}
+.famcard li{padding:5px 0; border-top:1px solid var(--rule); display:flex; justify-content:space-between; gap:12px}
+.famcard .agg{font-size:11.5px; letter-spacing:.01em; color:var(--muted); margin-top:10px}
+.famcard .agg b{font-family:var(--mono); font-weight:500; letter-spacing:.06em}
+dl.defs{margin:0; display:grid; grid-template-columns:auto 1fr; gap:0}
+dl.defs dt{font-size:12px; font-weight:640; letter-spacing:.02em; color:var(--muted);
+  padding:11px 22px 11px 0; border-top:1px solid var(--rule); white-space:nowrap}
+dl.defs dd{margin:0; padding:11px 0; border-top:1px solid var(--rule); color:var(--ink-2); font-size:13.5px}
+dl.defs dt:first-of-type,dl.defs dd:first-of-type{border-top:0}
+ul.notes{margin:0; padding-left:20px; color:var(--ink-2); font-size:13.5px}
+ul.notes li{margin-bottom:9px; max-width:70ch}
+.callout{border-left:2px solid var(--s1); padding:2px 0 2px 18px; margin:20px 0}
+.callout p{margin-bottom:0}
+footer{margin-top:64px; padding-top:26px; border-top:1px solid var(--rule); font-size:12.5px; color:var(--muted)}
+footer p{color:var(--muted); font-size:12.5px; max-width:70ch}
+:focus-visible{outline:2px solid var(--s1); outline-offset:2px}
+</style>
+
+<div class="wrap">
+
+<header class="top">
+  <p class="eyebrow">BCS · Bitcoin Cycle Score</p>
+  <h1>지금은 저점 부근인가, 고점 부근인가</h1>
+  <p class="lead">비트코인의 현재 가격이 <strong>과거 16년 데이터에 비교해 어디쯤인지</strong>를
+  오늘 기준으로 다시 세워 보여주는 게이지다. 언제 사고팔라는 신호가 아니다 —
+  <strong>위치값이지 예측값이 아니다.</strong></p>
+  <p>점수는 서로 계산 재료가 다른 지표 9개를 3개 계열로 묶어 만든다. 그리고 점 하나가 아니라
+  <strong>구간</strong>으로 표시한다 — 지표를 하나씩 빼고 다시 계산해 보면 판정이 얼마나 흔들리는지가
+  나오고, 그 폭이 곧 이 숫자를 어디까지 믿어도 되는지다.</p>
+  <div class="srcline">
+    <span id="src-span"></span>
+    <span id="src-days"></span>
+    <span>정규화 4년 이동 퍼센타일</span>
+    <span>CoinMetrics 커뮤니티 + 반감기 스케줄 파생</span>
+  </div>
+</header>
+
+<!-- ============ 지금 위치 ============ -->
+<section id="now" style="margin-top:0">
+  <div class="sechead">
+    <p class="eyebrow"><em>01</em> — 지금 위치</p>
+    <h2>계기판</h2>
+  </div>
+
+  <div class="panel gauge-wrap">
+    <div class="readout">
+      <div class="big" id="ro-range"></div>
+      <div class="band" id="ro-band"></div>
+      <div class="asof" id="ro-asof"></div>
+    </div>
+    <div class="chart" id="gauge-host">
+      <svg class="gauge-svg" id="gauge"></svg>
+    </div>
+  </div>
+
+  <div class="tiles" id="tiles"></div>
+</section>
+
+<!-- ============ 16년 이력 ============ -->
+<section id="history">
+  <div class="sechead">
+    <p class="eyebrow"><em>02</em> — 16년 이력</p>
+    <h2>같은 자리에 네 번 갔고, 네 번 돌아왔다</h2>
+    <p>세로축이 사이클 위치다. 띠의 두께가 곧 불확실성이고, 가는 선이 대표값이다.
+    배경색은 밴드 — 위로 갈수록 따뜻하고(과열) 아래로 갈수록 차갑다(항복).</p>
+  </div>
+
+  <figure class="panel">
+    <div class="chart-head">
+      <div class="legend">
+        <span><i style="background:var(--cool-2);opacity:.45"></i>BCS 구간 (지표 하나 제외 시 범위)</span>
+        <span><i style="background:var(--ink);height:2px;border-radius:0;margin-bottom:3px"></i>대표값</span>
+        <span><i style="background:var(--warm-3);border-radius:50%"></i>사이클 고점</span>
+        <span><i style="background:var(--cool-3);border-radius:50%"></i>사이클 저점</span>
+      </div>
+    </div>
+    <div class="chart" id="hist-host">
+      <svg id="hist"></svg>
+      <div class="tt" id="hist-tt"></div>
+    </div>
+    <figcaption id="hist-cap"></figcaption>
+  </figure>
+
+  <figure class="panel">
+    <div class="chart-head"><h3>가격 (로그) — 같은 기간</h3></div>
+    <div class="chart" id="price-host">
+      <svg id="price"></svg>
+      <div class="tt" id="price-tt"></div>
+    </div>
+    <figcaption>위 차트와 같은 가로축이다. 가격을 같은 그림에 겹치지 않는 이유는
+    축이 둘이 되면 없는 상관을 만들어 내기 때문이다 — 눈으로 위아래를 비교하는 것이 맞다.</figcaption>
+  </figure>
+</section>
+
+<!-- ============ 성적표 ============ -->
+<section id="scorecard">
+  <div class="sechead">
+    <p class="eyebrow"><em>03</em> — 성적표</p>
+    <h2>이 지표의 성적은 수익률이 아니다</h2>
+    <p>위치 게이지의 성적은 하나뿐이다. <strong>네 번의 사이클 고점에서 고점 쪽을 가리켰는가,
+    네 번의 저점에서 저점 쪽을 가리켰는가.</strong> 여덟 번 중 한 번도 뒤집히지 않았다.</p>
+  </div>
+
+  <figure class="panel">
+    <div class="chart" id="tp-host">
+      <svg id="tp"></svg>
+      <div class="tt" id="tp-tt"></div>
+    </div>
+    <figcaption id="tp-cap"></figcaption>
+  </figure>
+
+  <div class="tblwrap" style="margin-top:16px">
+    <table id="tp-table">
+      <caption>전환점 8곳의 계열별 점수 — 위 차트와 같은 데이터의 표 보기</caption>
+      <thead><tr>
+        <th>국면</th><th>날짜</th><th>가격</th><th>BCS 구간</th><th>대표값</th>
+        <th>폭</th><th>밸류에이션</th><th>가격·추세</th><th>공급·채굴</th>
+      </tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ 구성 ============ -->
+<section id="composition">
+  <div class="sechead">
+    <p class="eyebrow"><em>04</em> — 구성</p>
+    <h2>계열 3개로 접었다</h2>
+    <p>원문 12개 지표를 <strong>"계산 재료가 같으면 한 개로 센다"</strong>는 규칙으로 접으면
+    정보원이 3개만 남는다. 각 계열이 −1 ~ +1 을 내고, 가중합이 BCS 다.</p>
+  </div>
+
+  <div class="cols" id="famcards"></div>
+
+  <figure class="panel" style="margin-top:16px">
+    <div class="chart-head">
+      <h3>계열별 점수 — 최근 4년</h3>
+      <div class="legend" id="fam-legend"></div>
+    </div>
+    <div class="chart" id="fam-host">
+      <svg id="fam"></svg>
+      <div class="tt" id="fam-tt"></div>
+    </div>
+    <figcaption>세 계열이 한꺼번에 같은 방향으로 가야 실행이 열린다(합의 게이트).
+    가격 계열은 하나뿐이라 <strong>혼자서는 절대 2개를 채울 수 없다</strong> — 가격 이동평균 4종이
+    강세장 후반에 함께 붉어지는 착시를 산술적으로 막는다.</figcaption>
+  </figure>
+</section>
+
+<!-- ============ 불확실성 ============ -->
+<section id="uncertainty">
+  <div class="sechead">
+    <p class="eyebrow"><em>05</em> — 불확실성</p>
+    <h2>이 숫자를 어디까지 믿어도 되는가</h2>
+    <p>구간의 폭은 지표를 하나씩 빼고 다시 계산한 값들의 범위다.
+    <strong>새 파라미터가 하나도 없다</strong> — "±10 정도로 보라"는 상수를 박으면 그 10이 또 하나의
+    조정 숫자가 되기 때문에, 데이터가 스스로 폭을 정하게 했다.</p>
+  </div>
+
+  <figure class="panel">
+    <div class="chart-head"><h3>16년 전 구간의 구간 폭 분포</h3></div>
+    <div class="chart" id="width-host"><svg id="width"></svg></div>
+    <figcaption id="width-cap"></figcaption>
+  </figure>
+
+  <div class="callout">
+    <p><strong>절반이 조금 안 되는 날만 구간이 한 밴드 안에 들어온다.</strong>
+    나머지 날은 "저평가"와 "깊은 저평가" 사이처럼 두 국면에 걸쳐 있다. 소수점을 근거로 행동을 바꾸면
+    안 된다는 경고가 숫자로 나온 것이고, 그게 이 표시 방식을 고른 이유다.</p>
+  </div>
+</section>
+
+<!-- ============ 구조 ============ -->
+<section id="structure">
+  <div class="sechead">
+    <p class="eyebrow"><em>06</em> — 구조</p>
+    <h2>점수 안에 있는 것과 밖에 있는 것</h2>
+    <p>못 믿을 숫자를 점수에 넣으면 위치값이 오염된다. 그래서 경계를 분명히 그었다.</p>
+  </div>
+
+  <div class="panel">
+    <dl class="defs">
+      <dt>점수 안</dt>
+      <dd>지표 9개 · 계열 3개 · 4년 퍼센타일 정규화. 이것만이 BCS 를 만든다.</dd>
+      <dt>합의 게이트</dt>
+      <dd>계열 2개 이상이 같은 방향, 그중 <strong>최소 1개는 가격 계열이 아닐 것.</strong>
+      통과하지 못하면 사다리 실행이 열리지 않는다.</dd>
+      <dt>커버리지</dt>
+      <dd>결측이 있으면 남은 계열로 가중치를 재정규화하고, 60% 미만이면 실행을 금지한다.</dd>
+      <dt>표시 전용</dt>
+      <dd>저점 프로파일 5개 · 고점 프로파일 5개 · 바닥선 4개 · 반감기 이후 경과일.
+      4개 사이클에서 뽑은 임계라 신뢰할 수 없어서 <strong>화면에만 띄우고 점수에 넣지 않는다.</strong></dd>
+      <dt>별도 축</dt>
+      <dd>LRS(유동성 레짐)는 BCS 에 섞지 않는다. 실행의 <em>방향</em>이 아니라
+      <em>크기</em>만 0.75 ~ 1.25배로 조절한다.</dd>
+      <dt>실행 껍데기</dt>
+      <dd id="def-ladder"></dd>
+    </dl>
+  </div>
+
+  <div class="panel" style="margin-top:16px">
+    <h3 style="margin-bottom:12px">고쳐지지 않는 한계</h3>
+    <ul class="notes">
+      <li><strong>조정 가능한 숫자 269개 대 유효 사이클 4개.</strong> 파라미터를 줄여도 사이클이
+      네 번뿐이라는 사실은 바뀌지 않는다. 그래서 표본을 실제로 늘리는 유일한 방법 —
+      라이트코인·이더리움에 같은 설정을 적용해 전환점 21곳을 봤고 76.2% 를 잡았다.</li>
+      <li><strong>고점 탐지력이 사이클마다 약해진다.</strong> 네 고점에서의 4년 퍼센타일이
+      Puell +0.99 → +1.00 → +0.46 → −0.00 으로 무너졌다. 대체 후보 21개를 검정했지만
+      점수 지표로 쓸 만한 것은 없었다.</li>
+      <li><strong>계열이 완전히 독립은 아니다.</strong> 밸류에이션↔가격 상관 +0.83.
+      합의 게이트가 계열 독립을 전제하므로 이 값이 0.85 를 넘으면 게이트를 다시 설계해야 한다.</li>
+      <li><strong>실현시총이 유일한 단일 장애점이다.</strong> 유통량·발행량·시가총액은 반감기
+      스케줄로 계산되지만, 실현시총만은 체인 전체를 훑어야 나오고 무료 경로가 2개뿐이다.
+      막히면 밸류에이션 계열 40 중 서멀캡만 남는다.</li>
+      <li><strong>세 자산 모두 같은 15년의 같은 거시 환경을 겪었다.</strong> 제로금리 없는 세계에서
+      4년 사이클이 유지될지는 어떤 데이터도 말해 주지 않는다. 그래서 코어 40% 는 어떤 신호에도
+      팔지 않는다.</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <p id="foot-derive"></p>
+  <p style="margin-top:10px">이 페이지는 개인 기록과 정보 제공을 목적으로 하며 투자 자문이 아닙니다.
+  모든 투자 판단과 그 결과에 대한 책임은 투자자 본인에게 있습니다.</p>
+</footer>
+
+</div>
+
+<script>window.__BCS__ = /*__DATA__*/null/*__DATA__*/;</script>
+<script>
+(function(){
+"use strict";
+const D = window.__BCS__;
+const S = D.S;                                   // [dayOffset, price, bcs, low, high, fv, fp, fs, gate, nmiss]
+const BASE = new Date(D.base + "T00:00:00Z");
+const DAY = 86400000;
+const dateOf = o => new Date(BASE.getTime() + o * DAY);
+const iso = d => d.toISOString().slice(0, 10);
+const fmtD = s => s.slice(0, 7).replace("-", ".");
+const nf = (v, d) => (v === null || v === undefined) ? "—"
+  : (v >= 0 ? "+" : "") + v.toFixed(d);
+const money = v => "$" + Math.round(v).toLocaleString("en-US");
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+
+// 밴드 → 배경 washes. 0 위는 따뜻하게, 아래는 차갑게 (과열 ↔ 항복).
+const WASH = {
+  euphoria:"--wash-warm-3", distribution:"--wash-warm-2", upper_neutral:"--wash-warm-1",
+  neutral:"--wash-neutral",
+  accumulation:"--wash-cool-1", deep_value:"--wash-cool-2", capitulation:"--wash-cool-3"
+};
+const BANDS = D.bands.slice().sort((a,b)=>a.min-b.min);
+const bandOf = v => D.bands.find(b => v >= b.min && v < b.max) || D.bands[0];
+const labelOf = k => (D.bands.find(b=>b.key===k)||{}).label || k;
+const FAMC = ["--s1","--s2","--s3"];
+
+// 눈금 라벨은 폭에 맞춰 줄인다. 라벨끼리 붙어 버리면 축을 못 읽는다 —
+// 겹친 라벨은 없는 라벨보다 나쁘다.
+const ALL_TICKS = [-100,-70,-45,-20,0,20,45,70,100];
+function tickSet(iw){
+  if (iw >= 460) return ALL_TICKS;
+  if (iw >= 300) return [-100,-45,0,45,100];
+  return [-100,0,100];
+}
+
+const SVGNS = "http://www.w3.org/2000/svg";
+function el(tag, attrs, parent){
+  const n = document.createElementNS(SVGNS, tag);
+  for (const k in attrs) if (attrs[k] !== null && attrs[k] !== undefined) n.setAttribute(k, attrs[k]);
+  if (parent) parent.appendChild(n);
+  return n;
+}
+function txt(parent, x, y, s, o){
+  o = o || {};
+  const t = el("text", {x:x, y:y, fill:o.fill || "var(--muted)",
+    "font-size":o.size || 10.5, "font-weight":o.weight || 400,
+    "text-anchor":o.anchor || "start", "font-family":o.mono===false?"var(--sans)":"var(--mono)",
+    "letter-spacing":o.ls || 0, "dominant-baseline":o.base || "auto"}, parent);
+  t.textContent = s;
+  if (o.tabular !== false) t.style.fontVariantNumeric = "tabular-nums";
+  return t;
+}
+function clear(svg){ while (svg.firstChild) svg.removeChild(svg.firstChild); }
+
+/* =====================================================================
+   01. 계기판 — 눈금이 그려진 자
+   ===================================================================== */
+function drawGauge(){
+  const host = document.getElementById("gauge-host");
+  const svg = document.getElementById("gauge");
+  const W = host.clientWidth || 900;
+  const H = 132;
+  const PL = 4, PR = 4;
+  const iw = W - PL - PR;
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+  svg.setAttribute("height", H);
+  clear(svg);
+
+  const x = v => PL + (v + 100) / 200 * iw;
+  const barY = 34, barH = 40;
+  const c = D.current;
+
+
+  // 밴드 구획 — 사이에 2px 표면 간격.
+  // 현재 구간이 덮는 구획의 라벨은 지운다. 안 지우면 브래킷과 점이 글자 위에
+  // 얹혀 "●은 저평가" 처럼 읽힌다 — 잘린 라벨은 없는 라벨보다 나쁘다.
+  const ivLo = Math.min(c.low, c.high), ivHi = Math.max(c.low, c.high);
+  BANDS.forEach(b => {
+    const x0 = x(b.min), x1 = x(b.max);
+    el("rect", {x:x0+1, y:barY, width:Math.max(0,x1-x0-2), height:barH,
+      fill:`var(${WASH[b.key]})`}, svg);
+    const w = x1 - x0 - 12;
+    const cx = (x0+x1)/2, half = b.label.length * 6.2;
+    const hidden = (cx + half > x(ivLo) - 4) && (cx - half < x(ivHi) + 4);
+    if (w > 52 && !hidden)
+      txt(svg, cx, barY+barH/2+1, b.label,
+        {anchor:"middle", size:11, fill:"var(--ink-2)", weight:600, mono:false, base:"middle"});
+  });
+  el("rect", {x:x(-100)+1, y:barY, width:iw-2, height:barH, fill:"none",
+    stroke:"var(--rule)", "stroke-width":1}, svg);
+
+  // 0 기준선
+  el("line", {x1:x(0), y1:barY-6, x2:x(0), y2:barY+barH+6,
+    stroke:"var(--zero)", "stroke-width":1}, svg);
+
+  // 눈금 — 밴드 경계는 길게, 5점마다 짧게. 라벨은 폭에 맞춰 줄인다.
+  const labelled = tickSet(iw);
+  for (let v=-100; v<=100; v+=5){
+    if (ALL_TICKS.indexOf(v) >= 0) continue;
+    el("line", {x1:x(v), y1:barY+barH, x2:x(v), y2:barY+barH+4,
+      stroke:"var(--axis)", "stroke-width":1, opacity:.55}, svg);
+  }
+  ALL_TICKS.forEach(v => {
+    el("line", {x1:x(v), y1:barY+barH, x2:x(v), y2:barY+barH+9,
+      stroke:"var(--axis)", "stroke-width":1}, svg);
+    if (labelled.indexOf(v) >= 0)
+      txt(svg, x(v), barY+barH+23, (v>0?"+":"") + v,
+        {anchor:v<=-100?"start":(v>=100?"end":"middle"), size:10.5});
+  });
+
+  // 사다리 계단 — 실행 껍데기는 작게, 눈금 밑에
+  const lad = [].concat(
+    D.ladders.accumulate.map(s=>({v:s.bcs, kind:"acc"})),
+    D.ladders.distribute.map(s=>({v:s.bcs, kind:"dist"})));
+  lad.forEach(s => {
+    el("path", {d:`M${x(s.v)-3.5},${barY+barH+31} L${x(s.v)+3.5},${barY+barH+31} L${x(s.v)},${barY+barH+26} Z`,
+      fill:s.kind==="acc" ? "var(--cool-2)" : "var(--warm-2)", opacity:.55}, svg);
+  });
+  txt(svg, x(-100), barY+barH+45, "◀ 매집 계단 5", {size:10, fill:"var(--muted)", ls:".05em"});
+  txt(svg, x(100), barY+barH+45, "분배 계단 5 ▶", {size:10, fill:"var(--muted)", ls:".05em", anchor:"end"});
+
+  // 현재 구간 — 자 위에 놓인 브래킷
+  const gx0 = x(c.low), gx1 = x(c.high), gp = x(c.bcs);
+  const bTop = barY - 20;
+  const accent = c.bcs >= 0 ? "var(--warm-3)" : "var(--cool-3)";
+  el("rect", {x:gx0, y:barY-3, width:Math.max(2,gx1-gx0), height:barH+6,
+    fill:accent, opacity:.16}, svg);
+  [gx0, gx1].forEach(px => {
+    el("line", {x1:px, y1:bTop, x2:px, y2:barY+barH+3, stroke:accent, "stroke-width":2}, svg);
+  });
+  el("line", {x1:gx0, y1:bTop, x2:gx1, y2:bTop, stroke:accent, "stroke-width":2}, svg);
+  el("circle", {cx:gp, cy:barY+barH/2, r:5.5, fill:accent, stroke:"var(--surface)", "stroke-width":2}, svg);
+  txt(svg, (gx0+gx1)/2, bTop-9, "지금", {anchor:"middle", size:10.5, fill:accent, weight:600, ls:".14em"});
+}
+
+/* =====================================================================
+   02. 16년 이력 — 구간 리본
+   ===================================================================== */
+const xsShared = {};      // 이력·가격 차트가 같은 가로축을 쓴다
+function timeScale(iw, PL){
+  const d0 = S[0][0], d1 = S[S.length-1][0];
+  return v => PL + (v - d0) / (d1 - d0) * iw;
+}
+function yearTicks(){
+  // 범위 밖 눈금을 그리면 축 왼쪽 바깥에 연도가 떠 있게 된다.
+  const d0 = S[0][0], d1 = S[S.length-1][0];
+  const out = [];
+  const y0 = dateOf(d0).getUTCFullYear(), y1 = dateOf(d1).getUTCFullYear();
+  for (let y = y0; y <= y1; y += 2){
+    const off = (Date.UTC(y,0,1) - BASE.getTime()) / DAY;
+    if (off >= d0 && off <= d1) out.push({y:y, off:off});
+  }
+  return out;
+}
+
+function drawHist(){
+  const host = document.getElementById("hist-host");
+  const svg = document.getElementById("hist");
+  const W = host.clientWidth || 900;
+  const H = Math.max(300, Math.min(400, W * 0.40));
+  const PL = 40, PR = 16, PT = 12, PB = 30;
+  const iw = W - PL - PR, ih = H - PT - PB;
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.setAttribute("height", H);
+  clear(svg);
+
+  const X = timeScale(iw, PL);  xsShared.X = X; xsShared.iw = iw; xsShared.PL = PL; xsShared.PR = PR;
+  const Y = v => PT + (100 - v) / 200 * ih;
+
+  // 밴드 배경
+  BANDS.forEach(b => el("rect", {x:PL, y:Y(b.max), width:iw, height:Math.max(0,Y(b.min)-Y(b.max)),
+    fill:`var(${WASH[b.key]})`}, svg));
+  // 밴드 경계 hairline
+  [-70,-45,-20,20,45,70].forEach(v =>
+    el("line", {x1:PL, y1:Y(v), x2:PL+iw, y2:Y(v), stroke:"var(--grid)", "stroke-width":1}, svg));
+  el("line", {x1:PL, y1:Y(0), x2:PL+iw, y2:Y(0), stroke:"var(--zero)", "stroke-width":1}, svg);
+  [-100,-70,-45,-20,0,20,45,70,100].forEach(v =>
+    txt(svg, PL-7, Y(v)+3, (v>0?"+":"")+v, {anchor:"end", size:10}));
+
+  // 반감기 세로선
+  D.halvings.forEach(h => {
+    const off = (new Date(h+"T00:00:00Z").getTime() - BASE.getTime()) / DAY;
+    if (off < S[0][0] || off > S[S.length-1][0]) return;
+    el("line", {x1:X(off), y1:PT, x2:X(off), y2:PT+ih, stroke:"var(--axis)",
+      "stroke-width":1, "stroke-opacity":.5}, svg);
+    txt(svg, X(off)+4, PT+11, "반감기", {size:9.5, fill:"var(--muted)", ls:".08em"});
+  });
+
+  // 연도 눈금
+  yearTicks().forEach(t => txt(svg, X(t.off), H-9, String(t.y), {anchor:"middle", size:10}));
+
+  // 구간 리본
+  let up = "", dn = "";
+  S.forEach((r,i) => { up += (i?" L":"M") + X(r[0]) + "," + Y(r[4]); });
+  for (let i=S.length-1; i>=0; i--) dn += " L" + X(S[i][0]) + "," + Y(S[i][3]);
+  el("path", {d:up+dn+" Z", fill:"var(--cool-2)", opacity:.30}, svg);
+
+  // 대표값
+  let mid = "";
+  S.forEach((r,i) => { mid += (i?" L":"M") + X(r[0]) + "," + Y(r[2]); });
+  el("path", {d:mid, fill:"none", stroke:"var(--ink)", "stroke-width":1.6,
+    "stroke-linejoin":"round"}, svg);
+
+  // 전환점
+  D.tps.forEach(t => {
+    const off = (new Date(t.d+"T00:00:00Z").getTime() - BASE.getTime()) / DAY;
+    const top = t.phase === "top";
+    const col = top ? "var(--warm-3)" : "var(--cool-3)";
+    el("circle", {cx:X(off), cy:Y(t.bcs), r:4.5, fill:col,
+      stroke:"var(--surface)", "stroke-width":2}, svg);
+    txt(svg, X(off), Y(t.bcs) + (top ? -12 : 18), nf(t.bcs,0),
+      {anchor:"middle", size:10.5, fill:col, weight:600});
+  });
+
+  attachCrosshair(svg, "hist-tt", host, X, PL, iw, PT, ih, r => ([
+    ["BCS 구간", nf(r[3],1) + " ~ " + nf(r[4],1)],
+    ["대표값", nf(r[2],1)],
+    ["밴드", labelOf(bandOf(r[2]).key)],
+    ["가격", money(r[1])]
+  ]));
+
+  const st = D.stats;
+  document.getElementById("hist-cap").textContent =
+    `주 1회로 추린 ${S.length}점 (전환점 주변과 최근 400일은 일 단위). 전 구간 ${st.n}일의 ` +
+    `구간 폭은 중위 ${st.median}점, 평균 ${st.mean}점이다. 리본이 좁은 구간은 지표 9개가 서로 ` +
+    `동의하는 구간이고, 넓은 구간은 한두 지표가 판정을 끌고 가는 구간이다.`;
+}
+
+function drawPrice(){
+  const host = document.getElementById("price-host");
+  const svg = document.getElementById("price");
+  const W = host.clientWidth || 900;
+  const H = Math.max(150, Math.min(220, W * 0.20));
+  const PL = 40, PR = 16, PT = 10, PB = 26;
+  const iw = W - PL - PR, ih = H - PT - PB;
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.setAttribute("height", H);
+  clear(svg);
+
+  const X = timeScale(iw, PL);
+  const lo = Math.log10(Math.max(0.05, Math.min.apply(null, S.map(r=>r[1]))));
+  const hi = Math.log10(Math.max.apply(null, S.map(r=>r[1])));
+  const Y = v => PT + (hi - Math.log10(Math.max(0.05,v))) / (hi - lo) * ih;
+
+  for (let e = Math.ceil(lo); e <= Math.floor(hi); e++){
+    el("line", {x1:PL, y1:Y(Math.pow(10,e)), x2:PL+iw, y2:Y(Math.pow(10,e)),
+      stroke:"var(--grid)", "stroke-width":1}, svg);
+    txt(svg, PL-7, Y(Math.pow(10,e))+3,
+      e>=3 ? "$"+Math.pow(10,e-3)+"k" : "$"+Math.pow(10,e), {anchor:"end", size:10});
+  }
+  yearTicks().forEach(t => txt(svg, X(t.off), H-8, String(t.y), {anchor:"middle", size:10}));
+
+  let p = "";
+  S.forEach((r,i) => { p += (i?" L":"M") + X(r[0]) + "," + Y(r[1]); });
+  el("path", {d:p, fill:"none", stroke:"var(--ink-2)", "stroke-width":1.4,
+    "stroke-linejoin":"round"}, svg);
+
+  D.tps.forEach(t => {
+    const off = (new Date(t.d+"T00:00:00Z").getTime() - BASE.getTime()) / DAY;
+    el("circle", {cx:X(off), cy:Y(t.price), r:4, fill:t.phase==="top"?"var(--warm-3)":"var(--cool-3)",
+      stroke:"var(--surface)", "stroke-width":2}, svg);
+  });
+
+  attachCrosshair(svg, "price-tt", host, X, PL, iw, PT, ih, r => ([
+    ["가격", money(r[1])], ["BCS", nf(r[2],1)]
+  ]));
+}
+
+/* =====================================================================
+   03. 전환점 성적표
+   ===================================================================== */
+function drawTP(){
+  const host = document.getElementById("tp-host");
+  const svg = document.getElementById("tp");
+  const W = host.clientWidth || 900;
+  const rowH = W < 520 ? 34 : 30;
+  // 라벨은 전용 칼럼에 넣는다. 구간 끝 옆에 붙이면 저점 쪽 값이 왼쪽 행 라벨과
+  // 겹쳐 "저점 15.01" 과 "-98.2" 가 한 덩어리로 읽힌다 — 겹친 라벨은 없는
+  // 라벨보다 나쁘다.
+  const narrow = W < 520;
+  const PL = narrow ? 74 : 96, PR = narrow ? 62 : 78;
+  const PT = 54, PB = 46;
+  const H = PT + PB + rowH * D.tps.length;
+  const iw = W - PL - PR;
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.setAttribute("height", H);
+  clear(svg);
+
+  const x = v => PL + (v + 100) / 200 * iw;
+  const bandTop = PT - 8, bandBot = H - PB + 8;
+
+  BANDS.forEach(b => el("rect", {x:x(b.min), y:bandTop, width:Math.max(0,x(b.max)-x(b.min)),
+    height:bandBot-bandTop, fill:`var(${WASH[b.key]})`}, svg));
+  el("line", {x1:x(0), y1:bandTop, x2:x(0), y2:bandBot, stroke:"var(--zero)", "stroke-width":1}, svg);
+
+  ALL_TICKS.forEach(v => {
+    el("line", {x1:x(v), y1:bandTop-4, x2:x(v), y2:bandTop,
+      stroke:"var(--axis)", "stroke-width":1, opacity:.6}, svg);
+    el("line", {x1:x(v), y1:bandBot, x2:x(v), y2:bandBot+4,
+      stroke:"var(--axis)", "stroke-width":1, opacity:.6}, svg);
+  });
+  tickSet(iw).forEach(v => {
+    txt(svg, x(v), 18, (v>0?"+":"")+v, {anchor:"middle", size:10});
+    txt(svg, x(v), H-14, (v>0?"+":"")+v, {anchor:"middle", size:10});
+  });
+
+  const tops = D.tps.filter(t=>t.phase==="top").map(t=>t.bcs);
+  const bots = D.tps.filter(t=>t.phase==="bottom").map(t=>t.bcs);
+  const gapLo = Math.max.apply(null, bots), gapHi = Math.min.apply(null, tops);
+
+  // 고점 최저와 저점 최고 사이의 빈 공간 — 이 지표의 핵심 증거다
+  el("rect", {x:x(gapLo), y:bandTop, width:x(gapHi)-x(gapLo), height:bandBot-bandTop,
+    fill:"none", stroke:"var(--ink)", "stroke-width":1, "stroke-opacity":.22}, svg);
+  txt(svg, (x(gapLo)+x(gapHi))/2, 40,
+    narrow ? `빈 공간 ${(gapHi-gapLo).toFixed(0)}점` : `한 번도 겹치지 않은 ${(gapHi-gapLo).toFixed(0)}점`,
+    {anchor:"middle", size:11, fill:"var(--ink)", weight:600, ls:".02em", mono:false});
+
+  D.tps.forEach((t,i) => {
+    const y = PT + rowH*i + rowH/2;
+    const top = t.phase==="top";
+    const col = top ? "var(--warm-3)" : "var(--cool-3)";
+    txt(svg, PL-14, y+3.5, (top?"고점":"저점") + "  " + t.d.slice(2,7).replace("-","."),
+      {anchor:"end", size:narrow?10.5:11, fill:"var(--ink-2)", weight:600});
+    el("line", {x1:x(t.low), y1:y, x2:x(t.high), y2:y, stroke:col, "stroke-width":6,
+      "stroke-linecap":"butt", opacity:.34}, svg);
+    [t.low, t.high].forEach(v =>
+      el("line", {x1:x(v), y1:y-7, x2:x(v), y2:y+7, stroke:col, "stroke-width":2}, svg));
+    el("circle", {cx:x(t.bcs), cy:y, r:4.5, fill:col, stroke:"var(--surface)", "stroke-width":2}, svg);
+    // 값 칼럼
+    txt(svg, W-6, y+3.5, nf(t.bcs,1),
+      {anchor:"end", size:narrow?11:11.5, fill:col, weight:600});
+  });
+
+  // 현재 위치
+  const c = D.current;
+  el("line", {x1:x(c.bcs), y1:bandTop, x2:x(c.bcs), y2:bandBot,
+    stroke:"var(--ink)", "stroke-width":1.5, "stroke-opacity":.5}, svg);
+  txt(svg, x(c.bcs), bandBot+14, "지금 " + nf(c.bcs,0),
+    {anchor:"middle", size:10.5, fill:"var(--ink)", weight:600, ls:".06em"});
+
+  const mean = a => a.reduce((s,v)=>s+v,0)/a.length;
+  const sd = a => Math.sqrt(mean(a.map(v=>Math.pow(v-mean(a),2))));
+  document.getElementById("tp-cap").textContent =
+    `고점 4개 평균 ${nf(mean(tops),1)} (σ ${sd(tops).toFixed(1)}), ` +
+    `저점 4개 평균 ${nf(mean(bots),1)} (σ ${sd(bots).toFixed(1)}). ` +
+    `가장 낮은 고점 ${nf(gapHi,1)} 과 가장 높은 저점 ${nf(gapLo,1)} 사이에 ` +
+    `${(gapHi-gapLo).toFixed(0)}점의 빈 공간이 있다 — 여덟 번 중 한 번도 혼동하지 않았다. ` +
+    `2021·2025 고점의 구간이 넓고 아래로 처진 것이 이 지표의 알려진 약점이다: ` +
+    `사이클마다 고점 탐지력이 약해지고 있다.`;
+
+  const tb = document.querySelector("#tp-table tbody");
+  tb.innerHTML = "";
+  const byDate = {};
+  S.forEach(r => { byDate[iso(dateOf(r[0]))] = r; });
+  D.tps.forEach(t => {
+    const r = byDate[t.d] || [];
+    const tr = document.createElement("tr");
+    tr.innerHTML =
+      `<td>${t.phase==="top"?"고점":"저점"}</td><td>${t.d}</td><td>${money(t.price)}</td>` +
+      `<td>${nf(t.low,1)} ~ ${nf(t.high,1)}</td><td>${nf(t.bcs,1)}</td>` +
+      `<td>${(t.high-t.low).toFixed(1)}</td>` +
+      `<td>${nf(r[5],2)}</td><td>${nf(r[6],2)}</td><td>${nf(r[7],2)}</td>`;
+    tb.appendChild(tr);
+  });
+  const c2 = D.current;
+  const tr = document.createElement("tr");
+  tr.className = "hi";
+  tr.innerHTML = `<td>지금</td><td>${c2.d}</td><td>${money(c2.price)}</td>` +
+    `<td>${nf(c2.low,1)} ~ ${nf(c2.high,1)}</td><td>${nf(c2.bcs,1)}</td>` +
+    `<td>${(c2.high-c2.low).toFixed(1)}</td>` +
+    `<td>${nf(c2.fam.valuation,2)}</td><td>${nf(c2.fam.price,2)}</td><td>${nf(c2.fam.supply,2)}</td>`;
+  tb.appendChild(tr);
+}
+
+/* =====================================================================
+   04. 계열
+   ===================================================================== */
+function famCards(){
+  const host = document.getElementById("famcards");
+  host.innerHTML = "";
+  const cur = D.current.fam;
+  D.families.forEach((f, i) => {
+    const v = cur[f.key];
+    const div = document.createElement("div");
+    div.className = "famcard";
+    div.innerHTML =
+      `<div class="top"><h3><span class="sw" style="background:var(${FAMC[i]})"></span>${f.label}</h3>` +
+      `<span class="w">${f.weight}</span></div>` +
+      `<div class="agg">집계 <b>${f.aggregate === "max_abs" ? "MAX_ABS" : "MEAN"}</b> — ` +
+      `${f.aggregate === "max_abs" ? "가장 극단인 하나만" : "구성 지표의 평균"}</div>` +
+      `<ul>${f.members.map(m => `<li><span>${m}</span></li>`).join("")}</ul>` +
+      `<div class="score"><span>지금 점수</span><b>${nf(v,2)}</b></div>`;
+    host.appendChild(div);
+  });
+  document.getElementById("fam-legend").innerHTML = D.families.map((f,i) =>
+    `<span><i style="background:var(${FAMC[i]})"></i>${f.label} <b>${nf(cur[f.key],2)}</b></span>`).join("");
+}
+
+function drawFam(){
+  const host = document.getElementById("fam-host");
+  const svg = document.getElementById("fam");
+  const W = host.clientWidth || 900;
+  const H = Math.max(200, Math.min(280, W * 0.26));
+  const PL = 40, PR = 88, PT = 14, PB = 26;
+  const iw = W - PL - PR, ih = H - PT - PB;
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.setAttribute("height", H);
+  clear(svg);
+
+  const cutoff = S[S.length-1][0] - 1461;
+  const rows = S.filter(r => r[0] >= cutoff);
+  const d0 = rows[0][0], d1 = rows[rows.length-1][0];
+  const X = v => PL + (v - d0) / (d1 - d0) * iw;
+  const Y = v => PT + (1 - v) / 2 * ih;
+
+  [-1,-0.5,0,0.5,1].forEach(v => {
+    el("line", {x1:PL, y1:Y(v), x2:PL+iw, y2:Y(v),
+      stroke: v===0 ? "var(--zero)" : "var(--grid)", "stroke-width":1}, svg);
+    txt(svg, PL-7, Y(v)+3, nf(v,1), {anchor:"end", size:10});
+  });
+  const yr0 = dateOf(d0).getUTCFullYear();
+  for (let y = yr0; y <= dateOf(d1).getUTCFullYear(); y++){
+    const off = (Date.UTC(y,0,1) - BASE.getTime()) / DAY;
+    if (off < d0 || off > d1) continue;
+    el("line", {x1:X(off), y1:PT, x2:X(off), y2:PT+ih, stroke:"var(--grid)", "stroke-width":1}, svg);
+    txt(svg, X(off), H-8, String(y), {anchor:"middle", size:10});
+  }
+
+  const ends = [];
+  D.families.forEach((f, i) => {
+    const idx = 5 + i;
+    let p = "", started = false, lastPt = null;
+    rows.forEach(r => {
+      const v = r[idx];
+      if (v === null || v === undefined){ started = false; return; }
+      p += (started ? " L" : "M") + X(r[0]) + "," + Y(v);
+      started = true; lastPt = [X(r[0]), Y(v), v];
+    });
+    el("path", {d:p, fill:"none", stroke:`var(${FAMC[i]})`, "stroke-width":2,
+      "stroke-linejoin":"round"}, svg);
+    if (lastPt){
+      el("circle", {cx:lastPt[0], cy:lastPt[1], r:3.5, fill:`var(${FAMC[i]})`,
+        stroke:"var(--surface)", "stroke-width":2}, svg);
+      ends.push({y:lastPt[1], label:f.label, color:`var(${FAMC[i]})`});
+    }
+  });
+  // 끝 라벨을 최소 15px 간격으로 밀어낸다. 세 계열이 −0.59 / −0.65 처럼 붙어
+  // 있으면 그냥 그리면 글자가 서로 올라탄다.
+  ends.sort((a,b) => a.y - b.y);
+  for (let i = 1; i < ends.length; i++)
+    if (ends[i].y - ends[i-1].y < 15) ends[i].y = ends[i-1].y + 15;
+  ends.forEach(e => txt(svg, PL+iw+10, e.y+3.5, e.label,
+    {size:11, fill:e.color, weight:600, mono:false}));
+
+  attachCrosshair(svg, "fam-tt", host, X, PL, iw, PT, ih, r => ([
+    ["밸류에이션", nf(r[5],2)], ["가격·추세", nf(r[6],2)],
+    ["공급·채굴", nf(r[7],2)], ["BCS", nf(r[2],1)],
+    ["합의 게이트", r[8] ? "통과" : "미달"]
+  ]), rows);
+}
+
+/* =====================================================================
+   05. 구간 폭 분포
+   ===================================================================== */
+function drawWidth(){
+  const host = document.getElementById("width-host");
+  const svg = document.getElementById("width");
+  const W = host.clientWidth || 900;
+  const H = 168;
+  const PL = 16, PR = 16, PT = 40, PB = 46;
+  const iw = W - PL - PR;
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.setAttribute("height", H);
+  clear(svg);
+
+  const st = D.stats;
+  const maxW = 40;      // p90 가 34.4 다. 80 까지 그리면 절반이 빈 칸이 된다.
+
+  const x = v => PL + Math.min(1, v / maxW) * iw;
+  const y = PT, h = H - PT - PB;
+
+  el("line", {x1:PL, y1:y+h, x2:PL+iw, y2:y+h, stroke:"var(--axis)", "stroke-width":1}, svg);
+  for (let v=0; v<=maxW; v+=5){
+    el("line", {x1:x(v), y1:y+h, x2:x(v), y2:y+h+5, stroke:"var(--axis)", "stroke-width":1}, svg);
+    txt(svg, x(v), y+h+19, String(v), {anchor:"middle", size:10});
+  }
+  txt(svg, PL+iw/2, H-8, "구간 폭 (BCS 점수)", {anchor:"middle", size:10, ls:".1em"});
+
+  // p10–p90 상자, p25–p75 진한 상자, 중위선
+  el("rect", {x:x(st.p10), y:y+h*0.30, width:x(st.p90)-x(st.p10), height:h*0.40,
+    fill:"var(--cool-2)", opacity:.16}, svg);
+  el("rect", {x:x(st.p25), y:y+h*0.18, width:x(st.p75)-x(st.p25), height:h*0.64,
+    fill:"var(--cool-2)", opacity:.34}, svg);
+  el("line", {x1:x(st.median), y1:y+h*0.10, x2:x(st.median), y2:y+h*0.92,
+    stroke:"var(--ink)", "stroke-width":2}, svg);
+
+  const mark = (v, lab, dy) => {
+    el("line", {x1:x(v), y1:y-4, x2:x(v), y2:y+2, stroke:"var(--muted)", "stroke-width":1}, svg);
+    txt(svg, x(v), y-9+dy, lab, {anchor:"middle", size:10, fill:"var(--muted)"});
+  };
+  mark(st.p10, "p10 " + st.p10, 0);
+  mark(st.p25, "p25 " + st.p25, -13);
+  mark(st.p75, "p75 " + st.p75, -13);
+  mark(st.p90, "p90 " + st.p90, 0);
+  txt(svg, x(st.median), y+h*0.10-9, "중위 " + st.median,
+    {anchor:"middle", size:11, fill:"var(--ink)", weight:600});
+  txt(svg, PL+iw-2, y+h+19, "축 상한 " + maxW + " · p99 " + st.p99 + " · 최대 " + st.max,
+    {anchor:"end", size:10, fill:"var(--muted)"});
+
+  document.getElementById("width-cap").textContent =
+    `중위 ${st.median}점, 4분의 1은 ${st.p25}점보다 좁고 4분의 1은 ${st.p75}점보다 넓다. ` +
+    `상자는 p25–p75(진한 쪽)와 p10–p90 이고 가운데 선이 중위값이다. ` +
+    `구간이 한 밴드 안에 온전히 들어오는 날은 ${st.stable_days}/${st.n} = ${st.stable_pct}% 뿐이다.`;
+}
+
+/* =====================================================================
+   공용 — 크로스헤어 + 툴팁
+   ===================================================================== */
+function attachCrosshair(svg, ttId, host, X, PL, iw, PT, ih, rowsFn, rowsIn){
+  const rows = rowsIn || S;
+  const tt = document.getElementById(ttId);
+  const line = el("line", {x1:0, y1:PT, x2:0, y2:PT+ih, stroke:"var(--ink)",
+    "stroke-width":1, "stroke-opacity":0}, svg);
+  const hit = el("rect", {x:PL, y:PT, width:iw, height:ih, fill:"transparent",
+    style:"cursor:crosshair"}, svg);
+
+  function nearest(px){
+    let best = rows[0], bd = Infinity;
+    for (const r of rows){
+      const d = Math.abs(X(r[0]) - px);
+      if (d < bd){ bd = d; best = r; }
+    }
+    return best;
+  }
+  function move(ev){
+    const box = svg.getBoundingClientRect();
+    const scale = (svg.viewBox.baseVal.width || box.width) / box.width;
+    const px = (ev.clientX - box.left) * scale;
+    const r = nearest(px);
+    line.setAttribute("x1", X(r[0])); line.setAttribute("x2", X(r[0]));
+    line.setAttribute("stroke-opacity", .35);
+    tt.style.opacity = 1;
+    tt.innerHTML = `<div class="d">${iso(dateOf(r[0]))}</div>` +
+      rowsFn(r).map(p => `<div class="r"><span>${p[0]}</span><span>${p[1]}</span></div>`).join("");
+    const hb = host.getBoundingClientRect();
+    let left = ev.clientX - hb.left + 14;
+    if (left + tt.offsetWidth > hb.width) left = ev.clientX - hb.left - tt.offsetWidth - 14;
+    tt.style.left = Math.max(0, left) + "px";
+    tt.style.top = Math.max(0, ev.clientY - hb.top - tt.offsetHeight - 10) + "px";
+  }
+  hit.addEventListener("mousemove", move);
+  hit.addEventListener("mouseleave", () => {
+    tt.style.opacity = 0; line.setAttribute("stroke-opacity", 0);
+  });
+  hit.addEventListener("touchmove", ev => {
+    if (ev.touches[0]) move(ev.touches[0]);
+  }, {passive:true});
+}
+
+/* =====================================================================
+   헤더 · 스탯
+   ===================================================================== */
+function fillText(){
+  document.getElementById("src-span").textContent = D.span[0] + " → " + D.span[1];
+  document.getElementById("src-days").textContent = D.nDays.toLocaleString("en-US") + "일 · 지표 9개 · 계열 3개";
+
+  const c = D.current;
+  document.getElementById("ro-range").textContent = nf(c.low,0) + " ~ " + nf(c.high,0);
+  const bl = labelOf(c.band);
+  const bLo = labelOf(bandOf(c.low).key), bHi = labelOf(bandOf(c.high).key);
+  document.getElementById("ro-band").textContent = c.stable ? bl : bLo + " ~ " + bHi;
+  document.getElementById("ro-band").style.color = c.bcs >= 0 ? "var(--warm-3)" : "var(--cool-3)";
+  document.getElementById("ro-asof").textContent = "기준 " + c.d + " · " + money(c.price);
+
+  const st = D.stats;
+  const gate = c.gate;
+  const tiles = [
+    {k:"대표값", v:nf(c.bcs,1), n:"구간 중심이 아니라 지표 9개 전부로 계산한 값"},
+    {k:"구간 폭", v:(c.high-c.low).toFixed(1) + "점", n:`16년 중위 ${st.median}점 · ` +
+      (c.high-c.low < st.median ? "평소보다 좁다" : "평소보다 넓다")},
+    {k:"밴드 안정", v:c.stable ? "한 밴드" : "두 밴드", n:c.stable
+      ? "구간이 한 국면 안에 들어온다" : "구간이 국면 경계를 걸친다"},
+    {k:"커버리지", v:(c.cov*100).toFixed(0) + "%", n:c.nmiss ? `결측 ${c.nmiss}개` : "지표 9개 전부 산출"},
+    {k:"합의 게이트", v:gate ? "통과" : "미달", n:gate
+      ? "계열 2개 이상 동의, 비가격 포함" : "가격 계열 단독 — 실행 금지", chip:gate},
+    {k:"반감기 이후", v:c.dsh ? Math.round(c.dsh) + "일" : "—",
+      n:"고점은 반감기 후 367·526·548·534일에 나왔다"}
+  ];
+  document.getElementById("tiles").innerHTML = tiles.map(t => {
+    const col = t.chip === undefined ? "" :
+      ` style="color:${t.chip ? "var(--good)" : "var(--crit)"}"`;
+    return `<div class="tile"><div class="k">${t.k}</div>` +
+      `<div class="v"${col}>${t.v}</div><div class="n">${t.n}</div></div>`;
+  }).join("");
+
+  const L = D.ladders;
+  document.getElementById("def-ladder").innerHTML =
+    `분배 ${L.distribute.map(s=>nf(s.bcs,0)).join(" / ")} 에서 보유량의 ` +
+    `${L.distribute.map(s=>s.pct).join("/")}% — <strong>코어 ${L.core_hold_pct}% 는 어떤 신호에도 팔지 않는다.</strong> ` +
+    `매집 ${L.accumulate.map(s=>nf(s.bcs,0)).join(" / ")} 에서 예비현금의 ` +
+    `${L.accumulate.map(s=>s.pct).join("/")}%. 14일 간격, 확정 3일. ` +
+    `이건 위치값을 행동으로 옮길 때 한 번에 다 하지 않게 만드는 안전장치이고, 본체가 아니다.`;
+
+  const notes = D.deriveNotes || [];
+  const lat = D.latest;
+  let foot = "데이터는 CoinMetrics 커뮤니티 API. 외부에서 반드시 받아야 하는 시계열은 " +
+    "가격과 실현시총 둘뿐이고, 유통량·발행량·시가총액은 반감기 스케줄로 계산한다 " +
+    "(2015년 이후 실측 대비 평균오차 0.079%).";
+  if (notes.length) foot += " 이번 산출에서는 — " + notes.join(" / ") + ".";
+  if (lat && lat.d !== D.current.d)
+    foot += ` 마지막 행 ${lat.d} 은 실현시총 지연으로 지표 ${lat.nmiss}개가 결측이라 ` +
+      `헤드라인 기준일에서 제외했다 (그날 BCS ${nf(lat.bcs,1)}).`;
+  document.getElementById("foot-derive").textContent = foot;
+}
+
+/* ===================================================================== */
+function drawAll(){
+  drawGauge(); drawHist(); drawPrice(); drawTP(); drawFam(); drawWidth();
+}
+fillText(); famCards(); drawAll();
+
+let t = null;
+new ResizeObserver(() => {
+  clearTimeout(t); t = setTimeout(drawAll, 120);
+}).observe(document.querySelector(".wrap"));
+
+// 테마 토글 시 SVG 안의 var() 는 자동 반영되지만, 계산된 색을 쓴 곳이 없어도
+// 밴드 wash 가 바뀌므로 다시 그려 준다.
+const mo = new MutationObserver(() => setTimeout(drawAll, 30));
+mo.observe(document.documentElement, {attributes:true, attributeFilter:["data-theme"]});
+if (window.matchMedia) {
+  const mq = window.matchMedia("(prefers-color-scheme: dark)");
+  if (mq.addEventListener) mq.addEventListener("change", () => setTimeout(drawAll, 30));
+}
+})();
+</script>

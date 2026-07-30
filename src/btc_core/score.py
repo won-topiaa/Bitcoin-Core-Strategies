@@ -20,7 +20,7 @@ import math
 from typing import Mapping, Optional, Sequence
 
 from .config import StrategyConfig
-from .models import Consensus, FamilyScore, Reading
+from .models import BcsInterval, Consensus, FamilyScore, Reading
 from .normalize import blend, categorical, clamp, percentile_rank, piecewise
 
 PRICE_FAMILY = "price"
@@ -157,6 +157,68 @@ def compute_bcs(
         )
 
     return (round(bcs, 2) if live_weight else None), tuple(families), coverage
+
+
+def compute_bcs_interval(
+    cfg: StrategyConfig,
+    readings: Mapping[str, Reading],
+) -> Optional[BcsInterval]:
+    """BCS 를 구간으로 만든다 — 지표를 하나씩 빼고 다시 계산한 값들의 범위.
+
+    **파라미터를 하나도 추가하지 않는다.** 이것이 이 방식을 고른 이유다.
+    "±10 정도로 보라"는 상수를 박으면 그 10이 또 하나의 조정 숫자가 되고,
+    이미 269개인 자유도에 하나를 더 얹는다([docs/14](../../docs/14-과적합-노출도.md)).
+    잭나이프는 데이터가 스스로 폭을 정한다.
+
+    구간이 답하는 질문: **"지표 하나가 틀렸거나 없었다면 판정이 달라졌을까?"**
+
+    밸류에이션 계열의 집계가 `max_abs` 라, 그 안에서 가장 극단인 지표 하나가
+    BCS 의 40% 를 혼자 끌고 간다. 그 지표를 빼면 차상위가 올라오고 점수가
+    움직인다. 그 움직임의 크기가 곧 "이 판정이 지표 하나에 얼마나 매달려
+    있는가"다.
+
+    지표를 빼면 계열이 통째로 사라지는 경우도 있다(그 계열의 유일한 생존
+    멤버였을 때). 그때는 가중치가 재정규화되어 다른 계열의 지분이 커진다 —
+    실제로 그 데이터가 없을 때 벌어지는 일과 같으므로 그대로 둔다.
+    """
+    point, _, live = compute_bcs(cfg, readings)
+    if point is None or not live:
+        return None
+
+    available = [k for k, r in readings.items() if r.available]
+    if len(available) < 2:
+        # 뺄 것이 없으면 구간이 아니라 점이다. 폭 0 으로 정직하게 돌려준다.
+        return BcsInterval(
+            point=point, low=point, high=point,
+            band_low=cfg.band_for(point)["key"], band_high=cfg.band_for(point)["key"],
+            n_variants=0,
+        )
+
+    low = high = point
+    dropped_low = dropped_high = ""
+    for key in available:
+        trimmed = dict(readings)
+        r = trimmed[key]
+        trimmed[key] = Reading(r.key, r.label, r.family, r.raw, None, r.source,
+                               note="구간 산출을 위해 제외")
+        alt, _, alt_live = compute_bcs(cfg, trimmed)
+        if alt is None or not alt_live:
+            continue
+        if alt < low:
+            low, dropped_low = alt, r.label
+        if alt > high:
+            high, dropped_high = alt, r.label
+
+    return BcsInterval(
+        point=point,
+        low=round(low, 2),
+        high=round(high, 2),
+        band_low=cfg.band_for(low)["key"],
+        band_high=cfg.band_for(high)["key"],
+        dropped_low=dropped_low,
+        dropped_high=dropped_high,
+        n_variants=len(available),
+    )
 
 
 def compute_lrs(

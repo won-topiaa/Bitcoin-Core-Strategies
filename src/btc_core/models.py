@@ -243,6 +243,54 @@ class Plan:
 
 
 @dataclass(frozen=True)
+class BcsInterval:
+    """BCS 를 점 하나가 아니라 구간으로 표현한 것.
+
+    **새 파라미터가 하나도 없다.** 구간의 출처는 데이터 자체다 — 지표를 하나씩
+    빼고 다시 계산한 값들(잭나이프)의 최소·최대다.
+
+    이 구간이 답하는 질문은 이것이다. **"지표 하나가 틀렸거나 없었다면 판정이
+    달라졌을까?"** 밸류에이션 계열이 `max_abs` 라 그 안의 지표 하나가 BCS 의
+    40% 를 혼자 끌고 갈 수 있으므로, 이 질문은 형식적인 것이 아니다.
+
+    `stable` 이 False 면 구간이 밴드 경계를 걸친다 — 그때는 점수 대신 "두 밴드
+    사이"로 읽어야 한다.
+    """
+
+    point: float                    # 전체 지표로 계산한 BCS
+    low: float
+    high: float
+    band_low: str                   # low 가 속한 밴드 키
+    band_high: str
+    dropped_low: str = ""           # 이 지표를 빼면 low 가 된다
+    dropped_high: str = ""
+    n_variants: int = 0             # 실제로 빼 본 지표 수
+
+    @property
+    def width(self) -> float:
+        return self.high - self.low
+
+    @property
+    def stable(self) -> bool:
+        """구간 전체가 한 밴드 안에 있는가."""
+        return self.band_low == self.band_high
+
+    def as_dict(self) -> dict[str, Any]:
+        return {
+            "point": self.point,
+            "low": self.low,
+            "high": self.high,
+            "width": self.width,
+            "band_low": self.band_low,
+            "band_high": self.band_high,
+            "stable": self.stable,
+            "dropped_low": self.dropped_low,
+            "dropped_high": self.dropped_high,
+            "n_variants": self.n_variants,
+        }
+
+
+@dataclass(frozen=True)
 class Snapshot:
     """특정 날짜의 전체 판정."""
 
@@ -257,12 +305,14 @@ class Snapshot:
     consensus: Optional[Consensus] = None
     plan: Optional[Plan] = None
     warnings: tuple[str, ...] = field(default_factory=tuple)
+    bcs_interval: Optional[BcsInterval] = None
 
     def as_dict(self) -> dict[str, Any]:
         return {
             "as_of": self.as_of.isoformat(),
             "price": self.price,
             "bcs": self.bcs,
+            "bcs_interval": self.bcs_interval.as_dict() if self.bcs_interval else None,
             "lrs": self.lrs,
             "lrs_band": self.lrs_band,
             "coverage": self.coverage,

@@ -94,13 +94,43 @@ def test_issuance_sums_back_to_supply():
 
 # --- backfill 의 경계 -------------------------------------------------------
 
-def test_backfill_leaves_measured_series_alone():
+def test_backfill_leaves_measured_values_untouched():
+    """실측이 있는 날은 값이 바뀌지 않는다 — 파생이 실측을 덮으면 안 된다."""
     md = fixtures.market_data()
     filled, notes = backfill(md)
-    assert filled.supply is md.supply
-    assert filled.market_cap is md.market_cap
+    for name in ("supply", "market_cap"):
+        before = dict(getattr(md, name))
+        after = dict(getattr(filled, name))
+        for d, v in before.items():
+            if v is not None:
+                assert after[d] == v, f"{name} {d} 가 파생값으로 덮였다"
     # 픽스처에 issuance_usd 가 없으므로 그것만 채워진다
     assert any("발행액" in n for n in notes)
+    assert not any("유통량" in n for n in notes)
+
+
+def test_backfill_patches_a_trailing_gap():
+    """가장 흔한 실제 상황 — 최신 하루가 늦어 마지막 행만 비어 있다.
+
+    CoinMetrics 커뮤니티 티어가 정확히 이렇다. 시계열 전체가 없을 때만 채우면
+    이 하루를 놓치고, 오늘 값을 보려고 만든 지표에서 **오늘의 커버리지가**
+    떨어진다.
+    """
+    md = fixtures.market_data()
+    trimmed = MarketData(
+        price=md.price,
+        market_cap=Series(md.market_cap.dates[:-1], md.market_cap.values[:-1], "market_cap"),
+        realized_cap=md.realized_cap,
+        supply=Series(md.supply.dates[:-1], md.supply.values[:-1], "supply"),
+        issuance_btc=md.issuance_btc,
+        hashrate=md.hashrate,
+    )
+    filled, notes = backfill(trimmed)
+    last = md.price.dates[-1]
+    assert filled.supply.value_on(last) is not None
+    assert filled.supply.dates[-1] == last
+    assert filled.market_cap.dates[-1] == last
+    assert any("1일" in n and "유통량" in n for n in notes), notes
 
 
 def test_backfill_fills_supply_market_cap_and_issuance_from_price_alone():
