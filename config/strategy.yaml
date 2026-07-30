@@ -427,10 +427,17 @@ lrs_modifier:
 # ===========================================================================
 floors:
   lines:
-    - {key: ma200w,  label: "200주 이동평균",     source: auto,   weight: 0.35}
-    - {key: lth_rp,  label: "LTH 실현가격",       source: manual, weight: 0.35}
-    - {key: cvdd,    label: "CVDD",              source: manual, weight: 0.30}
-  # 세 선의 가중평균을 '기준 바닥'으로 삼고, 그 위아래로 분할 매수 구간을 깐다.
+    - {key: ma200w,         label: "200주 이동평균",  source: auto,   weight: 0.30}
+    - {key: lth_rp,         label: "LTH 실현가격",    source: manual, weight: 0.30}
+    # 실현가격 = 실현시총 ÷ 유통량. 2026-07-29 편입 — 자동 계산되는 두 번째 바닥선.
+    # 사이클 저점이 이 선의 0.56× → 0.69× → 0.78× → 1.09× 로 단조 수렴해 왔다.
+    # 2026 저점($58,525)에서는 네 바닥선 중 가장 정확했다(실현가 $53,560, 9% 이내).
+    # 가격이 이 선 아래였던 날은 16년 중 13.2% 뿐이다.
+    - {key: realized_price, label: "실현가격",        source: auto,   weight: 0.20}
+    # CVDD 는 '역사상 한 번도 깨지지 않은 최악' 선이라 평시에는 기준 바닥을
+    # 아래로 끌어내린다. 2026 저점보다 43% 낮았다. 최후방 선으로 강등.
+    - {key: cvdd,           label: "CVDD",           source: manual, weight: 0.20}
+  # 네 선의 가중평균을 '기준 바닥'으로 삼고, 그 위아래로 분할 매수 구간을 깐다.
   buy_zones:
     - {ratio_to_floor: 1.30, pct_of_reserve: 10, label: "1차 — 기준 바닥 +30%"}
     - {ratio_to_floor: 1.15, pct_of_reserve: 15, label: "2차 — 기준 바닥 +15%"}

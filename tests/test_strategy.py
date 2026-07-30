@@ -256,11 +256,12 @@ def test_lrs_scales_tranche_size_but_never_flips_direction(cfg):
 # --- 바닥선 ----------------------------------------------------------------
 
 def test_reference_floor_is_the_weighted_average_of_the_lines(cfg):
-    levels, ref, zones = build_floors(
-        cfg, 100_000.0, {"ma200w": 50_000, "lth_rp": 60_000, "cvdd": 40_000}
-    )
-    assert ref == pytest.approx(0.35 * 50_000 + 0.35 * 60_000 + 0.30 * 40_000)
-    assert len(levels) == 3
+    # 가중치를 하드코딩하지 않는다 — 설정이 진실의 원천이다
+    prices = {"ma200w": 50_000, "lth_rp": 60_000, "realized_price": 52_000, "cvdd": 40_000}
+    levels, ref, zones = build_floors(cfg, 100_000.0, prices)
+    expected = sum(float(l["weight"]) * prices[l["key"]] for l in cfg.floors["lines"])
+    assert ref == pytest.approx(expected)
+    assert len(levels) == len(cfg.floors["lines"]) == 4
     assert len(zones) == 5
 
 

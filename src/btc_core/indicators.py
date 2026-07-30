@@ -479,8 +479,31 @@ def hash_ribbons(hashrate: Optional[Series]) -> IndicatorValue:
 # ---------------------------------------------------------------------------
 
 def ma200w_price(price: Series) -> Optional[float]:
-    """200주 이동평균의 현재 가격값. 바닥선 후보 중 유일하게 자동 계산된다."""
+    """200주 이동평균의 현재 가격값. 자동 계산되는 바닥선."""
     return sma(price, MA_200W).last
+
+
+def realized_price_level(
+    realized_cap: Optional[Series],
+    supply: Optional[Series],
+) -> Optional[float]:
+    """실현가격 = 실현시총 ÷ 유통량. 자동 계산되는 두 번째 바닥선.
+
+    시장 전체의 평균 취득 원가다. 사이클 저점이 이 선 대비
+    0.56× (2015) → 0.69× (2018) → 0.78× (2022) → 1.09× (2026) 로 단조
+    수렴해 왔고, 2026 저점에서는 바닥선 후보 중 가장 정확했다.
+    가격이 이 선 아래였던 날은 16년 중 13.2% 뿐이다.
+
+    MVRV(가격 ÷ 실현가격)가 이미 점수 지표로 있지만 중복이 아니다 —
+    점수는 배수를 [-1,+1] 로 접은 것이고, 바닥선은 달러 수준 그대로다.
+    LTH 실현가격이 계열(배수)과 바닥선(수준)에 따로 쓰였던 것과 같은 구조다.
+    """
+    if realized_cap is None or supply is None:
+        return None
+    rc, s = realized_cap.last, supply.last
+    if rc is None or not s:
+        return None
+    return rc / s
 
 
 def drawdown_from_ath(price: Series) -> tuple[Optional[float], Optional[int], Optional[float]]:

@@ -13,7 +13,10 @@ from typing import Optional
 from .config import StrategyConfig
 from .datasources.base import DataBundle
 from .datasources.manual import ManualInput
-from .indicators import bottom_profile_inputs, compute_all, ma200w_price, top_profile_inputs
+from .indicators import (
+    bottom_profile_inputs, compute_all, ma200w_price, realized_price_level,
+    top_profile_inputs,
+)
 from .models import Reading, Snapshot
 from .score import compute_bcs, compute_lrs, evaluate_consensus, score_indicator
 from .strategy import ExecutionState, build_plan
@@ -39,6 +42,7 @@ def evaluate(
     histories: dict[str, list[float]] = {}
     price: Optional[float] = None
     auto_floor_ma200w: Optional[float] = None
+    auto_floor_rp: Optional[float] = None
     data_date: Optional[date] = None
     bottom_inputs: dict[str, Optional[float]] = {}
     top_inputs: dict[str, Optional[float]] = {}
@@ -56,6 +60,7 @@ def evaluate(
         price = market.price.last
         data_date = market.price.last_date
         auto_floor_ma200w = ma200w_price(market.price)
+        auto_floor_rp = realized_price_level(market.realized_cap, market.supply)
         bottom_inputs = bottom_profile_inputs(market, computed)
         top_inputs = top_profile_inputs(market, computed, as_of=as_of or data_date)
 
@@ -106,12 +111,14 @@ def evaluate(
 
     floor_prices: dict[str, Optional[float]] = {
         "ma200w": auto_floor_ma200w,
+        "realized_price": auto_floor_rp,
         "lth_rp": _floor("lth_rp"),
         "cvdd": _floor("cvdd"),
     }
-    # 수동 입력이 200주선을 직접 적었다면 그쪽을 존중한다
-    if manual.floors.get("ma200w") is not None:
-        floor_prices["ma200w"] = _floor("ma200w")
+    # 수동 입력이 자동 선을 직접 적었다면 그쪽을 존중한다
+    for auto_key in ("ma200w", "realized_price"):
+        if manual.floors.get(auto_key) is not None:
+            floor_prices[auto_key] = _floor(auto_key)
 
     if price is None:
         price = _floor("price")

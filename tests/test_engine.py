@@ -477,3 +477,21 @@ def test_days_since_ath_is_measured_in_calendar_days_not_rows(cfg):
     assert peak == 100.0
     assert dd == pytest.approx(-60.0)
     assert since == 200          # 행 수(2)가 아니라 달력 일수
+
+
+def test_realized_price_floor_is_computed_automatically(cfg, bundle):
+    """실현가격 = 실현시총 ÷ 유통량. 수동 입력 없이 바닥선에 나타나야 한다."""
+    snap, _ = evaluate(cfg, bundle=bundle)
+    rp = next(f for f in snap.plan.floors if f.key == "realized_price")
+    m = bundle.market
+    assert rp.price == pytest.approx(m.realized_cap.last / m.supply.last)
+
+
+def test_manual_input_can_override_the_realized_price_floor(cfg, bundle):
+    """자동 선도 수동 입력이 있으면 그쪽을 존중한다 (ma200w 와 같은 규칙)."""
+    from btc_core.datasources.manual import ManualInput
+
+    snap, _ = evaluate(cfg, bundle=bundle,
+                       manual=ManualInput(as_of=None, floors={"realized_price": 55_000}))
+    rp = next(f for f in snap.plan.floors if f.key == "realized_price")
+    assert rp.price == pytest.approx(55_000.0)
