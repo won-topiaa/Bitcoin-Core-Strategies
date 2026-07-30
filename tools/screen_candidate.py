@@ -210,6 +210,25 @@ class Result:
         gap = self.turning_gap
         if gap is not None and abs(gap) < 0.4:
             bad.append(f"전환점 퍼센타일 분리 {gap:+.2f} — 고·저점 구별 못 함")
+
+        # 전환점 표와 선행수익률이 서로 다른 이야기를 하면 그 지표는 자기모순이다.
+        #
+        # gap > 0 = 고점에서 높고 저점에서 낮다 → 과열 게이지 → 높을 때 이후
+        # 수익이 낮아야 하므로 상관은 음수여야 한다. 부호가 같으면 "고점에서
+        # 높은데 높을수록 이후 수익도 높다"가 되어 앞뒤가 안 맞는다.
+        #
+        # MVRV 모멘텀(90일)이 이 구멍으로 통과했다 — 고점 퍼센타일
+        # +0.89/+0.97 로 표는 깨끗한데 십분위가 단조 증가(D1 +13 → D10 +106,
+        # ρ +0.23)였다. 사이클 위치 지표가 아니라 모멘텀 신호였던 것이다.
+        # 8개 전환점만 보면 못 잡히고 전 표본을 봐야 잡힌다(docs/17).
+        if gap is not None and self.best_rho is not None and abs(gap) >= 0.4:
+            if (gap > 0) == (self.best_rho > 0):
+                direction = "과열" if gap > 0 else "저평가"
+                bad.append(
+                    f"전환점과 선행수익률이 모순 — 전환점은 {direction} 게이지"
+                    f"(분리 {gap:+.2f})인데 상관이 {self.best_rho:+.2f} 로 같은 부호다. "
+                    "사이클 위치가 아니라 모멘텀을 재고 있다"
+                )
         return bad
 
     def weak_flags(self) -> list[str]:

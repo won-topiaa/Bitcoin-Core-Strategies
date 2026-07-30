@@ -55,6 +55,9 @@ def build_parser() -> argparse.ArgumentParser:
                    help="퍼센타일 혼합 비율 (0=앵커만, 1=퍼센타일만). "
                         "생략하면 config 의 bcs.normalization.adaptive_weight")
     s.add_argument("--no-record", action="store_true", help="BCS 이력에 기록하지 않는다")
+    s.add_argument("--no-derive", action="store_true",
+                   help="빠진 유통량·발행량·시가총액을 반감기 스케줄로 채우지 않는다 "
+                        "(실측만 쓰고 없으면 결측으로 남긴다)")
     s.add_argument("--years", type=float, default=DEFAULT_YEARS)
 
     # init
@@ -118,11 +121,21 @@ def _dispatch(args, cfg) -> int:
 
 
 def _load_bundle(csv_path: Optional[str], years: float = DEFAULT_YEARS,
-                 timeout: int = 60):
+                 timeout: int = 60, derive: bool = True):
+    """시계열을 불러오고, 빠진 것 중 계산 가능한 것은 채운다.
+
+    유통량·발행량·시가총액은 반감기 스케줄로 계산된다. 그래서 소스가 가격과
+    실현시총만 줘도 지표 9개가 전부 산출된다 (datasources/derive.py).
+    """
     if csv_path:
-        return load_csv_bundle(csv_path)
-    from .datasources import coinmetrics
-    return coinmetrics.fetch(years=years, timeout=timeout)
+        bundle = load_csv_bundle(csv_path)
+    else:
+        from .datasources import coinmetrics
+        bundle = coinmetrics.fetch(years=years, timeout=timeout)
+    if derive:
+        from .datasources.derive import backfill_bundle
+        bundle = backfill_bundle(bundle)
+    return bundle
 
 
 def _cmd_fetch(args) -> int:
@@ -140,7 +153,8 @@ def _cmd_score(args, cfg) -> int:
     as_of = date.fromisoformat(args.as_of) if args.as_of else None
     bundle = None
     try:
-        bundle = _load_bundle(args.csv, years=args.years)
+        bundle = _load_bundle(args.csv, years=args.years,
+                              derive=not args.no_derive)
     except FetchError as exc:
         print(f"! 시계열을 불러오지 못했습니다: {exc}", file=sys.stderr)
         print("  수동 입력만으로 계속 진행합니다.\n", file=sys.stderr)
