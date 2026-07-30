@@ -99,6 +99,19 @@ def daily_rows(cfg: StrategyConfig, market) -> list[dict]:
         fam = {f.key: (round(f.score, 3) if f.available else None) for f in families}
         missing = [r.label for r in readings.values() if not r.available]
 
+        # 지표 하나하나의 현재 상태. 계열 점수만 내보내면 "왜 이 값이 나왔나"를
+        # 화면에서 되짚을 수 없다. 점수는 2×퍼센타일−1 이라 되돌리면 곧
+        # "최근 4년 중 몇 % 지점"이 되고, 그게 사람이 읽을 수 있는 형태다.
+        ind = {}
+        for key, r in readings.items():
+            ind[key] = {
+                "raw": (round(r.raw, 4) if isinstance(r.raw, (int, float))
+                        else (r.raw if r.raw is not None else None)),
+                "score": round(r.score, 3) if r.available else None,
+                "pct": round((r.score + 1) / 2, 4) if r.available else None,
+                "note": r.note or "",
+            }
+
         rows.append({
             "d": d.isoformat(),
             "price": round(prices.get(d) or 0.0, 2),
@@ -116,6 +129,7 @@ def daily_rows(cfg: StrategyConfig, market) -> list[dict]:
             # 그날 BCS 가 십수 점 움직인다. 그래서 멤버 결측 수를 따로 센다.
             "nmiss": len(missing),
             "miss": missing,
+            "ind": ind,
             "dsh": days_since_halving(d),
         })
     return rows
@@ -136,7 +150,7 @@ def thin(rows: list[dict]) -> list[dict]:
     out = []
     for i, r in enumerate(rows):
         if i % WEEKLY_STRIDE == 0 or r["d"] in keep_dates or i == len(rows) - 1:
-            slim = {k: v for k, v in r.items() if k != "miss"}
+            slim = {k: v for k, v in r.items() if k not in ("miss", "ind")}
             out.append(slim)
     return out
 
@@ -182,7 +196,8 @@ def build(cfg: StrategyConfig, csv: str, *, derive: bool = True) -> dict:
     for phase, when in TURNING_POINTS:
         r = by_date.get(when.isoformat())
         if r:
-            tps.append({"phase": phase, **r})
+            tps.append({"phase": phase,
+                        **{k: v for k, v in r.items() if k not in ("miss", "ind")}})
 
     return {
         "generated_from": csv,
@@ -210,6 +225,17 @@ def build(cfg: StrategyConfig, csv: str, *, derive: bool = True) -> dict:
             for k, f in cfg.bcs_families.items()
         ],
         "band_stances": {b["key"]: b.get("stance", "") for b in cfg.bands},
+        "indicator_meta": [
+            {"key": k,
+             "label": s.get("label", k),
+             "short": s.get("label", k).split(" (")[0],
+             "family": s.get("family", ""),
+             "unit": s.get("unit", ""),
+             "categorical": s.get("input_mode") == "categorical",
+             "explain": s.get("explain", ""),
+             "explain_long": s.get("explain_long", "")}
+            for k, s in cfg.indicators.items()
+        ],
         "ladders": {
             "distribute": [
                 {"bcs": float(s["trigger_bcs"]), "pct": float(s["pct_of_holdings"])}

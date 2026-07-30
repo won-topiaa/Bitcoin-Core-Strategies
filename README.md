@@ -186,22 +186,34 @@ btc-core score --csv data/market.csv
 `--format markdown`으로 저널에 붙일 문서를, `--format json`으로 다른 도구에
 넘길 데이터를 뽑을 수 있다.
 
-### 시각화
+### 시각화 — 페이지 두 장
 
 ```bash
-python3 tools/build_viz.py --csv data/market.csv --out viz/bcs-gauge.html
+python3 tools/build_viz.py --csv data/market.csv          # viz/site/ 에 생성
+python3 tools/build_viz.py --csv data/market.csv \
+    --rules-url https://... --index-url https://...       # 호스팅용 절대 링크
 ```
 
-CSS·JS·데이터를 한 파일에 굽는 자기완결 HTML 이다(149KB). 계기판 · 16년 이력
-구간 리본 · 전환점 성적표 · 계열 구성 · 구간 폭 분포. **외부 요청이 하나도
-없다** — 요청이 막힌 환경에서 빈 화면이 나오면 무료 데이터로 돌아가는 시스템에서
-그건 "안 보인다"와 같다.
+| 페이지 | 내용 |
+|---|---|
+| `index.html` (166KB) | 계기판 · **지표 9개 요약 표** · 16년 이력 · 전환점 성적표 · 계산 방법 · 범위 |
+| `rules.html` (126KB) | 실행 규칙 · 한계 · 데이터 출처 |
 
-지표마다 **"좀 더 자세히"** 버튼이 붙어 있어서, 그게 무엇을 재는지와 왜 의미가
-있는지가 펼쳐진다. 설명 문구는 `config/strategy.yaml` 의 `explain` /
-`explain_long` 이 소유한다 — 페이지에 따로 적어 두면 지표를 고칠 때 둘이
-어긋나고, **어긋난 설명은 없는 설명보다 나쁘다.** 같은 문구가
-`btc-core explain <지표>` 로도 나온다.
+**한 장에 다 넣지 않는다.** 실행 규칙과 한계는 "지금 어디쯤인가"를 보러 온
+사람에게 당장 필요한 정보가 아니라서 두 번째 장으로 뺐다. 첫 장은 위치 판단만
+한다.
+
+**지표 9개 요약 표**가 첫 장의 핵심이다. 아홉 개를 싼 쪽부터 정렬해 각각의
+현재값과 "최근 4년 중 몇 %"를 막대로 보여준다. 점수 하나가 어디서 왔는지가
+표 하나로 보인다.
+
+CSS·JS·데이터를 한 파일에 굽는 자기완결 HTML 이다. **외부 요청이 하나도 없다** —
+요청이 막힌 환경에서 빈 화면이 나오면 무료 데이터로 돌아가는 시스템에서 그건
+"안 보인다"와 같다.
+
+설명 문구는 `config/strategy.yaml` 의 `explain` / `explain_long` 이 소유한다 —
+페이지에 따로 적어 두면 지표를 고칠 때 둘이 어긋나고, **어긋난 설명은 없는
+설명보다 나쁘다.** 같은 문구가 `btc-core explain <지표>` 로도 나온다.
 
 ---
 
@@ -326,7 +338,9 @@ tools/lppls.py              LPPLS 거품 모형 적합 (표준 라이브러리�
 tools/export_viz.py         하루씩 구간·계열 계산 → JSON
 tools/build_viz.py          자기완결 시각화 페이지 굽기
 tools/audit_config.py       기준 간 상호 모순 감사
-viz/template.html           시각화 틀 (구조 + 스타일 + 차트 엔진)
+viz/template.html           첫 페이지 틀 (구조 + 스타일 + 차트 엔진)
+viz/rules.template.html     규칙 페이지 틀
+viz/site/                   생성된 페이지 두 장
 ```
 
 **의존성은 PyYAML 하나뿐이다.** 나머지는 표준 라이브러리로 구현했다.

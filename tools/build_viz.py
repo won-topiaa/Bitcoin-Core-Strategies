@@ -32,7 +32,12 @@ import export_viz  # noqa: E402
 
 from btc_core.config import load_config  # noqa: E402
 
-TEMPLATE = ROOT / "viz" / "template.html"
+# 페이지는 둘이고 데이터는 하나다. 같은 payload 를 두 틀에 굽는다 —
+# 규칙 페이지가 오래된 숫자를 보여주는 일이 없게.
+PAGES = (
+    ("viz/template.html", "index.html"),
+    ("viz/rules.template.html", "rules.html"),
+)
 MARKER = "/*__DATA__*/"
 
 
@@ -71,6 +76,7 @@ def compact(payload: dict) -> dict:
             "band": c["band"], "stable": c["stable"], "cov": c["cov"],
             "gate": c["gate"], "nmiss": c["nmiss"], "miss": c.get("miss", []),
             "fam": {k: _n(v, 2) for k, v in c["fam"].items()}, "dsh": c["dsh"],
+            "ind": c.get("ind", {}),
         }
 
     def tp(t: dict) -> dict:
@@ -84,6 +90,7 @@ def compact(payload: dict) -> dict:
         "base": payload["span"][0], "span": payload["span"], "nDays": payload["n_days"],
         "bands": payload["bands"], "families": payload["families"],
         "bandStances": payload["band_stances"],
+        "indMeta": payload["indicator_meta"],
         "ladders": payload["ladders"], "dca": payload["dca"],
         "halvings": payload["halvings"],
         "tps": [tp(t) for t in payload["turning_points"]],
@@ -94,40 +101,55 @@ def compact(payload: dict) -> dict:
     }
 
 
-def build(csv: str, out: Path, *, config: Optional[str] = None,
-          derive: bool = True) -> Path:
-    if not TEMPLATE.exists():
-        raise SystemExit(f"틀을 찾을 수 없습니다: {TEMPLATE}")
-    cfg = load_config(config) if config else load_config()
-    payload = export_viz.build(cfg, csv, derive=derive)
-    data = json.dumps(compact(payload), ensure_ascii=False, separators=(",", ":"))
-
-    tpl = TEMPLATE.read_text(encoding="utf-8")
+def _bake(tpl_path: Path, data: str, out: Path, links: dict[str, str]) -> Path:
+    if not tpl_path.exists():
+        raise SystemExit(f"틀을 찾을 수 없습니다: {tpl_path}")
+    tpl = tpl_path.read_text(encoding="utf-8")
     a = tpl.find(MARKER)
     b = tpl.find(MARKER, a + len(MARKER))
     if a < 0 or b < 0:
-        raise SystemExit(f"틀에 {MARKER} 자리표시자가 두 개 있어야 합니다.")
+        raise SystemExit(f"{tpl_path}: {MARKER} 자리표시자가 두 개 있어야 합니다.")
     page = tpl[:a] + MARKER + data + tpl[b:]
-
+    # 두 페이지는 서로를 링크한다. 로컬에서는 파일 이름이면 되지만, 각각 다른
+    # 주소로 올릴 때는 절대 주소여야 해서 빌드 시점에 갈아 끼운다.
+    for k, v in links.items():
+        page = page.replace(k, v)
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(page, encoding="utf-8")
     return out
+
+
+def build(csv: str, outdir: Path, *, config: Optional[str] = None,
+          derive: bool = True, index_url: str = "index.html",
+          rules_url: str = "rules.html") -> list[Path]:
+    cfg = load_config(config) if config else load_config()
+    payload = export_viz.build(cfg, csv, derive=derive)
+    data = json.dumps(compact(payload), ensure_ascii=False, separators=(",", ":"))
+    links = {"__INDEX_URL__": index_url, "__RULES_URL__": rules_url}
+    return [_bake(ROOT / tpl, data, outdir / name, links) for tpl, name in PAGES]
 
 
 def main(argv: Optional[list[str]] = None) -> int:
     ap = argparse.ArgumentParser(description="자기완결 시각화 페이지 생성")
     ap.add_argument("--csv", default="data/market.csv")
     ap.add_argument("--config", default=None)
-    ap.add_argument("--out", default="viz/bcs-gauge.html")
+    ap.add_argument("--out-dir", default="viz/site", help="페이지를 내보낼 디렉터리")
     ap.add_argument("--no-derive", action="store_true",
                     help="빠진 유통량·시총을 반감기 스케줄로 채우지 않는다")
+    ap.add_argument("--index-url", default="index.html",
+                    help="규칙 페이지에서 첫 페이지로 거는 링크 (호스팅 시 절대 주소)")
+    ap.add_argument("--rules-url", default="rules.html",
+                    help="첫 페이지에서 규칙 페이지로 거는 링크")
     args = ap.parse_args(argv)
 
-    p = build(args.csv, Path(args.out), config=args.config, derive=not args.no_derive)
-    kb = p.stat().st_size / 1024
-    print(f"생성: {p}  ({kb:.0f} KB)")
-    if kb > 400:
-        print("  ! 400KB 를 넘었습니다 — export_viz.py 의 추리기 간격을 넓히세요")
+    paths = build(args.csv, Path(args.out_dir), config=args.config,
+                  derive=not args.no_derive,
+                  index_url=args.index_url, rules_url=args.rules_url)
+    for p in paths:
+        kb = p.stat().st_size / 1024
+        print(f"생성: {p}  ({kb:.0f} KB)")
+        if kb > 400:
+            print("  ! 400KB 를 넘었습니다 — export_viz.py 의 추리기 간격을 넓히세요")
     return 0
 
 
