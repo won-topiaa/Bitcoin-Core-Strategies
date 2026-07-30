@@ -309,3 +309,24 @@ def test_mcap_per_active_needs_active_addresses():
     md = fixtures.market_data()
     assert md.active_addresses is None
     assert ind.mcap_per_active_address(md.market_cap, None).value is None
+
+
+def test_every_numeric_indicator_exposes_a_percentile_history():
+    """퍼센타일 경로가 모든 수치 지표에 열려 있어야 한다.
+
+    고정 앵커는 마지막 사이클에 맞춰 조정된 것이라 사이클을 넘어 일반화되지
+    않는다 — 네 고점의 BCS 표준편차가 앵커 전용 23.6 vs 퍼센타일 전용 16.2,
+    그리고 앵커 전용은 2025 고점에서 +28.9 로 분배 첫 계단(+45)에 못 닿는다
+    (docs/14, tools/robustness.py).
+
+    이력이 없으면 --adaptive-weight 1.0 (앵커 미사용 모드)이 그 지표에는
+    적용되지 않고 조용히 앵커로 되돌아간다. 그걸 막는다.
+    """
+    out = ind.compute_all(fixtures.market_data(start=date(2010, 1, 1)))
+    missing = [
+        k for k, v in out.items()
+        if not isinstance(v.value, str)              # 범주형은 대상이 아니다
+        and v.value is not None
+        and not v.detail.get("history_4y")
+    ]
+    assert not missing, f"history_4y 가 없는 수치 지표: {missing}"

@@ -134,9 +134,15 @@ def pi_cycle_ratio(price: Series) -> IndicatorValue:
     if f is None or s in (None, 0):
         return IndicatorValue("pi_cycle", None, price.last_date, note="이동평균 산출에 데이터 부족")
     val = f / (s * 2.0)
+    # history_4y 는 퍼센타일 정규화의 재료다. 고정 앵커는 마지막 사이클에 맞춰
+    # 조정된 것이라 사이클을 넘어 일반화되지 않는다 — 네 고점에서의 BCS
+    # 표준편차가 앵커 전용 23.6 vs 퍼센타일 전용 16.2 였다(tools/robustness.py).
+    # 그래서 모든 수치 지표가 퍼센타일 경로를 쓸 수 있게 이력을 함께 낸다.
+    ratio_series = fast.map_with(slow, lambda a, b: a / (b * 2.0) if b else None)
     return IndicatorValue(
         "pi_cycle", val, price.last_date,
-        detail={"ma111": f, "ma350": s, "ma350x2": s * 2.0, "crossed": val >= 1.0},
+        detail={"ma111": f, "ma350": s, "ma350x2": s * 2.0, "crossed": val >= 1.0,
+                "history_4y": history_of(ratio_series, years=4.0)},
     )
 
 
@@ -156,6 +162,7 @@ def golden_ratio_multiple(price: Series) -> IndicatorValue:
             "bands": {str(f): b * f for f in fibs},
             "next_band": next_band,
             "next_band_price": b * next_band if next_band else None,
+            "history_4y": history_of(ratio(price, base), years=4.0),
         },
     )
 
@@ -165,7 +172,11 @@ def ma_multiple(price: Series, window: int, key: str) -> IndicatorValue:
     p, b = price.last, base.last
     if p is None or b in (None, 0):
         return IndicatorValue(key, None, price.last_date, note=f"{window}일 이동평균 산출 불가")
-    return IndicatorValue(key, p / b, price.last_date, detail={"ma": b, "window": window})
+    return IndicatorValue(
+        key, p / b, price.last_date,
+        detail={"ma": b, "window": window,
+                "history_4y": history_of(ratio(price, base), years=4.0)},
+    )
 
 
 def ma200w_multiple(price: Series) -> IndicatorValue:
@@ -256,9 +267,10 @@ def nupl(market_cap: Optional[Series], realized_cap: Optional[Series]) -> Indica
     if m in (None, 0) or r is None:
         return IndicatorValue("nupl", None, market_cap.last_date, note="시총/실현시총 값 없음")
     val = (m - r) / m
+    series = market_cap.map_with(realized_cap, lambda a, b: (a - b) / a if a else None)
     return IndicatorValue(
         "nupl", val, market_cap.last_date,
-        detail={"phase": nupl_phase(val)},
+        detail={"phase": nupl_phase(val), "history_4y": history_of(series, years=4.0)},
     )
 
 

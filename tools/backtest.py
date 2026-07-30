@@ -49,7 +49,13 @@ CYCLES = [
 ]
 
 # 퍼센타일 혼합을 적용할 지표 (4년치 이력을 만들 수 있는 것들)
-ADAPTIVE_KEYS = {"mvrv_z", "puell", "thermocap", "mcap_per_active"}
+# 퍼센타일 혼합 대상 — **모든 수치 지표**다.
+# 고정 앵커는 마지막 사이클에 맞춰 조정된 것이라 일반화되지 않는다. 네 고점의
+# BCS 표준편차가 앵커 전용 23.6 / 현행 19.3 / 전 지표 혼합 18.2 / 퍼센타일 전용
+# 16.2 였고, 분배 첫 계단(+45)이 열린 고점 수는 앞 셋이 3/4, 퍼센타일 전용만
+# 4/4 였다 (tools/robustness.py).
+ADAPTIVE_KEYS = {"mvrv_z", "nupl", "puell", "thermocap", "mcap_per_active",
+                 "pi_cycle", "grm", "ma200w_mult", "ma2y_mult"}
 
 
 @dataclass
