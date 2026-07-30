@@ -239,3 +239,15 @@ def test_rearm_threshold_sits_between_the_two_ladders(cfg):
     first_acc = max(float(s["trigger_bcs"]) for s in cfg.ladders["accumulate"]["steps"])
     assert -opp >= first_acc, "분배 재무장 임계가 매집 첫 계단보다 아래여야 한다"
     assert opp <= first_dist, "매집 재무장 임계가 분배 첫 계단보다 위여야 한다"
+
+
+def test_invalidation_covers_family_independence(cfg):
+    """합의 게이트가 계열 독립성을 전제하므로, 그게 깨질 조건을 미리 적어야 한다.
+
+    실제로 Puell 이 GRM 과 ρ +0.89 였다 — 공급 계열에 가격 지표가 들어 있었고
+    게이트는 그것을 '비가격 확인'으로 세고 있었다(docs/13).
+    """
+    ids = {i["id"] for i in cfg.invalidation}
+    assert "INV-5" in ids
+    inv5 = next(i for i in cfg.invalidation if i["id"] == "INV-5")
+    assert "0.85" in inv5["text"]

@@ -125,13 +125,16 @@ def test_valuation_indicators_are_missing_without_realized_cap():
 # --- 공급·채굴 -------------------------------------------------------------
 
 def test_puell_is_one_when_issuance_revenue_is_constant():
-    p = const(30_000.0, days=500)
-    iss = const(450.0, days=500)
+    # 기준선이 1460일이라 그만큼 이력이 필요하다 — 반감기를 하나 포함해야
+    # 발행량이 약분되지 않는다(docs/13).
+    days = ind.PUELL_WINDOW + 200
+    p = const(30_000.0, days=days)
+    iss = const(450.0, days=days)
     assert ind.puell_multiple(p, iss).value == pytest.approx(1.0)
 
 
 def test_puell_falls_back_to_supply_differences():
-    days = 500
+    days = ind.PUELL_WINDOW + 200
     supply = Series.from_pairs(
         [(date(2018, 1, 1) + timedelta(days=i), 18_000_000.0 + 450.0 * i) for i in range(days)]
     )
@@ -140,7 +143,7 @@ def test_puell_falls_back_to_supply_differences():
 
 
 def test_puell_spikes_when_price_doubles():
-    days = 500
+    days = ind.PUELL_WINDOW + 200
     prices = [30_000.0] * (days - 1) + [60_000.0]
     p = Series.from_pairs(
         [(date(2018, 1, 1) + timedelta(days=i), v) for i, v in enumerate(prices)]
@@ -151,6 +154,17 @@ def test_puell_spikes_when_price_doubles():
 
 def test_puell_missing_without_issuance_data():
     assert ind.puell_multiple(const(1.0), None, None).value is None
+
+
+def test_puell_baseline_spans_a_halving_so_issuance_does_not_cancel():
+    """365일 기준선이면 발행량이 약분돼 가격 지표가 된다 — 실측 ρ +0.89.
+
+    1460일은 반감기 간격(약 1458일)을 넘으므로 창 안에서 발행량이 반으로
+    줄고, 약분이 일어나지 않는다. 이 상수를 다시 365 로 되돌리면 공급 계열이
+    가격 계열의 복사본이 되어 합의 게이트의 전제가 깨진다(docs/13).
+    """
+    HALVING_INTERVAL_DAYS = 1458
+    assert ind.PUELL_WINDOW > HALVING_INTERVAL_DAYS
 
 
 # --- Hash Ribbons ----------------------------------------------------------

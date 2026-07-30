@@ -669,3 +669,21 @@ def test_top_profile_note_appears_only_when_expensive(cfg):
     cheap = build_plan(bcs=-50.0, state=steady(-50.0), **args)
     assert any("고점 프로파일" in n for n in rich.notes)
     assert not any("고점 프로파일" in n for n in cheap.notes)
+
+
+def test_supply_family_is_not_a_copy_of_the_price_family(cfg):
+    """계열 간 독립성은 합의 게이트의 전제다. 설정으로 그 전제를 지킨다.
+
+    Puell 기준선이 반감기(약 1458일)보다 짧으면 발행량이 약분되어
+    '가격 ÷ MA(가격)' 이 되고, 공급 계열이 가격 계열의 복사본이 된다.
+    실측 ρ: 365일 기준선 +0.890 → 1460일 기준선 +0.495 (docs/13).
+    """
+    from btc_core.indicators import PUELL_WINDOW
+
+    assert PUELL_WINDOW > 1458, (
+        "Puell 기준선이 반감기 간격보다 짧으면 공급 계열이 가격 지표가 된다"
+    )
+    supply = cfg.bcs_families["supply"]
+    assert "puell" in supply["members"] and "hash_ribbons" in supply["members"], (
+        "공급 계열의 독립성이 Hash Ribbons 하나에만 걸리지 않게 두 지표를 유지한다"
+    )
