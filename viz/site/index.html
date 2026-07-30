@@ -108,8 +108,12 @@ section{margin-top:52px}
 .gauge-svg{display:block; width:100%; height:auto; overflow:visible}
 
 /* ---- 스탯 ---- */
-.tiles{display:grid; grid-template-columns:repeat(auto-fit,minmax(158px,1fr)); gap:1px; background:var(--rule);
+/* 타일이 6개다. auto-fit 으로 두면 폭에 따라 5+1 이 되어 빈 칸이 남고,
+   그 칸에 배경(구분선 색)이 그대로 비친다. 6을 나누어떨어지는 열 수만 쓴다. */
+.tiles{display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--rule);
   border:1px solid var(--rule); border-radius:3px; margin-top:16px; overflow:hidden}
+@media (min-width:560px){.tiles{grid-template-columns:repeat(3,1fr)}}
+@media (min-width:1060px){.tiles{grid-template-columns:repeat(6,1fr)}}
 .tile{background:var(--surface); padding:16px 18px 15px}
 .tile .k{font-size:11.5px; font-weight:620; letter-spacing:.03em; color:var(--muted)}
 .tile .v{font-family:var(--mono); font-variant-numeric:tabular-nums; font-size:23px; font-weight:600; letter-spacing:-.01em; margin-top:7px; line-height:1.15}
@@ -296,7 +300,6 @@ tbody td.sub{font-family:var(--sans); color:var(--muted); font-weight:400; text-
   <div class="srcline">
     <span id="src-span"></span>
     <span id="src-days"></span>
-    <span>지표 9개 · 매일 갱신</span>
     <span><a href="https://claude.ai/code/artifact/abf30c83-3c0d-4211-9dd3-b82b14ecb1bb">규칙과 한계 &rsaquo;</a></span>
   </div>
 </header>
@@ -1224,7 +1227,7 @@ function drawWidth(){
     el("line", {x1:x(v), y1:y+h, x2:x(v), y2:y+h+5, stroke:"var(--axis)", "stroke-width":1}, svg);
     txt(svg, x(v), y+h+19, String(v), {anchor:"middle", size:10});
   }
-  txt(svg, PL+iw/2, H-8, "구간 폭 (BCS 점수)", {anchor:"middle", size:10, ls:".1em"});
+  txt(svg, PL+iw/2, H-8, "범위의 폭 (점수 단위)", {anchor:"middle", size:10.5, ls:".02em", mono:false});
 
   // p10–p90 상자, p25–p75 진한 상자, 중위선
   el("rect", {x:x(st.p10), y:y+h*0.30, width:x(st.p90)-x(st.p10), height:h*0.40,
@@ -1244,13 +1247,16 @@ function drawWidth(){
   mark(st.p90, "p90 " + st.p90, 0);
   txt(svg, x(st.median), y+h*0.10-9, "중위 " + st.median,
     {anchor:"middle", size:11, fill:"var(--ink)", weight:600});
-  txt(svg, PL+iw-2, y+h+19, "축 상한 " + maxW + " · p99 " + st.p99 + " · 최대 " + st.max,
+  // 축 오른쪽 끝에 붙이면 눈금 숫자와 겹친다. 아래 한 줄을 통째로 쓴다.
+  txt(svg, PL+iw, H-8, `축은 ${maxW} 까지 · 드물게 ${st.p99} 이상(최대 ${st.max})`,
     {anchor:"end", size:10, fill:"var(--muted)"});
 
   document.getElementById("width-cap").textContent =
-    `중위 ${st.median}점, 4분의 1은 ${st.p25}점보다 좁고 4분의 1은 ${st.p75}점보다 넓다. ` +
-    `상자는 p25–p75(진한 쪽)와 p10–p90 이고 가운데 선이 중위값이다. ` +
-    `구간이 한 밴드 안에 온전히 들어오는 날은 ${st.stable_days}/${st.n} = ${st.stable_pct}% 뿐이다.`;
+    `보통은 ${st.median}점입니다. 네 날 중 하루는 ${st.p25}점보다 좁고, ` +
+    `또 하루는 ${st.p75}점보다 넓습니다. ` +
+    `진한 상자가 가운데 절반(p25~p75), 연한 상자가 열에 여덟(p10~p90), ` +
+    `세로선이 한가운데 값입니다. ` +
+    `범위가 한 구간 안에 온전히 들어온 날은 16년 중 ${st.stable_pct}% 뿐입니다.`;
 }
 
 /* =====================================================================
@@ -1302,7 +1308,8 @@ function attachCrosshair(svg, ttId, host, X, PL, iw, PT, ih, rowsFn, rowsIn){
    ===================================================================== */
 function fillText(){
   document.getElementById("src-span").textContent = D.span[0] + " → " + D.span[1];
-  document.getElementById("src-days").textContent = D.nDays.toLocaleString("en-US") + "일 · 지표 9개 · 계열 3개";
+  document.getElementById("src-days").textContent =
+    D.nDays.toLocaleString("en-US") + "일 · 지표 " + D.indMeta.length + "개";
 
   const c = D.current;
   document.getElementById("ro-range").textContent = nf(c.low,0) + " ~ " + nf(c.high,0);
@@ -1333,16 +1340,6 @@ function fillText(){
     return `<div class="tile"><div class="k">${t.k}</div>` +
       `<div class="v"${col}>${t.v}</div><div class="n">${t.n}</div></div>`;
   }).join("");
-
-  const L = D.ladders;
-  // 실행 규칙은 별도 페이지로 옮겼다. 이 페이지에 없으면 조용히 건너뛴다.
-  const ladderEl = document.getElementById("def-ladder");
-  if (ladderEl) ladderEl.innerHTML =
-    `분배 ${L.distribute.map(s=>nf(s.bcs,0)).join(" / ")} 에서 보유량의 ` +
-    `${L.distribute.map(s=>s.pct).join("/")}% — <strong>코어 ${L.core_hold_pct}% 는 어떤 신호에도 팔지 않는다.</strong> ` +
-    `매집 ${L.accumulate.map(s=>nf(s.bcs,0)).join(" / ")} 에서 예비현금의 ` +
-    `${L.accumulate.map(s=>s.pct).join("/")}%. 14일 간격, 확정 3일. ` +
-    `이건 위치값을 행동으로 옮길 때 한 번에 다 하지 않게 만드는 안전장치이고, 본체가 아니다.`;
 
   // --- 접었다 펴는 설명들 -------------------------------------------------
   const bandRows = D.bands.slice().sort((a, b) => b.min - a.min).map(b =>
@@ -1385,13 +1382,12 @@ function fillText(){
 
   const notes = D.deriveNotes || [];
   const lat = D.latest;
-  let foot = "데이터는 CoinMetrics 커뮤니티 API. 외부에서 반드시 받아야 하는 시계열은 " +
-    "가격과 실현시총 둘뿐이고, 유통량·발행량·시가총액은 반감기 스케줄로 계산한다 " +
-    "(2015년 이후 실측 대비 평균오차 0.079%).";
-  if (notes.length) foot += " 이번 산출에서는 — " + notes.join(" / ") + ".";
+  let foot = "데이터는 CoinMetrics 커뮤니티 API 에서 받습니다. 밖에서 꼭 받아와야 하는 것은 " +
+    "가격과 '시장 전체의 원가' 둘뿐이고, 나머지는 비트코인 발행 규칙으로 직접 계산합니다.";
+  if (notes.length) foot += " 이번 계산에서는 — " + notes.join(" / ") + ".";
   if (lat && lat.d !== D.current.d)
-    foot += ` 마지막 행 ${lat.d} 은 실현시총 지연으로 지표 ${lat.nmiss}개가 결측이라 ` +
-      `헤드라인 기준일에서 제외했다 (그날 BCS ${nf(lat.bcs,1)}).`;
+    foot += ` 가장 마지막 날(${lat.d})은 원가 데이터가 하루 늦어 지표 ${lat.nmiss}개가 ` +
+      `빠져 있어서, 기준일에서 제외했습니다.`;
   document.getElementById("foot-derive").textContent = foot;
 }
 
