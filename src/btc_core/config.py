@@ -45,6 +45,11 @@ class StrategyConfig:
         return self.raw["bcs"]["families"]
 
     @property
+    def adaptive_weight(self) -> float:
+        """고정 앵커와 퍼센타일의 혼합 비율. 설정이 소유한다."""
+        return float(self.raw["bcs"].get("normalization", {}).get("adaptive_weight", 0.35))
+
+    @property
     def coverage(self) -> Mapping[str, Any]:
         return self.raw["bcs"].get("coverage", {})
 

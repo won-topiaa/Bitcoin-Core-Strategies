@@ -251,3 +251,26 @@ def test_invalidation_covers_family_independence(cfg):
     assert "INV-5" in ids
     inv5 = next(i for i in cfg.invalidation if i["id"] == "INV-5")
     assert "0.85" in inv5["text"]
+
+
+def test_normalization_weight_lives_in_the_config(cfg):
+    """정규화 비율은 코드 기본값이 아니라 설정이 소유한다.
+
+    앵커 128개를 쓸지 말지가 이 한 값에 달려 있으므로, 코드에 숨어 있으면
+    안 된다. 현재 1.0(퍼센타일 전용)인 근거는 표본 외 검증이다 — BTC 설정을
+    라이트코인·이더리움에 그대로 적용해 전환점 21곳을 본 결과 포착률이
+    앵커 전용 66.7% / 0.35 66.7% / 퍼센타일 전용 76.2% 였다 (docs/15).
+    """
+    assert "normalization" in cfg.raw["bcs"]
+    assert 0.0 <= cfg.adaptive_weight <= 1.0
+    assert cfg.adaptive_weight == pytest.approx(1.0)
+
+
+def test_engine_takes_the_normalization_weight_from_the_config(cfg):
+    """--adaptive-weight 를 생략하면 설정값이 쓰여야 한다."""
+    import inspect
+
+    from btc_core.engine import evaluate
+
+    sig = inspect.signature(evaluate)
+    assert sig.parameters["adaptive_weight"].default is None

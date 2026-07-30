@@ -468,14 +468,16 @@ def main() -> int:
     ap = argparse.ArgumentParser(description="BCS 전체 이력 백테스트")
     ap.add_argument("--csv", default="data/market.csv")
     ap.add_argument("--config", default=None)
-    ap.add_argument("--adaptive", type=float, default=0.35)
+    ap.add_argument("--adaptive", type=float, default=None,
+                    help="생략하면 config 의 bcs.normalization.adaptive_weight")
     ap.add_argument("--out", default=None)
     args = ap.parse_args()
 
     cfg = load_config(args.config)
     bundle = load_csv_bundle(args.csv)
-    days = run(cfg, bundle.market, args.adaptive)
-    text = summarize(cfg, days, args.adaptive)
+    adaptive = cfg.adaptive_weight if args.adaptive is None else args.adaptive
+    days = run(cfg, bundle.market, adaptive)
+    text = summarize(cfg, days, adaptive)
 
     if args.out:
         p = Path(args.out)

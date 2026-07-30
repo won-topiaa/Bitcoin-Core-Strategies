@@ -117,11 +117,13 @@ def clamp(value: float, low: float = -1.0, high: float = 1.0) -> float:
     return max(low, min(high, float(value)))
 
 
-def blend(fixed: float, adaptive: float, weight_adaptive: float = 0.35) -> float:
+def blend(fixed: float, adaptive: float, weight_adaptive: float = 1.0) -> float:
     """고정 앵커 점수와 퍼센타일 점수를 섞는다.
 
-    기본은 고정 앵커 65% + 퍼센타일 35%. 앵커는 해석 가능하고 퍼센타일은
-    사이클 감쇠에 강하다. 둘의 장점을 조금씩 가져간다.
+    비율은 코드가 아니라 설정이 정한다 (bcs.normalization.adaptive_weight).
+    현재 기본은 **퍼센타일 전용(1.0)** 이다 — 고정 앵커가 사이클을 넘어
+    일반화되지 않는다는 것이 표본 외 검증(라이트코인·이더리움 전환점 21곳)에서
+    확인됐다. 근거는 docs/14, docs/15.
     """
     w = clamp(weight_adaptive, 0.0, 1.0)
     return clamp(fixed * (1.0 - w) + adaptive * w)

@@ -29,12 +29,14 @@ def evaluate(
     manual: Optional[ManualInput] = None,
     state: Optional[ExecutionState] = None,
     as_of: Optional[date] = None,
-    adaptive_weight: float = 0.35,
+    adaptive_weight: Optional[float] = None,   # None → cfg.adaptive_weight
     record: bool = True,
 ) -> tuple[Snapshot, ExecutionState]:
     """스냅샷 하나를 만든다. 상태(state)는 BCS 이력이 갱신되어 함께 반환된다."""
     manual = manual or ManualInput(as_of=None)
     state = state or ExecutionState()
+    if adaptive_weight is None:
+        adaptive_weight = cfg.adaptive_weight
 
     warnings: list[str] = list(manual.warnings)
 

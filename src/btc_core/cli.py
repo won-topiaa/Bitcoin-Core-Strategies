@@ -51,8 +51,9 @@ def build_parser() -> argparse.ArgumentParser:
     s.add_argument("--as-of", default=None, help="기준일 YYYY-MM-DD")
     s.add_argument("--format", choices=("console", "markdown", "json"), default="console")
     s.add_argument("--out", default=None, help="파일로 저장")
-    s.add_argument("--adaptive-weight", type=float, default=0.35,
-                   help="퍼센타일 척도 혼합 비율 (0=고정 앵커만)")
+    s.add_argument("--adaptive-weight", type=float, default=None,
+                   help="퍼센타일 혼합 비율 (0=앵커만, 1=퍼센타일만). "
+                        "생략하면 config 의 bcs.normalization.adaptive_weight")
     s.add_argument("--no-record", action="store_true", help="BCS 이력에 기록하지 않는다")
     s.add_argument("--years", type=float, default=DEFAULT_YEARS)
 
