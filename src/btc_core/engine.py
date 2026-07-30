@@ -57,7 +57,22 @@ def evaluate(
 
     if bundle is not None:
         warnings.extend(bundle.warnings)
-        market = bundle.market.normalized()
+        market = bundle.market
+        # as_of 는 **라벨이 아니라 기준선**이다. 자르지 않으면 "기준일
+        # 2018-12-15" 밑에 2026년 가격과 점수가 실린다 — 리포트가 거짓말을 한다.
+        if as_of is not None and market.price.dates and market.price.dates[-1] > as_of:
+            trimmed = market.up_to(as_of)
+            if not len(trimmed.price):
+                warnings.append(
+                    f"기준일 {as_of} 이전 데이터가 없어 전체 구간으로 계산했습니다"
+                )
+            else:
+                dropped = len(market.price) - len(trimmed.price)
+                market = trimmed
+                warnings.append(
+                    f"기준일 {as_of} 이후 {dropped}일을 잘라내고 계산했습니다"
+                )
+        market = market.normalized()
         computed = compute_all(market)
         for key, iv in computed.items():
             if iv.value is not None:

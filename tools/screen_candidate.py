@@ -55,6 +55,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "tools"))
 
+from btc_core.cycles import MEASURED_BOTTOMS, MEASURED_TOPS   # noqa: E402
 from btc_core.datasources.csv_source import load_csv_bundle   # noqa: E402
 from btc_core.normalize import percentile_rank                # noqa: E402
 from btc_core.series import Series, ratio, sma                 # noqa: E402
@@ -65,9 +66,11 @@ FAMILIES: dict[str, str] = {}
 PERCENTILE_YEARS = 4.0
 REDUNDANCY_LIMIT = 0.85
 
-# 실측된 사이클 전환점. 마지막 저점은 미완성 사이클의 최저점이라 확정이 아니다.
-TOPS = (date(2013, 11, 30), date(2017, 12, 17), date(2021, 11, 10), date(2025, 10, 6))
-BOTTOMS = (date(2015, 1, 14), date(2018, 12, 15), date(2022, 11, 21), date(2026, 6, 6))
+# 전환점은 btc_core.cycles 가 소유한다. 예전에는 도구마다 자기 표를 들고
+# 있었고 하나가 나머지와 어긋났다 — 손으로 고른 저점이 잰 저점보다 결과를
+# 좋아 보이게 하고 있었다(docs/21).
+TOPS = MEASURED_TOPS
+BOTTOMS = MEASURED_BOTTOMS
 NEAR_DAYS = 45
 
 CYCLES = (

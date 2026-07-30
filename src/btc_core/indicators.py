@@ -89,6 +89,32 @@ class MarketData:
     exchange_inflow: Optional[Series] = None   # 일간 거래소 유입 (BTC)
     exchange_outflow: Optional[Series] = None  # 일간 거래소 유출 (BTC)
 
+    def up_to(self, end: date) -> "MarketData":
+        """기준일 이후 데이터를 잘라낸다.
+
+        이게 없으면 ``--as-of 2018-12-15`` 가 **2018년 날짜에 2026년 숫자**를
+        붙여 보고한다. 리포트가 거짓말을 하는 것이라 조용히 넘길 수 없다.
+        """
+        def _c(s: Optional[Series]) -> Optional[Series]:
+            if s is None:
+                return None
+            out = s.slice_to(end)
+            return out if len(out) else None
+
+        return MarketData(
+            price=self.price.slice_to(end),
+            market_cap=_c(self.market_cap),
+            realized_cap=_c(self.realized_cap),
+            issuance_btc=_c(self.issuance_btc),
+            issuance_usd=_c(self.issuance_usd),
+            hashrate=_c(self.hashrate),
+            supply=_c(self.supply),
+            active_addresses=_c(self.active_addresses),
+            exchange_supply=_c(self.exchange_supply),
+            exchange_inflow=_c(self.exchange_inflow),
+            exchange_outflow=_c(self.exchange_outflow),
+        )
+
     def normalized(self) -> "MarketData":
         """모든 시계열을 일간 연속으로 맞춘다."""
         def _r(s: Optional[Series]) -> Optional[Series]:

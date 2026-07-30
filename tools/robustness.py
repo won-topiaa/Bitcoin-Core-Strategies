@@ -44,6 +44,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "tools"))
 
+from btc_core.cycles import MEASURED_BOTTOMS, MEASURED_TOPS   # noqa: E402
 from btc_core.config import StrategyConfig, load_config          # noqa: E402
 from btc_core.datasources.csv_source import load_csv_bundle       # noqa: E402
 from btc_core.datasources.manual import load_manual               # noqa: E402
@@ -55,8 +56,8 @@ from btc_core.score import score_indicator                        # noqa: E402
 
 import backtest as bt                                             # noqa: E402
 
-TOPS = (date(2013, 11, 30), date(2017, 12, 17), date(2021, 11, 10), date(2025, 10, 6))
-BOTTOMS = (date(2015, 1, 14), date(2018, 12, 15), date(2022, 11, 21), date(2026, 6, 6))
+TOPS = MEASURED_TOPS          # btc_core.cycles 가 소유한다 (docs/21)
+BOTTOMS = MEASURED_BOTTOMS
 NEAR_DAYS = 45
 PERCENTILE_DAYS = int(4 * 365.25)
 

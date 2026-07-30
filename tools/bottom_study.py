@@ -27,22 +27,16 @@ sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "tools"))
 
 from btc_core.config import load_config                       # noqa: E402
+from btc_core.cycles import MEASURED_BOTTOMS, MEASURED_TOPS    # noqa: E402
 from btc_core.datasources.csv_source import load_csv_bundle    # noqa: E402
 import backtest as bt                                          # noqa: E402
 
-# 각 약세장의 최저 종가. 사후 지정이며, 이 선택 자체가 결과에 영향을 준다.
-BOTTOMS = [
-    ("2011", date(2011, 11, 18)),
-    ("2015", date(2015, 1, 14)),
-    ("2018", date(2018, 12, 15)),
-    ("2022", date(2022, 11, 21)),
+# 전환점은 btc_core.cycles 가 소유한다 — 고른 것이 아니라 잰 것이다(docs/21).
+# 2011 저점은 반감기 이전이라 그 규칙으로 안 잡히므로 여기서만 따로 붙인다.
+BOTTOMS = [("2011", date(2011, 11, 18))] + [
+    (str(d.year), d) for d in MEASURED_BOTTOMS
 ]
-TOPS = [
-    ("2013", date(2013, 12, 4)),
-    ("2017", date(2017, 12, 16)),
-    ("2021", date(2021, 11, 8)),
-    ("2025", date(2025, 10, 6)),
-]
+TOPS = [(str(d.year), d) for d in MEASURED_TOPS]
 HALVINGS = [date(2012, 11, 28), date(2016, 7, 9), date(2020, 5, 11), date(2024, 4, 20)]
 
 NEAR_DAYS = 90          # 저점 ±이 기간을 '저점 근처'로 본다

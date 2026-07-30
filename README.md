@@ -291,6 +291,7 @@ node 파서로 구문, 정적 검사로 가드 누락, 빌드 결과로 자리�
 | [18. 무료 데이터 경로](docs/18-무료-데이터-경로.md) | **외부 필수 시계열을 7개 → 2개로, 나머지는 계산** |
 | [19. BCS 구간 표시](docs/19-BCS-구간-표시.md) | **점 하나 대신 범위 — 파라미터 0개로 불확실성 표시, 시각화** |
 | [20. LPPLS 검정](docs/20-LPPLS-검정.md) | **가장 유망하던 미심사 후보 — 표시 전용으로도 기각** |
+| [21. 전수 코드 점검](docs/21-전수-코드점검.md) | **`--as-of` 가 거짓말하고 있었다 · 전환점을 고르지 않고 재게 바꿈** |
 
 ---
 
@@ -334,9 +335,9 @@ src/btc_core/
   cli.py
   datasources/              CoinMetrics · CSV · 수동입력
     derive.py               반감기 스케줄로 유통량·발행량·시총 계산 (API 불필요)
-docs/                       설계 문서 21편
+docs/                       설계 문서 22편
 journal/TEMPLATE.md         판단 기록 템플릿 (원문 6.4)
-tests/                      321개
+tests/                      337개
 tools/backtest.py           16년 이력 백테스트
 tools/screen_candidate.py   신규 지표 6관문 검정
 tools/screen_indicator.py   신규 지표 선별 검정 (1세대)
@@ -357,7 +358,7 @@ viz/site/                   생성된 페이지 세 장
 **의존성은 PyYAML 하나뿐이다.** 나머지는 표준 라이브러리로 구현했다.
 
 ```bash
-python3 -m pytest tests/ -q      # 321 passed
+python3 -m pytest tests/ -q      # 337 passed
 ```
 
 네트워크 없이 전부 통과한다. 합성 시계열로 사이클 전 구간을 훑는 회귀 테스트가

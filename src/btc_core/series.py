@@ -82,6 +82,15 @@ class Series:
             idx = len(self.dates)
         return Series(self.dates[idx:], self.values[idx:], self.name)
 
+    def slice_to(self, end: date) -> "Series":
+        """end 이후를 잘라낸다. 특정 시점 기준으로 되돌려 계산할 때 쓴다."""
+        idx = len(self.dates)
+        for i, d in enumerate(self.dates):
+            if d > end:
+                idx = i
+                break
+        return Series(self.dates[:idx], self.values[:idx], self.name)
+
     def map_with(self, other: "Series", fn) -> "Series":
         """두 시계열을 날짜로 정렬해 결합한다. 한쪽이 없으면 그 날짜는 None."""
         lookup = dict(zip(other.dates, other.values))

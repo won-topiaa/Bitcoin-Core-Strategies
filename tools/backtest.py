@@ -27,7 +27,8 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from btc_core.config import load_config                      # noqa: E402
-from btc_core.datasources.csv_source import load_csv_bundle   # noqa: E402
+from btc_core.datasources.csv_source import load_csv_bundle
+from btc_core.datasources.derive import backfill_bundle   # noqa: E402
 from btc_core.indicators import (                             # noqa: E402
     ACTIVE_ADDR_WINDOW,
     GRM_BASE, HASH_EXPANSION_RATIO, HASH_FAST, HASH_RECOVERY_WINDOW, HASH_SLOW,
@@ -67,6 +68,10 @@ class Day:
     band: str = ""
     coverage: float = 0.0
     consensus: bool = False
+    # 계열 커버리지는 **멤버 결측을 숨긴다.** 밸류에이션은 max_abs 라 서멀캡
+    # 하나만 살아 있어도 계열은 '있음'이고 커버리지는 100% 다. 실제로
+    # CoinMetrics 의 하루 지연이 그 상태를 만들고 그날 BCS 가 십수 점 움직인다.
+    nmiss: int = 0
 
 
 # ---------------------------------------------------------------------------
@@ -193,6 +198,7 @@ def run(cfg, market, adaptive: float) -> list[Day]:
                 band=cfg.band_for(bcs)["key"] if bcs is not None else "",
                 coverage=coverage,
                 consensus=c.passed,
+                nmiss=sum(1 for r in readings.values() if not r.available),
             )
         )
     return days
@@ -443,9 +449,17 @@ def summarize(cfg, days: list[Day], adaptive: float) -> str:
     cur = live[-1]
     add("## 현재")
     add("")
+    # 마지막 날은 실현시총이 하루 늦어 지표가 빠질 수 있다. 그 상태의 점수를
+    # 그냥 적으면 하루 지연 때문에 위치가 십수 점 움직인 것을 "위치가 바뀌었다"
+    # 로 읽게 된다. 지표가 전부 살아 있는 마지막 날을 따로 알려 준다.
+    full = next((d for d in reversed(days) if d.nmiss == 0 and d.bcs is not None), None)
     add(f"- {cur.on} · ${cur.price:,.0f}")
     add(f"- **BCS {cur.bcs:+.1f}** — {cfg.band_for(cur.bcs)['label']}")
     add(f"- 합의 게이트: {'통과' if cur.consensus else '미달'}")
+    if cur.nmiss:
+        add(f"- 지표 {cur.nmiss}개 결측 (실현시총 지연) — 이 점수는 반쪽이다"
+            + (f". 아홉 개가 전부 산출된 마지막 날은 **{full.on} · BCS {full.bcs:+.1f}**"
+               if full and full.on != cur.on else ""))
     return "\n".join(L)
 
 
@@ -474,7 +488,9 @@ def main() -> int:
     args = ap.parse_args()
 
     cfg = load_config(args.config)
-    bundle = load_csv_bundle(args.csv)
+    # CLI 와 같은 '현재'를 보여주려면 파생도 같이 적용해야 한다.
+    # 안 하면 최신 하루의 시총이 비어 MVRV·NUPL 이 '—' 로 나온다.
+    bundle = backfill_bundle(load_csv_bundle(args.csv))
     adaptive = cfg.adaptive_weight if args.adaptive is None else args.adaptive
     days = run(cfg, bundle.market, adaptive)
     text = summarize(cfg, days, adaptive)

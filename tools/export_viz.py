@@ -31,6 +31,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import backtest as bt  # noqa: E402
 
 from btc_core.config import StrategyConfig, load_config  # noqa: E402
+from btc_core.cycles import MEASURED_BOTTOMS, MEASURED_TOPS  # noqa: E402
 from btc_core.datasources.csv_source import load_csv_bundle  # noqa: E402
 from btc_core.datasources.derive import backfill_bundle  # noqa: E402
 from btc_core.indicators import HALVINGS, days_since_halving  # noqa: E402
@@ -42,16 +43,12 @@ from btc_core.score import (  # noqa: E402
     score_indicator,
 )
 
-# 사이클 전환점. docs/07 에서 확정한 날짜다.
-TURNING_POINTS = (
-    ("top", date(2013, 11, 30)),
-    ("bottom", date(2015, 1, 14)),
-    ("top", date(2017, 12, 17)),
-    ("bottom", date(2018, 12, 15)),
-    ("top", date(2021, 11, 10)),
-    ("bottom", date(2022, 11, 21)),
-    ("top", date(2025, 10, 6)),
-    ("bottom", date(2026, 6, 6)),
+# 사이클 전환점. btc_core.cycles 가 소유하고, 고른 것이 아니라 잰 것이다.
+# 고점·저점을 번갈아 늘어놓는다.
+TURNING_POINTS = tuple(
+    x for pair in zip((("top", d) for d in MEASURED_TOPS),
+                      (("bottom", d) for d in MEASURED_BOTTOMS))
+    for x in pair
 )
 
 WEEKLY_STRIDE = 7

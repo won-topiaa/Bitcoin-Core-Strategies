@@ -495,3 +495,70 @@ def test_manual_input_can_override_the_realized_price_floor(cfg, bundle):
                        manual=ManualInput(as_of=None, floors={"realized_price": 55_000}))
     rp = next(f for f in snap.plan.floors if f.key == "realized_price")
     assert rp.price == pytest.approx(55_000.0)
+
+
+# --- as_of 는 라벨이 아니라 기준선이다 --------------------------------------
+
+def test_as_of_actually_cuts_the_data(cfg):
+    """``--as-of 2018-12-15`` 은 그날까지의 데이터로 계산해야 한다.
+
+    안 자르면 **2018년 날짜 밑에 2026년 가격과 점수**가 실린다. 리포트가
+    거짓말을 하는 것이라 조용히 넘길 수 없다. 전수 점검에서 실제로 나왔다.
+    """
+    from datetime import date
+    from pathlib import Path
+
+    from btc_core.datasources.csv_source import load_csv_bundle
+
+    csv = Path(__file__).resolve().parents[1] / "data" / "market.csv"
+    if not csv.exists():
+        pytest.skip("data/market.csv 없음")
+
+    bundle = load_csv_bundle(csv)
+    latest, _ = evaluate(cfg, bundle=bundle, record=False)
+    past, _ = evaluate(cfg, bundle=bundle, as_of=date(2018, 12, 15), record=False)
+
+    assert past.as_of == date(2018, 12, 15)
+    assert past.price != latest.price, "가격이 그대로면 자르지 않은 것이다"
+    assert past.price == pytest.approx(3185, rel=0.01)
+    # docs/07 이 기록한 그날의 값
+    assert past.bcs == pytest.approx(-86.6, abs=1.0)
+    assert any("잘라내고" in w for w in past.warnings)
+
+
+def test_as_of_in_the_future_changes_nothing(cfg):
+    """데이터 끝보다 뒤면 자를 것이 없다."""
+    from datetime import date
+
+    bundle = DataBundle(market=fixtures.market_data(), origin="테스트")
+    a, _ = evaluate(cfg, bundle=bundle, record=False)
+    b, _ = evaluate(cfg, bundle=bundle, as_of=date(2099, 1, 1), record=False)
+    assert a.bcs == b.bcs
+    assert not any("잘라내고" in w for w in b.warnings)
+
+
+def test_as_of_before_all_data_falls_back_with_a_warning(cfg):
+    """데이터 시작보다 앞이면 자를 수 없다. 조용히 빈 값을 내지 말고 알린다."""
+    from datetime import date
+
+    bundle = DataBundle(market=fixtures.market_data(), origin="테스트")
+    snap, _ = evaluate(cfg, bundle=bundle, as_of=date(1990, 1, 1), record=False)
+    assert snap.bcs is not None
+    assert any("이전 데이터가 없어" in w for w in snap.warnings)
+
+
+def test_slicing_reproduces_a_known_turning_point(cfg):
+    """2021 고점을 as_of 로 되짚으면 그때의 값이 나와야 한다."""
+    from datetime import date
+    from pathlib import Path
+
+    from btc_core.datasources.csv_source import load_csv_bundle
+
+    csv = Path(__file__).resolve().parents[1] / "data" / "market.csv"
+    if not csv.exists():
+        pytest.skip("data/market.csv 없음")
+
+    snap, _ = evaluate(cfg, bundle=load_csv_bundle(csv),
+                       as_of=date(2021, 11, 10), record=False)
+    assert snap.bcs == pytest.approx(52.0, abs=1.5)
+    assert snap.price == pytest.approx(64756, rel=0.01)
