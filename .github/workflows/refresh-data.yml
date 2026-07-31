@@ -5,9 +5,9 @@
 # CSV 는 매 실행에서 전 구간을 새로 받는다(1.7초). 증분으로 이어 온 파일과
 # 바이트 단위로 같은 결과가 나오는 것은 tests/test_refresh.py 가 지킨다.
 #
-# 주의: GitHub Actions 의 schedule 은 **기본 브랜치의 워크플로만** 실행한다.
-# 이 파일이 작업 브랜치에 있는 동안에는 자동으로 돌지 않고, 수동 실행
-# (workflow_dispatch) 으로만 돈다. 병합된 뒤부터 매일 돈다.
+# GitHub Actions 의 schedule 은 **기본 브랜치의 워크플로만** 실행한다. 이 저장소는
+# claude/bitcoin-key-indicators-strategy-hrcbdd 가 기본 브랜치라, 이 파일이 여기
+# 있는 것만으로 매일(02:20 UTC) 자동으로 돈다. 즉시 확인은 workflow_dispatch.
 name: 데이터 갱신
 
 on:
