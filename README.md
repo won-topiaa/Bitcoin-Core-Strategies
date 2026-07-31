@@ -5,6 +5,13 @@
 Bitcoin Magazine Pro의 사이클 타이밍 지표 12개에서 핵심을 뽑아, **서로 독립적인
 3개 계열 + 1개 거시 축 + 4개 바닥선**으로 재구성한 판단 시스템과 그 실행 엔진.
 
+### 🔗 라이브 사이트 — **[won-topiaa.github.io/Bitcoin-Core-Strategies](https://won-topiaa.github.io/Bitcoin-Core-Strategies/)**
+
+매일 자동 갱신되는 대시보드(한/영·라이트/다크). 지금 위치·16년 이력·거시 배경을
+한 화면에서 본다. → [지금 위치](https://won-topiaa.github.io/Bitcoin-Core-Strategies/) ·
+[믿어도 되나](https://won-topiaa.github.io/Bitcoin-Core-Strategies/verify.html) ·
+[규칙과 한계](https://won-topiaa.github.io/Bitcoin-Core-Strategies/rules.html)
+
 ## 이것이 무엇이고, 무엇이 아닌가
 
 **이 시스템은 "지금 사라 / 지금 팔아라"를 말하는 도구가 아니다.**
