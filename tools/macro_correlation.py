@@ -190,28 +190,92 @@ def _align(a: dict[date, float], b: dict[date, float],
 # ---------------------------------------------------------------------------
 # 분석 1 — 나스닥 ↔ 비트코인 (수익률 이동상관)
 # ---------------------------------------------------------------------------
+def _is_monthly(series: dict[date, float]) -> bool:
+    """관측 간격이 대체로 20일 이상이면 월간으로 본다."""
+    ds = sorted(series)
+    if len(ds) < 4:
+        return False
+    gaps = [(b - a).days for a, b in zip(ds, ds[1:])]
+    gaps.sort()
+    return gaps[len(gaps) // 2] > 20     # 중위 간격
+
+
 def nasdaq_analysis(btc: dict[date, float], ndq: dict[date, float]) -> dict:
-    bw, nw = weekly(btc), weekly(ndq)
+    # 주가 시계열의 빈도에 맞춘다. 월간 지수(S&P500 datahub 등)를 주간 BTC 와
+    # 비교하면 1주 수익률 vs 1개월 수익률이 되어 어긋난다. 둘 다 같은 빈도로.
+    monthly = _is_monthly(ndq)
+    freq = month_end if monthly else weekly
+    bw, nw = freq(btc), freq(ndq)
     br, nr = log_returns(bw), log_returns(nw)
-    # 공통 주만
-    common = sorted(set(br) & set(nr))
-    x = [br[d] for d in common]
-    y = [nr[d] for d in common]
+
+    # **달력 구간**으로 맞춘다. 월간 지수는 1일, BTC 월말은 30일이라 정확한
+    # 날짜로 교집합하면 하나도 안 맞는다. (연,월) 또는 (연,주)로 키를 잡는다.
+    def key(d: date):
+        return (d.year, d.month) if monthly else d.isocalendar()[:2]
+
+    brp = {key(d): v for d, v in sorted(br.items())}
+    nrp = {key(d): v for d, v in sorted(nr.items())}
+    common = sorted(set(brp) & set(nrp))
+    x = [brp[k] for k in common]
+    y = [nrp[k] for k in common]
     full = pearson(x, y)
 
-    # 연도별 상관 — 결합이 언제 세졌는지
     by_year: dict[int, tuple[list[float], list[float]]] = {}
-    for d in common:
-        by_year.setdefault(d.year, ([], []))
-        by_year[d.year][0].append(br[d])
-        by_year[d.year][1].append(nr[d])
+    for k in common:
+        by_year.setdefault(k[0], ([], []))
+        by_year[k[0]][0].append(brp[k])
+        by_year[k[0]][1].append(nrp[k])
+    min_pts = 6 if monthly else 10
     yearly = {y_: pearson(xs, ys) for y_, (xs, ys) in sorted(by_year.items())
-              if len(xs) >= 10}
+              if len(xs) >= min_pts}
 
-    # 최근 26주
-    recent = common[-26:]
-    rec = pearson([br[d] for d in recent], [nr[d] for d in recent]) if len(recent) >= 10 else None
-    return {"n_weeks": len(common), "full": full, "yearly": yearly, "recent26": rec,
+    # 국면 분할 — 이게 핵심 발견이다. 연도별은 표본이 작아 튀므로, 2020년
+    # (코로나·기관 유입) 앞뒤로 크게 갈라 안정된 값을 본다.
+    def era_corr(lo: int, hi: int):
+        ks = [k for k in common if lo <= k[0] <= hi]
+        return (pearson([brp[k] for k in ks], [nrp[k] for k in ks]), len(ks))
+    eras = {"2013~2019": era_corr(2013, 2019), "2020~현재": era_corr(2020, 2100)}
+
+    win = 24 if monthly else 26
+    recent = common[-win:]
+    rec = pearson([brp[k] for k in recent], [nrp[k] for k in recent]) \
+        if len(recent) >= min_pts else None
+    return {"n": len(common), "unit": "개월" if monthly else "주",
+            "full": full, "yearly": yearly, "eras": eras, "recent": rec,
+            "recent_win": win, "span": (common[0], common[-1]) if common else None}
+
+
+# ---------------------------------------------------------------------------
+# 분석 1b — VIX(공포지수) ↔ 비트코인 (수익률 vs VIX 변화)
+# ---------------------------------------------------------------------------
+def vix_analysis(btc: dict[date, float], vix: dict[date, float]) -> dict:
+    """월간 BTC 로그수익률 ↔ 월간 VIX 변화(ΔVIX)의 상관.
+
+    VIX 는 주식시장 공포지수다(레벨 10~80, 평균회귀). 비트코인이 '고베타
+    위험자산'으로 움직이면 **공포가 커질 때(ΔVIX>0) 같이 빠진다** → 음의 상관이
+    기대된다. 레벨이 아니라 변화로 재는 이유: 둘 다 우상향이 아니라, '이번 달
+    공포가 늘었나/줄었나' vs '이번 달 BTC 가 올랐나/내렸나' 를 맞춰야 한다.
+    """
+    bm, vm = month_end(btc), month_end(vix)
+    br = log_returns(bm)                      # BTC 월 로그수익률
+    vd: dict[date, float] = {}                # ΔVIX (이번달 - 지난달)
+    vs = sorted(vm)
+    for a, b in zip(vs, vs[1:]):
+        vd[b] = vm[b] - vm[a]
+
+    def key(d: date):
+        return (d.year, d.month)
+    brp = {key(d): v for d, v in sorted(br.items())}
+    vdp = {key(d): v for d, v in sorted(vd.items())}
+    common = sorted(set(brp) & set(vdp))
+    x = [brp[k] for k in common]
+    y = [vdp[k] for k in common]
+
+    def era(lo, hi):
+        ks = [k for k in common if lo <= k[0] <= hi]
+        return (pearson([brp[k] for k in ks], [vdp[k] for k in ks]), len(ks))
+    return {"n": len(common), "full": pearson(x, y),
+            "eras": {"2013~2019": era(2013, 2019), "2020~현재": era(2020, 2100)},
             "span": (common[0], common[-1]) if common else None}
 
 
@@ -269,22 +333,45 @@ def report(btc: dict[date, float], macro: dict[str, dict[date, float]]) -> str:
     add("=" * 78)
     btc_month = month_end(btc)
 
-    # --- 나스닥 ---
-    ndq_key = next((k for k in macro if "nasdaq" in k.lower() or "ndq" in k.lower()), None)
-    add("\n[1] 나스닥 ↔ 비트코인 — 주간 로그수익률 상관")
+    # --- 주식지수 (나스닥/S&P500) ---
+    eq_key = next((k for k in macro if any(
+        t in k.lower() for t in ("nasdaq", "ndq", "sp500", "s&p", "equit"))), None)
+    label = eq_key or "주가지수"
+    add(f"\n[1] {label} ↔ 비트코인 — 로그수익률 상관")
     add("-" * 78)
-    if ndq_key is None:
-        add("  나스닥 열이 없습니다 (macro.csv 에 nasdaq 추가).")
+    if eq_key is None:
+        add("  주가지수 열이 없습니다 (macro.csv 에 nasdaq 또는 sp500 추가).")
     else:
-        r = nasdaq_analysis(btc, macro[ndq_key])
+        r = nasdaq_analysis(btc, macro[eq_key])
+        u = r["unit"]
         if r["span"]:
-            add(f"  기간 {r['span'][0]} ~ {r['span'][1]} · 공통 {r['n_weeks']}주")
+            add(f"  기간 {r['span'][0]} ~ {r['span'][1]} · 공통 {r['n']}{u} "
+                f"({'월간' if u == '개월' else '주간'} 수익률)")
         add(f"  전 구간 상관 ρ = {r['full']:+.2f}" if r["full"] is not None else "  전 구간 상관 —")
-        add(f"  최근 26주 ρ  = {r['recent26']:+.2f}" if r["recent26"] is not None else "  최근 26주 —")
-        add("  연도별 ρ:")
+        add("  국면별 (핵심):")
+        for name, (v, npt) in r["eras"].items():
+            add(f"    {name}  ρ {v:+.2f}   ({npt}{u})" if v is not None else f"    {name}  —")
+        add(f"  최근 {r['recent_win']}{u} ρ = {r['recent']:+.2f}"
+            if r["recent"] is not None else f"  최근 {r['recent_win']}{u} —")
+        add("  연도별 ρ (표본 작아 참고):")
         for y_, v in r["yearly"].items():
             bar = "█" * max(0, round((v or 0) * 20))
-            add(f"    {y_}  {v:+.2f}  {bar}")
+            neg = "░" * max(0, round(-(v or 0) * 20))
+            add(f"    {y_}  {v:+.2f}  {neg}{bar}")
+
+    # --- VIX (공포지수) — 있으면 ---
+    vix_key = next((k for k in macro if "vix" in k.lower()), None)
+    if vix_key is not None:
+        add("\n[1b] VIX(공포지수) ↔ 비트코인 — 월수익률 vs ΔVIX (위험자산성 점검)")
+        add("-" * 78)
+        v = vix_analysis(btc, macro[vix_key])
+        if v["span"]:
+            add(f"  기간 {v['span'][0]} ~ {v['span'][1]} · 공통 {v['n']}개월")
+        add(f"  전 구간 ρ = {v['full']:+.2f}   (음수 = 공포 커질 때 BTC 하락 = 위험자산)"
+            if v["full"] is not None else "  전 구간 —")
+        for name, (val, npt) in v["eras"].items():
+            add(f"    {name}  ρ {val:+.2f}   ({npt}개월)" if val is not None
+                else f"    {name}  —")
 
     # --- M2 (열마다) ---
     add("\n[2] M2 ↔ 비트코인 — 전년비 증가율, 선행/후행 스캔")

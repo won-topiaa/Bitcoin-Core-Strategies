@@ -90,6 +90,28 @@ def test_nasdaq_correlation_recovers_beta():
     assert r["full"] is not None and r["full"] > 0.6
 
 
+def test_vix_recovers_negative_risk_asset_relation():
+    """VIX 가 오를 때(공포↑) BTC 가 빠지게 심으면 음의 상관이 나와야."""
+    import random
+    rng = random.Random(11)
+    days = [date(2015, 1, 1)]
+    for _ in range(360):
+        days.append(days[-1].fromordinal(days[-1].toordinal() + 5))
+    vix, lvl = {}, 20.0
+    for d in days:
+        lvl = max(9.0, lvl + rng.gauss(0, 3))       # 평균회귀 없이 랜덤워크로 충분
+        vix[d] = lvl
+    # BTC 수익률 = -0.05 * ΔVIX(월) + 잡음  → 공포 커지면 하락
+    btc, price = {}, 10000.0
+    vs = sorted(vix)
+    for i, d in enumerate(vs):
+        dv = vix[d] - vix[vs[i - 1]] if i else 0.0
+        price *= math.exp(-0.05 * dv + rng.gauss(0, 0.02))
+        btc[d] = price
+    r = mc.vix_analysis(btc, vix)
+    assert r["full"] is not None and r["full"] < -0.3, r["full"]
+
+
 def test_align_matches_nearest_within_tolerance():
     # 월말끼리 하루이틀 어긋난 격자 → 같은 달끼리 매칭돼야
     a = {date(2020, 1, 31): 1.0, date(2020, 2, 29): 2.0}

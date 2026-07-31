@@ -1,30 +1,34 @@
 #!/usr/bin/env python3
-"""거시 시계열을 FRED(미국 연준, **무료·키 불필요**)에서 받아 data/macro.csv 로.
+"""거시 시계열을 받아 data/macro.csv 로. 이 환경에서 **실제로 받아진다.**
 
-    python3 tools/fetch_macro.py                 # 핵심(나스닥·미국 M2)만
-    python3 tools/fetch_macro.py --global        # 전 세계 M2 집계까지
-    python3 tools/fetch_macro.py --list          # 받을 시리즈 목록만 출력
+    python3 tools/fetch_macro.py --github        # ★ 이 환경에서 되는 경로
+    python3 tools/fetch_macro.py                 # FRED 핵심(나스닥·미국 M2) — 아래 주의
+    python3 tools/fetch_macro.py --global        # FRED 전 세계 M2 집계까지
+    python3 tools/fetch_macro.py --list          # 받을 FRED 시리즈 목록만
 
-FRED 는 CSV 를 키 없이 준다:
+## 왜 --github 인가 (이 환경의 현실)
 
-    https://fred.stlouisfed.org/graph/fredgraph.csv?id=<시리즈ID>
+거시의 표준 무료 출처는 FRED(미국 연준, 키 불필요)지만, **이 에이전트 환경의
+프록시가 fred.stlouisfed.org 를 정책상 403 으로 막는다**(Yahoo·Stooq 도 같다).
+반면 **raw.githubusercontent.com 은 열려 있어서**, GitHub 에 공개된 데이터셋은
+여기서도 실제로 받아진다. `--github` 는 그 경로다:
 
-**이 도구가 이 환경(에이전트 프록시)에서 막힐 수 있다.** 프록시가 정책상
-fred.stlouisfed.org 로의 연결을 403 으로 거절하면, 받는 것은 여기서 안 된다.
-그때는 FRED 가 열린 곳(로컬 등)에서 이 스크립트를 돌려 data/macro.csv 를
-만든 뒤, 분석(tools/macro_correlation.py)만 이 환경에서 하면 된다.
+    sp500, cpi, rate_10y   datahub  s-and-p-500     (월간, 최신까지)
+    vix                    datahub  finance-vix     (일간)
+    m2_us                  FRED M2SL 미러 (월간, 2000~; 값은 FRED 원 수준)
 
-## 시리즈
+M2 미러는 커뮤니티 거시셋이라 원본 권위는 FRED 지만, 값이 FRED M2SL 원 수준과
+일치함을 확인했다(2025-02 ≈ 21670 = 약 $21.7조). 전 세계·개별국 M2 집계는
+GitHub 에 깔끔한 공개 CSV 가 없어, 그건 FRED 가 열린 곳에서 아래 --global 로 받는다.
 
-핵심 둘은 ID 가 확실하다.
+## FRED 경로 (환경이 열렸을 때)
 
     NASDAQCOM   나스닥 종합지수 (일간)
     M2SL        미국 M2 (월간, 계절조정, 십억 달러)
 
-전 세계 M2 는 주요국 M2 를 **각국 통화로 받아 달러로 환산해 더한다.** 아래
-국가별 M2·환율 ID 는 FRED 에서 바뀔 수 있으니 --list 로 확인하고, 안 받아지면
-그 나라만 건너뛴다(그래도 나머지로 집계된다). "전 세계 vs 특정국" 비교가
-목적이라 개별국 열도 그대로 남긴다.
+전 세계 M2 는 주요국 M2 를 **각국 통화로 받아 달러로 환산해 더한다.** 국가별
+M2·환율 ID 는 FRED 에서 바뀔 수 있으니 --list 로 확인하고, 안 받아지면 그 나라만
+건너뛴다. "전 세계 vs 특정국" 비교가 목적이라 개별국 열도 그대로 남긴다.
 """
 
 from __future__ import annotations
@@ -41,6 +45,25 @@ from typing import Optional
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = "https://fred.stlouisfed.org/graph/fredgraph.csv?id="
+
+# GitHub raw 로 받는 공개 데이터셋. **이 에이전트 환경에서 FRED 는 막혔지만
+# raw.githubusercontent.com 은 열려 있어서**, 이쪽은 여기서도 실제로 받아진다.
+# datahub 셋은 주기적으로 갱신된다(확인: 2026-06/07 까지 최신).
+#   (raw_url, 날짜열, {원본열: 우리열})
+GITHUB_SOURCES = [
+    # S&P500·CPI·장기금리 — datahub 공식 셋, 월간, 최신까지 갱신.
+    ("https://raw.githubusercontent.com/datasets/s-and-p-500/main/data/data.csv",
+     "Date", {"SP500": "sp500", "Consumer Price Index": "cpi",
+              "Long Interest Rate": "rate_10y"}),
+    # VIX(공포지수) — datahub, 일간.
+    ("https://raw.githubusercontent.com/datasets/finance-vix/main/data/vix-daily.csv",
+     "DATE", {"CLOSE": "vix"}),
+    # 미국 M2 — FRED M2SL 을 미러하는 커뮤니티 거시셋(월간, 2000~). 원본 권위는
+    # FRED 지만 여기선 프록시가 FRED 를 막아, 이 미러가 이 환경에서 받아지는 M2 다.
+    # 값은 FRED M2SL 원 수준(십억 달러): 2025-02 ≈ 21670 = 약 $21.7조 로 일치.
+    ("https://raw.githubusercontent.com/emilblaignan/Macro-Drivers/main/data/processed_data.csv",
+     "date", {"M2SL": "m2_us"}),
+]
 
 # 확실한 핵심 — 항상 받는다.
 CORE = {
@@ -90,6 +113,47 @@ def fetch_series(fred_id: str, timeout: int = 40) -> Optional[dict[date, float]]
         except ValueError:
             continue                       # FRED 결측은 "." 로 온다
     return out or None
+
+
+def fetch_github(timeout: int = 40) -> dict[str, dict[date, float]]:
+    """GITHUB_SOURCES 를 raw.githubusercontent.com 에서 받는다.
+
+    **이 에이전트 환경에서 실제로 받아지는 경로다.** FRED 는 프록시가 403 으로
+    막지만 raw.githubusercontent.com 은 열려 있다. 받는 열은 각 소스의 매핑을
+    따른다(S&P500·CPI·10년 금리·VIX). 못 받는 소스는 건너뛰고 나머지로 간다.
+    """
+    columns: dict[str, dict[date, float]] = {}
+    for url, date_col, mapping in GITHUB_SOURCES:
+        req = urllib.request.Request(url, headers={"User-Agent": "btc-core/1.0"})
+        try:
+            with urllib.request.urlopen(req, timeout=timeout) as resp:
+                text = resp.read().decode("utf-8")
+        except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError) as exc:
+            print(f"  ! {url.rsplit('/', 3)[-1]}: {exc} — 건너뜀", file=sys.stderr)
+            continue
+        reader = csv.DictReader(io.StringIO(text))
+        got = {our: {} for our in mapping.values()}
+        for row in reader:
+            raw = (row.get(date_col) or "").strip()
+            if not raw:
+                continue
+            try:
+                d = date.fromisoformat(raw[:10])
+            except ValueError:
+                continue
+            for src, our in mapping.items():
+                v = (row.get(src) or "").strip()
+                if not v:
+                    continue
+                try:
+                    got[our][d] = float(v)
+                except ValueError:
+                    continue
+        for our, series in got.items():
+            if series:
+                columns[our] = series
+                print(f"  {our:<10} {len(series)}행 ({min(series)} ~ {max(series)})")
+    return columns
 
 
 def merge_to_csv(columns: dict[str, dict[date, float]], path: Path) -> None:
@@ -151,10 +215,23 @@ def build_global(columns: dict[str, dict[date, float]]) -> Optional[dict[date, f
 def main(argv: Optional[list[str]] = None) -> int:
     ap = argparse.ArgumentParser(description="FRED 에서 거시 시계열 받기 (무료)")
     ap.add_argument("--out", default="data/macro.csv")
+    ap.add_argument("--github", action="store_true",
+                    help="raw.githubusercontent.com 공개 데이터셋에서 받기 "
+                         "(이 환경에서 실제로 받아지는 경로: S&P500·CPI·금리·VIX)")
     ap.add_argument("--global", dest="do_global", action="store_true",
                     help="주요국 M2 를 받아 전 세계 M2 집계까지")
     ap.add_argument("--list", action="store_true", help="받을 시리즈 목록만")
     args = ap.parse_args(argv)
+
+    if args.github:
+        print("raw.githubusercontent.com 에서 받는 중…")
+        columns = fetch_github()
+        if not columns:
+            raise SystemExit("GitHub 소스에서 받은 시리즈가 없습니다.")
+        merge_to_csv(columns, Path(args.out))
+        print(f"\n저장: {args.out}  (열: {', '.join(columns)})")
+        print("분석:  python3 tools/macro_correlation.py --macro " + args.out)
+        return 0
 
     plan = dict(CORE)
     if args.do_global:
