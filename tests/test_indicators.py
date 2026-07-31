@@ -279,7 +279,7 @@ def test_puell_falls_back_when_the_usd_series_is_too_short():
                           issuance_usd=stub)
     usd_only = ind.MarketData(price=md.price, issuance_usd=stub)
 
-    assert ind.compute_all(usd_only)["puell"].value is None      # 365일 평균 불가
+    assert ind.compute_all(usd_only)["puell"].value is None      # 1460일 평균 불가
     assert ind.compute_all(both)["puell"].value is not None      # BTC 경로로 넘어간다
 
 

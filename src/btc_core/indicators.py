@@ -454,13 +454,16 @@ def puell_multiple(
     supply: Optional[Series] = None,
     issuance_usd: Optional[Series] = None,
 ) -> IndicatorValue:
-    """일간 신규 발행의 달러 가치 ÷ 그 값의 365일 이동평균.
+    """일간 신규 발행의 달러 가치 ÷ 그 값의 1460일(약 4년) 이동평균.
+
+    기준선이 흔히 쓰는 365일이 아니라 반감기를 넘는 1460일인 이유는 이 파일
+    맨 위 PUELL_WINDOW 주석에 있다 (365일이면 발행량이 약분돼 가격 지표가 된다).
 
     달러 값을 직접 받았으면 그쪽을 쓴다. 데이터 제공자가 블록별 시점 가격으로
     계산한 값이라, 코인 수량에 종가를 곱하는 것보다 정확하다.
 
-    다만 **우선순위가 곧 배타는 아니다.** 달러 시계열이 최근 몇 달치뿐이면
-    365일 평균이 나오지 않는데, 그것 때문에 온전한 BTC 시계열까지 못 쓰게 되면
+    다만 **우선순위가 곧 배타는 아니다.** 달러 시계열이 짧으면 1460일 평균이
+    나오지 않는데, 그것 때문에 온전한 BTC 시계열까지 못 쓰게 되면
     있는 데이터를 버리는 셈이다. 그래서 계산이 되는 첫 후보를 쓴다.
     """
     candidates: list[Series] = []
@@ -484,10 +487,10 @@ def puell_multiple(
             continue
         return IndicatorValue(
             "puell", cur / base, price.last_date,
-            detail={"issuance_usd": cur, "avg365_usd": base,
+            detail={"issuance_usd": cur, "avg1460_usd": base,
                     "history_4y": history_of(ratio(revenue, avg), years=4.0)},
         )
-    return IndicatorValue("puell", None, price.last_date, note="365일 평균 산출 불가")
+    return IndicatorValue("puell", None, price.last_date, note="1460일 평균 산출 불가")
 
 
 def hash_ribbons(hashrate: Optional[Series]) -> IndicatorValue:
