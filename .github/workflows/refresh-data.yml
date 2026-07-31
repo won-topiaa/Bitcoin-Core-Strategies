@@ -42,7 +42,9 @@ jobs:
           python-version: "3.11"
 
       - name: 의존성
-        run: pip install -r requirements.txt
+        # pytest 는 런타임 의존성이 아니라 requirements.txt 에 없다. 아래 '테스트'
+        # 게이트가 이걸 쓰므로 여기서 함께 깔지 않으면 매 실행이 그 단계에서 죽는다.
+        run: pip install -r requirements.txt pytest
 
       - name: 받아서 병합
         run: python3 tools/refresh_data.py --full
