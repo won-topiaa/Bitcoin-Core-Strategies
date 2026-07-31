@@ -208,36 +208,37 @@ def interval_stats(rows: list[dict]) -> dict:
 
 
 def macro_lead(cfg: StrategyConfig, macro_csv: str, rows: list, reference: date) -> Optional[dict]:
-    """중국 M2 유동성 임펄스 시계열 + 현재값/LRS. 없으면(파일·열·이력 없음) None.
+    """중국 M2(선행) vs 비트코인 겹쳐보기 데이터 + 현재 임펄스/LRS. 없으면 None.
 
-    임펄스 = 중국 M2 전년비 − 자기 24개월 평균(가속도, %p). 화면은 이것을 단일
-    축으로 그리고, 비트코인 전환점(D.tps)을 날짜 세로선으로 겹쳐 '임펄스 극단이
-    사이클 전환보다 ~1년 앞섰다'를 보인다 — 이중축 겹침(오해 소지)이 아니라 실제
-    쓰는 신호 그대로. 오프셋은 다른 차트와 같은 기준일(rows[0]).
+    화면은 비트코인 로그가격에 **중국 M2 전년비를 측정된 선행(lead)만큼 앞으로
+    당겨** 겹친다. 이중축 겹침의 위험(축을 밀어 없던 관계를 만드는 것)은 (1) 당김을
+    눈대중이 아니라 **측정값**(ρ+0.43, docs/25)으로 고정하고, (2) 축 범위를 데이터
+    최소/최대로만 잡아 없앤다. 실제로 LRS 를 움직이는 신호는 추세를 뺀 임펄스라,
+    그 값도 함께 낸다(readout). 오프셋은 다른 차트와 같은 기준일(rows[0]).
     """
     path = Path(macro_csv)
     m2_yoy = _yoy(_month_end(_load_column(path, "m2_cn")))
     if not m2_yoy:
         return None
     base = date.fromisoformat(rows[0]["d"])
-    ds = sorted(m2_yoy)
-    imp_pts: list = []
-    for i, d in enumerate(ds):
-        window = [m2_yoy[ds[j]] for j in range(max(0, i - 24), i)]
-        if len(window) >= 12:
-            imp_pts.append([(d - base).days,
-                            round(m2_yoy[d] - sum(window) / len(window), 2)])
-    if not imp_pts:
-        return None
+    by_month: dict[tuple[int, int], tuple[date, float]] = {}
+    for r in rows:
+        d = date.fromisoformat(r["d"])
+        if r.get("price"):
+            by_month[(d.year, d.month)] = (d, r["price"])
+    btc = [[(d - base).days, round(p, 0)] for d, p in
+           (by_month[k] for k in sorted(by_month))]
+    m2 = [[(d - base).days, round(v, 2)] for d, v in sorted(m2_yoy.items())]
     imp = china_m2_impulse(path, reference=reference)
     lrs = band = None
     if imp is not None:
         lrs, _, band = compute_lrs(cfg, {"m2_impulse": imp})
     return {
-        "imp": imp_pts,
+        "lead": 11,                     # 측정된 선행(개월) — 화면에서 M2 를 이만큼 당긴다
+        "btc": btc, "m2": m2,
         "impulse": None if imp is None else round(imp, 2),
         "lrs": lrs, "band": band,
-        "corr": 0.43, "corrLead": 11,   # 실측(docs/25): 중국 M2 ~11개월 선행 ρ+0.43
+        "corr": 0.43,                   # 실측(docs/25): 중국 M2 11개월 선행 ρ+0.43
     }
 
 

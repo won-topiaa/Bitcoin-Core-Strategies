@@ -175,13 +175,14 @@ ko: {
   altPrice: (from, to, now) =>
     `${from} 부터 ${to} 까지 비트코인 가격을 로그 눈금으로 그린 선 그래프. ` +
     `지금 ${now} 입니다.`,
-  m2Pos: "완화(순풍)", m2Neg: "긴축(역풍)",
+  m2Btc: "비트코인 가격", m2Cn: "중국 M2 전년비",
+  m2Shift: n => `${n}개월 당김(측정값)`,
   m2Read: (imp, lrs, band) =>
-    `지금 임펄스 ${imp}%p → 유동성 레짐 LRS ${lrs} · ‘${band}’. 실행 방향이 아니라 크기(속도)에만 반영됩니다.`,
+    `지금 중국 M2 임펄스 ${imp}%p → 유동성 레짐 LRS ${lrs} · ‘${band}’. 실행 방향이 아니라 크기(속도)에만 반영됩니다.`,
   altM2: (lead, corr, imp, band) =>
-    `중국 M2 유동성 임펄스(전년비 − 24개월평균)를 시간순으로 그린 그림. 0 위는 완화(순풍), ` +
-    `아래는 긴축(역풍)입니다. 세로선은 과거 비트코인 고점·저점이고, 임펄스 극단이 그보다 약 ` +
-    `${lead}개월 앞섰습니다(상관 ${corr}). 지금 임펄스 ${imp}, 레짐 ‘${band}’ 입니다.`,
+    `비트코인 로그가격(검정)에 중국 M2 전년비(파랑)를 측정된 선행 ${lead}개월만큼 앞으로 당겨 ` +
+    `겹친 그림. 왼쪽 축은 가격, 오른쪽 축은 M2 증가율입니다. 중국 M2 가 비트코인을 약 ` +
+    `${lead}개월 앞선 관계(상관 ${corr})입니다. 지금 임펄스 ${imp}, 레짐 ‘${band}’.`,
   altTP: (mt, mb, gap, now) =>
     `과거 전환점 여덟 곳의 위치 점수를 가로 막대로 늘어놓은 그림. 고점 네 번 평균 ` +
     `${mt}, 바닥 네 번 평균 ${mb}, 그 사이 ${gap}점이 비어 있습니다. 지금은 ${now} 입니다.`,
@@ -310,14 +311,14 @@ en: {
   altPrice: (from, to, now) =>
     `A line chart of the Bitcoin price from ${from} to ${to} on a log scale. ` +
     `It is ${now} now.`,
-  m2Pos: "easing (tailwind)", m2Neg: "tightening (headwind)",
+  m2Btc: "Bitcoin price", m2Cn: "China M2 (YoY)",
+  m2Shift: n => `pulled ${n}mo forward (measured)`,
   m2Read: (imp, lrs, band) =>
-    `Impulse now ${imp}pp → liquidity regime LRS ${lrs} · '${band}'. Scales execution size, not direction.`,
+    `China M2 impulse now ${imp}pp → liquidity regime LRS ${lrs} · '${band}'. Scales execution size, not direction.`,
   altM2: (lead, corr, imp, band) =>
-    `China M2 liquidity impulse (year-on-year minus its own 24-month mean) over time. Above zero ` +
-    `is easing (tailwind), below is tightening (headwind). Vertical lines mark past Bitcoin tops ` +
-    `and bottoms; the impulse extremes led them by about ${lead} months (correlation ${corr}). ` +
-    `Impulse now ${imp}, regime '${band}'.`,
+    `Bitcoin log price (black) overlaid with China M2 year-on-year growth (blue) pulled ${lead} ` +
+    `months forward — the measured lead. Left axis is price, right axis is M2 growth. China M2 ` +
+    `leads Bitcoin by about ${lead} months (correlation ${corr}). Impulse now ${imp}, regime '${band}'.`,
   altTP: (mt, mb, gap, now) =>
     `Horizontal bars showing the position score at eight past turning points. The four peaks ` +
     `average ${mt}, the four bottoms ${mb}, and ${gap} points between them are empty. ` +
@@ -746,31 +747,44 @@ function bandWord(key){
               mild_tightening:"mild tightening", tightening:"tightening"};
   return (EN() ? en : ko)[key] || key || "";
 }
-function drawM2Impulse(){
+function drawM2Lead(){
   const host = $("m2-host"), svg = $("m2");
   if (!host || !svg) return;
-  if (!D.macro || !D.macro.imp || !D.macro.imp.length){ host.style.display = "none"; return; }
+  if (!D.macro || !D.macro.m2 || !D.macro.m2.length){ host.style.display = "none"; return; }
   host.style.display = "";
-  const M = D.macro, P = M.imp;
+  const M = D.macro;
   const W = host.clientWidth || 900;
-  const H = Math.max(180, Math.min(260, W * 0.32));
-  const PL = 40, PR = 14, PT = 18, PB = 28;
+  const H = Math.max(190, Math.min(280, W * 0.34));
+  const PL = 46, PR = 44, PT = 14, PB = 30;
   const iw = W - PL - PR, ih = H - PT - PB;
   svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.setAttribute("height", H);
   clear(svg);
 
-  const x0 = P[0][0], x1 = P[P.length - 1][0];
+  const shift = M.lead * 30.44;                 // 측정된 선행(개월) → 일
+  const m2s = M.m2.map(p => [p[0] + shift, p[1]]);   // M2 를 앞으로 당긴다
+  const x0 = m2s[0][0], x1 = m2s[m2s.length - 1][0];
   const X = v => PL + (v - x0) / (x1 - x0) * iw;
-  let a = Math.max.apply(null, P.map(p => Math.abs(p[1]))); a = Math.max(1, a * 1.12);
-  const Y = v => PT + (a - v) / (2 * a) * ih;     // +a 위, 0 가운데, -a 아래
+  const nowOff = M.btc[M.btc.length - 1][0];
+  const btc = M.btc.filter(p => p[0] >= x0 - 40 && p[1] > 0);
 
-  // 0 위(완화)·아래(긴축) 옅은 바탕
-  el("rect", {x:PL, y:PT, width:iw, height:Y(0)-PT, fill:"var(--cool-1)", opacity:.6}, svg);
-  el("rect", {x:PL, y:Y(0), width:iw, height:PT+ih-Y(0), fill:"var(--warm-1)", opacity:.6}, svg);
-  el("line", {x1:PL, y1:Y(0), x2:PL+iw, y2:Y(0), stroke:"var(--zero)", "stroke-width":1}, svg);
-  txt(svg, PL-6, Y(0)+3, "0", {anchor:"end", size:10});
+  // 좌축: BTC 로그가격 / 우축: M2 전년비 % — 둘 다 데이터 최소·최대만 쓴다
+  const bl = Math.log10(Math.min.apply(null, btc.map(p => p[1])));
+  const bh = Math.log10(Math.max.apply(null, btc.map(p => p[1])));
+  const YB = v => PT + (bh - Math.log10(Math.max(1, v))) / (bh - bl) * ih;
+  let ml = Math.min.apply(null, M.m2.map(p => p[1]));
+  let mh = Math.max.apply(null, M.m2.map(p => p[1]));
+  const mp = (mh - ml) * 0.15 || 1; ml -= mp; mh += mp;
+  const YM = v => PT + (mh - v) / (mh - ml) * ih;
 
-  // 연도
+  for (let e = Math.ceil(bl); e <= Math.floor(bh); e++){
+    el("line", {x1:PL, y1:YB(Math.pow(10,e)), x2:PL+iw, y2:YB(Math.pow(10,e)),
+      stroke:"var(--grid)", "stroke-width":1}, svg);
+    txt(svg, PL-7, YB(Math.pow(10,e))+3,
+      e>=3 ? "$"+Math.pow(10,e-3)+"k" : "$"+Math.pow(10,e), {anchor:"end", size:10});
+  }
+  [ml + (mh-ml)*0.2, (ml+mh)/2, mh - (mh-ml)*0.2].forEach(v =>
+    txt(svg, PL+iw+7, YM(v)+3, Math.round(v)+"%", {anchor:"start", size:10, fill:"var(--cool-3)"}));
+
   const yA = dateOf(x0).getUTCFullYear(), yB = dateOf(x1).getUTCFullYear();
   for (let y = yA; y <= yB; y += 1){
     const off = (Date.UTC(y,0,1) - BASE.getTime()) / DAY;
@@ -778,42 +792,39 @@ function drawM2Impulse(){
       txt(svg, X(off), H-8, String(y), {anchor:"middle", size:9, fill:"var(--ink-2)"});
   }
 
-  // 비트코인 전환점 세로선 — 임펄스 극단이 이보다 ~1년 앞섰다
-  (D.tps || []).forEach(k => {
-    const off = (new Date(k.d+"T00:00:00Z").getTime() - BASE.getTime()) / DAY;
-    if (off < x0 || off > x1) return;
-    const col = k.phase === "top" ? "var(--warm-3)" : "var(--cool-3)";
-    el("line", {x1:X(off), y1:PT, x2:X(off), y2:PT+ih, stroke:col,
-      "stroke-width":1, "stroke-dasharray":"2 3", opacity:.75}, svg);
-    txt(svg, X(off), PT-5, t(k.phase === "top" ? "phaseTop" : "phaseBottom"),
-      {anchor:"middle", size:9, fill:col, mono:false});
-  });
-
-  // 임펄스 채움 + 선
-  let area = "M" + X(x0) + "," + Y(0);
-  P.forEach(p => { area += " L" + X(p[0]) + "," + Y(p[1]); });
-  area += " L" + X(x1) + "," + Y(0) + " Z";
-  el("path", {d:area, fill:"var(--ink)", opacity:.06}, svg);
-  let ln = "";
-  P.forEach((p,i) => { ln += (i?" L":"M") + X(p[0]) + "," + Y(p[1]); });
-  el("path", {d:ln, fill:"none", stroke:"var(--ink)", "stroke-width":1.6,
+  // BTC 로그가격 (좌축, 검정 실선)
+  let pb = "";
+  btc.forEach((p,i) => { pb += (i?" L":"M") + X(p[0]) + "," + YB(p[1]); });
+  el("path", {d:pb, fill:"none", stroke:"var(--ink)", "stroke-width":1.6,
     "stroke-linejoin":"round"}, svg);
 
-  const last = P[P.length - 1];
-  el("circle", {cx:X(last[0]), cy:Y(last[1]), r:4, fill:"var(--ink)",
-    stroke:"var(--surface)", "stroke-width":2}, svg);
+  // M2 (우축, 파란 선). NOW 이전은 실선, NOW 이후(앞선=미래 겹침)는 점선
+  function seg(pts, dash){
+    if (pts.length < 2) return;
+    let d = "";
+    pts.forEach((p,i) => { d += (i?" L":"M") + X(p[0]) + "," + YM(p[1]); });
+    const a = {d:d, fill:"none", stroke:"var(--cool-3)", "stroke-width":2, "stroke-linejoin":"round"};
+    if (dash) a["stroke-dasharray"] = "4 3";
+    el("path", a, svg);
+  }
+  seg(m2s.filter(p => p[0] <= nowOff), false);
+  seg(m2s.filter(p => p[0] >= nowOff), true);
+
+  // NOW 선 — 오른쪽은 M2 만 있는 '앞선' 구간(다음 ~1년 힌트)
+  el("line", {x1:X(nowOff), y1:PT, x2:X(nowOff), y2:PT+ih, stroke:"var(--zero)",
+    "stroke-width":1, "stroke-dasharray":"3 3"}, svg);
+  txt(svg, X(nowOff)-4, PT+11, t("now"), {anchor:"end", size:10, fill:"var(--ink-2)"});
 
   const BW = bandWord(M.band);
   setHTML("m2-legend",
-    `<span><i style="background:var(--cool-1)"></i>${t("m2Pos")}</span>` +
-    `<span><i style="background:var(--warm-1)"></i>${t("m2Neg")}</span>` +
-    `<span><i style="width:16px;height:0;border-top:2px dashed var(--ink-2);` +
-    `border-radius:0;margin-bottom:3px"></i>${t("phaseTop")}·${t("phaseBottom")}</span>`);
+    `<span><i style="background:var(--ink);height:2px;border-radius:0;margin-bottom:3px"></i>${t("m2Btc")}</span>` +
+    `<span><i style="background:var(--cool-3);height:2px;border-radius:0;margin-bottom:3px"></i>` +
+    `${t("m2Cn")} · ${t("m2Shift", M.lead)}</span>`);
   if (M.impulse != null)
     setHTML("m2-read", t("m2Read", (M.impulse>=0?"+":"") + M.impulse,
       (M.lrs>=0?"+":"") + Math.round(M.lrs), BW));
 
-  describe(svg, t("altM2", M.corrLead, M.corr, (M.impulse>=0?"+":"") + M.impulse, BW));
+  describe(svg, t("altM2", M.lead, M.corr, (M.impulse>=0?"+":"") + M.impulse, BW));
 }
 
 /* =====================================================================
@@ -1521,7 +1532,7 @@ function applyLang(){
 
 /* ===================================================================== */
 function drawAll(){
-  drawGauge(); drawKey(); drawHist(); drawPrice(); drawM2Impulse(); drawTP(); drawFam(); drawWidth();
+  drawGauge(); drawKey(); drawHist(); drawPrice(); drawM2Lead(); drawTP(); drawFam(); drawWidth();
 }
 // 규칙 페이지의 스크립트가 여기에 자기 렌더러를 밀어 넣는다. 언어를 바꿀 때
 // 이 스크립트가 그것도 같이 다시 그려야 한다.
