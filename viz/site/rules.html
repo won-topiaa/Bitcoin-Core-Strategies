@@ -741,12 +741,6 @@ window.__I18N__ = {
   percentage is <strong>where it falls within the last four years</strong>. 18%, for instance, means
   only 18% of days in the last four years were lower than this. <strong>‘Last time it was here’</strong>
   is the most recent time that indicator was as extreme as it is now (at least six months ago).`,
-"idx.th.ind": "Indicator",
-"idx.th.what": "What it measures",
-"idx.th.value": "Value now",
-"idx.th.pos": "Position within four years",
-"idx.th.prev": "Last time it was here",
-"idx.th.fam": "Family",
 "idx.s3.eyebrow": "<em>02</em> — The last 16 years",
 "idx.s3.h2": "Four visits to the same place, four returns",
 "idx.s3.p": `The ruler above, computed every day and strung out in time order. Vertical is the position
@@ -1176,6 +1170,7 @@ ko: {
   liqSize: "크기만 조절",
   kpiCov: "지표 커버리지",
   kpiCovD: n => `${n}개 지표 반영`,
+  pos4: p => `4년 위치 ${p}%`,
   altTP: (mt, mb, gap, now) =>
     `과거 전환점 여덟 곳의 위치 점수를 가로 막대로 늘어놓은 그림. 고점 네 번 평균 ` +
     `${mt}, 바닥 네 번 평균 ${mb}, 그 사이 ${gap}점이 비어 있습니다. 지금은 ${now} 입니다.`,
@@ -1184,7 +1179,17 @@ ko: {
     `범위 폭의 분포를 그린 상자 그림. 중위 ${med}점, 가운데 절반이 ${p25}점에서 ` +
     `${p75}점 사이이고, 범위가 한 구간에 온전히 들어온 날은 ${stable}% 입니다.`,
   altKbd: "화살표 키로 날짜를 옮겨 가며 값을 읽을 수 있습니다.",
-  kbdHint: "← → 날짜 이동 · Shift 또는 PageUp/Down 은 크게 · Home·End 처음·끝 · Esc 해제"
+  kbdHint: "← → 날짜 이동 · Shift 또는 PageUp/Down 은 크게 · Home·End 처음·끝 · Esc 해제",
+  rangeAll: "전체",
+  rangeYears: n => `${n}년`,
+  rangeAria: n => n ? `최근 ${n}년만 보기` : "전체 기간 보기",
+  sideToday: "오늘의 신호",
+  sideRecent: "최근 변화",
+  sideBand: "구간",
+  sideConsensus: "합의 폭",
+  sideAgreeHi: "한 목소리",
+  sideAgreeLo: "갈리는 중",
+  sideLiq: "유동성"
 },
 en: {
   now: "NOW",
@@ -1323,6 +1328,7 @@ en: {
   liqSize: "size only",
   kpiCov: "Coverage",
   kpiCovD: n => `${n} indicators in`,
+  pos4: p => `${p}% of 4y`,
   altTP: (mt, mb, gap, now) =>
     `Horizontal bars showing the position score at eight past turning points. The four peaks ` +
     `average ${mt}, the four bottoms ${mb}, and ${gap} points between them are empty. ` +
@@ -1332,7 +1338,17 @@ en: {
     `A box plot of the range width. Median ${med} points, the middle half between ${p25} and ` +
     `${p75}, and the range fits inside one band on ${stable}% of days.`,
   altKbd: "Use the arrow keys to step through dates and read the values.",
-  kbdHint: "← → step a date · Shift or PageUp/Down jumps · Home/End first/last · Esc clears"
+  kbdHint: "← → step a date · Shift or PageUp/Down jumps · Home/End first/last · Esc clears",
+  rangeAll: "ALL",
+  rangeYears: n => `${n}Y`,
+  rangeAria: n => n ? `Show the last ${n} years only` : "Show the full history",
+  sideToday: "Today's read",
+  sideRecent: "Recent change",
+  sideBand: "Band",
+  sideConsensus: "Spread",
+  sideAgreeHi: "in agreement",
+  sideAgreeLo: "split",
+  sideLiq: "Liquidity"
 }
 };
 
@@ -1598,6 +1614,61 @@ function histLegend(){
     `<span><i style="background:var(--cool-3);border-radius:50%"></i>${t("legBottom")}</span>`);
 }
 
+/* 시간 범위 선택(1Y·3Y·5Y·ALL). 우리 차트의 목적은 '16년 사이클 위치'라 월 단위
+   줌은 목적과 어긋난다 — 연 단위만 준다. RANGE_Y=null 은 전체. */
+let RANGE_Y = null;
+function viewRows(){
+  if (!RANGE_Y || S.length < 2) return S;
+  const cut = S[S.length - 1][0] - RANGE_Y * 365.25;
+  const v = S.filter(r => r[0] >= cut);
+  return v.length >= 2 ? v : S;
+}
+function xScaleOf(V, iw, PL){
+  const d0 = V[0][0], d1 = V[V.length - 1][0], span = (d1 - d0) || 1;
+  return v => PL + (v - d0) / span * iw;
+}
+function yearTicksOf(V){
+  const d0 = V[0][0], d1 = V[V.length - 1][0], out = [];
+  const y0 = dateOf(d0).getUTCFullYear(), y1 = dateOf(d1).getUTCFullYear();
+  const step = (y1 - y0) > 12 ? 2 : 1;
+  for (let y = y0; y <= y1; y += step){
+    const off = (Date.UTC(y, 0, 1) - BASE.getTime()) / DAY;
+    if (off >= d0 && off <= d1) out.push({y: y, off: off});
+  }
+  return out;
+}
+function inView(V, off){ return off >= V[0][0] && off <= V[V.length - 1][0]; }
+
+/* 범위 버튼을 그린다. 전체 이력이 짧으면(예: 3년치뿐) 그보다 긴 옵션은 숨긴다 —
+   누르면 아무 것도 안 바뀌는 버튼은 없느니만 못하다. */
+const RANGE_OPTS = [{y:1}, {y:3}, {y:5}, {y:null}];
+function spanYears(){
+  return S.length >= 2 ? (S[S.length-1][0] - S[0][0]) / 365.25 : 0;
+}
+function rangeSel(){
+  const box = $("rangesel");
+  if (!box) return;
+  const total = spanYears();
+  // RANGE_Y 가 이제 못 쓰는 값(데이터보다 김)이면 전체로 되돌린다.
+  if (RANGE_Y && RANGE_Y >= total) RANGE_Y = null;
+  const opts = RANGE_OPTS.filter(o => o.y === null || o.y < total);
+  box.innerHTML = opts.map(o => {
+    const on = (RANGE_Y === o.y);
+    const label = o.y === null ? t("rangeAll") : t("rangeYears", o.y);
+    return `<button type="button" class="rbtn" data-ry="${o.y === null ? "" : o.y}" ` +
+      `aria-pressed="${on ? "true" : "false"}" ` +
+      `aria-label="${esc(t("rangeAria", o.y))}">${esc(label)}</button>`;
+  }).join("");
+  box.querySelectorAll(".rbtn").forEach(b => {
+    b.addEventListener("click", () => {
+      const v = b.getAttribute("data-ry");
+      RANGE_Y = v ? Number(v) : null;
+      rangeSel();                 // aria-pressed 갱신
+      drawHist(); drawPrice();    // 두 차트의 가로축을 함께 좁힌다
+    });
+  });
+}
+
 function drawHist(){
   const host = $("hist-host"), svg = $("hist");
   if (!host || !svg) return;
@@ -1608,7 +1679,8 @@ function drawHist(){
   svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.setAttribute("height", H);
   clear(svg);
 
-  const X = timeScale(iw, PL);
+  const V = viewRows();
+  const X = xScaleOf(V, iw, PL);
   const Y = v => PT + (100 - v) / 200 * ih;
 
   // 밴드 배경
@@ -1626,7 +1698,7 @@ function drawHist(){
   const showHalvingText = iw >= 560;
   D.halvings.forEach(h => {
     const off = (new Date(h+"T00:00:00Z").getTime() - BASE.getTime()) / DAY;
-    if (off < S[0][0] || off > S[S.length-1][0]) return;
+    if (!inView(V, off)) return;
     el("line", {x1:X(off), y1:PT, x2:X(off), y2:PT+ih, stroke:"var(--axis)",
       "stroke-width":1, "stroke-opacity":.5}, svg);
     if (showHalvingText)
@@ -1635,23 +1707,24 @@ function drawHist(){
   });
 
   // 연도 눈금
-  yearTicks().forEach(k => txt(svg, X(k.off), H-9, String(k.y), {anchor:"middle", size:10}));
+  yearTicksOf(V).forEach(k => txt(svg, X(k.off), H-9, String(k.y), {anchor:"middle", size:10}));
 
   // 구간 리본
   let up = "", dn = "";
-  S.forEach((r,i) => { up += (i?" L":"M") + X(r[0]) + "," + Y(r[4]); });
-  for (let i=S.length-1; i>=0; i--) dn += " L" + X(S[i][0]) + "," + Y(S[i][3]);
+  V.forEach((r,i) => { up += (i?" L":"M") + X(r[0]) + "," + Y(r[4]); });
+  for (let i=V.length-1; i>=0; i--) dn += " L" + X(V[i][0]) + "," + Y(V[i][3]);
   el("path", {d:up+dn+" Z", fill:"var(--cool-2)", opacity:.30}, svg);
 
   // 대표값
   let mid = "";
-  S.forEach((r,i) => { mid += (i?" L":"M") + X(r[0]) + "," + Y(r[2]); });
+  V.forEach((r,i) => { mid += (i?" L":"M") + X(r[0]) + "," + Y(r[2]); });
   el("path", {d:mid, fill:"none", stroke:"var(--ink)", "stroke-width":1.6,
     "stroke-linejoin":"round"}, svg);
 
-  // 전환점
+  // 전환점 (창 안에 드는 것만)
   D.tps.forEach(k => {
     const off = (new Date(k.d+"T00:00:00Z").getTime() - BASE.getTime()) / DAY;
+    if (!inView(V, off)) return;
     const top = k.phase === "top";
     const col = top ? "var(--warm-3)" : "var(--cool-3)";
     el("circle", {cx:X(off), cy:Y(k.bcs), r:4.5, fill:col,
@@ -1692,7 +1765,7 @@ function drawHist(){
     [t("ttPoint"), nf(r[2],1)],
     [t("ttBand"), labelOf(bandOf(r[2]).key)],
     [t("ttPrice"), money(r[1])]
-  ]));
+  ]), V);
 
   const st = D.stats;
   setText("hist-cap", t("histCap", S.length, st.median, st.mean));
@@ -1710,9 +1783,10 @@ function drawPrice(){
   svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.setAttribute("height", H);
   clear(svg);
 
-  const X = timeScale(iw, PL);
-  const lo = Math.log10(Math.max(0.05, Math.min.apply(null, S.map(r=>r[1]))));
-  const hi = Math.log10(Math.max.apply(null, S.map(r=>r[1])));
+  const V = viewRows();
+  const X = xScaleOf(V, iw, PL);
+  const lo = Math.log10(Math.max(0.05, Math.min.apply(null, V.map(r=>r[1]))));
+  const hi = Math.log10(Math.max.apply(null, V.map(r=>r[1])));
   const Y = v => PT + (hi - Math.log10(Math.max(0.05,v))) / (hi - lo) * ih;
 
   for (let e = Math.ceil(lo); e <= Math.floor(hi); e++){
@@ -1721,22 +1795,23 @@ function drawPrice(){
     txt(svg, PL-7, Y(Math.pow(10,e))+3,
       e>=3 ? "$"+Math.pow(10,e-3)+"k" : "$"+Math.pow(10,e), {anchor:"end", size:10});
   }
-  yearTicks().forEach(k => txt(svg, X(k.off), H-8, String(k.y), {anchor:"middle", size:10}));
+  yearTicksOf(V).forEach(k => txt(svg, X(k.off), H-8, String(k.y), {anchor:"middle", size:10}));
 
   let p = "";
-  S.forEach((r,i) => { p += (i?" L":"M") + X(r[0]) + "," + Y(r[1]); });
+  V.forEach((r,i) => { p += (i?" L":"M") + X(r[0]) + "," + Y(r[1]); });
   el("path", {d:p, fill:"none", stroke:"var(--ink-2)", "stroke-width":1.4,
     "stroke-linejoin":"round"}, svg);
 
   D.tps.forEach(k => {
     const off = (new Date(k.d+"T00:00:00Z").getTime() - BASE.getTime()) / DAY;
+    if (!inView(V, off)) return;
     el("circle", {cx:X(off), cy:Y(k.price), r:4, fill:k.phase==="top"?"var(--warm-3)":"var(--cool-3)",
       stroke:"var(--surface)", "stroke-width":2}, svg);
   });
 
   attachCrosshair(svg, "price-tt", host, X, PL, iw, PT, ih, r => ([
     [t("ttPrice"), money(r[1])], ["BCS", nf(r[2],1)]
-  ]));
+  ]), V);
   describe(svg, t("altPrice", D.span[0], D.span[1], money(D.current.price)));
 }
 
@@ -2028,18 +2103,15 @@ function stateLabel(v){
   return tab[v] || v;
 }
 
-/** 지표 아홉 개를 한 표로. 이 페이지에서 가장 먼저 읽히는 부분이다. */
-function indicatorTable(){
-  const tb = document.querySelector("#ind-table tbody");
-  const cardHost = $("ind-cards");
-  if (!tb) return;
-  tb.innerHTML = "";
-  if (cardHost) cardHost.innerHTML = "";
+/** 지표 아홉 개를 프리미엄 메트릭 카드로. 싼 쪽부터 정렬해 "가장 극단"이 먼저. */
+function metricCards(){
+  const host = $("metric-grid");
+  if (!host) return;
+  host.innerHTML = "";
   const cur = D.current.ind || {};
   const famIdx = {};
   D.families.forEach((f, i) => { famIdx[f.key] = i; });
 
-  // 싼 쪽부터 정렬한다. 그래야 "무엇이 가장 극단인가"가 위에서 바로 보인다.
   const rows = D.indMeta.slice().sort((a, b) => {
     const pa = cur[a.key] && cur[a.key].pct, pb = cur[b.key] && cur[b.key].pct;
     if (pa == null) return 1;
@@ -2051,54 +2123,35 @@ function indicatorTable(){
     const v = cur[m.key] || {};
     const i = famIdx[m.family] != null ? famIdx[m.family] : 0;
     const col = `var(${FAMC[i]})`;
-    let cell;
-    if (v.pct == null){
-      cell = `<span style="color:var(--muted)">${t("notComputed")}</span>`;
-    } else {
-      const pctTxt = (v.pct * 100).toFixed(0) + "%";
-      // 막대는 가운데(50%)에서 현재 위치까지 채운다. 방향이 곧 싼 쪽/비싼 쪽이다.
-      const lo = Math.min(0.5, v.pct), hi = Math.max(0.5, v.pct);
-      cell = `<span class="poscell">` +
-        `<span class="posbar"><span class="mid"></span>` +
-        `<span class="fill" style="left:${lo*100}%;width:${Math.max(1.2,(hi-lo)*100)}%;` +
-        `background:${col}"></span></span>` +
-        `<span class="pct">${pctTxt}</span></span>`;
-    }
+    const pct = v.pct;
     const raw = v.raw == null ? "—"
       : (typeof v.raw === "number"
           ? (Math.abs(v.raw) >= 100 ? v.raw.toFixed(1) : v.raw.toFixed(2))
           : stateLabel(v.raw));
-    const side = v.pct == null ? "" : t(v.pct < 0.5 ? "sideCheap" : "sideRich");
+    // 상태 칩: 싼 쪽(cool)·비싼 쪽(warm)·중간(flat). 매수/매도가 아니라 '위치'다.
+    const chip = pct == null
+      ? `<span class="chip flat">${t("notComputed")}</span>`
+      : `<span class="chip ${pct < 0.45 ? "cool" : pct > 0.55 ? "warm" : "flat"}">` +
+        `${t(pct < 0.5 ? "sideCheap" : "sideRich")}</span>`;
+    // 4년 위치 막대 — 카드의 '스파크라인' 역할(현재가 4년 범위 어디쯤인가).
+    const bar = pct == null ? "" :
+      `<span class="posbar"><span class="mid"></span>` +
+      `<span class="fill" style="left:${Math.min(0.5,pct)*100}%;` +
+      `width:${Math.max(1.2,Math.abs(pct-0.5)*100)}%;background:${col}"></span></span>`;
     const when = ym((D.lastSimilar || {})[m.key]);
-    const prev = when ? t("prevAt", side, when) : t("prevNone");
+    const sub = (pct == null ? "" : t("pos4", (pct*100).toFixed(0))) + (when ? " · " + when : "");
 
-    const tr = document.createElement("tr");
-    tr.innerHTML =
-      `<td class="lbl">${esc(pick(m, "short"))}</td>` +
-      `<td class="sub">${esc(pick(m, "explain"))}</td>` +
-      `<td>${esc(raw)}</td>` +
-      `<td>${cell}</td>` +
-      `<td class="sub" style="min-width:0;white-space:nowrap">${esc(when || "—")}</td>` +
-      `<td class="sub" style="min-width:0;white-space:nowrap">` +
-      `<span class="famdot" style="background:${col}"></span>${esc(famLabel(m.family))}</td>`;
-    tb.appendChild(tr);
-
-    if (cardHost){
-      const card = document.createElement("div");
-      card.className = "indcard";
-      card.innerHTML =
-        `<div class="top"><span class="nm">${esc(pick(m, "short"))}</span>` +
-        `<span class="pct" style="color:${col}">${v.pct == null ? "—"
-          : (v.pct*100).toFixed(0) + "%"}</span></div>` +
-        `<div class="one">${esc(pick(m, "explain"))}</div>` +
-        (v.pct == null ? "" :
-          `<span class="posbar" style="display:block;min-width:0"><span class="mid"></span>` +
-          `<span class="fill" style="left:${Math.min(0.5,v.pct)*100}%;` +
-          `width:${Math.max(1.2,Math.abs(v.pct-0.5)*100)}%;background:${col}"></span></span>`) +
-        `<div class="meta"><span>${t("valueNow")} <b>${esc(raw)}</b></span>` +
-        `<span>${esc(prev)}</span></div>`;
-      cardHost.appendChild(card);
-    }
+    const card = document.createElement("div");
+    card.className = "metric";
+    card.innerHTML =
+      `<div class="top"><span class="nm">` +
+      `<span class="famdot" style="background:${col}"></span>${esc(pick(m, "short"))}</span>${chip}</div>` +
+      `<div class="val">${esc(raw)}</div>` +
+      `<div class="one">${esc(pick(m, "explain"))}</div>` +
+      `<div class="pos4">${bar}` +
+      (sub ? `<div style="font-size:11px;color:var(--muted);margin-top:6px">${esc(sub)}</div>` : "") +
+      `</div>`;
+    host.appendChild(card);
   });
 
   const vals = D.indMeta.map(m => cur[m.key] && cur[m.key].pct).filter(v => v != null);
@@ -2485,6 +2538,58 @@ function heroFill(){
   setHTML("hero-kpis", tiles.slice(0, 4).join(""));
 }
 
+/* 스티키 사이드바 — 히어로와 달리 스크롤해도 붙어 있다. 히어로가 '숫자',
+   여기는 '오늘 뭐가 켜졌나(신호)'와 '최근에 어디로 움직였나(변화)'다.
+   판단 문구·확신%·예측은 넣지 않는다. */
+function sideRow(k, v){
+  return `<div class="row"><span>${esc(k)}</span><span>${v}</span></div>`;
+}
+function sideFill(){
+  const c = D.current; if (!c) return;
+  setText("side-today-h", t("sideToday"));
+  setText("side-recent-h", t("sideRecent"));
+
+  // 오늘의 신호
+  const cool = c.bcs < 0, chipCls = cool ? "cool" : (c.bcs > 0 ? "warm" : "flat");
+  const now = [];
+  now.push(sideRow(t("sideBand"),
+    `<span class="chip ${chipCls}">${esc(labelOf(c.band))}</span>`));
+  // 합의 — 아홉 지표가 한 목소리인지. 범위가 한 구간에 온전히 들면 합의,
+  // 두 구간에 걸치면 갈림. 방향이 아니라 '얼마나 확실한가'다.
+  const width = (c.high != null && c.low != null) ? (c.high - c.low) : null;
+  if (width != null){
+    const agree = c.stable ? t("sideAgreeHi") : t("sideAgreeLo");
+    now.push(sideRow(t("sideConsensus"),
+      `<span class="rv">±${nf(width / 2, 0)}</span>` +
+      `<span style="color:var(--muted);font-size:12px;margin-left:7px">${esc(agree)}</span>`));
+  }
+  // 유동성 레짐(LRS) — 중립색. 방향이 아니라 실행 '크기'만 조절한다.
+  if (D.macro && D.macro.lrs != null){
+    const lrs = Math.round(D.macro.lrs);
+    now.push(sideRow(t("sideLiq"),
+      `<span class="rv">${lrs >= 0 ? '+' : ''}${lrs}</span>` +
+      `<span style="color:var(--muted);font-size:12px;margin-left:7px">${esc(bandWord(D.macro.band))}</span>`));
+  }
+  setHTML("side-today", now.join(""));
+
+  // 최근 변화 — 어제·지난주·지난달 대비. 값이 올라가면 비싼 쪽, 내려가면 싼 쪽.
+  if (D.deltas){
+    const labels = t("dLabels");
+    setHTML("side-recent", ["d1", "d7", "d30"].map(k => {
+      const v = D.deltas[k];
+      if (!v) return "";
+      const col = Math.abs(v.bcs) < 0.05 ? "var(--muted)"
+        : (v.bcs > 0 ? "var(--warm-3)" : "var(--cool-3)");
+      const px = v.price_pct == null ? ""
+        : `<span style="color:var(--muted);font-size:12px;margin-left:7px">` +
+          `${t("deltaPrice", (v.price_pct >= 0 ? "+" : "") + v.price_pct.toFixed(1))}</span>`;
+      return sideRow(t("deltaVs", labels[k]),
+        `<span class="rv" style="color:${col}">` +
+        `${t("deltaPts", (v.bcs >= 0 ? "+" : "") + v.bcs.toFixed(1))}</span>${px}`);
+    }).filter(Boolean).join(""));
+  }
+}
+
 function fillText(){
   setText("src-span", D.span[0] + " → " + D.span[1]);
   setText("src-days", t("srcDays", D.nDays.toLocaleString("en-US"), D.indMeta.length));
@@ -2500,21 +2605,8 @@ function fillText(){
     setHTML("ro-rank", t("rankLine", Math.round(c.rank * 100),
       D.nDays.toLocaleString("en-US")));
 
-  // 어제·지난주·지난달 대비. 매일 보는 사람에게는 절대값보다 변화가 궁금하다.
-  // 값이 올라가면 "비싼 쪽으로", 내려가면 "싼 쪽으로" 움직인 것이다.
-  if (D.deltas){
-    const labels = t("dLabels");
-    setHTML("ro-deltas", ["d1", "d7", "d30"].map(k => {
-      const v = D.deltas[k];
-      if (!v) return "";
-      const col = Math.abs(v.bcs) < 0.05 ? "var(--muted)"
-        : (v.bcs > 0 ? "var(--warm-3)" : "var(--cool-3)");
-      const px = v.price_pct == null ? ""
-        : `<i>${t("deltaPrice", (v.price_pct >= 0 ? "+" : "") + v.price_pct.toFixed(1))}</i>`;
-      return `<span>${t("deltaVs", labels[k])}<b style="color:${col}">` +
-             `${t("deltaPts", (v.bcs >= 0 ? "+" : "") + v.bcs.toFixed(1))}</b>${px}</span>`;
-    }).filter(Boolean).join(""));
-  }
+  // 어제·지난주·지난달 대비 변화는 이제 우측 사이드바(sideFill)가 맡는다 —
+  // 계기판이 화면 밖으로 밀려도 붙어 있게.
 
   // 계기판 밑의 '눈금 읽는 법' 하나만 접어 둔다. 점수 계산 원리는 다음 장이
   // 통째로 다루므로 여기서 또 설명하지 않는다 — 겹치면 첫 화면만 무거워진다.
@@ -2596,7 +2688,7 @@ function drawAll(){
 // 이 스크립트가 그것도 같이 다시 그려야 한다.
 const HOOKS = window.__BCS_HOOKS__ = window.__BCS_HOOKS__ || [];
 function renderAll(){
-  heroFill(); fillText(); famCards(); indicatorTable(); scaleKey(); mixBar(); histLegend(); drawAll();
+  heroFill(); sideFill(); fillText(); famCards(); metricCards(); scaleKey(); mixBar(); histLegend(); rangeSel(); drawAll();
   for (let i = 0; i < HOOKS.length; i++) HOOKS[i]();
 }
 // 페이지별 스크립트가 쓸 최소한의 창구. 문자열 표를 두 벌 두면 언어를 하나

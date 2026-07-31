@@ -35,20 +35,34 @@ __NAV__
     숫자 하나가 아니라 <strong>범위</strong>로 나오는 이유는 <a href="__VERIFY_URL__">다음 장</a>에 있습니다.</p>
   </div>
 
-  <div class="panel gauge-wrap">
-    <div class="readout">
-      <div class="big" id="ro-range"></div>
-      <div class="band" id="ro-band"></div>
-      <div class="asof" id="ro-asof"></div>
+  <div class="dash">
+    <div class="panel gauge-wrap">
+      <div class="readout">
+        <div class="big" id="ro-range"></div>
+        <div class="band" id="ro-band"></div>
+        <div class="asof" id="ro-asof"></div>
+      </div>
+      <!-- 큰 숫자 바로 밑의 한 줄. 처음 오는 사람에게 "−61.3" 은 아무 뜻이 없고
+           "아래에서 12% 지점" 은 즉시 이해된다. -->
+      <p class="rank" id="ro-rank"></p>
+      <div class="chart" id="gauge-host">
+        <svg class="gauge-svg" id="gauge"></svg>
+      </div>
+      <div id="gauge-why" style="margin-top:16px"></div>
     </div>
-    <!-- 큰 숫자 바로 밑의 한 줄. 처음 오는 사람에게 "−61.3" 은 아무 뜻이 없고
-         "아래에서 12% 지점" 은 즉시 이해된다. -->
-    <p class="rank" id="ro-rank"></p>
-    <div class="deltas" id="ro-deltas"></div>
-    <div class="chart" id="gauge-host">
-      <svg class="gauge-svg" id="gauge"></svg>
-    </div>
-    <div id="gauge-why" style="margin-top:16px"></div>
+
+    <!-- 스크롤해도 붙어 있는 요약. 값은 전부 JS 가 실제 데이터로 채운다 —
+         계기판이 화면에서 밀려나도 밴드·합의·유동성·최근 변화는 남는다. -->
+    <aside class="side" aria-label="요약">
+      <div class="card">
+        <h3 id="side-today-h"></h3>
+        <div id="side-today"></div>
+      </div>
+      <div class="card">
+        <h3 id="side-recent-h"></h3>
+        <div id="side-recent"></div>
+      </div>
+    </aside>
   </div>
 
   <!-- 지표 전체 요약 — 이 페이지에서 가장 중요한 표 -->
@@ -61,19 +75,8 @@ __NAV__
     시기입니다 (최소 6개월 전).</p>
   </div>
 
-  <!-- 넓은 화면은 표, 좁은 화면은 카드. 같은 데이터를 두 형태로 그린다. -->
-  <div class="tblwrap indtable" tabindex="0" role="region" aria-labelledby="ind-h">
-    <table id="ind-table">
-      <thead><tr>
-        <th data-t="idx.th.ind">지표</th><th data-t="idx.th.what">재는 것</th>
-        <th data-t="idx.th.value">지금 값</th>
-        <th style="min-width:210px" data-t="idx.th.pos">최근 4년 중 위치</th>
-        <th data-t="idx.th.prev">직전에 이만큼이던 때</th><th data-t="idx.th.fam">갈래</th>
-      </tr></thead>
-      <tbody></tbody>
-    </table>
-  </div>
-  <div class="indcards" id="ind-cards"></div>
+  <!-- 지표 아홉 개를 프리미엄 메트릭 카드로. JS 가 실제 데이터로 채운다. -->
+  <div class="metrics" id="metric-grid" role="region" aria-labelledby="ind-h"></div>
   <p class="tblnote" id="ind-note"></p>
 </section>
 
@@ -111,6 +114,8 @@ __NAV__
   <figure class="panel">
     <div class="chart-head">
       <div class="legend" id="hist-legend"></div>
+      <!-- 시간 범위. 두 차트(위치·가격)의 가로축을 함께 좁힌다. JS 가 채운다. -->
+      <div class="rangesel" id="rangesel" role="group" aria-label="Time range"></div>
     </div>
     <div class="chart" id="hist-host">
       <svg id="hist"></svg>
