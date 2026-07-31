@@ -283,7 +283,7 @@ def vix_analysis(btc: dict[date, float], vix: dict[date, float]) -> dict:
 # 분석 2 — M2 ↔ 비트코인 (전년비 증가율의 선행/후행)
 # ---------------------------------------------------------------------------
 def m2_lead_lag(btc_month: dict[date, float], m2: dict[date, float],
-                max_lag: int = 6) -> dict:
+                max_lag: int = 12) -> dict:
     """BTC 전년비를 M2 전년비보다 k개월 뒤로 놓고 상관. 최적 k(=M2 선행)를 찾는다."""
     btc_yoy = yoy(btc_month)
     m2_yoy = yoy(month_end(m2))
@@ -333,31 +333,25 @@ def report(btc: dict[date, float], macro: dict[str, dict[date, float]]) -> str:
     add("=" * 78)
     btc_month = month_end(btc)
 
-    # --- 주식지수 (나스닥/S&P500) ---
-    eq_key = next((k for k in macro if any(
-        t in k.lower() for t in ("nasdaq", "ndq", "sp500", "s&p", "equit"))), None)
-    label = eq_key or "주가지수"
-    add(f"\n[1] {label} ↔ 비트코인 — 로그수익률 상관")
+    # --- 주식지수 (나스닥·S&P500) — 있는 것 모두, 나스닥 먼저 ---
+    eq_keys = [k for k in macro if any(
+        t in k.lower() for t in ("nasdaq", "ndq", "sp500", "s&p", "equit"))]
+    eq_keys.sort(key=lambda k: 0 if ("nasdaq" in k.lower() or "ndq" in k.lower()) else 1)
+    add("\n[1] 주식지수 ↔ 비트코인 — 로그수익률 상관")
     add("-" * 78)
-    if eq_key is None:
+    if not eq_keys:
         add("  주가지수 열이 없습니다 (macro.csv 에 nasdaq 또는 sp500 추가).")
-    else:
+    for eq_key in eq_keys:
         r = nasdaq_analysis(btc, macro[eq_key])
         u = r["unit"]
-        if r["span"]:
-            add(f"  기간 {r['span'][0]} ~ {r['span'][1]} · 공통 {r['n']}{u} "
-                f"({'월간' if u == '개월' else '주간'} 수익률)")
-        add(f"  전 구간 상관 ρ = {r['full']:+.2f}" if r["full"] is not None else "  전 구간 상관 —")
-        add("  국면별 (핵심):")
+        add(f"\n  ▸ {eq_key}"
+            + (f"  ({r['span'][0]} ~ {r['span'][1]}, 공통 {r['n']}{u}, "
+               f"{'월간' if u == '개월' else '주간'} 수익률)" if r["span"] else ""))
+        add(f"    전 구간 ρ = {r['full']:+.2f}" if r["full"] is not None else "    전 구간 —")
         for name, (v, npt) in r["eras"].items():
-            add(f"    {name}  ρ {v:+.2f}   ({npt}{u})" if v is not None else f"    {name}  —")
-        add(f"  최근 {r['recent_win']}{u} ρ = {r['recent']:+.2f}"
-            if r["recent"] is not None else f"  최근 {r['recent_win']}{u} —")
-        add("  연도별 ρ (표본 작아 참고):")
-        for y_, v in r["yearly"].items():
-            bar = "█" * max(0, round((v or 0) * 20))
-            neg = "░" * max(0, round(-(v or 0) * 20))
-            add(f"    {y_}  {v:+.2f}  {neg}{bar}")
+            add(f"      {name}  ρ {v:+.2f}   ({npt}{u})" if v is not None else f"      {name}  —")
+        add(f"    최근 {r['recent_win']}{u} ρ = {r['recent']:+.2f}"
+            if r["recent"] is not None else f"    최근 {r['recent_win']}{u} —")
 
     # --- VIX (공포지수) — 있으면 ---
     vix_key = next((k for k in macro if "vix" in k.lower()), None)
