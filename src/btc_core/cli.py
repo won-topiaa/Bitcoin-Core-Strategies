@@ -19,6 +19,7 @@ from typing import Optional, Sequence
 from .config import ConfigError, load_config
 from .datasources import FetchError, load_manual
 from .datasources.coinmetrics import DEFAULT_YEARS
+from .datasources.macro import load_macro_signals
 from .datasources.csv_source import load_csv_bundle, save_csv_bundle
 from .datasources.manual import write_template
 from .engine import evaluate
@@ -27,6 +28,7 @@ from .strategy import ExecutionState, commit_action, next_ladder_step
 
 DEFAULT_STATE = Path("data/state.json")
 DEFAULT_MANUAL = Path("data/manual_input.yaml")
+DEFAULT_MACRO = Path("data/macro.csv")
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -47,6 +49,8 @@ def build_parser() -> argparse.ArgumentParser:
     s = sub.add_parser("score", help="점수와 실행 계획을 낸다")
     s.add_argument("--csv", default=None, help="로컬 CSV 사용 (없으면 원격 조회)")
     s.add_argument("--manual", default=str(DEFAULT_MANUAL))
+    s.add_argument("--macro", default=str(DEFAULT_MACRO),
+                   help="거시 CSV (중국 M2 임펄스 등 LRS 자동값). tools/fetch_macro.py 로 받는다")
     s.add_argument("--state", default=str(DEFAULT_STATE))
     s.add_argument("--as-of", default=None, help="기준일 YYYY-MM-DD")
     s.add_argument("--format", choices=("console", "markdown", "json"), default="console")
@@ -71,6 +75,7 @@ def build_parser() -> argparse.ArgumentParser:
     c.add_argument("--state", default=str(DEFAULT_STATE))
     c.add_argument("--csv", default=None)
     c.add_argument("--manual", default=str(DEFAULT_MANUAL))
+    c.add_argument("--macro", default=str(DEFAULT_MACRO))
     c.add_argument("--on", default=None, help="실행일 YYYY-MM-DD (기본: 오늘)")
     c.add_argument("--note", default="")
     c.add_argument("--force", action="store_true", help="보류 사유를 무시하고 기록")
@@ -160,6 +165,7 @@ def _cmd_score(args, cfg) -> int:
         print("  수동 입력만으로 계속 진행합니다.\n", file=sys.stderr)
 
     manual = load_manual(args.manual, reference=as_of or date.today())
+    macro_signals = load_macro_signals(args.macro, reference=as_of)
     state = ExecutionState.load(args.state)
 
     snap, state = evaluate(
@@ -169,6 +175,7 @@ def _cmd_score(args, cfg) -> int:
         state=state,
         as_of=as_of,
         adaptive_weight=args.adaptive_weight,
+        macro_signals=macro_signals,
         record=not args.no_record,
     )
     if not args.no_record:
@@ -211,8 +218,10 @@ def _cmd_commit(args, cfg) -> int:
         pass
 
     manual = load_manual(args.manual, reference=on)
+    macro_signals = load_macro_signals(args.macro, reference=on)
     state = ExecutionState.load(args.state)
-    snap, state = evaluate(cfg, bundle=bundle, manual=manual, state=state, as_of=on)
+    snap, state = evaluate(cfg, bundle=bundle, manual=manual, state=state, as_of=on,
+                           macro_signals=macro_signals)
 
     if snap.bcs is None:
         print("BCS 를 산출할 수 없어 기록하지 않습니다.", file=sys.stderr)

@@ -36,6 +36,7 @@ def evaluate(
     state: Optional[ExecutionState] = None,
     as_of: Optional[date] = None,
     adaptive_weight: Optional[float] = None,   # None → cfg.adaptive_weight
+    macro_signals: Optional[dict] = None,      # 자동 계산된 LRS 값(중국 M2 등)
     record: bool = True,
 ) -> tuple[Snapshot, ExecutionState]:
     """스냅샷 하나를 만든다. 상태(state)는 BCS 이력이 갱신되어 함께 반환된다."""
@@ -118,7 +119,13 @@ def evaluate(
         state.record_bcs(resolved_date, bcs)
 
     # ---- 거시 축 -----------------------------------------------------------
-    lrs, lrs_readings, lrs_band = compute_lrs(cfg, manual.macro)
+    # 자동값(중국 M2 임펄스 등)을 기본으로 깔고, 사람이 손으로 적은 값이 있으면
+    # 그쪽을 존중한다(수동 우선). LRS 는 실행 '크기'만 조절한다 — 방향(BCS) 아님.
+    macro_values: dict = dict(macro_signals or {})
+    for k, v in manual.macro.items():
+        if v not in (None, ""):
+            macro_values[k] = v
+    lrs, lrs_readings, lrs_band = compute_lrs(cfg, macro_values)
 
     # ---- 합의 -------------------------------------------------------------
     consensus = evaluate_consensus(cfg, families, bcs)

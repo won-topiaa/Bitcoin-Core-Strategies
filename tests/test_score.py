@@ -302,7 +302,7 @@ def test_consensus_works_in_the_undervalued_direction(cfg):
 def test_lrs_is_a_weighted_average_of_its_components(cfg):
     lrs, readings, band = compute_lrs(
         cfg,
-        {"m2_impulse": 12.0, "dxy_trend": -6.0, "fed_stance": "cutting_qe", "etf_flow": 12.0},
+        {"m2_impulse": 3.0, "dxy_trend": -6.0, "fed_stance": "cutting_qe", "etf_flow": 12.0},
     )
     assert lrs == pytest.approx(100.0)
     assert band == "easing"
@@ -312,14 +312,14 @@ def test_lrs_is_a_weighted_average_of_its_components(cfg):
 def test_lrs_bottoms_out_under_tightening(cfg):
     lrs, _, band = compute_lrs(
         cfg,
-        {"m2_impulse": -2.0, "dxy_trend": 6.0, "fed_stance": "qt_hiking", "etf_flow": -6.0},
+        {"m2_impulse": -3.0, "dxy_trend": 6.0, "fed_stance": "qt_hiking", "etf_flow": -6.0},
     )
     assert lrs == pytest.approx(-100.0)
     assert band == "tightening"
 
 
 def test_lrs_renormalizes_over_available_components(cfg):
-    lrs, _, _ = compute_lrs(cfg, {"m2_impulse": 12.0})
+    lrs, _, _ = compute_lrs(cfg, {"m2_impulse": 3.0})
     assert lrs == pytest.approx(100.0)
 
 

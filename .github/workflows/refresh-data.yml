@@ -47,6 +47,20 @@ jobs:
       - name: 받아서 병합
         run: python3 tools/refresh_data.py --full
 
+      - name: 거시 데이터 (중국 M2·나스닥·전세계 M2·VIX)
+        # GitHub 러너는 에이전트 프록시가 없어 FRED·chinadata·GitHub 모두 열려 있다.
+        # 임시 파일로 받고 **중국 M2(m2_cn)가 들어왔을 때만** 교체한다 — chinadata 가
+        # 잠깐 죽어도 기존 macro.csv(중국 M2 포함)를 통째로 덮어써 신호를 잃지 않도록.
+        run: |
+          if python3 tools/fetch_macro.py --github --global --out data/macro.new.csv \
+             && head -1 data/macro.new.csv | grep -q "m2_cn"; then
+            mv data/macro.new.csv data/macro.csv
+            echo "거시 갱신 완료"
+          else
+            rm -f data/macro.new.csv
+            echo "거시 갱신 건너뜀 — 기존 macro.csv 유지"
+          fi
+
       - name: 신선도 확인
         # 받았는데도 오래됐으면 원본이 늦은 것이다. 실패시키지 않고 기록만
         # 남긴다 — 커뮤니티 티어는 하루 늦는 것이 정상이다.
@@ -67,12 +81,12 @@ jobs:
       - name: 커밋
         if: ${{ inputs.dry_run != true }}
         run: |
-          if git diff --quiet -- viz/site; then
+          if git diff --quiet -- viz/site data/macro.csv; then
             echo "바뀐 페이지가 없습니다."
             exit 0
           fi
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add viz/site
+          git add viz/site data/macro.csv
           git commit -m "데이터 갱신 — 기준일 ${ASOF:-미확인}"
           git push
