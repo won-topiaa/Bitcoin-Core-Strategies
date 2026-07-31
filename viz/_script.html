@@ -185,15 +185,8 @@ ko: {
     `겹친 그림. 왼쪽 축은 가격, 오른쪽 축은 M2 증가율입니다. 중국 M2 가 비트코인을 약 ` +
     `${lead}개월 앞선 관계(상관 ${corr})입니다. 지금 임펄스 ${imp}, 레짐 ‘${band}’.`,
   heroNow: "비트코인 · 현재",
-  hero24h: x => `${x}% · 24H`,
   heroSub: d => `기준일 ${d} · 매일 자동 갱신`,
-  kpiCycle: "사이클 위치",
-  kpiPct: "16년 백분위",
-  kpiPctD: p => `지난 16년 중 하위 ${p}%`,
-  kpiLiq: "유동성 레짐",
-  liqSize: "크기만 조절",
-  kpiCov: "지표 커버리지",
-  kpiCovD: n => `${n}개 지표 반영`,
+  heroAnswer: p => `지난 16년 중 <b>하위 ${p}%</b>`,
   pos4: p => `4년 위치 ${p}%`,
   altTP: (mt, mb, gap, now) =>
     `과거 전환점 여덟 곳의 위치 점수를 가로 막대로 늘어놓은 그림. 고점 네 번 평균 ` +
@@ -207,13 +200,7 @@ ko: {
   rangeAll: "전체",
   rangeYears: n => `${n}년`,
   rangeAria: n => n ? `최근 ${n}년만 보기` : "전체 기간 보기",
-  sideToday: "오늘의 신호",
-  sideRecent: "최근 변화",
-  sideBand: "구간",
-  sideConsensus: "합의 폭",
-  sideAgreeHi: "한 목소리",
-  sideAgreeLo: "갈리는 중",
-  sideLiq: "유동성"
+  sideRecent: "최근 변화"
 },
 en: {
   now: "NOW",
@@ -343,15 +330,8 @@ en: {
     `months forward — the measured lead. Left axis is price, right axis is M2 growth. China M2 ` +
     `leads Bitcoin by about ${lead} months (correlation ${corr}). Impulse now ${imp}, regime '${band}'.`,
   heroNow: "Bitcoin · now",
-  hero24h: x => `${x}% · 24H`,
   heroSub: d => `as of ${d} · updates daily`,
-  kpiCycle: "Cycle position",
-  kpiPct: "16-year percentile",
-  kpiPctD: p => `bottom ${p}% of 16 years`,
-  kpiLiq: "Liquidity regime",
-  liqSize: "size only",
-  kpiCov: "Coverage",
-  kpiCovD: n => `${n} indicators in`,
+  heroAnswer: p => `<b>bottom ${p}%</b> of the last 16 years`,
   pos4: p => `${p}% of 4y`,
   altTP: (mt, mb, gap, now) =>
     `Horizontal bars showing the position score at eight past turning points. The four peaks ` +
@@ -366,13 +346,7 @@ en: {
   rangeAll: "ALL",
   rangeYears: n => `${n}Y`,
   rangeAria: n => n ? `Show the last ${n} years only` : "Show the full history",
-  sideToday: "Today's read",
-  sideRecent: "Recent change",
-  sideBand: "Band",
-  sideConsensus: "Spread",
-  sideAgreeHi: "in agreement",
-  sideAgreeLo: "split",
-  sideLiq: "Liquidity"
+  sideRecent: "Recent change"
 }
 };
 
@@ -1521,80 +1495,30 @@ function freshness(){
     : (stale ? t("freshStale", days) : t("freshDays", days));
 }
 
-/* 시장 스냅샷 히어로 — 실제 데이터(D)로 채운다. 없는 값(가격·변화·LRS)이면
-   그 조각만 빼고 나머지로 간다. 판단 문구·확신%·예측은 넣지 않는다. */
-function kpiTile(k, v, d){
-  return `<div class="kpi"><div class="k">${k}</div><div class="v">${v}</div>` +
-         (d ? `<div class="d">${d}</div>` : "") + `</div>`;
-}
+/* 시장 스냅샷 히어로 — 가격 + '핵심 답 한 줄'만. 위치 상세(범위·구간·눈금)는
+   바로 밑 계기판이 맡으므로 여기서 반복하지 않는다. 판단 문구·확신%·예측·
+   24h 등락(방향 암시)은 넣지 않는다. */
 function heroFill(){
   const c = D.current; if (!c) return;
   setText("hero-eyebrow", t("heroNow"));
   setText("hero-price", c.price != null ? money(c.price) : "—");
-  const chg = D.deltas && D.deltas.d1 ? D.deltas.d1.price_pct : null;
-  const chgEl = $("hero-chg");
-  if (chgEl){
-    chgEl.textContent = chg == null ? "" : t("hero24h", (chg >= 0 ? "+" : "") + chg.toFixed(1));
-    chgEl.className = "chg " + (chg == null ? "" : (chg >= 0 ? "pos" : "neg"));
-  }
   setText("hero-sub", t("heroSub", c.d));
-
   const pct = c.rank != null ? Math.round(c.rank * 100) : null;
-  const cool = c.bcs < 0, chipCls = cool ? "cool" : (c.bcs > 0 ? "warm" : "flat");
-  const tiles = [];
-  tiles.push(kpiTile(t("kpiCycle"), `${nf(c.low,0)} ~ ${nf(c.high,0)}`,
-    `<span class="chip ${chipCls}">${esc(labelOf(c.band))}</span>`));
-  if (pct != null)
-    tiles.push(kpiTile(t("kpiPct"),
-      `${pct}<span style="font-size:14px;color:var(--muted);margin-left:1px">th</span>`,
-      t("kpiPctD", pct)));
-  if (D.macro && D.macro.lrs != null){
-    const lrs = Math.round(D.macro.lrs);
-    // LRS 값은 **중립색**으로 둔다 — 초록/빨강은 방향(좋다/나쁘다)을 암시하는데
-    // LRS 는 방향이 아니라 실행 '크기'만 조절한다. 그래서 pos/neg 색을 쓰지 않는다.
-    tiles.push(kpiTile(t("kpiLiq"), `${lrs >= 0 ? '+' : ''}${lrs}`,
-      `${bandWord(D.macro.band)} · ${t("liqSize")}`));
-  }
-  const cov = Math.round((c.cov != null ? c.cov : 1) * 100);
-  tiles.push(kpiTile(t("kpiCov"),
-    `<span style="color:${cov >= 100 ? 'var(--pos)' : 'var(--accent)'}">${cov}%</span>`,
-    t("kpiCovD", D.indMeta.length)));
-  setHTML("hero-kpis", tiles.slice(0, 4).join(""));
+  const chipCls = c.bcs < 0 ? "cool" : (c.bcs > 0 ? "warm" : "flat");
+  setHTML("hero-answer",
+    (pct != null ? t("heroAnswer", pct) + " " : "") +
+    `<span class="chip ${chipCls}">${esc(labelOf(c.band))}</span>`);
 }
 
-/* 스티키 사이드바 — 히어로와 달리 스크롤해도 붙어 있다. 히어로가 '숫자',
-   여기는 '오늘 뭐가 켜졌나(신호)'와 '최근에 어디로 움직였나(변화)'다.
-   판단 문구·확신%·예측은 넣지 않는다. */
+/* 스티키 사이드바 — 계기판이 화면 밖으로 밀려도 붙어 있다. 구간·밴드·유동성은
+   계기판이 이미 보여주므로 반복하지 않고, 계기판에 없는 '최근에 어디로 움직였나'
+   하나만 남긴다. 판단 문구·확신%·예측은 넣지 않는다. */
 function sideRow(k, v){
   return `<div class="row"><span>${esc(k)}</span><span>${v}</span></div>`;
 }
 function sideFill(){
   const c = D.current; if (!c) return;
-  setText("side-today-h", t("sideToday"));
   setText("side-recent-h", t("sideRecent"));
-
-  // 오늘의 신호
-  const cool = c.bcs < 0, chipCls = cool ? "cool" : (c.bcs > 0 ? "warm" : "flat");
-  const now = [];
-  now.push(sideRow(t("sideBand"),
-    `<span class="chip ${chipCls}">${esc(labelOf(c.band))}</span>`));
-  // 합의 — 아홉 지표가 한 목소리인지. 범위가 한 구간에 온전히 들면 합의,
-  // 두 구간에 걸치면 갈림. 방향이 아니라 '얼마나 확실한가'다.
-  const width = (c.high != null && c.low != null) ? (c.high - c.low) : null;
-  if (width != null){
-    const agree = c.stable ? t("sideAgreeHi") : t("sideAgreeLo");
-    now.push(sideRow(t("sideConsensus"),
-      `<span class="rv">±${nf(width / 2, 0)}</span>` +
-      `<span style="color:var(--muted);font-size:12px;margin-left:7px">${esc(agree)}</span>`));
-  }
-  // 유동성 레짐(LRS) — 중립색. 방향이 아니라 실행 '크기'만 조절한다.
-  if (D.macro && D.macro.lrs != null){
-    const lrs = Math.round(D.macro.lrs);
-    now.push(sideRow(t("sideLiq"),
-      `<span class="rv">${lrs >= 0 ? '+' : ''}${lrs}</span>` +
-      `<span style="color:var(--muted);font-size:12px;margin-left:7px">${esc(bandWord(D.macro.band))}</span>`));
-  }
-  setHTML("side-today", now.join(""));
 
   // 최근 변화 — 어제·지난주·지난달 대비. 값이 올라가면 비싼 쪽, 내려가면 싼 쪽.
   if (D.deltas){
@@ -1728,6 +1652,10 @@ if (bar && bar.getAttribute("data-current")){
 
 applyLang();
 renderAll();
+// 본문에 정적으로 박혀 있는 접힘 버튼(아홉 지표·거시 배경)을 배선한다. 계기판·
+// 갈래 카드 안의 동적 .why 는 각자 렌더에서 배선되지만, 이 둘은 HTML 에 고정이라
+// 여기서 한 번 걸어 준다. wireToggles 는 dataset.wired 로 중복을 막는다.
+wireToggles(document.querySelector(".wrap"));
 paintControls();
 
 const langBtn = $("lang-btn");
