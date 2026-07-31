@@ -37,9 +37,13 @@ from btc_core.datasources.csv_source import load_csv_bundle  # noqa: E402
 from btc_core.datasources.derive import backfill_bundle  # noqa: E402
 from btc_core.indicators import HALVINGS, days_since_halving  # noqa: E402
 from btc_core.models import Reading  # noqa: E402
+from btc_core.datasources.macro import (  # noqa: E402
+    _load_column, _month_end, _yoy, china_m2_impulse,
+)
 from btc_core.score import (  # noqa: E402
     compute_bcs,
     compute_bcs_interval,
+    compute_lrs,
     evaluate_consensus,
     score_indicator,
 )
@@ -203,8 +207,42 @@ def interval_stats(rows: list[dict]) -> dict:
     }
 
 
+def macro_lead(cfg: StrategyConfig, macro_csv: str, rows: list, reference: date) -> Optional[dict]:
+    """중국 M2 유동성 임펄스 시계열 + 현재값/LRS. 없으면(파일·열·이력 없음) None.
+
+    임펄스 = 중국 M2 전년비 − 자기 24개월 평균(가속도, %p). 화면은 이것을 단일
+    축으로 그리고, 비트코인 전환점(D.tps)을 날짜 세로선으로 겹쳐 '임펄스 극단이
+    사이클 전환보다 ~1년 앞섰다'를 보인다 — 이중축 겹침(오해 소지)이 아니라 실제
+    쓰는 신호 그대로. 오프셋은 다른 차트와 같은 기준일(rows[0]).
+    """
+    path = Path(macro_csv)
+    m2_yoy = _yoy(_month_end(_load_column(path, "m2_cn")))
+    if not m2_yoy:
+        return None
+    base = date.fromisoformat(rows[0]["d"])
+    ds = sorted(m2_yoy)
+    imp_pts: list = []
+    for i, d in enumerate(ds):
+        window = [m2_yoy[ds[j]] for j in range(max(0, i - 24), i)]
+        if len(window) >= 12:
+            imp_pts.append([(d - base).days,
+                            round(m2_yoy[d] - sum(window) / len(window), 2)])
+    if not imp_pts:
+        return None
+    imp = china_m2_impulse(path, reference=reference)
+    lrs = band = None
+    if imp is not None:
+        lrs, _, band = compute_lrs(cfg, {"m2_impulse": imp})
+    return {
+        "imp": imp_pts,
+        "impulse": None if imp is None else round(imp, 2),
+        "lrs": lrs, "band": band,
+        "corr": 0.43, "corrLead": 11,   # 실측(docs/25): 중국 M2 ~11개월 선행 ρ+0.43
+    }
+
+
 def build(cfg: StrategyConfig, csv: str, *, derive: bool = True,
-          strings_en: Optional[str] = None) -> dict:
+          strings_en: Optional[str] = None, macro_csv: Optional[str] = None) -> dict:
     en = load_en(strings_en)
     bundle = load_csv_bundle(csv)
     notes: tuple[tuple[str, str], ...] = ()
@@ -253,7 +291,11 @@ def build(cfg: StrategyConfig, csv: str, *, derive: bool = True,
         for k, v in (cur.get("ind") or {}).items() if v.get("pct") is not None
     }
 
+    macro = macro_lead(cfg, macro_csv, rows,
+                       date.fromisoformat(rows[-1]["d"])) if macro_csv else None
+
     return {
+        "macro": macro,
         "generated_from": csv,
         "generated": date.today().isoformat(),
         # 만든 시점의 지연. 페이지는 이 값을 쓰지 않고 **보는 시점에** 다시

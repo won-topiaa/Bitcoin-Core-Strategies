@@ -122,6 +122,7 @@ def compact(payload: dict) -> dict:
         "current": point(payload["current"]), "latest": point(payload["latest"]),
         "deltas": payload["deltas"], "lastSimilar": payload["last_similar"],
         "deriveNotes": payload["derive_notes"],
+        "macro": payload.get("macro"),
         "S": rows,
     }
 
@@ -165,6 +166,7 @@ def _bake(body_rel: str, page_key: str, title: str, extra_script: Optional[str],
 def build(csv: str, outdir: Path, *, config: Optional[str] = None,
           derive: bool = True, index_url: str = "index.html",
           verify_url: str = "verify.html", rules_url: str = "rules.html",
+          macro_csv: Optional[str] = None,
           info: Optional[dict] = None) -> list[Path]:
     """세 장을 굽고 경로를 돌려준다.
 
@@ -173,7 +175,7 @@ def build(csv: str, outdir: Path, *, config: Optional[str] = None,
     커밋 메시지에 기준일을 넣으려고 그럴 이유는 없다.
     """
     cfg = load_config(config) if config else load_config()
-    payload = export_viz.build(cfg, csv, derive=derive)
+    payload = export_viz.build(cfg, csv, derive=derive, macro_csv=macro_csv)
     data = json.dumps(compact(payload), ensure_ascii=False, separators=(",", ":"))
     links = {"__INDEX_URL__": index_url, "__VERIFY_URL__": verify_url,
              "__RULES_URL__": rules_url}
@@ -189,6 +191,8 @@ def build(csv: str, outdir: Path, *, config: Optional[str] = None,
 def main(argv: Optional[list[str]] = None) -> int:
     ap = argparse.ArgumentParser(description="자기완결 시각화 페이지 생성")
     ap.add_argument("--csv", default="data/market.csv")
+    ap.add_argument("--macro", default="data/macro.csv",
+                    help="거시 CSV (중국 M2 선행 차트·LRS). 없으면 그 섹션은 숨긴다")
     ap.add_argument("--config", default=None)
     ap.add_argument("--out-dir", default="viz/site", help="페이지를 내보낼 디렉터리")
     ap.add_argument("--no-derive", action="store_true",
@@ -204,7 +208,7 @@ def main(argv: Optional[list[str]] = None) -> int:
     paths = build(args.csv, Path(args.out_dir), config=args.config,
                   derive=not args.no_derive, index_url=args.index_url,
                   verify_url=args.verify_url, rules_url=args.rules_url,
-                  info=info)
+                  macro_csv=args.macro, info=info)
     for p in paths:
         kb = p.stat().st_size / 1024
         print(f"생성: {p}  ({kb:.0f} KB)")
