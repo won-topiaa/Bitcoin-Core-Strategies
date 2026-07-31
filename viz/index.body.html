@@ -16,7 +16,7 @@ __NAV__
 <!-- ============ 시장 스냅샷 (10초 요약) — 값은 JS 가 실제 데이터로 채운다.
      첫 화면에 숫자를 잔뜩 늘어놓지 않는다. 가격 + '핵심 답 한 줄' 뿐. 나머지
      위치 상세(범위·구간·눈금)는 바로 밑 계기판이 맡는다. ============ -->
-<section class="hero" id="hero" style="margin-top:0" aria-label="Market snapshot">
+<section class="hero" id="hero" style="margin-top:0" aria-label="시장 스냅샷" data-t-aria="idx.aria.hero">
   <div class="hero-main">
     <p class="eyebrow" id="hero-eyebrow"></p>
     <div class="hero-price">
@@ -55,7 +55,7 @@ __NAV__
     <!-- 스크롤해도 붙어 있는 요약. 구간·밴드·유동성은 계기판이 이미 보여주므로
          여기서 반복하지 않는다. 계기판에 없는 것 하나 — '최근에 어디로 움직였나' —
          만 남긴다. 값은 JS 가 실제 데이터로 채운다. -->
-    <aside class="side" aria-label="요약">
+    <aside class="side" aria-label="요약" data-t-aria="idx.aria.side">
       <div class="card">
         <h3 id="side-recent-h"></h3>
         <div id="side-recent"></div>
@@ -117,7 +117,7 @@ __NAV__
     <div class="chart-head">
       <div class="legend" id="hist-legend"></div>
       <!-- 시간 범위. 두 차트(위치·가격)의 가로축을 함께 좁힌다. JS 가 채운다. -->
-      <div class="rangesel" id="rangesel" role="group" aria-label="Time range"></div>
+      <div class="rangesel" id="rangesel" role="group" aria-label="시간 범위" data-t-aria="idx.aria.range"></div>
     </div>
     <div class="chart" id="hist-host">
       <svg id="hist"></svg>

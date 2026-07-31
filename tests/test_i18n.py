@@ -43,9 +43,11 @@ def read(rel: str) -> str:
 # 1. 본문 산문
 # --------------------------------------------------------------------------
 def body_keys() -> dict[str, set[str]]:
+    # data-t(본문 innerHTML)와 data-t-aria(낭독기용 aria-label) 둘 다 _i18n 키를
+    # 가리키므로 함께 센다 — 안 그러면 aria 키가 '고아'로 잡힌다.
     out = {}
     for name in BODIES + (NAV,):
-        out[name] = set(re.findall(r'data-t="([^"]+)"', read(name)))
+        out[name] = set(re.findall(r'data-t(?:-aria)?="([^"]+)"', read(name)))
     return out
 
 

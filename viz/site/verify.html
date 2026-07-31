@@ -460,7 +460,7 @@ nav.pages .n{font-family:var(--mono); font-size:11px; opacity:.55; margin-right:
      HTML 에 적어 두면 두 곳이 어긋난다. 여기 있는 것은 스크립트가 죽었을 때
      남는 기본값이다. -->
 <div class="topbar" data-current="verify">
-  <nav class="pages" aria-label="페이지">
+  <nav class="pages" aria-label="페이지" data-t-aria="nav.aria">
     <a href="index.html" data-page="index"><span class="n">01</span><span data-t="nav.now">지금 위치</span></a>
     <a href="verify.html" data-page="verify"><span class="n">02</span><span data-t="nav.verify">믿어도 되나</span></a>
     <a href="rules.html" data-page="rules"><span class="n">03</span><span data-t="nav.rules">규칙과 한계</span></a>
@@ -630,6 +630,11 @@ window.__I18N__ = {
 "nav.now": "Where we are",
 "nav.verify": "Can you trust it",
 "nav.rules": "Rules and limits",
+/* 낭독기용 영역 라벨(aria-label) — data-t-aria 로 언어를 따라간다 */
+"nav.aria": "Pages",
+"idx.aria.hero": "Market snapshot",
+"idx.aria.side": "Summary",
+"idx.aria.range": "Time range",
 "foot.disclaimer": `This page exists for personal record-keeping and information, not as investment advice.
   None of the numbers here say anything about future prices. What you decide, and what follows from it, is yours.`,
 
@@ -2524,6 +2529,7 @@ function paintControls(){
    언어 적용 — 한국어 원본을 기억해 두고 갈아 끼운다
    ===================================================================== */
 const ORIG = new Map();
+const ARIA_ORIG = new Map();
 function applyLang(){
   document.documentElement.setAttribute("lang", EN() ? "en" : "ko");
   document.querySelectorAll("[data-t]").forEach(n => {
@@ -2532,6 +2538,13 @@ function applyLang(){
     if (!ORIG.has(n)) ORIG.set(n, n.innerHTML);
     const en = I18N[n.getAttribute("data-t")];
     n.innerHTML = (EN() && en != null) ? en : ORIG.get(n);
+  });
+  // data-t-aria: 낭독기용 영역 라벨(aria-label)도 언어를 따라가게 한다. 본문은
+  // 한국어가 원본이라, 처음 값(한국어)을 ARIA_ORIG 에 담아 두고 영어일 때만 바꾼다.
+  document.querySelectorAll("[data-t-aria]").forEach(n => {
+    if (!ARIA_ORIG.has(n)) ARIA_ORIG.set(n, n.getAttribute("aria-label") || "");
+    const en = I18N[n.getAttribute("data-t-aria")];
+    n.setAttribute("aria-label", (EN() && en != null) ? en : ARIA_ORIG.get(n));
   });
 }
 

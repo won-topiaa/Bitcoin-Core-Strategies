@@ -460,7 +460,7 @@ nav.pages .n{font-family:var(--mono); font-size:11px; opacity:.55; margin-right:
      HTML 에 적어 두면 두 곳이 어긋난다. 여기 있는 것은 스크립트가 죽었을 때
      남는 기본값이다. -->
 <div class="topbar" data-current="index">
-  <nav class="pages" aria-label="페이지">
+  <nav class="pages" aria-label="페이지" data-t-aria="nav.aria">
     <a href="index.html" data-page="index"><span class="n">01</span><span data-t="nav.now">지금 위치</span></a>
     <a href="verify.html" data-page="verify"><span class="n">02</span><span data-t="nav.verify">믿어도 되나</span></a>
     <a href="rules.html" data-page="rules"><span class="n">03</span><span data-t="nav.rules">규칙과 한계</span></a>
@@ -486,7 +486,7 @@ nav.pages .n{font-family:var(--mono); font-size:11px; opacity:.55; margin-right:
 <!-- ============ 시장 스냅샷 (10초 요약) — 값은 JS 가 실제 데이터로 채운다.
      첫 화면에 숫자를 잔뜩 늘어놓지 않는다. 가격 + '핵심 답 한 줄' 뿐. 나머지
      위치 상세(범위·구간·눈금)는 바로 밑 계기판이 맡는다. ============ -->
-<section class="hero" id="hero" style="margin-top:0" aria-label="Market snapshot">
+<section class="hero" id="hero" style="margin-top:0" aria-label="시장 스냅샷" data-t-aria="idx.aria.hero">
   <div class="hero-main">
     <p class="eyebrow" id="hero-eyebrow"></p>
     <div class="hero-price">
@@ -525,7 +525,7 @@ nav.pages .n{font-family:var(--mono); font-size:11px; opacity:.55; margin-right:
     <!-- 스크롤해도 붙어 있는 요약. 구간·밴드·유동성은 계기판이 이미 보여주므로
          여기서 반복하지 않는다. 계기판에 없는 것 하나 — '최근에 어디로 움직였나' —
          만 남긴다. 값은 JS 가 실제 데이터로 채운다. -->
-    <aside class="side" aria-label="요약">
+    <aside class="side" aria-label="요약" data-t-aria="idx.aria.side">
       <div class="card">
         <h3 id="side-recent-h"></h3>
         <div id="side-recent"></div>
@@ -587,7 +587,7 @@ nav.pages .n{font-family:var(--mono); font-size:11px; opacity:.55; margin-right:
     <div class="chart-head">
       <div class="legend" id="hist-legend"></div>
       <!-- 시간 범위. 두 차트(위치·가격)의 가로축을 함께 좁힌다. JS 가 채운다. -->
-      <div class="rangesel" id="rangesel" role="group" aria-label="Time range"></div>
+      <div class="rangesel" id="rangesel" role="group" aria-label="시간 범위" data-t-aria="idx.aria.range"></div>
     </div>
     <div class="chart" id="hist-host">
       <svg id="hist"></svg>
@@ -665,6 +665,11 @@ window.__I18N__ = {
 "nav.now": "Where we are",
 "nav.verify": "Can you trust it",
 "nav.rules": "Rules and limits",
+/* 낭독기용 영역 라벨(aria-label) — data-t-aria 로 언어를 따라간다 */
+"nav.aria": "Pages",
+"idx.aria.hero": "Market snapshot",
+"idx.aria.side": "Summary",
+"idx.aria.range": "Time range",
 "foot.disclaimer": `This page exists for personal record-keeping and information, not as investment advice.
   None of the numbers here say anything about future prices. What you decide, and what follows from it, is yours.`,
 
@@ -2559,6 +2564,7 @@ function paintControls(){
    언어 적용 — 한국어 원본을 기억해 두고 갈아 끼운다
    ===================================================================== */
 const ORIG = new Map();
+const ARIA_ORIG = new Map();
 function applyLang(){
   document.documentElement.setAttribute("lang", EN() ? "en" : "ko");
   document.querySelectorAll("[data-t]").forEach(n => {
@@ -2567,6 +2573,13 @@ function applyLang(){
     if (!ORIG.has(n)) ORIG.set(n, n.innerHTML);
     const en = I18N[n.getAttribute("data-t")];
     n.innerHTML = (EN() && en != null) ? en : ORIG.get(n);
+  });
+  // data-t-aria: 낭독기용 영역 라벨(aria-label)도 언어를 따라가게 한다. 본문은
+  // 한국어가 원본이라, 처음 값(한국어)을 ARIA_ORIG 에 담아 두고 영어일 때만 바꾼다.
+  document.querySelectorAll("[data-t-aria]").forEach(n => {
+    if (!ARIA_ORIG.has(n)) ARIA_ORIG.set(n, n.getAttribute("aria-label") || "");
+    const en = I18N[n.getAttribute("data-t-aria")];
+    n.setAttribute("aria-label", (EN() && en != null) ? en : ARIA_ORIG.get(n));
   });
 }
 
