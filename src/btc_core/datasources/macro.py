@@ -94,10 +94,21 @@ def china_m2_impulse(path: str | Path, *, reference: Optional[date] = None,
     if not ds:
         return None
     last = ds[-1]
-    window_vals = [m2[d] for d in ds[-(window + 1):-1]]     # last 이전 window개
-    if len(window_vals) < window:
-        return None
-    return m2[last] - sum(window_vals) / len(window_vals)
+    # 창은 **달력 기준**으로 last 직전 window개월이다. 위치로 잡으면(ds[-25:-1])
+    # 중간에 한 달이 비었을 때 창이 조용히 25~26개월로 늘어나 임펄스 크기가
+    # 스냅샷끼리 비교 불가능해진다 — _yoy 와 같은 이유로 달력으로 센다.
+    by_ym = {(d.year, d.month): m2[d] for d in ds}
+    window_vals: list[float] = []
+    y, m = last.year, last.month
+    for _ in range(window):
+        m -= 1
+        if m == 0:
+            m, y = 12, y - 1
+        v = by_ym.get((y, m))
+        if v is None:                 # 달력상 한 달이라도 비면 임펄스를 내지 않는다
+            return None
+        window_vals.append(v)
+    return m2[last] - sum(window_vals) / window
 
 
 def load_macro_signals(path: str | Path = "data/macro.csv", *,

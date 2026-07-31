@@ -235,16 +235,68 @@ def fetch_csv_api(timeout: int = 40) -> dict[str, dict[date, float]]:
     return columns
 
 
+def _read_existing(path: Path) -> dict[str, dict[date, float]]:
+    """이미 있는 CSV 를 열별로 읽는다. 없거나 못 읽으면 빈 사전.
+
+    한 소스가 잠깐 막혀 이번 run 에 빠진 열을 기존 값으로 되살리기 위한 것이다
+    (merge_to_csv 참고). 깨진 파일 하나 때문에 죽지 않도록 넓게 방어한다."""
+    if not path.exists():
+        return {}
+    out: dict[str, dict[date, float]] = {}
+    try:
+        with path.open("r", encoding="utf-8", newline="") as fh:
+            rows = list(csv.reader(fh))
+    except (OSError, csv.Error, UnicodeDecodeError):
+        return {}
+    if not rows or not rows[0] or rows[0][0] != "date":
+        return {}
+    cols = rows[0][1:]
+    for c in cols:
+        out[c] = {}
+    for row in rows[1:]:
+        if not row:
+            continue
+        d = _parse_ymd(row[0])
+        if d is None:
+            continue
+        for i, c in enumerate(cols, start=1):
+            if i < len(row) and row[i] != "":
+                try:
+                    out[c][d] = float(row[i])
+                except ValueError:
+                    pass
+    return out
+
+
 def merge_to_csv(columns: dict[str, dict[date, float]], path: Path) -> None:
-    all_dates = sorted(set().union(*[set(s) for s in columns.values()]) if columns else set())
-    names = list(columns)
+    """이번에 받은 열을 **기존 파일과 합쳐** 원자적으로 쓴다.
+
+    핵심: 소스 하나(예: chinadata·FRED 일부)가 막혀 이번 run 의 columns 에 빠진
+    열/값은 **기존 파일 것을 그대로 살린다.** 통째로 덮어쓰면 그 한 번의 실패가
+    m2_cn 같은 열을 통째로 지워 LRS 축이 조용히 사라진다. 같은 (열, 날짜)는
+    이번 run 값이 이긴다(더 최신·권위 있는 재수집).
+
+    쓰기는 같은 폴더의 임시 파일에 먼저 하고 `Path.replace` 로 바꿔치기해,
+    쓰다 죽어도 기존 파일이 반쯤 망가지지 않게 한다."""
+    merged: dict[str, dict[date, float]] = {
+        name: dict(series) for name, series in _read_existing(path).items()
+    }
+    for name, series in columns.items():
+        merged.setdefault(name, {}).update(series)
+    if not merged:
+        return
+
+    all_dates = sorted(set().union(*[set(s) for s in merged.values()]))
+    names = list(merged)
     path.parent.mkdir(parents=True, exist_ok=True)
-    with path.open("w", encoding="utf-8", newline="") as fh:
+    tmp = path.with_name(f"{path.name}.tmp")
+    with tmp.open("w", encoding="utf-8", newline="") as fh:
         w = csv.writer(fh)
         w.writerow(["date"] + names)
         for d in all_dates:
             w.writerow([d.isoformat()] +
-                       [("" if d not in columns[n] else repr(columns[n][d])) for n in names])
+                       [("" if d not in merged[n] else repr(merged[n][d])) for n in names])
+    tmp.replace(path)
 
 
 def build_global(columns: dict[str, dict[date, float]]) -> Optional[dict[date, float]]:
@@ -271,6 +323,8 @@ def build_global(columns: dict[str, dict[date, float]]) -> Optional[dict[date, f
             if best is None:
                 continue
             rate = fx[best]
+            if not rate:                       # 0/결측 환율이면 이 달은 건너뛴다
+                continue                        # (÷0 로 전체 수집이 죽지 않도록)
             usd[d] = v * rate if spec["fx_is_usd_per_unit"] else v / rate
         if usd:
             parts.append(usd)

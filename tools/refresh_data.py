@@ -376,7 +376,11 @@ def run(args) -> int:
         print("\n사이트 재생성")
         import build_viz
 
-        for p in build_viz.build(str(path), ROOT / args.out_dir):
+        # 거시(중국 M2·LRS) 패널을 빠뜨리지 않도록 macro CSV 를 넘긴다 — 안 넘기면
+        # build_viz.py 직접 실행(기본 --macro data/macro.csv)과 결과가 달라진다.
+        macro_csv = ROOT / "data" / "macro.csv"
+        for p in build_viz.build(str(path), ROOT / args.out_dir,
+                                 macro_csv=str(macro_csv) if macro_csv.exists() else None):
             print(f"        {p}  ({p.stat().st_size / 1024:.0f} KB)")
     return 0
 

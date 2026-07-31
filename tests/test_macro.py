@@ -126,3 +126,26 @@ def test_align_matches_nearest_within_tolerance():
 
 def test_self_test_passes():
     assert mc.self_test() == 0
+
+
+def test_merge_to_csv_preserves_columns_from_a_missing_source(tmp_path):
+    """소스 하나가 이번 run 에 빠져도 그 열/값은 기존 파일에서 살아남는다 (H1).
+
+    통째로 덮어쓰던 옛 방식은 chinadata 가 잠깐 막히면 m2_cn 열을 통째로 지워
+    LRS 축이 조용히 사라졌다. 병합은 그 실패가 열을 지우지 못하게 한다."""
+    import fetch_macro as fm
+
+    p = tmp_path / "macro.csv"
+    fm.merge_to_csv({
+        "m2_cn": {date(2020, 1, 31): 100.0, date(2020, 2, 29): 101.0},
+        "vix": {date(2020, 1, 31): 20.0},
+    }, p)
+    # 둘째 run: chinadata 가 막혀 m2_cn 없이 vix 만 새로 왔다
+    fm.merge_to_csv({"vix": {date(2020, 2, 29): 22.0}}, p)
+
+    got = fm._read_existing(p)
+    assert "m2_cn" in got                                  # 지워지지 않았다
+    assert got["m2_cn"][date(2020, 1, 31)] == 100.0
+    assert got["m2_cn"][date(2020, 2, 29)] == 101.0
+    assert got["vix"][date(2020, 2, 29)] == 22.0           # 새 run 값이 이긴다
+    assert got["vix"][date(2020, 1, 31)] == 20.0           # 기존 값 보존

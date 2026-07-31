@@ -98,6 +98,19 @@ def test_impulse_requires_full_24_month_window(tmp_path):
     assert china_m2_impulse(p) is None
 
 
+def test_impulse_needs_contiguous_calendar_window(tmp_path):
+    """창 안에 달력상 한 달이라도 비면 임펄스를 내지 않는다 — 위치로 세면 창이
+    조용히 25~26개월로 늘어나 스냅샷끼리 비교 불가능해진다 (M3)."""
+    p = tmp_path / "m.csv"
+    rows = _monthly(50)                         # 50개월 연속 → 임펄스 나온다
+    _write(p, rows)
+    assert china_m2_impulse(p) is not None
+    # 마지막 YoY(50번째 달) 직전 24개월 창 안(40번째 달)을 하나 뺀다
+    gapped = [r for i, r in enumerate(rows) if i != 39]
+    _write(p, gapped)
+    assert china_m2_impulse(p) is None
+
+
 def test_no_future_reference(tmp_path):
     """reference 이후 데이터는 절대 안 본다 — 과거 스냅샷이 미래를 훔쳐보면 안 된다."""
     p = tmp_path / "m.csv"
