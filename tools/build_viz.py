@@ -101,6 +101,10 @@ def compact(payload: dict) -> dict:
             "phase": t["phase"], "d": t["d"], "price": _n(t["price"], 0),
             "bcs": _n(t["bcs"], 1), "low": _n(t["low"], 1), "high": _n(t["high"], 1),
             "stable": t["stable"], "band": t["band"],
+            # 반감기 이후 경과일. 화면의 "과거 고점은 …일에 나왔습니다" 를 여기서
+            # 계산한다 — 예전엔 그 숫자가 JS 에 박혀 있다가 전환점을 옮겼을 때
+            # 어긋났다.
+            "dsh": _n(t.get("dsh"), 0),
         }
 
     return {

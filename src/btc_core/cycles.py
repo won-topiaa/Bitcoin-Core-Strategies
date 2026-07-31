@@ -49,7 +49,7 @@ from .indicators import HALVINGS
 from .series import Series
 
 # 사람이 정하는 것은 이 둘뿐이다.
-TOP_WINDOW_DAYS = 800      # 반감기 이후 고점이 나온 최장 시점은 548일이었다
+TOP_WINDOW_DAYS = 800      # 반감기 이후 고점이 나온 최장 시점은 546일이었다
 BOTTOM_PAD_DAYS = 60       # 저점은 다음 반감기 직전까지도 갈 수 있다
 
 

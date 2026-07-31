@@ -85,6 +85,21 @@ def test_no_unguarded_element_access(name):
     assert not bad, f"가드 없는 접근: {bad[:5]}"
 
 
+def test_halving_since_days_are_not_hardcoded():
+    """"과거 고점은 …일에 나왔습니다" 의 숫자는 전환점에서 계산해야 한다.
+
+    예전엔 367·526·548·534 가 문자열에 박혀 있었고, docs/21 에서 전환점을
+    실측으로 옮기자 실제(371·525·546·534)와 어긋났다. 화면이 지표와 다른 말을
+    하고 있었던 것이다. 다시 박지 못하게 막는다.
+    """
+    # 주석은 뺀다 — 왜 이렇게 고쳤는지 설명하는 줄에 옛 숫자가 남아 있다.
+    code = "\n".join(ln for ln in read("_script.html").splitlines()
+                     if not ln.lstrip().startswith("//"))
+    seq = re.compile(r"367[·, ].*?534|534[ ]?days after")
+    assert not seq.search(code), \
+        "반감기 경과일이 문자열에 박혀 있습니다 — D.tps 에서 계산하세요"
+
+
 def test_svg_listeners_are_wired_exactly_once():
     """svg 요소는 **다시 그려도 살아남는다** (지워지는 것은 그 자식들이다).
 

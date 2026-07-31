@@ -144,7 +144,7 @@ ko: {
   tGateNoteOk: "두 갈래 이상이 같은 방향입니다",
   tGateNoteNo: "가격 평균선 하나뿐 — 실행 막힘",
   tHalving: "반감기 이후", tHalvingVal: n => `${n}일`,
-  tHalvingNote: "과거 고점은 367·526·548·534일에 나왔습니다",
+  tHalvingNote: days => `과거 고점은 반감기 이후 ${days}일에 나왔습니다`,
   // -- 접어 둔 설명
   whyScale: "눈금 읽는 법",
   whyScaleBody: bandRows =>
@@ -163,7 +163,7 @@ ko: {
     `"MVRV가 7을 넘으면 과열" 같은 기준은 2013년에는 맞았지만 2025년에는 한 번도 닿지 않았습니다. ` +
     `사이클마다 값이 점점 낮아지기 때문입니다. 등수로 바꾸면 그 영향을 덜 받습니다.</p>`,
   whyTiles: "위 숫자들이 뭔가요",
-  whyTilesBody:
+  whyTilesBody: days =>
     `<p style="margin:0"><b>대표값</b> — 지표 아홉 개를 전부 써서 계산한 값입니다. ` +
     `범위의 한가운데가 아니라 별도로 계산한 값이라 가운데에서 벗어나 있을 수 있습니다.</p>` +
     `<p style="margin:8px 0 0"><b>범위 폭</b> — 지표를 하나씩 빼며 다시 계산했을 때 값이 흩어지는 폭입니다. ` +
@@ -175,7 +175,7 @@ ko: {
     `<p style="margin:8px 0 0"><b>둘 이상 동의</b> — 세 갈래 중 둘 이상이 같은 방향인지입니다. ` +
     `그중 하나는 반드시 '평균가 대비'가 아니어야 합니다.</p>` +
     `<p style="margin:8px 0 0"><b>반감기 이후</b> — 마지막 반감기로부터 며칠 지났는지입니다. ` +
-    `과거 네 번의 고점이 반감기 이후 367·526·548·534일에 나왔습니다. 다만 이건 온체인 지표가 ` +
+    `과거 네 번의 고점이 반감기 이후 ${days}일에 나왔습니다. 다만 이건 온체인 지표가 ` +
     `아니라 달력일 뿐이라 <b>점수에는 넣지 않습니다.</b></p>`,
   // -- 꼬리말
   footBase:
@@ -311,7 +311,7 @@ en: {
   tGateNoteOk: "two or more families point the same way",
   tGateNoteNo: "price averages only — execution blocked",
   tHalving: "since halving", tHalvingVal: n => `${n} days`,
-  tHalvingNote: "past peaks came at 367 · 526 · 548 · 534 days",
+  tHalvingNote: days => `past peaks came ${days} days after a halving`,
   whyScale: "How to read the ruler",
   whyScaleBody: bandRows =>
     `<p style="margin:0">The 0 in the middle is "the midpoint of the last 16 years". Further left ` +
@@ -331,7 +331,7 @@ en: {
     `"MVRV above 7 means overheated" held in 2013 but was never once reached in 2025, because the ` +
     `readings fall from cycle to cycle. Ranks are less exposed to that.</p>`,
   whyTiles: "What are these numbers",
-  whyTilesBody:
+  whyTilesBody: days =>
     `<p style="margin:0"><b>Headline</b> — the value computed using all nine indicators. It is a ` +
     `separate calculation rather than the middle of the range, so it can sit off-centre.</p>` +
     `<p style="margin:8px 0 0"><b>Range width</b> — how far the values scatter when each indicator ` +
@@ -344,7 +344,7 @@ en: {
     `<p style="margin:8px 0 0"><b>Two agree</b> — whether two or more of the three families point the ` +
     `same way, at least one of which must not be 'Against average price'.</p>` +
     `<p style="margin:8px 0 0"><b>Since halving</b> — days since the last halving. The four past peaks ` +
-    `came 367, 526, 548 and 534 days after one. But this is a calendar, not an on-chain measure, so ` +
+    `came ${days} days after one. But this is a calendar, not an on-chain measure, so ` +
     `<b>it is kept out of the score.</b></p>`,
   footBase:
     "Data is fetched automatically every day from the CoinMetrics community API. Only two things have " +
@@ -1431,6 +1431,12 @@ function fillText(){
   const st = D.stats;
   const gate = c.gate;
   const width = c.high - c.low;
+  // "과거 고점은 반감기 이후 …일에 나왔습니다" 를 전환점에서 계산한다. 예전엔
+  // 이 숫자가 문자열에 박혀 있다가, 전환점 날짜를 실측으로 옮겼을 때 어긋났다
+  // (박힌 값 367·526·548·534 vs 실제 371·525·546·534). 이제 못 어긋난다.
+  const topDays = D.tps.filter(k => k.phase === "top" && k.dsh != null)
+    .map(k => Math.round(k.dsh));
+  const halvingDays = topDays.join(EN() ? ", " : "·");
   const tiles = [
     {k:t("tPoint"), v:nf(c.bcs,1), n:t("tPointNote")},
     {k:t("tWidth"), v:t("tWidthVal", width.toFixed(1)),
@@ -1443,7 +1449,7 @@ function fillText(){
     {k:t("tGate"), v:t(gate ? "gatePass" : "gateFail"),
      n:t(gate ? "tGateNoteOk" : "tGateNoteNo"), chip:gate},
     {k:t("tHalving"), v:c.dsh ? t("tHalvingVal", Math.round(c.dsh)) : "—",
-     n:t("tHalvingNote")}
+     n:t("tHalvingNote", halvingDays)}
   ];
   setHTML("tiles", tiles.map(k => {
     const col = k.chip === undefined ? "" :
@@ -1462,7 +1468,7 @@ function fillText(){
       D.families.map(f => f.weight + "%").join(" / ")))))
     wireToggles($("gauge-why"));
 
-  if (setHTML("tiles-why", toggle(t("whyTiles"), t("whyTilesBody"))))
+  if (setHTML("tiles-why", toggle(t("whyTiles"), t("whyTilesBody", halvingDays))))
     wireToggles($("tiles-why"));
 
   const notes = (D.deriveNotes || []).map(p => EN() ? p[1] : p[0]);
