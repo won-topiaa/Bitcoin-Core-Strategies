@@ -370,7 +370,7 @@ def report(btc: dict[date, float], macro: dict[str, dict[date, float]]) -> str:
     # --- M2 (열마다) ---
     add("\n[2] M2 ↔ 비트코인 — 전년비 증가율, 선행/후행 스캔")
     add("-" * 78)
-    m2_keys = [k for k in macro if k.lower().startswith("m2") or "m2" in k.lower()]
+    m2_keys = [k for k in macro if any(k.lower().startswith(p) for p in ("m1", "m2"))]
     if not m2_keys:
         add("  M2 열이 없습니다 (macro.csv 에 m2_us, m2_global 등 추가).")
     else:
