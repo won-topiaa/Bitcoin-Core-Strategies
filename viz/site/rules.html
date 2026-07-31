@@ -667,7 +667,7 @@ nav.pages .n{font-family:var(--mono); font-size:11px; opacity:.55; margin-right:
     <a href="index.html">
       <span class="k" data-t="rul.next.k">처음으로</span>
       <span class="t" data-t="rul.next.t">지금 위치 보기</span>
-      <span class="d" data-t="rul.next.d">오늘 비트코인이 지난 16년에 비춰 어디쯤인지</span>
+      <span class="d" data-t="rul.next.d">오늘 비트코인이 지난 <span class="yr">16</span>년에 비춰 어디쯤인지</span>
     </a>
   </div>
 </section>
@@ -700,10 +700,10 @@ window.__I18N__ = {
 "idx.eyebrow": "Bitcoin cycle position",
 "idx.h1": "Cheap side, or expensive side?",
 "idx.lead": `A ruler that tells you one thing only — <strong>where today's Bitcoin price sits against
-  the last 16 years</strong>. It says nothing about whether the price goes up or down from here.`,
+  the last <span class="yr">16</span> years</strong>. It says nothing about whether the price goes up or down from here.`,
 "idx.s1.eyebrow": "<em>01</em> — Where we are",
 "idx.s1.h2": "Today lands about here",
-"idx.s1.p": `The closer to −100, the cheaper against the last 16 years; the closer to +100, the more
+"idx.s1.p": `The closer to −100, the cheaper against the last <span class="yr">16</span> years; the closer to +100, the more
   expensive. Why it comes out as a <strong>range</strong> rather than a single number is
   <a href="verify.html">on the next page</a>.`,
 "idx.s2.h2": "Where each of the nine indicators sits",
@@ -711,12 +711,12 @@ window.__I18N__ = {
   reaches the cheaper the side, the further <strong>right</strong> the more expensive, and the
   percentage is <strong>where it falls within that indicator's last four years</strong>.`,
 "idx.s2.more": "Show all nine indicators",
-"idx.s2.note": `<strong>This ‘4-year’ percentage uses a different window than the ‘16-year’ percentile on the
-  gauge up top</strong> — the top one ranks the final score across all 16 years, these rank each
+"idx.s2.note": `<strong>This ‘4-year’ percentage uses a different window than the ‘<span class="yr">16</span>-year’ percentile on the
+  gauge up top</strong> — the top one ranks the final score across all <span class="yr">16</span> years, these rank each
   indicator over its own last four years, so don't compare the two numbers directly.
   The date at the end of each card is <strong>the most recent time that indicator was as extreme as it
   is now</strong> (at least six months ago).`,
-"idx.s3.eyebrow": "<em>02</em> — The last 16 years",
+"idx.s3.eyebrow": "<em>02</em> — The last <span class=\"yr\">16</span> years",
 "idx.s3.h2": "Four visits to the same place, four returns",
 "idx.s3.p": `The ruler above, computed every day and strung out in time order. Vertical is the position
   score, horizontal is time.`,
@@ -810,7 +810,7 @@ window.__I18N__ = {
 "vfy.s3.p2": `Done this way, <strong>not one new number had to be chosen.</strong> Fixing a constant
   like "read it as ±10" would make that 10 one more arbitrary value, so the data sets the width
   itself.`,
-"vfy.width.h3": "How wide the range ran over 16 years",
+"vfy.width.h3": "How wide the range ran over <span class=\"yr\">16</span> years",
 "vfy.callout": `<strong>On slightly fewer than half of all days the range fits entirely inside one
   band.</strong> The rest of the time it straddles two — "cheap side" and "near a bottom", say. That
   is the warning against reading the decimals, put into a number, and it is why the range is what
@@ -947,13 +947,29 @@ window.__I18N__ = {
   disagree it <strong>stops without writing anything.</strong>`,
 "rul.next.k": "Back to the start",
 "rul.next.t": "See where we are",
-"rul.next.d": "Where Bitcoin sits today against the last 16 years"
+"rul.next.d": "Where Bitcoin sits today against the last <span class=\"yr\">16</span> years"
 };
 </script>
 <script>
 (function(){
 "use strict";
 const D = window.__BCS__;
+
+/* 데이터가 실제로 걸쳐 있는 햇수. "지난 16년"을 하드코딩하면 2027년엔 17년치를
+   16이라 부르게 된다. span 에서 **달력 기준**으로 센다(365.25 나눗셈은 경계에서
+   한 해 어긋난다). 정적 산문은 <span class="yr"> 로, JS 문장은 ${YRS} 로 채운다. */
+let YRS = 16;
+try {
+  const a = new Date(D.span[0] + "T00:00:00Z"), b = new Date(D.span[1] + "T00:00:00Z");
+  let y = b.getUTCFullYear() - a.getUTCFullYear();
+  if (b.getUTCMonth() < a.getUTCMonth() ||
+      (b.getUTCMonth() === a.getUTCMonth() && b.getUTCDate() < a.getUTCDate())) y--;
+  if (Number.isFinite(y) && y > 0) YRS = y;
+} catch (e) { /* span 이 이상하면 기본 16 */ }
+function fillYears(){
+  const y = String(YRS);
+  document.querySelectorAll(".yr").forEach(e => { e.textContent = y; });
+}
 const I18N = window.__I18N__ || {};
 const S = D.S;                                   // [dayOffset, price, bcs, low, high, fv, fp, fs, gate, nmiss]
 const BASE = new Date(D.base + "T00:00:00Z");
@@ -1006,7 +1022,7 @@ ko: {
   ladderDist: "나눠 파는 5단계 ▶",
   // 큰 숫자를 사람 말로. 이 한 줄이 첫 화면에서 가장 먼저 읽힌다.
   rankLine: (pct, days) =>
-    `지난 16년을 통틀어 <b>아래에서 <span class="pin">${pct}%</span> 지점</b>입니다 — ` +
+    `지난 ${YRS}년을 통틀어 <b>아래에서 <span class="pin">${pct}%</span> 지점</b>입니다 — ` +
     `${days}일 가운데 오늘보다 싼 쪽이었던 날이 ${pct}% 뿐이라는 뜻입니다.`,
   // -- 읽는 법 그림
   keyExpensive: "비싼 쪽", keyCheap: "싼 쪽",
@@ -1020,7 +1036,7 @@ ko: {
   ttGate: "둘 이상 동의", gatePass: "충족", gateFail: "미달",
   histCap: (n, med, mean) =>
     `점 ${n}개로 그렸습니다 (주 1회, 전환점 주변과 최근 400일은 하루 단위). ` +
-    `띠의 폭은 16년 전체에서 보통 ${med}점, 평균 ${mean}점입니다. ` +
+    `띠의 폭은 ${YRS}년 전체에서 보통 ${med}점, 평균 ${mean}점입니다. ` +
     `띠가 유난히 두꺼운 구간은 지표들이 서로 다른 이야기를 하던 때이고, ` +
     `얇은 구간은 아홉 개가 한목소리를 내던 때입니다.`,
   // -- 성적표
@@ -1070,7 +1086,7 @@ ko: {
     `또 하루는 ${st.p75}점보다 넓습니다. ` +
     `진한 상자가 가운데 절반(p25~p75), 연한 상자가 열에 여덟(p10~p90), ` +
     `세로선이 한가운데 값입니다. ` +
-    `범위가 한 구간 안에 온전히 들어온 날은 16년 중 ${st.stable_pct}% 뿐입니다.`,
+    `범위가 한 구간 안에 온전히 들어온 날은 ${YRS}년 중 ${st.stable_pct}% 뿐입니다.`,
   // -- 머리글
   srcDays: (n, k) => `${n}일 · 지표 ${k}개`,
   freshToday: "데이터 오늘 기준",
@@ -1084,7 +1100,7 @@ ko: {
   // -- 계기판 밑 '눈금 읽는 법' (접힘)
   whyScale: "눈금 읽는 법",
   whyScaleBody: bandRows =>
-    `<p style="margin:0">가운데 0이 "과거 16년의 한가운데"입니다. 왼쪽으로 갈수록 그때에 비해 싼 편, ` +
+    `<p style="margin:0">가운데 0이 "과거 ${YRS}년의 한가운데"입니다. 왼쪽으로 갈수록 그때에 비해 싼 편, ` +
     `오른쪽으로 갈수록 비싼 편이라는 뜻입니다. <b>−100이 바닥, +100이 천장</b>이 아니라 ` +
     `<b>과거 분포에서의 위치</b>라는 점이 중요합니다 — 값이 −90이어도 더 떨어질 수 있습니다.</p>` +
     `<p style="margin:10px 0 0">굵은 세로 막대 두 개가 <b>범위</b>이고 그 안의 점이 대표값입니다. ` +
@@ -1137,7 +1153,7 @@ ko: {
     `${lead}개월 앞선 관계(상관 ${corr})입니다. 지금 임펄스 ${imp}, 레짐 ‘${band}’.`,
   heroNow: "비트코인 · 현재",
   heroSub: d => `기준일 ${d} · 매일 자동 갱신`,
-  heroAnswer: p => `지난 16년 중 <b>하위 ${p}%</b>`,
+  heroAnswer: p => `지난 ${YRS}년 중 <b>하위 ${p}%</b>`,
   pos4: p => `4년 위치 ${p}%`,
   altTP: (mt, mb, gap, now) =>
     `과거 전환점 여덟 곳의 위치 점수를 가로 막대로 늘어놓은 그림. 고점 네 번 평균 ` +
@@ -1159,7 +1175,7 @@ en: {
   ladderDist: "5 sell-down steps ▶",
   rankLine: (pct, days) =>
     `That is <b>the <span class="pin">${pct}</span>${ordinal(pct)} percentile</b> of the last ` +
-    `16 years — of ${days} days, only ${pct}% were cheaper than today.`,
+    `${YRS} years — of ${days} days, only ${pct}% were cheaper than today.`,
   keyExpensive: "expensive", keyCheap: "cheap",
   keyBandIs: "band = range", keyLineIs: "line = headline",
   halving: "halving",
@@ -1170,7 +1186,7 @@ en: {
   ttGate: "two agree", gatePass: "met", gateFail: "not met",
   histCap: (n, med, mean) =>
     `Drawn from ${n} points (weekly, daily around turning points and for the last 400 days). ` +
-    `Across the 16 years the band is typically ${med} points wide, ${mean} on average. ` +
+    `Across the ${YRS} years the band is typically ${med} points wide, ${mean} on average. ` +
     `Stretches where it is unusually thick are where the indicators disagreed; ` +
     `thin stretches are where the nine spoke with one voice.`,
   phaseTop: "peak", phaseBottom: "bottom",
@@ -1216,7 +1232,7 @@ en: {
     `and another is wider than ${st.p75}. ` +
     `The dark box is the middle half (p25–p75), the light box eight days in ten (p10–p90), ` +
     `and the vertical line the midpoint. ` +
-    `The range fits entirely inside one band on only ${st.stable_pct}% of the 16 years.`,
+    `The range fits entirely inside one band on only ${st.stable_pct}% of the ${YRS} years.`,
   srcDays: (n, k) => `${n} days · ${k} indicators`,
   freshToday: "data as of today",
   freshDays: n => `data ${n} day${n === 1 ? "" : "s"} old`,
@@ -1228,7 +1244,7 @@ en: {
   deltaPrice: v => `price ${v}%`,
   whyScale: "How to read the ruler",
   whyScaleBody: bandRows =>
-    `<p style="margin:0">The 0 in the middle is "the midpoint of the last 16 years". Further left ` +
+    `<p style="margin:0">The 0 in the middle is "the midpoint of the last ${YRS} years". Further left ` +
     `means cheaper against that history, further right means more expensive. What matters is that ` +
     `<b>−100 is not the floor and +100 is not the ceiling</b> — it is a ` +
     `<b>position within the past distribution</b>. At −90 it can still fall further.</p>` +
@@ -1280,7 +1296,7 @@ en: {
     `leads Bitcoin by about ${lead} months (correlation ${corr}). Impulse now ${imp}, regime '${band}'.`,
   heroNow: "Bitcoin · now",
   heroSub: d => `as of ${d} · updates daily`,
-  heroAnswer: p => `<b>bottom ${p}%</b> of the last 16 years`,
+  heroAnswer: p => `<b>bottom ${p}%</b> of the last ${YRS} years`,
   pos4: p => `${p}% of 4y`,
   altTP: (mt, mb, gap, now) =>
     `Horizontal bars showing the position score at eight past turning points. The four peaks ` +
@@ -2592,6 +2608,7 @@ const HOOKS = window.__BCS_HOOKS__ = window.__BCS_HOOKS__ || [];
 function renderAll(){
   heroFill(); sideFill(); fillText(); famCards(); metricCards(); scaleKey(); mixBar(); histLegend(); rangeSel(); drawAll();
   for (let i = 0; i < HOOKS.length; i++) HOOKS[i]();
+  fillYears();   // applyLang 이 산문을 다시 그린 뒤라, .yr 스팬을 마지막에 채운다
 }
 // 페이지별 스크립트가 쓸 최소한의 창구. 문자열 표를 두 벌 두면 언어를 하나
 // 고칠 때 한쪽만 고쳐지고, 그러면 같은 화면에 두 문장이 섞인다.
