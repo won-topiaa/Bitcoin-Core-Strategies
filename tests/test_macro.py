@@ -128,6 +128,22 @@ def test_self_test_passes():
     assert mc.self_test() == 0
 
 
+def test_gold_analysis_detects_sign_and_null():
+    """금 분석이 심은 양/음 상관은 잡고 무상관은 낮게 낸다 (docs/25 재현 로직).
+
+    실제 금↔BTC 는 무상관(|ρ|<0.2)이지만, 그 판정을 내리는 로직 자체는 답을
+    아는 합성 데이터로 검증할 수 있다 — 부호와 크기를 되찾는지 본다."""
+    dates = month_grid(120)
+    btc = {d: 1000.0 * math.exp(0.3 * math.sin(i / 3)) for i, d in enumerate(dates)}
+    gold_pos = {d: 50.0 * btc[d] ** 0.5 for d in dates}                 # log 선형 → ρ≈+1
+    gold_neg = {d: 5.0e6 / btc[d] for d in dates}                       # 역수 → ρ≈−1
+    gold_null = {d: 1000.0 * math.exp(0.3 * math.cos(i / 7))
+                 for i, d in enumerate(dates)}                          # 다른 주파수 → ρ≈0
+    assert mc.gold_analysis(btc, gold_pos)["full"] > 0.9
+    assert mc.gold_analysis(btc, gold_neg)["full"] < -0.9
+    assert abs(mc.gold_analysis(btc, gold_null)["full"]) < 0.5
+
+
 def test_merge_to_csv_preserves_columns_from_a_missing_source(tmp_path):
     """소스 하나가 이번 run 에 빠져도 그 열/값은 기존 파일에서 살아남는다 (H1).
 

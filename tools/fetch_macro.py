@@ -76,6 +76,10 @@ GITHUB_SOURCES = [
     # VIX(공포지수) — datahub, 일간.
     ("https://raw.githubusercontent.com/datasets/finance-vix/main/data/vix-daily.csv",
      "DATE", {"CLOSE": "vix"}),
+    # 금 현물(LBMA, USD) — datahub, 월간 1833~. '디지털 금' 서사 점검용. 검정
+    # 결과 BTC 와 무상관(docs/25)이라 점수엔 안 쓰지만, 재현·재검증되도록 받아 둔다.
+    ("https://raw.githubusercontent.com/datasets/gold-prices/main/data/monthly.csv",
+     "Date", {"Price": "gold"}),
     # 미국 M2 — FRED M2SL 을 미러하는 커뮤니티 거시셋(월간, 2000~). 원본 권위는
     # FRED 지만 여기선 프록시가 FRED 를 막아, 이 미러가 이 환경에서 받아지는 M2 다.
     # 값은 FRED M2SL 원 수준(십억 달러): 2025-02 ≈ 21670 = 약 $21.7조 로 일치.

@@ -285,6 +285,58 @@ def vix_analysis(btc: dict[date, float], vix: dict[date, float]) -> dict:
 
 
 # ---------------------------------------------------------------------------
+# 분석 1c — 금 현물 ↔ 비트코인 ('디지털 금' 서사 점검: 로그수익률 + 선행/후행)
+# ---------------------------------------------------------------------------
+def gold_analysis(btc: dict[date, float], gold: dict[date, float],
+                  max_lag: int = 6) -> dict:
+    """월간 BTC 로그수익률 ↔ 금 로그수익률의 상관과 선행/후행 스캔.
+
+    '디지털 금'이 맞다면 둘이 같이(양의 상관) 움직이거나 한쪽이 다른 쪽을 앞서야
+    한다. 레벨이 아니라 수익률로 재는 이유는 나스닥·VIX 와 같다 — 둘 다 우상향이라
+    레벨 상관은 가짜로 높다. 선행/후행은 금 수익률을 k개월 밀어 BTC 와 맞춘다
+    (k>0 = 금이 앞선다). 실측 결론은 '무상관'이지만, 재현·재검증되도록 도구에
+    남긴다(docs/25)."""
+    bm, gm = month_end(btc), month_end(gold)
+    br, gr = log_returns(bm), log_returns(gm)
+
+    def key(d: date):
+        return (d.year, d.month)
+    brp = {key(d): v for d, v in br.items()}
+    grp = {key(d): v for d, v in gr.items()}
+    common = sorted(set(brp) & set(grp))
+    x = [brp[k] for k in common]
+    y = [grp[k] for k in common]
+
+    def era(lo, hi):
+        ks = [k for k in common if lo <= k[0] <= hi]
+        return (pearson([brp[k] for k in ks], [grp[k] for k in ks]), len(ks))
+
+    def shift(ym: tuple[int, int], k: int) -> tuple[int, int]:
+        y_, m_ = ym[0], ym[1] + k
+        while m_ > 12:
+            m_ -= 12
+            y_ += 1
+        while m_ < 1:
+            m_ += 12
+            y_ -= 1
+        return (y_, m_)
+
+    lead: dict[int, Optional[float]] = {}
+    for k in range(-max_lag, max_lag + 1):
+        gsh = {shift(ky, k): v for ky, v in grp.items()}   # 금을 k개월 민다
+        ks = sorted(set(brp) & set(gsh))
+        lead[k] = pearson([gsh[c] for c in ks], [brp[c] for c in ks]) \
+            if len(ks) >= 24 else None
+    valid = {k: v for k, v in lead.items() if v is not None}
+    best_k = max(valid, key=lambda k: abs(valid[k])) if valid else None
+    return {"n": len(common), "full": pearson(x, y),
+            "eras": {"2013~2019": era(2013, 2019), "2020~현재": era(2020, 2100)},
+            "lead": lead, "best_lag": best_k,
+            "best_corr": valid.get(best_k) if best_k is not None else None,
+            "span": (common[0], common[-1]) if common else None}
+
+
+# ---------------------------------------------------------------------------
 # 분석 2 — M2 ↔ 비트코인 (전년비 증가율의 선행/후행)
 # ---------------------------------------------------------------------------
 def m2_lead_lag(btc_month: dict[date, float], m2: dict[date, float],
@@ -334,7 +386,7 @@ def report(btc: dict[date, float], macro: dict[str, dict[date, float]]) -> str:
     L: list[str] = []
     add = L.append
     add("=" * 78)
-    add("  비트코인 ↔ 거시 연관성 — 무료 데이터, 변화율 기준")
+    add("  비트코인 ↔ 거시 연관성 — 공개 데이터, 변화율 기준")
     add("=" * 78)
     btc_month = month_end(btc)
 
@@ -371,6 +423,25 @@ def report(btc: dict[date, float], macro: dict[str, dict[date, float]]) -> str:
         for name, (val, npt) in v["eras"].items():
             add(f"    {name}  ρ {val:+.2f}   ({npt}개월)" if val is not None
                 else f"    {name}  —")
+
+    # --- 금 현물 — 있으면 ('디지털 금' 점검) ---
+    gold_key = next((k for k in macro
+                     if "gold" in k.lower() or k.lower() in ("xau", "xauusd")), None)
+    if gold_key is not None:
+        add("\n[1c] 금 현물 ↔ 비트코인 — 월수익률 상관 + 선행/후행 ('디지털 금' 점검)")
+        add("-" * 78)
+        g = gold_analysis(btc, macro[gold_key])
+        if g["span"]:
+            add(f"  기간 {g['span'][0]} ~ {g['span'][1]} · 공통 {g['n']}개월")
+        add(f"  동시 ρ = {g['full']:+.2f}" if g["full"] is not None else "  동시 —")
+        for name, (val, npt) in g["eras"].items():
+            add(f"    {name}  ρ {val:+.2f}   ({npt}개월)" if val is not None
+                else f"    {name}  —")
+        if g["best_lag"] is not None:
+            add(f"  최강 선행/후행: k={g['best_lag']:+d}개월  ρ {g['best_corr']:+.2f}"
+                "  (k>0 = 금이 앞섬)")
+        add("  → |ρ| 가 0.2 도 안 되고 시대·프레임마다 부호가 바뀐다 = 무상관."
+            " 방향·선행 신호로 쓰지 않는다 (docs/25).")
 
     # --- M2 (열마다) ---
     add("\n[2] M2 ↔ 비트코인 — 전년비 증가율, 선행/후행 스캔")
