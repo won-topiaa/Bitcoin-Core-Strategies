@@ -130,22 +130,7 @@ ko: {
   deltaVs: label => `${label} 대비`,
   deltaPts: v => `${v}점`,
   deltaPrice: v => `가격 ${v}%`,
-  // -- 타일
-  tPoint: "대표값", tPointNote: "지표 아홉 개를 전부 써서 계산한 값",
-  tWidth: "범위 폭", tWidthVal: w => `${w}점`,
-  tWidthNote: (med, narrow) =>
-    `16년 보통값 ${med}점 · ` + (narrow ? "평소보다 좁습니다" : "평소보다 넓습니다"),
-  tStable: "구간 안정", tStableOne: "한 구간", tStableTwo: "두 구간",
-  tStableNoteOne: "범위가 한 구간 안에 들어옵니다",
-  tStableNoteTwo: "범위가 두 구간에 걸쳐 있습니다",
-  tData: "데이터 상태", tDataNoteAll: "지표 아홉 개 전부 계산됨",
-  tDataNoteSome: n => `지표 ${n}개가 빠졌습니다`,
-  tGate: "둘 이상 동의",
-  tGateNoteOk: "두 갈래 이상이 같은 방향입니다",
-  tGateNoteNo: "가격 평균선 하나뿐 — 실행 막힘",
-  tHalving: "반감기 이후", tHalvingVal: n => `${n}일`,
-  tHalvingNote: days => `과거 고점은 반감기 이후 ${days}일에 나왔습니다`,
-  // -- 접어 둔 설명
+  // -- 계기판 밑 '눈금 읽는 법' (접힘)
   whyScale: "눈금 읽는 법",
   whyScaleBody: bandRows =>
     `<p style="margin:0">가운데 0이 "과거 16년의 한가운데"입니다. 왼쪽으로 갈수록 그때에 비해 싼 편, ` +
@@ -154,29 +139,6 @@ ko: {
     `<p style="margin:10px 0 0">굵은 세로 막대 두 개가 <b>범위</b>이고 그 안의 점이 대표값입니다. ` +
     `막대 아래 작은 삼각형은 미리 정해 둔 매매 단계의 위치입니다.</p>` +
     `<div class="bandlist">${bandRows}</div>`,
-  whyScore: "이 점수는 어떻게 나오나",
-  whyScoreBody: weights =>
-    `<p style="margin:0">지표 아홉 개를 각각 <b>"최근 4년 안에서 몇 등쯤인가"</b>로 바꿔 ` +
-    `−1(가장 싼 축) ~ +1(가장 비싼 축) 사이의 값으로 만듭니다. 그 아홉 개를 세 갈래로 묶고, ` +
-    `갈래마다 정해진 비중(${weights})으로 합쳐서 −100 ~ +100 으로 폅니다.</p>` +
-    `<p style="margin:10px 0 0"><b>고정된 기준선을 쓰지 않는 이유</b>가 있습니다. ` +
-    `"MVRV가 7을 넘으면 과열" 같은 기준은 2013년에는 맞았지만 2025년에는 한 번도 닿지 않았습니다. ` +
-    `사이클마다 값이 점점 낮아지기 때문입니다. 등수로 바꾸면 그 영향을 덜 받습니다.</p>`,
-  whyTiles: "위 숫자들이 뭔가요",
-  whyTilesBody: days =>
-    `<p style="margin:0"><b>대표값</b> — 지표 아홉 개를 전부 써서 계산한 값입니다. ` +
-    `범위의 한가운데가 아니라 별도로 계산한 값이라 가운데에서 벗어나 있을 수 있습니다.</p>` +
-    `<p style="margin:8px 0 0"><b>범위 폭</b> — 지표를 하나씩 빼며 다시 계산했을 때 값이 흩어지는 폭입니다. ` +
-    `좁으면 아홉 개가 서로 동의한다는 뜻이고, 넓으면 한두 개가 판단을 끌고 있다는 뜻입니다.</p>` +
-    `<p style="margin:8px 0 0"><b>구간 안정</b> — 범위가 한 구간 안에 온전히 들어오는지입니다. ` +
-    `"두 구간"이면 예컨대 '싼 편'과 '저점 부근' 사이에 걸쳐 있어서 하나로 잘라 말하기 어렵다는 뜻입니다.</p>` +
-    `<p style="margin:8px 0 0"><b>데이터 상태</b> — 지표 아홉 개가 전부 계산됐는지입니다. ` +
-    `절반 넘게 빠지면 점수는 나와도 실행은 막습니다.</p>` +
-    `<p style="margin:8px 0 0"><b>둘 이상 동의</b> — 세 갈래 중 둘 이상이 같은 방향인지입니다. ` +
-    `그중 하나는 반드시 '평균가 대비'가 아니어야 합니다.</p>` +
-    `<p style="margin:8px 0 0"><b>반감기 이후</b> — 마지막 반감기로부터 며칠 지났는지입니다. ` +
-    `과거 네 번의 고점이 반감기 이후 ${days}일에 나왔습니다. 다만 이건 온체인 지표가 ` +
-    `아니라 달력일 뿐이라 <b>점수에는 넣지 않습니다.</b></p>`,
   // -- 꼬리말
   footBase:
     "데이터는 CoinMetrics 커뮤니티 API 에서 매일 자동으로 받습니다. 밖에서 꼭 받아와야 하는 것은 " +
@@ -298,20 +260,6 @@ en: {
   deltaVs: label => `vs ${label}`,
   deltaPts: v => `${v} pts`,
   deltaPrice: v => `price ${v}%`,
-  tPoint: "headline", tPointNote: "computed using all nine indicators",
-  tWidth: "range width", tWidthVal: w => `${w} pts`,
-  tWidthNote: (med, narrow) =>
-    `16-year typical ${med} pts · ` + (narrow ? "narrower than usual" : "wider than usual"),
-  tStable: "band fit", tStableOne: "one band", tStableTwo: "two bands",
-  tStableNoteOne: "the range fits inside one band",
-  tStableNoteTwo: "the range straddles two bands",
-  tData: "data state", tDataNoteAll: "all nine indicators computed",
-  tDataNoteSome: n => `${n} indicator${n === 1 ? "" : "s"} missing`,
-  tGate: "two agree",
-  tGateNoteOk: "two or more families point the same way",
-  tGateNoteNo: "price averages only — execution blocked",
-  tHalving: "since halving", tHalvingVal: n => `${n} days`,
-  tHalvingNote: days => `past peaks came ${days} days after a halving`,
   whyScale: "How to read the ruler",
   whyScaleBody: bandRows =>
     `<p style="margin:0">The 0 in the middle is "the midpoint of the last 16 years". Further left ` +
@@ -321,31 +269,6 @@ en: {
     `<p style="margin:10px 0 0">The two thick vertical bars are the <b>range</b> and the dot inside ` +
     `is the headline value. The small triangles below the bar mark the pre-set trade steps.</p>` +
     `<div class="bandlist">${bandRows}</div>`,
-  whyScore: "How this score is produced",
-  whyScoreBody: weights =>
-    `<p style="margin:0">Each of the nine indicators is turned into <b>"roughly what rank is this ` +
-    `within the last four years"</b>, giving a value between −1 (cheapest end) and +1 (most ` +
-    `expensive end). Those nine are grouped into three families and combined at fixed weights ` +
-    `(${weights}), then spread out into −100 to +100.</p>` +
-    `<p style="margin:10px 0 0">There is <b>a reason for not using fixed thresholds</b>. ` +
-    `"MVRV above 7 means overheated" held in 2013 but was never once reached in 2025, because the ` +
-    `readings fall from cycle to cycle. Ranks are less exposed to that.</p>`,
-  whyTiles: "What are these numbers",
-  whyTilesBody: days =>
-    `<p style="margin:0"><b>Headline</b> — the value computed using all nine indicators. It is a ` +
-    `separate calculation rather than the middle of the range, so it can sit off-centre.</p>` +
-    `<p style="margin:8px 0 0"><b>Range width</b> — how far the values scatter when each indicator ` +
-    `is dropped in turn. Narrow means the nine agree; wide means one or two are carrying the call.</p>` +
-    `<p style="margin:8px 0 0"><b>Band fit</b> — whether the range sits entirely inside one band. ` +
-    `"Two bands" means it straddles, say, 'cheap side' and 'near a bottom', so it cannot be stated ` +
-    `as one thing.</p>` +
-    `<p style="margin:8px 0 0"><b>Data state</b> — whether all nine indicators were computed. If more ` +
-    `than half are missing, the score still appears but execution is blocked.</p>` +
-    `<p style="margin:8px 0 0"><b>Two agree</b> — whether two or more of the three families point the ` +
-    `same way, at least one of which must not be 'Against average price'.</p>` +
-    `<p style="margin:8px 0 0"><b>Since halving</b> — days since the last halving. The four past peaks ` +
-    `came ${days} days after one. But this is a calendar, not an on-chain measure, so ` +
-    `<b>it is kept out of the score.</b></p>`,
   footBase:
     "Data is fetched automatically every day from the CoinMetrics community API. Only two things have " +
     "to come from outside — price and 'what the whole market paid'. The rest is computed directly " +
@@ -1428,48 +1351,13 @@ function fillText(){
     }).filter(Boolean).join(""));
   }
 
-  const st = D.stats;
-  const gate = c.gate;
-  const width = c.high - c.low;
-  // "과거 고점은 반감기 이후 …일에 나왔습니다" 를 전환점에서 계산한다. 예전엔
-  // 이 숫자가 문자열에 박혀 있다가, 전환점 날짜를 실측으로 옮겼을 때 어긋났다
-  // (박힌 값 367·526·548·534 vs 실제 371·525·546·534). 이제 못 어긋난다.
-  const topDays = D.tps.filter(k => k.phase === "top" && k.dsh != null)
-    .map(k => Math.round(k.dsh));
-  const halvingDays = topDays.join(EN() ? ", " : "·");
-  const tiles = [
-    {k:t("tPoint"), v:nf(c.bcs,1), n:t("tPointNote")},
-    {k:t("tWidth"), v:t("tWidthVal", width.toFixed(1)),
-     n:t("tWidthNote", st.median, width < st.median)},
-    {k:t("tStable"), v:t(c.stable ? "tStableOne" : "tStableTwo"),
-     n:t(c.stable ? "tStableNoteOne" : "tStableNoteTwo")},
-    {k:t("tData"), v:c.nmiss ? `${D.indMeta.length-c.nmiss}/${D.indMeta.length}`
-       : `${D.indMeta.length}/${D.indMeta.length}`,
-     n:c.nmiss ? t("tDataNoteSome", c.nmiss) : t("tDataNoteAll")},
-    {k:t("tGate"), v:t(gate ? "gatePass" : "gateFail"),
-     n:t(gate ? "tGateNoteOk" : "tGateNoteNo"), chip:gate},
-    {k:t("tHalving"), v:c.dsh ? t("tHalvingVal", Math.round(c.dsh)) : "—",
-     n:t("tHalvingNote", halvingDays)}
-  ];
-  setHTML("tiles", tiles.map(k => {
-    const col = k.chip === undefined ? "" :
-      ` style="color:${k.chip ? "var(--good)" : "var(--crit)"}"`;
-    return `<div class="tile"><div class="k">${esc(k.k)}</div>` +
-      `<div class="v"${col}>${k.v}</div><div class="n">${esc(k.n)}</div></div>`;
-  }).join(""));
-
-  // --- 접었다 펴는 설명들 -------------------------------------------------
+  // 계기판 밑의 '눈금 읽는 법' 하나만 접어 둔다. 점수 계산 원리는 다음 장이
+  // 통째로 다루므로 여기서 또 설명하지 않는다 — 겹치면 첫 화면만 무거워진다.
   const bandRows = D.bands.slice().sort((a, b) => b.min - a.min).map(b =>
     `<div class="bandrow"><span>${nf(b.min,0)} ~ ${nf(b.max,0)}</span>` +
     `<span>${esc(pick(b, "label"))}</span></div>`).join("");
-  if (setHTML("gauge-why",
-    toggle(t("whyScale"), t("whyScaleBody", bandRows)) +
-    toggle(t("whyScore"), t("whyScoreBody",
-      D.families.map(f => f.weight + "%").join(" / ")))))
+  if (setHTML("gauge-why", toggle(t("whyScale"), t("whyScaleBody", bandRows))))
     wireToggles($("gauge-why"));
-
-  if (setHTML("tiles-why", toggle(t("whyTiles"), t("whyTilesBody", halvingDays))))
-    wireToggles($("tiles-why"));
 
   const notes = (D.deriveNotes || []).map(p => EN() ? p[1] : p[0]);
   const lat = D.latest;

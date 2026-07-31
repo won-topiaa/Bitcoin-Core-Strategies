@@ -112,21 +112,6 @@ section{margin-top:52px}
 .readout .asof{font-family:var(--mono); font-size:11.5px; color:var(--muted); padding-bottom:7px; letter-spacing:.04em}
 .gauge-svg{display:block; width:100%; height:auto; overflow:visible}
 
-/* ---- 스탯 ---- */
-/* 타일이 6개다. auto-fit 으로 두면 폭에 따라 5+1 이 되어 빈 칸이 남고,
-   그 칸에 배경(구분선 색)이 그대로 비친다. 6을 나누어떨어지는 열 수만 쓴다. */
-.tiles{display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--rule);
-  border:1px solid var(--rule); border-radius:3px; margin-top:16px; overflow:hidden}
-@media (min-width:560px){.tiles{grid-template-columns:repeat(3,1fr)}}
-@media (min-width:1060px){.tiles{grid-template-columns:repeat(6,1fr)}}
-.tile{background:var(--surface); padding:16px 18px 15px}
-.tile .k{font-size:11.5px; font-weight:620; letter-spacing:.03em; color:var(--muted)}
-.tile .v{font-family:var(--mono); font-variant-numeric:tabular-nums; font-size:23px; font-weight:600; letter-spacing:-.01em; margin-top:7px; line-height:1.15}
-.tile .n{font-size:12px; color:var(--muted); margin-top:3px; line-height:1.4}
-.chip{display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:600;
-  font-family:var(--sans); padding:2px 8px; border-radius:2px; border:1px solid var(--rule)}
-.chip .dot{width:7px; height:7px; border-radius:50%}
-
 /* ---- 차트 ---- */
 figure{margin:0}
 figcaption{font-size:12.5px; color:var(--muted); margin-top:12px; max-width:74ch; line-height:1.55}

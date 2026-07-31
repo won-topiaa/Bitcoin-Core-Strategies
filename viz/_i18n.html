@@ -246,15 +246,10 @@ window.__I18N__ = {
   since 2020</strong>. Compared against scores computed from real data, the eight past turning points
   differ by <strong>1.2 points on average</strong>, and none of them flips direction.`,
 "rul.auto.h3": "The data refreshes automatically every day",
-"rul.auto.p1": `It used to be a fetched file, frozen in place. Now it is <strong>re-fetched
-  automatically once a day</strong> and this page is rebuilt. The header above says how many days old
-  the last data point is, and past three days it is marked there conspicuously.`,
-"rul.auto.p2": `Since this means leaving code that overwrites the file unattended, most of the care
-  went into not overwriting it wrongly. New values are <strong>checked against the dates already
-  held</strong> first — if prices in the overlapping stretch differ by more than 2%, that is taken as
-  a different asset or different units, and it <strong>stops without writing anything.</strong>
-  An existing value is never overwritten with a blank. And the new file is written to a temporary path
-  and read back to confirm it parses before being moved into place.`,
+"rul.auto.p1": `It is <strong>re-fetched automatically once a day</strong> and this page is rebuilt.
+  The header above says how many days old the last data point is, and past three days it is marked
+  there conspicuously. New values are checked against the dates already held first, and if they
+  disagree it <strong>stops without writing anything.</strong>`,
 "rul.next.k": "Back to the start",
 "rul.next.t": "See where we are",
 "rul.next.d": "Where Bitcoin sits today against the last 16 years"
