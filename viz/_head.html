@@ -1,4 +1,9 @@
 <title>__TITLE__</title>
+<!-- 이게 없으면 폰이 페이지를 980px 로 잡고 통째로 축소한다 — 글자가 깨알같이
+     작아지고 모바일 카드 전환도 안 걸린다. 아티팩트 host 는 자기 wrapper 에
+     이걸 넣어 주지만, build_viz 로 구워 파일을 직접 여는 경우엔 없어서 새로
+     넣는다. -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 :root{
   color-scheme: light;
@@ -221,6 +226,15 @@ dl.defs dt{font-size:12px; font-weight:640; letter-spacing:.02em; color:var(--mu
   padding:11px 22px 11px 0; border-top:1px solid var(--rule); white-space:nowrap}
 dl.defs dd{margin:0; padding:11px 0; border-top:1px solid var(--rule); color:var(--ink-2); font-size:13.5px}
 dl.defs dt:first-of-type,dl.defs dd:first-of-type{border-top:0}
+/* 좁은 화면에서는 용어와 설명을 위아래로 쌓는다. 두 칸으로 두면 긴 영어 용어
+   ("Three-day confirmation")가 왼쪽 칸을 넓혀 설명이 실오라기처럼 눌린다.
+   구분선은 용어 위에만 둔다 — 설명 위에도 두면 한 항목이 둘로 보인다. */
+@media (max-width:560px){
+  dl.defs{display:block}
+  dl.defs dt{white-space:normal; padding:12px 0 2px; color:var(--ink); font-size:13px}
+  dl.defs dd{padding:0 0 12px; border-top:0}
+  dl.defs dd:first-of-type{padding-top:2px}
+}
 ul.notes{margin:0; padding-left:20px; color:var(--ink-2); font-size:13.5px}
 ul.notes li{margin-bottom:9px; max-width:70ch}
 .callout{border-left:2px solid var(--s1); padding:2px 0 2px 18px; margin:20px 0}
@@ -356,6 +370,16 @@ nav.pages a:hover{border-color:var(--axis); color:var(--ink)}
 nav.pages a[aria-current="page"]{background:var(--ink); color:var(--plane); border-color:var(--ink)}
 nav.pages .n{font-family:var(--mono); font-size:11px; opacity:.6; margin-right:7px}
 @media (prefers-reduced-motion: reduce){nav.pages a{transition:none}}
+/* 좁은 화면에서 머리띠가 네 줄을 먹으면 첫 화면의 계기판이 접힌 밑으로 밀린다.
+   알약을 촘촘하게 만들어 한 줄에 들어가게 하고, 길 안내 번호는 접는다. */
+@media (max-width:440px){
+  /* 내비를 한 줄에 다 채우고(알약 셋이 폭을 삼등분), 언어·테마 버튼은 그 밑
+     줄로 내린다. 길 안내 번호는 접는다. */
+  nav.pages{flex-basis:100%; gap:4px}
+  nav.pages a{flex:1; padding:7px 4px; font-size:12px; text-align:center; white-space:nowrap}
+  nav.pages .n{display:none}
+  .topbar .ctl{margin-left:0}
+}
 
 /* 좁은 화면에서는 표 대신 카드로.
    요약 표는 첫 화면의 핵심인데 폭이 780px 라 390px 화면에서 절반이 잘린다.
