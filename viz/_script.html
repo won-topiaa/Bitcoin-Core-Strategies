@@ -72,6 +72,7 @@ ko: {
     `얇은 구간은 아홉 개가 한목소리를 내던 때입니다.`,
   // -- 성적표
   phaseTop: "고점", phaseBottom: "저점",
+  shortYM: (yy, m) => `${yy}.${m < 10 ? "0" + m : m}`,
   gapShort: g => `빈 공간 ${g}점`,
   gapLong: g => `전환점이 한 번도 들어오지 않은 ${g}점`,
   nowAt: v => `지금 ${v}`,
@@ -243,6 +244,8 @@ en: {
     `Stretches where it is unusually thick are where the indicators disagreed; ` +
     `thin stretches are where the nine spoke with one voice.`,
   phaseTop: "peak", phaseBottom: "bottom",
+  // "13.12" 는 영어권에서 12월 13일로 읽힌다. 달 이름을 쓴다.
+  shortYM: (yy, m) => `${MON_EN[m - 1]} '${yy}`,
   gapShort: g => `${g} points empty`,
   gapLong: g => `${g} points no turning point ever entered`,
   nowAt: v => `now ${v}`,
@@ -437,6 +440,24 @@ function txt(parent, x, y, s, o){
   return n;
 }
 function clear(svg){ while (svg.firstChild) svg.removeChild(svg.firstChild); }
+
+/** 글자가 실제로 몇 px 인지 **재서** 돌려준다.
+ *
+ * 글자 수에 계수를 곱해 어림하던 것을 걷어냈다. 같은 글자 수라도 "저점  15.01"
+ * 과 "bottom  Dec '18" 은 폭이 딴판이고, 언어를 하나 더 붙이거나 라벨을 조금만
+ * 손봐도 어림이 틀린다. 실제로 영어를 붙였을 때 여백이 모자라 라벨이 그림 밖으로
+ * 나갔다. 재면 그런 일이 없다. */
+function measureText(svg, strings, size, weight){
+  const probe = el("text", {x:-9999, y:-9999, "font-size":size,
+    "font-family":"var(--sans)", "font-weight":weight || 600}, svg);
+  let w = 0;
+  for (let i = 0; i < strings.length; i++){
+    probe.textContent = strings[i];
+    w = Math.max(w, probe.getBBox().width);
+  }
+  svg.removeChild(probe);
+  return w;
+}
 
 /** 그림을 읽을 수 없는 사람에게 같은 내용을 글로 준다. 이 페이지는 그림이
     본체라, 그림에 설명이 없으면 화면 낭독기로는 빈 페이지나 다름없다. */
@@ -710,7 +731,7 @@ function drawHist(){
   el("line", {x1:PL, y1:Y(cur.bcs), x2:PL+iw, y2:Y(cur.bcs), stroke:curCol,
     "stroke-width":1.5, "stroke-dasharray":"5 4", "stroke-opacity":.85}, svg);
   const nowLabel = t("nowAt", nf(cur.bcs, 0));
-  const lw = nowLabel.length * (EN() ? 5.8 : 7.2) + 12;
+  const lw = measureText(svg, [nowLabel], 10.5, 640) + 12;
   el("rect", {x:PL+5, y:Y(cur.bcs)-16, width:lw, height:14, rx:2,
     fill:"var(--surface)", "fill-opacity":.92}, svg);
   txt(svg, PL+11, Y(cur.bcs)-5, nowLabel,
@@ -788,14 +809,19 @@ function drawTP(){
   // 겹쳐 "저점 15.01" 과 "-98.2" 가 한 덩어리로 읽힌다 — 겹친 라벨은 없는
   // 라벨보다 나쁘다.
   const narrow = W < 520;
-  // 행 라벨은 "고점 13.12" / "peak 13.12" 다. 영어가 길어서 같은 여백을 쓰면
-  // 왼쪽으로 삐져나간다.
-  const PL = narrow ? (EN() ? 94 : 74) : 96, PR = narrow ? 62 : 78;
+  const PR = narrow ? 62 : 78;
   const PT = 54, PB = 56;
   const H = PT + PB + rowH * D.tps.length;
-  const iw = W - PL - PR;
   svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.setAttribute("height", H);
   clear(svg);
+
+  // 행 라벨("고점  13.12" / "peak  Dec '13")을 재서 왼쪽 여백을 정한다.
+  const rowLabels = D.tps.map(k =>
+    t(k.phase === "top" ? "phaseTop" : "phaseBottom") + "  " +
+    t("shortYM", k.d.slice(2, 4), parseInt(k.d.slice(5, 7), 10)));
+  const PL = Math.max(narrow ? 74 : 96,
+    measureText(svg, rowLabels, narrow ? 10.5 : 11) + 20);
+  const iw = W - PL - PR;
 
   const x = v => PL + (v + 100) / 200 * iw;
   const bandTop = PT - 8, bandBot = H - PB + 8;
@@ -832,12 +858,13 @@ function drawTP(){
     el("path", {d:`M${pair[0]},${gy} l${pair[1]*7},-4 l0,8 Z`, fill:"var(--ink)",
       "fill-opacity":.45}, svg));
   const gapPts = (gapHi-gapLo).toFixed(0);
-  // 좁은 화면에서는 짧은 문구로. 다만 영어는 같은 뜻이 길어져서, 상자가
-  // 치수선을 넘어가면 짧은 쪽으로 내린다.
-  const glyph = EN() ? 5.9 : 6.8;
+  // 좁은 화면에서는 짧은 문구로. 긴 문구가 치수선을 넘으면 짧은 쪽으로 내린다.
   let gapTxt = narrow ? t("gapShort", gapPts) : t("gapLong", gapPts);
-  if (gapTxt.length * glyph + 14 > gx1 - gx0) gapTxt = t("gapShort", gapPts);
-  const gw = gapTxt.length * glyph + 14;
+  let gw = measureText(svg, [gapTxt], 11.5, 640) + 14;
+  if (gw > gx1 - gx0){
+    gapTxt = t("gapShort", gapPts);
+    gw = measureText(svg, [gapTxt], 11.5, 640) + 14;
+  }
   el("rect", {x:(gx0+gx1)/2 - gw/2, y:gy-11, width:gw, height:17,
     fill:"var(--surface)"}, svg);
   txt(svg, (gx0+gx1)/2, gy+3, gapTxt,
@@ -847,8 +874,7 @@ function drawTP(){
     const y = PT + rowH*i + rowH/2;
     const top = k.phase==="top";
     const col = top ? "var(--warm-3)" : "var(--cool-3)";
-    txt(svg, PL-14, y+3.5,
-      t(top ? "phaseTop" : "phaseBottom") + "  " + k.d.slice(2,7).replace("-","."),
+    txt(svg, PL-14, y+3.5, rowLabels[i],
       {anchor:"end", size:narrow?10.5:11, fill:"var(--ink-2)", weight:600, mono:false});
     el("line", {x1:x(k.low), y1:y, x2:x(k.high), y2:y, stroke:col, "stroke-width":6,
       "stroke-linecap":"butt", opacity:.34}, svg);
@@ -1105,13 +1131,13 @@ function drawFam(){
   // 선 끝의 갈래 이름은 자리가 있을 때만 붙인다. 이름 길이가 언어마다 두 배
   // 차이 나서 고정 여백으로는 영어에서 그림 밖으로 나간다. 자리가 없으면
   // 빼도 되는 라벨이다 — 바로 위 범례에 세 이름과 현재 값이 이미 있다.
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.setAttribute("height", H);
+  clear(svg);
   const labels = D.families.map(f => pick(f, "label"));
-  const wide = Math.max.apply(null, labels.map(s => s.length)) * (EN() ? 6.4 : 11.5) + 14;
+  const wide = measureText(svg, labels, 11) + 16;
   const showEnds = W - 40 - wide >= 260;
   const PL = 40, PR = showEnds ? wide : 16, PT = 14, PB = 26;
   const iw = W - PL - PR, ih = H - PT - PB;
-  svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.setAttribute("height", H);
-  clear(svg);
 
   const cutoff = S[S.length-1][0] - 1461;
   const rows = S.filter(r => r[0] >= cutoff);
