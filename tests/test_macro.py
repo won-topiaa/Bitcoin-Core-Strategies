@@ -1,0 +1,106 @@
+"""거시 연관성 분석 로직 검증 — 데이터가 없어도 코드는 맞아야 한다.
+
+이 환경에서는 FRED 가 막혀 실제 나스닥·M2 를 못 받는다. 그래도 **분석 로직**은
+합성 데이터로 검증할 수 있다. 답을 아는 데이터를 심어 두고, 도구가 그 답을
+되찾는지 본다 — 심은 선행 개월, 심은 상관.
+"""
+
+from __future__ import annotations
+
+import math
+import sys
+from datetime import date
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "tools"))
+
+import macro_correlation as mc  # noqa: E402
+
+
+def month_grid(n: int, start=date(2013, 1, 31)) -> list[date]:
+    out, d = [], start
+    for _ in range(n):
+        out.append(d)
+        y, m = (d.year + (1 if d.month == 12 else 0)), (1 if d.month == 12 else d.month + 1)
+        d = date(y, m, 28)
+    return out
+
+
+def test_pearson_and_spearman_basics():
+    xs = [1, 2, 3, 4, 5]
+    assert abs(mc.pearson(xs, xs) - 1.0) < 1e-9
+    assert abs(mc.pearson(xs, [5, 4, 3, 2, 1]) + 1.0) < 1e-9
+    assert abs(mc.spearman(xs, [1, 4, 9, 16, 25]) - 1.0) < 1e-9   # 단조 → 1
+    assert mc.pearson([1, 1, 1], [1, 2, 3]) is None                # 분산 0
+
+
+def test_yoy_growth():
+    months = month_grid(14)
+    series = {d: 100 * (1.01 ** i) for i, d in enumerate(months)}   # 매월 +1%
+    g = mc.yoy(series)
+    # 12개월 뒤 ≈ (1.01^12 − 1) = 12.7%
+    assert g and all(abs(v - 12.68) < 0.2 for v in g.values())
+
+
+def test_month_end_keeps_last_per_month():
+    s = {date(2020, 1, 5): 1.0, date(2020, 1, 20): 2.0, date(2020, 2, 3): 3.0}
+    me = mc.month_end(s)
+    assert me[date(2020, 1, 20)] == 2.0 and date(2020, 1, 5) not in me
+    assert me[date(2020, 2, 3)] == 3.0
+
+
+def test_lead_lag_recovers_planted_lead():
+    """M2 를 BTC 보다 정확히 3개월 앞서게 심고, 스캔이 3(±1)을 찾는지."""
+    months = month_grid(140)
+    m2_growth = [8 + 5 * math.sin(i / 9.0) for i in range(len(months))]
+    m2, lvl = {}, 10000.0
+    for i, d in enumerate(months):
+        lvl *= (1 + m2_growth[i] / 100 / 12)
+        m2[d] = lvl
+    btc, price = {}, 100.0
+    for i, d in enumerate(months):
+        drive = m2_growth[i - 3] if i >= 3 else m2_growth[0]     # 3개월 선행
+        price *= (1 + (drive * 8) / 100)                         # 잡음 없이 깨끗하게
+        btc[d] = max(1.0, price)
+    r = mc.m2_lead_lag(btc, m2, max_lag=6)
+    assert r["best_lag"] in (2, 3, 4), r["by_lag"]
+    assert r["best_corr"] > 0.5
+
+
+def test_nasdaq_correlation_recovers_beta():
+    """나스닥을 BTC 수익률의 0.5배 + 잡음으로 심으면 강한 양의 상관이 나와야."""
+    import random
+    rng = random.Random(7)
+    days = [date(2018, 1, 1)]
+    for _ in range(600):
+        days.append(days[-1].fromordinal(days[-1].toordinal() + 3))   # 3일 간격
+    btc, price = {}, 10000.0
+    for d in days:
+        price *= math.exp(rng.gauss(0, 0.03))
+        btc[d] = price
+    ndq, lvl = {}, 3000.0
+    bd = sorted(btc)
+    for i, d in enumerate(bd):
+        if i:
+            br = math.log(btc[d] / btc[bd[i - 1]])
+            lvl *= math.exp(0.5 * br + rng.gauss(0, 0.01))
+        ndq[d] = lvl
+    r = mc.nasdaq_analysis(btc, ndq)
+    assert r["full"] is not None and r["full"] > 0.6
+
+
+def test_align_matches_nearest_within_tolerance():
+    # 월말끼리 하루이틀 어긋난 격자 → 같은 달끼리 매칭돼야
+    a = {date(2020, 1, 31): 1.0, date(2020, 2, 29): 2.0}
+    b = {date(2020, 1, 30): 10.0, date(2020, 2, 28): 20.0}
+    xs, ys = mc._align(a, b, tol_days=5)
+    assert list(zip(xs, ys)) == [(1.0, 10.0), (2.0, 20.0)]
+    # 허용범위 밖(20일↑)은 버린다
+    far = {date(2020, 1, 31): 1.0}
+    xs2, _ = mc._align(far, {date(2020, 3, 15): 9.0}, tol_days=5)
+    assert xs2 == []
+
+
+def test_self_test_passes():
+    assert mc.self_test() == 0
