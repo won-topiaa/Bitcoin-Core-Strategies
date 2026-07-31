@@ -716,7 +716,8 @@ window.__I18N__ = {
   lead is not the few weeks people cite but <strong>about a year</strong> (measured 11 months,
   correlation +0.43, confirmed across three sources). Below, the Bitcoin price (black) is overlaid with
   China M2 growth (blue) pulled forward by that <strong>measured 11 months</strong> — the dashed part
-  right of 'now' is the <strong>next year</strong> that already-published M2 points to.`,
+  right of 'now' is <strong>liquidity that is already in the past</strong>, not yet old enough to have
+  shown up in Bitcoin; it is <strong>not a price forecast</strong>.`,
 "idx.macro.cap": `Overlaid, but not a trick — the shift is fixed to the <strong>measured lead
   (11 months)</strong>, not eyeballed, and each vertical axis uses only its own data min and max. Even
   so, a two-axis overlay is only a <strong>guide</strong>. What actually moves execution
@@ -1098,7 +1099,8 @@ ko: {
   altPrice: (from, to, now) =>
     `${from} 부터 ${to} 까지 비트코인 가격을 로그 눈금으로 그린 선 그래프. ` +
     `지금 ${now} 입니다.`,
-  m2Btc: "비트코인 가격", m2Cn: "중국 M2 전년비",
+  m2Btc: "비트코인 가격",
+  m2Cn: "중국 M2 전년비",
   m2Shift: n => `${n}개월 당김(측정값)`,
   m2Read: (imp, lrs, band) =>
     `지금 중국 M2 임펄스 ${imp}%p → 유동성 레짐 LRS ${lrs} · ‘${band}’. 실행 방향이 아니라 크기(속도)에만 반영됩니다.`,
@@ -1234,7 +1236,8 @@ en: {
   altPrice: (from, to, now) =>
     `A line chart of the Bitcoin price from ${from} to ${to} on a log scale. ` +
     `It is ${now} now.`,
-  m2Btc: "Bitcoin price", m2Cn: "China M2 (YoY)",
+  m2Btc: "Bitcoin price",
+  m2Cn: "China M2 (YoY)",
   m2Shift: n => `pulled ${n}mo forward (measured)`,
   m2Read: (imp, lrs, band) =>
     `China M2 impulse now ${imp}pp → liquidity regime LRS ${lrs} · '${band}'. Scales execution size, not direction.`,
@@ -1673,26 +1676,33 @@ function bandWord(key){
 function drawM2Lead(){
   const host = $("m2-host"), svg = $("m2");
   if (!host || !svg) return;
-  if (!D.macro || !D.macro.m2 || !D.macro.m2.length){ host.style.display = "none"; return; }
-  host.style.display = "";
+  const fig = host.closest ? host.closest("figure") : null;
+  const hide = () => { (fig || host).style.display = "none"; };
+  // 데이터가 없으면 host 만이 아니라 **섹션(figure) 전체**를 숨긴다 — 안 그러면
+  // 제목·설명·캡션만 덩그러니 남아 "그림 없는 그림 설명"이 된다.
   const M = D.macro;
+  if (!M || !M.m2 || M.m2.length < 2 || !M.btc || !M.btc.length){ hide(); return; }
+  (fig || host).style.display = "";
   const W = host.clientWidth || 900;
   const H = Math.max(190, Math.min(280, W * 0.34));
   const PL = 46, PR = 44, PT = 14, PB = 30;
   const iw = W - PL - PR, ih = H - PT - PB;
-  svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.setAttribute("height", H);
-  clear(svg);
 
   const shift = M.lead * 30.44;                 // 측정된 선행(개월) → 일
   const m2s = M.m2.map(p => [p[0] + shift, p[1]]);   // M2 를 앞으로 당긴다
   const x0 = m2s[0][0], x1 = m2s[m2s.length - 1][0];
-  const X = v => PL + (v - x0) / (x1 - x0) * iw;
   const nowOff = M.btc[M.btc.length - 1][0];
   const btc = M.btc.filter(p => p[0] >= x0 - 40 && p[1] > 0);
+  // 축이 한 점으로 뭉개지는 퇴행 데이터(전부 같은 값/한 점)면 그리지 않는다 — 0 나눗셈 방지
+  if (x1 <= x0 || btc.length < 2){ hide(); return; }
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.setAttribute("height", H);
+  clear(svg);
+  const X = v => PL + (v - x0) / (x1 - x0) * iw;
 
   // 좌축: BTC 로그가격 / 우축: M2 전년비 % — 둘 다 데이터 최소·최대만 쓴다
   const bl = Math.log10(Math.min.apply(null, btc.map(p => p[1])));
-  const bh = Math.log10(Math.max.apply(null, btc.map(p => p[1])));
+  let bh = Math.log10(Math.max.apply(null, btc.map(p => p[1])));
+  if (bh - bl < 1e-9) bh = bl + 1;              // 가격이 한 값이면 1데케이드로 벌려 0 나눗셈 방지
   const YB = v => PT + (bh - Math.log10(Math.max(1, v))) / (bh - bl) * ih;
   let ml = Math.min.apply(null, M.m2.map(p => p[1]));
   let mh = Math.max.apply(null, M.m2.map(p => p[1]));
@@ -1730,8 +1740,13 @@ function drawM2Lead(){
     if (dash) a["stroke-dasharray"] = "4 3";
     el("path", a, svg);
   }
-  seg(m2s.filter(p => p[0] <= nowOff), false);
-  seg(m2s.filter(p => p[0] >= nowOff), true);
+  // NOW 를 기준으로 나누되 **경계에 걸친 선분을 잃지 않도록** 인덱스로 자른다.
+  // 예전엔 (≤now) 와 (≥now) 두 필터로 그려, 어느 M2 점도 정확히 now 에 없으면
+  // now 를 가로지르는 한 달치 선분이 양쪽 어디에도 안 들어가 blue 선에 틈이 생겼다.
+  const si = m2s.findIndex(p => p[0] > nowOff);       // 첫 '미래' 점
+  if (si < 0) seg(m2s, false);                        // 전부 과거 → 실선
+  else if (si === 0) seg(m2s, true);                  // 전부 미래 → 점선
+  else { seg(m2s.slice(0, si), false); seg(m2s.slice(si - 1), true); }  // 겹치는 점 공유
 
   // NOW 선 — 오른쪽은 M2 만 있는 '앞선' 구간(다음 ~1년 힌트)
   el("line", {x1:X(nowOff), y1:PT, x2:X(nowOff), y2:PT+ih, stroke:"var(--zero)",
@@ -1739,15 +1754,16 @@ function drawM2Lead(){
   txt(svg, X(nowOff)-4, PT+11, t("now"), {anchor:"end", size:10, fill:"var(--ink-2)"});
 
   const BW = bandWord(M.band);
+  const impTxt = (M.impulse != null) ? ((M.impulse >= 0 ? "+" : "") + M.impulse) : "—";
   setHTML("m2-legend",
     `<span><i style="background:var(--ink);height:2px;border-radius:0;margin-bottom:3px"></i>${t("m2Btc")}</span>` +
     `<span><i style="background:var(--cool-3);height:2px;border-radius:0;margin-bottom:3px"></i>` +
     `${t("m2Cn")} · ${t("m2Shift", M.lead)}</span>`);
-  if (M.impulse != null)
-    setHTML("m2-read", t("m2Read", (M.impulse>=0?"+":"") + M.impulse,
-      (M.lrs>=0?"+":"") + Math.round(M.lrs), BW));
+  // 임펄스가 없으면(짧은 이력) 읽기 줄은 비우고, 대체텍스트도 "+null" 대신 "—".
+  setHTML("m2-read", (M.impulse != null)
+    ? t("m2Read", impTxt, (M.lrs >= 0 ? "+" : "") + Math.round(M.lrs), BW) : "");
 
-  describe(svg, t("altM2", M.lead, M.corr, (M.impulse>=0?"+":"") + M.impulse, BW));
+  describe(svg, t("altM2", M.lead, M.corr, impTxt, BW));
 }
 
 /* =====================================================================

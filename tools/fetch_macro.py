@@ -122,8 +122,24 @@ CSV_API_SOURCES = [
 ]
 
 
+class PolicyBlocked(Exception):
+    """프록시 egress 정책이 호스트를 막았다(403/407). 호출부가 잡아서, 이미 받은
+    다른 소스는 버리지 않고 저장하도록 한다."""
+
+
+def _parse_ymd(raw: str) -> Optional[date]:
+    """'YYYY-MM' 또는 'YYYY-MM-DD' 를 받는다(월만 있으면 1일). 못 읽으면 None."""
+    p = raw[:10].split("-")
+    try:
+        y, m = int(p[0]), int(p[1])
+        d = int(p[2]) if len(p) > 2 else 1
+        return date(y, m, d)
+    except (ValueError, IndexError):
+        return None
+
+
 def fetch_series(fred_id: str, timeout: int = 40) -> Optional[dict[date, float]]:
-    """FRED CSV 한 시리즈. 정책 차단(403)이면 명확히 알리고 None."""
+    """FRED CSV 한 시리즈. 정책 차단(403/407)이면 PolicyBlocked, 그 외 실패는 None."""
     req = urllib.request.Request(BASE + fred_id,
                                  headers={"User-Agent": UA})
     try:
@@ -135,12 +151,7 @@ def fetch_series(fred_id: str, timeout: int = 40) -> Optional[dict[date, float]]
         code = getattr(exc, "code", None)
         blocked = code in (403, 407) or "403" in str(getattr(exc, "reason", exc))
         if blocked:
-            raise SystemExit(
-                "\nFRED 연결이 정책상 막혔습니다 (403).\n"
-                "  이 환경의 에이전트 프록시가 fred.stlouisfed.org 를 거절합니다.\n"
-                "  FRED 가 열린 곳(로컬 등)에서 이 스크립트를 돌려 data/macro.csv 를\n"
-                "  만든 뒤, 분석만 여기서 하세요:\n"
-                "    python3 tools/macro_correlation.py --macro data/macro.csv")
+            raise PolicyBlocked(fred_id)
         print(f"  ! {fred_id}: {code or exc} — 건너뜀", file=sys.stderr)
         return None
 
@@ -175,11 +186,8 @@ def fetch_github(timeout: int = 40) -> dict[str, dict[date, float]]:
         got = {our: {} for our in mapping.values()}
         for row in reader:
             raw = (row.get(date_col) or "").strip()
-            if not raw:
-                continue
-            try:
-                d = date.fromisoformat(raw[:10])
-            except ValueError:
+            d = _parse_ymd(raw) if raw else None      # YYYY-MM 도 받는다(월-only 소스 대비)
+            if d is None:
                 continue
             for src, our in mapping.items():
                 v = (row.get(src) or "").strip()
@@ -214,14 +222,12 @@ def fetch_csv_api(timeout: int = 40) -> dict[str, dict[date, float]]:
         for row in csv.DictReader(io.StringIO(text)):
             raw = (row.get(dcol) or "").strip()
             val = (row.get(vcol) or "").strip()
-            if not raw or not val:
+            d = _parse_ymd(raw) if raw else None
+            if d is None or not val:
                 continue
-            p = raw[:10].split("-")
             try:
-                y, m = int(p[0]), int(p[1])
-                d = int(p[2]) if len(p) > 2 else 1
-                series[date(y, m, d)] = float(val)
-            except (ValueError, IndexError):
+                series[d] = float(val)
+            except ValueError:
                 continue
         if series:
             columns[target] = series
@@ -322,12 +328,19 @@ def main(argv: Optional[list[str]] = None) -> int:
     want_fred = args.do_global or not args.github
     if want_fred:
         fred: dict[str, dict[date, float]] = {}
-        for fid, col in plan.items():
-            print(f"받는 중 {fid} → {col}")
-            s = fetch_series(fid)
-            if s:
-                fred[col] = s
-                print(f"        {len(s)}행 ({min(s)} ~ {max(s)})")
+        try:
+            for fid, col in plan.items():
+                print(f"받는 중 {fid} → {col}")
+                s = fetch_series(fid)
+                if s:
+                    fred[col] = s
+                    print(f"        {len(s)}행 ({min(s)} ~ {max(s)})")
+        except PolicyBlocked as blk:
+            # FRED 가 정책상 막혔다. **이미 받은 GitHub·CSV 데이터는 버리지 않는다** —
+            # 여기서 죽으면 --github 로 받은 주식·VIX 가 통째로 날아간다.
+            print(f"\n  ! FRED 차단(403/407) — {blk} 이후 건너뜀. 이미 받은 소스만 저장.\n"
+                  "    FRED 가 열린 곳에서 --global 을 다시 돌리면 나스닥·M2 가 채워집니다.",
+                  file=sys.stderr)
         if args.do_global:
             g = build_global(fred)
             if g:

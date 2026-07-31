@@ -156,14 +156,19 @@ def log_returns(series: dict[date, float]) -> dict[date, float]:
 
 
 def yoy(series: dict[date, float], months: int = 12) -> dict[date, float]:
-    """전년비 증가율(%). 월말 시계열에 쓴다."""
+    """전년비 증가율(%). **달력 기준으로** 12개월 전을 찾는다 — 위치로 12칸 뒤를
+    잡으면 월이 하나라도 빠지거나 겹칠 때 11/13개월 전과 비교해 값이 틀어진다.
+    정확히 (연,월)−12 관측이 없으면 그 점은 건너뛴다."""
     out: dict[date, float] = {}
-    ds = sorted(series)
-    for i, d in enumerate(ds):
-        if i >= months:
-            prev = series[ds[i - months]]
-            if prev:
-                out[d] = (series[d] / prev - 1.0) * 100.0
+    by_ym = {(d.year, d.month): d for d in sorted(series)}
+    for d in sorted(series):
+        y, m = d.year, d.month - months
+        while m <= 0:
+            m += 12
+            y -= 1
+        prev = by_ym.get((y, m))
+        if prev is not None and series[prev]:
+            out[d] = (series[d] / series[prev] - 1.0) * 100.0
     return out
 
 
@@ -291,26 +296,26 @@ def m2_lead_lag(btc_month: dict[date, float], m2: dict[date, float],
     if len(m2_dates) < 18:
         return {"n": 0}
 
-    def shift_months(d: date, k: int) -> date:
-        # k개월 전 날짜(근사) — 월말 격자라 15일 허용으로 맞춘다
+    # M2 를 (연,월) 키로 잡아 정확히 k개월 전을 찾는다 — 예전엔 '15일 근사 + 20일
+    # 허용'이라, M2 가 월말 격자(30/31일)면 target-15 가 앞뒤 두 달과 똑같이 15일씩
+    # 떨어져 동점이 되고, 스캔이 이른 쪽을 골라 선행을 한 달 부풀렸다. 달력 키는 그
+    # 모호함이 없다(월-초 격자인 현재 데이터에선 결과 동일).
+    m2_by_ym = {(d.year, d.month): v for d, v in m2_yoy.items()}
+
+    def shift_ym(d: date, k: int) -> tuple[int, int]:
         y_, m_ = d.year, d.month - k
         while m_ <= 0:
             m_ += 12
             y_ -= 1
-        return date(y_, m_, 15)
+        return (y_, m_)
 
     results: dict[int, Optional[float]] = {}
     for k in range(0, max_lag + 1):
         xs, ys = [], []
         for d in sorted(btc_yoy):
-            target = shift_months(d, k)
-            best, gap = None, 20
-            for dm in m2_dates:
-                g = abs((dm - target).days)
-                if g < gap:
-                    best, gap = dm, g
-            if best is not None:
-                xs.append(m2_yoy[best])
+            v = m2_by_ym.get(shift_ym(d, k))
+            if v is not None:
+                xs.append(v)
                 ys.append(btc_yoy[d])
         results[k] = pearson(xs, ys) if len(xs) >= 12 else None
 

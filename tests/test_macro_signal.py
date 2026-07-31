@@ -10,7 +10,7 @@ import csv
 from datetime import date
 
 from btc_core.datasources.macro import (
-    china_m2_impulse, load_macro_signals,
+    _yoy, china_m2_impulse, load_macro_signals,
 )
 
 
@@ -74,6 +74,28 @@ def test_acceleration_gives_positive_impulse(tmp_path):
     _write(p, slow + fast)
     imp = china_m2_impulse(p)
     assert imp is not None and imp > 0.5
+
+
+def test_yoy_uses_calendar_month_not_index(tmp_path):
+    """한 달이 빠져도 (연,월)−12 로 정확히 비교한다 — 위치로 12칸 뒤를 잡으면 어긋난다."""
+    s = {}
+    for m in range(1, 13):
+        if m != 6:                                  # 2015-06 을 일부러 뺀다
+            s[date(2015, m, 1)] = 100.0
+    for m in range(1, 13):
+        s[date(2016, m, 1)] = 110.0                 # 2016 은 10% 높은 수준
+    g = _yoy(s)
+    assert date(2016, 6, 1) not in g                # 2015-06 결측 → 건너뜀
+    assert abs(g[date(2016, 7, 1)] - 10.0) < 1e-6   # 2015-07 대비 +10%, 위치라면 틀렸을 값
+
+
+def test_impulse_requires_full_24_month_window(tmp_path):
+    """24개월치가 다 있어야 임펄스를 낸다 — 짧은 스냅샷의 들쭉날쭉한 창을 막는다."""
+    p = tmp_path / "m.csv"
+    _write(p, _monthly(37))          # 37개월 → YoY 25점 → 직전 24개월 확보 → 계산됨
+    assert china_m2_impulse(p) is not None
+    _write(p, _monthly(36))          # 36개월 → YoY 24점 → 직전 23개월뿐 → None
+    assert china_m2_impulse(p) is None
 
 
 def test_no_future_reference(tmp_path):

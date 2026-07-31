@@ -61,23 +61,33 @@ def _month_end(series: dict[date, float]) -> dict[date, float]:
 
 
 def _yoy(series: dict[date, float], months: int = 12) -> dict[date, float]:
-    """전년비 증가율(%). 월말 시계열에 쓴다."""
+    """전년비 증가율(%). 월말 시계열에 쓴다.
+
+    **달력 기준으로** 12개월 전을 찾는다 — 위치(index)로 12칸 뒤를 잡으면 중간에
+    한 달이라도 빠지거나 겹치면 11/13개월 전과 비교해 값이 통째로 틀어진다. 정확히
+    (연,월)−12 에 해당하는 관측이 없으면 그 점은 건너뛴다(억지로 잇지 않는다)."""
     out: dict[date, float] = {}
-    ds = sorted(series)
-    for i, d in enumerate(ds):
-        if i >= months and series[ds[i - months]]:
-            out[d] = (series[d] / series[ds[i - months]] - 1.0) * 100.0
+    by_ym = {(d.year, d.month): d for d in sorted(series)}
+    for d in sorted(series):
+        y, m = d.year, d.month - months
+        while m <= 0:
+            m += 12
+            y -= 1
+        prev = by_ym.get((y, m))
+        if prev is not None and series[prev]:
+            out[d] = (series[d] / series[prev] - 1.0) * 100.0
     return out
 
 
-def china_m2_impulse(path: Path, *, reference: Optional[date] = None,
+def china_m2_impulse(path: str | Path, *, reference: Optional[date] = None,
                      window: int = IMPULSE_WINDOW) -> Optional[float]:
     """중국 M2 전년비 − 직전 `window`개월 평균(가속도, %p). reference 이하 최신값.
 
-    reference 미래의 데이터는 절대 보지 않는다(과거 스냅샷 정직성). 이력이 모자라면
-    None — LRS 는 그 구성요소를 결측으로 두고 나머지로 재정규화한다.
+    reference 미래의 데이터는 절대 보지 않는다(과거 스냅샷 정직성). **정확히 `window`
+    개월치가 없으면 None** — 짧은 과거 스냅샷마다 창이 12~24 로 들쭉날쭉하면 임펄스
+    크기를 스냅샷끼리 비교할 수 없기 때문이다(모듈 설명이 '24개월 평균'을 약속한다).
     """
-    m2 = _yoy(_month_end(_load_column(path, "m2_cn")))
+    m2 = _yoy(_month_end(_load_column(Path(path), "m2_cn")))
     if not m2:
         return None
     ds = [d for d in sorted(m2) if reference is None or d <= reference]
@@ -85,7 +95,7 @@ def china_m2_impulse(path: Path, *, reference: Optional[date] = None,
         return None
     last = ds[-1]
     window_vals = [m2[d] for d in ds[-(window + 1):-1]]     # last 이전 window개
-    if len(window_vals) < 12:
+    if len(window_vals) < window:
         return None
     return m2[last] - sum(window_vals) / len(window_vals)
 
@@ -94,7 +104,7 @@ def load_macro_signals(path: str | Path = "data/macro.csv", *,
                        reference: Optional[date] = None) -> dict[str, float]:
     """LRS 구성요소 자동값. 지금은 m2_impulse(중국 M2) 하나. 파일/이력 없으면 빈 사전."""
     out: dict[str, float] = {}
-    imp = china_m2_impulse(Path(path), reference=reference)
+    imp = china_m2_impulse(path, reference=reference)
     if imp is not None:
         out["m2_impulse"] = round(imp, 2)
     return out
