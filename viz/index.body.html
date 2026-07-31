@@ -43,7 +43,7 @@ __NAV__
 
   <!-- 지표 전체 요약 — 이 페이지에서 가장 중요한 표 -->
   <div class="sechead" style="margin-top:42px">
-    <h2 style="font-size:19px" data-t="idx.s2.h2">지표 아홉 개가 각각 어디에 있나</h2>
+    <h2 style="font-size:19px" id="ind-h" data-t="idx.s2.h2">지표 아홉 개가 각각 어디에 있나</h2>
     <p data-t="idx.s2.p">위의 점수 하나는 아래 아홉 개를 합친 결과입니다. 막대가 <strong>왼쪽에 있을수록 싼 쪽,
     오른쪽에 있을수록 비싼 쪽</strong>이고, 퍼센트는 <strong>최근 4년 중 몇 %에 해당하는가</strong>입니다.
     예를 들어 18%면 최근 4년 동안 이보다 낮았던 날이 18%뿐이었다는 뜻입니다.
@@ -51,7 +51,7 @@ __NAV__
   </div>
 
   <!-- 넓은 화면은 표, 좁은 화면은 카드. 같은 데이터를 두 형태로 그린다. -->
-  <div class="tblwrap indtable">
+  <div class="tblwrap indtable" tabindex="0" role="region" aria-labelledby="ind-h">
     <table id="ind-table">
       <thead><tr>
         <th data-t="idx.th.ind">지표</th><th data-t="idx.th.what">재는 것</th>

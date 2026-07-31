@@ -218,7 +218,9 @@ ko: {
   altFam: list => `세 갈래의 최근 4년 점수를 그린 선 그래프. 지금 값은 ${list} 입니다.`,
   altWidth: (med, p25, p75, stable) =>
     `범위 폭의 분포를 그린 상자 그림. 중위 ${med}점, 가운데 절반이 ${p25}점에서 ` +
-    `${p75}점 사이이고, 범위가 한 구간에 온전히 들어온 날은 ${stable}% 입니다.`
+    `${p75}점 사이이고, 범위가 한 구간에 온전히 들어온 날은 ${stable}% 입니다.`,
+  altKbd: "화살표 키로 날짜를 옮겨 가며 값을 읽을 수 있습니다.",
+  kbdHint: "← → 날짜 이동 · Shift 또는 PageUp/Down 은 크게 · Home·End 처음·끝 · Esc 해제"
 },
 en: {
   now: "NOW",
@@ -382,7 +384,9 @@ en: {
   altFam: list => `A line chart of the three families over the last four years. Now: ${list}.`,
   altWidth: (med, p25, p75, stable) =>
     `A box plot of the range width. Median ${med} points, the middle half between ${p25} and ` +
-    `${p75}, and the range fits inside one band on ${stable}% of days.`
+    `${p75}, and the range fits inside one band on ${stable}% of days.`,
+  altKbd: "Use the arrow keys to step through dates and read the values.",
+  kbdHint: "← → step a date · Shift or PageUp/Down jumps · Home/End first/last · Esc clears"
 }
 };
 
@@ -439,7 +443,10 @@ function clear(svg){ while (svg.firstChild) svg.removeChild(svg.firstChild); }
 function describe(svg, text){
   if (!svg || !text) return;
   svg.setAttribute("role", "img");
-  svg.setAttribute("aria-label", text);
+  // 키보드로 짚어 볼 수 있는 그림이면 그 사실도 같이 읽어 준다. 조작할 수 있는
+  // 줄 모르면 없는 기능이나 같다.
+  svg.setAttribute("aria-label",
+    svg.hasAttribute("tabindex") ? text + " " + t("altKbd") : text);
 }
 
 /* 이 스크립트 한 벌이 세 장을 모두 그린다. 어느 장에 어떤 요소가 있는지
@@ -1153,14 +1160,14 @@ function drawFam(){
       {size:11, fill:e.color, weight:600, mono:false}));
   }
 
-  describe(svg, t("altFam", D.families.map(f =>
-    `${pick(f, "label")} ${nf(D.current.fam[f.key], 2)}`).join(", ")));
   attachCrosshair(svg, "fam-tt", host, X, PL, iw, PT, ih, r => (
     D.families.map((f, i) => [pick(f, "label"), nf(r[5+i], 2)]).concat([
       ["BCS", nf(r[2],1)],
       [t("ttGate"), r[8] ? t("gatePass") : t("gateFail")]
     ])
   ), rows);
+  describe(svg, t("altFam", D.families.map(f =>
+    `${pick(f, "label")} ${nf(D.current.fam[f.key], 2)}`).join(", ")));
 }
 
 /* =====================================================================
@@ -1221,6 +1228,34 @@ function drawWidth(){
 /* =====================================================================
    공용 — 크로스헤어 + 툴팁
    ===================================================================== */
+/* 차트별 상태. 다시 그릴 때마다 rows·좌표 함수가 바뀌므로 핸들러가 여기서
+   현재 것을 읽어 간다. 핸들러 자체는 **한 번만** 붙인다 — svg 요소는 다시
+   그려도 살아남기 때문에, 그릴 때마다 붙이면 화살표 한 번에 두 칸, 세 칸씩
+   움직이게 된다. */
+const CH = {};
+
+function chartKey(ttId, ev){
+  const c = CH[ttId];
+  if (!c) return;
+  const n = c.rows.length;
+  let i = c.at;
+  if (i == null || i < 0 || i >= n) i = n - 1;
+  const jump = Math.max(1, Math.round(n / 20));
+  let next = i;
+  switch (ev.key){
+    case "ArrowLeft":  next = i - (ev.shiftKey ? jump : 1); break;
+    case "ArrowRight": next = i + (ev.shiftKey ? jump : 1); break;
+    case "PageUp":     next = i - jump; break;
+    case "PageDown":   next = i + jump; break;
+    case "Home":       next = 0; break;
+    case "End":        next = n - 1; break;
+    case "Escape":     c.hide(); c.at = null; return;
+    default: return;
+  }
+  ev.preventDefault();
+  c.go(Math.max(0, Math.min(n - 1, next)));
+}
+
 function attachCrosshair(svg, ttId, host, X, PL, iw, PT, ih, rowsFn, rowsIn){
   const rows = rowsIn || S;
   const tt = $(ttId);
@@ -1230,6 +1265,23 @@ function attachCrosshair(svg, ttId, host, X, PL, iw, PT, ih, rowsFn, rowsIn){
   const hit = el("rect", {x:PL, y:PT, width:iw, height:ih, fill:"transparent",
     style:"cursor:crosshair"}, svg);
 
+  // 낭독기에 읽어 줄 자리와 키보드 안내. 있으면 다시 쓰고 없으면 만든다 —
+  // 다시 그릴 때마다 새로 붙이면 쌓인다.
+  let live = host.querySelector(".sr-live");
+  if (!live){
+    live = document.createElement("div");
+    live.className = "sr-only sr-live";
+    live.setAttribute("aria-live", "polite");
+    host.appendChild(live);
+  }
+  let hint = host.querySelector(".kbdhint");
+  if (!hint){
+    hint = document.createElement("div");
+    hint.className = "kbdhint";
+    host.appendChild(hint);
+  }
+  hint.textContent = t("kbdHint");
+
   function nearest(px){
     let best = rows[0], bd = Infinity;
     for (const r of rows){
@@ -1238,11 +1290,13 @@ function attachCrosshair(svg, ttId, host, X, PL, iw, PT, ih, rowsFn, rowsIn){
     }
     return best;
   }
-  function move(ev){
-    const box = svg.getBoundingClientRect();
-    const scale = (svg.viewBox.baseVal.width || box.width) / box.width;
-    const px = (ev.clientX - box.left) * scale;
-    const r = nearest(px);
+  /** 뷰박스 좌표 → host 안의 픽셀. 키보드로 옮길 때 툴팁을 놓을 자리를 잰다. */
+  function toHost(vx, vy){
+    const sb = svg.getBoundingClientRect(), hb = host.getBoundingClientRect();
+    const k = sb.width / (svg.viewBox.baseVal.width || sb.width);
+    return [sb.left - hb.left + vx * k, sb.top - hb.top + vy * k];
+  }
+  function show(r, px, py){
     line.setAttribute("x1", X(r[0])); line.setAttribute("x2", X(r[0]));
     line.setAttribute("stroke-opacity", .35);
     tt.style.opacity = 1;
@@ -1250,18 +1304,54 @@ function attachCrosshair(svg, ttId, host, X, PL, iw, PT, ih, rowsFn, rowsIn){
       rowsFn(r).map(p => `<div class="r"><span>${esc(p[0])}</span>` +
         `<span>${esc(p[1])}</span></div>`).join("");
     const hb = host.getBoundingClientRect();
-    let left = ev.clientX - hb.left + 14;
-    if (left + tt.offsetWidth > hb.width) left = ev.clientX - hb.left - tt.offsetWidth - 14;
+    let left = px + 14;
+    if (left + tt.offsetWidth > hb.width) left = px - tt.offsetWidth - 14;
     tt.style.left = Math.max(0, left) + "px";
-    tt.style.top = Math.max(0, ev.clientY - hb.top - tt.offsetHeight - 10) + "px";
+    tt.style.top = Math.max(0, py) + "px";
+  }
+  function hide(){
+    tt.style.opacity = 0; line.setAttribute("stroke-opacity", 0);
+  }
+  function go(i){
+    const r = rows[i];
+    const at = toHost(X(r[0]), PT + 4);
+    show(r, at[0], at[1]);
+    CH[ttId].at = i;
+    // 툴팁은 마우스용이라 낭독기가 읽지 않는다. 같은 내용을 글로 따로 준다.
+    live.textContent = iso(dateOf(r[0])) + ". " +
+      rowsFn(r).map(p => p[0] + " " + p[1]).join(". ");
+  }
+
+  CH[ttId] = Object.assign(CH[ttId] || {at: null},
+    {rows: rows, hide: hide, go: go});
+
+  function move(ev){
+    const box = svg.getBoundingClientRect();
+    const scale = (svg.viewBox.baseVal.width || box.width) / box.width;
+    const px = (ev.clientX - box.left) * scale;
+    const hb = host.getBoundingClientRect();
+    show(nearest(px), ev.clientX - hb.left,
+         ev.clientY - hb.top - tt.offsetHeight - 10);
   }
   hit.addEventListener("mousemove", move);
-  hit.addEventListener("mouseleave", () => {
-    tt.style.opacity = 0; line.setAttribute("stroke-opacity", 0);
-  });
+  hit.addEventListener("mouseleave", hide);
   hit.addEventListener("touchmove", ev => {
     if (ev.touches[0]) move(ev.touches[0]);
   }, {passive:true});
+
+  // --- 키보드 ------------------------------------------------------------
+  svg.setAttribute("tabindex", "0");
+  if (!svg.dataset.kbWired){
+    svg.dataset.kbWired = "1";
+    svg.addEventListener("keydown", ev => chartKey(ttId, ev));
+    svg.addEventListener("focus", () => {
+      const c = CH[ttId];
+      // 처음 들어오면 **오늘**부터. 16년 왼쪽 끝에서 시작하면 5,000번을 눌러야
+      // 지금에 닿는다.
+      if (c) c.go(c.at == null ? c.rows.length - 1 : c.at);
+    });
+    svg.addEventListener("blur", () => { const c = CH[ttId]; if (c) c.hide(); });
+  }
 }
 
 /* =====================================================================

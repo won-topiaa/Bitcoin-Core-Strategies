@@ -131,6 +131,14 @@ figcaption{font-size:12.5px; color:var(--muted); margin-top:12px; max-width:74ch
 .legend b{font-weight:600; color:var(--ink)}
 .chart{position:relative; width:100%}
 .chart svg{display:block; width:100%; height:auto; overflow:visible}
+/* 키보드로 짚어 볼 수 있는 그림. 안내는 자리를 미리 비워 두고 보였다 안 보였다
+   한다 — 나타날 때 아래 캡션이 밀려 내려가면 그것만으로 읽기가 끊긴다. */
+.chart svg[tabindex]:focus-visible{outline:2px solid var(--s1); outline-offset:3px}
+.kbdhint{margin-top:9px; font-size:11.5px; color:var(--muted); visibility:hidden;
+  font-family:var(--mono); letter-spacing:.01em}
+.chart:focus-within .kbdhint{visibility:visible}
+.sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+  overflow:hidden; clip-path:inset(50%); white-space:nowrap; border:0}
 .tt{
   position:absolute; pointer-events:none; opacity:0; transition:opacity .09s linear;
   background:var(--surface); border:1px solid var(--axis); border-radius:3px;
@@ -377,7 +385,7 @@ nav.pages .n{font-family:var(--mono); font-size:11px; opacity:.6; margin-right:7
   }
   body{background:#fff; font-size:11pt}
   .wrap{max-width:none; padding:0}
-  nav.pages, .ctl, .why, .nextlink, .srcline a{display:none !important}
+  nav.pages, .ctl, .why, .nextlink, .srcline a, .kbdhint{display:none !important}
   .panelbody{display:block !important; border:0; padding:0; background:none;
     margin-top:6px}          /* 접힌 설명도 인쇄에서는 전부 편다 */
   .panel, .tblwrap, .famcard, figure, .tiles{

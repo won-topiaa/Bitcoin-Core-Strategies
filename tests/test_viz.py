@@ -85,6 +85,23 @@ def test_no_unguarded_element_access(name):
     assert not bad, f"가드 없는 접근: {bad[:5]}"
 
 
+def test_svg_listeners_are_wired_exactly_once():
+    """svg 요소는 **다시 그려도 살아남는다** (지워지는 것은 그 자식들이다).
+
+    그래서 그릴 때마다 리스너를 붙이면 쌓이고, 화살표를 한 번 눌렀는데 두 칸,
+    세 칸씩 움직인다. 창 크기를 바꾸거나 테마를 바꾼 뒤에야 드러나는 종류라
+    여기서 못 박는다 — svg 에 리스너를 붙이는 코드는 전부 '한 번만' 가드 안에
+    있어야 한다.
+    """
+    js = read("_script.html")
+    guard = re.search(r"if \(!svg\.dataset\.kbWired\)\{(.*?)\n  \}", js, re.S)
+    assert guard, "한 번만 붙이는 가드를 찾지 못했습니다"
+    total = js.count("svg.addEventListener(")
+    inside = guard.group(1).count("svg.addEventListener(")
+    assert total and total == inside, (
+        f"가드 밖에서 svg 에 리스너를 붙입니다 ({total - inside}곳)")
+
+
 def test_the_nav_is_not_duplicated_in_the_bodies():
     """머리띠는 조각 하나가 소유한다. 세 본문에 복제되면 버튼을 하나 붙일 때
     세 곳을 똑같이 고쳐야 하고, 실제로 한 곳을 빠뜨린다."""

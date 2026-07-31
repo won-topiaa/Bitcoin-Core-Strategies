@@ -61,9 +61,9 @@ __NAV__
     맞게 바꿔도 됩니다.</p>
   </div>
 
-  <div class="tblwrap">
+  <div class="tblwrap" tabindex="0" role="region" aria-labelledby="band-cap-h">
     <table id="band-table">
-      <caption data-t="rul.band.caption">구간별 태도와 적립 배수</caption>
+      <caption id="band-cap-h" data-t="rul.band.caption">구간별 태도와 적립 배수</caption>
       <thead><tr>
         <th data-t="rul.band.th1">점수</th><th style="text-align:left" data-t="rul.band.th2">구간</th>
         <th style="text-align:left" data-t="rul.band.th3">태도</th><th data-t="rul.band.th4">적립 배수</th>
@@ -152,7 +152,7 @@ __NAV__
 <section id="data">
   <div class="sechead">
     <p class="eyebrow" data-t="rul.s4.eyebrow"><em>04</em> — 데이터</p>
-    <h2 data-t="rul.s4.h2">어디서 받아서 어떻게 계산하나</h2>
+    <h2 id="data-h" data-t="rul.s4.h2">어디서 받아서 어떻게 계산하나</h2>
     <p data-t="rul.s4.p">전부 무료로 구할 수 있는 데이터만 씁니다. 유료 구독이 필요한 지표는 아무리 좋아 보여도
     넣지 않았습니다.</p>
   </div>
@@ -161,7 +161,8 @@ __NAV__
     <p style="margin-bottom:14px" data-t="rul.data.p1">지표 아홉 개를 만드는 데 쓰는 원재료는 일곱 가지인데,
     <strong>그중 넷은 아예 받아올 필요가 없습니다.</strong> 비트코인의 발행 규칙이 코드에 박혀
     있어서 직접 계산되기 때문입니다.</p>
-    <div class="tblwrap" style="border:0">
+    <div class="tblwrap" style="border:0" tabindex="0" role="region"
+         aria-labelledby="data-h">
       <table data-t="rul.data.table">
         <thead><tr><th>원재료</th><th>조달</th><th>설명</th></tr></thead>
         <tbody>
