@@ -1,0 +1,60 @@
+# 구워 둔 사이트(viz/site)를 GitHub Pages 로 배포한다.
+#
+# 이 저장소는 사이트를 '다 구운 정적 3장'으로 viz/site 에 커밋한다(refresh-data.yml).
+# 여기서는 그 폴더를 그대로 Pages 에 올린다 — 빌드를 다시 하지 않는다.
+#
+# 자동 갱신 흐름:
+#   1) 매일 '데이터 갱신'이 데이터를 받아 viz/site 를 다시 굽고 커밋한다.
+#   2) 그 커밋은 기본 GITHUB_TOKEN 으로 push 되는데, 토큰 push 는 다른 워크플로의
+#      push 이벤트를 **트리거하지 않는다**(무한루프 방지). 그래서 push 대신
+#      workflow_run 으로 '데이터 갱신'이 끝난 뒤에 이어 붙여 배포가 빠지지 않게 한다.
+#   3) 내가 소스를 고쳐 직접 push 할 때는 push(paths: viz/site) 로 배포된다.
+#
+# 최초 1회: configure-pages 가 enablement:true 로 Pages 를 자동으로 켜 본다. 조직/
+# 저장소 정책이 막으면 Settings → Pages → Source 를 'GitHub Actions' 로 한 번만
+# 바꾼 뒤 이 워크플로를 다시 돌리면 된다.
+name: Pages 배포
+
+on:
+  push:
+    branches: ["claude/bitcoin-key-indicators-strategy-hrcbdd"]
+    paths: ["viz/site/**"]
+  workflow_run:
+    workflows: ["데이터 갱신"]
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 앞 배포가 끝나기 전에 다음이 시작하면 최신 것만 남기고 취소한다.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    # workflow_run 으로 올 때는 '데이터 갱신'이 성공했을 때만 배포한다.
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Pages 설정 (없으면 자동으로 켜기)
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - name: 구운 사이트 업로드 (viz/site)
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: viz/site
+
+      - name: 배포
+        id: deployment
+        uses: actions/deploy-pages@v4
