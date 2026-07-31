@@ -8,9 +8,10 @@ const BASE = new Date(D.base + "T00:00:00Z");
 const DAY = 86400000;
 const dateOf = o => new Date(BASE.getTime() + o * DAY);
 const iso = d => d.toISOString().slice(0, 10);
-const nf = (v, d) => (v === null || v === undefined) ? "—"
+const nf = (v, d) => (v === null || v === undefined || !Number.isFinite(v)) ? "—"
   : (v >= 0 ? "+" : "") + v.toFixed(d);
-const money = v => "$" + Math.round(v).toLocaleString("en-US");
+const money = v => (v === null || v === undefined || !Number.isFinite(+v)) ? "—"
+  : "$" + Math.round(v).toLocaleString("en-US");
 
 /* =====================================================================
    언어 — 한국어가 원본이고 영어는 사전에서 온다
@@ -84,8 +85,6 @@ ko: {
   // -- 지표 표
   notComputed: "계산 안 됨",
   sideCheap: "이만큼 쌌던", sideRich: "이만큼 비쌌던",
-  prevAt: (side, when) => `직전에 ${side} 때 — ${when}`,
-  prevNone: "최근 4년 안에는 없음",
   valueNow: "지금 값",
   indNote: (below, total, lo, hi, spread) =>
     (below === total ? `${total}개가 전부` : `${total}개 중 ${below}개가`) +
@@ -236,8 +235,6 @@ en: {
     `indicator's known weakness.`,
   notComputed: "not computed",
   sideCheap: "this cheap", sideRich: "this expensive",
-  prevAt: (side, when) => `last ${side} — ${when}`,
-  prevNone: "not within the last four years",
   valueNow: "value now",
   indNote: (below, total, lo, hi, spread) =>
     (below === total ? `All ${total}` : `${below} of the ${total}`) +
@@ -785,7 +782,7 @@ function drawPrice(){
   const X = xScaleOf(V, iw, PL);
   const lo = Math.log10(Math.max(0.05, Math.min.apply(null, V.map(r=>r[1]))));
   const hi = Math.log10(Math.max.apply(null, V.map(r=>r[1])));
-  const Y = v => PT + (hi - Math.log10(Math.max(0.05,v))) / (hi - lo) * ih;
+  const Y = v => PT + (hi - Math.log10(Math.max(0.05,v))) / ((hi - lo) || 1) * ih;
 
   for (let e = Math.ceil(lo); e <= Math.floor(hi); e++){
     el("line", {x1:PL, y1:Y(Math.pow(10,e)), x2:PL+iw, y2:Y(Math.pow(10,e)),
@@ -1240,7 +1237,7 @@ function drawFam(){
   const cutoff = S[S.length-1][0] - 1461;
   const rows = S.filter(r => r[0] >= cutoff);
   const d0 = rows[0][0], d1 = rows[rows.length-1][0];
-  const X = v => PL + (v - d0) / (d1 - d0) * iw;
+  const X = v => PL + (v - d0) / ((d1 - d0) || 1) * iw;
   const Y = v => PT + (1 - v) / 2 * ih;
 
   [-1,-0.5,0,0.5,1].forEach(v => {
@@ -1437,7 +1434,12 @@ function attachCrosshair(svg, ttId, host, X, PL, iw, PT, ih, rowsFn, rowsIn){
     tt.style.opacity = 0; line.setAttribute("stroke-opacity", 0);
   }
   function go(i){
+    // 범위를 좁히면(rangeSel) rows 가 줄어드는데 CH[ttId].at 은 이전(넓은) 값을
+    // 그대로 갖고 있다 — 그 상태로 focus 하면 rows[i] 가 undefined 라 r[0] 에서
+    // 던진다. 여기서 클램프해 한 곳에서 막는다.
+    i = Math.max(0, Math.min(i, rows.length - 1));
     const r = rows[i];
+    if (!r) return;
     const at = toHost(X(r[0]), PT + 4);
     show(r, at[0], at[1]);
     CH[ttId].at = i;
@@ -1656,6 +1658,19 @@ renderAll();
 // 갈래 카드 안의 동적 .why 는 각자 렌더에서 배선되지만, 이 둘은 HTML 에 고정이라
 // 여기서 한 번 걸어 준다. wireToggles 는 dataset.wired 로 중복을 막는다.
 wireToggles(document.querySelector(".wrap"));
+// 거시 접힘: 여는 순간 차트를 직접 다시 그린다(ResizeObserver 에만 기대지 않음).
+// 데이터가 없으면 버튼·상자를 통째로 감춘다 — 빈 상자를 열게 두지 않는다.
+(function(){
+  const btn = document.querySelector('.why[data-target="macro-fold"]');
+  const box = $("macro-fold");
+  if (!btn || !box) return;
+  const M = D.macro;
+  const hasM2 = M && M.m2 && M.m2.length >= 2 && M.btc && M.btc.length;
+  if (!hasM2){ btn.style.display = "none"; box.style.display = "none"; return; }
+  btn.addEventListener("click", () => {
+    if (box.classList.contains("open")) setTimeout(drawM2Lead, 30);
+  });
+})();
 paintControls();
 
 const langBtn = $("lang-btn");

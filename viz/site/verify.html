@@ -195,7 +195,7 @@ tbody tr.hi td{background:var(--surface-2)}
 .metric .one{font-size:12px; color:var(--muted); line-height:1.5; margin-top:-1px}
 .metric .pos4{margin-top:auto}
 .metric .posbar{min-width:0}
-@media (prefers-reduced-motion: reduce){.kpi,.metric{transition:none}}
+@media (prefers-reduced-motion: reduce){.metric{transition:none}}
 
 /* ---- 구조 설명 ---- */
 .cols{display:grid; grid-template-columns:repeat(auto-fit,minmax(266px,1fr)); gap:16px}
@@ -286,15 +286,7 @@ footer p{color:var(--muted); font-size:12.5px; max-width:70ch}
 .readbox b{color:var(--ink); font-weight:640}
 .readbox p{font-size:13.5px}
 
-/* 해석 카드 (현재 상태 · 의미 · 근거) */
-.interp{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:14px; margin-top:6px}
-.interp .box{background:var(--surface-2); border:1px solid var(--rule); border-radius:var(--r-sm); padding:15px 16px}
-.interp .k{font-size:11px; font-weight:640; letter-spacing:.05em; text-transform:uppercase; color:var(--muted)}
-.interp .v{margin-top:7px; font-size:16px; font-weight:660; color:var(--ink); line-height:1.35}
-.interp .v.mono{font-family:var(--mono); font-variant-numeric:tabular-nums}
-.interp .s{margin-top:5px; font-size:12.5px; color:var(--ink-2); line-height:1.5}
-
-/* 사이드바 (오늘 요약 · 신호 · 최근 변화) */
+/* 사이드바 (최근 변화) */
 .dash{display:grid; grid-template-columns:minmax(0,1fr) 328px; gap:clamp(16px,2.4vw,28px); align-items:start}
 .side{position:sticky; top:20px; display:flex; flex-direction:column; gap:16px}
 .side .card{background:var(--surface); border:1px solid var(--rule); border-radius:var(--r-md);
@@ -313,10 +305,8 @@ footer p{color:var(--muted); font-size:12.5px; max-width:70ch}
   min-width:150px; overflow:hidden; border:1px solid var(--rule)}
 .posbar .mid{position:absolute; left:50%; top:0; bottom:0; width:1px; background:var(--axis)}
 .posbar .fill{position:absolute; top:3px; bottom:3px; border-radius:2px; opacity:.9}
-.poscell{display:flex; align-items:center; gap:10px; justify-content:flex-end}
-.poscell .pct{font-variant-numeric:tabular-nums; min-width:38px; text-align:right}
 .tblnote{font-size:12.5px; color:var(--muted); margin-top:10px; max-width:74ch}
-td .famdot{display:inline-block; width:8px; height:8px; border-radius:3px; margin-right:6px; vertical-align:0}
+.famdot{display:inline-block; width:8px; height:8px; border-radius:3px; margin-right:6px; vertical-align:0}
 tbody td.lbl{font-family:var(--sans); color:var(--ink); font-weight:640}
 tbody td.sub{font-family:var(--sans); color:var(--muted); font-weight:400; text-align:left;
   white-space:normal; min-width:210px; font-size:12.5px; line-height:1.5}
@@ -374,12 +364,6 @@ tbody td.sub{font-family:var(--sans); color:var(--muted); font-weight:400; text-
 .foldnote{margin:0 0 16px; font-size:12.5px; color:var(--muted); line-height:1.6; max-width:74ch}
 .foldnote strong{color:var(--ink-2); font-weight:660}
 
-/* 어제·지난주·지난달 대비 변화 */
-.deltas{display:flex; flex-wrap:wrap; gap:8px 22px; margin:0 0 22px; font-size:12.5px; color:var(--muted)}
-.deltas > span{white-space:nowrap}
-.deltas b{font-family:var(--mono); font-variant-numeric:tabular-nums; font-weight:600; margin-left:5px}
-.deltas i{font-style:normal; font-family:var(--mono); font-variant-numeric:tabular-nums; color:var(--ink-2); margin-left:6px}
-
 /* ============================================================
    상단 내비게이션 — 로고 + 페이지 + 컨트롤 (프리미엄 톱바)
    ============================================================ */
@@ -425,41 +409,30 @@ nav.pages .n{font-family:var(--mono); font-size:11px; opacity:.55; margin-right:
   .topbar .ctl{margin-left:auto}
 }
 
-/* 좁은 화면: 표 대신 카드 */
-.indcards{display:none}
-.indcard{background:var(--surface); border:1px solid var(--rule); border-radius:var(--r-md);
-  padding:15px 16px; margin-top:10px; box-shadow:var(--shadow)}
-.indcard .top{display:flex; justify-content:space-between; align-items:baseline; gap:10px}
-.indcard .nm{font-size:14px; font-weight:660; color:var(--ink)}
-.indcard .pct{font-family:var(--mono); font-variant-numeric:tabular-nums; font-size:15px; font-weight:600; white-space:nowrap}
-.indcard .one{font-size:12.5px; color:var(--ink-2); margin:4px 0 9px; line-height:1.5}
-.indcard .meta{display:flex; justify-content:space-between; gap:10px; margin-top:7px; font-size:11.5px; color:var(--muted)}
-.indcard .meta b{font-family:var(--mono); color:var(--ink-2); font-weight:500}
-@media (max-width:720px){
-  .indtable{display:none}
-  .indcards{display:block}
-}
-
 /* 인쇄 */
 @media print{
   :root{
     --plane:#fff; --surface:#fff; --surface-2:#fff; --surface-3:#fff;
     --ink:#000; --ink-2:#333; --muted:#666;
-    --grid:#ddd; --axis:#999; --rule:#ccc
+    --grid:#ddd; --axis:#999; --rule:#ccc;
+    /* 다크 테마에서 인쇄해도 차트 밴드 음영·0선이 종이에서 보이도록 밝은 값으로 */
+    --zero:#b9bec7;
+    --wash-warm-3:rgba(210,59,56,.12); --wash-warm-2:rgba(214,98,74,.09); --wash-warm-1:rgba(228,166,143,.08);
+    --wash-neutral:rgba(134,140,150,.07);
+    --wash-cool-1:rgba(147,182,223,.11); --wash-cool-2:rgba(63,127,196,.13); --wash-cool-3:rgba(29,80,145,.17)
   }
   body{background:#fff; font-size:11pt}
   .wrap{max-width:none; padding:0}
-  nav.pages, .ctl, .why, .nextlink, .srcline a, .kbdhint, .rangesel, .side{display:none !important}
+  nav.pages, .ctl, .why, .nextlink, .srcline a, .kbdhint, .rangesel{display:none !important}
   .panelbody{display:block !important; border:0; padding:0; background:none; margin-top:6px}
-  .panel, .tblwrap, .famcard, .kpi, .metric, figure, .hero-main{
+  .panel, .tblwrap, .famcard, .metric, figure, .hero-main{
     break-inside:avoid; page-break-inside:avoid; box-shadow:none}
   .dash{grid-template-columns:1fr}
+  .side{position:static}
   section{break-inside:auto; page-break-inside:auto; margin-top:22px}
   h1{font-size:22pt} h2{font-size:15pt} h3{font-size:11.5pt}
   .readout .big{font-size:30pt}
   .tblwrap{overflow:visible}
-  .indcards{display:none !important}
-  .indtable{display:table !important}
   a[href^="http"]::after{content:" (" attr(href) ")"; font-size:8pt; color:#666}
   footer{margin-top:24px}
 }
@@ -569,7 +542,7 @@ nav.pages .n{font-family:var(--mono); font-size:11px; opacity:.55; margin-right:
     <strong>"최근 4년 안에서 몇 등쯤인가"</strong>로 바꿉니다.</p>
     <div class="scalekey" id="scalekey"></div>
     <p style="margin-top:16px" data-t="vfy.scale.p2">그래야 지표끼리 더할 수 있습니다. MVRV는 0~10 사이를 오가고
-    200주 MA 배수는 0.5~5 사이를 오가는데, 그냥 더하면 큰 쪽이 이깁니다.
+    200주 MA 배수는 0.5에서 16까지 오가는데, 그냥 더하면 큰 쪽이 이깁니다.
     <strong>등수로 바꾸면 둘이 같은 무게가 됩니다.</strong></p>
     <p style="margin-top:10px" data-t="vfy.scale.p3">고정 기준을 쓰지 않는 이유도 있습니다. "MVRV가 7을 넘으면 비싸다"는
     2013년에는 맞았지만 <strong>2025년에는 한 번도 7에 닿지 않았습니다.</strong> 사이클마다
@@ -678,8 +651,8 @@ window.__I18N__ = {
 "idx.s2.note": `<strong>This ‘4-year’ percentage uses a different window than the ‘16-year’ percentile on the
   gauge up top</strong> — the top one ranks the final score across all 16 years, these rank each
   indicator over its own last four years, so don't compare the two numbers directly.
-  <strong>‘Last time it was here’</strong> is the most recent time that indicator was as extreme as it
-  is now (at least six months ago).`,
+  The date at the end of each card is <strong>the most recent time that indicator was as extreme as it
+  is now</strong> (at least six months ago).`,
 "idx.s3.eyebrow": "<em>02</em> — The last 16 years",
 "idx.s3.h2": "Four visits to the same place, four returns",
 "idx.s3.p": `The ruler above, computed every day and strung out in time order. Vertical is the position
@@ -753,7 +726,7 @@ window.__I18N__ = {
 "vfy.scale.p1": `Every indicator is first <strong>measured with the same ruler.</strong> Whatever its
   raw value, it becomes <strong>"roughly what rank is this within the last four years"</strong>.`,
 "vfy.scale.p2": `That is what makes them addable. MVRV wanders between 0 and 10 while the 200-week MA
-  multiple wanders between 0.5 and 5 — add those directly and the bigger one wins.
+  multiple wanders between 0.5 and 16 — add those directly and the bigger one wins.
   <strong>Turned into ranks, the two weigh the same.</strong>`,
 "vfy.scale.p3": `There is a reason for not using fixed thresholds. "MVRV above 7 is expensive" held in
   2013, but <strong>2025 never once touched 7.</strong> The absolute readings fall from cycle to
@@ -794,7 +767,7 @@ window.__I18N__ = {
   So what makes the score and what merely appears on screen are kept firmly apart.`,
 "rul.s1.dl": `<dt>What makes the score</dt>
       <dd>Nine indicators. Each is converted into <strong>roughly what rank it holds within the last
-      four years</strong>. Fixed thresholds like "MVRV of 3 is expensive" are avoided because those
+      four years</strong>. Fixed thresholds like "MVRV of 7 is expensive" are avoided because those
       absolute readings have kept falling from cycle to cycle.</dd>
 
       <dt>Two must agree</dt>
@@ -924,9 +897,10 @@ const BASE = new Date(D.base + "T00:00:00Z");
 const DAY = 86400000;
 const dateOf = o => new Date(BASE.getTime() + o * DAY);
 const iso = d => d.toISOString().slice(0, 10);
-const nf = (v, d) => (v === null || v === undefined) ? "—"
+const nf = (v, d) => (v === null || v === undefined || !Number.isFinite(v)) ? "—"
   : (v >= 0 ? "+" : "") + v.toFixed(d);
-const money = v => "$" + Math.round(v).toLocaleString("en-US");
+const money = v => (v === null || v === undefined || !Number.isFinite(+v)) ? "—"
+  : "$" + Math.round(v).toLocaleString("en-US");
 
 /* =====================================================================
    언어 — 한국어가 원본이고 영어는 사전에서 온다
@@ -1000,8 +974,6 @@ ko: {
   // -- 지표 표
   notComputed: "계산 안 됨",
   sideCheap: "이만큼 쌌던", sideRich: "이만큼 비쌌던",
-  prevAt: (side, when) => `직전에 ${side} 때 — ${when}`,
-  prevNone: "최근 4년 안에는 없음",
   valueNow: "지금 값",
   indNote: (below, total, lo, hi, spread) =>
     (below === total ? `${total}개가 전부` : `${total}개 중 ${below}개가`) +
@@ -1152,8 +1124,6 @@ en: {
     `indicator's known weakness.`,
   notComputed: "not computed",
   sideCheap: "this cheap", sideRich: "this expensive",
-  prevAt: (side, when) => `last ${side} — ${when}`,
-  prevNone: "not within the last four years",
   valueNow: "value now",
   indNote: (below, total, lo, hi, spread) =>
     (below === total ? `All ${total}` : `${below} of the ${total}`) +
@@ -1701,7 +1671,7 @@ function drawPrice(){
   const X = xScaleOf(V, iw, PL);
   const lo = Math.log10(Math.max(0.05, Math.min.apply(null, V.map(r=>r[1]))));
   const hi = Math.log10(Math.max.apply(null, V.map(r=>r[1])));
-  const Y = v => PT + (hi - Math.log10(Math.max(0.05,v))) / (hi - lo) * ih;
+  const Y = v => PT + (hi - Math.log10(Math.max(0.05,v))) / ((hi - lo) || 1) * ih;
 
   for (let e = Math.ceil(lo); e <= Math.floor(hi); e++){
     el("line", {x1:PL, y1:Y(Math.pow(10,e)), x2:PL+iw, y2:Y(Math.pow(10,e)),
@@ -2156,7 +2126,7 @@ function drawFam(){
   const cutoff = S[S.length-1][0] - 1461;
   const rows = S.filter(r => r[0] >= cutoff);
   const d0 = rows[0][0], d1 = rows[rows.length-1][0];
-  const X = v => PL + (v - d0) / (d1 - d0) * iw;
+  const X = v => PL + (v - d0) / ((d1 - d0) || 1) * iw;
   const Y = v => PT + (1 - v) / 2 * ih;
 
   [-1,-0.5,0,0.5,1].forEach(v => {
@@ -2353,7 +2323,12 @@ function attachCrosshair(svg, ttId, host, X, PL, iw, PT, ih, rowsFn, rowsIn){
     tt.style.opacity = 0; line.setAttribute("stroke-opacity", 0);
   }
   function go(i){
+    // 범위를 좁히면(rangeSel) rows 가 줄어드는데 CH[ttId].at 은 이전(넓은) 값을
+    // 그대로 갖고 있다 — 그 상태로 focus 하면 rows[i] 가 undefined 라 r[0] 에서
+    // 던진다. 여기서 클램프해 한 곳에서 막는다.
+    i = Math.max(0, Math.min(i, rows.length - 1));
     const r = rows[i];
+    if (!r) return;
     const at = toHost(X(r[0]), PT + 4);
     show(r, at[0], at[1]);
     CH[ttId].at = i;
@@ -2572,6 +2547,19 @@ renderAll();
 // 갈래 카드 안의 동적 .why 는 각자 렌더에서 배선되지만, 이 둘은 HTML 에 고정이라
 // 여기서 한 번 걸어 준다. wireToggles 는 dataset.wired 로 중복을 막는다.
 wireToggles(document.querySelector(".wrap"));
+// 거시 접힘: 여는 순간 차트를 직접 다시 그린다(ResizeObserver 에만 기대지 않음).
+// 데이터가 없으면 버튼·상자를 통째로 감춘다 — 빈 상자를 열게 두지 않는다.
+(function(){
+  const btn = document.querySelector('.why[data-target="macro-fold"]');
+  const box = $("macro-fold");
+  if (!btn || !box) return;
+  const M = D.macro;
+  const hasM2 = M && M.m2 && M.m2.length >= 2 && M.btc && M.btc.length;
+  if (!hasM2){ btn.style.display = "none"; box.style.display = "none"; return; }
+  btn.addEventListener("click", () => {
+    if (box.classList.contains("open")) setTimeout(drawM2Lead, 30);
+  });
+})();
 paintControls();
 
 const langBtn = $("lang-btn");
