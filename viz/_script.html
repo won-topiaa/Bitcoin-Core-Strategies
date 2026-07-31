@@ -184,6 +184,16 @@ ko: {
     `비트코인 로그가격(검정)에 중국 M2 전년비(파랑)를 측정된 선행 ${lead}개월만큼 앞으로 당겨 ` +
     `겹친 그림. 왼쪽 축은 가격, 오른쪽 축은 M2 증가율입니다. 중국 M2 가 비트코인을 약 ` +
     `${lead}개월 앞선 관계(상관 ${corr})입니다. 지금 임펄스 ${imp}, 레짐 ‘${band}’.`,
+  heroNow: "비트코인 · 현재",
+  hero24h: x => `${x}% · 24H`,
+  heroSub: d => `기준일 ${d} · 매일 자동 갱신`,
+  kpiCycle: "사이클 위치",
+  kpiPct: "16년 백분위",
+  kpiPctD: p => `지난 16년 중 하위 ${p}%`,
+  kpiLiq: "유동성 레짐",
+  liqSize: "크기만 조절",
+  kpiCov: "지표 커버리지",
+  kpiCovD: n => `${n}개 지표 반영`,
   altTP: (mt, mb, gap, now) =>
     `과거 전환점 여덟 곳의 위치 점수를 가로 막대로 늘어놓은 그림. 고점 네 번 평균 ` +
     `${mt}, 바닥 네 번 평균 ${mb}, 그 사이 ${gap}점이 비어 있습니다. 지금은 ${now} 입니다.`,
@@ -321,6 +331,16 @@ en: {
     `Bitcoin log price (black) overlaid with China M2 year-on-year growth (blue) pulled ${lead} ` +
     `months forward — the measured lead. Left axis is price, right axis is M2 growth. China M2 ` +
     `leads Bitcoin by about ${lead} months (correlation ${corr}). Impulse now ${imp}, regime '${band}'.`,
+  heroNow: "Bitcoin · now",
+  hero24h: x => `${x}% · 24H`,
+  heroSub: d => `as of ${d} · updates daily`,
+  kpiCycle: "Cycle position",
+  kpiPct: "16-year percentile",
+  kpiPctD: p => `bottom ${p}% of 16 years`,
+  kpiLiq: "Liquidity regime",
+  liqSize: "size only",
+  kpiCov: "Coverage",
+  kpiCovD: n => `${n} indicators in`,
   altTP: (mt, mb, gap, now) =>
     `Horizontal bars showing the position score at eight past turning points. The four peaks ` +
     `average ${mt}, the four bottoms ${mb}, and ${gap} points between them are empty. ` +
@@ -1442,6 +1462,47 @@ function freshness(){
     : (stale ? t("freshStale", days) : t("freshDays", days));
 }
 
+/* 시장 스냅샷 히어로 — 실제 데이터(D)로 채운다. 없는 값(가격·변화·LRS)이면
+   그 조각만 빼고 나머지로 간다. 판단 문구·확신%·예측은 넣지 않는다. */
+function kpiTile(k, v, d){
+  return `<div class="kpi"><div class="k">${k}</div><div class="v">${v}</div>` +
+         (d ? `<div class="d">${d}</div>` : "") + `</div>`;
+}
+function heroFill(){
+  const c = D.current; if (!c) return;
+  setText("hero-eyebrow", t("heroNow"));
+  setText("hero-price", c.price != null ? money(c.price) : "—");
+  const chg = D.deltas && D.deltas.d1 ? D.deltas.d1.price_pct : null;
+  const chgEl = $("hero-chg");
+  if (chgEl){
+    chgEl.textContent = chg == null ? "" : t("hero24h", (chg >= 0 ? "+" : "") + chg.toFixed(1));
+    chgEl.className = "chg " + (chg == null ? "" : (chg >= 0 ? "pos" : "neg"));
+  }
+  setText("hero-sub", t("heroSub", c.d));
+
+  const pct = c.rank != null ? Math.round(c.rank * 100) : null;
+  const cool = c.bcs < 0, chipCls = cool ? "cool" : (c.bcs > 0 ? "warm" : "flat");
+  const tiles = [];
+  tiles.push(kpiTile(t("kpiCycle"), `${nf(c.low,0)} ~ ${nf(c.high,0)}`,
+    `<span class="chip ${chipCls}">${esc(labelOf(c.band))}</span>`));
+  if (pct != null)
+    tiles.push(kpiTile(t("kpiPct"),
+      `${pct}<span style="font-size:14px;color:var(--muted);margin-left:1px">th</span>`,
+      t("kpiPctD", pct)));
+  if (D.macro && D.macro.lrs != null){
+    const lrs = Math.round(D.macro.lrs);
+    // LRS 값은 **중립색**으로 둔다 — 초록/빨강은 방향(좋다/나쁘다)을 암시하는데
+    // LRS 는 방향이 아니라 실행 '크기'만 조절한다. 그래서 pos/neg 색을 쓰지 않는다.
+    tiles.push(kpiTile(t("kpiLiq"), `${lrs >= 0 ? '+' : ''}${lrs}`,
+      `${bandWord(D.macro.band)} · ${t("liqSize")}`));
+  }
+  const cov = Math.round((c.cov != null ? c.cov : 1) * 100);
+  tiles.push(kpiTile(t("kpiCov"),
+    `<span style="color:${cov >= 100 ? 'var(--pos)' : 'var(--accent)'}">${cov}%</span>`,
+    t("kpiCovD", D.indMeta.length)));
+  setHTML("hero-kpis", tiles.slice(0, 4).join(""));
+}
+
 function fillText(){
   setText("src-span", D.span[0] + " → " + D.span[1]);
   setText("src-days", t("srcDays", D.nDays.toLocaleString("en-US"), D.indMeta.length));
@@ -1553,7 +1614,7 @@ function drawAll(){
 // 이 스크립트가 그것도 같이 다시 그려야 한다.
 const HOOKS = window.__BCS_HOOKS__ = window.__BCS_HOOKS__ || [];
 function renderAll(){
-  fillText(); famCards(); indicatorTable(); scaleKey(); mixBar(); histLegend(); drawAll();
+  heroFill(); fillText(); famCards(); indicatorTable(); scaleKey(); mixBar(); histLegend(); drawAll();
   for (let i = 0; i < HOOKS.length; i++) HOOKS[i]();
 }
 // 페이지별 스크립트가 쓸 최소한의 창구. 문자열 표를 두 벌 두면 언어를 하나
