@@ -185,6 +185,34 @@ def test_rank_is_measured_over_every_day_not_the_thinned_series():
     assert export_viz.rank_of([{"bcs": 5}] * 4 + [{"bcs": 9}], 5) == 0.0
 
 
+def test_build_with_macro_populates_overlay_and_stays_json_safe():
+    """일간 워크플로는 --macro 로 굽지만 모든 테스트가 macro_csv=None 이었다 —
+    거시 오버레이(export_viz.macro_lead + payload['macro'] 분기)가 프로덕션에서만
+    돌던 공백을 메운다. 겸사겸사 payload 가 NaN 없는(유효 JSON) 상태인지도 본다."""
+    import json
+    import math
+
+    sys.path.insert(0, str(ROOT / "tools"))
+    import export_viz
+    from btc_core.config import load_config
+
+    market = ROOT / "data" / "market.csv"
+    macro = ROOT / "data" / "macro.csv"
+    if not (market.exists() and macro.exists()):
+        pytest.skip("data/market.csv 또는 macro.csv 없음")
+
+    payload = export_viz.build(load_config(), str(market), macro_csv=str(macro))
+    m = payload.get("macro")
+    assert m, "macro 분기가 payload 에 실리지 않았다"
+    assert m["m2"] and m["btc"], "중국 M2·BTC 오버레이 배열이 비었다"
+
+    imp = m.get("impulse")
+    assert imp is None or math.isfinite(imp), "임펄스가 비유한(NaN/inf)이다"
+
+    # NaN/inf 가 하나라도 새면 브라우저의 JSON.parse 가 죽는다. allow_nan=False 로 강제.
+    json.dumps(payload, allow_nan=False)
+
+
 def test_pages_are_self_contained():
     """외부 요청이 하나라도 있으면 막힌 환경에서 빈 화면이 된다."""
     import tempfile

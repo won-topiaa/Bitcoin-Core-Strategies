@@ -144,6 +144,29 @@ def test_gold_analysis_detects_sign_and_null():
     assert abs(mc.gold_analysis(btc, gold_null)["full"]) < 0.5
 
 
+def test_gold_analysis_recovers_a_planted_lead():
+    """선행/후행 스캔이 심어 둔 선행(개월)을 되찾는지 — best_lag 를 검증한다.
+    gold 수익률[t] = btc 수익률[t+L] 로 만들면 금이 BTC 를 L개월 앞선다(k>0=금 선행)."""
+    L = 3
+    dates = month_grid(140)
+    r = [0.3 * math.sin(i / 2.0) + 0.1 * math.cos(i / 5.0)
+         for i in range(len(dates) + L + 2)]
+
+    def cumexp(seq):                       # price[i] = exp(누적합) → 로그수익률[i] = seq[i]
+        out, s = [], 0.0
+        for x in seq:
+            s += x
+            out.append(math.exp(s))
+        return out
+
+    btc = {d: v for d, v in zip(dates, cumexp(r[:len(dates)]))}
+    gold = {d: v for d, v in zip(dates, cumexp([r[i + L] for i in range(len(dates))]))}
+
+    res = mc.gold_analysis(btc, gold, max_lag=6)
+    assert res["best_lag"] == L, f"best_lag={res['best_lag']} (기대 {L})"
+    assert res["best_corr"] is not None and res["best_corr"] > 0.9
+
+
 def test_merge_to_csv_preserves_columns_from_a_missing_source(tmp_path):
     """소스 하나가 이번 run 에 빠져도 그 열/값은 기존 파일에서 살아남는다 (H1).
 

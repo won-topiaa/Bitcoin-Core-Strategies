@@ -51,7 +51,7 @@ sys.path.insert(0, str(ROOT / "src"))
 # ---------------------------------------------------------------------------
 def pearson(xs: list[float], ys: list[float]) -> Optional[float]:
     n = len(xs)
-    if n < 3:
+    if n < 3 or len(ys) != n:      # 길이가 다르면 cov(zip) 만 잘려 조용히 틀린다
         return None
     mx, my = sum(xs) / n, sum(ys) / n
     cov = sum((x - mx) * (y - my) for x, y in zip(xs, ys))

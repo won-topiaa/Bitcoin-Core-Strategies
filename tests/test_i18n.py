@@ -87,6 +87,21 @@ def test_no_orphan_english_keys():
     assert not orphans, f"쓰이지 않는 키: {orphans}"
 
 
+def test_year_span_is_never_hardcoded_in_prose():
+    """'16년'/'16 years' 를 .yr 스팬 없이 본문에 박으면, 데이터가 17년치가 되는
+    2027년에 조용히 틀린다. 동적화(YRS/.yr, 커밋 045070e) 회귀를 막는다 — 본문·
+    사전 산문엔 맨 연도 표기가 없어야 한다(모두 <span class="yr"> 로 감싸 JS 가 채운다).
+    앞에 숫자가 붙은 '2016년' 같은 실제 연도는 제외한다."""
+    pat = re.compile(r'(?<!\d)16\s*년|(?<!\d)16[-\s]?years?\b')
+    comment = re.compile(r'<!--.*?-->', re.S)   # 주석은 렌더되지 않으니 제외
+    bad = {}
+    for name in BODIES + (NAV, "_i18n.html"):
+        hits = pat.findall(comment.sub('', read(name)))
+        if hits:
+            bad[name] = hits
+    assert not bad, f"동적화 안 된 연도 표기(.yr 스팬으로 감싸세요): {bad}"
+
+
 def test_english_values_are_not_empty():
     empty = sorted(k for k, v in i18n_table().items() if not str(v).strip())
     assert not empty, f"빈 번역: {empty}"

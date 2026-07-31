@@ -2496,9 +2496,10 @@ function sideFill(){
   setText("side-recent-h", t("sideRecent"));
 
   // 최근 변화 — 어제·지난주·지난달 대비. 값이 올라가면 비싼 쪽, 내려가면 싼 쪽.
+  let html = "";
   if (D.deltas){
     const labels = t("dLabels");
-    setHTML("side-recent", ["d1", "d7", "d30"].map(k => {
+    html = ["d1", "d7", "d30"].map(k => {
       const v = D.deltas[k];
       if (!v) return "";
       const col = Math.abs(v.bcs) < 0.05 ? "var(--muted)"
@@ -2509,8 +2510,12 @@ function sideFill(){
       return sideRow(t("deltaVs", labels[k]),
         `<span class="rv" style="color:${col}">` +
         `${t("deltaPts", (v.bcs >= 0 ? "+" : "") + v.bcs.toFixed(1))}</span>${px}`);
-    }).filter(Boolean).join(""));
+    }).filter(Boolean).join("");
   }
+  setHTML("side-recent", html);
+  // 변화가 하나도 없으면 헤더만 남은 빈 카드를 숨긴다(데이터 초기·결측 시).
+  const card = $("side-recent") && $("side-recent").closest(".card");
+  if (card) card.style.display = html ? "" : "none";
 }
 
 function fillText(){
@@ -2646,9 +2651,13 @@ wireToggles(document.querySelector(".wrap"));
   const btn = document.querySelector('.why[data-target="macro-fold"]');
   const box = $("macro-fold");
   if (!btn || !box) return;
-  const M = D.macro;
-  const hasM2 = M && M.m2 && M.m2.length >= 2 && M.btc && M.btc.length;
-  if (!hasM2){ btn.style.display = "none"; box.style.display = "none"; return; }
+  // drawM2Lead 는 renderAll 에서 이미 돌며, 데이터가 부실하면(빈·짧은·퇴화 = 자체
+  // 2차 가드) figure 를 inline display:none 으로 감춘다. IIFE 가 제 기준으로 판단하면
+  // 그 더 엄격한 가드와 어긋나 '빈 상자'가 열린다 — figure 가시성을 그대로 따른다.
+  const fig = box.querySelector("figure");
+  if (!fig || fig.style.display === "none"){
+    btn.style.display = "none"; box.style.display = "none"; return;
+  }
   btn.addEventListener("click", () => {
     if (box.classList.contains("open")) setTimeout(drawM2Lead, 30);
   });

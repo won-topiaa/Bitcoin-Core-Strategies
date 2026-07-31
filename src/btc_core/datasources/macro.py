@@ -22,6 +22,7 @@
 from __future__ import annotations
 
 import csv
+import math
 from datetime import date
 from pathlib import Path
 from typing import Optional
@@ -108,7 +109,10 @@ def china_m2_impulse(path: str | Path, *, reference: Optional[date] = None,
         if v is None:                 # 달력상 한 달이라도 비면 임펄스를 내지 않는다
             return None
         window_vals.append(v)
-    return m2[last] - sum(window_vals) / window
+    imp = m2[last] - sum(window_vals) / window
+    # 셀이 비유한(NaN/inf)이면 임펄스도 비유한이 된다 — 그대로 내보내면
+    # export_viz → json.dumps 가 무효 JSON(NaN)을 써서 사이트가 깨진다. None 으로.
+    return imp if math.isfinite(imp) else None
 
 
 def load_macro_signals(path: str | Path = "data/macro.csv", *,
