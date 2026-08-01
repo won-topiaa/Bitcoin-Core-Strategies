@@ -343,6 +343,62 @@ def test_candidate_analysis_detects_sign_and_partials_out_a_common_driver():
         f"공통 원인을 통제하면 남는 게 없어야 한다: {r2['partial_vix']}")
 
 
+def test_report_never_names_a_candidate_it_did_not_measure():
+    """리포트는 **실제로 잰 후보만** 언급해야 한다. 결론 문장에 후보 이름을 하드코딩해
+    두면, 그 열이 없는 데이터로 돌렸을 때 '재지 않은 것을 잰 것처럼' 읽힌다 — 이
+    프로젝트가 가장 경계하는 종류의 거짓말이라 문자열 수준에서 막는다."""
+    dates = month_grid(150)
+    btc = {d: 1000.0 * math.exp(0.3 * math.sin(i / 4)) for i, d in enumerate(dates)}
+    base = {d: 100.0 * math.exp(0.2 * math.cos(i / 5)) for i, d in enumerate(dates)}
+
+    # 코스피만 있고 나머지 후보는 없는 데이터
+    only_kospi = mc.report(btc, {"kospi": base, "nasdaq": base})
+    assert "코스피" in only_kospi
+    for absent in ("DXY", "실질금리", "순유동성"):
+        assert absent not in only_kospi, f"없는 후보를 언급했다: {absent}"
+
+    # 후보가 하나도 없으면 [1e] 섹션 자체가 나오지 않는다
+    none_present = mc.report(btc, {"nasdaq": base})
+    assert "[1e]" not in none_present
+
+
+def test_candidate_analysis_measures_a_monthly_driver_on_the_monthly_grid():
+    """월간으로만 나오는 후보(코스피=OECD 월간 지수)를 주간 격자에 물리면 '1개월
+    수익률 vs 1주 수익률'을 비교하게 돼 값이 통째로 틀린다. 빈도를 후보에 맞추는지,
+    그리고 **부분상관도 같은 격자**에서 재는지 못 박는다.
+
+    심는 값: 월간 driver 수익률 = BTC 월수익률 × 1 (완전 동행). 격자가 맞으면 ρ≈+1,
+    주간 격자에 잘못 물리면 짝이 어긋나 ρ 가 크게 떨어진다."""
+    import random
+    rng = random.Random(3)
+    days = [date(2014, 1, 6)]
+    for _ in range(1500):                       # 일간 BTC (주간 격자가 촘촘하도록)
+        days.append(days[-1].fromordinal(days[-1].toordinal() + 3))
+
+    btc, lb = {}, 10000.0
+    for d in days:
+        lb *= math.exp(rng.gauss(0, 0.02))
+        btc[d] = lb
+
+    # 월간 driver: 그 달 BTC 월말값에 비례 → 월 로그수익률이 정확히 같다
+    bm = mc.month_end(btc)
+    driver = {d: v * 0.01 for d, v in bm.items()}
+
+    r = mc.candidate_analysis(btc, driver, use_log=True)
+    assert r["monthly_only"] is True, "월간 후보를 월간으로 인식해야 한다"
+    assert r["primary"] == "월간"
+    assert r["full_wk"] is None and r["n_wk"] == 0, "주간 프레임은 계산하지 않는다"
+    assert r["full_mo"] is not None and r["full_mo"] > 0.99, (
+        f"같은 격자면 심은 완전 동행을 되찾아야 한다: {r['full_mo']}")
+
+    # 부분상관도 월간 격자여야 한다 — 무관한 통제를 넣어도 값이 살아남는다
+    ndq = {d: 100.0 * math.exp(rng.gauss(0, 0.01)) for d in days}
+    r2 = mc.candidate_analysis(btc, driver, nasdaq=ndq, use_log=True)
+    assert r2["partial_ndq"] is not None, "월간 격자에서 부분상관이 계산돼야 한다"
+    assert r2["partial_ndq"] > 0.9, (
+        f"무관한 통제는 완전 동행을 못 지운다(격자 어긋남 의심): {r2['partial_ndq']}")
+
+
 def test_build_net_liquidity_aligns_rrp_to_the_other_legs():
     """순유동성 = WALCL − TGA − RRP. WALCL·TGA 는 백만$, RRP(RRPONTSYD)는 십억$ 라
     RRP 를 ×1000 해야 맞다. 안 맞추면 RRP 가 1000배 작아져 사실상 빠진다 — build_global

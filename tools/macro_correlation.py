@@ -437,15 +437,26 @@ def candidate_analysis(btc: dict[date, float], driver: dict[date, float],
 
     use_log=False 는 수준 금리(실질금리)용 — 음수가 될 수 있어 로그 대신 차분(Δ)으로
     변화를 잡는다. VIX 통제도 차분(ΔVIX), 나스닥 통제는 로그수익률로 맞춘다.
+
+    **빈도를 후보에 맞춘다.** 월간으로만 나오는 후보(코스피=OECD 월간 지수 등)를 주간
+    격자에 물리면 '1개월 수익률 vs 1주 수익률'을 비교하게 돼 값이 통째로 틀린다
+    (nasdaq_analysis 가 `_is_monthly` 로 막는 것과 같은 함정). 그래서 후보가 월간이면
+    주요 프레임도, **부분상관도** 월간 격자에서 잰다.
     """
     def keyed(chg: dict, monthly: bool) -> dict:
         def key(d: date):
             return (d.year, d.month) if monthly else d.isocalendar()[:2]
         return {key(d): v for d, v in sorted(chg.items())}
 
-    res: dict = {"use_log": use_log}
-    dk_wk = bk_wk = None
+    prim_monthly = _is_monthly(driver)      # 후보의 관측 빈도가 주요 프레임을 정한다
+    res: dict = {"use_log": use_log, "monthly_only": prim_monthly,
+                 "primary": "월간" if prim_monthly else "주간"}
+    dk_pr = bk_pr = None
     for monthly, tag in ((False, "wk"), (True, "mo")):
+        if monthly is False and prim_monthly:
+            # 월간 후보에 주간 프레임은 의미가 없다 — 계산하지 않고 비워 둔다
+            res["full_wk"], res["n_wk"] = None, 0
+            continue
         freq = month_end if monthly else weekly
         dk = keyed(_change(freq(driver), use_log), monthly)
         bk = keyed(log_returns(freq(btc)), monthly)
@@ -453,9 +464,10 @@ def candidate_analysis(btc: dict[date, float], driver: dict[date, float],
         res[f"full_{tag}"] = pearson([dk[c] for c in common], [bk[c] for c in common]) \
             if len(common) >= 12 else None
         res[f"n_{tag}"] = len(common)
-        if not monthly:
-            dk_wk, bk_wk = dk, bk
+        if monthly is prim_monthly:         # 주요 프레임에서 구간·국면을 잡는다
+            dk_pr, bk_pr = dk, bk
             res["span"] = (common[0], common[-1]) if common else None
+            res["n_primary"] = len(common)
 
             def era(lo, hi):
                 ks = [c for c in common if lo <= c[0] <= hi]
@@ -464,10 +476,11 @@ def candidate_analysis(btc: dict[date, float], driver: dict[date, float],
                            "2018~2021": era(2018, 2021),
                            "2022~현재": era(2022, 2100)}
 
-    # 부분상관 — 주간 격자에서 ΔVIX·나스닥수익률을 각각 통제
-    res["partial_vix"] = (_partial(dk_wk, bk_wk, _change(weekly(vix), False), False)
+    # 부분상관 — **주요 프레임과 같은 격자**에서 ΔVIX·나스닥수익률을 각각 통제
+    pfreq = month_end if prim_monthly else weekly
+    res["partial_vix"] = (_partial(dk_pr, bk_pr, _change(pfreq(vix), False), prim_monthly)
                           if vix else None)
-    res["partial_ndq"] = (_partial(dk_wk, bk_wk, _change(weekly(nasdaq), True), False)
+    res["partial_ndq"] = (_partial(dk_pr, bk_pr, _change(pfreq(nasdaq), True), prim_monthly)
                           if nasdaq else None)
 
     # 선행/후행 — 월간, driver 를 k개월 밀어 BTC 와 맞춘다(k>0 = driver 가 앞선다)
@@ -634,33 +647,47 @@ def report(btc: dict[date, float], macro: dict[str, dict[date, float]]) -> str:
     ndq_col = next((k for k in macro if "nasdaq" in k.lower() or "ndq" in k.lower()), None)
     cand_specs = [("dxy", "DXY(광의 달러지수)", True, "달러 강세=BTC 하락(음)"),
                   ("realyield", "미국 10년 실질금리", False, "실질금리 상승=BTC 하락(음)"),
-                  ("net_liq", "연준 순유동성(WALCL−TGA−RRP)", True, "유동성 증가=BTC 상승(양)")]
+                  ("net_liq", "연준 순유동성(WALCL−TGA−RRP)", True, "유동성 증가=BTC 상승(양)"),
+                  ("kospi", "코스피(한국 주가지수)", True, "한국 위험선호=BTC 상승(양)")]
     present = [c for c in cand_specs if c[0] in macro]
     if present:
-        add("\n[1e] 거시 후보 3종 ↔ 비트코인 — 주간/월간 수익률 + ΔVIX·나스닥 통제 부분상관")
+        add("\n[1e] 거시 후보 ↔ 비트코인 — 수익률 상관 + ΔVIX·나스닥 통제 부분상관")
         add("-" * 78)
         vcol = macro.get(vix_col) if vix_col else None
         ncol = macro.get(ndq_col) if ndq_col else None
         for col, label, use_log, hyp in present:
             r = candidate_analysis(btc, macro[col], vcol, ncol, use_log=use_log)
             basis = "로그수익률" if use_log else "Δ수준"
+            unit = "개월" if r.get("monthly_only") else "주"
             add(f"\n  ▸ {label}  (가설: {hyp}, {basis})"
                 + (f"  {r['span'][0]}~{r['span'][1]}" if r.get("span") else ""))
             fw, fm = r.get("full_wk"), r.get("full_mo")
-            add(f"    주간 ρ = {fw:+.2f} ({r['n_wk']}주)" if fw is not None else "    주간 —")
+            if not r.get("monthly_only"):
+                add(f"    주간 ρ = {fw:+.2f} ({r['n_wk']}주)" if fw is not None else "    주간 —")
             add(f"    월간 ρ = {fm:+.2f} ({r['n_mo']}개월)" if fm is not None else "    월간 —")
+            if r.get("monthly_only"):
+                add("    (월간 자료만 있어 월간을 주요 프레임으로 쓴다 — 주간 격자에 물리면"
+                    " 빈도가 어긋난다)")
             for name, (val, npt) in r["eras"].items():
                 if val is not None:
-                    add(f"      {name}  ρ {val:+.2f}  ({npt}주)")
+                    add(f"      {name}  ρ {val:+.2f}  ({npt}{unit})")
             pv, pn = r.get("partial_vix"), r.get("partial_ndq")
             add(f"    ΔVIX 통제 부분상관 = {pv:+.2f}   나스닥 통제 = {pn:+.2f}"
+                f"   ({r.get('primary')} 격자)"
                 if pv is not None and pn is not None else "    부분상관 —")
             if r.get("best_lag") is not None:
                 add(f"    최강 선행/후행: k={r['best_lag']:+d}개월  ρ {r['best_corr']:+.2f}"
                     "  (k>0 = 후보가 앞섬)")
-        add("\n  → 셋 다 주간 |ρ| < 0.25 이고, ΔVIX·나스닥을 통제하면 0 근처로 주저앉는다.")
-        add("    부호는 대체로 가설과 맞지만(달러↓·실질금리↓·유동성↑ = BTC 우호) 크기가")
-        add("    작고 독립 설명력이 없다 — 중국 M2(+0.44, 11개월 선행)와 격이 다르다.")
+                add("      ※ 13개 시차에서 |ρ| 최대를 고른 값이라 선택 효과가 있다 —"
+                    " 부호가 국면마다 뒤집히면 잡음으로 본다(docs/27).")
+        # 결론 문장의 예시는 **실제로 잰 후보만** 나열한다 — 없는 열을 언급하면
+        # 리포트가 재지 않은 것을 잰 것처럼 읽힌다.
+        favor = {"dxy": "달러↓", "realyield": "실질금리↓",
+                 "net_liq": "유동성↑", "kospi": "코스피↑"}
+        shown = "·".join(favor[c] for c, *_ in present if c in favor)
+        add("\n  → 전부 주요 프레임 |ρ| < 0.25 이고, ΔVIX·나스닥을 통제하면 0 근처로 주저앉는다.")
+        add(f"    부호는 대체로 가설과 맞지만({shown} = BTC 우호)")
+        add("    크기가 작고 독립 설명력이 없다 — 중국 M2(+0.44, 11개월 선행)와 격이 다르다.")
         add("    방향(BCS)·사이트에 넣지 않는다. 유동성은 이미 LRS '크기'로만 쓴다 (docs/27).")
 
     # --- M2 (열마다) ---
