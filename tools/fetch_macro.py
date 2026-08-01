@@ -89,8 +89,9 @@ GITHUB_SOURCES = [
 ]
 
 # 확실한 핵심 — 항상 받는다.
-# 미국은 전 세계 집계와 **같은 정의**(OECD 광의통화 MABMM301)로 받아야 "전 세계
-# vs 특정국" 비교가 사과 대 사과가 된다. 그래서 M2SL 이 아니라 MABMM301USM189S.
+# 미국 M2 는 **M2SL**(활성, 십억$)로 받는다. 예전엔 전 세계 집계와 정의를 맞추려
+# OECD 광의통화(MABMM301USM189S)를 썼지만, 그 계열이 2023-11 에 폐기돼 활성 M2SL 로
+# 옮겼다. 전 세계 합계(build_global)는 미국분을 ×1e9 로 외국분(원 달러)에 맞춰 더한다.
 CORE = {
     "NASDAQCOM": "nasdaq",             # 나스닥 종합, 일간, 1971~
     # 미국 M2 — 전에 쓰던 OECD 광의통화(MABMM301USM189S)는 2023-11 에 폐기됐다.
@@ -179,7 +180,7 @@ def fetch_github(timeout: int = 40) -> dict[str, dict[date, float]]:
 
     **이 에이전트 환경에서 실제로 받아지는 경로다.** FRED 는 프록시가 403 으로
     막지만 raw.githubusercontent.com 은 열려 있다. 받는 열은 각 소스의 매핑을
-    따른다(S&P500·CPI·10년 금리·VIX). 못 받는 소스는 건너뛰고 나머지로 간다.
+    따른다(S&P500·VIX·금·미국 M2). 못 받는 소스는 건너뛰고 나머지로 간다.
     """
     columns: dict[str, dict[date, float]] = {}
     for url, date_col, mapping in GITHUB_SOURCES:
@@ -307,11 +308,19 @@ def merge_to_csv(columns: dict[str, dict[date, float]], path: Path) -> None:
     tmp.replace(path)
 
 
+M2_US_TO_USD = 1e9      # m2_us 는 M2SL(십억 달러) — 외국분(원 달러)과 더하려면 환산해야 한다
+
+
 def build_global(columns: dict[str, dict[date, float]]) -> Optional[dict[date, float]]:
-    """미국 M2 + 각국 M2(달러 환산)의 합. 있는 나라만 더한다."""
+    """미국 M2 + 각국 M2(달러 환산)의 합. 있는 나라만 더한다.
+
+    **단위 주의.** m2_us 는 M2SL 이라 '십억 달러'인데 각국 M2 는 환율을 곱해 '원 달러'가
+    된다. 그대로 더하면 미국분이 1e9 배 작아져 사실상 사라지고, 저장된 예전(달러) 값과
+    이어 붙으면 그 지점에서 수준이 튀어 전년비가 깨진다. 그래서 미국분을 먼저 환산한다.
+    """
     if "m2_us" not in columns:
         return None
-    parts = [columns["m2_us"]]
+    parts = [{d: v * M2_US_TO_USD for d, v in columns["m2_us"].items()}]
     for cc, spec in GLOBAL.items():
         if not spec.get("agg", True):          # 합계 제외국(예: 중국, 커버리지 짧음)
             continue
@@ -360,7 +369,7 @@ def main(argv: Optional[list[str]] = None) -> int:
     ap.add_argument("--out", default="data/macro.csv")
     ap.add_argument("--github", action="store_true",
                     help="raw.githubusercontent.com 공개 데이터셋에서 받기 "
-                         "(이 환경에서 실제로 받아지는 경로: S&P500·CPI·금리·VIX)")
+                         "(이 환경에서 실제로 받아지는 경로: S&P500·VIX·금·미국 M2)")
     ap.add_argument("--global", dest="do_global", action="store_true",
                     help="주요국 M2 를 받아 전 세계 M2 집계까지")
     ap.add_argument("--list", action="store_true", help="받을 시리즈 목록만")

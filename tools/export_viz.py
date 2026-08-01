@@ -212,7 +212,7 @@ def macro_lead(cfg: StrategyConfig, macro_csv: str, rows: list, reference: date)
 
     화면은 비트코인 로그가격에 **중국 M2 전년비를 측정된 선행(lead)만큼 앞으로
     당겨** 겹친다. 이중축 겹침의 위험(축을 밀어 없던 관계를 만드는 것)은 (1) 당김을
-    눈대중이 아니라 **측정값**(ρ+0.43, docs/25)으로 고정하고, (2) 축 범위를 데이터
+    눈대중이 아니라 **측정값**(ρ+0.44, docs/25)으로 고정하고, (2) 축 범위를 데이터
     최소/최대로만 잡아 없앤다. 실제로 LRS 를 움직이는 신호는 추세를 뺀 임펄스라,
     그 값도 함께 낸다(readout). 오프셋은 다른 차트와 같은 기준일(rows[0]).
     """
@@ -238,7 +238,7 @@ def macro_lead(cfg: StrategyConfig, macro_csv: str, rows: list, reference: date)
         "btc": btc, "m2": m2,
         "impulse": None if imp is None else round(imp, 2),
         "lrs": lrs, "band": band,
-        "corr": 0.43,                   # 실측(docs/25): 중국 M2 11개월 선행 ρ+0.43
+        "corr": 0.44,                   # 실측(docs/25): 중국 M2 11개월 선행 ρ+0.44
     }
 
 
@@ -490,7 +490,8 @@ def main(argv: Optional[list[str]] = None) -> int:
     if args.out and not args.stats_only:
         p = Path(args.out)
         p.parent.mkdir(parents=True, exist_ok=True)
-        p.write_text(json.dumps(payload, ensure_ascii=False, separators=(",", ":")),
+        p.write_text(json.dumps(payload, ensure_ascii=False, separators=(",", ":"),
+                                allow_nan=False),   # NaN/inf 는 무효 JSON — 새면 여기서 죽여 알린다
                      encoding="utf-8")
         print(f"\n저장: {p}  ({p.stat().st_size / 1024:.0f} KB, "
               f"{len(payload['series'])}점)")

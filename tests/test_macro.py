@@ -12,6 +12,8 @@ import sys
 from datetime import date
 from pathlib import Path
 
+import pytest
+
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 
@@ -188,3 +190,71 @@ def test_merge_to_csv_preserves_columns_from_a_missing_source(tmp_path):
     assert got["m2_cn"][date(2020, 2, 29)] == 101.0
     assert got["vix"][date(2020, 2, 29)] == 22.0           # 새 run 값이 이긴다
     assert got["vix"][date(2020, 1, 31)] == 20.0           # 기존 값 보존
+
+
+def test_build_global_scales_us_to_the_same_units_as_foreign_legs():
+    """전 세계 합계는 미국분(M2SL=십억$)을 외국분(원 달러)에 맞춰 환산해 더한다.
+
+    m2_us 를 MABMM301(달러) → M2SL(십억$) 로 바꿨을 때 build_global 을 안 고쳐서,
+    미국분이 1e9 배 작아져 합계에서 사실상 증발하던 실제 버그를 못 박는다. 이런
+    '단위 바뀜' 은 조용히 틀리므로(에러가 안 난다) 테스트가 유일한 방어선이다."""
+    import fetch_macro as fm
+
+    d = date(2020, 1, 31)
+    cols = {
+        "m2_us": {d: 20_000.0},        # 십억 달러 = $20조
+        "m2_jp": {d: 1_000_000.0},     # 엔 (원 단위)
+        "fx_jp": {d: 100.0},           # 엔/달러 → $10,000
+    }
+    out = fm.build_global(cols)
+    assert out and d in out
+    # 미국분이 제대로 환산됐다면 합계는 $20조 + $1만 ≈ 2e13 이다.
+    assert out[d] > 1e13, f"미국분이 증발했다(단위 불일치): {out[d]:.3e}"
+    assert abs(out[d] - (20_000.0 * fm.M2_US_TO_USD + 10_000.0)) < 1.0
+
+
+def test_gold_and_m2_columns_never_carry_non_finite_values():
+    """받아 둔 실데이터에 NaN/inf 가 섞이면 임펄스·payload 로 번져 사이트가 백지가
+    된다. 파일 자체를 검문한다 — 나중에 손으로 고치다 넣는 사고까지 잡힌다."""
+    import math
+    from pathlib import Path
+
+    p = Path(__file__).resolve().parents[1] / "data" / "macro.csv"
+    if not p.exists():
+        pytest.skip("data/macro.csv 없음")
+    import csv as _csv
+    bad = []
+    with p.open(encoding="utf-8", newline="") as fh:
+        for row in _csv.DictReader(fh):
+            for col, v in row.items():
+                if col == "date" or not (v or "").strip():
+                    continue
+                try:
+                    f = float(v)
+                except ValueError:
+                    bad.append((row.get("date"), col, v))
+                    continue
+                if not math.isfinite(f):
+                    bad.append((row.get("date"), col, v))
+    assert not bad, f"비유한/비수치 셀: {bad[:5]}"
+
+
+def test_m2_us_stays_on_one_scale():
+    """m2_us 를 M2SL(십억$)로 재구성했는데 옛 MABMM301(달러, ~1e13) 값이 한 줄이라도
+    남으면, 그 지점에서 전년비가 통째로 깨진다(수준이 1e9 배 튄다)."""
+    from pathlib import Path
+    import csv as _csv
+
+    p = Path(__file__).resolve().parents[1] / "data" / "macro.csv"
+    if not p.exists():
+        pytest.skip("data/macro.csv 없음")
+    vals = []
+    with p.open(encoding="utf-8", newline="") as fh:
+        for row in _csv.DictReader(fh):
+            v = (row.get("m2_us") or "").strip()
+            if v:
+                vals.append((row["date"], float(v)))
+    if not vals:
+        pytest.skip("m2_us 열 비어 있음")
+    hi = max(v for _, v in vals)
+    assert hi < 1e7, f"달러 스케일 잔재로 보이는 값: 최대 {hi:.3e}"

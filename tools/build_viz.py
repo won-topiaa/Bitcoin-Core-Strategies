@@ -179,7 +179,8 @@ def build(csv: str, outdir: Path, *, config: Optional[str] = None,
     """
     cfg = load_config(config) if config else load_config()
     payload = export_viz.build(cfg, csv, derive=derive, macro_csv=macro_csv)
-    data = json.dumps(compact(payload), ensure_ascii=False, separators=(",", ":"))
+    data = json.dumps(compact(payload), ensure_ascii=False, separators=(",", ":"),
+                      allow_nan=False)   # NaN/inf 는 무효 JSON → JSON.parse 백지. 여기서 막는다.
     links = {"__INDEX_URL__": index_url, "__VERIFY_URL__": verify_url,
              "__RULES_URL__": rules_url, "__LIQUIDITY_URL__": liquidity_url}
     paths = [_bake(body, key, title, extra, data, outdir / name, links)

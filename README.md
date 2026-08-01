@@ -208,12 +208,13 @@ python3 tools/refresh_data.py --build      # 받아서 병합하고 사이트까
 `--format markdown`으로 저널에 붙일 문서를, `--format json`으로 다른 도구에
 넘길 데이터를 뽑을 수 있다.
 
-### 시각화 — 페이지 세 장
+### 시각화 — 페이지 네 장
 
 ```bash
-python3 tools/build_viz.py --csv data/market.csv     # viz/site/ 에 세 장
+python3 tools/build_viz.py --csv data/market.csv     # viz/site/ 에 네 장
 python3 tools/build_viz.py --csv data/market.csv \
-    --index-url https://... --verify-url https://... --rules-url https://...
+    --index-url https://... --verify-url https://... \
+    --rules-url https://... --liquidity-url https://...
 ```
 
 | 페이지 | 내용 | 높이 |
@@ -221,9 +222,10 @@ python3 tools/build_viz.py --csv data/market.csv \
 | `index.html` | 계기판 · 변화량 · **지표 9개 요약** · 16년 이력 | 3,483px |
 | `verify.html` | 전환점 성적표 · 계산 방법 · 범위가 나오는 이유 | 4,788px |
 | `rules.html` | 실행 규칙 · 한계 · 데이터 출처 · 자동 갱신 | 4,306px |
+| `liquidity.html` | **04 유동성** — 중국 M2 선행 겹쳐보기 · 왜 크기에만 쓰나 | 1,900px |
 
 **한 장에 다 넣지 않는다.** 처음에 한 장이었을 때 7,500px 였고, 그러니까
-"무엇을 봐야 하는가"가 사라졌다. 세 장으로 나누고 각 장 맨 위에 이동 막대를 뒀다.
+"무엇을 봐야 하는가"가 사라졌다. 네 장으로 나누고 각 장 맨 위에 이동 막대를 뒀다.
 
 첫 화면의 큰 숫자(`−63 ~ −60`) 바로 밑에 **사람 말로 옮긴 한 줄**이 붙는다 —
 "지난 16년을 통틀어 **아래에서 14% 지점**입니다. 5,856일 가운데 오늘보다 싼
@@ -254,11 +256,11 @@ python3 tools/build_viz.py --csv data/market.csv \
 
 #### 조각을 합쳐 굽는다
 
-    viz/_head.html        스타일 (세 장 공용)
+    viz/_head.html        스타일 (네 장 공용)
     viz/_nav.html         머리띠 — 페이지 이동 + 언어·테마 버튼
-    viz/_script.html      차트 엔진 (세 장 공용, 없는 요소는 건너뛴다)
+    viz/_script.html      차트 엔진 (네 장 공용, 없는 요소는 건너뛴다)
     viz/_i18n.html        본문 산문의 영어 판 (data-t 키와 1:1)
-    viz/*.body.html       페이지별 본문 셋
+    viz/*.body.html       페이지별 본문 넷
 
 CSS·JS·데이터를 한 파일에 굽는 자기완결 HTML 이다. **외부 요청이 하나도 없다** —
 요청이 막힌 환경에서 빈 화면이 나오면 공개 데이터로 돌아가는 시스템에서 그건
@@ -404,12 +406,12 @@ tools/export_viz.py         하루씩 구간·계열 계산 → JSON
 tools/build_viz.py          자기완결 시각화 페이지 굽기
 tools/refresh_data.py       CSV 증분 갱신 (검증 후에만 쓴다)
 tools/audit_config.py       기준 간 상호 모순 감사
-viz/_head.html              스타일 (세 장 공용)
+viz/_head.html              스타일 (네 장 공용)
 viz/_nav.html               머리띠 (페이지 이동 + 언어·테마)
-viz/_script.html            차트 엔진 (세 장 공용)
+viz/_script.html            차트 엔진 (네 장 공용)
 viz/_i18n.html              본문 산문의 영어 판
-viz/*.body.html             페이지별 본문 셋
-viz/site/                   생성된 페이지 세 장
+viz/*.body.html             페이지별 본문 넷
+viz/site/                   생성된 페이지 네 장
 config/strings.en.yaml      지표·갈래·구간 이름의 영어 판
 ```
 

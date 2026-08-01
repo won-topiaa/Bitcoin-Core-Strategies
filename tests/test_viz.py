@@ -233,3 +233,74 @@ def test_pages_are_self_contained():
             for pat in (r'<script[^>]+src=', r'<link[^>]+href=',
                         r'@import\s', r'url\(\s*["\']?https?:'):
                 assert not re.search(pat, html), f"{p.name}: 외부 리소스 {pat}"
+
+
+def test_payload_json_is_strictly_valid():
+    """NaN/Infinity 는 유효 JSON 이 아니다 — 하나라도 새면 브라우저의 JSON.parse 가
+    죽어 사이트가 통째로 백지가 된다. 굽는 두 경로 모두 allow_nan=False 인지 본다."""
+    import json
+    import tempfile
+
+    sys.path.insert(0, str(ROOT / "tools"))
+    csv = ROOT / "data" / "market.csv"
+    if not csv.exists():
+        pytest.skip("data/market.csv 없음")
+    import build_viz
+    import export_viz
+    from btc_core.config import load_config
+
+    macro = ROOT / "data" / "macro.csv"
+    payload = export_viz.build(load_config(), str(csv),
+                               macro_csv=str(macro) if macro.exists() else None)
+    json.dumps(payload, allow_nan=False)                 # 원본 payload
+    json.dumps(build_viz.compact(payload), allow_nan=False)   # 페이지에 박히는 축약본
+
+    # 실제로 구운 페이지에서 __BCS__ 를 꺼내 파싱해 본다 — 최종 산출물 검문.
+    with tempfile.TemporaryDirectory() as tmp:
+        page = build_viz.build(str(csv), Path(tmp))[0]
+        html = page.read_text(encoding="utf-8")
+        m = re.search(r"window\.__BCS__ = /\*__DATA__\*/(.*?)/\*__DATA__\*/;", html, re.S)
+        assert m, "구운 페이지에서 __BCS__ 데이터를 못 찾았다"
+        blob = m.group(1)
+        for tok in ("NaN", "Infinity", "-Infinity"):
+            assert tok not in blob, f"payload 에 무효 JSON 토큰 {tok}"
+        json.loads(blob)
+
+
+def test_no_dangling_element_ids_between_script_and_bodies():
+    """리팩터로 본문에서 지운 요소를 스크립트가 계속 부르면(또는 그 반대) 화면
+    일부가 조용히 빈다. 실제로 그런 사고가 반복돼 여기서 못 박는다.
+
+    스크립트가 $("...") 로 부르는 id 는 어느 본문에든 존재해야 한다(공유 스크립트라
+    페이지마다 없을 수는 있지만, 네 장 어디에도 없으면 잔재다)."""
+    script = read("_script.html")
+    bodies = " ".join(read(n) for n in
+                      ("index.body.html", "verify.body.html", "rules.body.html",
+                       "liquidity.body.html", "_nav.html"))
+    # 뒤에 문자열을 이어 붙여 만드는 동적 id("tp-th-f"+(i+1))는 접두사만 남으므로
+    # 여기서 제외한다 — 닫는 따옴표 뒤에 ')' 가 오는(=완성된 id) 것만 센다.
+    called = set(re.findall(r'\$\("([a-zA-Z][\w-]*)"\)', script))
+    called |= set(re.findall(r'setText\("([a-zA-Z][\w-]*)"\s*,', script))
+    called |= set(re.findall(r'setHTML\("([a-zA-Z][\w-]*)"\s*,', script))
+    # 스크립트가 스스로 만들어 넣는 id(동적 생성)는 제외한다.
+    dynamic = set(re.findall(r'id="([a-zA-Z][\w-]*)"', script))
+    concat = set(re.findall(r'"([a-zA-Z][\w-]*)"\s*\+', script))   # "prefix" + i
+    missing = sorted(i for i in called
+                     if f'id="{i}"' not in bodies and i not in dynamic
+                     and i not in concat and not i.startswith("why-"))
+    assert not missing, f"본문 어디에도 없는 id 를 스크립트가 부릅니다: {missing}"
+
+
+def test_css_has_no_orphaned_id_rules_for_removed_elements():
+    """#foo 규칙만 남고 요소가 사라진 경우를 잡는다 — 죽은 CSS 는 다음 사람이
+    '있는 줄 알고' 고치게 만든다(실제로 #macro-fold 가 그랬다)."""
+    head = read("_head.html")
+    bodies = " ".join(read(n) for n in
+                      ("index.body.html", "verify.body.html", "rules.body.html",
+                       "liquidity.body.html", "_nav.html"))
+    script = read("_script.html")
+    ids = set(re.findall(r"#([a-zA-Z][\w-]*)\s*[,{ ]", head))
+    orphan = sorted(i for i in ids
+                    if f'id="{i}"' not in bodies and f'id="{i}"' not in script
+                    and f'"{i}"' not in script)
+    assert not orphan, f"요소가 없는데 남아 있는 CSS id 규칙: {orphan}"

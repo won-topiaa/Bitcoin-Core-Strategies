@@ -14,6 +14,7 @@ price 외의 열은 없어도 된다. 빈 칸은 결측으로 처리한다.
 from __future__ import annotations
 
 import csv
+import math
 from datetime import date
 from pathlib import Path
 from typing import Optional
@@ -207,6 +208,9 @@ def _as_float(v) -> Optional[float]:
     if not v:
         return None
     try:
-        return float(v)
+        f = float(v)
     except ValueError:
         return None
+    # inf/nan 은 결측으로 취급한다 — 그대로 흘리면 점수·payload 로 번져 json.dumps
+    # 가 무효 토큰(NaN/Infinity)을 써서 브라우저 JSON.parse 가 죽고 사이트가 백지가 된다.
+    return f if math.isfinite(f) else None
