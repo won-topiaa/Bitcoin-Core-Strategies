@@ -285,6 +285,63 @@ def vix_analysis(btc: dict[date, float], vix: dict[date, float]) -> dict:
 
 
 # ---------------------------------------------------------------------------
+# 분석 1d — 엔캐리 트레이드 ↔ 비트코인 (엔 약세=캐리 활발 가설 점검)
+# ---------------------------------------------------------------------------
+def carry_analysis(btc: dict[date, float], usdjpy: dict[date, float],
+                   vix: Optional[dict[date, float]] = None) -> dict:
+    """주간 BTC 로그수익률 ↔ USDJPY 로그수익률. 가설이 맞으면 **양(+)** 이어야 한다.
+
+    엔캐리(엔을 싸게 빌려 위험자산을 산다)가 BTC 를 움직인다면, 엔이 약해질 때
+    (USDJPY↑) 캐리가 활발해 BTC 가 오르고, 엔이 급등하면(청산) BTC 가 빠져야 한다.
+
+    **핵심은 통제다.** 엔 급등은 대개 '공포가 커진 주'와 겹치므로, 단순 상관이
+    음수로 나와도 그것이 엔 때문인지 그냥 위험회피 때문인지 알 수 없다. 그래서
+    ΔVIX 를 통제한 부분상관을 함께 낸다 — 통제 후에도 0 근처면 엔은 위험회피의
+    대리변수일 뿐 독립 정보가 없다는 뜻이다(실측 결론, docs/26).
+    """
+    def wk(s):
+        by = {}
+        for d in sorted(s):
+            by[d.isocalendar()[:2]] = (d, s[d])
+        return {k: v for k, (_, v) in by.items()}
+
+    wb, wj = wk(btc), wk(usdjpy)
+    ks = sorted(set(wb) & set(wj))
+    rows = []
+    for a, b in zip(ks, ks[1:]):
+        if wb[a] > 0 and wj[a] > 0 and wb[b] > 0 and wj[b] > 0:
+            rows.append((b, math.log(wj[b] / wj[a]), math.log(wb[b] / wb[a])))
+    if len(rows) < 30:
+        return {"n": 0}
+    xs = [j for _, j, _ in rows]
+    ys = [b for _, _, b in rows]
+    full = pearson(xs, ys)
+
+    def era(lo, hi):
+        sub = [(j, b) for k, j, b in rows if lo <= k[0] <= hi]
+        return (pearson([j for j, _ in sub], [b for _, b in sub]), len(sub))
+
+    # ΔVIX 통제 부분상관 — 엔이 '독립적으로' 설명하는 몫이 있는지
+    partial = None
+    if vix:
+        wv = wk(vix)
+        trio = []
+        for (k, j, b), (a, _) in zip(rows, zip(ks, ks[1:])):
+            if k in wv and a in wv:
+                trio.append((j, b, wv[k] - wv[a]))
+        if len(trio) >= 30:
+            jj = [t[0] for t in trio]; bb = [t[1] for t in trio]; vv = [t[2] for t in trio]
+            r_jb, r_jv, r_bv = pearson(jj, bb), pearson(jj, vv), pearson(bb, vv)
+            if None not in (r_jb, r_jv, r_bv):
+                den = math.sqrt((1 - r_jv ** 2) * (1 - r_bv ** 2))
+                partial = (r_jb - r_jv * r_bv) / den if den else None
+    return {"n": len(rows), "full": full, "partial_vix": partial,
+            "eras": {"2010~2017": era(2010, 2017), "2018~2021": era(2018, 2021),
+                     "2022~현재": era(2022, 2100)},
+            "span": (rows[0][0], rows[-1][0])}
+
+
+# ---------------------------------------------------------------------------
 # 분석 1c — 금 현물 ↔ 비트코인 ('디지털 금' 서사 점검: 로그수익률 + 선행/후행)
 # ---------------------------------------------------------------------------
 def gold_analysis(btc: dict[date, float], gold: dict[date, float],
@@ -442,6 +499,30 @@ def report(btc: dict[date, float], macro: dict[str, dict[date, float]]) -> str:
                 "  (k>0 = 금이 앞섬)")
         add("  → |ρ| 가 0.2 도 안 되고 시대·프레임마다 부호가 바뀐다 = 무상관."
             " 방향·선행 신호로 쓰지 않는다 (docs/25).")
+
+    # --- 엔캐리(USDJPY) — 있으면 ---
+    jpy_key = next((k for k in macro if k.lower() in ("usdjpy", "jpy", "dexjpus")), None)
+    if jpy_key is not None:
+        add("\n[1d] 엔캐리 트레이드 ↔ 비트코인 — 주간 수익률 (엔 약세=캐리 활발 가설)")
+        add("-" * 78)
+        vix_col = next((k for k in macro if "vix" in k.lower()), None)
+        c = carry_analysis(btc, macro[jpy_key], macro.get(vix_col) if vix_col else None)
+        if c.get("n"):
+            add(f"  공통 {c['n']}주")
+            add(f"  전 구간 ρ = {c['full']:+.2f}   (가설이 맞으면 **양수**여야 한다)"
+                if c["full"] is not None else "  전 구간 —")
+            for name, (val, npt) in c["eras"].items():
+                add(f"    {name}  ρ {val:+.2f}   ({npt}주)" if val is not None
+                    else f"    {name}  —")
+            if c["partial_vix"] is not None:
+                add(f"  ΔVIX 통제 부분상관 = {c['partial_vix']:+.2f}"
+                    "   (엔이 '독립적으로' 설명하는 몫)")
+            add("  → 어느 프레임에서도 |ρ| < 0.2 이고 부호도 가설과 반대다. 엔 급등이"
+                " BTC 하락과 겹쳐 보이는 것은")
+            add("    엔 때문이 아니라 그 주의 일반적 위험회피 때문이다 — 통제하면 남는 게"
+                " 없다. 쓰지 않는다 (docs/26).")
+        else:
+            add("  데이터 부족")
 
     # --- M2 (열마다) ---
     add("\n[2] M2 ↔ 비트코인 — 전년비 증가율, 선행/후행 스캔")

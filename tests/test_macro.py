@@ -258,3 +258,40 @@ def test_m2_us_stays_on_one_scale():
         pytest.skip("m2_us 열 비어 있음")
     hi = max(v for _, v in vals)
     assert hi < 1e7, f"달러 스케일 잔재로 보이는 값: 최대 {hi:.3e}"
+
+
+def test_carry_analysis_detects_sign_and_partials_out_a_common_driver():
+    """엔캐리 분석이 (1) 심은 부호를 잡고 (2) 공통 원인(공포)을 통제하면
+    가짜 상관이 사라지는지 — 실측 판정(docs/26)의 핵심 논리를 검증한다."""
+    import random
+    rng = random.Random(5)
+    days = [date(2016, 1, 4)]
+    for _ in range(700):
+        days.append(days[-1].fromordinal(days[-1].toordinal() + 3))
+
+    # (1) 진짜 캐리: USDJPY 수익률이 BTC 를 양(+)으로 끌면 ρ>0 이어야
+    jpy, btc, lj, lb = {}, {}, 100.0, 10000.0
+    for d in days:
+        jr = rng.gauss(0, 0.01)
+        lj *= math.exp(jr); lb *= math.exp(1.5 * jr + rng.gauss(0, 0.005))
+        jpy[d], btc[d] = lj, lb
+    r = mc.carry_analysis(btc, jpy)
+    assert r["full"] is not None and r["full"] > 0.5, r["full"]
+
+    # (2) 가짜 상관: 공포(VIX)가 둘 다 흔드는 공통 원인일 때, 통제하면 사라진다.
+    # 함수는 **ΔVIX(주간 변화)** 로 통제하므로, 충격이 '변화'에 담기도록 누적한다
+    # (레벨에만 담으면 차분과 어긋나 통제가 성립하지 않는다 — 실제로 그렇게 짰다가 잡혔다).
+    # 시작 수준을 넉넉히 둔다 — 낮게 잡으면 랜덤워크가 하한(9)에 자주 눌려 ΔVIX 가
+    # 잘리고, 그 구간에서 통제가 성립하지 않아 테스트가 함수를 억울하게 신고한다.
+    jpy2, btc2, vix2, lj, lb, lv = {}, {}, {}, 100.0, 10000.0, 100.0
+    for d in days:
+        shock = rng.gauss(0, 1.0)                 # 공통 원인
+        lv = max(9.0, lv + shock * 3)             # 누적 → ΔVIX ≈ shock*3
+        lj *= math.exp(-0.01 * shock + rng.gauss(0, 0.004))   # 공포↑ → 엔 강세
+        lb *= math.exp(-0.02 * shock + rng.gauss(0, 0.004))   # 공포↑ → BTC 하락
+        jpy2[d], btc2[d], vix2[d] = lj, lb, lv
+    r2 = mc.carry_analysis(btc2, jpy2, vix2)
+    assert r2["full"] > 0.3, f"공통 원인이면 단순 상관은 양수로 크게 뜬다: {r2['full']}"
+    assert r2["partial_vix"] is not None
+    assert abs(r2["partial_vix"]) < 0.2, (
+        f"공통 원인을 통제하면 남는 게 없어야 한다: {r2['partial_vix']}")
