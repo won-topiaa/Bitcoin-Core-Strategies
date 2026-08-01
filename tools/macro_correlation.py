@@ -645,10 +645,18 @@ def report(btc: dict[date, float], macro: dict[str, dict[date, float]]) -> str:
     # --- 거시 후보 3종 (DXY·실질금리·연준 순유동성) — 있으면 ---
     vix_col = next((k for k in macro if "vix" in k.lower()), None)
     ndq_col = next((k for k in macro if "nasdaq" in k.lower() or "ndq" in k.lower()), None)
+    # (열, 라벨, 로그변환?, 가설). 로그=가격류(양수), 차분=수준 금리·스프레드(음수 가능)
     cand_specs = [("dxy", "DXY(광의 달러지수)", True, "달러 강세=BTC 하락(음)"),
                   ("realyield", "미국 10년 실질금리", False, "실질금리 상승=BTC 하락(음)"),
                   ("net_liq", "연준 순유동성(WALCL−TGA−RRP)", True, "유동성 증가=BTC 상승(양)"),
-                  ("kospi", "코스피(한국 주가지수)", True, "한국 위험선호=BTC 상승(양)")]
+                  ("kospi", "코스피(한국 주가지수)", True, "한국 위험선호=BTC 상승(양)"),
+                  ("hy_spread", "고수익채 스프레드(신용)", False, "스프레드 확대=BTC 하락(음)"),
+                  ("breakeven", "10년 기대인플레이션", False, "인플레 기대↑='디지털 금'(양)"),
+                  ("curve", "수익률곡선 10년−2년", False, "가팔라짐=완화 사이클(양)"),
+                  ("oil", "WTI 원유(에너지)", True, "유가↑=인플레·성장(양)"),
+                  ("copper", "구리(산업금속)", True, "'닥터 코퍼' 글로벌 성장(양)"),
+                  ("em_fx", "신흥국 대비 달러지수", True, "신흥국 통화 약세=위험회피(음)"),
+                  ("china_eq", "중국 주가지수", True, "중국 위험선호=BTC 상승(양)")]
     present = [c for c in cand_specs if c[0] in macro]
     if present:
         add("\n[1e] 거시 후보 ↔ 비트코인 — 수익률 상관 + ΔVIX·나스닥 통제 부분상관")
@@ -682,13 +690,11 @@ def report(btc: dict[date, float], macro: dict[str, dict[date, float]]) -> str:
                     " 부호가 국면마다 뒤집히면 잡음으로 본다(docs/27).")
         # 결론 문장의 예시는 **실제로 잰 후보만** 나열한다 — 없는 열을 언급하면
         # 리포트가 재지 않은 것을 잰 것처럼 읽힌다.
-        favor = {"dxy": "달러↓", "realyield": "실질금리↓",
-                 "net_liq": "유동성↑", "kospi": "코스피↑"}
-        shown = "·".join(favor[c] for c, *_ in present if c in favor)
-        add("\n  → 전부 주요 프레임 |ρ| < 0.25 이고, ΔVIX·나스닥을 통제하면 0 근처로 주저앉는다.")
-        add(f"    부호는 대체로 가설과 맞지만({shown} = BTC 우호)")
-        add("    크기가 작고 독립 설명력이 없다 — 중국 M2(+0.44, 11개월 선행)와 격이 다르다.")
-        add("    방향(BCS)·사이트에 넣지 않는다. 유동성은 이미 LRS '크기'로만 쓴다 (docs/27).")
+        add(f"\n  → 후보 {len(present)}종: 부호는 대체로 가설과 맞지만 크기가 작고,"
+            " ΔVIX·나스닥을 통제하면")
+        add("    전부 0 근처로 주저앉는다 = 자산 고유 정보가 아니라 **위험자산 베타**")
+        add("    (나스닥이 이미 나르는 채널)다. 중국 M2(+0.44, 11개월 선행)와 격이 다르다.")
+        add("    방향(BCS)·사이트에 넣지 않는다 (docs/27·28).")
 
     # --- M2 (열마다) ---
     add("\n[2] M2 ↔ 비트코인 — 전년비 증가율, 선행/후행 스캔")
