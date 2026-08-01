@@ -15,6 +15,7 @@ FRED 가 이긴다(권위·정의 일관). 각 소스가 잘 하는 걸 맡는�
                   vix                 datahub finance-vix (일간, 최신)
     [FRED]        nasdaq              NASDAQCOM (일간, 1971~; **실제 나스닥**)
                   m2_us·m2_cn·m2_jp·m2_gb·m2_eu·m2_global   아래
+                  dxy·realyield·net_liq   거시 후보 검정용(docs/27, 셋 다 기각)
 
 ## 왜 UA 를 바꿨나 (이 환경의 함정)
 
@@ -107,6 +108,16 @@ CORE = {
     "DEXJPUS": "usdjpy",               # 엔/달러, 일간, 1971~ (↑ = 엔 약세 = 캐리 활발)
     "IRSTCI01JPM156N": "jp_rate",      # 일본 단기 정책금리, 월간
     "DFF": "us_rate",                  # 미국 실효 연방기금금리, 일간 (금리차 = 캐리 유인)
+    # 거시 후보 3종 검정용(docs/27). 셋 다 |ρ|<0.25 이고 공포·나스닥을 통제하면
+    # 독립 설명력이 없어 점수·사이트엔 안 쓴다. 금·엔캐리와 같은 이유로 재현 가능하게만.
+    "DTWEXBGS": "dxy",                 # 광의 무역가중 달러지수, 일간, 2006~ (달러 강세 검정)
+    "DFII10": "realyield",             # 미국 10년 실질금리(TIPS), 일간, 2003~ (할인율 검정)
+    # 연준 순유동성 = WALCL − TGA − RRP. 세 원계열은 임시(_) 로 받아 net_liq 만 남기고
+    # 버린다(build_net_liquidity). **단위 주의**: WALCL·WTREGEN 은 백만$, RRPONTSYD 는
+    # 십억$ 라 RRP 를 ×1000 해야 맞다(안 맞추면 RRP 가 1000배 작아져 조용히 빠진다).
+    "WALCL": "_walcl",                 # 연준 총자산, 백만$, 주간
+    "WTREGEN": "_tga",                 # 재무부 일반계정(TGA), 백만$, 일간
+    "RRPONTSYD": "_rrp",               # 익일물 역레포(RRP), 십억$, 일간
 }
 
 # 전 세계 집계용 — 각국 광의통화(자국 통화)와 그 통화의 달러 환율.
@@ -314,6 +325,39 @@ def merge_to_csv(columns: dict[str, dict[date, float]], path: Path) -> None:
 
 
 M2_US_TO_USD = 1e9      # m2_us 는 M2SL(십억 달러) — 외국분(원 달러)과 더하려면 환산해야 한다
+RRP_B_TO_M = 1e3        # RRPONTSYD 는 십억$ → WALCL·TGA(백만$)에 맞추려면 ×1000
+
+
+def build_net_liquidity(columns: dict[str, dict[date, float]]) -> Optional[dict[date, float]]:
+    """연준 순유동성 = WALCL − TGA − RRP (모두 백만$로 정렬한 뒤 뺀다).
+
+    **단위 정렬이 핵심.** WALCL·WTREGEN 은 백만 달러, RRPONTSYD 는 십억 달러라
+    그대로 빼면 RRP 가 1000배 작아져 사실상 빠진다(에러 없이 조용히 틀린다). 그래서
+    RRP 를 ×1000 한다. WALCL 은 주간, TGA·RRP 는 일간이라 각 주 날짜에서 10일 안의
+    가장 가까운 값을 쓴다. TGA·RRP 가 아직 0 이던 초기 구간은 그 항을 0 으로 둔다."""
+    walcl = columns.get("_walcl")
+    if not walcl:
+        return None
+    tga = columns.get("_tga") or {}
+    rrp = columns.get("_rrp") or {}
+    tsorted, rsorted = sorted(tga), sorted(rrp)
+
+    def nearest(dates_sorted: list[date], series: dict[date, float], d: date) -> Optional[float]:
+        best, gap = None, 11
+        for x in dates_sorted:
+            g = abs((x - d).days)
+            if g < gap:
+                best, gap = series[x], g
+        return best
+
+    out: dict[date, float] = {}
+    for d, w in walcl.items():
+        t = nearest(tsorted, tga, d) if tga else 0.0
+        rp = nearest(rsorted, rrp, d) if rrp else 0.0
+        if t is None or rp is None:      # 근처 값이 아예 없으면 그 주는 건너뛴다
+            continue
+        out[d] = w - t - rp * RRP_B_TO_M
+    return out or None
 
 
 def build_global(columns: dict[str, dict[date, float]]) -> Optional[dict[date, float]]:
@@ -424,6 +468,13 @@ def main(argv: Optional[list[str]] = None) -> int:
                 print(f"집계   m2_global {len(g)}행 ({min(g)} ~ {max(g)})")
             # 환율 열은 결과 CSV 에서 뺀다 (분석에 직접 안 쓴다)
             fred = {k: v for k, v in fred.items() if not k.startswith("fx_")}
+        # 연준 순유동성(WALCL−TGA−RRP)을 계산해 넣고, 원계열(_walcl·_tga·_rrp)은 버린다.
+        # net_liq 만 분석에 쓰므로 CSV 를 가볍게 유지한다(환율 열을 버리는 것과 같은 이유).
+        nl = build_net_liquidity(fred)
+        if nl:
+            fred["net_liq"] = nl
+            print(f"집계   net_liq {len(nl)}행 ({min(nl)} ~ {max(nl)})")
+        fred = {k: v for k, v in fred.items() if not k.startswith("_")}
         columns.update(fred)     # FRED 가 GitHub 을 덮어쓴다(열 충돌 시)
 
     # CSV API 소스(중국 M2 등). 허용목록에 없으면 조용히 건너뛴다.

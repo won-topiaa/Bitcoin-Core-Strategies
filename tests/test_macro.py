@@ -295,3 +295,80 @@ def test_carry_analysis_detects_sign_and_partials_out_a_common_driver():
     assert r2["partial_vix"] is not None
     assert abs(r2["partial_vix"]) < 0.2, (
         f"공통 원인을 통제하면 남는 게 없어야 한다: {r2['partial_vix']}")
+
+
+def test_change_uses_log_for_prices_and_diff_for_rates():
+    """_change: 가격류(양수)는 로그수익률, 수준 금리(음수 가능)는 차분(Δ).
+
+    실질금리처럼 음수가 되는 계열에 로그를 쓰면 값이 통째로 사라져(도메인 밖)
+    검정이 조용히 비어버린다. 후보 검정이 그 함정을 피하는지 못 박는다."""
+    price = {date(2020, 1, 1): 100.0, date(2020, 1, 2): 110.0}
+    assert abs(mc._change(price, True)[date(2020, 1, 2)] - math.log(1.1)) < 1e-9
+    # 음수를 넘나드는 금리: 로그는 값을 못 만들고, 차분은 정확히 −0.3 을 준다
+    rate = {date(2020, 1, 1): 0.2, date(2020, 1, 2): -0.1}
+    assert mc._change(rate, True) == {}
+    assert abs(mc._change(rate, False)[date(2020, 1, 2)] - (-0.3)) < 1e-9
+
+
+def test_candidate_analysis_detects_sign_and_partials_out_a_common_driver():
+    """거시 후보 검정이 (1) 심은 부호를 잡고 (2) 공통 원인(공포)을 통제하면 가짜
+    상관이 사라지는지 — 실측 3종 기각(docs/27)의 핵심 논리를 검증한다."""
+    import random
+    rng = random.Random(11)
+    days = [date(2016, 1, 4)]
+    for _ in range(760):
+        days.append(days[-1].fromordinal(days[-1].toordinal() + 3))
+
+    # (1) 진짜 결합: driver 로그수익률이 BTC 를 양(+)으로 끌면 주간 ρ>0
+    drv, btc, ld, lb = {}, {}, 100.0, 10000.0
+    for d in days:
+        dr = rng.gauss(0, 0.01)
+        ld *= math.exp(dr); lb *= math.exp(1.3 * dr + rng.gauss(0, 0.005))
+        drv[d], btc[d] = ld, lb
+    r = mc.candidate_analysis(btc, drv, use_log=True)
+    assert r["full_wk"] is not None and r["full_wk"] > 0.5, r["full_wk"]
+
+    # (2) 가짜 상관: 공포(VIX)가 driver·BTC 를 동시에 흔드는 공통 원인일 때,
+    # ΔVIX 를 통제하면 남는 게 없어야 한다. 충격을 '변화'에 담기도록 누적한다.
+    drv2, btc2, vix2, ld, lb, lv = {}, {}, {}, 100.0, 10000.0, 100.0
+    for d in days:
+        shock = rng.gauss(0, 1.0)
+        lv = max(9.0, lv + shock * 3)
+        ld *= math.exp(0.01 * shock + rng.gauss(0, 0.004))    # 공포↑ → driver↑
+        lb *= math.exp(0.02 * shock + rng.gauss(0, 0.004))    # 공포↑ → BTC↑ (같은 원인)
+        drv2[d], btc2[d], vix2[d] = ld, lb, lv
+    r2 = mc.candidate_analysis(btc2, drv2, vix2, use_log=True)
+    assert r2["full_wk"] > 0.3, f"공통 원인이면 단순 상관은 크게 뜬다: {r2['full_wk']}"
+    assert r2["partial_vix"] is not None and abs(r2["partial_vix"]) < 0.2, (
+        f"공통 원인을 통제하면 남는 게 없어야 한다: {r2['partial_vix']}")
+
+
+def test_build_net_liquidity_aligns_rrp_to_the_other_legs():
+    """순유동성 = WALCL − TGA − RRP. WALCL·TGA 는 백만$, RRP(RRPONTSYD)는 십억$ 라
+    RRP 를 ×1000 해야 맞다. 안 맞추면 RRP 가 1000배 작아져 사실상 빠진다 — build_global
+    의 m2_us 단위 버그와 같은 부류의 '조용히 틀림'이라, 테스트가 유일한 방어선이다."""
+    import fetch_macro as fm
+
+    d = date(2022, 6, 1)
+    cols = {
+        "_walcl": {d: 8_900_000.0},   # 백만$ = $8.9조
+        "_tga":   {d: 700_000.0},     # 백만$ = $0.7조
+        "_rrp":   {d: 2_200.0},       # 십억$ = $2.2조  (×1000 = 2_200_000 백만$)
+    }
+    out = fm.build_net_liquidity(cols)
+    assert out and d in out
+    # 정렬이 맞으면 8.9 − 0.7 − 2.2 = $6.0조 = 6_000_000 백만$
+    assert abs(out[d] - (8_900_000.0 - 700_000.0 - 2_200.0 * fm.RRP_B_TO_M)) < 1e-6
+    assert abs(out[d] - 6_000_000.0) < 1.0
+    # ×1000 을 빠뜨렸다면 값이 ~$8.2조로 크게 부풀어 오른다 — 그 회귀를 배제한다.
+    assert out[d] < 7_000_000.0, "RRP 단위 정렬 누락으로 보이는 값"
+
+
+def test_build_net_liquidity_survives_a_missing_leg():
+    """TGA·RRP 가 아직 0 이던 초기(또는 소스가 잠깐 빠진) 구간에서도 죽지 않고
+    있는 항으로만 계산한다 — WALCL 만 있으면 net_liq = WALCL 로 이어진다."""
+    import fetch_macro as fm
+
+    d = date(2011, 1, 5)
+    out = fm.build_net_liquidity({"_walcl": {d: 2_400_000.0}})
+    assert out and abs(out[d] - 2_400_000.0) < 1e-6

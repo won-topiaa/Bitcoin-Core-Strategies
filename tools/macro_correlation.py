@@ -394,6 +394,111 @@ def gold_analysis(btc: dict[date, float], gold: dict[date, float],
 
 
 # ---------------------------------------------------------------------------
+# 분석 1e — 거시 후보 3종 ↔ 비트코인 (DXY·실질금리·연준 순유동성)
+# ---------------------------------------------------------------------------
+def _change(series: dict[date, float], use_log: bool) -> dict[date, float]:
+    """관측 격자 위의 변화. 가격류(양수)는 로그수익률, 수준 금리(음수 가능)는 차분."""
+    ds = sorted(series)
+    out: dict[date, float] = {}
+    for a, b in zip(ds, ds[1:]):
+        if use_log:
+            if series[a] > 0 and series[b] > 0:
+                out[b] = math.log(series[b] / series[a])
+        else:
+            out[b] = series[b] - series[a]
+    return out
+
+
+def _partial(dk: dict, bk: dict, ctrl_change: dict, monthly: bool) -> Optional[float]:
+    """driver·BTC 를 control 로 통제한 부분상관. 세 계열을 같은 격자 키로 맞춘다."""
+    def key(d: date):
+        return (d.year, d.month) if monthly else d.isocalendar()[:2]
+    ck = {key(d): v for d, v in sorted(ctrl_change.items())}
+    common = sorted(set(dk) & set(bk) & set(ck))
+    if len(common) < 20:
+        return None
+    dd = [dk[c] for c in common]; bb = [bk[c] for c in common]; cc = [ck[c] for c in common]
+    xy, xz, yz = pearson(dd, bb), pearson(dd, cc), pearson(bb, cc)
+    if None in (xy, xz, yz):
+        return None
+    den = math.sqrt((1 - xz ** 2) * (1 - yz ** 2))
+    return (xy - xz * yz) / den if den else None
+
+
+def candidate_analysis(btc: dict[date, float], driver: dict[date, float],
+                       vix: Optional[dict[date, float]] = None,
+                       nasdaq: Optional[dict[date, float]] = None,
+                       use_log: bool = True, max_lag: int = 6) -> dict:
+    """거시 후보 하나를 금·엔캐리와 **같은 잣대**로 검정한다(docs/27).
+
+    주간·월간 로그수익률 상관 + 국면분할 + 선행/후행 + **ΔVIX·나스닥 통제 부분상관**.
+    부분상관이 결정적이다 — 후보가 위험자산 베타(공포·나스닥)를 넘어 BTC 에 **독립
+    정보**를 주는지 본다. 통제 후 0 근처면 대리변수일 뿐이라 점수·사이트엔 안 쓴다.
+
+    use_log=False 는 수준 금리(실질금리)용 — 음수가 될 수 있어 로그 대신 차분(Δ)으로
+    변화를 잡는다. VIX 통제도 차분(ΔVIX), 나스닥 통제는 로그수익률로 맞춘다.
+    """
+    def keyed(chg: dict, monthly: bool) -> dict:
+        def key(d: date):
+            return (d.year, d.month) if monthly else d.isocalendar()[:2]
+        return {key(d): v for d, v in sorted(chg.items())}
+
+    res: dict = {"use_log": use_log}
+    dk_wk = bk_wk = None
+    for monthly, tag in ((False, "wk"), (True, "mo")):
+        freq = month_end if monthly else weekly
+        dk = keyed(_change(freq(driver), use_log), monthly)
+        bk = keyed(log_returns(freq(btc)), monthly)
+        common = sorted(set(dk) & set(bk))
+        res[f"full_{tag}"] = pearson([dk[c] for c in common], [bk[c] for c in common]) \
+            if len(common) >= 12 else None
+        res[f"n_{tag}"] = len(common)
+        if not monthly:
+            dk_wk, bk_wk = dk, bk
+            res["span"] = (common[0], common[-1]) if common else None
+
+            def era(lo, hi):
+                ks = [c for c in common if lo <= c[0] <= hi]
+                return (pearson([dk[c] for c in ks], [bk[c] for c in ks]), len(ks))
+            res["eras"] = {"2013~2017": era(2013, 2017),
+                           "2018~2021": era(2018, 2021),
+                           "2022~현재": era(2022, 2100)}
+
+    # 부분상관 — 주간 격자에서 ΔVIX·나스닥수익률을 각각 통제
+    res["partial_vix"] = (_partial(dk_wk, bk_wk, _change(weekly(vix), False), False)
+                          if vix else None)
+    res["partial_ndq"] = (_partial(dk_wk, bk_wk, _change(weekly(nasdaq), True), False)
+                          if nasdaq else None)
+
+    # 선행/후행 — 월간, driver 를 k개월 밀어 BTC 와 맞춘다(k>0 = driver 가 앞선다)
+    dkm = {(d.year, d.month): v for d, v in _change(month_end(driver), use_log).items()}
+    bkm = {(d.year, d.month): v for d, v in log_returns(month_end(btc)).items()}
+
+    def shift(ym, k):
+        y_, m_ = ym[0], ym[1] + k
+        while m_ > 12:
+            m_ -= 12
+            y_ += 1
+        while m_ < 1:
+            m_ += 12
+            y_ -= 1
+        return (y_, m_)
+
+    lead: dict[int, Optional[float]] = {}
+    for k in range(-max_lag, max_lag + 1):
+        dsh = {shift(ky, k): v for ky, v in dkm.items()}
+        ks = sorted(set(bkm) & set(dsh))
+        lead[k] = pearson([dsh[c] for c in ks], [bkm[c] for c in ks]) \
+            if len(ks) >= 24 else None
+    valid = {k: v for k, v in lead.items() if v is not None}
+    best_k = max(valid, key=lambda k: abs(valid[k])) if valid else None
+    res["lead"] = lead
+    res["best_lag"] = best_k
+    res["best_corr"] = valid.get(best_k) if best_k is not None else None
+    return res
+
+
+# ---------------------------------------------------------------------------
 # 분석 2 — M2 ↔ 비트코인 (전년비 증가율의 선행/후행)
 # ---------------------------------------------------------------------------
 def m2_lead_lag(btc_month: dict[date, float], m2: dict[date, float],
@@ -523,6 +628,40 @@ def report(btc: dict[date, float], macro: dict[str, dict[date, float]]) -> str:
                 " 없다. 쓰지 않는다 (docs/26).")
         else:
             add("  데이터 부족")
+
+    # --- 거시 후보 3종 (DXY·실질금리·연준 순유동성) — 있으면 ---
+    vix_col = next((k for k in macro if "vix" in k.lower()), None)
+    ndq_col = next((k for k in macro if "nasdaq" in k.lower() or "ndq" in k.lower()), None)
+    cand_specs = [("dxy", "DXY(광의 달러지수)", True, "달러 강세=BTC 하락(음)"),
+                  ("realyield", "미국 10년 실질금리", False, "실질금리 상승=BTC 하락(음)"),
+                  ("net_liq", "연준 순유동성(WALCL−TGA−RRP)", True, "유동성 증가=BTC 상승(양)")]
+    present = [c for c in cand_specs if c[0] in macro]
+    if present:
+        add("\n[1e] 거시 후보 3종 ↔ 비트코인 — 주간/월간 수익률 + ΔVIX·나스닥 통제 부분상관")
+        add("-" * 78)
+        vcol = macro.get(vix_col) if vix_col else None
+        ncol = macro.get(ndq_col) if ndq_col else None
+        for col, label, use_log, hyp in present:
+            r = candidate_analysis(btc, macro[col], vcol, ncol, use_log=use_log)
+            basis = "로그수익률" if use_log else "Δ수준"
+            add(f"\n  ▸ {label}  (가설: {hyp}, {basis})"
+                + (f"  {r['span'][0]}~{r['span'][1]}" if r.get("span") else ""))
+            fw, fm = r.get("full_wk"), r.get("full_mo")
+            add(f"    주간 ρ = {fw:+.2f} ({r['n_wk']}주)" if fw is not None else "    주간 —")
+            add(f"    월간 ρ = {fm:+.2f} ({r['n_mo']}개월)" if fm is not None else "    월간 —")
+            for name, (val, npt) in r["eras"].items():
+                if val is not None:
+                    add(f"      {name}  ρ {val:+.2f}  ({npt}주)")
+            pv, pn = r.get("partial_vix"), r.get("partial_ndq")
+            add(f"    ΔVIX 통제 부분상관 = {pv:+.2f}   나스닥 통제 = {pn:+.2f}"
+                if pv is not None and pn is not None else "    부분상관 —")
+            if r.get("best_lag") is not None:
+                add(f"    최강 선행/후행: k={r['best_lag']:+d}개월  ρ {r['best_corr']:+.2f}"
+                    "  (k>0 = 후보가 앞섬)")
+        add("\n  → 셋 다 주간 |ρ| < 0.25 이고, ΔVIX·나스닥을 통제하면 0 근처로 주저앉는다.")
+        add("    부호는 대체로 가설과 맞지만(달러↓·실질금리↓·유동성↑ = BTC 우호) 크기가")
+        add("    작고 독립 설명력이 없다 — 중국 M2(+0.44, 11개월 선행)와 격이 다르다.")
+        add("    방향(BCS)·사이트에 넣지 않는다. 유동성은 이미 LRS '크기'로만 쓴다 (docs/27).")
 
     # --- M2 (열마다) ---
     add("\n[2] M2 ↔ 비트코인 — 전년비 증가율, 선행/후행 스캔")
