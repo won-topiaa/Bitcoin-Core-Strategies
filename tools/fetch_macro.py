@@ -80,9 +80,10 @@ GITHUB_SOURCES = [
     # 결과 BTC 와 무상관(docs/25)이라 점수엔 안 쓰지만, 재현·재검증되도록 받아 둔다.
     ("https://raw.githubusercontent.com/datasets/gold-prices/main/data/monthly.csv",
      "Date", {"Price": "gold"}),
-    # 미국 M2 — FRED M2SL 을 미러하는 커뮤니티 거시셋(월간, 2000~). 원본 권위는
-    # FRED 지만 여기선 프록시가 FRED 를 막아, 이 미러가 이 환경에서 받아지는 M2 다.
-    # 값은 FRED M2SL 원 수준(십억 달러): 2025-02 ≈ 21670 = 약 $21.7조 로 일치.
+    # 미국 M2 — FRED M2SL 미러(커뮤니티 거시셋, 월간 2000~2025 초). CORE 의 FRED
+    # M2SL 과 **같은 시리즈**라 정의·단위(십억 달러)가 일관된다. FRED 가 막힌 이
+    # 환경에선 이 미러가 m2_us 를 채우고, FRED 가 되면 그쪽이 최신까지 잇는다.
+    # 값 수준: 2025-02 ≈ 21670 = 약 $21.7조.
     ("https://raw.githubusercontent.com/emilblaignan/Macro-Drivers/main/data/processed_data.csv",
      "date", {"M2SL": "m2_us"}),
 ]
@@ -92,7 +93,10 @@ GITHUB_SOURCES = [
 # vs 특정국" 비교가 사과 대 사과가 된다. 그래서 M2SL 이 아니라 MABMM301USM189S.
 CORE = {
     "NASDAQCOM": "nasdaq",             # 나스닥 종합, 일간, 1971~
-    "MABMM301USM189S": "m2_us",        # 미국 광의통화(M3), 자국통화(=USD), 월간 ~2023-11
+    # 미국 M2 — 전에 쓰던 OECD 광의통화(MABMM301USM189S)는 2023-11 에 폐기됐다.
+    # 활성 시리즈 M2SL(십억 달러, 월간, 현재까지)로 교체한다. GitHub 미러도 같은
+    # M2SL 이라 정의·단위가 일관된다. (FRED 가 살아 있으면 미러보다 최신까지 채운다.)
+    "M2SL": "m2_us",                   # 미국 M2, 십억 달러, 월간, 1959~ (활성)
     # 중국 협의통화(M1) — 광의통화(MABMM301CN)가 2018~19 에 끊겨, 코로나 이후까지
     # 살아 있는(2023-11) 중국 유동성 대용으로 넣는다. M1 자체가 중국 신용/경기
     # 선행지표로 널리 쓰인다. 개별 분석은 자국통화 YoY(척도무관)라 환산 불필요.
