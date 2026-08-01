@@ -11,7 +11,7 @@
 `--github` 와 FRED(`--global`)를 **같이 주면 한 파일로 합친다.** 같은 열이면
 FRED 가 이긴다(권위·정의 일관). 각 소스가 잘 하는 걸 맡는다:
 
-    [GitHub raw]  sp500·cpi·rate_10y  datahub s-and-p-500 (월간, 최신)
+    [GitHub raw]  sp500               datahub s-and-p-500 (월간, 최신)
                   vix                 datahub finance-vix (일간, 최신)
     [FRED]        nasdaq              NASDAQCOM (일간, 1971~; **실제 나스닥**)
                   m2_us·m2_cn·m2_jp·m2_gb·m2_eu·m2_global   아래
@@ -69,10 +69,10 @@ UA = "curl/8.0"
 # datahub 셋은 주기적으로 갱신된다(확인: 2026-06/07 까지 최신).
 #   (raw_url, 날짜열, {원본열: 우리열})
 GITHUB_SOURCES = [
-    # S&P500·CPI·장기금리 — datahub 공식 셋, 월간, 최신까지 갱신.
+    # S&P500 — datahub 공식 셋, 월간, 최신까지 갱신. (같은 셋의 CPI·장기금리 열은
+    # 어떤 분석도 안 써서 받지 않는다 — 받아 두면 최근값이 0 으로 오염되기도 했다.)
     ("https://raw.githubusercontent.com/datasets/s-and-p-500/main/data/data.csv",
-     "Date", {"SP500": "sp500", "Consumer Price Index": "cpi",
-              "Long Interest Rate": "rate_10y"}),
+     "Date", {"SP500": "sp500"}),
     # VIX(공포지수) — datahub, 일간.
     ("https://raw.githubusercontent.com/datasets/finance-vix/main/data/vix-daily.csv",
      "DATE", {"CLOSE": "vix"}),
