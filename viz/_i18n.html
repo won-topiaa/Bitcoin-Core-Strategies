@@ -13,6 +13,7 @@ window.__I18N__ = {
 "nav.rules": "Rules and limits",
 /* 낭독기용 영역 라벨(aria-label) — data-t-aria 로 언어를 따라간다 */
 "nav.aria": "Pages",
+"nav.liquidity": "Liquidity",
 "idx.aria.hero": "Market snapshot",
 "idx.aria.side": "Summary",
 "idx.aria.range": "Time range",
@@ -60,21 +61,9 @@ window.__I18N__ = {
   was actually at a bottom when the chart above went low</strong> is the whole of what this indicator
   claims. They are not drawn on top of each other because two vertical axes let you slide the lines
   until a relationship appears that was never there.`,
-"idx.macro.more": "Backdrop — Chinese liquidity leads by about a year (context, not in the score)",
-"idx.macro.h3": "Backdrop — Chinese liquidity leads by about a year",
-"idx.macro.p": `When money is printed, risk assets follow <strong>later</strong>. Backtested on historical data,
-  the best leader of Bitcoin is not a global aggregate but <strong>China's liquidity</strong>, and the
-  lead is not the few weeks people cite but <strong>about a year</strong> (measured 11 months,
-  correlation +0.43, confirmed across three sources). Below, the Bitcoin price (black) is overlaid with
-  China M2 growth (blue) pulled forward by that <strong>measured 11 months</strong> — the dashed part
-  right of 'now' is <strong>liquidity that is already in the past</strong>, not yet old enough to have
-  shown up in Bitcoin; it is <strong>not a price forecast</strong>.`,
-"idx.macro.cap": `Overlaid, but not a trick — the shift is fixed to the <strong>measured lead
-  (11 months)</strong>, not eyeballed, and each vertical axis uses only its own data min and max. Even
-  so, a two-axis overlay is only a <strong>guide</strong>. What actually moves execution
-  <strong>size</strong> (LRS) is the detrended impulse (the number above), and this signal is
-  <strong>not</strong> in the score (direction) — with only two or three monetary cycles in the sample,
-  using it directionally would be reckless.`,
+"idx.liqlink.k": "Macro backdrop",
+"idx.liqlink.t": "Chinese liquidity leads by about a year",
+"idx.liqlink.d": "When money is printed, Bitcoin follows later — context only, not in the score",
 "idx.next.k": "Next",
 "idx.next.t": "Can you trust this number",
 "idx.next.d": "What it said at eight past turning points, and why it comes out as a range",
@@ -272,6 +261,32 @@ window.__I18N__ = {
   disagree it <strong>stops without writing anything.</strong>`,
 "rul.next.k": "Back to the start",
 "rul.next.t": "See where we are",
-"rul.next.d": "Where Bitcoin sits today against the last <span class=\"yr\">16</span> years"
+"rul.next.d": "Where Bitcoin sits today against the last <span class=\"yr\">16</span> years",
+
+/* ---------------- 04 유동성 (거시 배경) ---------------- */
+"liq.eyebrow": "<em>04</em> — Macro backdrop",
+"liq.h1": "Chinese liquidity leads Bitcoin by about a year",
+"liq.lead": `When money is printed, risk assets follow <strong>later</strong>. Backtested on historical
+  data, the best leader of Bitcoin is not a global aggregate but <strong>China's liquidity</strong>.
+  This page is <strong>context only — not in the score (BCS)</strong>: it moves execution size, not
+  direction.`,
+"liq.chart.h3": "China M2 growth (led) vs Bitcoin log price",
+"liq.p": `The lead is not the few weeks people cite but <strong>about a year</strong> (measured 11
+  months, correlation +0.43, confirmed across three sources). Below, the Bitcoin log price (black) is
+  overlaid with China M2 growth (blue) pulled forward by that <strong>measured 11 months</strong> — the
+  dashed part right of 'now' is <strong>liquidity already in the past</strong>, not yet old enough to
+  have shown up in Bitcoin; it is <strong>not a price forecast</strong>.`,
+"liq.cap": `Overlaid, but not a trick — the shift is fixed to the <strong>measured lead (11 months)</strong>,
+  not eyeballed, and each vertical axis uses only its own data min and max. Even so, a two-axis overlay is
+  only a <strong>guide</strong>.`,
+"liq.s2.h2": "Why it moves size, not direction",
+"liq.s2.p": `What actually moves execution <strong>size</strong> (LRS, 0.75–1.25×) is the detrended
+  <strong>impulse</strong> (the number above), and this signal is <strong>not</strong> in the score
+  (direction) — with only two or three monetary cycles in the sample, using it directionally would be
+  reckless. By the same standard, dropping gold (uncorrelated) and using this +0.43 for size only are
+  <strong>two faces of the same skepticism</strong>: it is used only where being wrong costs little.`,
+"liq.next.k": "Back",
+"liq.next.t": "See where we are now",
+"liq.next.d": "Where Bitcoin sits today against the last <span class=\"yr\">16</span> years"
 };
 </script>

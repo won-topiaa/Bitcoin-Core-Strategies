@@ -27,7 +27,8 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 VIZ = ROOT / "viz"
-BODIES = ("index.body.html", "verify.body.html", "rules.body.html")
+BODIES = ("index.body.html", "verify.body.html", "rules.body.html",
+          "liquidity.body.html")
 NAV = "_nav.html"
 VOID = {"br", "hr", "img", "input", "meta", "link", "source", "col", "area"}
 

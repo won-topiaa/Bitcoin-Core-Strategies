@@ -139,30 +139,15 @@ __NAV__
   </figure>
 
 
-  <!-- 거시 배경 — 점수에 안 들어가는 '참고' 자료라 기본 접힘. 여는 순간 .wrap
-       높이가 바뀌어 ResizeObserver 가 drawM2Lead 를 다시 그린다(빈 폭 문제 없음). -->
-  <button class="why" type="button" aria-expanded="false" aria-controls="macro-fold"
-    data-target="macro-fold"><span class="mk">+</span><span data-t="idx.macro.more">거시 배경 — 중국 유동성이 한 해 앞선다 (참고, 점수 밖)</span></button>
-  <div class="panelbody" id="macro-fold">
-  <figure class="panel">
-    <div class="chart-head"><h3 data-t="idx.macro.h3">거시 배경 — 중국 유동성이 한 해 앞선다</h3></div>
-    <p data-t="idx.macro.p">통화가 풀리면 위험자산은 <strong>나중에</strong> 따라 옵니다. 과거 데이터로 백테스팅해 보니,
-    비트코인을 가장 잘 앞서는 건 전 세계 집계가 아니라 <strong>중국의 유동성</strong>이었고, 선행은 흔히
-    말하는 몇 주가 아니라 <strong>약 1년</strong>(측정 11개월, 상관 +0.43, 세 출처 재확인)이었습니다.
-    아래는 비트코인 가격(검정)에 중국 M2 증가율(파랑)을 그 <strong>측정된 11개월</strong>만큼 앞으로 당겨
-    겹친 그림입니다 — ‘지금’ 오른쪽 점선은 <strong>이미 풀린(과거) 유동성</strong>이 아직 비트코인에 반영될
-    시간이 안 지난 구간일 뿐, <strong>가격 예측이 아닙니다</strong>.</p>
-    <div class="legend" id="m2-legend"></div>
-    <div class="chart" id="m2-host"><svg id="m2"></svg></div>
-    <p class="m2-read" id="m2-read"></p>
-    <figcaption data-t="idx.macro.cap">겹쳐 그렸지만 눈속임이 아닙니다 — 당김은 눈대중이 아니라
-    <strong>측정값(11개월)</strong>으로 고정했고, 두 세로축은 각자 데이터의 최소·최대만 씁니다. 그래도 두
-    축을 겹친 그림은 <strong>참고</strong>일 뿐입니다. 실제로 실행 <strong>크기</strong>(LRS)를 움직이는 건
-    추세를 뺀 임펄스(위 숫자)이고, 이 신호는 점수(방향)에 <strong>넣지 않습니다</strong> — 통화 사이클
-    표본이 두세 번뿐이라 방향 신호로는 위험하기 때문입니다.</figcaption>
-  </figure>
+  <!-- 거시 배경은 이제 전용 페이지(04 유동성). 첫 화면을 점수 밖 자료로
+       무겁게 하지 않도록, 여기서는 링크만 둔다. -->
+  <div class="nextlink">
+    <a href="__LIQUIDITY_URL__">
+      <span class="k" data-t="idx.liqlink.k">거시 배경</span>
+      <span class="t" data-t="idx.liqlink.t">중국 유동성이 한 해 앞선다</span>
+      <span class="d" data-t="idx.liqlink.d">통화가 풀리면 비트코인은 나중에 따라온다 — 참고용, 점수엔 안 들어감</span>
+    </a>
   </div>
-
 
   <div class="nextlink">
     <a href="__VERIFY_URL__">

@@ -26,7 +26,8 @@ import pytest
 ROOT = Path(__file__).resolve().parents[1]
 VIZ = ROOT / "viz"
 PIECES = ("_head.html", "_script.html", "_rules_script.html", "_i18n.html",
-          "_nav.html", "index.body.html", "verify.body.html", "rules.body.html")
+          "_nav.html", "index.body.html", "verify.body.html", "rules.body.html",
+          "liquidity.body.html")
 
 
 def test_all_pieces_exist():
@@ -120,7 +121,8 @@ def test_svg_listeners_are_wired_exactly_once():
 def test_the_nav_is_not_duplicated_in_the_bodies():
     """머리띠는 조각 하나가 소유한다. 세 본문에 복제되면 버튼을 하나 붙일 때
     세 곳을 똑같이 고쳐야 하고, 실제로 한 곳을 빠뜨린다."""
-    for name in ("index.body.html", "verify.body.html", "rules.body.html"):
+    for name in ("index.body.html", "verify.body.html", "rules.body.html",
+                 "liquidity.body.html"):
         body = read(name)
         assert "__NAV__" in body, f"{name}: 머리띠 자리표시자가 없습니다"
         assert 'class="pages"' not in body, f"{name}: 머리띠가 복제돼 있습니다"
@@ -152,7 +154,7 @@ def test_every_placeholder_gets_replaced():
 
     with tempfile.TemporaryDirectory() as tmp:
         paths = build_viz.build(str(csv), Path(tmp))
-        assert len(paths) == 3
+        assert len(paths) == len(build_viz.PAGES)
         for p in paths:
             html = p.read_text(encoding="utf-8")
             # 등록된 자리표시자가 남았는가 — 빌드가 이미 막지만 여기서 한 번 더.

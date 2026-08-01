@@ -53,6 +53,8 @@ PAGES = (
      "이 숫자를 믿어도 되나 — 비트코인 사이클 위치", None),
     ("viz/rules.body.html",  "rules.html",  "rules",
      "규칙과 한계 — 비트코인 사이클 위치", "viz/_rules_script.html"),
+    ("viz/liquidity.body.html", "liquidity.html", "liquidity",
+     "중국 유동성 — 비트코인 사이클 위치", None),
 )
 MARKER = "/*__DATA__*/"
 
@@ -135,7 +137,7 @@ def _read(rel: str) -> str:
 
 
 PLACEHOLDERS = ("__INDEX_URL__", "__VERIFY_URL__", "__RULES_URL__",
-                "__TITLE__", "__NAV__", "__PAGE__")
+                "__LIQUIDITY_URL__", "__TITLE__", "__NAV__", "__PAGE__")
 
 
 def _bake(body_rel: str, page_key: str, title: str, extra_script: Optional[str],
@@ -166,6 +168,7 @@ def _bake(body_rel: str, page_key: str, title: str, extra_script: Optional[str],
 def build(csv: str, outdir: Path, *, config: Optional[str] = None,
           derive: bool = True, index_url: str = "index.html",
           verify_url: str = "verify.html", rules_url: str = "rules.html",
+          liquidity_url: str = "liquidity.html",
           macro_csv: Optional[str] = None,
           info: Optional[dict] = None) -> list[Path]:
     """세 장을 굽고 경로를 돌려준다.
@@ -178,7 +181,7 @@ def build(csv: str, outdir: Path, *, config: Optional[str] = None,
     payload = export_viz.build(cfg, csv, derive=derive, macro_csv=macro_csv)
     data = json.dumps(compact(payload), ensure_ascii=False, separators=(",", ":"))
     links = {"__INDEX_URL__": index_url, "__VERIFY_URL__": verify_url,
-             "__RULES_URL__": rules_url}
+             "__RULES_URL__": rules_url, "__LIQUIDITY_URL__": liquidity_url}
     paths = [_bake(body, key, title, extra, data, outdir / name, links)
              for body, name, key, title, extra in PAGES]
     if info is not None:
@@ -202,12 +205,14 @@ def main(argv: Optional[list[str]] = None) -> int:
     ap.add_argument("--index-url", default="index.html")
     ap.add_argument("--verify-url", default="verify.html")
     ap.add_argument("--rules-url", default="rules.html")
+    ap.add_argument("--liquidity-url", default="liquidity.html")
     args = ap.parse_args(argv)
 
     info: dict = {}
     paths = build(args.csv, Path(args.out_dir), config=args.config,
                   derive=not args.no_derive, index_url=args.index_url,
                   verify_url=args.verify_url, rules_url=args.rules_url,
+                  liquidity_url=args.liquidity_url,
                   macro_csv=args.macro, info=info)
     for p in paths:
         kb = p.stat().st_size / 1024

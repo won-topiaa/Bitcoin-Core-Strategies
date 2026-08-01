@@ -1697,23 +1697,6 @@ renderAll();
 // 갈래 카드 안의 동적 .why 는 각자 렌더에서 배선되지만, 이 둘은 HTML 에 고정이라
 // 여기서 한 번 걸어 준다. wireToggles 는 dataset.wired 로 중복을 막는다.
 wireToggles(document.querySelector(".wrap"));
-// 거시 접힘: 여는 순간 차트를 직접 다시 그린다(ResizeObserver 에만 기대지 않음).
-// 데이터가 없으면 버튼·상자를 통째로 감춘다 — 빈 상자를 열게 두지 않는다.
-(function(){
-  const btn = document.querySelector('.why[data-target="macro-fold"]');
-  const box = $("macro-fold");
-  if (!btn || !box) return;
-  // drawM2Lead 는 renderAll 에서 이미 돌며, 데이터가 부실하면(빈·짧은·퇴화 = 자체
-  // 2차 가드) figure 를 inline display:none 으로 감춘다. IIFE 가 제 기준으로 판단하면
-  // 그 더 엄격한 가드와 어긋나 '빈 상자'가 열린다 — figure 가시성을 그대로 따른다.
-  const fig = box.querySelector("figure");
-  if (!fig || fig.style.display === "none"){
-    btn.style.display = "none"; box.style.display = "none"; return;
-  }
-  btn.addEventListener("click", () => {
-    if (box.classList.contains("open")) setTimeout(drawM2Lead, 30);
-  });
-})();
 paintControls();
 
 const langBtn = $("lang-btn");
