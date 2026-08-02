@@ -51,6 +51,15 @@ sys.path.insert(0, str(ROOT / "tools"))
 
 import macro_correlation as mc      # noqa: E402
 
+# --extended 로 받아오는 외부 아카이브. 둘 다 **무료·공개**지만 조건이 다르다.
+#   coinmetrics/data  : CC BY-NC 4.0 — 출처표시 + **비상업적 사용만**
+#   supervik/...      : MIT — 제약 없음 (펀딩비 2020~2023, 갱신 중단)
+# 상업적 배포를 계획한다면 CoinMetrics 조건을 반드시 확인해야 한다(docs/29).
+CM_URL = ("https://raw.githubusercontent.com/coinmetrics/data/master/csv/btc.csv")
+FUNDING_URL = ("https://raw.githubusercontent.com/supervik/"
+               "historical-funding-rates-fetcher/main/data/BTC-USDT/"
+               "BTC-USDT_binance_2020-01-01_2024-01-01_funding_history.csv")
+
 SIZE_BAR = 0.25
 SHADOW_CONTEMP = 0.25      # 동시점이 이 이상인데
 SHADOW_FWD = 0.10          # 전방이 이 미만이면 '가격의 그림자'로 표시
@@ -149,6 +158,74 @@ def forward(metric: dict[date, float], price: dict[date, float],
     return (mc.pearson(xs, ys), len(xs))
 
 
+def _get(url: str, timeout: int = 60) -> Optional[str]:
+    import urllib.request
+    req = urllib.request.Request(url, headers={"User-Agent": "curl/8.0"})
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as r:
+            return r.read().decode("utf-8")
+    except Exception as exc:                       # 정책 차단·네트워크 실패 모두
+        print(f"  ! {url.rsplit('/', 1)[-1]}: {exc} — 건너뜀", file=sys.stderr)
+        return None
+
+
+def fetch_extended() -> list[tuple]:
+    """외부 아카이브에서 추가 후보를 받는다. 실패하면 빈 목록(치명적이지 않다)."""
+    import io as _io
+    out: list[tuple] = []
+    txt = _get(CM_URL)
+    if txt:
+        cm: dict[str, dict[date, float]] = {}
+        want = ("CapMrktCurUSD", "volume_reported_spot_usd_1d", "FeeTotNtv",
+                "AdrBalCnt", "TxCnt")
+        for row in csv.DictReader(_io.StringIO(txt)):
+            try:
+                d = date.fromisoformat((row.get("time") or "")[:10])
+            except ValueError:
+                continue
+            for c in want:
+                v = (row.get(c) or "").strip()
+                if not v:
+                    continue
+                try:
+                    f = float(v)
+                except ValueError:
+                    continue
+                if math.isfinite(f):
+                    cm.setdefault(c, {})[d] = f
+        mcap, vol = cm.get("CapMrktCurUSD"), cm.get("volume_reported_spot_usd_1d")
+        if mcap and vol:
+            nvt = {d: mcap[d] / vol[d] for d in set(mcap) & set(vol) if vol[d] > 0}
+            out.append(("NVT(시총/거래량)", nvt, True, True, "-", "고평가 = 이후 수익률↓"))
+        fee, tx = cm.get("FeeTotNtv"), cm.get("TxCnt")
+        if fee:
+            out.append(("수수료 총액(BTC)", fee, False, False, "+", "블록 수요"))
+        if fee and tx:
+            ft = {d: fee[d] / tx[d] for d in set(fee) & set(tx) if tx[d] > 0}
+            out.append(("건당 수수료", ft, False, False, "+", "혼잡 = 수요"))
+        if cm.get("AdrBalCnt"):
+            out.append(("잔고보유 주소수", cm["AdrBalCnt"], False, False, "+", "채택 확산"))
+        if tx:
+            out.append(("거래건수", tx, False, False, "+", "네트워크 사용"))
+
+    txt = _get(FUNDING_URL)
+    if txt:
+        import statistics as _st
+        byday: dict[date, list[float]] = {}
+        for row in csv.DictReader(_io.StringIO(txt)):
+            try:
+                d = date.fromisoformat((row.get("Date") or "")[:10])
+                byday.setdefault(d, []).append(float(row["Funding Rate"]))
+            except (ValueError, KeyError):
+                continue
+        if byday:
+            # 하루 3회(8시간) 정산의 합 = 그날 총 펀딩
+            daily = {d: sum(v) for d, v in byday.items()}
+            out.append(("펀딩비(Binance)", daily, True, True, "-",
+                        "롱 과열 = 이후 수익률↓ (2020~2023, 갱신 중단)"))
+    return out
+
+
 def forward_ex_momentum(metric: dict[date, float], price: dict[date, float],
                         months: int, level: bool) -> Optional[float]:
     """전방 예측에서 **당월 가격수익률(모멘텀)** 을 통제한 부분상관.
@@ -182,11 +259,14 @@ def forward_ex_momentum(metric: dict[date, float], price: dict[date, float],
     return (xy - xz * yz) / den if den else None
 
 
-def analyse(market: dict, macro: dict) -> list[dict]:
+def analyse(market: dict, macro: dict, extended: bool = False) -> list[dict]:
     price = market["price"]
     vix, ndq = macro.get("vix"), macro.get("nasdaq")
     rows = []
-    for name, ser, derived, level, want, desc in build_candidates(market):
+    cands = build_candidates(market)
+    if extended:
+        cands = cands + fetch_extended()
+    for name, ser, derived, level, want, desc in cands:
         f3 = forward(ser, price, 3, level)
         f6 = forward(ser, price, 6, level)
         f12 = forward(ser, price, 12, level)
@@ -286,6 +366,8 @@ def main(argv: Optional[list[str]] = None) -> int:
     ap.add_argument("--csv", default="data/market.csv")
     ap.add_argument("--macro", default="data/macro.csv")
     ap.add_argument("--out", default=None)
+    ap.add_argument("--extended", action="store_true",
+                    help="외부 아카이브(coinmetrics·펀딩비)에서 후보를 더 받아 함께 검정")
     args = ap.parse_args(argv)
 
     market = load_market(args.csv)
@@ -295,7 +377,7 @@ def main(argv: Optional[list[str]] = None) -> int:
         macro = mc.load_macro(args.macro)
     except SystemExit:
         macro = {}
-    text = report(analyse(market, macro))
+    text = report(analyse(market, macro, extended=args.extended))
     print(text)
     if args.out:
         Path(args.out).write_text(text + "\n", encoding="utf-8")
