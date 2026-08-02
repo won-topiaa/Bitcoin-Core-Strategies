@@ -489,7 +489,10 @@ def candidate_analysis(btc: dict[date, float], driver: dict[date, float],
             res["span"] = (common[0], common[-1]) if common else None
             res["n_primary"] = len(common)
 
-            def era(lo, hi):
+            # common·dk·bk 를 기본값으로 묶는다 — 이 클로저는 바로 아래에서 즉시
+            # 호출되므로 지금도 안전하지만, 묶어 두면 그 사실이 명시되고 B023
+            # 오탐이 사라져 진짜 늦은-바인딩 버그가 나면 그때 드러난다.
+            def era(lo, hi, common=common, dk=dk, bk=bk):
                 ks = [c for c in common if lo <= c[0] <= hi]
                 return (pearson([dk[c] for c in ks], [bk[c] for c in ks]), len(ks))
             res["eras"] = {"2013~2017": era(2013, 2017),

@@ -148,7 +148,7 @@ def bcs_series(cfg: StrategyConfig, market, *, mode: str, adaptive: float,
             if k in raws:
                 hist[k].append((d, float(raws[k])))
 
-        def window(key: str) -> Optional[list[float]]:
+        def window(key: str, d: date = d) -> Optional[list[float]]:  # d 를 묶어 늦은-바인딩 오탐 제거
             arr = hist.get(key, [])
             i = bisect.bisect_left(arr, (d - timedelta(days=PERCENTILE_DAYS), float("-inf")))
             w = [v for _, v in arr[i:]]
