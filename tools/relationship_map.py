@@ -94,16 +94,35 @@ def band(x: Optional[float]) -> str:
     return "거의 없음"
 
 
+# 표본이 이보다 짧으면 '한 국면만 본 값'이다. 사이클 하나가 약 4년이라
+# 5년을 못 넘기면 다른 국면과 비교할 수가 없다.
+SHORT_YEARS = 5.0
+
+
 def measure(price, ser, vix, ndq, use_log=None):
     r = mc.candidate_analysis(price, ser, vix, ndq,
                               use_log=(min(ser.values()) > 0) if use_log is None else use_log)
     prim = r["full_mo"] if r["monthly_only"] else r["full_wk"]
-    return prim, r.get("partial_ndq"), r.get("n_primary", 0), r["primary"]
+    return prim, r.get("partial_ndq"), r.get("n_primary", 0), r["primary"], _years(r)
+
+
+def _years(r: dict) -> float:
+    """주요 프레임이 실제로 덮은 기간(년).
+
+    표본 수(n)만 보여 주면 주간 156개가 3년인지 3주인지 알 수 없다. 그리고
+    이 저장소에서 **가장 큰 외부 상관(신용 스프레드)이 하필 가장 짧은 표본**
+    위에 있어서, 그 사실이 화면에 안 보이면 순위표가 사람을 오도한다.
+    """
+    span = r.get("span")
+    if not span:
+        return 0.0
+    (y0, u0), (y1, u1) = span
+    per = 12 if r.get("monthly_only") else 52.0        # 월 or ISO 주
+    return round(((y1 - y0) * per + (u1 - u0)) / per, 1)
 
 
 def era_scan(price, ser, use_log=None):
     """국면별 상관 — 관련성이 언제 생겼는지 본다."""
-    import math
     freq = mc.weekly if not mc._is_monthly(ser) else mc.month_end
     monthly = mc._is_monthly(ser)
     pos = min(ser.values()) > 0 if use_log is None else use_log
@@ -147,7 +166,7 @@ def payload(market: dict, macro: dict) -> dict:
         # 실제로 밟는 경로라, 조용히 건너뛴다.
         if not ser or not price:
             return
-        p, pn, n, fr = measure(price, ser, vix, ndq, use_log=use_log)
+        p, pn, n, fr, yrs = measure(price, ser, vix, ndq, use_log=use_log)
         if p is None:
             return
         ranked.append({
@@ -161,7 +180,9 @@ def payload(market: dict, macro: dict) -> dict:
             "rho": round(p, 3),
             # 나스닥 자신은 자기를 통제할 수 없다 — 그 칸은 비운다
             "partial": None if pn is None else round(pn, 3),
-            "n": n, "freq": fr,
+            "n": n, "freq": fr, "years": yrs,
+            # 한 국면만 덮은 표본은 다른 행과 같은 잣대로 읽으면 안 된다.
+            "short": yrs < SHORT_YEARS,
             "band": band(p), "band_en": BAND_EN[band(p)],
         })
 
@@ -189,7 +210,9 @@ def payload(market: dict, macro: dict) -> dict:
                      "n": [n for _, _, n in scan]})
 
     return {"ranked": ranked, "eraLabels": [lab for _, _, lab in ERAS],
-            "eras": eras, "cuts": [c for c, _ in BAND_CUTS]}
+            "eras": eras, "cuts": [c for c, _ in BAND_CUTS],
+            # 화면의 각주가 이 숫자를 그대로 읽는다 — 문턱을 여기서만 정한다
+            "shortYears": SHORT_YEARS}
 
 
 def render(pl: dict) -> str:
@@ -199,15 +222,17 @@ def render(pl: dict) -> str:
     add("  비트코인 관련성 지도 — '무엇과 관련 있는가'")
     add("  ※ '모델에 넣을 수 있는가'는 다른 질문이다(docs/25~32). 여기서는 관련성만 본다.")
     add("=" * 84)
-    add(f"  {'구분':6}{'대상':16}{'rho':>8}{'나스닥통제':>11}{'n':>7}   관련성")
+    add(f"  {'구분':6}{'대상':16}{'rho':>8}{'나스닥통제':>11}{'n':>7}{'기간':>7}   관련성")
     add("  " + "-" * 76)
     for r in pl["ranked"]:
         pn = r["partial"]
         add(f"  {r['kind']:6}{r['label']:16}{r['rho']:>+8.3f}"
-            f"{(f'{pn:+.3f}' if pn is not None else '—'):>11}{r['n']:>7}   {r['band']}")
+            f"{(f'{pn:+.3f}' if pn is not None else '—'):>11}{r['n']:>7}"
+            f"{r['years']:>6.1f}y{'*' if r['short'] else ' '}  {r['band']}")
     add("")
     add("  ※ '파생'(MVRV·드로다운)은 가격에서 계산되므로 상관이 높은 것이 당연하다")
     add("     — 항등식에 가깝다. '외부' 계열만이 '비트코인 밖과 관련 있는가'에 답한다.")
+    add(f"  ※ '*' 는 표본이 {SHORT_YEARS:.0f}년 미만 = **한 국면만 본 값**이라는 표시다.")
 
     add("")
     add("  [국면별] 관련성은 시간에 따라 생기고 사라진다 — 전 구간 하나로 뭉개면 잘못 읽힌다")

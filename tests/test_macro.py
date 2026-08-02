@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import math
 import sys
-from datetime import date
+from datetime import date, timedelta
 from pathlib import Path
 
 import pytest
@@ -428,3 +428,40 @@ def test_build_net_liquidity_survives_a_missing_leg():
     d = date(2011, 1, 5)
     out = fm.build_net_liquidity({"_walcl": {d: 2_400_000.0}})
     assert out and abs(out[d] - 2_400_000.0) < 1e-6
+
+
+# ---------------------------------------------------------------------------
+# 부분상관 — 통제가 완전한 예측자일 때
+# ---------------------------------------------------------------------------
+def test_pearson_never_returns_a_value_outside_minus_one_to_one():
+    """두 계열이 사실상 같으면 부동소수 오차로 1.0000000000000002 가 나온다.
+
+    그 값이 부분상관의 sqrt(1 − r²) 에 들어가면 **음수의 제곱근**이 되어
+    ValueError 로 죽는다. 사이트 빌드가 이 경로를 지나므로 실제 사고가 된다.
+    """
+    xs = [i * 0.7 - 3 for i in range(200)]
+    for ys in ([x * 0.8 for x in xs], [-x * 1.3 for x in xs], xs):
+        r = mc.pearson(xs, ys)
+        assert r is not None and -1.0 <= r <= 1.0, r
+
+
+def test_partial_correlation_returns_none_instead_of_crashing_on_a_perfect_control():
+    """통제가 후보와 BTC 를 **완전히** 설명하면 부분상관은 정의되지 않는다.
+    정의되지 않는 것을 None 으로 돌려주는 것과 죽는 것은 다르다."""
+    n = 200
+    base = [math.sin(i / 5.0) + i * 0.01 for i in range(n)]
+    dates = [date(2013, 1, 7) + timedelta(days=7 * i) for i in range(n)]
+    keys = [d.isocalendar()[:2] for d in dates]
+    dk = dict(zip(keys, [0.6 * v for v in base]))
+    bk = dict(zip(keys, [0.8 * v for v in base]))
+    ctrl = dict(zip(dates, base))
+    assert mc._partial(dk, bk, ctrl, False) is None
+
+
+def test_partial_from_r_matches_the_textbook_formula():
+    """공용 헬퍼로 모으면서 식이 바뀌지 않았는지 — 세 도구가 이 함수를 쓴다."""
+    xy, xz, yz = 0.5, 0.4, 0.3
+    want = (xy - xz * yz) / math.sqrt((1 - xz ** 2) * (1 - yz ** 2))
+    assert abs(mc.partial_from_r(xy, xz, yz) - want) < 1e-12
+    assert mc.partial_from_r(None, xz, yz) is None
+    assert mc.partial_from_r(xy, 1.0, yz) is None          # 완전 통제 → 정의 불가

@@ -154,9 +154,13 @@ def mc_pearson_levels(a: dict, b: dict) -> float:
 # 퇴행 입력
 # --------------------------------------------------------------------------
 def test_empty_inputs_do_not_raise():
-    """표본 CSV 로 사이트를 빌드할 때 실제로 밟는 경로다. 빈 지도를 내야 한다."""
-    assert rm.payload({}, {}) == {"ranked": [], "eraLabels": rm.payload({}, {})["eraLabels"],
-                                  "eras": [], "cuts": list(rm.payload({}, {})["cuts"])}
+    """표본 CSV 로 사이트를 빌드할 때 실제로 밟는 경로다. 빈 지도를 내야 한다.
+
+    모양 전체를 못 박지는 않는다 — 그러면 칸을 하나 더할 때마다 여기가 깨지고,
+    깨진 이유가 '기능이 늘었다'뿐이면 그 시험은 아무것도 안 지킨 것이다."""
+    pl = rm.payload({}, {})
+    assert pl["ranked"] == [] and pl["eras"] == []
+    assert pl["eraLabels"], "국면 라벨은 데이터 없이도 나와야 한다"
 
 
 def test_a_series_with_no_observations_is_skipped_not_crashed():
@@ -188,3 +192,33 @@ def test_render_survives_an_empty_map():
     """데이터가 없을 때도 리포트는 떠야 한다 — 빈 표라도 형식은 남는다."""
     text = rm.render(rm.payload({}, {}))
     assert "관련성 지도" in text and "국면별" in text
+
+
+def test_a_short_sample_is_flagged_so_it_is_not_read_like_the_others():
+    """이 저장소에서 **가장 큰 외부 상관이 하필 가장 짧은 표본** 위에 있다
+    (신용 스프레드 — 원자료가 2023-08 부터만 온다). 그 사실이 표에 안 보이면
+    순위표가 사람을 오도한다. 표시는 데이터에서 나와야 하고, 특정 계열 이름을
+    코드에 박아서는 안 된다."""
+    full, n = 2400, 200                        # 6.6년 vs 0.5년 — 문턱은 5년
+    price = _series(full, lambda i: 1000 * math.exp(i / 900 + 0.25 * math.sin(i / 60)))
+    short = _series(n, lambda i: 50 + 10 * math.sin(i / 9.0),
+                    start=date(2013, 1, 1) + timedelta(days=full - n))
+    long_ = _series(full, lambda i: 60 + 12 * math.sin(i / 17.3))
+    by = lambda pl: {r["key"]: r for r in pl["ranked"]}
+    hit = by(rm.payload({"price": price}, {"oil": short}))["oil"]
+    assert hit["short"] is True and hit["years"] < rm.SHORT_YEARS, hit
+    miss = by(rm.payload({"price": price}, {"oil": long_}))["oil"]
+    assert miss["short"] is False, miss
+
+
+def test_the_span_is_reported_in_years_not_just_row_count():
+    """주간 156개가 3년인지 3주인지 n 만으로는 알 수 없다."""
+    price = _series(1400, lambda i: 1000 * math.exp(i / 900 + 0.2 * math.sin(i / 60)))
+    pl = rm.payload({"price": price}, {"oil": _series(1400, lambda i: 60 + 12 * math.sin(i / 17.3))})
+    yrs = next(r["years"] for r in pl["ranked"] if r["key"] == "oil")
+    assert 3.7 < yrs < 3.9, f"1400일 ≈ 3.8년이어야 하는데 {yrs}"
+
+
+def test_the_short_flag_threshold_is_a_named_constant_not_a_literal():
+    """문턱을 화면과 리포트가 각각 적어 두면 둘이 갈라진다. 한 곳에서만 정한다."""
+    assert rm.payload({}, {})["shortYears"] == rm.SHORT_YEARS

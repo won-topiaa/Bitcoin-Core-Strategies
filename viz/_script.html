@@ -216,6 +216,9 @@ ko: {
     `${p75}점 사이이고, 범위가 한 구간에 온전히 들어온 날은 ${stable}% 입니다.`,
   // -- 05 관련성 지도
   relOther: "나머지 후보",
+  relShort: y => `<b>*</b> 표본이 ${y}년 미만 — <b>한 국면만 본 값</b>이라 다른 행과 같은 잣대로 ` +
+    `읽으면 안 됩니다. 이 저장소가 받을 수 있는 원자료 자체가 그 기간부터입니다.`,
+  relShortT: "표본이 한 국면뿐입니다",
   relRead: (a, b, va, vb) =>
     `국면별로 보면 나스닥 상관이 ${a} ${va} → ${b} ${vb} 로 커졌습니다. ` +
     `관련은 뚜렷하지만 <b>동시에</b> 움직이는 관계라 타이밍에는 못 씁니다.`,
@@ -375,6 +378,9 @@ en: {
     `${p75}, and the range fits inside one band on ${stable}% of days.`,
   // -- 05 relationship map
   relOther: "other candidates",
+  relShort: y => `<b>*</b> Fewer than ${y} years of data — <b>a single regime</b>, so it cannot be ` +
+    `read on the same scale as the other rows. The upstream source itself starts only that recently.`,
+  relShortT: "The sample covers a single regime",
   relRead: (a, b, va, vb) =>
     `Split by era, the correlation with the Nasdaq grew from ${va} in ${a} to ${vb} in ${b}. ` +
     `The link is clear, but it moves <b>at the same time</b>, so it is useless for timing.`,
@@ -1059,6 +1065,10 @@ function relRows(){
   if (!body) return;
   const R = D.rel;
   body.innerHTML = "";
+  // 짧은 표본이 하나도 없으면 그 설명 줄은 아예 띄우지 않는다 — 해당 없는
+  // 각주가 늘 붙어 있으면 다음 사람이 읽지 않게 된다.
+  const anyShort = !!(R && R.ranked && R.ranked.some(x => x.short));
+  setHTML("rel-short", anyShort ? t("relShort", R.shortYears) : "");
   if (!R || !R.ranked || !R.ranked.length){
     const wrap = body.closest ? body.closest(".tblwrap") : null;
     if (wrap) wrap.style.display = "none";
@@ -1073,12 +1083,15 @@ function relRows(){
     if (r.kind === "파생") tr.className = "dim";
     const pn = (r.partial === null || r.partial === undefined)
       ? t("relNone") : relFmt(r.partial);
+    // 짧은 표본 표시는 **첫 칸**에 붙인다. 좁은 화면에서 뒤쪽 칸을 접기 때문에,
+    // n 이나 등급 칸에 붙이면 폰에서 경고가 통째로 사라진다.
+    const mark = r.short ? `<sup class="warn" title="${esc(t("relShortT"))}">*</sup>` : "";
     tr.innerHTML =
-      `<td>${esc(pick(r, "label"))}</td>` +
+      `<td>${esc(pick(r, "label"))}${mark}</td>` +
       `<td>${esc(pick(r, "kind"))}</td>` +
       `<td class="num">${relFmt(r.rho)}</td>` +
       `<td class="num">${pn}</td>` +
-      `<td class="num">${r.n}</td>` +
+      `<td class="num">${r.n} · ${r.years}y</td>` +
       `<td>${esc(pick(r, "band"))}</td>`;
     body.appendChild(tr);
   });
@@ -1836,8 +1849,31 @@ if (bar && bar.getAttribute("data-current")){
   if (cur) cur.setAttribute("aria-current", "page");
 }
 
+HOOKS.push(nameScrollRegions);   // 첫 렌더에도 붙도록 renderAll 앞에서 등록한다
 applyLang();
 renderAll();
+/* 가로로 스크롤되는 표는 브라우저가 알아서 초점을 받게 만든다(그래야 키보드로
+   옆칸을 볼 수 있다). 그런데 **이름이 없으면** 낭독기에서 "그룹"이라고만 읽혀,
+   초점이 왜 거기 갔는지 알 수 없다. 표의 <caption> 이나 바로 앞 제목에서 이름을
+   빌려 준다. 폭이 좁을 때만 스크롤되므로 판단은 화면 크기가 바뀔 때마다 다시 한다. */
+function nameScrollRegions(){
+  document.querySelectorAll(".tblwrap").forEach(w => {
+    const scrolls = w.scrollWidth > w.clientWidth + 1;
+    if (!scrolls){ w.removeAttribute("role"); w.removeAttribute("aria-label"); return; }
+    const cap = w.querySelector("caption");
+    let name = cap && cap.textContent.trim();
+    if (!name){
+      let n = w.previousElementSibling;
+      while (n && !name){
+        const h = n.matches && n.matches("h1,h2,h3") ? n : (n.querySelector && n.querySelector("h1,h2,h3"));
+        if (h) name = h.textContent.trim();
+        n = n.previousElementSibling;
+      }
+    }
+    w.setAttribute("role", "region");
+    if (name) w.setAttribute("aria-label", name);
+  });
+}
 // 본문에 정적으로 박혀 있는 접힘 버튼(아홉 지표·거시 배경)을 배선한다. 계기판·
 // 갈래 카드 안의 동적 .why 는 각자 렌더에서 배선되지만, 이 둘은 HTML 에 고정이라
 // 여기서 한 번 걸어 준다. wireToggles 는 dataset.wired 로 중복을 막는다.
@@ -1860,7 +1896,8 @@ if (themeBtn) themeBtn.addEventListener("click", () => {
 
 let timer = null;
 const ro = new ResizeObserver(() => {
-  clearTimeout(timer); timer = setTimeout(drawAll, 120);
+  clearTimeout(timer);
+  timer = setTimeout(() => { drawAll(); nameScrollRegions(); }, 120);
 });
 const wrapEl = document.querySelector(".wrap");
 if (wrapEl) ro.observe(wrapEl);

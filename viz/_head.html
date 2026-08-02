@@ -108,6 +108,9 @@ section{margin-top:44px}
 figure{margin:0}
 figcaption{font-size:12.5px; color:var(--muted); margin-top:12px; max-width:76ch; line-height:1.58}
 .chart-head{display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:8px 20px; margin-bottom:14px}
+/* 그림 제목은 h2 다 — 그림이 그 장의 첫 절이라, h3 로 두면 h1 다음 단계가
+   비어 낭독기의 제목 훑기가 끊긴다. 크기는 h3 와 같게 유지한다. */
+.chart-head h2{font-size:15px; font-weight:660; letter-spacing:-.006em; margin:0 0 4px}
 .legend{display:flex; flex-wrap:wrap; gap:6px 18px; font-size:12.5px; color:var(--ink-2)}
 .legend i{display:inline-block; width:11px; height:11px; border-radius:3px; margin-right:6px; vertical-align:-1px}
 .legend b{font-weight:640; color:var(--ink)}
@@ -161,6 +164,7 @@ tbody tr.hi td{background:var(--surface-2)}
 /* 질문에 답하지 않는 행(가격에서 계산된 것). 지우지 않고 흐리게 둔다 —
    빼 버리면 "왜 MVRV 는 없나"를 다음 사람이 다시 묻는다. */
 tbody tr.dim td,tbody tr.dim td:first-child{color:var(--muted); font-weight:400}
+sup.warn{color:var(--accent); font-weight:700; margin-left:2px; cursor:help}
 /* 관련성 표는 여섯 칸이라 폰에서 3분의 2가 가로 스크롤 뒤로 숨는다. 숨는 쪽이
    하필 핵심(rho)이라, 좁은 화면에서는 **되풀이되는 두 칸**(n·관련성 등급)을
    접는다 — 등급은 |rho| 를 말로 옮긴 것이고 n 은 곁다리다. */
@@ -177,9 +181,6 @@ tbody tr.dim td,tbody tr.dim td:first-child{color:var(--muted); font-weight:400}
   letter-spacing:.01em; padding:3px 9px; border-radius:999px; line-height:1.4;
   border:1px solid var(--rule); color:var(--ink-2); background:var(--surface-2); white-space:nowrap}
 .chip::before{content:""; width:6px; height:6px; border-radius:50%; background:currentColor; flex:none}
-.chip.pos{color:var(--pos); border-color:color-mix(in srgb,var(--pos) 34%,transparent); background:color-mix(in srgb,var(--pos) 10%,transparent)}
-.chip.neg{color:var(--neg); border-color:color-mix(in srgb,var(--neg) 34%,transparent); background:color-mix(in srgb,var(--neg) 10%,transparent)}
-.chip.warn{color:var(--accent); border-color:var(--accent-line); background:var(--accent-soft)}
 .chip.cool{color:var(--cool-3); border-color:color-mix(in srgb,var(--cool-3) 34%,transparent); background:color-mix(in srgb,var(--cool-3) 12%,transparent)}
 .chip.warm{color:var(--warm-3); border-color:color-mix(in srgb,var(--warm-3) 34%,transparent); background:color-mix(in srgb,var(--warm-3) 12%,transparent)}
 .chip.flat::before{display:none}
@@ -247,8 +248,6 @@ tbody tr.dim td,tbody tr.dim td:first-child{color:var(--muted); font-weight:400}
 #metric-fold{background:none; border:0; padding:0; font-size:inherit; color:inherit}
 #metric-fold .metrics{margin-top:4px}
 .panelbody b{color:var(--ink)}
-.panelbody .formula{font-family:var(--mono); font-size:12px; color:var(--muted);
-  margin-top:9px; display:block}
 .bandlist{margin-top:13px; border-top:1px solid var(--rule); padding-top:4px; max-width:340px}
 .bandrow{display:flex; justify-content:space-between; gap:20px; padding:5px 0;
   font-size:12.5px; border-bottom:1px solid var(--rule)}
@@ -382,11 +381,6 @@ tbody td.sub{font-family:var(--sans); color:var(--muted); font-weight:400; text-
    ============================================================ */
 .topbar{display:flex; align-items:center; gap:10px 18px; flex-wrap:wrap; margin-bottom:28px;
   padding-bottom:16px; border-bottom:1px solid var(--rule)}
-.brand{display:flex; align-items:center; gap:9px; font-weight:680; font-size:15px;
-  letter-spacing:-.02em; color:var(--ink); text-decoration:none; margin-right:6px}
-.brand .logo{width:22px; height:22px; border-radius:6px; background:var(--accent-soft);
-  border:1px solid var(--accent-line); display:flex; align-items:center; justify-content:center;
-  color:var(--accent); font-family:var(--mono); font-weight:700; font-size:13px; flex:none}
 .ctl{display:flex; gap:2px; margin-left:auto}
 .ctlbtn{
   appearance:none; display:inline-flex; align-items:center; gap:6px;
@@ -418,7 +412,6 @@ nav.pages .n{font-family:var(--mono); font-size:11px; opacity:.55; margin-right:
   nav.pages{flex-basis:100%; gap:3px; order:3}
   nav.pages a{flex:1; padding:8px 4px; font-size:12px; text-align:center; white-space:nowrap; background:var(--surface); border-color:var(--rule)}
   nav.pages .n{display:none}
-  .brand{margin-right:0}
   .topbar .ctl{margin-left:auto}
 }
 

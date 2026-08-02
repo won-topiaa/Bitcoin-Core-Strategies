@@ -263,7 +263,6 @@ def fetch_extended(btc_price: Optional[dict] = None) -> list[tuple]:
 
     txt = _get(FUNDING_URL)
     if txt:
-        import statistics as _st
         byday: dict[date, list[float]] = {}
         for row in csv.DictReader(_io.StringIO(txt)):
             try:
@@ -305,11 +304,7 @@ def forward_ex_momentum(metric: dict[date, float], price: dict[date, float],
             xs.append(M[k]); ys.append(math.log(b / a)); zs.append(R[k])
     if len(xs) < 24:
         return None
-    xy, xz, yz = mc.pearson(xs, ys), mc.pearson(xs, zs), mc.pearson(ys, zs)
-    if None in (xy, xz, yz):
-        return None
-    den = math.sqrt((1 - xz ** 2) * (1 - yz ** 2))
-    return (xy - xz * yz) / den if den else None
+    return mc.partial_from_r(mc.pearson(xs, ys), mc.pearson(xs, zs), mc.pearson(ys, zs))
 
 
 def analyse(market: dict, macro: dict, extended: bool = False) -> list[dict]:

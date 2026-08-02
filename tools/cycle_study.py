@@ -207,7 +207,7 @@ def report(price: dict[date, float], quick: bool = False) -> str:
     add("=" * 84)
     ncyc = {c: sum(1 for r in rows if r[2] == c) for c in sorted({r[2] for r in rows})}
     add(f"  표본 {len(rows)}개월 · 사이클별 " + ", ".join(f"C{c}:{v}" for c, v in ncyc.items()))
-    add(f"  완결된 사이클은 3개뿐이다 — 통계 이전에 '주기' 관측치가 셋이라는 한계가 있다.")
+    add("  완결된 사이클은 3개뿐이다 — 통계 이전에 '주기' 관측치가 셋이라는 한계가 있다.")
     add("")
     add("  [사이클 내 위치별 평균 3개월 전방 수익률] — 전체표본(사후적으로 본 패턴)")
     buck: dict[int, list[float]] = {}

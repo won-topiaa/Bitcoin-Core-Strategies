@@ -59,7 +59,10 @@ def pearson(xs: list[float], ys: list[float]) -> Optional[float]:
     sy = math.sqrt(sum((y - my) ** 2 for y in ys))
     if sx == 0 or sy == 0:
         return None
-    return cov / (sx * sy)
+    # **[-1, 1] 로 조인다.** 두 계열이 사실상 같으면 부동소수 오차로 1.0000000000000002
+    # 가 나오고, 그 값이 부분상관의 sqrt(1 - r**2) 에 들어가면 음수 제곱근이 되어
+    # ValueError 로 죽는다. 사이트 빌드가 이 경로를 지나므로 실제 사고가 된다.
+    return max(-1.0, min(1.0, cov / (sx * sy)))
 
 
 def spearman(xs: list[float], ys: list[float]) -> Optional[float]:
@@ -331,10 +334,7 @@ def carry_analysis(btc: dict[date, float], usdjpy: dict[date, float],
                 trio.append((j, b, wv[k] - wv[a]))
         if len(trio) >= 30:
             jj = [t[0] for t in trio]; bb = [t[1] for t in trio]; vv = [t[2] for t in trio]
-            r_jb, r_jv, r_bv = pearson(jj, bb), pearson(jj, vv), pearson(bb, vv)
-            if None not in (r_jb, r_jv, r_bv):
-                den = math.sqrt((1 - r_jv ** 2) * (1 - r_bv ** 2))
-                partial = (r_jb - r_jv * r_bv) / den if den else None
+            partial = partial_from_r(pearson(jj, bb), pearson(jj, vv), pearson(bb, vv))
     return {"n": len(rows), "full": full, "partial_vix": partial,
             "eras": {"2010~2017": era(2010, 2017), "2018~2021": era(2018, 2021),
                      "2022~현재": era(2022, 2100)},
@@ -409,6 +409,30 @@ def _change(series: dict[date, float], use_log: bool) -> dict[date, float]:
     return out
 
 
+# 통제가 이만큼까지 설명하면(잔차분산 < 이 값) 부분상관은 정의되지 않은 것으로 본다.
+# |r| ≈ 0.9999999995 에 해당한다 — 실제 데이터의 0.99 는 잔차 0.02 라 영향이 없다.
+COLLINEAR = 1e-9
+
+
+def partial_from_r(xy: Optional[float], xz: Optional[float],
+                   yz: Optional[float]) -> Optional[float]:
+    """상관 셋으로 부분상관 하나 — ρ(x,y) 에서 z 와 같이 움직이는 몫을 뺀다.
+
+    같은 식이 세 도구에 각자 적혀 있었고, 셋 다 같은 함정을 안고 있었다:
+    통제가 사실상 완전한 예측자면 (1 − r²) 가 −1e−16 이 되어 **sqrt 가 죽는다.**
+    한 곳에 모아 두면 고칠 곳도 한 곳이다.
+    """
+    if None in (xy, xz, yz):
+        return None
+    rx, ry = 1 - xz ** 2, 1 - yz ** 2      # 통제로 설명하고 남은 분산
+    # **남은 분산이 사실상 0 이면 부분상관은 정의되지 않는다.** 0 인지만 보면
+    # 부동소수 티끌(2e−16)이 살아남아 0 나눗셈 직전의 **쓰레기 값**이 표에 실린다
+    # — 죽는 것보다 나쁘다. 티끌은 티끌로 보고 None 을 돌려준다.
+    if rx < COLLINEAR or ry < COLLINEAR:
+        return None
+    return (xy - xz * yz) / math.sqrt(rx * ry)
+
+
 def _partial(dk: dict, bk: dict, ctrl_change: dict, monthly: bool) -> Optional[float]:
     """driver·BTC 를 control 로 통제한 부분상관. 세 계열을 같은 격자 키로 맞춘다."""
     def key(d: date):
@@ -418,11 +442,7 @@ def _partial(dk: dict, bk: dict, ctrl_change: dict, monthly: bool) -> Optional[f
     if len(common) < 20:
         return None
     dd = [dk[c] for c in common]; bb = [bk[c] for c in common]; cc = [ck[c] for c in common]
-    xy, xz, yz = pearson(dd, bb), pearson(dd, cc), pearson(bb, cc)
-    if None in (xy, xz, yz):
-        return None
-    den = math.sqrt((1 - xz ** 2) * (1 - yz ** 2))
-    return (xy - xz * yz) / den if den else None
+    return partial_from_r(pearson(dd, bb), pearson(dd, cc), pearson(bb, cc))
 
 
 def candidate_analysis(btc: dict[date, float], driver: dict[date, float],

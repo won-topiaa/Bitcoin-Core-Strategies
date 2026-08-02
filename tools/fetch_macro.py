@@ -191,7 +191,9 @@ def fetch_series(fred_id: str, timeout: int = 40) -> Optional[dict[date, float]]
         code = getattr(exc, "code", None)
         blocked = code in (403, 407) or "403" in str(getattr(exc, "reason", exc))
         if blocked:
-            raise PolicyBlocked(fred_id)
+            # `from exc` 로 원인을 붙여 둔다 — 붙이지 않으면 역추적에서
+            # "정책 차단"만 보이고 어느 요청이 어떻게 막혔는지가 사라진다.
+            raise PolicyBlocked(fred_id) from exc
         print(f"  ! {fred_id}: {code or exc} — 건너뜀", file=sys.stderr)
         return None
 

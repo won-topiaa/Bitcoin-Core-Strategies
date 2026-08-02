@@ -303,3 +303,57 @@ def test_css_has_no_orphaned_id_rules_for_removed_elements():
                     if f'id="{i}"' not in bodies and f'id="{i}"' not in script
                     and f'"{i}"' not in script)
     assert not orphan, f"요소가 없는데 남아 있는 CSS id 규칙: {orphan}"
+
+
+def test_css_has_no_orphaned_class_rules():
+    """id 와 같은 이유인데 class 쪽은 비어 있었다 — 실제로 `.brand`·`.logo`(머리띠에서
+    사라진 로고), `.chip.pos/.neg/.warn`(만들어지지 않는 변형), `.panelbody .formula`
+    다섯이 남아 있었다. 죽은 CSS 는 다음 사람이 '있는 줄 알고' 고치게 만든다.
+
+    선택자 뒤에 무엇이 오든(공백·쉼표·중괄호·조합) 이름만 뽑고, 본문·스크립트
+    어디에도 그 이름이 안 나오면 잔재로 본다. 스크립트가 문자열을 이어 붙여
+    클래스를 만드는 경우가 있어(`chip ${cool|warm|flat}`) 이름 단위로 훑는다."""
+    head = read("_head.html")
+    used = " ".join(read(n) for n in
+                    BODIES + ("_nav.html", "_script.html", "_rules_script.html"))
+    # CSS 의사클래스·의사요소는 마침표 뒤에 오지 않으므로 `.` 로 시작하는 것만 본다.
+    names = set(re.findall(r"\.([a-zA-Z][\w-]*)", head))
+    orphan = sorted(n for n in names if n not in used)
+    assert not orphan, f"쓰이지 않는 CSS 클래스 규칙: {orphan}"
+
+
+def test_the_liquidity_chart_constants_still_match_the_measurement():
+    """유동성 장의 '11개월 · ρ+0.44' 는 export_viz 에 **상수로 박혀 있다.**
+
+    일부러 그렇게 뒀다 — 겹쳐 그리는 당김을 매일 재측정하면 그림이 하루마다
+    흔들리고, 산문("측정 11개월")도 같이 흔들려야 한다. 대신 **드리프트가
+    조용하면 안 된다.** 데이터가 자라 최적 선행이 옮겨 가면 여기서 걸려야
+    화면·문서·상수를 한꺼번에 고칠 기회가 생긴다.
+
+    관련성 지도(05)는 반대 선택을 했다 — 거기는 표라서 매일 다시 계산해 굽는다.
+    무엇을 굳히고 무엇을 흐르게 둘지는 화면마다 다르고, 굳힌 쪽에는 이런 가드가
+    따라와야 한다.
+    """
+    sys.path.insert(0, str(ROOT / "tools"))
+    import macro_correlation as mc
+
+    market = ROOT / "data" / "market.csv"
+    macro = ROOT / "data" / "macro.csv"
+    if not (market.exists() and macro.exists()):
+        pytest.skip("data/market.csv 또는 macro.csv 없음")
+
+    btc = mc.load_btc(str(market))
+    cols = mc.load_macro(str(macro))
+    if "m2_cn" not in cols:
+        pytest.skip("macro.csv 에 m2_cn 이 없음")
+    res = mc.m2_lead_lag(mc.month_end(btc), cols["m2_cn"])
+
+    src = (ROOT / "tools" / "export_viz.py").read_text(encoding="utf-8")
+    lead = int(re.search(r'"lead":\s*(\d+)', src).group(1))
+    corr = float(re.search(r'"corr":\s*([\d.]+)', src).group(1))
+
+    assert res["best_lag"] == lead, (
+        f"측정된 선행이 {res['best_lag']}개월인데 화면 상수는 {lead}개월입니다 — "
+        f"export_viz.macro_lead 와 viz/_i18n.html 의 산문을 함께 고치세요")
+    assert abs(res["best_corr"] - corr) < 0.03, (
+        f"측정 ρ {res['best_corr']:+.3f} vs 화면 상수 {corr:+.2f} — 같이 고치세요")
