@@ -552,5 +552,31 @@ python3 tools/audit_config.py
 
 ---
 
+## 라이선스와 데이터 출처
+
+**코드는 [MIT](LICENSE), 데이터는 각 제공처 조건을 따른다.** 둘은 별개다.
+
+> ⚠️ **핵심 주의:** `data/market.csv` 는 **Coin Metrics 커뮤니티 데이터** 파생물이고
+> **CC BY-NC 4.0(출처표시 + 비상업적 사용만)** 이다. BCS 점수의 뿌리(`price`·
+> `realized_cap`)가 여기서 나오므로, **이 저장소를 상업적으로 쓰려면 그 데이터와
+> 파생물(사이트 차트·점수 포함)을 그대로 쓸 수 없다.** 개인 연구·공개 공유는 해당 없다.
+
+이 프로젝트는 다음 공개 데이터에 기대고 있다.
+
+| 데이터 | 제공처 | 라이선스 | 상업적 이용 |
+|---|---|---|---|
+| 가격·실현시총·해시레이트·주소수·거래소 흐름 | **[Coin Metrics](https://coinmetrics.io)** 커뮤니티 | **[CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/)** | ❌ 불가 |
+| 나스닥·M2·DXY·실질금리·연준 유동성·국채·원자재 | **[FRED](https://fred.stlouisfed.org)** (세인트루이스 연준) | 미국 정부 저작물(퍼블릭 도메인) | ✅ 가능 |
+| S&P500·VIX·금(LBMA) | GitHub 공개 데이터셋 | 데이터셋별 상이 | ⚠️ 확인 |
+| 중국 M2 | **[China Data Portal](https://chinadata.live)** (PBoC 미러) | 명시 없음 | ⚠️ 확인 |
+
+기각된 거시 열(dxy·realyield·net_liq·kospi·hy_spread 등)은 **전부 FRED**라 퍼블릭
+도메인이고, 점수·사이트에는 들어가지 않는다. 자세한 내용과 상업적 이용 시 대안은
+**[DATA-SOURCES.md](DATA-SOURCES.md)** 참고.
+
+*(선의의 요약이며 법률 자문이 아니다. 상업적 이용을 계획한다면 원문을 직접 확인할 것.)*
+
+---
+
 > 이 저장소는 정보 제공과 개인 기록을 목적으로 하며 투자 자문이 아닙니다.
 > 모든 투자 판단과 그 결과에 대한 책임은 투자자 본인에게 있습니다.
