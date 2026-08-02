@@ -56,6 +56,7 @@ import macro_correlation as mc      # noqa: E402
 #   supervik/...      : MIT — 제약 없음 (펀딩비 2020~2023, 갱신 중단)
 # 상업적 배포를 계획한다면 CoinMetrics 조건을 반드시 확인해야 한다(docs/29).
 CM_URL = ("https://raw.githubusercontent.com/coinmetrics/data/master/csv/btc.csv")
+ETH_URL = "https://raw.githubusercontent.com/coinmetrics/data/master/csv/eth.csv"
 FUNDING_URL = ("https://raw.githubusercontent.com/supervik/"
                "historical-funding-rates-fetcher/main/data/BTC-USDT/"
                "BTC-USDT_binance_2020-01-01_2024-01-01_funding_history.csv")
@@ -123,6 +124,30 @@ def build_candidates(m: dict[str, dict[date, float]]) -> list[tuple]:
     if mcap and rcap:
         mv = {d: mcap[d] / rcap[d] for d in set(mcap) & set(rcap) if rcap[d] > 0}
         out.append(("MVRV", mv, True, True, "-", "원가 대비 위치 — 비싸면 이후 수익률↓"))
+    price = m.get("price")
+    if price:
+        # 드로다운 — 사상 고점 대비. '싸게 사라'가 실제로 통하는지 재는 자리다.
+        ds = sorted(price)
+        peak = 0.0
+        dd = {}
+        for d in ds:
+            peak = max(peak, price[d])
+            if peak > 0:
+                dd[d] = price[d] / peak - 1.0
+        out.append(("드로다운(고점대비)", dd, True, True, "-",
+                    "깊이 빠졌을수록 이후 수익률↑ (=역발상)"))
+        # 30일 실현변동성 — 변동성 위험프리미엄
+        lr = {ds[i]: math.log(price[ds[i]] / price[ds[i - 1]])
+              for i in range(1, len(ds)) if price[ds[i - 1]] > 0 and price[ds[i]] > 0}
+        ls = sorted(lr)
+        vol = {}
+        for i in range(29, len(ls)):
+            w = [lr[ls[j]] for j in range(i - 29, i + 1)]
+            mu = sum(w) / len(w)
+            vol[ls[i]] = (sum((x - mu) ** 2 for x in w) / len(w)) ** 0.5 * (365 ** 0.5)
+        if vol:
+            out.append(("실현변동성(30일)", vol, True, True, "+",
+                        "변동성 위험프리미엄 — 높을수록 이후 보상↑?"))
     if m.get("issuance_usd"):
         iu = m["issuance_usd"]
         avg = _sma(iu, 365)
@@ -169,7 +194,7 @@ def _get(url: str, timeout: int = 60) -> Optional[str]:
         return None
 
 
-def fetch_extended() -> list[tuple]:
+def fetch_extended(btc_price: Optional[dict] = None) -> list[tuple]:
     """외부 아카이브에서 추가 후보를 받는다. 실패하면 빈 목록(치명적이지 않다)."""
     import io as _io
     out: list[tuple] = []
@@ -207,6 +232,34 @@ def fetch_extended() -> list[tuple]:
             out.append(("잔고보유 주소수", cm["AdrBalCnt"], False, False, "+", "채택 확산"))
         if tx:
             out.append(("거래건수", tx, False, False, "+", "네트워크 사용"))
+
+    txt = _get(ETH_URL)
+    if txt:
+        eth: dict[date, float] = {}
+        for row in csv.DictReader(_io.StringIO(txt)):
+            v = (row.get("PriceUSD") or "").strip()
+            if not v:
+                continue
+            try:
+                f = float(v)
+            except ValueError:
+                continue
+            if math.isfinite(f) and f > 0:
+                try:
+                    eth[date.fromisoformat((row.get("time") or "")[:10])] = f
+                except ValueError:
+                    pass
+        # **반드시 비율로 만든다.** ETH 달러가격을 그대로 넘기면 그 변화의 대부분이
+        # BTC 변화라 이름만 '비율'인 다른 값이 된다(실제로 그렇게 짰다가 잡혔다).
+        if btc_price:
+            ratio = {d: eth[d] / btc_price[d]
+                     for d in set(eth) & set(btc_price) if btc_price[d] > 0}
+            if ratio:
+                out.append(("ETH/BTC 비율", ratio, False, False, "+",
+                            "크립토 내부 위험선호 — 알트 강세 = 위험선호"))
+        else:
+            print("  ! ETH/BTC: BTC 가격이 없어 비율을 만들 수 없음 — 건너뜀",
+                  file=sys.stderr)
 
     txt = _get(FUNDING_URL)
     if txt:
@@ -265,7 +318,7 @@ def analyse(market: dict, macro: dict, extended: bool = False) -> list[dict]:
     rows = []
     cands = build_candidates(market)
     if extended:
-        cands = cands + fetch_extended()
+        cands = cands + fetch_extended(price)
     for name, ser, derived, level, want, desc in cands:
         f3 = forward(ser, price, 3, level)
         f6 = forward(ser, price, 6, level)
