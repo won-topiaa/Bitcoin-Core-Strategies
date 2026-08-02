@@ -23,11 +23,15 @@ from pathlib import Path
 
 import pytest
 
+import build_viz          # conftest 가 tools/ 를 경로에 넣는다
+
 ROOT = Path(__file__).resolve().parents[1]
 VIZ = ROOT / "viz"
+# 본문 목록은 **build_viz.PAGES 가 소유한다.** 예전엔 이 파일에만 네 벌이 박혀
+# 있어서, 페이지를 하나 더 붙이면 새 장이 어느 시험에도 안 걸렸다.
+BODIES = tuple(Path(b).name for b, *_ in build_viz.PAGES)
 PIECES = ("_head.html", "_script.html", "_rules_script.html", "_i18n.html",
-          "_nav.html", "index.body.html", "verify.body.html", "rules.body.html",
-          "liquidity.body.html")
+          "_nav.html") + BODIES
 
 
 def test_all_pieces_exist():
@@ -121,8 +125,7 @@ def test_svg_listeners_are_wired_exactly_once():
 def test_the_nav_is_not_duplicated_in_the_bodies():
     """머리띠는 조각 하나가 소유한다. 세 본문에 복제되면 버튼을 하나 붙일 때
     세 곳을 똑같이 고쳐야 하고, 실제로 한 곳을 빠뜨린다."""
-    for name in ("index.body.html", "verify.body.html", "rules.body.html",
-                 "liquidity.body.html"):
+    for name in BODIES:
         body = read(name)
         assert "__NAV__" in body, f"{name}: 머리띠 자리표시자가 없습니다"
         assert 'class="pages"' not in body, f"{name}: 머리띠가 복제돼 있습니다"
@@ -274,9 +277,7 @@ def test_no_dangling_element_ids_between_script_and_bodies():
     스크립트가 $("...") 로 부르는 id 는 어느 본문에든 존재해야 한다(공유 스크립트라
     페이지마다 없을 수는 있지만, 네 장 어디에도 없으면 잔재다)."""
     script = read("_script.html")
-    bodies = " ".join(read(n) for n in
-                      ("index.body.html", "verify.body.html", "rules.body.html",
-                       "liquidity.body.html", "_nav.html"))
+    bodies = " ".join(read(n) for n in BODIES + ("_nav.html",))
     # 뒤에 문자열을 이어 붙여 만드는 동적 id("tp-th-f"+(i+1))는 접두사만 남으므로
     # 여기서 제외한다 — 닫는 따옴표 뒤에 ')' 가 오는(=완성된 id) 것만 센다.
     called = set(re.findall(r'\$\("([a-zA-Z][\w-]*)"\)', script))
@@ -295,9 +296,7 @@ def test_css_has_no_orphaned_id_rules_for_removed_elements():
     """#foo 규칙만 남고 요소가 사라진 경우를 잡는다 — 죽은 CSS 는 다음 사람이
     '있는 줄 알고' 고치게 만든다(실제로 #macro-fold 가 그랬다)."""
     head = read("_head.html")
-    bodies = " ".join(read(n) for n in
-                      ("index.body.html", "verify.body.html", "rules.body.html",
-                       "liquidity.body.html", "_nav.html"))
+    bodies = " ".join(read(n) for n in BODIES + ("_nav.html",))
     script = read("_script.html")
     ids = set(re.findall(r"#([a-zA-Z][\w-]*)\s*[,{ ]", head))
     orphan = sorted(i for i in ids

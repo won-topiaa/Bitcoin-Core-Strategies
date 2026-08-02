@@ -25,10 +25,13 @@ from pathlib import Path
 import pytest
 import yaml
 
+import build_viz          # conftest 가 tools/ 를 경로에 넣는다
+
 ROOT = Path(__file__).resolve().parents[1]
 VIZ = ROOT / "viz"
-BODIES = ("index.body.html", "verify.body.html", "rules.body.html",
-          "liquidity.body.html")
+# 본문 목록은 build_viz.PAGES 가 소유한다 — 여기 또 적어 두면 페이지를 하나
+# 더 붙였을 때 그 장만 번역 검사에서 빠진다.
+BODIES = tuple(Path(b).name for b, *_ in build_viz.PAGES)
 NAV = "_nav.html"
 VOID = {"br", "hr", "img", "input", "meta", "link", "source", "col", "area"}
 
@@ -93,7 +96,8 @@ def test_year_span_is_never_hardcoded_in_prose():
     2027년에 조용히 틀린다. 동적화(YRS/.yr, 커밋 045070e) 회귀를 막는다 — 본문·
     사전 산문엔 맨 연도 표기가 없어야 한다(모두 <span class="yr"> 로 감싸 JS 가 채운다).
     앞에 숫자가 붙은 '2016년' 같은 실제 연도는 제외한다."""
-    pat = re.compile(r'(?<!\d)16\s*년|(?<!\d)16[-\s]?years?\b')
+    # 앞에 연도 범위 구분자(2013~16년)나 숫자(2016년)가 붙은 것은 실제 연도라 제외한다.
+    pat = re.compile(r'(?<![\d~\u2013\u2014-])16\s*년|(?<![\d~\u2013\u2014-])16[-\s]?years?\b')
     comment = re.compile(r'<!--.*?-->', re.S)   # 주석은 렌더되지 않으니 제외
     bad = {}
     for name in BODIES + (NAV, "_i18n.html"):

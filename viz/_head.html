@@ -158,6 +158,19 @@ tbody td{font-family:var(--mono); font-variant-numeric:tabular-nums; color:var(-
 tbody td:first-child{font-family:var(--sans); color:var(--ink); font-weight:620}
 tbody tr:last-child td{border-bottom:0}
 tbody tr.hi td{background:var(--surface-2)}
+/* 질문에 답하지 않는 행(가격에서 계산된 것). 지우지 않고 흐리게 둔다 —
+   빼 버리면 "왜 MVRV 는 없나"를 다음 사람이 다시 묻는다. */
+tbody tr.dim td,tbody tr.dim td:first-child{color:var(--muted); font-weight:400}
+/* 관련성 표는 여섯 칸이라 폰에서 3분의 2가 가로 스크롤 뒤로 숨는다. 숨는 쪽이
+   하필 핵심(rho)이라, 좁은 화면에서는 **되풀이되는 두 칸**(n·관련성 등급)을
+   접는다 — 등급은 |rho| 를 말로 옮긴 것이고 n 은 곁다리다. */
+@media (max-width:620px){
+  #rel-table th:nth-child(n+5),#rel-table td:nth-child(n+5){display:none}
+}
+/* 그림 아래 한 줄 읽기(임펄스·국면 요약). 캡션보다 진하고 본문보다 작다. */
+.m2-read{font-size:13px; color:var(--ink-2); margin:14px 0 0; max-width:76ch}
+.m2-read:empty{display:none}
+.m2-read b{color:var(--ink); font-weight:640}
 
 /* ---- 상태 칩 / 배지 ---- */
 .chip{display:inline-flex; align-items:center; gap:5px; font-size:11px; font-weight:660;

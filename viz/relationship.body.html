@@ -1,0 +1,98 @@
+<div class="wrap">
+
+__NAV__
+<header class="top">
+  <p class="eyebrow" data-t="rel.eyebrow"><em>05</em> — 관련성 지도</p>
+  <h1 data-t="rel.h1">비트코인은 무엇과 관련 있나</h1>
+  <p class="lead" data-t="rel.lead"><strong>‘관련이 있다’와 ‘신호로 쓸 수 있다’는 다른 층입니다.</strong>
+  이 사이트의 나머지는 뒤의 층 — “점수에 넣을 수 있나” — 을 재고, 그 잣대로 60종 중 59종이
+  떨어졌습니다. 이 장은 <strong>그보다 앞선 질문</strong> 하나만 봅니다: 비트코인은 실제로 무엇과
+  같이 움직이나.</p>
+  <div class="srcline">
+    <span id="src-span"></span>
+    <span id="src-days"></span>
+    <span id="src-fresh"></span>
+  </div>
+</header>
+
+<!-- ============ 국면별 상관 — 이 장의 핵심 발견 ============ -->
+<section id="rel" style="margin-top:0">
+  <figure class="panel">
+    <div class="chart-head"><h3 data-t="rel.era.h3">위험자산과의 관계는 2020년에 <strong>생겼다</strong></h3></div>
+    <p data-t="rel.era.p">전 구간을 하나로 뭉개면 “나스닥과도 별 관련 없음”으로 읽힙니다.
+    <strong>그건 잘못된 독해입니다.</strong> 국면을 나눠 보면 나스닥과의 상관은 2013~16년에
+    사실상 0이었다가 2020년부터 뚜렷해집니다. 같은 시점에 VIX(공포지수)는 <strong>반대
+    부호</strong>로 커집니다 — 두 지표가 서로를 확증합니다.</p>
+    <div class="legend" id="rel-era-legend"></div>
+    <div class="chart" id="rel-era-host"><svg id="rel-era"></svg></div>
+    <p class="m2-read" id="rel-era-read"></p>
+    <figcaption data-t="rel.era.cap">세로축은 <strong>주간 로그수익률끼리의 상관</strong>입니다.
+    수준(가격 그 자체)이 아니라 변화율로 재는 이유는, 둘 다 장기 우상향이라 수준끼리 재면
+    “같이 올랐다”만 나오기 때문입니다(허위 상관). 옅은 선은 나머지 후보들이고, 대부분 0 근처에
+    머뭅니다.</figcaption>
+  </figure>
+
+  <!-- ============ 관련성 순위 ============ -->
+  <div class="sechead" style="margin-top:34px">
+    <p class="eyebrow" data-t="rel.rank.eyebrow"><em>02</em> — 순위</p>
+    <h2 data-t="rel.rank.h2">무엇과 얼마나 관련 있나</h2>
+    <p data-t="rel.rank.p">전 구간 기준입니다. <strong>‘가격에서 계산’ 계열(MVRV·드로다운)은
+    질문에 답하지 않습니다</strong> — MVRV의 분자가 가격이므로 상관이 높은 건 발견이 아니라
+    산술입니다. <strong>‘외부’ 계열만이</strong> “비트코인 밖의 무언가와 관련 있는가”에 답합니다.
+    ‘나스닥 통제 후’는 나스닥과 같이 움직이는 몫을 걷어내고 남은 값입니다 — 여기서 0으로
+    주저앉으면 그 후보는 <strong>위험선호의 그림자</strong>였다는 뜻입니다.</p>
+  </div>
+  <div class="tblwrap">
+    <table id="rel-table">
+      <caption id="rel-cap" data-t="rel.rank.caption">|ρ| 큰 순서. n은 표본 수(주 또는 월)</caption>
+      <thead><tr>
+        <th data-t="rel.th2">대상</th><th data-t="rel.th1">구분</th>
+        <th data-t="rel.th3">상관 ρ</th><th data-t="rel.th4">나스닥 통제 후</th>
+        <th data-t="rel.th5">n</th><th data-t="rel.th6">관련성</th>
+      </tr></thead>
+      <tbody id="rel-rows"></tbody>
+    </table>
+  </div>
+
+  <!-- ============ 그림자 ============ -->
+  <div class="sechead" style="margin-top:34px">
+    <p class="eyebrow" data-t="rel.why.eyebrow"><em>03</em> — 그래서</p>
+    <h2 data-t="rel.why.h2">관련이 있는데 왜 점수에 안 넣나</h2>
+    <p data-t="rel.why.p">이 질문의 답은 <strong>“관련이 없어서”가 아닙니다.</strong> 관련은
+    있는데 <strong>방향을 맡기기엔 세 가지가 걸립니다.</strong></p>
+  </div>
+  <div class="tblwrap">
+    <table>
+      <thead><tr>
+        <th data-t="rel.why.th1">걸리는 것</th><th data-t="rel.why.th2">무슨 뜻인가</th>
+      </tr></thead>
+      <tbody data-t="rel.why.rows">
+        <tr><td><strong>동시에 움직인다</strong></td>
+            <td>나스닥은 비트코인과 <strong>같은 주에</strong> 움직입니다. 미리 알 수 없으니 타이밍에 못 씁니다</td></tr>
+        <tr><td><strong>방향이 아니라 배경이다</strong></td>
+            <td>위험선호는 “비트코인이 자기 사이클 어디쯤인가”를 말하지 않습니다</td></tr>
+        <tr><td><strong>국면에 따라 생겼다 사라진다</strong></td>
+            <td>2013~16년엔 없던 관계입니다. 다음 국면에도 있으리란 보장이 없습니다</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="margin-top:16px" data-t="rel.why.after">그래서 거시는 점수(방향)가 아니라
+  <strong>실행 크기</strong>(0.75~1.25배)에만 씁니다. 관련은 있으니 버리지 않고, 위 셋이 걸리니
+  틀려도 손실이 제한되는 자리에만 놓는 것입니다. 실제로 그 자리에 들어간 것은
+  <strong>60종 중 하나</strong>, 중국 M2뿐입니다.</p>
+
+  <div class="nextlink">
+    <a href="__LIQUIDITY_URL__">
+      <span class="k" data-t="rel.next.k">유일하게 채택된 것</span>
+      <span class="t" data-t="rel.next.t">중국 유동성 보기</span>
+      <span class="d" data-t="rel.next.d">60종 중 하나만 남았습니다 — 그것도 방향이 아니라 크기에만</span>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <p style="margin-top:10px" data-t="foot.disclaimer">이 페이지는 개인 기록과 정보 제공을 위한 것이고 투자 권유가 아닙니다.
+  여기 있는 어떤 숫자도 앞으로의 가격을 말하지 않습니다. 투자 판단과 그 결과는 본인의 몫입니다.</p>
+</footer>
+
+</div>

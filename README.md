@@ -214,7 +214,8 @@ python3 tools/refresh_data.py --build      # 받아서 병합하고 사이트까
 python3 tools/build_viz.py --csv data/market.csv     # viz/site/ 에 네 장
 python3 tools/build_viz.py --csv data/market.csv \
     --index-url https://... --verify-url https://... \
-    --rules-url https://... --liquidity-url https://...
+    --rules-url https://... --liquidity-url https://... \
+    --relation-url https://...
 ```
 
 | 페이지 | 내용 | 높이 |
@@ -223,9 +224,14 @@ python3 tools/build_viz.py --csv data/market.csv \
 | `verify.html` | 전환점 성적표 · 계산 방법 · 범위가 나오는 이유 | 4,788px |
 | `rules.html` | 실행 규칙 · 한계 · 데이터 출처 · 자동 갱신 | 4,306px |
 | `liquidity.html` | **04 유동성** — 중국 M2 선행 겹쳐보기 · 왜 크기에만 쓰나 | 1,900px |
+| `relationship.html` | **05 관련성** — 국면별 상관 차트 · 23종 순위 · 왜 점수에 안 넣나 | 2,988px |
 
 **한 장에 다 넣지 않는다.** 처음에 한 장이었을 때 7,500px 였고, 그러니까
-"무엇을 봐야 하는가"가 사라졌다. 네 장으로 나누고 각 장 맨 위에 이동 막대를 뒀다.
+"무엇을 봐야 하는가"가 사라졌다. 다섯 장으로 나누고 각 장 맨 위에 이동 막대를 뒀다.
+
+**05 관련성 장의 숫자는 손으로 적지 않는다.** 빌드 시점에
+`relationship_map.payload()` 를 다시 돌려 페이지 안에 굽는다 — 데이터가 갱신될 때
+[docs/33](docs/33-관련성-지도.md) 과 화면이 갈라지는 것을 구조적으로 막는다.
 
 첫 화면의 큰 숫자(`−63 ~ −60`) 바로 밑에 **사람 말로 옮긴 한 줄**이 붙는다 —
 "지난 16년을 통틀어 **아래에서 14% 지점**입니다. 5,856일 가운데 오늘보다 싼

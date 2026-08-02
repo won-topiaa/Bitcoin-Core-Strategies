@@ -214,6 +214,16 @@ ko: {
   altWidth: (med, p25, p75, stable) =>
     `범위 폭의 분포를 그린 상자 그림. 중위 ${med}점, 가운데 절반이 ${p25}점에서 ` +
     `${p75}점 사이이고, 범위가 한 구간에 온전히 들어온 날은 ${stable}% 입니다.`,
+  // -- 05 관련성 지도
+  relOther: "나머지 후보",
+  relRead: (a, b, va, vb) =>
+    `국면별로 보면 나스닥 상관이 ${a} ${va} → ${b} ${vb} 로 커졌습니다. ` +
+    `관련은 뚜렷하지만 <b>동시에</b> 움직이는 관계라 타이밍에는 못 씁니다.`,
+  relNone: "—",
+  altRelEra: (first, last, vf, vl, vix) =>
+    `국면별 상관을 그린 선 그래프. 나스닥과의 주간수익률 상관이 ${first} ${vf} 에서 ` +
+    `${last} ${vl} 로 커졌고, VIX 는 같은 기간 반대 부호로 ${vix} 입니다. ` +
+    `옅은 선은 나머지 후보이고 대부분 0 근처입니다.`,
   altKbd: "화살표 키로 날짜를 옮겨 가며 값을 읽을 수 있습니다.",
   kbdHint: "← → 날짜 이동 · Shift 또는 PageUp/Down 은 크게 · Home·End 처음·끝 · Esc 해제",
   rangeAll: "전체",
@@ -363,6 +373,16 @@ en: {
   altWidth: (med, p25, p75, stable) =>
     `A box plot of the range width. Median ${med} points, the middle half between ${p25} and ` +
     `${p75}, and the range fits inside one band on ${stable}% of days.`,
+  // -- 05 relationship map
+  relOther: "other candidates",
+  relRead: (a, b, va, vb) =>
+    `Split by era, the correlation with the Nasdaq grew from ${va} in ${a} to ${vb} in ${b}. ` +
+    `The link is clear, but it moves <b>at the same time</b>, so it is useless for timing.`,
+  relNone: "—",
+  altRelEra: (first, last, vf, vl, vix) =>
+    `A line chart of correlation by era. The weekly-return correlation with the Nasdaq grew from ` +
+    `${vf} in ${first} to ${vl} in ${last}, while VIX over the same period runs the opposite way at ` +
+    `${vix}. The faint lines are the other candidates and most stay near zero.`,
   altKbd: "Use the arrow keys to step through dates and read the values.",
   kbdHint: "← → step a date · Shift or PageUp/Down jumps · Home/End first/last · Esc clears",
   rangeAll: "ALL",
@@ -937,6 +957,131 @@ function drawM2Lead(){
     ? t("m2Read", impTxt, (M.lrs >= 0 ? "+" : "") + Math.round(M.lrs), BW) : "");
 
   describe(svg, t("altM2", M.lead, M.corr, impTxt, BW));
+}
+
+/* =====================================================================
+   05. 관련성 지도 — 국면별 상관
+   ===================================================================== */
+// 강조할 두 계열. **라벨이 아니라 데이터 열 키로** 고른다 — 라벨은 번역되고
+// 다듬어지지만 키는 안 바뀐다. 나스닥(위험자산)과 VIX(공포)는 부호가 반대라
+// 서로를 확증하고, 그게 이 그림이 말하려는 전부다.
+const REL_HL = {nasdaq: "var(--s1)", vix: "var(--warm-3)"};
+
+function relFmt(v){ return (v >= 0 ? "+" : "−") + Math.abs(v).toFixed(2); }
+
+function drawRelEra(){
+  const host = $("rel-era-host"), svg = $("rel-era");
+  if (!host || !svg) return;
+  const fig = host.closest ? host.closest("figure") : null;
+  const hide = () => { (fig || host).style.display = "none"; };
+  const R = D.rel;
+  // 데이터가 없으면 그림만이 아니라 섹션 전체를 숨긴다 — 안 그러면 제목과
+  // 설명만 남아 "그림 없는 그림 설명"이 된다(drawM2Lead 와 같은 이유).
+  if (!R || !R.eras || !R.eras.length || !R.eraLabels || R.eraLabels.length < 2){
+    hide(); setHTML("rel-era-legend", ""); setHTML("rel-era-read", ""); return;
+  }
+  (fig || host).style.display = "";
+  const L = R.eraLabels, N = L.length;
+  const W = host.clientWidth || 900;
+  const H = Math.max(200, Math.min(300, W * 0.36));
+  const PL = 44, PR = 16, PT = 14, PB = 30;
+  const iw = W - PL - PR, ih = H - PT - PB;
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.setAttribute("height", H);
+  clear(svg);
+
+  // 세로축은 0 을 가운데 두고 대칭이다. 비대칭으로 잡으면 "부호가 반대"라는
+  // 이 그림의 요점이 눈으로 안 보인다.
+  let lim = 0.1;
+  R.eras.forEach(r => r.v.forEach(v => { if (v !== null) lim = Math.max(lim, Math.abs(v)); }));
+  lim = Math.ceil(lim * 10 + 0.5) / 10;
+  const X = i => PL + (N === 1 ? iw / 2 : i * iw / (N - 1));
+  const Y = v => PT + (lim - v) / (2 * lim) * ih;
+
+  for (let g = -lim; g <= lim + 1e-9; g += lim / 2){
+    const zero = Math.abs(g) < 1e-9;
+    el("line", {x1:PL, y1:Y(g), x2:PL + iw, y2:Y(g),
+      stroke: zero ? "var(--zero)" : "var(--grid)", "stroke-width":1}, svg);
+    txt(svg, PL - 7, Y(g) + 3, relFmt(g), {anchor:"end", size:10});
+  }
+  L.forEach((lab, i) =>
+    txt(svg, X(i), H - 8, lab, {anchor: i === 0 ? "start" : (i === N - 1 ? "end" : "middle"),
+      size:9.5, fill:"var(--ink-2)"}));
+
+  function line(row, color, wide){
+    // null(표본이 모자란 국면)에서 선을 끊는다. 이어 버리면 없는 관측을
+    // 있는 것처럼 그리게 된다.
+    let d = "", pen = false;
+    row.v.forEach((v, i) => {
+      if (v === null){ pen = false; return; }
+      d += (pen ? " L" : "M") + X(i) + "," + Y(v); pen = true;
+    });
+    if (!d) return;
+    el("path", {d:d, fill:"none", stroke:color, "stroke-width": wide ? 2.2 : 1,
+      "stroke-linejoin":"round", "stroke-linecap":"round",
+      opacity: wide ? 1 : 0.28}, svg);
+    if (!wide) return;
+    row.v.forEach((v, i) => {
+      if (v !== null) el("circle", {cx:X(i), cy:Y(v), r:3, fill:color}, svg);
+    });
+  }
+  R.eras.forEach(r => { if (!REL_HL[r.key]) line(r, "var(--ink-2)", false); });
+  R.eras.forEach(r => { if (REL_HL[r.key]) line(r, REL_HL[r.key], true); });
+
+  const byKey = {};
+  R.eras.forEach(r => { byKey[r.key] = r; });
+  const legend = R.eras.filter(r => REL_HL[r.key]).map(r =>
+    `<span><i style="background:${REL_HL[r.key]};height:2px;border-radius:0;` +
+    `margin-bottom:3px"></i>${esc(pick(r, "label"))}</span>`).join("") +
+    `<span><i style="background:var(--ink-2);height:2px;border-radius:0;` +
+    `margin-bottom:3px;opacity:.35"></i>${t("relOther")}</span>`;
+  setHTML("rel-era-legend", legend);
+
+  // 읽는 줄과 대체텍스트는 **데이터에서** 만든다. 처음/끝은 값이 있는
+  // 국면으로 잡는다 — 앞쪽 국면이 표본 부족으로 비어 있을 수 있다.
+  const nd = byKey.nasdaq, vx = byKey.vix;
+  const at = row => {
+    if (!row) return null;
+    const idx = row.v.map((v, i) => v === null ? -1 : i).filter(i => i >= 0);
+    return idx.length ? {a: idx[0], b: idx[idx.length - 1]} : null;
+  };
+  const g = at(nd);
+  if (g && g.a !== g.b){
+    const vv = vx && vx.v[g.b] !== null ? relFmt(vx.v[g.b]) : t("relNone");
+    setHTML("rel-era-read", t("relRead", L[g.a], L[g.b], relFmt(nd.v[g.a]), relFmt(nd.v[g.b])));
+    describe(svg, t("altRelEra", L[g.a], L[g.b], relFmt(nd.v[g.a]), relFmt(nd.v[g.b]), vv));
+  } else {
+    setHTML("rel-era-read", "");
+  }
+}
+
+function relRows(){
+  const body = $("rel-rows");
+  if (!body) return;
+  const R = D.rel;
+  body.innerHTML = "";
+  if (!R || !R.ranked || !R.ranked.length){
+    const wrap = body.closest ? body.closest(".tblwrap") : null;
+    if (wrap) wrap.style.display = "none";
+    return;
+  }
+  const wrap = body.closest ? body.closest(".tblwrap") : null;
+  if (wrap) wrap.style.display = "";
+  R.ranked.forEach(r => {
+    const tr = document.createElement("tr");
+    // '가격에서 계산' 계열은 질문에 답하지 않는다. 지우지 않고 흐리게 둔다 —
+    // 빼 버리면 "왜 MVRV 는 없나"를 다음 사람이 다시 묻는다.
+    if (r.kind === "파생") tr.className = "dim";
+    const pn = (r.partial === null || r.partial === undefined)
+      ? t("relNone") : relFmt(r.partial);
+    tr.innerHTML =
+      `<td>${esc(pick(r, "label"))}</td>` +
+      `<td>${esc(pick(r, "kind"))}</td>` +
+      `<td class="num">${relFmt(r.rho)}</td>` +
+      `<td class="num">${pn}</td>` +
+      `<td class="num">${r.n}</td>` +
+      `<td>${esc(pick(r, "band"))}</td>`;
+    body.appendChild(tr);
+  });
 }
 
 /* =====================================================================
@@ -1670,13 +1815,13 @@ function applyLang(){
 
 /* ===================================================================== */
 function drawAll(){
-  drawGauge(); drawKey(); drawHist(); drawPrice(); drawM2Lead(); drawTP(); drawFam(); drawWidth();
+  drawGauge(); drawKey(); drawHist(); drawPrice(); drawM2Lead(); drawRelEra(); drawTP(); drawFam(); drawWidth();
 }
 // 규칙 페이지의 스크립트가 여기에 자기 렌더러를 밀어 넣는다. 언어를 바꿀 때
 // 이 스크립트가 그것도 같이 다시 그려야 한다.
 const HOOKS = window.__BCS_HOOKS__ = window.__BCS_HOOKS__ || [];
 function renderAll(){
-  heroFill(); sideFill(); fillText(); famCards(); metricCards(); scaleKey(); mixBar(); histLegend(); rangeSel(); drawAll();
+  heroFill(); sideFill(); fillText(); famCards(); metricCards(); scaleKey(); mixBar(); histLegend(); rangeSel(); relRows(); drawAll();
   for (let i = 0; i < HOOKS.length; i++) HOOKS[i]();
   fillYears();   // applyLang 이 산문을 다시 그린 뒤라, .yr 스팬을 마지막에 채운다
 }
