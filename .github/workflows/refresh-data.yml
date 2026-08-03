@@ -57,6 +57,14 @@ jobs:
         # 완전 실패면 fetch_macro 가 파일을 건드리지 않고 비정상 종료하므로 넘긴다.
         run: python3 tools/fetch_macro.py --github --global --out data/macro.csv || true
 
+      - name: 주가 (MSTR — 05장 트레저리 부록)
+        # 스투크 주 소스 + 야후 폴백. 열 단위 병합·원자적 쓰기라 잠깐 막혀도
+        # 기존 값이 남는다. 실패해도 사이트는 그 섹션만 숨긴 채 정상이다.
+        run: python3 tools/fetch_stock.py --out data/stocks.csv || true
+
+      - name: 뉴스 (06장 — 여기서도 한 번, 이후는 refresh-news.yml 이 하루 네 번)
+        run: python3 tools/fetch_news.py --out data/news.json || true
+
       - name: 신선도 확인
         # 받았는데도 오래됐으면 원본이 늦은 것이다. 실패시키지 않고 기록만
         # 남긴다 — 커뮤니티 티어는 하루 늦는 것이 정상이다.
@@ -77,12 +85,17 @@ jobs:
       - name: 커밋
         if: ${{ inputs.dry_run != true }}
         run: |
-          if git diff --quiet -- viz/site data/macro.csv; then
+          if git diff --quiet -- viz/site data/macro.csv data/stocks.csv data/news.json; then
             echo "바뀐 페이지가 없습니다."
             exit 0
           fi
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add viz/site data/macro.csv
+          # 주가·뉴스는 그날 소스가 막히면 파일 자체가 없을 수 있다 — 없는 경로를
+          # add 하면 워크플로가 통째로 죽으므로 있을 때만 넣는다.
+          for f in data/stocks.csv data/news.json; do
+            [ -f "$f" ] && git add "$f"
+          done
           git commit -m "데이터 갱신 — 기준일 ${ASOF:-미확인}"
           git push

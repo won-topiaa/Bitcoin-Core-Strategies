@@ -31,6 +31,7 @@ sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "tools"))
 
 import export_viz  # noqa: E402
+import inject_news  # noqa: E402  # 뉴스 데이터 주입 — 이스케이프 규칙을 한 곳에 둔다
 
 from btc_core.config import load_config  # noqa: E402
 
@@ -57,6 +58,8 @@ PAGES = (
      "중국 유동성 — 비트코인 사이클 위치", None),
     ("viz/relationship.body.html", "relationship.html", "relationship",
      "무엇과 관련 있나 — 비트코인 사이클 위치", None),
+    ("viz/news.body.html", "news.html", "news",
+     "비트코인 뉴스 — 비트코인 사이클 위치", None),
 )
 MARKER = "/*__DATA__*/"
 
@@ -140,12 +143,13 @@ def _read(rel: str) -> str:
 
 
 PLACEHOLDERS = ("__INDEX_URL__", "__VERIFY_URL__", "__RULES_URL__",
-                "__LIQUIDITY_URL__", "__RELATION_URL__",
+                "__LIQUIDITY_URL__", "__RELATION_URL__", "__NEWS_URL__",
                 "__TITLE__", "__NAV__", "__PAGE__")
 
 
 def _bake(body_rel: str, page_key: str, title: str, extra_script: Optional[str],
-          data: str, out: Path, links: dict[str, str]) -> Path:
+          data: str, out: Path, links: dict[str, str],
+          news_js: str = "null") -> Path:
     # 머리띠는 전 장이 공유한다. 예전에는 본문마다 복제돼 있었고, 버튼을 하나
     # 붙이려면 모든 본문을 똑같이 고쳐야 했다.
     nav = _read(NAV).replace("__PAGE__", page_key)
@@ -161,6 +165,11 @@ def _bake(body_rel: str, page_key: str, title: str, extra_script: Optional[str],
     # 주소로 올릴 때는 절대 주소여야 해서 빌드 시점에 갈아 끼운다.
     for k, v in links.items():
         page = page.replace(k, v)
+    # 뉴스 데이터는 공용 페이로드와 분리된 마커에 산다(뉴스 본문에만 있다) —
+    # 주입 주기가 달라서다. 하루 네 번 갱신은 inject_news 가 같은 헬퍼로 한다.
+    replaced = inject_news.replace_region(page, news_js)
+    if replaced is not None:
+        page = replaced
     leftover = [w for w in PLACEHOLDERS if w in page]
     if leftover:
         raise SystemExit(f"{out.name}: 치환되지 않은 자리표시자 {leftover}")
@@ -174,7 +183,9 @@ def build(csv: str, outdir: Path, *, config: Optional[str] = None,
           verify_url: str = "verify.html", rules_url: str = "rules.html",
           liquidity_url: str = "liquidity.html",
           relation_url: str = "relationship.html",
+          news_url: str = "news.html",
           macro_csv: Optional[str] = None,
+          news_json: str = "data/news.json",
           info: Optional[dict] = None) -> list[Path]:
     """페이지를 굽고 경로를 돌려준다.
 
@@ -188,8 +199,9 @@ def build(csv: str, outdir: Path, *, config: Optional[str] = None,
                       allow_nan=False)   # NaN/inf 는 무효 JSON → JSON.parse 백지. 여기서 막는다.
     links = {"__INDEX_URL__": index_url, "__VERIFY_URL__": verify_url,
              "__RULES_URL__": rules_url, "__LIQUIDITY_URL__": liquidity_url,
-             "__RELATION_URL__": relation_url}
-    paths = [_bake(body, key, title, extra, data, outdir / name, links)
+             "__RELATION_URL__": relation_url, "__NEWS_URL__": news_url}
+    njs = inject_news.news_js(news_json)
+    paths = [_bake(body, key, title, extra, data, outdir / name, links, news_js=njs)
              for body, name, key, title, extra in PAGES]
     if info is not None:
         info["as_of"] = payload["current"]["d"]
@@ -214,6 +226,9 @@ def main(argv: Optional[list[str]] = None) -> int:
     ap.add_argument("--rules-url", default="rules.html")
     ap.add_argument("--liquidity-url", default="liquidity.html")
     ap.add_argument("--relation-url", default="relationship.html")
+    ap.add_argument("--news-url", default="news.html")
+    ap.add_argument("--news-json", default="data/news.json",
+                    help="기사 데이터(JSON). 없으면 뉴스 페이지는 빈 안내를 띄운다")
     args = ap.parse_args(argv)
 
     info: dict = {}
@@ -221,8 +236,8 @@ def main(argv: Optional[list[str]] = None) -> int:
                   derive=not args.no_derive, index_url=args.index_url,
                   verify_url=args.verify_url, rules_url=args.rules_url,
                   liquidity_url=args.liquidity_url,
-                  relation_url=args.relation_url,
-                  macro_csv=args.macro, info=info)
+                  relation_url=args.relation_url, news_url=args.news_url,
+                  macro_csv=args.macro, news_json=args.news_json, info=info)
     for p in paths:
         kb = p.stat().st_size / 1024
         print(f"생성: {p}  ({kb:.0f} KB)")

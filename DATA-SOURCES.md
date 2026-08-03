@@ -21,6 +21,8 @@
 | 중국 M2 (`m2_cn`) | **[China Data Portal](https://chinadata.live)** (PBoC 미러) | 명시 없음 | ⚠️ 확인 필요 |
 | 펀딩비(검정 전용, `--extended`) | **[supervik/historical-funding-rates-fetcher](https://github.com/supervik/historical-funding-rates-fetcher)** | **MIT** | ✅ 가능 |
 | 온체인 확장 지표(검정 전용, `--extended`) | **[coinmetrics/data](https://github.com/coinmetrics/data)** | **CC BY-NC 4.0** | ❌ 불가 |
+| MSTR 주가 종가 (`data/stocks.csv`) | **[Stooq](https://stooq.com)** (폴백: Yahoo Finance) | 개인·교육 용도 무료 제공, 라이선스 명문 없음 | ⚠️ 개인·비상업 범위로 한정 |
+| 뉴스 제목·요약·링크 (`data/news.json`) | CoinDesk · Cointelegraph · Bitcoin Magazine · Decrypt 공개 RSS | 각사 저작물 — **제목·짧은 발췌 + 원문 링크**만 싣는다(전문 복제 없음) | ⚠️ 발췌+링크 한정 |
 
 ## 무엇이 어디에 쓰이나
 

@@ -1,0 +1,43 @@
+<div class="wrap">
+
+__NAV__
+<header class="top">
+  <p class="eyebrow" data-t="news.eyebrow"><em>06</em> — 뉴스</p>
+  <h1 data-t="news.h1">지금 비트코인 판에서 무슨 일이</h1>
+  <p class="lead" data-t="news.lead">공개 RSS 피드에서 <strong>핵심 기사만 걸러</strong> 하루 네 번 다시 굽습니다.
+  기사를 고르는 것은 사람이 아니라 <strong>공개된 점수 규칙</strong>(키워드·최신성·중복 제거)이고,
+  그 규칙은 저장소의 <code>tools/fetch_news.py</code> 에 있습니다. 제목과 요약은 원문 그대로이며
+  이 사이트의 의견이 아닙니다.</p>
+  <div class="srcline">
+    <span id="news-fetched"></span>
+    <span id="news-count"></span>
+  </div>
+</header>
+
+<section id="news" style="margin-top:0">
+  <div class="newslist" id="news-list"></div>
+  <p class="m2-read" id="news-empty"></p>
+  <p style="margin-top:18px; font-size:12.5px; color:var(--muted); max-width:76ch" data-t="news.cap">
+  기사 제목·요약은 <strong>원문 언어(대부분 영어) 그대로</strong>이고, 언어 버튼으로 번역되지 않습니다.
+  링크는 전부 외부 사이트로 나갑니다. 기사가 실렸다는 것은 "그런 보도가 있었다"는 뜻이지
+  <strong>사실 확인이나 동의가 아닙니다</strong> — 점수(BCS)는 뉴스를 전혀 읽지 않습니다.</p>
+
+  <div class="nextlink">
+    <a href="__INDEX_URL__">
+      <span class="k" data-t="news.next.k">돌아가기</span>
+      <span class="t" data-t="news.next.t">지금 위치 보기</span>
+      <span class="d" data-t="news.next.d">뉴스가 아니라 데이터가 말하는 오늘의 사이클 위치</span>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <p style="margin-top:10px" data-t="foot.disclaimer">이 페이지는 개인 기록과 정보 제공을 위한 것이고 투자 권유가 아닙니다.
+  여기 있는 어떤 숫자도 앞으로의 가격을 말하지 않습니다. 투자 판단과 그 결과는 본인의 몫입니다.</p>
+</footer>
+
+</div>
+<!-- 기사 데이터는 빌드/주입 시점에 이 마커 사이로 들어온다. 다른 페이지의 __BCS__
+     페이로드와 분리한 이유: 뉴스는 하루 네 번 갱신되는데, 공용 페이로드에 넣으면
+     뉴스가 바뀔 때마다 여섯 장이 전부 바뀌어 매번 전체 재배포가 일어난다. -->
+<script>window.__BCS_NEWS__ = /*__BCS_NEWSDATA__*/null/*__BCS_NEWSDATA__*/;</script>

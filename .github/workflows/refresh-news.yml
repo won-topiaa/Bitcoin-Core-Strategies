@@ -1,0 +1,56 @@
+# 뉴스만 갱신한다 — 하루 네 번, 사이트 전체 재빌드 없이.
+#
+# 전체를 다시 굽지 않는 이유:
+#   (1) data/market.csv 는 .gitignore 라 체크아웃에 없어 매번 다시 받아야 하고
+#   (2) 여섯 장이 전부 바뀌어 뉴스 하나 때문에 매번 전체 재배포가 된다.
+# 그래서 기사 데이터는 공용 페이로드(__BCS__)와 분리된 마커 구간에 살고,
+# tools/inject_news.py 가 구워 둔 news.html 의 그 구간만 갈아 끼운다.
+# 커밋이 viz/site/** 를 건드리므로 Pages 배포(pages.yml)가 이어서 돈다.
+#
+# 시각은 매일 02:20 UTC 전체 갱신(refresh-data.yml) **뒤에만** 오게 골랐다 —
+# 그 갱신이 news.html 을 통째로 다시 굽기 때문에, 앞서 돌면 서로를 덮어쓴다.
+name: 뉴스 갱신
+
+on:
+  schedule:
+    - cron: "10 5,11,17,23 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-news
+  cancel-in-progress: false
+
+jobs:
+  news:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # fetch_news·inject_news 는 표준 라이브러리만 쓴다 — pip 설치가 없다.
+      - name: 기사 수집
+        run: python3 tools/fetch_news.py --out data/news.json
+
+      - name: news.html 에 주입
+        run: python3 tools/inject_news.py --page viz/site/news.html --news data/news.json
+
+      - name: 커밋
+        run: |
+          if git diff --quiet -- viz/site/news.html data/news.json; then
+            echo "새 기사가 없습니다."
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add viz/site/news.html data/news.json
+          git commit -m "뉴스 갱신"
+          # 다른 워크플로(데이터 갱신)가 그 사이 푸시했을 수 있다 — 리베이스 후 푸시.
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push

@@ -262,6 +262,27 @@ def relationship(csv: str, macro_csv: str) -> Optional[dict]:
     return pl if pl["ranked"] else None
 
 
+def mstr_block(csv: str, base: date) -> Optional[dict]:
+    """MSTR 상대성과(05장 부록). data/stocks.csv 가 없으면 None — 섹션이 숨는다.
+
+    이 환경은 주가 소스가 정책으로 막혀 있어 로컬 빌드에선 보통 None 이고,
+    매일 갱신 워크플로(러너는 이그레스가 열려 있다)가 stocks.csv 를 채우면
+    다음 빌드부터 나타난다. 없는 데이터로 섹션을 그리지 않는다."""
+    stocks = Path(csv).parent / "stocks.csv"
+    if not stocks.exists():
+        return None
+    import mstr_study
+    import onchain_correlation as oc
+
+    ser = mstr_study.load_mstr(str(stocks))
+    if not ser:
+        return None
+    price = oc.load_market(csv).get("price") or {}
+    if not price:
+        return None
+    return mstr_study.site_payload(ser, price, base)
+
+
 def build(cfg: StrategyConfig, csv: str, *, derive: bool = True,
           strings_en: Optional[str] = None, macro_csv: Optional[str] = None) -> dict:
     en = load_en(strings_en)
@@ -315,9 +336,16 @@ def build(cfg: StrategyConfig, csv: str, *, derive: bool = True,
     macro = macro_lead(cfg, macro_csv, rows,
                        date.fromisoformat(rows[-1]["d"])) if macro_csv else None
 
+    rel = relationship(csv, macro_csv) if macro_csv else None
+    if rel is not None:
+        # MSTR 부록은 관련성 장의 일부다 — 지도(rel)가 있을 때만 싣는다.
+        m = mstr_block(csv, date.fromisoformat(rows[0]["d"]))
+        if m:
+            rel["mstr"] = m
+
     return {
         "macro": macro,
-        "relationship": relationship(csv, macro_csv) if macro_csv else None,
+        "relationship": rel,
         "generated_from": csv,
         "generated": date.today().isoformat(),
         # 만든 시점의 지연. 페이지는 이 값을 쓰지 않고 **보는 시점에** 다시

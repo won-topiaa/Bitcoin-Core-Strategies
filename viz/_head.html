@@ -176,6 +176,19 @@ sup.warn{color:var(--accent); font-weight:700; margin-left:2px; cursor:help}
 .m2-read:empty{display:none}
 .m2-read b{color:var(--ink); font-weight:640}
 
+/* ---- 06 뉴스 목록 ---- */
+.newslist{display:flex; flex-direction:column; gap:10px; max-width:860px}
+a.newsitem{display:block; text-decoration:none; background:var(--surface);
+  border:1px solid var(--rule); border-radius:var(--r-md); padding:15px 18px;
+  box-shadow:var(--shadow); transition:border-color .12s, background .12s}
+a.newsitem:hover{border-color:var(--axis); background:var(--surface-2)}
+.newsitem .nt{font-weight:640; color:var(--ink); font-size:15px; letter-spacing:-.012em; line-height:1.42}
+/* 외부로 나가는 링크라는 표시 — 링크마다 문장으로 적는 것보다 낫다 */
+.newsitem .nt::after{content:" \2197"; color:var(--muted); font-size:12px}
+.newsitem .nm{font-family:var(--mono); font-size:11px; color:var(--muted); margin-top:5px; letter-spacing:.02em}
+.newsitem .ns{font-size:13px; color:var(--ink-2); margin:8px 0 0; max-width:76ch; line-height:1.55}
+@media (prefers-reduced-motion: reduce){a.newsitem{transition:none}}
+
 /* ---- 상태 칩 / 배지 ---- */
 .chip{display:inline-flex; align-items:center; gap:5px; font-size:11px; font-weight:660;
   letter-spacing:.01em; padding:3px 9px; border-radius:999px; line-height:1.4;

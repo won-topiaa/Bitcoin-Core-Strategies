@@ -1,6 +1,6 @@
 # 구워 둔 사이트(viz/site)를 GitHub Pages 로 배포한다.
 #
-# 이 저장소는 사이트를 '다 구운 정적 3장'으로 viz/site 에 커밋한다(refresh-data.yml).
+# 이 저장소는 사이트를 '다 구운 정적 페이지들'로 viz/site 에 커밋한다(refresh-data.yml).
 # 여기서는 그 폴더를 그대로 Pages 에 올린다 — 빌드를 다시 하지 않는다.
 #
 # 자동 갱신 흐름:

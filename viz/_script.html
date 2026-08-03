@@ -219,6 +219,22 @@ ko: {
   relShort: y => `<b>*</b> 표본이 ${y}년 미만 — <b>한 국면만 본 값</b>이라 다른 행과 같은 잣대로 ` +
     `읽으면 안 됩니다. 이 저장소가 받을 수 있는 원자료 자체가 그 기간부터입니다.`,
   relShortT: "표본이 한 국면뿐입니다",
+  // -- 05 부록 MSTR
+  mstrRatio: "상대성과 (MSTR ÷ BTC, 시작=1)",
+  mstrShade: "음영 = MSTR 가 크게 앞선 구간",
+  mstrRead: (k, days) =>
+    `그런 구간이 <b>${k}번</b>, 합쳐서 약 ${days}일 있었습니다. 반대로 크게 뒤진 구간도 ` +
+    `있습니다 — 지렛대는 양방향입니다.`,
+  altMstr: (from, to, k) =>
+    `MSTR 주가를 비트코인 가격으로 나눈 상대성과 선 그래프(로그 눈금), ${from}부터 ${to}까지. ` +
+    `1을 넘으면 주가가 비트코인보다 많이 오른 것입니다. 음영 ${k}곳은 90일 수익률 격차가 ` +
+    `로그 +0.5를 넘어 주가가 크게 앞선 구간입니다.`,
+  // -- 06 뉴스
+  newsEmpty: "아직 수집된 기사가 없습니다. 수집기는 서버에서 하루 네 번 돌며, 다음 갱신 때 채워집니다.",
+  newsFetched: s => `마지막 수집 ${s}`,
+  newsCount: n => `핵심 기사 ${n}건`,
+  newsAgoH: h => h < 1 ? "방금 전" : `${h}시간 전`,
+  newsAgoD: d => `${d}일 전`,
   relRead: (a, b, va, vb) =>
     `국면별로 보면 나스닥 상관이 ${a} ${va} → ${b} ${vb} 로 커졌습니다. ` +
     `관련은 뚜렷하지만 <b>동시에</b> 움직이는 관계라 타이밍에는 못 씁니다.`,
@@ -381,6 +397,20 @@ en: {
   relShort: y => `<b>*</b> Fewer than ${y} years of data — <b>a single regime</b>, so it cannot be ` +
     `read on the same scale as the other rows. The upstream source itself starts only that recently.`,
   relShortT: "The sample covers a single regime",
+  mstrRatio: "Relative performance (MSTR \u00f7 BTC, start = 1)",
+  mstrShade: "shaded = MSTR far ahead",
+  mstrRead: (k, days) =>
+    `That happened <b>${k} times</b>, roughly ${days} days in total. There are also stretches of ` +
+    `falling far behind \u2014 the lever works both ways.`,
+  altMstr: (from, to, k) =>
+    `A line chart, on a log scale, of the MSTR share price divided by the Bitcoin price from ${from} ` +
+    `to ${to}. Above 1 the stock has gained more than the coin. The ${k} shaded spans mark 90-day ` +
+    `return gaps above +0.5 in logs \u2014 the stock running far ahead.`,
+  newsEmpty: "No articles collected yet. The fetcher runs four times a day on the server and this page fills in on the next refresh.",
+  newsFetched: s => `last fetched ${s}`,
+  newsCount: n => `${n} essential articles`,
+  newsAgoH: h => h < 1 ? "just now" : `${h}h ago`,
+  newsAgoD: d => `${d}d ago`,
   relRead: (a, b, va, vb) =>
     `Split by era, the correlation with the Nasdaq grew from ${va} in ${a} to ${vb} in ${b}. ` +
     `The link is clear, but it moves <b>at the same time</b>, so it is useless for timing.`,
@@ -1094,6 +1124,112 @@ function relRows(){
       `<td class="num">${r.n} · ${r.years}y</td>` +
       `<td>${esc(pick(r, "band"))}</td>`;
     body.appendChild(tr);
+  });
+}
+
+/* =====================================================================
+   05 부록. MSTR 상대성과 — 데이터가 없으면 섹션 전체를 숨긴다
+   ===================================================================== */
+function drawMstr(){
+  const host = $("mstr-host"), svg = $("mstr");
+  if (!host || !svg) return;
+  const M = D.rel && D.rel.mstr;
+  const blocks = ["mstr-head", "mstr-fig"];
+  const hideAll = () => blocks.forEach(i => { const e = $(i); if (e) e.style.display = "none"; });
+  if (!M || !M.series || M.series.length < 10){ hideAll(); return; }
+  blocks.forEach(i => { const e = $(i); if (e) e.style.display = ""; });
+  const S = M.series.filter(pt => pt[1] > 0);       // [[base 기준 일수, 비율]]
+  if (S.length < 10){ hideAll(); return; }
+  const W = host.clientWidth || 900;
+  const H = Math.max(200, Math.min(300, W * 0.36));
+  const PL = 46, PR = 16, PT = 14, PB = 30;
+  const iw = W - PL - PR, ih = H - PT - PB;
+  const x0 = S[0][0], x1 = S[S.length - 1][0];
+  if (x1 <= x0){ hideAll(); return; }
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.setAttribute("height", H);
+  clear(svg);
+  const X = v => PL + (v - x0) / (x1 - x0) * iw;
+  let lo = Infinity, hi = 0;
+  S.forEach(pt => { lo = Math.min(lo, pt[1]); hi = Math.max(hi, pt[1]); });
+  const la = Math.log10(lo), lb = Math.log10(hi);
+  const pad = (lb - la) * 0.08 || 0.1;
+  const Y = v => PT + ((lb + pad) - Math.log10(v)) / ((lb - la) + 2 * pad) * ih;
+
+  // 음영 — 사용자가 물은 바로 그 구간. 선보다 먼저 그려 선이 위에 오게 한다.
+  // 그리는 집합과 세는 집합이 같아야 한다 — 하루짜리 구간을 폭 0으로 떨어뜨리면
+  // "10번" 이라고 말하면서 9개만 칠하는 화면이 된다(실제로 그랬다). 최소 1.5px.
+  const vis = (M.periods || []).filter(pr => Math.min(x1, pr[1]) >= Math.max(x0, pr[0]));
+  vis.forEach(pr => {
+    const a = Math.max(x0, pr[0]), b = Math.min(x1, pr[1]);
+    el("rect", {x:X(a), y:PT, width:Math.max(1.5, X(b) - X(a)), height:ih,
+      fill:"var(--wash-warm-2)"}, svg);
+  });
+
+  // 가로 눈금 — ×배수. 1× 은 기준선이라 점선으로 구분한다.
+  [0.25, 0.5, 1, 2, 4, 8, 16].forEach(v => {
+    if (v < lo / 1.6 || v > hi * 1.6) return;
+    const one = v === 1;
+    el("line", {x1:PL, y1:Y(v), x2:PL + iw, y2:Y(v),
+      stroke: one ? "var(--zero)" : "var(--grid)", "stroke-width":1,
+      "stroke-dasharray": one ? "3 3" : null}, svg);
+    txt(svg, PL - 7, Y(v) + 3, v + "\u00d7", {anchor:"end", size:10});
+  });
+  const yA = dateOf(x0).getUTCFullYear(), yB = dateOf(x1).getUTCFullYear();
+  for (let y = yA; y <= yB; y++){
+    const off = (Date.UTC(y, 0, 1) - BASE.getTime()) / DAY;
+    if (off >= x0 && off <= x1)
+      txt(svg, X(off), H - 8, String(y), {anchor:"middle", size:9, fill:"var(--ink-2)"});
+  }
+  let d = "";
+  S.forEach(pt => { d += (d ? " L" : "M") + X(pt[0]) + "," + Y(pt[1]); });
+  el("path", {d:d, fill:"none", stroke:"var(--accent)", "stroke-width":1.8,
+    "stroke-linejoin":"round"}, svg);
+
+  const k = vis.length;
+  const days = vis.reduce((s2, pr) => s2 + (pr[1] - pr[0]) + 1, 0);   // 하루짜리도 1일
+  setHTML("mstr-legend",
+    `<span><i style="background:var(--accent);height:2px;border-radius:0;margin-bottom:3px"></i>${t("mstrRatio")}</span>` +
+    `<span><i style="background:var(--wash-warm-2);border:1px solid var(--rule)"></i>${t("mstrShade")}</span>`);
+  setHTML("mstr-read", k ? t("mstrRead", k, days) : "");
+  describe(svg, t("altMstr", iso(dateOf(x0)), iso(dateOf(x1)), k));
+}
+
+/* =====================================================================
+   06. 뉴스 — 데이터는 __BCS__ 가 아니라 __BCS_NEWS__ 로 온다(주입 주기가 다르다)
+   ===================================================================== */
+function renderNews(){
+  const host = $("news-list");
+  if (!host) return;
+  const N = window.__BCS_NEWS__;
+  host.innerHTML = "";
+  // 신뢰 경계: 기사 제목·요약·URL 은 외부 입력이다. 수집기가 태그를 벗기지만
+  // 여기서도 esc() 와 http(s) 강제를 다시 건다 — 방어는 겹으로.
+  const items = (N && N.items ? N.items : []).filter(it =>
+    it && typeof it.url === "string" && /^https?:\/\//i.test(it.url) && it.title);
+  const ago = t0 => {
+    const h = Math.floor((Date.now() - new Date(t0).getTime()) / 3600000);
+    return !isFinite(h) || h < 0 ? "" : (h >= 48 ? t("newsAgoD", Math.floor(h / 24)) : t("newsAgoH", h));
+  };
+  if (!items.length){
+    setHTML("news-empty", esc(t("newsEmpty")));
+    setText("news-fetched", ""); setText("news-count", "");
+    return;
+  }
+  setHTML("news-empty", "");
+  // 수집 시각은 보는 시점에 다시 계산한다 — 구워 넣은 "1시간 전"은 금방 거짓이 된다.
+  setText("news-fetched", N.fetched ? t("newsFetched", ago(N.fetched)) : "");
+  setText("news-count", t("newsCount", items.length));
+  items.forEach(it => {
+    const a = document.createElement("a");
+    a.className = "newsitem";
+    a.href = it.url;                       // 위에서 ^https?:// 를 강제했다
+    a.target = "_blank"; a.rel = "noopener noreferrer";
+    const when = it.published ? ago(it.published) : "";
+    a.innerHTML =
+      `<div class="nt">${esc(String(it.title))}</div>` +
+      `<div class="nm">${esc(String(it.source || ""))}${when ? " \u00b7 " + esc(when) : ""}</div>` +
+      (it.summary ? `<p class="ns">${esc(String(it.summary))}</p>` : "");
+    host.appendChild(a);
   });
 }
 
@@ -1828,13 +1964,13 @@ function applyLang(){
 
 /* ===================================================================== */
 function drawAll(){
-  drawGauge(); drawKey(); drawHist(); drawPrice(); drawM2Lead(); drawRelEra(); drawTP(); drawFam(); drawWidth();
+  drawGauge(); drawKey(); drawHist(); drawPrice(); drawM2Lead(); drawRelEra(); drawMstr(); drawTP(); drawFam(); drawWidth();
 }
 // 규칙 페이지의 스크립트가 여기에 자기 렌더러를 밀어 넣는다. 언어를 바꿀 때
 // 이 스크립트가 그것도 같이 다시 그려야 한다.
 const HOOKS = window.__BCS_HOOKS__ = window.__BCS_HOOKS__ || [];
 function renderAll(){
-  heroFill(); sideFill(); fillText(); famCards(); metricCards(); scaleKey(); mixBar(); histLegend(); rangeSel(); relRows(); drawAll();
+  heroFill(); sideFill(); fillText(); famCards(); metricCards(); scaleKey(); mixBar(); histLegend(); rangeSel(); relRows(); renderNews(); drawAll();
   for (let i = 0; i < HOOKS.length; i++) HOOKS[i]();
   fillYears();   // applyLang 이 산문을 다시 그린 뒤라, .yr 스팬을 마지막에 채운다
 }
