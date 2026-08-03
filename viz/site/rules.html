@@ -10,6 +10,7 @@
   --plane:#090909; --surface:#111111; --surface-2:#171717; --surface-3:#1c1c1c;
   --ink:#ffffff; --ink-2:#a1a1aa; --muted:#71717a;
   --grid:rgba(255,255,255,.05); --axis:rgba(255,255,255,.16); --rule:rgba(255,255,255,.06);
+  --fade:rgba(0,0,0,.6);
   --warm-3:#ef5350; --warm-2:#d9705e; --warm-1:#9c5c52;
   --cool-1:#3f5a80; --cool-2:#4a8ce0; --cool-3:#5ea3ea;
   --zero:rgba(255,255,255,.20);
@@ -30,6 +31,7 @@
   --plane:#f6f7f9; --surface:#ffffff; --surface-2:#f1f3f6; --surface-3:#e9ecf1;
   --ink:#0d1013; --ink-2:#565c66; --muted:#8a909a;
   --grid:#e6e8ec; --axis:#c8cdd5; --rule:rgba(16,19,23,.08);
+  --fade:rgba(15,23,42,.16);
   --warm-3:#d23b38; --warm-2:#d6624a; --warm-1:#e4a68f;
   --cool-1:#93b6df; --cool-2:#3f7fc4; --cool-3:#1d5091;
   --zero:#b9bec7;
@@ -146,9 +148,25 @@ figcaption{font-size:12.5px; color:var(--muted); margin-top:12px; max-width:76ch
 .rangesel button[aria-pressed="true"]{background:var(--surface-3); color:var(--ink);
   box-shadow:inset 0 0 0 1px var(--rule)}
 @media (prefers-reduced-motion: reduce){.rangesel button{transition:none}}
+/* 폰에서 이력 차트 창(1년/3년/8년/전체)을 바꾸는 버튼이 너무 낮아 오탭이 잦다 —
+   세로 여백을 키워 편한 탭 크기에 가깝게. 라벨·aria-pressed 로직은 그대로. */
+@media (max-width:560px){.rangesel button{padding:9px 12px}}
 
 /* ---- 표 ---- */
-.tblwrap{overflow-x:auto; border:1px solid var(--rule); border-radius:var(--r); background:var(--surface); box-shadow:var(--shadow)}
+.tblwrap{overflow-x:auto; border:1px solid var(--rule); border-radius:var(--r); box-shadow:var(--shadow);
+  /* 가로 스크롤이 있으면 그 가장자리에 옅은 그림자로 '더 있다'를 알린다 — 폰에서
+     화면 밖 열(예: 05 순위표의 '관련성' 판정)을 아무도 찾아 밀지 않는다. 순수
+     CSS: 표면색 덮개(local)가 양 끝에서 그림자를 가리고, 스크롤해 덮개가 걷히면
+     그림자가 드러난다. 스크롤이 없으면 덮개가 끝까지 덮어 아무것도 안 보인다. */
+  background:
+    linear-gradient(90deg, var(--surface) 42%, rgba(0,0,0,0)) 0 0,
+    linear-gradient(90deg, rgba(0,0,0,0), var(--surface) 58%) 100% 0,
+    radial-gradient(farthest-side at 0 50%, var(--fade), rgba(0,0,0,0)) 0 0,
+    radial-gradient(farthest-side at 100% 50%, var(--fade), rgba(0,0,0,0)) 100% 0,
+    var(--surface);
+  background-repeat:no-repeat;
+  background-size:34px 100%, 34px 100%, 14px 100%, 14px 100%, 100% 100%;
+  background-attachment:local, local, scroll, scroll, scroll}
 table{border-collapse:collapse; width:100%; font-size:12.5px}
 caption{text-align:left; font-size:12.5px; color:var(--muted); padding:14px 16px 0; caption-side:top}
 th,td{padding:9px 14px; text-align:right; white-space:nowrap; border-bottom:1px solid var(--rule)}
@@ -175,6 +193,10 @@ sup.warn{color:var(--accent); font-weight:700; margin-left:2px; cursor:help}
 .m2-read{font-size:13px; color:var(--ink-2); margin:14px 0 0; max-width:76ch}
 .m2-read:empty{display:none}
 .m2-read b{color:var(--ink); font-weight:640}
+/* 유동성 장의 '지금 한 줄'만 눈에 띄게 — 공유 .m2-read 는 그대로 두고 이 id 만.
+   긴 차트 밑에 회색 캡션처럼 묻혀 있던 '현재 판독'을 찾기 쉬운 칸으로 만든다. */
+#m2-read{background:var(--surface-2); border-left:3px solid var(--accent);
+  padding:12px 16px; border-radius:var(--r-sm)}
 
 /* ---- 06 뉴스 목록 ---- */
 .newslist{display:flex; flex-direction:column; gap:10px; max-width:860px}
@@ -208,6 +230,9 @@ a.newsitem:hover{border-color:var(--axis); background:var(--surface-2)}
   display:flex; align-items:center; gap:10px; flex-wrap:wrap}
 .hero-answer b{color:var(--ink); font-weight:680}
 .hero-sub{margin-top:10px; font-size:12.5px; color:var(--muted); font-family:var(--mono); letter-spacing:.02em}
+/* 갱신이 3일 넘게 멈추면 히어로 가격 바로 밑이 붉어진다 — '오늘 가격인가?'가
+   방문자의 첫 질문인데, 낡음 경고가 위쪽 작은 줄에만 있으면 놓치기 쉽다. */
+.hero-sub.stale{color:var(--crit); font-weight:600}
 
 /* ---- 지표 카드 그리드 (프리미엄 메트릭 카드) ---- */
 .metrics{display:grid; grid-template-columns:repeat(auto-fill,minmax(232px,1fr)); gap:clamp(12px,1.6vw,16px)}
@@ -407,6 +432,21 @@ tbody td.sub{font-family:var(--sans); color:var(--muted); font-weight:400; text-
 @media (max-width:400px){.ctlbtn{padding:8px 10px; font-size:12px}}
 @media (prefers-reduced-motion: reduce){.ctlbtn{transition:none}}
 
+/* 맨 위로 버튼 — 한참 내리면 나타난다(JS 가 .show 토글). z-index 는 차트
+   툴팁(z-index:5)보다 낮게 둬 겹칠 때 툴팁이 이긴다. 44px = 편한 탭 크기. */
+.backtop{
+  position:fixed; right:18px; bottom:18px; z-index:4;
+  width:44px; height:44px; display:grid; place-items:center;
+  border:1px solid var(--rule); border-radius:50%;
+  background:var(--surface); color:var(--ink-2); cursor:pointer;
+  box-shadow:var(--shadow);
+  opacity:0; visibility:hidden; transform:translateY(6px);
+  transition:opacity .18s ease, transform .18s ease, visibility .18s;
+}
+.backtop.show{opacity:1; visibility:visible; transform:none}
+.backtop:hover{color:var(--ink); border-color:var(--axis)}
+@media (prefers-reduced-motion: reduce){.backtop{transition:none}}
+
 .srcline .stale{color:var(--crit); font-weight:600}
 
 /* 페이지 알약 */
@@ -423,7 +463,7 @@ nav.pages .n{font-family:var(--mono); font-size:11px; opacity:.55; margin-right:
 @media (prefers-reduced-motion: reduce){nav.pages a{transition:none}}
 @media (max-width:520px){
   nav.pages{flex-basis:100%; gap:3px; order:3}
-  nav.pages a{flex:1; padding:8px 4px; font-size:12px; text-align:center; white-space:nowrap; background:var(--surface); border-color:var(--rule)}
+  nav.pages a{flex:1; padding:11px 4px; font-size:12px; text-align:center; white-space:nowrap; background:var(--surface); border-color:var(--rule)}
   nav.pages .n{display:none}
   .topbar .ctl{margin-left:auto}
 }
@@ -442,7 +482,7 @@ nav.pages .n{font-family:var(--mono); font-size:11px; opacity:.55; margin-right:
   }
   body{background:#fff; font-size:11pt}
   .wrap{max-width:none; padding:0}
-  nav.pages, .ctl, .why, .nextlink, .srcline a, .kbdhint, .rangesel{display:none !important}
+  nav.pages, .ctl, .why, .nextlink, .srcline a, .kbdhint, .rangesel, .backtop{display:none !important}
   .panelbody{display:block !important; border:0; padding:0; background:none; margin-top:6px}
   .panel, .tblwrap, .famcard, .metric, figure, .hero-main{
     break-inside:avoid; page-break-inside:avoid; box-shadow:none}
@@ -492,6 +532,12 @@ nav.pages .n{font-family:var(--mono); font-size:11px; opacity:.55; margin-right:
     <button class="ctlbtn" id="theme-btn" type="button">어둡게</button>
   </div>
 </div>
+<!-- 맨 위로. 이 장들은 길어서(어떤 장은 4,000px+) 상단 내비·언어·테마 버튼이
+     스크롤로 사라지면 돌아갈 길이 없다. 한참 내리면 나타나고 누르면 위로 간다.
+     스크립트가 없으면 숨은 채로 둔다(순수 부가기능). -->
+<button class="backtop" id="backtop" type="button" aria-label="맨 위로" data-t-aria="nav.backtop">
+  <svg viewBox="0 0 24 24" aria-hidden="true" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V6M6 12l6-6 6 6"/></svg>
+</button>
 
 <header class="top">
   <p class="eyebrow" data-t="rul.eyebrow">규칙</p>
@@ -719,6 +765,7 @@ window.__I18N__ = {
 "nav.rules": "Rules and limits",
 /* 낭독기용 영역 라벨(aria-label) — data-t-aria 로 언어를 따라간다 */
 "nav.aria": "Pages",
+"nav.backtop": "Back to top",
 "nav.liquidity": "Liquidity",
 "idx.aria.hero": "Market snapshot",
 "idx.aria.side": "Summary",
@@ -1066,6 +1113,7 @@ window.__I18N__ = {
 /* ---------------- 06 뉴스 ---------------- */
 "nav.news": "News",
 "news.eyebrow": "<em>06</em> — News",
+"news.sorted": "sorted by relevance",
 "news.h1": "What is happening in Bitcoin right now",
 "news.lead": `<strong>Only the essential articles</strong>, filtered from public RSS feeds and refreshed
   four times a day. What selects them is not a person but a <strong>published scoring rule</strong>
@@ -2916,7 +2964,17 @@ function heroFill(){
   const c = D.current; if (!c) return;
   setText("hero-eyebrow", t("heroNow"));
   setText("hero-price", c.price != null ? money(c.price) : "—");
-  setText("hero-sub", t("heroSub", c.d));
+  // 갱신이 3일 넘게 멈추면 히어로 가격 바로 밑에서 붉게 경고한다 — '오늘
+  // 가격인가?'가 첫 질문이라, 낡음 표시가 위쪽 작은 줄에만 있으면 놓친다.
+  const latSub = (D.latest || D.current || {}).d;
+  const subDays = latSub ? Math.max(0, Math.floor(
+    (Date.now() - Date.parse(latSub + "T00:00:00Z")) / DAY)) : 0;
+  const subEl = $("hero-sub");
+  if (subEl){
+    const stale = subDays > 3;
+    subEl.className = "hero-sub" + (stale ? " stale" : "");
+    subEl.textContent = stale ? t("freshStale", subDays) : t("heroSub", c.d);
+  }
   const pct = c.rank != null ? Math.round(c.rank * 100) : null;
   const chipCls = c.bcs < 0 ? "cool" : (c.bcs > 0 ? "warm" : "flat");
   setHTML("hero-answer",
@@ -3131,6 +3189,21 @@ if (themeBtn) themeBtn.addEventListener("click", () => {
   store.set(LS_THEME, next);
   paintControls();                 // 다시 그리기는 아래 MutationObserver 가 맡는다
 });
+
+// 맨 위로 — 한 화면 반쯤 내리면 나타나고, 누르면 위로 간다(움직임 최소 설정이면
+// 즉시). 이 장들은 4,000px 를 넘어, 내리면 상단 내비로 돌아갈 길이 없었다.
+const backtop = $("backtop");
+if (backtop){
+  const onScroll = () => backtop.classList.toggle(
+    "show", (window.scrollY || window.pageYOffset || 0) > window.innerHeight * 1.5);
+  window.addEventListener("scroll", onScroll, {passive:true});
+  onScroll();
+  backtop.addEventListener("click", () => {
+    const reduce = window.matchMedia
+      && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({top:0, behavior: reduce ? "auto" : "smooth"});
+  });
+}
 
 let timer = null;
 const ro = new ResizeObserver(() => {
