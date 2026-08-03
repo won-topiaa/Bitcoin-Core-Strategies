@@ -5,7 +5,11 @@
 #   (2) 여섯 장이 전부 바뀌어 뉴스 하나 때문에 매번 전체 재배포가 된다.
 # 그래서 기사 데이터는 공용 페이로드(__BCS__)와 분리된 마커 구간에 살고,
 # tools/inject_news.py 가 구워 둔 news.html 의 그 구간만 갈아 끼운다.
-# 커밋이 viz/site/** 를 건드리므로 Pages 배포(pages.yml)가 이어서 돈다.
+#
+# 배포: 이 커밋은 GITHUB_TOKEN 으로 push 되므로 push 이벤트를 트리거하지 않는다.
+# 그래서 pages.yml 이 이 워크플로를 workflow_run 으로 지켜보다 끝나면 배포한다
+# (예전 주석은 "push 가 배포를 잇는다"고 했으나, 토큰 push 는 push 이벤트를 내지
+# 않아 사실이 아니었다 — 그 잠복 결함을 pages.yml 의 workflow_run 으로 고쳤다).
 #
 # 시각은 매일 02:20 UTC 전체 갱신(refresh-data.yml) **뒤에만** 오게 골랐다 —
 # 그 갱신이 news.html 을 통째로 다시 굽기 때문에, 앞서 돌면 서로를 덮어쓴다.
@@ -18,6 +22,7 @@ on:
 
 permissions:
   contents: write
+  issues: write   # 실패 시 조용히 멈추지 않도록 알림 이슈를 연다
 
 concurrency:
   group: refresh-news
@@ -41,7 +46,7 @@ jobs:
       - name: news.html 에 주입
         run: python3 tools/inject_news.py --page viz/site/news.html --news data/news.json
 
-      - name: 커밋
+      - name: 커밋·푸시
         run: |
           if git diff --quiet -- viz/site/news.html data/news.json; then
             echo "새 기사가 없습니다."
@@ -50,7 +55,53 @@ jobs:
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add viz/site/news.html data/news.json
-          git commit -m "뉴스 갱신"
-          # 다른 워크플로(데이터 갱신)가 그 사이 푸시했을 수 있다 — 리베이스 후 푸시.
-          git pull --rebase origin "${GITHUB_REF_NAME}"
-          git push
+          MSG="뉴스 갱신"
+          git commit -m "$MSG"
+          # 그 사이 데이터 갱신이나 사람이 밀었을 수 있다. non-fast-forward 로 죽는
+          # 대신, 원격 tip 위로 우리의 news.html·news.json 만 얹어 다시 커밋한다
+          # (market 데이터는 스테이지하지 않으므로 절대 건드리지 않는다).
+          for i in 1 2 3 4 5; do
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then
+              echo "푸시 성공."
+              exit 0
+            fi
+            echo "푸시 경합 — 원격을 받아 그 위로 다시 얹습니다 ($i/5)."
+            # FETCH_HEAD 는 방금 받은 원격 브랜치 tip 을 확실히 가리킨다.
+            git fetch origin "${GITHUB_REF_NAME}"
+            git reset --soft FETCH_HEAD
+            git commit -m "$MSG" || { echo "원격에 이미 반영됨."; exit 0; }
+            sleep $((i * 3))
+          done
+          echo "::error::뉴스 갱신 커밋을 원격에 밀지 못했습니다."
+          exit 1
+
+      - name: 실패 알림 (조용히 멈추지 않게)
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const title = `⚠️ 자동 갱신 실패 — ${context.workflow}`;
+            const runUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            const body = [
+              `\`${context.workflow}\` 워크플로가 실패했습니다.`,
+              ``,
+              `- 실행 로그: ${runUrl}`,
+              `- 커밋: \`${context.sha}\``,
+              `- 이벤트: \`${context.eventName}\``,
+              ``,
+              `뉴스 페이지가 갱신·배포되지 않았을 수 있습니다. 위 로그에서 실패한 단계를 확인하세요.`,
+            ].join('\n');
+            const found = await github.rest.search.issuesAndPullRequests({
+              q: `repo:${context.repo.owner}/${context.repo.repo} is:issue is:open in:title ${JSON.stringify(title)}`,
+            });
+            const existing = found.data.items.find(i => i.title === title);
+            if (existing) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner, repo: context.repo.repo,
+                issue_number: existing.number, body,
+              });
+            } else {
+              await github.rest.issues.create({
+                owner: context.repo.owner, repo: context.repo.repo, title, body,
+              });
+            }

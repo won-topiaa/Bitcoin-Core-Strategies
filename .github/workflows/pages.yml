@@ -1,14 +1,22 @@
 # 구워 둔 사이트(viz/site)를 GitHub Pages 로 배포한다.
 #
-# 이 저장소는 사이트를 '다 구운 정적 페이지들'로 viz/site 에 커밋한다(refresh-data.yml).
-# 여기서는 그 폴더를 그대로 Pages 에 올린다 — 빌드를 다시 하지 않는다.
+# 이 저장소는 사이트를 '다 구운 정적 페이지들'로 viz/site 에 커밋한다. 여기서는
+# 그 폴더를 그대로 Pages 에 올린다 — 빌드를 다시 하지 않는다.
 #
-# 자동 갱신 흐름:
-#   1) 매일 '데이터 갱신'이 데이터를 받아 viz/site 를 다시 굽고 커밋한다.
-#   2) 그 커밋은 기본 GITHUB_TOKEN 으로 push 되는데, 토큰 push 는 다른 워크플로의
-#      push 이벤트를 **트리거하지 않는다**(무한루프 방지). 그래서 push 대신
-#      workflow_run 으로 '데이터 갱신'이 끝난 뒤에 이어 붙여 배포가 빠지지 않게 한다.
-#   3) 내가 소스를 고쳐 직접 push 할 때는 push(paths: viz/site) 로 배포된다.
+# ⚠️ 왜 push 트리거가 없는가 (한 번 데이터가 뒤로 간 사고의 교훈):
+#   viz/site 는 **데이터에 의존하는 산출물**이다. 그런데 소스를 고치는 사람이
+#   최신 market.csv 가 없는 환경(에이전트 샌드박스)에서 사이트를 다시 구우면,
+#   며칠 전 데이터가 박힌 낡은 페이지가 나온다. 예전엔 push(paths: viz/site) 로
+#   그 낡은 페이지가 그대로 배포돼, CI 가 신선한 데이터로 구워 둔 것을 덮고
+#   화면의 기준일이 **뒤로 갔다**. 사용자에겐 갱신이 멈춘 것으로 보였다.
+#
+#   그래서 배포는 **오직 신선한 CI 빌드 뒤에만** 일어나게 한다:
+#     · '데이터 갱신'  — 러너(이그레스 열림)가 최신 데이터를 받아 사이트를 다시
+#                        굽고 커밋한다. 소스 push 도 이걸 트리거한다.
+#     · '뉴스 갱신'    — 하루 네 번 news.html 만 갈아 끼운다.
+#   두 워크플로의 커밋은 GITHUB_TOKEN 으로 push 되는데, 토큰 push 는 다른
+#   워크플로의 push 이벤트를 **트리거하지 않는다**(무한루프 방지). 그래서 push
+#   대신 workflow_run 으로 그 둘이 끝난 뒤에 이어 붙여 배포가 빠지지 않게 한다.
 #
 # 최초 1회: configure-pages 가 enablement:true 로 Pages 를 자동으로 켜 본다. 조직/
 # 저장소 정책이 막으면 Settings → Pages → Source 를 'GitHub Actions' 로 한 번만
@@ -16,11 +24,8 @@
 name: Pages 배포
 
 on:
-  push:
-    branches: ["claude/bitcoin-key-indicators-strategy-hrcbdd"]
-    paths: ["viz/site/**"]
   workflow_run:
-    workflows: ["데이터 갱신"]
+    workflows: ["데이터 갱신", "뉴스 갱신"]
     types: [completed]
   workflow_dispatch:
 
@@ -36,13 +41,16 @@ concurrency:
 
 jobs:
   deploy:
-    # workflow_run 으로 올 때는 '데이터 갱신'이 성공했을 때만 배포한다.
+    # workflow_run 으로 올 때는 앞 워크플로가 성공했을 때만 배포한다. 실패한
+    # 갱신(예: 데이터 소스가 낡아 후퇴 가드가 멈춤)을 배포로 이어붙이지 않는다.
     if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      # workflow_run 은 기본 브랜치의 tip 을 체크아웃한다. 앞 갱신이 방금 커밋한
+      # 신선한 viz/site 가 거기 있다.
       - uses: actions/checkout@v4
 
       - name: Pages 설정 (없으면 자동으로 켜기)

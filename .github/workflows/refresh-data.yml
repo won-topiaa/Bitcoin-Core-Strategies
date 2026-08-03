@@ -1,13 +1,23 @@
-# 데이터를 매일 받아 사이트를 다시 굽는다.
+# 데이터를 받아 사이트를 다시 굽고 커밋한다 — 매일, 그리고 소스가 바뀔 때마다.
 #
 # data/market.csv 는 .gitignore 에 있다 — 매일 1MB 짜리 CSV 를 커밋하면 1년에
-# 100MB 가 쌓인다. 그래서 저장소에 남기는 것은 **다 구운 페이지 세 장**이고,
-# CSV 는 매 실행에서 전 구간을 새로 받는다(1.7초). 증분으로 이어 온 파일과
-# 바이트 단위로 같은 결과가 나오는 것은 tests/test_refresh.py 가 지킨다.
+# 100MB 가 쌓인다. 그래서 저장소에 남기는 것은 **다 구운 페이지들**이고, CSV 는
+# 매 실행에서 전 구간을 새로 받는다(1.7초). 증분으로 이어 온 파일과 바이트 단위로
+# 같은 결과가 나오는 것은 tests/test_refresh.py 가 지킨다.
+#
+# ⚠️ 이 워크플로가 배포의 유일한 정문이다. 사이트(viz/site)는 데이터에 의존하는
+#    산출물이라, **최신 데이터를 가진 러너**만 올바르게 구울 수 있다. 소스를 고치는
+#    사람이 데이터 없는 환경에서 구우면 며칠 전 데이터가 박힌다. 그래서:
+#      · schedule       — 매일 최신 데이터로 굽는다.
+#      · push(소스 변경) — 소스가 바뀌면 여기서 **신선한 데이터로 다시 구워** 배포로
+#                          잇는다. 낡은 viz/site 를 곧바로 배포하지 않는다(pages.yml
+#                          에서 push 트리거를 없앤 이유).
+#    커밋은 GITHUB_TOKEN 으로 push 되므로 이 워크플로가 스스로를 다시 트리거하지
+#    않는다(무한루프 방지). 배포(pages.yml)는 workflow_run 으로 이어 붙는다.
 #
 # GitHub Actions 의 schedule 은 **기본 브랜치의 워크플로만** 실행한다. 이 저장소는
 # claude/bitcoin-key-indicators-strategy-hrcbdd 가 기본 브랜치라, 이 파일이 여기
-# 있는 것만으로 매일(02:20 UTC) 자동으로 돈다. 즉시 확인은 workflow_dispatch.
+# 있는 것만으로 매일 자동으로 돈다. 즉시 확인은 workflow_dispatch.
 name: 데이터 갱신
 
 on:
@@ -15,6 +25,18 @@ on:
     # 매일 02:20 UTC (한국 11:20). CoinMetrics 커뮤니티 티어가 전날 데이터를
     # 채우고 난 뒤여야 해서 자정 직후를 피한다.
     - cron: "20 2 * * *"
+  push:
+    # 소스가 바뀌면 신선한 데이터로 다시 구워 배포한다. 데이터 없는 환경에서 손으로
+    # 구운 낡은 페이지가 배포되던 경로를 이걸로 대체한다. 문서·테스트만 바뀌면
+    # 사이트가 안 바뀌므로 트리거하지 않는다.
+    branches: ["claude/bitcoin-key-indicators-strategy-hrcbdd"]
+    paths:
+      - "viz/**"
+      - "tools/**"
+      - "src/**"
+      - "config/**"
+      - "requirements.txt"
+      - ".github/workflows/refresh-data.yml"
   workflow_dispatch:
     inputs:
       dry_run:
@@ -24,6 +46,7 @@ on:
 
 permissions:
   contents: write
+  issues: write   # 실패 시 조용히 멈추지 않도록 알림 이슈를 연다
 
 concurrency:
   # 앞 실행이 아직 커밋하지 않았는데 다음이 시작하면 서로를 덮어쓴다.
@@ -82,7 +105,21 @@ jobs:
           echo "ASOF=$(sed -n 's/^기준일: \([0-9-]*\).*/\1/p' build.log)" >> "$GITHUB_ENV"
           rm -f build.log
 
-      - name: 커밋
+      - name: 후퇴 방지 — 더 오래된 데이터로 덮지 않는다
+        # 이 러너가 방금 구운 페이지의 기준일이 **이미 커밋된 것보다 오래됐으면**
+        # 굽지도 커밋도 하지 않고 멈춘다. 정상 경로에선 새로 받은 데이터가 같거나
+        # 더 최신이라 통과한다. 후퇴는 상류(데이터 소스) 이상이거나 낡은 빌드가
+        # 새어 든 것이므로, 조용히 배포하는 대신 실패시켜 알림이 뜨게 한다.
+        run: |
+          NEW=$(python3 tools/site_asof.py viz/site/index.html || true)
+          OLD=$(git show HEAD:viz/site/index.html 2>/dev/null | python3 tools/site_asof.py - || true)
+          echo "새 기준일=${NEW:-?}  이미 배포된 기준일=${OLD:-없음}"
+          if [ -n "$NEW" ] && [ -n "$OLD" ] && [[ "$NEW" < "$OLD" ]]; then
+            echo "::error::받은 데이터($NEW)가 이미 배포된 것($OLD)보다 오래됐습니다 — 후퇴를 막고 중단합니다."
+            exit 1
+          fi
+
+      - name: 커밋·푸시
         if: ${{ inputs.dry_run != true }}
         run: |
           if git diff --quiet -- viz/site data/macro.csv data/stocks.csv data/news.json; then
@@ -97,5 +134,57 @@ jobs:
           for f in data/stocks.csv data/news.json; do
             [ -f "$f" ] && git add "$f"
           done
-          git commit -m "데이터 갱신 — 기준일 ${ASOF:-미확인}"
-          git push
+          MSG="데이터 갱신 — 기준일 ${ASOF:-미확인}"
+          git commit -m "$MSG"
+          # 그 사이 다른 워크플로(뉴스 갱신)나 사람이 밀었으면 bare push 는
+          # non-fast-forward 로 죽는다(예전엔 여기서 조용히 멈췄다). 원격 tip 위로
+          # 우리의 '신선 전체 재빌드' 트리를 얹어 다시 커밋하고 민다 — index·성적표는
+          # 이 워크플로만 만들고, 뉴스가 잠깐 달라지는 건 다음 뉴스 갱신이 바로잡는다.
+          for i in 1 2 3 4 5; do
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then
+              echo "푸시 성공."
+              exit 0
+            fi
+            echo "푸시 경합 — 원격을 받아 그 위로 다시 얹습니다 ($i/5)."
+            # FETCH_HEAD 는 방금 받은 원격 브랜치 tip 을 확실히 가리킨다
+            # (origin/<branch> 원격추적 ref 설정에 의존하지 않는다).
+            git fetch origin "${GITHUB_REF_NAME}"
+            git reset --soft FETCH_HEAD
+            git commit -m "$MSG" || { echo "원격에 이미 반영됨."; exit 0; }
+            sleep $((i * 3))
+          done
+          echo "::error::데이터 갱신 커밋을 원격에 밀지 못했습니다."
+          exit 1
+
+      - name: 실패 알림 (조용히 멈추지 않게)
+        # 자동화의 가장 큰 위험은 '조용히' 멈추는 것이다. 어느 단계든 실패하면
+        # 열려 있는 알림 이슈에 덧붙이거나(없으면 새로 열어) 사람이 알게 한다.
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const title = `⚠️ 자동 갱신 실패 — ${context.workflow}`;
+            const runUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            const body = [
+              `\`${context.workflow}\` 워크플로가 실패했습니다.`,
+              ``,
+              `- 실행 로그: ${runUrl}`,
+              `- 커밋: \`${context.sha}\``,
+              `- 이벤트: \`${context.eventName}\``,
+              ``,
+              `데이터/사이트가 갱신·배포되지 않았을 수 있습니다. 위 로그에서 실패한 단계를 확인하세요.`,
+            ].join('\n');
+            const found = await github.rest.search.issuesAndPullRequests({
+              q: `repo:${context.repo.owner}/${context.repo.repo} is:issue is:open in:title ${JSON.stringify(title)}`,
+            });
+            const existing = found.data.items.find(i => i.title === title);
+            if (existing) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner, repo: context.repo.repo,
+                issue_number: existing.number, body,
+              });
+            } else {
+              await github.rest.issues.create({
+                owner: context.repo.owner, repo: context.repo.repo, title, body,
+              });
+            }
