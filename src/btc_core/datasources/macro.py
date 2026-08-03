@@ -8,7 +8,7 @@
 
 중국 M2 전년비는 늘 높은 좁은 띠(대략 6~14%)에 있고 장기적으로 완만히 낮아진다.
 전년비 '수준'을 그대로 쓰면 고정 앵커에서 거의 상수(+큰 값)로 붙어 신호가 안 된다.
-게다가 그 수준-상관(+0.43)의 일부는 '둘 다 우하향'이라는 공통추세 착시다. 그래서
+게다가 그 수준-상관(+0.44)의 일부는 '둘 다 우하향'이라는 공통추세 착시다. 그래서
 **자기 24개월 평균에서 얼마나 벗어났나**(가속/감속)를 임펄스로 쓴다 — 추세를 빼고
 남는 순수 순환 신호(실측 ρ≈+0.3, ~1년 선행)다. 값이 +면 완화 순풍, −면 긴축 역풍.
 
@@ -22,6 +22,7 @@
 from __future__ import annotations
 
 import csv
+import math
 from datetime import date
 from pathlib import Path
 from typing import Optional
@@ -108,7 +109,10 @@ def china_m2_impulse(path: str | Path, *, reference: Optional[date] = None,
         if v is None:                 # 달력상 한 달이라도 비면 임펄스를 내지 않는다
             return None
         window_vals.append(v)
-    return m2[last] - sum(window_vals) / window
+    imp = m2[last] - sum(window_vals) / window
+    # 셀이 비유한(NaN/inf)이면 임펄스도 비유한이 된다 — 그대로 내보내면
+    # export_viz → json.dumps 가 무효 JSON(NaN)을 써서 사이트가 깨진다. None 으로.
+    return imp if math.isfinite(imp) else None
 
 
 def load_macro_signals(path: str | Path = "data/macro.csv", *,

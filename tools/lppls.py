@@ -492,7 +492,7 @@ def main(argv: Optional[list[str]] = None) -> int:
             d0, d1 = run[0][0], run[-1][0]
             p0 = run[0][1]
 
-            def fwd(n: int) -> str:
+            def fwd(n: int, px_lut=px_lut, d1=d1, run=run) -> str:  # 루프 변수 묶기 — 즉시 호출이라 안전하나 명시
                 q = px_lut.get(d1 + timedelta(days=n))
                 return f"{(q/run[-1][1]-1)*100:+.0f}%" if q else "—"
 

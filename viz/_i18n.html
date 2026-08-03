@@ -11,6 +11,12 @@ window.__I18N__ = {
 "nav.now": "Where we are",
 "nav.verify": "Can you trust it",
 "nav.rules": "Rules and limits",
+/* 낭독기용 영역 라벨(aria-label) — data-t-aria 로 언어를 따라간다 */
+"nav.aria": "Pages",
+"nav.liquidity": "Liquidity",
+"idx.aria.hero": "Market snapshot",
+"idx.aria.side": "Summary",
+"idx.aria.range": "Time range",
 "foot.disclaimer": `This page exists for personal record-keeping and information, not as investment advice.
   None of the numbers here say anything about future prices. What you decide, and what follows from it, is yours.`,
 
@@ -18,23 +24,23 @@ window.__I18N__ = {
 "idx.eyebrow": "Bitcoin cycle position",
 "idx.h1": "Cheap side, or expensive side?",
 "idx.lead": `A ruler that tells you one thing only — <strong>where today's Bitcoin price sits against
-  the last 16 years</strong>. It says nothing about whether the price goes up or down from here.`,
+  the last <span class="yr">16</span> years</strong>. It says nothing about whether the price goes up or down from here.`,
 "idx.s1.eyebrow": "<em>01</em> — Where we are",
 "idx.s1.h2": "Today lands about here",
-"idx.s1.p": `The closer to −100, the cheaper against the last 16 years; the closer to +100, the more
+"idx.s1.p": `The closer to −100, the cheaper against the last <span class="yr">16</span> years; the closer to +100, the more
   expensive. Why it comes out as a <strong>range</strong> rather than a single number is
   <a href="__VERIFY_URL__">on the next page</a>.`,
 "idx.s2.h2": "Where each of the nine indicators sits",
 "idx.s2.p": `The single score above is these nine combined. The further <strong>left</strong> a bar
   reaches the cheaper the side, the further <strong>right</strong> the more expensive, and the
-  percentage is <strong>where it falls within that indicator's last four years</strong> (one cycle) —
-  18%, for instance, means only 18% of the last four years were lower than this.
-  <strong>Note: this ‘4-year’ percentage uses a different window than the ‘16-year’ percentile on the
-  gauge up top</strong> — the top one ranks the <strong>final score across all 16 years</strong>, these
-  rank <strong>each indicator over its own last four years</strong>, so don't compare the two numbers
-  directly. <strong>‘Last time it was here’</strong> is the most recent time that indicator was as
-  extreme as it is now (at least six months ago).`,
-"idx.s3.eyebrow": "<em>02</em> — The last 16 years",
+  percentage is <strong>where it falls within that indicator's last four years</strong>.`,
+"idx.s2.more": "Show all nine indicators",
+"idx.s2.note": `<strong>This ‘4-year’ percentage uses a different window than the ‘<span class="yr">16</span>-year’ percentile on the
+  gauge up top</strong> — the top one ranks the final score across all <span class="yr">16</span> years, these rank each
+  indicator over its own last four years, so don't compare the two numbers directly.
+  The date at the end of each card is <strong>the most recent time that indicator was as extreme as it
+  is now</strong> (at least six months ago).`,
+"idx.s3.eyebrow": "<em>02</em> — The last <span class=\"yr\">16</span> years",
 "idx.s3.h2": "Four visits to the same place, four returns",
 "idx.s3.p": `The ruler above, computed every day and strung out in time order. Vertical is the position
   score, horizontal is time.`,
@@ -55,20 +61,9 @@ window.__I18N__ = {
   was actually at a bottom when the chart above went low</strong> is the whole of what this indicator
   claims. They are not drawn on top of each other because two vertical axes let you slide the lines
   until a relationship appears that was never there.`,
-"idx.macro.h3": "Backdrop — Chinese liquidity leads by about a year",
-"idx.macro.p": `When money is printed, risk assets follow <strong>later</strong>. Backtested on historical data,
-  the best leader of Bitcoin is not a global aggregate but <strong>China's liquidity</strong>, and the
-  lead is not the few weeks people cite but <strong>about a year</strong> (measured 11 months,
-  correlation +0.43, confirmed across three sources). Below, the Bitcoin price (black) is overlaid with
-  China M2 growth (blue) pulled forward by that <strong>measured 11 months</strong> — the dashed part
-  right of 'now' is <strong>liquidity that is already in the past</strong>, not yet old enough to have
-  shown up in Bitcoin; it is <strong>not a price forecast</strong>.`,
-"idx.macro.cap": `Overlaid, but not a trick — the shift is fixed to the <strong>measured lead
-  (11 months)</strong>, not eyeballed, and each vertical axis uses only its own data min and max. Even
-  so, a two-axis overlay is only a <strong>guide</strong>. What actually moves execution
-  <strong>size</strong> (LRS) is the detrended impulse (the number above), and this signal is
-  <strong>not</strong> in the score (direction) — with only two or three monetary cycles in the sample,
-  using it directionally would be reckless.`,
+"idx.liqlink.k": "Macro backdrop",
+"idx.liqlink.t": "Chinese liquidity leads by about a year",
+"idx.liqlink.d": "When money is printed, Bitcoin follows later — context only, not in the score",
 "idx.next.k": "Next",
 "idx.next.t": "Can you trust this number",
 "idx.next.d": "What it said at eight past turning points, and why it comes out as a range",
@@ -106,7 +101,7 @@ window.__I18N__ = {
 "vfy.scale.p1": `Every indicator is first <strong>measured with the same ruler.</strong> Whatever its
   raw value, it becomes <strong>"roughly what rank is this within the last four years"</strong>.`,
 "vfy.scale.p2": `That is what makes them addable. MVRV wanders between 0 and 10 while the 200-week MA
-  multiple wanders between 0.5 and 5 — add those directly and the bigger one wins.
+  multiple wanders between 0.5 and 16 — add those directly and the bigger one wins.
   <strong>Turned into ranks, the two weigh the same.</strong>`,
 "vfy.scale.p3": `There is a reason for not using fixed thresholds. "MVRV above 7 is expensive" held in
   2013, but <strong>2025 never once touched 7.</strong> The absolute readings fall from cycle to
@@ -127,7 +122,7 @@ window.__I18N__ = {
 "vfy.s3.p2": `Done this way, <strong>not one new number had to be chosen.</strong> Fixing a constant
   like "read it as ±10" would make that 10 one more arbitrary value, so the data sets the width
   itself.`,
-"vfy.width.h3": "How wide the range ran over 16 years",
+"vfy.width.h3": "How wide the range ran over <span class=\"yr\">16</span> years",
 "vfy.callout": `<strong>On slightly fewer than half of all days the range fits entirely inside one
   band.</strong> The rest of the time it straddles two — "cheap side" and "near a bottom", say. That
   is the warning against reading the decimals, put into a number, and it is why the range is what
@@ -147,7 +142,7 @@ window.__I18N__ = {
   So what makes the score and what merely appears on screen are kept firmly apart.`,
 "rul.s1.dl": `<dt>What makes the score</dt>
       <dd>Nine indicators. Each is converted into <strong>roughly what rank it holds within the last
-      four years</strong>. Fixed thresholds like "MVRV of 3 is expensive" are avoided because those
+      four years</strong>. Fixed thresholds like "MVRV of 7 is expensive" are avoided because those
       absolute readings have kept falling from cycle to cycle.</dd>
 
       <dt>Two must agree</dt>
@@ -207,7 +202,9 @@ window.__I18N__ = {
       differs from everything so far, it may not hold.
       <br><br>So <strong>the same configuration was applied unchanged to Litecoin and
       Ethereum</strong>. It called 16 of the 21 turning points across the two assets (76%). Pure
-      number-fitting to Bitcoin would not survive that.</li>
+      number-fitting to Bitcoin would not survive that. That said, 21 is a small sample, so the error
+      band on this 76% is wide (roughly ±18pp); and Litecoin and Ethereum move together with Bitcoin,
+      so it is not a fully independent out-of-sample test — it cannot rule overfitting out entirely.</li>
 
       <li><strong>Its grip on tops is weakening cycle by cycle.</strong> Puell, for instance, ranked
       top-tier, top-tier, mid, then ordinary across the four peaks. This follows from price no longer
@@ -264,6 +261,78 @@ window.__I18N__ = {
   disagree it <strong>stops without writing anything.</strong>`,
 "rul.next.k": "Back to the start",
 "rul.next.t": "See where we are",
-"rul.next.d": "Where Bitcoin sits today against the last 16 years"
+"rul.next.d": "Where Bitcoin sits today against the last <span class=\"yr\">16</span> years",
+
+/* ---------------- 04 유동성 (거시 배경) ---------------- */
+"liq.eyebrow": "<em>04</em> — Macro backdrop",
+"liq.h1": "Chinese liquidity leads Bitcoin by about a year",
+"liq.lead": `When money is printed, risk assets follow <strong>later</strong>. Backtested on historical
+  data, the best leader of Bitcoin is not a global aggregate but <strong>China's liquidity</strong>.
+  This page is <strong>context only — not in the score (BCS)</strong>: it moves execution size, not
+  direction.`,
+"liq.chart.h3": "China M2 growth (led) vs Bitcoin log price",
+"liq.p": `The lead is not the few weeks people cite but <strong>about a year</strong> (measured 11
+  months, correlation +0.44, confirmed across three sources). Below, the Bitcoin log price (black) is
+  overlaid with China M2 growth (blue) pulled forward by that <strong>measured 11 months</strong> — the
+  dashed part right of 'now' is <strong>liquidity already in the past</strong>, not yet old enough to
+  have shown up in Bitcoin; it is <strong>not a price forecast</strong>.`,
+"liq.cap": `Overlaid, but not a trick — the shift is fixed to the <strong>measured lead (11 months)</strong>,
+  not eyeballed, and each vertical axis uses only its own data min and max. Even so, a two-axis overlay is
+  only a <strong>guide</strong>.`,
+"liq.s2.h2": "Why it moves size, not direction",
+"liq.s2.p": `What actually moves execution <strong>size</strong> (LRS, 0.75–1.25×) is the detrended
+  <strong>impulse</strong> (the number above), and this signal is <strong>not</strong> in the score
+  (direction) — with only two or three monetary cycles in the sample, using it directionally would be
+  reckless. By the same standard, dropping gold (uncorrelated) and using this +0.44 for size only are
+  <strong>two faces of the same skepticism</strong>: it is used only where being wrong costs little.`,
+"liq.next.k": "Back",
+"liq.next.t": "See where we are now",
+"liq.next.d": "Where Bitcoin sits today against the last <span class=\"yr\">16</span> years",
+
+/* ---------------- 05 관련성 지도 ---------------- */
+"rel.eyebrow": "<em>05</em> — Relationship map",
+"rel.h1": "What is Bitcoin actually related to",
+"rel.lead": `<strong>‘Related to’ and ‘usable as a signal’ are two different layers.</strong>
+  The rest of this site measures the second one — “can it go in the score?” — and by that standard 59 of
+  60 candidates were rejected. This page asks only the <strong>question that comes before it</strong>:
+  what does Bitcoin actually move with?`,
+"rel.era.h3": "The link to risk assets <strong>came into being</strong> in 2020",
+"rel.era.p": `Collapse the whole history into one number and it reads “barely related to the Nasdaq
+  either.” <strong>That reading is wrong.</strong> Split by era and the correlation with the Nasdaq is
+  effectively zero through 2013–16, then becomes distinct from 2020. At the same moment VIX (the fear
+  index) grows with the <strong>opposite sign</strong> — the two confirm each other.`,
+"rel.era.cap": `The vertical axis is the correlation <strong>between weekly log returns</strong>. The
+  reason for using rates of change rather than levels (the prices themselves) is that both trend upward
+  over the long run, so comparing levels only ever says “they both went up” (spurious correlation). The
+  faint lines are the remaining candidates, and most of them stay near zero.`,
+"rel.rank.eyebrow": "<em>02</em> — Ranking",
+"rel.rank.h2": "Related to what, and how much",
+"rel.rank.p": `Whole-sample figures. <strong>The ‘from price’ rows (MVRV, drawdown) do not
+  answer the question</strong> — the numerator of MVRV <em>is</em> price, so a high correlation is
+  arithmetic, not a finding. <strong>Only the ‘external’ rows</strong> answer “is it related to
+  something outside Bitcoin?” The ‘controlled for Nasdaq’ column strips out the part that moves with the
+  Nasdaq: a candidate that collapses to zero there was a <strong>shadow of risk appetite</strong>.`,
+"rel.rank.caption": "Ordered by |ρ|. n is the sample size (weeks or months); ‘ex-Nasdaq’ is the partial correlation controlling for Nasdaq returns",
+"rel.th1": "Kind", "rel.th2": "Against", "rel.th3": "Correlation ρ",
+"rel.th4": "\u03c1 ex-Nasdaq", "rel.th5": "n · span", "rel.th6": "Relationship",
+"rel.why.eyebrow": "<em>03</em> — So what",
+"rel.why.h2": "If it is related, why keep it out of the score",
+"rel.why.p": `The answer is <strong>not “because it isn't related.”</strong> It is related — but
+  <strong>three things stand in the way</strong> of trusting it with direction.`,
+"rel.why.th1": "What stands in the way", "rel.why.th2": "What that means",
+"rel.why.rows": `<tr><td><strong>It moves at the same time</strong></td>
+        <td>The Nasdaq moves in the <strong>same week</strong> as Bitcoin. You cannot know it in advance, so it is useless for timing</td></tr>
+      <tr><td><strong>It is backdrop, not direction</strong></td>
+        <td>Risk appetite says nothing about “where Bitcoin sits in its own cycle”</td></tr>
+      <tr><td><strong>It appears and disappears by era</strong></td>
+        <td>The relationship did not exist in 2013–16. Nothing guarantees it exists in the next era</td></tr>`,
+"rel.why.after": `So macro is used only for execution <strong>size</strong> (0.75–1.25×), never for the
+  score (direction). It is related, so it is not thrown away; the three things above stand in the way, so
+  it is placed only where being wrong costs little. Exactly <strong>one of the 60 candidates</strong>
+  made it that far — China's M2.`,
+"rel.next.k": "The one that made it",
+"rel.next.t": "See Chinese liquidity",
+"rel.next.d": "One of 60 survived — and even that one moves size, not direction",
+"nav.relationship": "Relationships"
 };
 </script>

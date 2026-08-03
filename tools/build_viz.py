@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
 """시각화 페이지를 만든다 — 데이터를 페이지 안에 굽는다.
 
-    python3 tools/build_viz.py --csv data/market.csv    # viz/site/ 에 세 장
+    python3 tools/build_viz.py --csv data/market.csv    # viz/site/ 에 다섯 장
 
 페이지는 **자기완결이어야 한다.** 외부 요청이 하나라도 있으면 그 요청이 막힌
 환경에서 빈 화면이 나오고, 무료 데이터로 돌아가는 시스템에서 그건 곧 "안 보인다"
 와 같다. 그래서 CSS·JS·데이터를 전부 한 파일에 넣는다.
 
-    viz/_head.html        스타일 (세 장 공용)
-    viz/_script.html      차트 엔진 (세 장 공용, 없는 요소는 건너뛴다)
-    viz/*.body.html       페이지별 본문 셋
+    viz/_head.html        스타일 (전 장 공용)
+    viz/_script.html      차트 엔진 (전 장 공용, 없는 요소는 건너뛴다)
+    viz/*.body.html       페이지별 본문
     tools/export_viz.py   하루씩 계산해 JSON 을 만든다
-    이 파일                조각을 합쳐 자기완결 HTML 세 장으로 굽는다
+    이 파일                조각을 합쳐 자기완결 HTML 로 굽는다 (PAGES 가 목록)
 
 데이터는 주 단위로 추리고(전환점 주변·최근 400일은 일 단위) 좌표를 배열로
 눕혀 담는다. 그렇게 해야 16년치가 100KB 안쪽에 들어온다.
@@ -34,10 +34,10 @@ import export_viz  # noqa: E402
 
 from btc_core.config import load_config  # noqa: E402
 
-# 페이지는 셋이고 데이터는 하나다. 같은 payload 를 세 조각에 굽는다 —
+# 페이지는 여럿이고 데이터는 하나다. 같은 payload 를 모든 조각에 굽는다 —
 # 어느 한 장이 오래된 숫자를 보여주는 일이 없게.
 #
-# 머리(스타일)와 차트 엔진은 조각으로 빼서 세 장이 공유한다. 예전에는 틀마다
+# 머리(스타일)와 차트 엔진은 조각으로 빼서 전 장이 공유한다. 예전에는 틀마다
 # 스타일 블록을 통째로 복제하고 있었고, 한쪽만 고치면 두 장의 생김새가
 # 갈라졌다.
 HEAD = "viz/_head.html"
@@ -53,6 +53,10 @@ PAGES = (
      "이 숫자를 믿어도 되나 — 비트코인 사이클 위치", None),
     ("viz/rules.body.html",  "rules.html",  "rules",
      "규칙과 한계 — 비트코인 사이클 위치", "viz/_rules_script.html"),
+    ("viz/liquidity.body.html", "liquidity.html", "liquidity",
+     "중국 유동성 — 비트코인 사이클 위치", None),
+    ("viz/relationship.body.html", "relationship.html", "relationship",
+     "무엇과 관련 있나 — 비트코인 사이클 위치", None),
 )
 MARKER = "/*__DATA__*/"
 
@@ -123,6 +127,7 @@ def compact(payload: dict) -> dict:
         "deltas": payload["deltas"], "lastSimilar": payload["last_similar"],
         "deriveNotes": payload["derive_notes"],
         "macro": payload.get("macro"),
+        "rel": payload.get("relationship"),
         "S": rows,
     }
 
@@ -135,13 +140,14 @@ def _read(rel: str) -> str:
 
 
 PLACEHOLDERS = ("__INDEX_URL__", "__VERIFY_URL__", "__RULES_URL__",
+                "__LIQUIDITY_URL__", "__RELATION_URL__",
                 "__TITLE__", "__NAV__", "__PAGE__")
 
 
 def _bake(body_rel: str, page_key: str, title: str, extra_script: Optional[str],
           data: str, out: Path, links: dict[str, str]) -> Path:
-    # 머리띠는 세 장이 공유한다. 예전에는 본문마다 복제돼 있었고, 버튼을 하나
-    # 붙이려면 세 곳을 똑같이 고쳐야 했다.
+    # 머리띠는 전 장이 공유한다. 예전에는 본문마다 복제돼 있었고, 버튼을 하나
+    # 붙이려면 모든 본문을 똑같이 고쳐야 했다.
     nav = _read(NAV).replace("__PAGE__", page_key)
     page = (
         _read(HEAD).replace("__TITLE__", title)
@@ -151,7 +157,7 @@ def _bake(body_rel: str, page_key: str, title: str, extra_script: Optional[str],
         + _read(SCRIPT)
         + (_read(extra_script) if extra_script else "")
     )
-    # 세 장이 서로를 링크한다. 로컬에서는 파일 이름이면 되지만, 각각 다른
+    # 페이지들이 서로를 링크한다. 로컬에서는 파일 이름이면 되지만, 각각 다른
     # 주소로 올릴 때는 절대 주소여야 해서 빌드 시점에 갈아 끼운다.
     for k, v in links.items():
         page = page.replace(k, v)
@@ -166,9 +172,11 @@ def _bake(body_rel: str, page_key: str, title: str, extra_script: Optional[str],
 def build(csv: str, outdir: Path, *, config: Optional[str] = None,
           derive: bool = True, index_url: str = "index.html",
           verify_url: str = "verify.html", rules_url: str = "rules.html",
+          liquidity_url: str = "liquidity.html",
+          relation_url: str = "relationship.html",
           macro_csv: Optional[str] = None,
           info: Optional[dict] = None) -> list[Path]:
-    """세 장을 굽고 경로를 돌려준다.
+    """페이지를 굽고 경로를 돌려준다.
 
     ``info`` 를 주면 기준일·데이터 지연 같은 부수 정보를 그 딕셔너리에 담는다.
     반환형을 바꾸면 ``for p in build(...)`` 로 쓰는 호출부가 전부 깨지는데,
@@ -176,9 +184,11 @@ def build(csv: str, outdir: Path, *, config: Optional[str] = None,
     """
     cfg = load_config(config) if config else load_config()
     payload = export_viz.build(cfg, csv, derive=derive, macro_csv=macro_csv)
-    data = json.dumps(compact(payload), ensure_ascii=False, separators=(",", ":"))
+    data = json.dumps(compact(payload), ensure_ascii=False, separators=(",", ":"),
+                      allow_nan=False)   # NaN/inf 는 무효 JSON → JSON.parse 백지. 여기서 막는다.
     links = {"__INDEX_URL__": index_url, "__VERIFY_URL__": verify_url,
-             "__RULES_URL__": rules_url}
+             "__RULES_URL__": rules_url, "__LIQUIDITY_URL__": liquidity_url,
+             "__RELATION_URL__": relation_url}
     paths = [_bake(body, key, title, extra, data, outdir / name, links)
              for body, name, key, title, extra in PAGES]
     if info is not None:
@@ -197,17 +207,21 @@ def main(argv: Optional[list[str]] = None) -> int:
     ap.add_argument("--out-dir", default="viz/site", help="페이지를 내보낼 디렉터리")
     ap.add_argument("--no-derive", action="store_true",
                     help="빠진 유통량·시총을 반감기 스케줄로 채우지 않는다")
-    # 세 장이 서로를 링크한다. 로컬 파일로 볼 때는 기본값(파일 이름)이면 되고,
+    # 페이지들이 서로를 링크한다. 로컬 파일로 볼 때는 기본값(파일 이름)이면 되고,
     # 각각 다른 주소로 올릴 때만 절대 주소를 넘긴다.
     ap.add_argument("--index-url", default="index.html")
     ap.add_argument("--verify-url", default="verify.html")
     ap.add_argument("--rules-url", default="rules.html")
+    ap.add_argument("--liquidity-url", default="liquidity.html")
+    ap.add_argument("--relation-url", default="relationship.html")
     args = ap.parse_args(argv)
 
     info: dict = {}
     paths = build(args.csv, Path(args.out_dir), config=args.config,
                   derive=not args.no_derive, index_url=args.index_url,
                   verify_url=args.verify_url, rules_url=args.rules_url,
+                  liquidity_url=args.liquidity_url,
+                  relation_url=args.relation_url,
                   macro_csv=args.macro, info=info)
     for p in paths:
         kb = p.stat().st_size / 1024

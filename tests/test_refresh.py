@@ -21,7 +21,8 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "tools"))
 
-import refresh_data as rd  # noqa: E402
+import refresh_data as rd
+from btc_core.datasources.base import FetchError  # noqa: E402
 
 from btc_core.datasources.csv_source import read_cells, write_cells  # noqa: E402
 
@@ -240,7 +241,7 @@ def test_install_leaves_the_original_alone_when_the_new_file_is_bad(tmp_path):
     p = tmp_path / "market.csv"
     write_cells(cells(30), p)
     before = p.read_bytes()
-    with pytest.raises(Exception):
+    with pytest.raises(FetchError, match="price"):
         rd.install({}, p)                 # 가격이 없는 파일
     assert p.read_bytes() == before
     assert not (tmp_path / "market.csv.tmp").exists()

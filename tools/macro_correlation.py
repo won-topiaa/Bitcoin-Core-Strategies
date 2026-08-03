@@ -51,7 +51,7 @@ sys.path.insert(0, str(ROOT / "src"))
 # ---------------------------------------------------------------------------
 def pearson(xs: list[float], ys: list[float]) -> Optional[float]:
     n = len(xs)
-    if n < 3:
+    if n < 3 or len(ys) != n:      # 길이가 다르면 cov(zip) 만 잘려 조용히 틀린다
         return None
     mx, my = sum(xs) / n, sum(ys) / n
     cov = sum((x - mx) * (y - my) for x, y in zip(xs, ys))
@@ -59,7 +59,10 @@ def pearson(xs: list[float], ys: list[float]) -> Optional[float]:
     sy = math.sqrt(sum((y - my) ** 2 for y in ys))
     if sx == 0 or sy == 0:
         return None
-    return cov / (sx * sy)
+    # **[-1, 1] 로 조인다.** 두 계열이 사실상 같으면 부동소수 오차로 1.0000000000000002
+    # 가 나오고, 그 값이 부분상관의 sqrt(1 - r**2) 에 들어가면 음수 제곱근이 되어
+    # ValueError 로 죽는다. 사이트 빌드가 이 경로를 지나므로 실제 사고가 된다.
+    return max(-1.0, min(1.0, cov / (sx * sy)))
 
 
 def spearman(xs: list[float], ys: list[float]) -> Optional[float]:
@@ -285,6 +288,253 @@ def vix_analysis(btc: dict[date, float], vix: dict[date, float]) -> dict:
 
 
 # ---------------------------------------------------------------------------
+# 분석 1d — 엔캐리 트레이드 ↔ 비트코인 (엔 약세=캐리 활발 가설 점검)
+# ---------------------------------------------------------------------------
+def carry_analysis(btc: dict[date, float], usdjpy: dict[date, float],
+                   vix: Optional[dict[date, float]] = None) -> dict:
+    """주간 BTC 로그수익률 ↔ USDJPY 로그수익률. 가설이 맞으면 **양(+)** 이어야 한다.
+
+    엔캐리(엔을 싸게 빌려 위험자산을 산다)가 BTC 를 움직인다면, 엔이 약해질 때
+    (USDJPY↑) 캐리가 활발해 BTC 가 오르고, 엔이 급등하면(청산) BTC 가 빠져야 한다.
+
+    **핵심은 통제다.** 엔 급등은 대개 '공포가 커진 주'와 겹치므로, 단순 상관이
+    음수로 나와도 그것이 엔 때문인지 그냥 위험회피 때문인지 알 수 없다. 그래서
+    ΔVIX 를 통제한 부분상관을 함께 낸다 — 통제 후에도 0 근처면 엔은 위험회피의
+    대리변수일 뿐 독립 정보가 없다는 뜻이다(실측 결론, docs/26).
+    """
+    def wk(s):
+        by = {}
+        for d in sorted(s):
+            by[d.isocalendar()[:2]] = (d, s[d])
+        return {k: v for k, (_, v) in by.items()}
+
+    wb, wj = wk(btc), wk(usdjpy)
+    ks = sorted(set(wb) & set(wj))
+    rows = []
+    for a, b in zip(ks, ks[1:]):
+        if wb[a] > 0 and wj[a] > 0 and wb[b] > 0 and wj[b] > 0:
+            rows.append((b, math.log(wj[b] / wj[a]), math.log(wb[b] / wb[a])))
+    if len(rows) < 30:
+        return {"n": 0}
+    xs = [j for _, j, _ in rows]
+    ys = [b for _, _, b in rows]
+    full = pearson(xs, ys)
+
+    def era(lo, hi):
+        sub = [(j, b) for k, j, b in rows if lo <= k[0] <= hi]
+        return (pearson([j for j, _ in sub], [b for _, b in sub]), len(sub))
+
+    # ΔVIX 통제 부분상관 — 엔이 '독립적으로' 설명하는 몫이 있는지
+    partial = None
+    if vix:
+        wv = wk(vix)
+        trio = []
+        for (k, j, b), (a, _) in zip(rows, zip(ks, ks[1:])):
+            if k in wv and a in wv:
+                trio.append((j, b, wv[k] - wv[a]))
+        if len(trio) >= 30:
+            jj = [t[0] for t in trio]; bb = [t[1] for t in trio]; vv = [t[2] for t in trio]
+            partial = partial_from_r(pearson(jj, bb), pearson(jj, vv), pearson(bb, vv))
+    return {"n": len(rows), "full": full, "partial_vix": partial,
+            "eras": {"2010~2017": era(2010, 2017), "2018~2021": era(2018, 2021),
+                     "2022~현재": era(2022, 2100)},
+            "span": (rows[0][0], rows[-1][0])}
+
+
+# ---------------------------------------------------------------------------
+# 분석 1c — 금 현물 ↔ 비트코인 ('디지털 금' 서사 점검: 로그수익률 + 선행/후행)
+# ---------------------------------------------------------------------------
+def gold_analysis(btc: dict[date, float], gold: dict[date, float],
+                  max_lag: int = 6) -> dict:
+    """월간 BTC 로그수익률 ↔ 금 로그수익률의 상관과 선행/후행 스캔.
+
+    '디지털 금'이 맞다면 둘이 같이(양의 상관) 움직이거나 한쪽이 다른 쪽을 앞서야
+    한다. 레벨이 아니라 수익률로 재는 이유는 나스닥·VIX 와 같다 — 둘 다 우상향이라
+    레벨 상관은 가짜로 높다. 선행/후행은 금 수익률을 k개월 밀어 BTC 와 맞춘다
+    (k>0 = 금이 앞선다). 실측 결론은 '무상관'이지만, 재현·재검증되도록 도구에
+    남긴다(docs/25)."""
+    bm, gm = month_end(btc), month_end(gold)
+    br, gr = log_returns(bm), log_returns(gm)
+
+    def key(d: date):
+        return (d.year, d.month)
+    brp = {key(d): v for d, v in br.items()}
+    grp = {key(d): v for d, v in gr.items()}
+    common = sorted(set(brp) & set(grp))
+    x = [brp[k] for k in common]
+    y = [grp[k] for k in common]
+
+    def era(lo, hi):
+        ks = [k for k in common if lo <= k[0] <= hi]
+        return (pearson([brp[k] for k in ks], [grp[k] for k in ks]), len(ks))
+
+    def shift(ym: tuple[int, int], k: int) -> tuple[int, int]:
+        y_, m_ = ym[0], ym[1] + k
+        while m_ > 12:
+            m_ -= 12
+            y_ += 1
+        while m_ < 1:
+            m_ += 12
+            y_ -= 1
+        return (y_, m_)
+
+    lead: dict[int, Optional[float]] = {}
+    for k in range(-max_lag, max_lag + 1):
+        gsh = {shift(ky, k): v for ky, v in grp.items()}   # 금을 k개월 민다
+        ks = sorted(set(brp) & set(gsh))
+        lead[k] = pearson([gsh[c] for c in ks], [brp[c] for c in ks]) \
+            if len(ks) >= 24 else None
+    valid = {k: v for k, v in lead.items() if v is not None}
+    best_k = max(valid, key=lambda k: abs(valid[k])) if valid else None
+    return {"n": len(common), "full": pearson(x, y),
+            "eras": {"2013~2019": era(2013, 2019), "2020~현재": era(2020, 2100)},
+            "lead": lead, "best_lag": best_k,
+            "best_corr": valid.get(best_k) if best_k is not None else None,
+            "span": (common[0], common[-1]) if common else None}
+
+
+# ---------------------------------------------------------------------------
+# 분석 1e — 거시 후보 3종 ↔ 비트코인 (DXY·실질금리·연준 순유동성)
+# ---------------------------------------------------------------------------
+def _change(series: dict[date, float], use_log: bool) -> dict[date, float]:
+    """관측 격자 위의 변화. 가격류(양수)는 로그수익률, 수준 금리(음수 가능)는 차분."""
+    ds = sorted(series)
+    out: dict[date, float] = {}
+    for a, b in zip(ds, ds[1:]):
+        if use_log:
+            if series[a] > 0 and series[b] > 0:
+                out[b] = math.log(series[b] / series[a])
+        else:
+            out[b] = series[b] - series[a]
+    return out
+
+
+# 통제가 이만큼까지 설명하면(잔차분산 < 이 값) 부분상관은 정의되지 않은 것으로 본다.
+# |r| ≈ 0.9999999995 에 해당한다 — 실제 데이터의 0.99 는 잔차 0.02 라 영향이 없다.
+COLLINEAR = 1e-9
+
+
+def partial_from_r(xy: Optional[float], xz: Optional[float],
+                   yz: Optional[float]) -> Optional[float]:
+    """상관 셋으로 부분상관 하나 — ρ(x,y) 에서 z 와 같이 움직이는 몫을 뺀다.
+
+    같은 식이 세 도구에 각자 적혀 있었고, 셋 다 같은 함정을 안고 있었다:
+    통제가 사실상 완전한 예측자면 (1 − r²) 가 −1e−16 이 되어 **sqrt 가 죽는다.**
+    한 곳에 모아 두면 고칠 곳도 한 곳이다.
+    """
+    if None in (xy, xz, yz):
+        return None
+    rx, ry = 1 - xz ** 2, 1 - yz ** 2      # 통제로 설명하고 남은 분산
+    # **남은 분산이 사실상 0 이면 부분상관은 정의되지 않는다.** 0 인지만 보면
+    # 부동소수 티끌(2e−16)이 살아남아 0 나눗셈 직전의 **쓰레기 값**이 표에 실린다
+    # — 죽는 것보다 나쁘다. 티끌은 티끌로 보고 None 을 돌려준다.
+    if rx < COLLINEAR or ry < COLLINEAR:
+        return None
+    return (xy - xz * yz) / math.sqrt(rx * ry)
+
+
+def _partial(dk: dict, bk: dict, ctrl_change: dict, monthly: bool) -> Optional[float]:
+    """driver·BTC 를 control 로 통제한 부분상관. 세 계열을 같은 격자 키로 맞춘다."""
+    def key(d: date):
+        return (d.year, d.month) if monthly else d.isocalendar()[:2]
+    ck = {key(d): v for d, v in sorted(ctrl_change.items())}
+    common = sorted(set(dk) & set(bk) & set(ck))
+    if len(common) < 20:
+        return None
+    dd = [dk[c] for c in common]; bb = [bk[c] for c in common]; cc = [ck[c] for c in common]
+    return partial_from_r(pearson(dd, bb), pearson(dd, cc), pearson(bb, cc))
+
+
+def candidate_analysis(btc: dict[date, float], driver: dict[date, float],
+                       vix: Optional[dict[date, float]] = None,
+                       nasdaq: Optional[dict[date, float]] = None,
+                       use_log: bool = True, max_lag: int = 6) -> dict:
+    """거시 후보 하나를 금·엔캐리와 **같은 잣대**로 검정한다(docs/27).
+
+    주간·월간 로그수익률 상관 + 국면분할 + 선행/후행 + **ΔVIX·나스닥 통제 부분상관**.
+    부분상관이 결정적이다 — 후보가 위험자산 베타(공포·나스닥)를 넘어 BTC 에 **독립
+    정보**를 주는지 본다. 통제 후 0 근처면 대리변수일 뿐이라 점수·사이트엔 안 쓴다.
+
+    use_log=False 는 수준 금리(실질금리)용 — 음수가 될 수 있어 로그 대신 차분(Δ)으로
+    변화를 잡는다. VIX 통제도 차분(ΔVIX), 나스닥 통제는 로그수익률로 맞춘다.
+
+    **빈도를 후보에 맞춘다.** 월간으로만 나오는 후보(코스피=OECD 월간 지수 등)를 주간
+    격자에 물리면 '1개월 수익률 vs 1주 수익률'을 비교하게 돼 값이 통째로 틀린다
+    (nasdaq_analysis 가 `_is_monthly` 로 막는 것과 같은 함정). 그래서 후보가 월간이면
+    주요 프레임도, **부분상관도** 월간 격자에서 잰다.
+    """
+    def keyed(chg: dict, monthly: bool) -> dict:
+        def key(d: date):
+            return (d.year, d.month) if monthly else d.isocalendar()[:2]
+        return {key(d): v for d, v in sorted(chg.items())}
+
+    prim_monthly = _is_monthly(driver)      # 후보의 관측 빈도가 주요 프레임을 정한다
+    res: dict = {"use_log": use_log, "monthly_only": prim_monthly,
+                 "primary": "월간" if prim_monthly else "주간"}
+    dk_pr = bk_pr = None
+    for monthly, tag in ((False, "wk"), (True, "mo")):
+        if monthly is False and prim_monthly:
+            # 월간 후보에 주간 프레임은 의미가 없다 — 계산하지 않고 비워 둔다
+            res["full_wk"], res["n_wk"] = None, 0
+            continue
+        freq = month_end if monthly else weekly
+        dk = keyed(_change(freq(driver), use_log), monthly)
+        bk = keyed(log_returns(freq(btc)), monthly)
+        common = sorted(set(dk) & set(bk))
+        res[f"full_{tag}"] = pearson([dk[c] for c in common], [bk[c] for c in common]) \
+            if len(common) >= 12 else None
+        res[f"n_{tag}"] = len(common)
+        if monthly is prim_monthly:         # 주요 프레임에서 구간·국면을 잡는다
+            dk_pr, bk_pr = dk, bk
+            res["span"] = (common[0], common[-1]) if common else None
+            res["n_primary"] = len(common)
+
+            # common·dk·bk 를 기본값으로 묶는다 — 이 클로저는 바로 아래에서 즉시
+            # 호출되므로 지금도 안전하지만, 묶어 두면 그 사실이 명시되고 B023
+            # 오탐이 사라져 진짜 늦은-바인딩 버그가 나면 그때 드러난다.
+            def era(lo, hi, common=common, dk=dk, bk=bk):
+                ks = [c for c in common if lo <= c[0] <= hi]
+                return (pearson([dk[c] for c in ks], [bk[c] for c in ks]), len(ks))
+            res["eras"] = {"2013~2017": era(2013, 2017),
+                           "2018~2021": era(2018, 2021),
+                           "2022~현재": era(2022, 2100)}
+
+    # 부분상관 — **주요 프레임과 같은 격자**에서 ΔVIX·나스닥수익률을 각각 통제
+    pfreq = month_end if prim_monthly else weekly
+    res["partial_vix"] = (_partial(dk_pr, bk_pr, _change(pfreq(vix), False), prim_monthly)
+                          if vix else None)
+    res["partial_ndq"] = (_partial(dk_pr, bk_pr, _change(pfreq(nasdaq), True), prim_monthly)
+                          if nasdaq else None)
+
+    # 선행/후행 — 월간, driver 를 k개월 밀어 BTC 와 맞춘다(k>0 = driver 가 앞선다)
+    dkm = {(d.year, d.month): v for d, v in _change(month_end(driver), use_log).items()}
+    bkm = {(d.year, d.month): v for d, v in log_returns(month_end(btc)).items()}
+
+    def shift(ym, k):
+        y_, m_ = ym[0], ym[1] + k
+        while m_ > 12:
+            m_ -= 12
+            y_ += 1
+        while m_ < 1:
+            m_ += 12
+            y_ -= 1
+        return (y_, m_)
+
+    lead: dict[int, Optional[float]] = {}
+    for k in range(-max_lag, max_lag + 1):
+        dsh = {shift(ky, k): v for ky, v in dkm.items()}
+        ks = sorted(set(bkm) & set(dsh))
+        lead[k] = pearson([dsh[c] for c in ks], [bkm[c] for c in ks]) \
+            if len(ks) >= 24 else None
+    valid = {k: v for k, v in lead.items() if v is not None}
+    best_k = max(valid, key=lambda k: abs(valid[k])) if valid else None
+    res["lead"] = lead
+    res["best_lag"] = best_k
+    res["best_corr"] = valid.get(best_k) if best_k is not None else None
+    return res
+
+
+# ---------------------------------------------------------------------------
 # 분석 2 — M2 ↔ 비트코인 (전년비 증가율의 선행/후행)
 # ---------------------------------------------------------------------------
 def m2_lead_lag(btc_month: dict[date, float], m2: dict[date, float],
@@ -334,7 +584,7 @@ def report(btc: dict[date, float], macro: dict[str, dict[date, float]]) -> str:
     L: list[str] = []
     add = L.append
     add("=" * 78)
-    add("  비트코인 ↔ 거시 연관성 — 무료 데이터, 변화율 기준")
+    add("  비트코인 ↔ 거시 연관성 — 공개 데이터, 변화율 기준")
     add("=" * 78)
     btc_month = month_end(btc)
 
@@ -371,6 +621,106 @@ def report(btc: dict[date, float], macro: dict[str, dict[date, float]]) -> str:
         for name, (val, npt) in v["eras"].items():
             add(f"    {name}  ρ {val:+.2f}   ({npt}개월)" if val is not None
                 else f"    {name}  —")
+
+    # --- 금 현물 — 있으면 ('디지털 금' 점검) ---
+    gold_key = next((k for k in macro
+                     if "gold" in k.lower() or k.lower() in ("xau", "xauusd")), None)
+    if gold_key is not None:
+        add("\n[1c] 금 현물 ↔ 비트코인 — 월수익률 상관 + 선행/후행 ('디지털 금' 점검)")
+        add("-" * 78)
+        g = gold_analysis(btc, macro[gold_key])
+        if g["span"]:
+            add(f"  기간 {g['span'][0]} ~ {g['span'][1]} · 공통 {g['n']}개월")
+        add(f"  동시 ρ = {g['full']:+.2f}" if g["full"] is not None else "  동시 —")
+        for name, (val, npt) in g["eras"].items():
+            add(f"    {name}  ρ {val:+.2f}   ({npt}개월)" if val is not None
+                else f"    {name}  —")
+        if g["best_lag"] is not None:
+            add(f"  최강 선행/후행: k={g['best_lag']:+d}개월  ρ {g['best_corr']:+.2f}"
+                "  (k>0 = 금이 앞섬)")
+        add("  → |ρ| 가 0.2 도 안 되고 시대·프레임마다 부호가 바뀐다 = 무상관."
+            " 방향·선행 신호로 쓰지 않는다 (docs/25).")
+
+    # --- 엔캐리(USDJPY) — 있으면 ---
+    jpy_key = next((k for k in macro if k.lower() in ("usdjpy", "jpy", "dexjpus")), None)
+    if jpy_key is not None:
+        add("\n[1d] 엔캐리 트레이드 ↔ 비트코인 — 주간 수익률 (엔 약세=캐리 활발 가설)")
+        add("-" * 78)
+        vix_col = next((k for k in macro if "vix" in k.lower()), None)
+        c = carry_analysis(btc, macro[jpy_key], macro.get(vix_col) if vix_col else None)
+        if c.get("n"):
+            add(f"  공통 {c['n']}주")
+            add(f"  전 구간 ρ = {c['full']:+.2f}   (가설이 맞으면 **양수**여야 한다)"
+                if c["full"] is not None else "  전 구간 —")
+            for name, (val, npt) in c["eras"].items():
+                add(f"    {name}  ρ {val:+.2f}   ({npt}주)" if val is not None
+                    else f"    {name}  —")
+            if c["partial_vix"] is not None:
+                add(f"  ΔVIX 통제 부분상관 = {c['partial_vix']:+.2f}"
+                    "   (엔이 '독립적으로' 설명하는 몫)")
+            add("  → 어느 프레임에서도 |ρ| < 0.2 이고 부호도 가설과 반대다. 엔 급등이"
+                " BTC 하락과 겹쳐 보이는 것은")
+            add("    엔 때문이 아니라 그 주의 일반적 위험회피 때문이다 — 통제하면 남는 게"
+                " 없다. 쓰지 않는다 (docs/26).")
+        else:
+            add("  데이터 부족")
+
+    # --- 거시 후보 3종 (DXY·실질금리·연준 순유동성) — 있으면 ---
+    vix_col = next((k for k in macro if "vix" in k.lower()), None)
+    ndq_col = next((k for k in macro if "nasdaq" in k.lower() or "ndq" in k.lower()), None)
+    # (열, 라벨, 로그변환?, 가설). 로그=가격류(양수), 차분=수준 금리·스프레드(음수 가능)
+    cand_specs = [("dxy", "DXY(광의 달러지수)", True, "달러 강세=BTC 하락(음)"),
+                  ("realyield", "미국 10년 실질금리", False, "실질금리 상승=BTC 하락(음)"),
+                  ("net_liq", "연준 순유동성(WALCL−TGA−RRP)", True, "유동성 증가=BTC 상승(양)"),
+                  ("kospi", "코스피(한국 주가지수)", True, "한국 위험선호=BTC 상승(양)"),
+                  ("hy_spread", "고수익채 스프레드(신용)", False, "스프레드 확대=BTC 하락(음)"),
+                  ("breakeven", "10년 기대인플레이션", False, "인플레 기대↑='디지털 금'(양)"),
+                  ("curve", "수익률곡선 10년−2년", False, "가팔라짐=완화 사이클(양)"),
+                  ("oil", "WTI 원유(에너지)", True, "유가↑=인플레·성장(양)"),
+                  ("copper", "구리(산업금속)", True, "'닥터 코퍼' 글로벌 성장(양)"),
+                  ("em_fx", "신흥국 대비 달러지수", True, "신흥국 통화 약세=위험회피(음)"),
+                  ("china_eq", "중국 주가지수", True, "중국 위험선호=BTC 상승(양)")]
+    present = [c for c in cand_specs if c[0] in macro]
+    if present:
+        add("\n[1e] 거시 후보 ↔ 비트코인 — 수익률 상관 + ΔVIX·나스닥 통제 부분상관")
+        add("-" * 78)
+        vcol = macro.get(vix_col) if vix_col else None
+        ncol = macro.get(ndq_col) if ndq_col else None
+        for col, label, use_log, hyp in present:
+            r = candidate_analysis(btc, macro[col], vcol, ncol, use_log=use_log)
+            basis = "로그수익률" if use_log else "Δ수준"
+            unit = "개월" if r.get("monthly_only") else "주"
+            add(f"\n  ▸ {label}  (가설: {hyp}, {basis})"
+                + (f"  {r['span'][0]}~{r['span'][1]}" if r.get("span") else ""))
+            fw, fm = r.get("full_wk"), r.get("full_mo")
+            if not r.get("monthly_only"):
+                add(f"    주간 ρ = {fw:+.2f} ({r['n_wk']}주)" if fw is not None else "    주간 —")
+            add(f"    월간 ρ = {fm:+.2f} ({r['n_mo']}개월)" if fm is not None else "    월간 —")
+            if r.get("monthly_only"):
+                add("    (월간 자료만 있어 월간을 주요 프레임으로 쓴다 — 주간 격자에 물리면"
+                    " 빈도가 어긋난다)")
+            for name, (val, npt) in r["eras"].items():
+                if val is not None:
+                    add(f"      {name}  ρ {val:+.2f}  ({npt}{unit})")
+            pv, pn = r.get("partial_vix"), r.get("partial_ndq")
+            add(f"    ΔVIX 통제 부분상관 = {pv:+.2f}   나스닥 통제 = {pn:+.2f}"
+                f"   ({r.get('primary')} 격자)"
+                if pv is not None and pn is not None else "    부분상관 —")
+            if r.get("best_lag") is not None:
+                add(f"    최강 선행/후행: k={r['best_lag']:+d}개월  ρ {r['best_corr']:+.2f}"
+                    "  (k>0 = 후보가 앞섬)")
+                add("      ※ 13개 시차에서 |ρ| 최대를 고른 값이라 선택 효과가 있다 —"
+                    " 부호가 국면마다 뒤집히면 잡음으로 본다(docs/27).")
+        # 결론 문장의 예시는 **실제로 잰 후보만** 나열한다 — 없는 열을 언급하면
+        # 리포트가 재지 않은 것을 잰 것처럼 읽힌다.
+        # 사유를 둘로 나눠 적되, **후보 이름은 쓰지 않는다** — 이 결론문은 어떤 열
+        # 조합으로도 실행되므로, 이름을 박으면 재지 않은 후보를 잰 것처럼 읽힌다.
+        add(f"\n  → 후보 {len(present)}종 전부 기준 미달. 다만 **사유는 둘로 갈린다**:")
+        add("    (a) 크기는 되는데 통제하면 사라짐 = 위험선호 대리변수(나스닥·VIX 와 강하게 붙음)")
+        add("    (b) 나스닥과 거의 직교하지만 애초에 크기가 부족함")
+        add("    '전부 나스닥 베타'로 뭉뚱그리면 (b)에 대해 사실이 아니다 — 크기를 넘으면서")
+        add("    위험선호와 독립인 후보를 아직 못 찾았을 뿐이다. 채택된 중국 M2(11개월 선행)와")
+        add("    격이 다르므로 방향(BCS)·사이트에 넣지 않는다 (docs/27·28).")
 
     # --- M2 (열마다) ---
     add("\n[2] M2 ↔ 비트코인 — 전년비 증가율, 선행/후행 스캔")

@@ -8,6 +8,7 @@ import pytest
 import yaml
 
 from btc_core.config import ConfigError, StrategyConfig, load_config, validate
+from btc_core.normalize import NormalizationError
 
 
 @pytest.fixture(scope="module")
@@ -170,9 +171,11 @@ def test_rejects_floor_weights_that_do_not_sum_to_one(cfg):
 
 
 def test_rejects_malformed_anchors(cfg):
+    """`Exception` 으로 받으면 **오타로 난 AttributeError 도 통과한다** — 실제로
+    이 시험은 한동안 그렇게 통과하고 있었다. 무엇이 왜 났는지까지 못 박는다."""
     def poke(r):
         r["indicators"]["puell"]["anchors"] = [[1.0, 0.5], [0.5, 0.9]]
-    with pytest.raises(Exception):
+    with pytest.raises(NormalizationError, match="순증가"):
         validate(mutated(cfg, poke))
 
 

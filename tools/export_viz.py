@@ -212,7 +212,7 @@ def macro_lead(cfg: StrategyConfig, macro_csv: str, rows: list, reference: date)
 
     화면은 비트코인 로그가격에 **중국 M2 전년비를 측정된 선행(lead)만큼 앞으로
     당겨** 겹친다. 이중축 겹침의 위험(축을 밀어 없던 관계를 만드는 것)은 (1) 당김을
-    눈대중이 아니라 **측정값**(ρ+0.43, docs/25)으로 고정하고, (2) 축 범위를 데이터
+    눈대중이 아니라 **측정값**(ρ+0.44, docs/25)으로 고정하고, (2) 축 범위를 데이터
     최소/최대로만 잡아 없앤다. 실제로 LRS 를 움직이는 신호는 추세를 뺀 임펄스라,
     그 값도 함께 낸다(readout). 오프셋은 다른 차트와 같은 기준일(rows[0]).
     """
@@ -238,8 +238,28 @@ def macro_lead(cfg: StrategyConfig, macro_csv: str, rows: list, reference: date)
         "btc": btc, "m2": m2,
         "impulse": None if imp is None else round(imp, 2),
         "lrs": lrs, "band": band,
-        "corr": 0.43,                   # 실측(docs/25): 중국 M2 11개월 선행 ρ+0.43
+        "corr": 0.44,                   # 실측(docs/25): 중국 M2 11개월 선행 ρ+0.44
     }
+
+
+def relationship(csv: str, macro_csv: str) -> Optional[dict]:
+    """'비트코인은 무엇과 관련 있는가' 지도(docs/33). 없으면 None.
+
+    **숫자를 페이지에 손으로 적지 않는다.** 관련성 표는 데이터가 갱신될 때마다
+    조금씩 움직이는데, 화면에 박아 두면 문서·리포트와 조용히 갈라진다. 그래서
+    빌드 때 `tools/relationship_map.py` 로 다시 계산해 굽는다(약 1.4초).
+
+    이 값은 **점수(BCS)에 들어가지 않는다.** 관련성은 '무엇과 같이 움직이나'이고
+    점수는 '지금 싼가 비싼가'라, 섞으면 순환논증이 된다(docs/33 5절).
+    """
+    if not Path(macro_csv).exists() or not Path(csv).exists():
+        return None
+    import macro_correlation as mc
+    import onchain_correlation as oc
+    import relationship_map as rm
+
+    pl = rm.payload(oc.load_market(csv), mc.load_macro(macro_csv))
+    return pl if pl["ranked"] else None
 
 
 def build(cfg: StrategyConfig, csv: str, *, derive: bool = True,
@@ -297,6 +317,7 @@ def build(cfg: StrategyConfig, csv: str, *, derive: bool = True,
 
     return {
         "macro": macro,
+        "relationship": relationship(csv, macro_csv) if macro_csv else None,
         "generated_from": csv,
         "generated": date.today().isoformat(),
         # 만든 시점의 지연. 페이지는 이 값을 쓰지 않고 **보는 시점에** 다시
@@ -490,7 +511,8 @@ def main(argv: Optional[list[str]] = None) -> int:
     if args.out and not args.stats_only:
         p = Path(args.out)
         p.parent.mkdir(parents=True, exist_ok=True)
-        p.write_text(json.dumps(payload, ensure_ascii=False, separators=(",", ":")),
+        p.write_text(json.dumps(payload, ensure_ascii=False, separators=(",", ":"),
+                                allow_nan=False),   # NaN/inf 는 무효 JSON — 새면 여기서 죽여 알린다
                      encoding="utf-8")
         print(f"\n저장: {p}  ({p.stat().st_size / 1024:.0f} KB, "
               f"{len(payload['series'])}점)")

@@ -65,7 +65,7 @@ HASH_EXPANSION_RATIO = 1.08   # 30일선이 60일선을 8% 이상 웃돌면 '팽
 # 서멀캡은 '창세 이래' 누적이라야 의미가 있다. 발행액 시계열이 이 날짜보다
 # 늦게 시작하면 분모가 그만큼 작아져 배수가 부풀려진다.
 # 실측(2026-07-28): 8년 창이면 +10.1%, 4년 창이면 +84.4% 과대평가된다.
-# 밸류에이션 계열은 max_abs 라 부풀려진 값 하나가 30% 지분을 통째로 가져간다.
+# 밸류에이션 계열은 max_abs 라 부풀려진 값 하나가 40% 지분을 통째로 가져간다.
 THERMOCAP_ORIGIN_CUTOFF = date(2011, 1, 1)
 
 
@@ -333,7 +333,7 @@ def thermocap_multiple(
 
     # 분모가 창세부터 누적된 것이 아니면 배수 자체가 다른 숫자다.
     # 그럴듯한 값을 조용히 내주는 대신 결측으로 둔다 — 이 계열은 max_abs 라
-    # 부풀려진 값 하나가 밸류에이션 30% 를 전부 끌고 가기 때문이다.
+    # 부풀려진 값 하나가 밸류에이션 40% 를 전부 끌고 가기 때문이다.
     first = next((d for d, v in zip(revenue.dates, revenue.values) if v is not None), None)
     if first is None or first > THERMOCAP_ORIGIN_CUTOFF:
         return IndicatorValue(

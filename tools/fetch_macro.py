@@ -11,10 +11,11 @@
 `--github` 와 FRED(`--global`)를 **같이 주면 한 파일로 합친다.** 같은 열이면
 FRED 가 이긴다(권위·정의 일관). 각 소스가 잘 하는 걸 맡는다:
 
-    [GitHub raw]  sp500·cpi·rate_10y  datahub s-and-p-500 (월간, 최신)
+    [GitHub raw]  sp500               datahub s-and-p-500 (월간, 최신)
                   vix                 datahub finance-vix (일간, 최신)
     [FRED]        nasdaq              NASDAQCOM (일간, 1971~; **실제 나스닥**)
                   m2_us·m2_cn·m2_jp·m2_gb·m2_eu·m2_global   아래
+                  dxy·realyield·net_liq   거시 후보 검정용(docs/27, 셋 다 기각)
 
 ## 왜 UA 를 바꿨나 (이 환경의 함정)
 
@@ -69,30 +70,69 @@ UA = "curl/8.0"
 # datahub 셋은 주기적으로 갱신된다(확인: 2026-06/07 까지 최신).
 #   (raw_url, 날짜열, {원본열: 우리열})
 GITHUB_SOURCES = [
-    # S&P500·CPI·장기금리 — datahub 공식 셋, 월간, 최신까지 갱신.
+    # S&P500 — datahub 공식 셋, 월간, 최신까지 갱신. (같은 셋의 CPI·장기금리 열은
+    # 어떤 분석도 안 써서 받지 않는다 — 받아 두면 최근값이 0 으로 오염되기도 했다.)
     ("https://raw.githubusercontent.com/datasets/s-and-p-500/main/data/data.csv",
-     "Date", {"SP500": "sp500", "Consumer Price Index": "cpi",
-              "Long Interest Rate": "rate_10y"}),
+     "Date", {"SP500": "sp500"}),
     # VIX(공포지수) — datahub, 일간.
     ("https://raw.githubusercontent.com/datasets/finance-vix/main/data/vix-daily.csv",
      "DATE", {"CLOSE": "vix"}),
-    # 미국 M2 — FRED M2SL 을 미러하는 커뮤니티 거시셋(월간, 2000~). 원본 권위는
-    # FRED 지만 여기선 프록시가 FRED 를 막아, 이 미러가 이 환경에서 받아지는 M2 다.
-    # 값은 FRED M2SL 원 수준(십억 달러): 2025-02 ≈ 21670 = 약 $21.7조 로 일치.
+    # 금 현물(LBMA, USD) — datahub, 월간 1833~. '디지털 금' 서사 점검용. 검정
+    # 결과 BTC 와 무상관(docs/25)이라 점수엔 안 쓰지만, 재현·재검증되도록 받아 둔다.
+    ("https://raw.githubusercontent.com/datasets/gold-prices/main/data/monthly.csv",
+     "Date", {"Price": "gold"}),
+    # 미국 M2 — FRED M2SL 미러(커뮤니티 거시셋, 월간 2000~2025 초). CORE 의 FRED
+    # M2SL 과 **같은 시리즈**라 정의·단위(십억 달러)가 일관된다. FRED 가 막힌 이
+    # 환경에선 이 미러가 m2_us 를 채우고, FRED 가 되면 그쪽이 최신까지 잇는다.
+    # 값 수준: 2025-02 ≈ 21670 = 약 $21.7조.
     ("https://raw.githubusercontent.com/emilblaignan/Macro-Drivers/main/data/processed_data.csv",
      "date", {"M2SL": "m2_us"}),
 ]
 
 # 확실한 핵심 — 항상 받는다.
-# 미국은 전 세계 집계와 **같은 정의**(OECD 광의통화 MABMM301)로 받아야 "전 세계
-# vs 특정국" 비교가 사과 대 사과가 된다. 그래서 M2SL 이 아니라 MABMM301USM189S.
+# 미국 M2 는 **M2SL**(활성, 십억$)로 받는다. 예전엔 전 세계 집계와 정의를 맞추려
+# OECD 광의통화(MABMM301USM189S)를 썼지만, 그 계열이 2023-11 에 폐기돼 활성 M2SL 로
+# 옮겼다. 전 세계 합계(build_global)는 미국분을 ×1e9 로 외국분(원 달러)에 맞춰 더한다.
 CORE = {
     "NASDAQCOM": "nasdaq",             # 나스닥 종합, 일간, 1971~
-    "MABMM301USM189S": "m2_us",        # 미국 광의통화(M3), 자국통화(=USD), 월간 ~2023-11
+    # 미국 M2 — 전에 쓰던 OECD 광의통화(MABMM301USM189S)는 2023-11 에 폐기됐다.
+    # 활성 시리즈 M2SL(십억 달러, 월간, 현재까지)로 교체한다. GitHub 미러도 같은
+    # M2SL 이라 정의·단위가 일관된다. (FRED 가 살아 있으면 미러보다 최신까지 채운다.)
+    "M2SL": "m2_us",                   # 미국 M2, 십억 달러, 월간, 1959~ (활성)
     # 중국 협의통화(M1) — 광의통화(MABMM301CN)가 2018~19 에 끊겨, 코로나 이후까지
     # 살아 있는(2023-11) 중국 유동성 대용으로 넣는다. M1 자체가 중국 신용/경기
     # 선행지표로 널리 쓰인다. 개별 분석은 자국통화 YoY(척도무관)라 환산 불필요.
     "MANMM101CNM189N": "m1_cn",        # 중국 M1, 위안, 월간 ~2023-11
+    # 엔캐리 트레이드 검정용(docs/26). 검정 결과 BTC 와 무상관이라 점수·사이트엔
+    # 안 쓰지만, 금(gold)과 같은 이유로 **재현 가능하게** 받아 둔다.
+    "DEXJPUS": "usdjpy",               # 엔/달러, 일간, 1971~ (↑ = 엔 약세 = 캐리 활발)
+    "IRSTCI01JPM156N": "jp_rate",      # 일본 단기 정책금리, 월간
+    "DFF": "us_rate",                  # 미국 실효 연방기금금리, 일간 (금리차 = 캐리 유인)
+    # 거시 후보 3종 검정용(docs/27). 셋 다 |ρ|<0.25 이고 공포·나스닥을 통제하면
+    # 독립 설명력이 없어 점수·사이트엔 안 쓴다. 금·엔캐리와 같은 이유로 재현 가능하게만.
+    "DTWEXBGS": "dxy",                 # 광의 무역가중 달러지수, 일간, 2006~ (달러 강세 검정)
+    "DFII10": "realyield",             # 미국 10년 실질금리(TIPS), 일간, 2003~ (할인율 검정)
+    # 연준 순유동성 = WALCL − TGA − RRP. 세 원계열은 임시(_) 로 받아 net_liq 만 남기고
+    # 버린다(build_net_liquidity). **단위 주의**: WALCL·WTREGEN 은 백만$, RRPONTSYD 는
+    # 십억$ 라 RRP 를 ×1000 해야 맞다(안 맞추면 RRP 가 1000배 작아져 조용히 빠진다).
+    "WALCL": "_walcl",                 # 연준 총자산, 백만$, 주간
+    "WTREGEN": "_tga",                 # 재무부 일반계정(TGA), 백만$, 일간
+    "RRPONTSYD": "_rrp",               # 익일물 역레포(RRP), 십억$, 일간
+    # 코스피 검정용(docs/27). 무료 일간(stooq·yahoo)은 이 환경의 egress 정책에 막혀,
+    # **활성**인 OECD 한국 주가지수(월간, 1981~)를 코스피 대용으로 쓴다. 2008 −36%·
+    # 2009 +44%·2020 +25%·월 표준편차 6.0% 로 실제 한국 증시와 일치함을 확인했다.
+    "SPASTT01KRM661N": "kospi",        # OECD 한국 총주가지수(원화 기준), 월간
+    # 자산군 7종 검정용(docs/28). 공개 리서치에서 비트코인과 자주 엮이는 서사를
+    # 자산군별로 하나씩 골라 같은 잣대로 쟀고, **전부 기각**했다. 재현용으로만 받는다.
+    "BAMLH0A0HYM2": "hy_spread",       # ICE BofA 고수익채 OAS(신용), 일간 ※ 이 환경 FRED 는
+                                       #   2023-08 부터만 준다 — 한 국면뿐임을 문서에 명시
+    "T10YIE": "breakeven",             # 10년 기대인플레이션(TIPS 손익분기), 일간 2003~
+    "T10Y2Y": "curve",                 # 국채 수익률곡선 10년−2년(음수 가능 → 차분), 일간
+    "DCOILWTICO": "oil",               # WTI 원유, 일간 ※ 2020-04-20 음수 프린트가 있으나
+                                       #   주간·월간 '마지막 관측' 축약에서 걸러진다
+    "PCOPPUSDM": "copper",             # 글로벌 구리 가격('닥터 코퍼'), 월간
+    "DTWEXEMEGS": "em_fx",             # 신흥국 대비 광의 달러지수, 일간 2006~
+    "SPASTT01CNM661N": "china_eq",     # OECD 중국 총주가지수, 월간 — 중국 M2 채택 신호의 교차검증
 }
 
 # 전 세계 집계용 — 각국 광의통화(자국 통화)와 그 통화의 달러 환율.
@@ -151,7 +191,9 @@ def fetch_series(fred_id: str, timeout: int = 40) -> Optional[dict[date, float]]
         code = getattr(exc, "code", None)
         blocked = code in (403, 407) or "403" in str(getattr(exc, "reason", exc))
         if blocked:
-            raise PolicyBlocked(fred_id)
+            # `from exc` 로 원인을 붙여 둔다 — 붙이지 않으면 역추적에서
+            # "정책 차단"만 보이고 어느 요청이 어떻게 막혔는지가 사라진다.
+            raise PolicyBlocked(fred_id) from exc
         print(f"  ! {fred_id}: {code or exc} — 건너뜀", file=sys.stderr)
         return None
 
@@ -171,7 +213,7 @@ def fetch_github(timeout: int = 40) -> dict[str, dict[date, float]]:
 
     **이 에이전트 환경에서 실제로 받아지는 경로다.** FRED 는 프록시가 403 으로
     막지만 raw.githubusercontent.com 은 열려 있다. 받는 열은 각 소스의 매핑을
-    따른다(S&P500·CPI·10년 금리·VIX). 못 받는 소스는 건너뛰고 나머지로 간다.
+    따른다(S&P500·VIX·금·미국 M2). 못 받는 소스는 건너뛰고 나머지로 간다.
     """
     columns: dict[str, dict[date, float]] = {}
     for url, date_col, mapping in GITHUB_SOURCES:
@@ -299,11 +341,52 @@ def merge_to_csv(columns: dict[str, dict[date, float]], path: Path) -> None:
     tmp.replace(path)
 
 
+M2_US_TO_USD = 1e9      # m2_us 는 M2SL(십억 달러) — 외국분(원 달러)과 더하려면 환산해야 한다
+RRP_B_TO_M = 1e3        # RRPONTSYD 는 십억$ → WALCL·TGA(백만$)에 맞추려면 ×1000
+
+
+def build_net_liquidity(columns: dict[str, dict[date, float]]) -> Optional[dict[date, float]]:
+    """연준 순유동성 = WALCL − TGA − RRP (모두 백만$로 정렬한 뒤 뺀다).
+
+    **단위 정렬이 핵심.** WALCL·WTREGEN 은 백만 달러, RRPONTSYD 는 십억 달러라
+    그대로 빼면 RRP 가 1000배 작아져 사실상 빠진다(에러 없이 조용히 틀린다). 그래서
+    RRP 를 ×1000 한다. WALCL 은 주간, TGA·RRP 는 일간이라 각 주 날짜에서 10일 안의
+    가장 가까운 값을 쓴다. TGA·RRP 가 아직 0 이던 초기 구간은 그 항을 0 으로 둔다."""
+    walcl = columns.get("_walcl")
+    if not walcl:
+        return None
+    tga = columns.get("_tga") or {}
+    rrp = columns.get("_rrp") or {}
+    tsorted, rsorted = sorted(tga), sorted(rrp)
+
+    def nearest(dates_sorted: list[date], series: dict[date, float], d: date) -> Optional[float]:
+        best, gap = None, 11
+        for x in dates_sorted:
+            g = abs((x - d).days)
+            if g < gap:
+                best, gap = series[x], g
+        return best
+
+    out: dict[date, float] = {}
+    for d, w in walcl.items():
+        t = nearest(tsorted, tga, d) if tga else 0.0
+        rp = nearest(rsorted, rrp, d) if rrp else 0.0
+        if t is None or rp is None:      # 근처 값이 아예 없으면 그 주는 건너뛴다
+            continue
+        out[d] = w - t - rp * RRP_B_TO_M
+    return out or None
+
+
 def build_global(columns: dict[str, dict[date, float]]) -> Optional[dict[date, float]]:
-    """미국 M2 + 각국 M2(달러 환산)의 합. 있는 나라만 더한다."""
+    """미국 M2 + 각국 M2(달러 환산)의 합. 있는 나라만 더한다.
+
+    **단위 주의.** m2_us 는 M2SL 이라 '십억 달러'인데 각국 M2 는 환율을 곱해 '원 달러'가
+    된다. 그대로 더하면 미국분이 1e9 배 작아져 사실상 사라지고, 저장된 예전(달러) 값과
+    이어 붙으면 그 지점에서 수준이 튀어 전년비가 깨진다. 그래서 미국분을 먼저 환산한다.
+    """
     if "m2_us" not in columns:
         return None
-    parts = [columns["m2_us"]]
+    parts = [{d: v * M2_US_TO_USD for d, v in columns["m2_us"].items()}]
     for cc, spec in GLOBAL.items():
         if not spec.get("agg", True):          # 합계 제외국(예: 중국, 커버리지 짧음)
             continue
@@ -352,7 +435,7 @@ def main(argv: Optional[list[str]] = None) -> int:
     ap.add_argument("--out", default="data/macro.csv")
     ap.add_argument("--github", action="store_true",
                     help="raw.githubusercontent.com 공개 데이터셋에서 받기 "
-                         "(이 환경에서 실제로 받아지는 경로: S&P500·CPI·금리·VIX)")
+                         "(이 환경에서 실제로 받아지는 경로: S&P500·VIX·금·미국 M2)")
     ap.add_argument("--global", dest="do_global", action="store_true",
                     help="주요국 M2 를 받아 전 세계 M2 집계까지")
     ap.add_argument("--list", action="store_true", help="받을 시리즈 목록만")
@@ -402,6 +485,13 @@ def main(argv: Optional[list[str]] = None) -> int:
                 print(f"집계   m2_global {len(g)}행 ({min(g)} ~ {max(g)})")
             # 환율 열은 결과 CSV 에서 뺀다 (분석에 직접 안 쓴다)
             fred = {k: v for k, v in fred.items() if not k.startswith("fx_")}
+        # 연준 순유동성(WALCL−TGA−RRP)을 계산해 넣고, 원계열(_walcl·_tga·_rrp)은 버린다.
+        # net_liq 만 분석에 쓰므로 CSV 를 가볍게 유지한다(환율 열을 버리는 것과 같은 이유).
+        nl = build_net_liquidity(fred)
+        if nl:
+            fred["net_liq"] = nl
+            print(f"집계   net_liq {len(nl)}행 ({min(nl)} ~ {max(nl)})")
+        fred = {k: v for k, v in fred.items() if not k.startswith("_")}
         columns.update(fred)     # FRED 가 GitHub 을 덮어쓴다(열 충돌 시)
 
     # CSV API 소스(중국 M2 등). 허용목록에 없으면 조용히 건너뛴다.

@@ -23,10 +23,15 @@ from pathlib import Path
 
 import pytest
 
+import build_viz          # conftest 가 tools/ 를 경로에 넣는다
+
 ROOT = Path(__file__).resolve().parents[1]
 VIZ = ROOT / "viz"
+# 본문 목록은 **build_viz.PAGES 가 소유한다.** 예전엔 이 파일에만 네 벌이 박혀
+# 있어서, 페이지를 하나 더 붙이면 새 장이 어느 시험에도 안 걸렸다.
+BODIES = tuple(Path(b).name for b, *_ in build_viz.PAGES)
 PIECES = ("_head.html", "_script.html", "_rules_script.html", "_i18n.html",
-          "_nav.html", "index.body.html", "verify.body.html", "rules.body.html")
+          "_nav.html") + BODIES
 
 
 def test_all_pieces_exist():
@@ -120,7 +125,7 @@ def test_svg_listeners_are_wired_exactly_once():
 def test_the_nav_is_not_duplicated_in_the_bodies():
     """머리띠는 조각 하나가 소유한다. 세 본문에 복제되면 버튼을 하나 붙일 때
     세 곳을 똑같이 고쳐야 하고, 실제로 한 곳을 빠뜨린다."""
-    for name in ("index.body.html", "verify.body.html", "rules.body.html"):
+    for name in BODIES:
         body = read(name)
         assert "__NAV__" in body, f"{name}: 머리띠 자리표시자가 없습니다"
         assert 'class="pages"' not in body, f"{name}: 머리띠가 복제돼 있습니다"
@@ -152,7 +157,7 @@ def test_every_placeholder_gets_replaced():
 
     with tempfile.TemporaryDirectory() as tmp:
         paths = build_viz.build(str(csv), Path(tmp))
-        assert len(paths) == 3
+        assert len(paths) == len(build_viz.PAGES)
         for p in paths:
             html = p.read_text(encoding="utf-8")
             # 등록된 자리표시자가 남았는가 — 빌드가 이미 막지만 여기서 한 번 더.
@@ -185,6 +190,34 @@ def test_rank_is_measured_over_every_day_not_the_thinned_series():
     assert export_viz.rank_of([{"bcs": 5}] * 4 + [{"bcs": 9}], 5) == 0.0
 
 
+def test_build_with_macro_populates_overlay_and_stays_json_safe():
+    """일간 워크플로는 --macro 로 굽지만 모든 테스트가 macro_csv=None 이었다 —
+    거시 오버레이(export_viz.macro_lead + payload['macro'] 분기)가 프로덕션에서만
+    돌던 공백을 메운다. 겸사겸사 payload 가 NaN 없는(유효 JSON) 상태인지도 본다."""
+    import json
+    import math
+
+    sys.path.insert(0, str(ROOT / "tools"))
+    import export_viz
+    from btc_core.config import load_config
+
+    market = ROOT / "data" / "market.csv"
+    macro = ROOT / "data" / "macro.csv"
+    if not (market.exists() and macro.exists()):
+        pytest.skip("data/market.csv 또는 macro.csv 없음")
+
+    payload = export_viz.build(load_config(), str(market), macro_csv=str(macro))
+    m = payload.get("macro")
+    assert m, "macro 분기가 payload 에 실리지 않았다"
+    assert m["m2"] and m["btc"], "중국 M2·BTC 오버레이 배열이 비었다"
+
+    imp = m.get("impulse")
+    assert imp is None or math.isfinite(imp), "임펄스가 비유한(NaN/inf)이다"
+
+    # NaN/inf 가 하나라도 새면 브라우저의 JSON.parse 가 죽는다. allow_nan=False 로 강제.
+    json.dumps(payload, allow_nan=False)
+
+
 def test_pages_are_self_contained():
     """외부 요청이 하나라도 있으면 막힌 환경에서 빈 화면이 된다."""
     import tempfile
@@ -203,3 +236,124 @@ def test_pages_are_self_contained():
             for pat in (r'<script[^>]+src=', r'<link[^>]+href=',
                         r'@import\s', r'url\(\s*["\']?https?:'):
                 assert not re.search(pat, html), f"{p.name}: 외부 리소스 {pat}"
+
+
+def test_payload_json_is_strictly_valid():
+    """NaN/Infinity 는 유효 JSON 이 아니다 — 하나라도 새면 브라우저의 JSON.parse 가
+    죽어 사이트가 통째로 백지가 된다. 굽는 두 경로 모두 allow_nan=False 인지 본다."""
+    import json
+    import tempfile
+
+    sys.path.insert(0, str(ROOT / "tools"))
+    csv = ROOT / "data" / "market.csv"
+    if not csv.exists():
+        pytest.skip("data/market.csv 없음")
+    import build_viz
+    import export_viz
+    from btc_core.config import load_config
+
+    macro = ROOT / "data" / "macro.csv"
+    payload = export_viz.build(load_config(), str(csv),
+                               macro_csv=str(macro) if macro.exists() else None)
+    json.dumps(payload, allow_nan=False)                 # 원본 payload
+    json.dumps(build_viz.compact(payload), allow_nan=False)   # 페이지에 박히는 축약본
+
+    # 실제로 구운 페이지에서 __BCS__ 를 꺼내 파싱해 본다 — 최종 산출물 검문.
+    with tempfile.TemporaryDirectory() as tmp:
+        page = build_viz.build(str(csv), Path(tmp))[0]
+        html = page.read_text(encoding="utf-8")
+        m = re.search(r"window\.__BCS__ = /\*__DATA__\*/(.*?)/\*__DATA__\*/;", html, re.S)
+        assert m, "구운 페이지에서 __BCS__ 데이터를 못 찾았다"
+        blob = m.group(1)
+        for tok in ("NaN", "Infinity", "-Infinity"):
+            assert tok not in blob, f"payload 에 무효 JSON 토큰 {tok}"
+        json.loads(blob)
+
+
+def test_no_dangling_element_ids_between_script_and_bodies():
+    """리팩터로 본문에서 지운 요소를 스크립트가 계속 부르면(또는 그 반대) 화면
+    일부가 조용히 빈다. 실제로 그런 사고가 반복돼 여기서 못 박는다.
+
+    스크립트가 $("...") 로 부르는 id 는 어느 본문에든 존재해야 한다(공유 스크립트라
+    페이지마다 없을 수는 있지만, 네 장 어디에도 없으면 잔재다)."""
+    script = read("_script.html")
+    bodies = " ".join(read(n) for n in BODIES + ("_nav.html",))
+    # 뒤에 문자열을 이어 붙여 만드는 동적 id("tp-th-f"+(i+1))는 접두사만 남으므로
+    # 여기서 제외한다 — 닫는 따옴표 뒤에 ')' 가 오는(=완성된 id) 것만 센다.
+    called = set(re.findall(r'\$\("([a-zA-Z][\w-]*)"\)', script))
+    called |= set(re.findall(r'setText\("([a-zA-Z][\w-]*)"\s*,', script))
+    called |= set(re.findall(r'setHTML\("([a-zA-Z][\w-]*)"\s*,', script))
+    # 스크립트가 스스로 만들어 넣는 id(동적 생성)는 제외한다.
+    dynamic = set(re.findall(r'id="([a-zA-Z][\w-]*)"', script))
+    concat = set(re.findall(r'"([a-zA-Z][\w-]*)"\s*\+', script))   # "prefix" + i
+    missing = sorted(i for i in called
+                     if f'id="{i}"' not in bodies and i not in dynamic
+                     and i not in concat and not i.startswith("why-"))
+    assert not missing, f"본문 어디에도 없는 id 를 스크립트가 부릅니다: {missing}"
+
+
+def test_css_has_no_orphaned_id_rules_for_removed_elements():
+    """#foo 규칙만 남고 요소가 사라진 경우를 잡는다 — 죽은 CSS 는 다음 사람이
+    '있는 줄 알고' 고치게 만든다(실제로 #macro-fold 가 그랬다)."""
+    head = read("_head.html")
+    bodies = " ".join(read(n) for n in BODIES + ("_nav.html",))
+    script = read("_script.html")
+    ids = set(re.findall(r"#([a-zA-Z][\w-]*)\s*[,{ ]", head))
+    orphan = sorted(i for i in ids
+                    if f'id="{i}"' not in bodies and f'id="{i}"' not in script
+                    and f'"{i}"' not in script)
+    assert not orphan, f"요소가 없는데 남아 있는 CSS id 규칙: {orphan}"
+
+
+def test_css_has_no_orphaned_class_rules():
+    """id 와 같은 이유인데 class 쪽은 비어 있었다 — 실제로 `.brand`·`.logo`(머리띠에서
+    사라진 로고), `.chip.pos/.neg/.warn`(만들어지지 않는 변형), `.panelbody .formula`
+    다섯이 남아 있었다. 죽은 CSS 는 다음 사람이 '있는 줄 알고' 고치게 만든다.
+
+    선택자 뒤에 무엇이 오든(공백·쉼표·중괄호·조합) 이름만 뽑고, 본문·스크립트
+    어디에도 그 이름이 안 나오면 잔재로 본다. 스크립트가 문자열을 이어 붙여
+    클래스를 만드는 경우가 있어(`chip ${cool|warm|flat}`) 이름 단위로 훑는다."""
+    head = read("_head.html")
+    used = " ".join(read(n) for n in
+                    BODIES + ("_nav.html", "_script.html", "_rules_script.html"))
+    # CSS 의사클래스·의사요소는 마침표 뒤에 오지 않으므로 `.` 로 시작하는 것만 본다.
+    names = set(re.findall(r"\.([a-zA-Z][\w-]*)", head))
+    orphan = sorted(n for n in names if n not in used)
+    assert not orphan, f"쓰이지 않는 CSS 클래스 규칙: {orphan}"
+
+
+def test_the_liquidity_chart_constants_still_match_the_measurement():
+    """유동성 장의 '11개월 · ρ+0.44' 는 export_viz 에 **상수로 박혀 있다.**
+
+    일부러 그렇게 뒀다 — 겹쳐 그리는 당김을 매일 재측정하면 그림이 하루마다
+    흔들리고, 산문("측정 11개월")도 같이 흔들려야 한다. 대신 **드리프트가
+    조용하면 안 된다.** 데이터가 자라 최적 선행이 옮겨 가면 여기서 걸려야
+    화면·문서·상수를 한꺼번에 고칠 기회가 생긴다.
+
+    관련성 지도(05)는 반대 선택을 했다 — 거기는 표라서 매일 다시 계산해 굽는다.
+    무엇을 굳히고 무엇을 흐르게 둘지는 화면마다 다르고, 굳힌 쪽에는 이런 가드가
+    따라와야 한다.
+    """
+    sys.path.insert(0, str(ROOT / "tools"))
+    import macro_correlation as mc
+
+    market = ROOT / "data" / "market.csv"
+    macro = ROOT / "data" / "macro.csv"
+    if not (market.exists() and macro.exists()):
+        pytest.skip("data/market.csv 또는 macro.csv 없음")
+
+    btc = mc.load_btc(str(market))
+    cols = mc.load_macro(str(macro))
+    if "m2_cn" not in cols:
+        pytest.skip("macro.csv 에 m2_cn 이 없음")
+    res = mc.m2_lead_lag(mc.month_end(btc), cols["m2_cn"])
+
+    src = (ROOT / "tools" / "export_viz.py").read_text(encoding="utf-8")
+    lead = int(re.search(r'"lead":\s*(\d+)', src).group(1))
+    corr = float(re.search(r'"corr":\s*([\d.]+)', src).group(1))
+
+    assert res["best_lag"] == lead, (
+        f"측정된 선행이 {res['best_lag']}개월인데 화면 상수는 {lead}개월입니다 — "
+        f"export_viz.macro_lead 와 viz/_i18n.html 의 산문을 함께 고치세요")
+    assert abs(res["best_corr"] - corr) < 0.03, (
+        f"측정 ρ {res['best_corr']:+.3f} vs 화면 상수 {corr:+.2f} — 같이 고치세요")

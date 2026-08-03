@@ -4,7 +4,7 @@ __NAV__
 <header class="top">
   <p class="eyebrow" data-t="idx.eyebrow">비트코인 사이클 위치</p>
   <h1 data-t="idx.h1">지금은 싼 편인가, 비싼 편인가</h1>
-  <p class="lead" data-t="idx.lead">비트코인의 오늘 가격이 <strong>지난 16년에 비춰 어디쯤인지</strong>만 알려주는
+  <p class="lead" data-t="idx.lead">비트코인의 오늘 가격이 <strong>지난 <span class="yr">16</span>년에 비춰 어디쯤인지</strong>만 알려주는
   눈금자입니다. 앞으로 오를지 내릴지는 말하지 않습니다.</p>
   <div class="srcline">
     <span id="src-span"></span>
@@ -13,17 +13,18 @@ __NAV__
   </div>
 </header>
 
-<!-- ============ 시장 스냅샷 (10초 요약) — 값은 JS 가 실제 데이터로 채운다 ============ -->
-<section class="hero" id="hero" style="margin-top:0" aria-label="Market snapshot">
+<!-- ============ 시장 스냅샷 (10초 요약) — 값은 JS 가 실제 데이터로 채운다.
+     첫 화면에 숫자를 잔뜩 늘어놓지 않는다. 가격 + '핵심 답 한 줄' 뿐. 나머지
+     위치 상세(범위·구간·눈금)는 바로 밑 계기판이 맡는다. ============ -->
+<section class="hero" id="hero" style="margin-top:0" aria-label="시장 스냅샷" data-t-aria="idx.aria.hero">
   <div class="hero-main">
     <p class="eyebrow" id="hero-eyebrow"></p>
     <div class="hero-price">
       <span class="p num" id="hero-price">—</span>
-      <span class="chg" id="hero-chg"></span>
     </div>
+    <p class="hero-answer" id="hero-answer"></p>
     <div class="hero-sub" id="hero-sub"></div>
   </div>
-  <div class="kpis" id="hero-kpis"></div>
 </section>
 
 <!-- ============ 01 지금 위치 ============ -->
@@ -31,33 +32,30 @@ __NAV__
   <div class="sechead">
     <p class="eyebrow" data-t="idx.s1.eyebrow"><em>01</em> — 지금 위치</p>
     <h2 data-t="idx.s1.h2">오늘은 여기쯤입니다</h2>
-    <p data-t="idx.s1.p">−100에 가까울수록 지난 16년에 비해 싼 편, +100에 가까울수록 비싼 편입니다.
+    <p data-t="idx.s1.p">−100에 가까울수록 지난 <span class="yr">16</span>년에 비해 싼 편, +100에 가까울수록 비싼 편입니다.
     숫자 하나가 아니라 <strong>범위</strong>로 나오는 이유는 <a href="__VERIFY_URL__">다음 장</a>에 있습니다.</p>
   </div>
 
   <div class="dash">
     <div class="panel gauge-wrap">
+      <!-- 사람 말 한 줄을 맨 위에. 처음 오는 사람에게 "−58 ~ −56" 은 아무 뜻이
+           없고 "아래에서 17% 지점" 은 즉시 이해된다. 그래서 원점수 범위보다 먼저. -->
+      <p class="rank" id="ro-rank"></p>
       <div class="readout">
         <div class="big" id="ro-range"></div>
         <div class="band" id="ro-band"></div>
         <div class="asof" id="ro-asof"></div>
       </div>
-      <!-- 큰 숫자 바로 밑의 한 줄. 처음 오는 사람에게 "−61.3" 은 아무 뜻이 없고
-           "아래에서 12% 지점" 은 즉시 이해된다. -->
-      <p class="rank" id="ro-rank"></p>
       <div class="chart" id="gauge-host">
         <svg class="gauge-svg" id="gauge"></svg>
       </div>
       <div id="gauge-why" style="margin-top:16px"></div>
     </div>
 
-    <!-- 스크롤해도 붙어 있는 요약. 값은 전부 JS 가 실제 데이터로 채운다 —
-         계기판이 화면에서 밀려나도 밴드·합의·유동성·최근 변화는 남는다. -->
-    <aside class="side" aria-label="요약">
-      <div class="card">
-        <h3 id="side-today-h"></h3>
-        <div id="side-today"></div>
-      </div>
+    <!-- 스크롤해도 붙어 있는 요약. 구간·밴드·유동성은 계기판이 이미 보여주므로
+         여기서 반복하지 않는다. 계기판에 없는 것 하나 — '최근에 어디로 움직였나' —
+         만 남긴다. 값은 JS 가 실제 데이터로 채운다. -->
+    <aside class="side" aria-label="요약" data-t-aria="idx.aria.side">
       <div class="card">
         <h3 id="side-recent-h"></h3>
         <div id="side-recent"></div>
@@ -65,28 +63,29 @@ __NAV__
     </aside>
   </div>
 
-  <!-- 지표 전체 요약 — 이 페이지에서 가장 중요한 표 -->
+  <!-- 지표 전체 — 계기판 하나로 충분한 사람은 지나치고, 파고들 사람만 펼친다. -->
   <div class="sechead" style="margin-top:42px">
     <h2 style="font-size:19px" id="ind-h" data-t="idx.s2.h2">지표 아홉 개가 각각 어디에 있나</h2>
-    <p data-t="idx.s2.p">위의 점수 하나는 아래 아홉 개를 합친 결과입니다. 막대가 <strong>왼쪽에 있을수록 싼 쪽,
-    오른쪽에 있을수록 비싼 쪽</strong>이고, 퍼센트는 <strong>그 지표의 최근 4년(한 사이클) 중 몇 %</strong>인가입니다 —
-    예를 들어 18%면 최근 4년 동안 이보다 낮았던 날이 18%뿐이었다는 뜻입니다.
-    <strong>여기 ‘4년’ 퍼센트는 맨 위 계기판의 ‘16년’ 백분위와 기준 기간이 다릅니다</strong> —
-    위는 <strong>16년 전체에서 최종 점수</strong>의 위치, 여기는 <strong>지표마다 각자의 최근 4년</strong>에서의 위치라,
-    두 숫자를 직접 비교하지 마세요.
-    <strong>‘직전에 이만큼이던 때’</strong>는 그 지표가 마지막으로 지금만큼 극단이었던
-    시기입니다 (최소 6개월 전).</p>
+    <p data-t="idx.s2.p">위 점수 하나는 아래 아홉 개를 합친 결과입니다. 막대가 <strong>왼쪽일수록 싼 쪽,
+    오른쪽일수록 비싼 쪽</strong>이고, 퍼센트는 <strong>그 지표의 최근 4년 중 몇 %</strong>인가입니다.</p>
   </div>
 
-  <!-- 지표 아홉 개를 프리미엄 메트릭 카드로. JS 가 실제 데이터로 채운다. -->
-  <div class="metrics" id="metric-grid" role="region" aria-labelledby="ind-h"></div>
-  <p class="tblnote" id="ind-note"></p>
+  <!-- 아홉 카드는 기본 접힘 — 첫 화면을 숫자 수십 개로 덮지 않는다. JS 가 채운다. -->
+  <button class="why" type="button" aria-expanded="false" aria-controls="metric-fold"
+    data-target="metric-fold"><span class="mk">+</span><span data-t="idx.s2.more">아홉 개 지표 펼쳐보기</span></button>
+  <div class="panelbody" id="metric-fold">
+    <p class="foldnote" data-t="idx.s2.note"><strong>여기 ‘4년’ 퍼센트는 맨 위 계기판의 ‘<span class="yr">16</span>년’ 백분위와 기준 기간이 다릅니다</strong> —
+    위는 <span class="yr">16</span>년 전체에서 최종 점수의 위치, 여기는 지표마다 각자의 최근 4년에서의 위치라 두 숫자를 직접 비교하지 마세요.
+    카드 끝의 날짜(예: 2023년 3월)는 <strong>그 지표가 마지막으로 지금만큼 극단이었던 때</strong>입니다(최소 6개월 전).</p>
+    <div class="metrics" id="metric-grid" role="region" aria-labelledby="ind-h"></div>
+    <p class="tblnote" id="ind-note"></p>
+  </div>
 </section>
 
-<!-- ============ 02 16년 이력 ============ -->
+<!-- ============ 02 전체 이력 리본 ============ -->
 <section id="history">
   <div class="sechead">
-    <p class="eyebrow" data-t="idx.s3.eyebrow"><em>02</em> — 지난 16년</p>
+    <p class="eyebrow" data-t="idx.s3.eyebrow"><em>02</em> — 지난 <span class="yr">16</span>년</p>
     <h2 data-t="idx.s3.h2">같은 자리에 네 번 갔고, 네 번 돌아왔습니다</h2>
     <p data-t="idx.s3.p">위 눈금을 매일 계산해서 시간 순으로 쭉 이어 놓은 그림입니다. 세로가 위치 점수,
     가로가 시간입니다.</p>
@@ -118,7 +117,7 @@ __NAV__
     <div class="chart-head">
       <div class="legend" id="hist-legend"></div>
       <!-- 시간 범위. 두 차트(위치·가격)의 가로축을 함께 좁힌다. JS 가 채운다. -->
-      <div class="rangesel" id="rangesel" role="group" aria-label="Time range"></div>
+      <div class="rangesel" id="rangesel" role="group" aria-label="시간 범위" data-t-aria="idx.aria.range"></div>
     </div>
     <div class="chart" id="hist-host">
       <svg id="hist"></svg>
@@ -140,24 +139,15 @@ __NAV__
   </figure>
 
 
-  <figure class="panel">
-    <div class="chart-head"><h3 data-t="idx.macro.h3">거시 배경 — 중국 유동성이 한 해 앞선다</h3></div>
-    <p data-t="idx.macro.p">통화가 풀리면 위험자산은 <strong>나중에</strong> 따라 옵니다. 과거 데이터로 백테스팅해 보니,
-    비트코인을 가장 잘 앞서는 건 전 세계 집계가 아니라 <strong>중국의 유동성</strong>이었고, 선행은 흔히
-    말하는 몇 주가 아니라 <strong>약 1년</strong>(측정 11개월, 상관 +0.43, 세 출처 재확인)이었습니다.
-    아래는 비트코인 가격(검정)에 중국 M2 증가율(파랑)을 그 <strong>측정된 11개월</strong>만큼 앞으로 당겨
-    겹친 그림입니다 — ‘지금’ 오른쪽 점선은 <strong>이미 풀린(과거) 유동성</strong>이 아직 비트코인에 반영될
-    시간이 안 지난 구간일 뿐, <strong>가격 예측이 아닙니다</strong>.</p>
-    <div class="legend" id="m2-legend"></div>
-    <div class="chart" id="m2-host"><svg id="m2"></svg></div>
-    <p class="m2-read" id="m2-read"></p>
-    <figcaption data-t="idx.macro.cap">겹쳐 그렸지만 눈속임이 아닙니다 — 당김은 눈대중이 아니라
-    <strong>측정값(11개월)</strong>으로 고정했고, 두 세로축은 각자 데이터의 최소·최대만 씁니다. 그래도 두
-    축을 겹친 그림은 <strong>참고</strong>일 뿐입니다. 실제로 실행 <strong>크기</strong>(LRS)를 움직이는 건
-    추세를 뺀 임펄스(위 숫자)이고, 이 신호는 점수(방향)에 <strong>넣지 않습니다</strong> — 통화 사이클
-    표본이 두세 번뿐이라 방향 신호로는 위험하기 때문입니다.</figcaption>
-  </figure>
-
+  <!-- 거시 배경은 이제 전용 페이지(04 유동성). 첫 화면을 점수 밖 자료로
+       무겁게 하지 않도록, 여기서는 링크만 둔다. -->
+  <div class="nextlink">
+    <a href="__LIQUIDITY_URL__">
+      <span class="k" data-t="idx.liqlink.k">거시 배경</span>
+      <span class="t" data-t="idx.liqlink.t">중국 유동성이 한 해 앞선다</span>
+      <span class="d" data-t="idx.liqlink.d">통화가 풀리면 비트코인은 나중에 따라온다 — 참고용, 점수엔 안 들어감</span>
+    </a>
+  </div>
 
   <div class="nextlink">
     <a href="__VERIFY_URL__">
