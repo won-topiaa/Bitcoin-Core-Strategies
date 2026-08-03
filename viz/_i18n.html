@@ -292,29 +292,34 @@ window.__I18N__ = {
 /* ---------------- 05 관련성 지도 ---------------- */
 "rel.eyebrow": "<em>05</em> — Relationship map",
 "rel.h1": "What is Bitcoin actually related to",
-"rel.lead": `<strong>‘Related to’ and ‘usable as a signal’ are two different layers.</strong>
-  The rest of this site measures the second one — “can it go in the score?” — and by that standard 59 of
-  60 candidates were rejected. This page asks only the <strong>question that comes before it</strong>:
-  what does Bitcoin actually move with?`,
+"rel.lead": `This page looks at one thing only — <strong>what Bitcoin actually moves together with.</strong>
+  Remember just this: <strong>‘moves together’ and ‘lets you see it coming’ are not the same.</strong> If
+  two things rise and fall together but you can't know it in advance, it is useless for timing. That
+  ‘seeing it coming’ is what the rest of the site tested — and by that standard 59 of 60 candidates fell.`,
 "rel.era.h3": "The link to risk assets <strong>came into being</strong> in 2020",
-"rel.era.p": `Collapse the whole history into one number and it reads “barely related to the Nasdaq
-  either.” <strong>That reading is wrong.</strong> Split by era and the correlation with the Nasdaq is
-  effectively zero through 2013–16, then becomes distinct from 2020. At the same moment VIX (the fear
-  index) grows with the <strong>opposite sign</strong> — the two confirm each other.`,
-"rel.era.cap": `The vertical axis is the correlation <strong>between weekly log returns</strong>. The
-  reason for using rates of change rather than levels (the prices themselves) is that both trend upward
-  over the long run, so comparing levels only ever says “they both went up” (spurious correlation). The
-  faint lines are the remaining candidates, and most of them stay near zero.`,
+"rel.era.p": `Average all <span class="yr">16</span> years into one number and it looks like “barely related to the Nasdaq either.”
+  But <strong>split it by period and it is different</strong> — how much it moves with the Nasdaq was near
+  zero in 2013–16, then <strong>became clear from 2020.</strong> Over the same period the fear index (VIX)
+  moves the opposite way (up with stocks, down with fear). The two signals tell the same story.`,
+"rel.era.cap": `The vertical axis is <strong>how much the two moved in the same direction</strong>
+  (+1 = perfectly together, −1 = perfectly opposite, 0 = unrelated). It uses the <strong>size of the
+  ups and downs</strong>, not the price itself, because otherwise both just rise over the years and you
+  always get “they went up together.” The faint lines are the other candidates, and most stay near zero.`,
 "rel.rank.eyebrow": "<em>02</em> — Ranking",
 "rel.rank.h2": "Related to what, and how much",
-"rel.rank.p": `Whole-sample figures. <strong>The ‘from price’ rows (MVRV, drawdown) do not
-  answer the question</strong> — the numerator of MVRV <em>is</em> price, so a high correlation is
-  arithmetic, not a finding. <strong>Only the ‘external’ rows</strong> answer “is it related to
-  something outside Bitcoin?” The ‘controlled for Nasdaq’ column strips out the part that moves with the
-  Nasdaq: a candidate that collapses to zero there was a <strong>shadow of risk appetite</strong>.`,
-"rel.rank.caption": "Ordered by |ρ|. n is the sample size (weeks or months); ‘ex-Nasdaq’ is the partial correlation controlling for Nasdaq returns",
+"rel.rank.p": `Whole-period figures. <strong>MVRV and drawdown are built from the Bitcoin price</strong>,
+  so a high correlation is only natural (a property of the arithmetic, not a finding). So for “related to
+  something <em>outside</em> Bitcoin,” only the rows marked <strong>‘external’</strong> count. The
+  ‘Nasdaq removed’ column strips out the part that overlaps with the Nasdaq — if it drops toward zero
+  there, the thing was really just <strong>moving along with the Nasdaq</strong>.`,
+"rel.rank.caption": "Ordered by |ρ|. n is the sample size (weeks or months). ‘Nasdaq removed’ is what is left after taking out the overlap with the Nasdaq",
 "rel.th1": "Kind", "rel.th2": "Against", "rel.th3": "Correlation ρ",
-"rel.th4": "\u03c1 ex-Nasdaq", "rel.th5": "n · span", "rel.th6": "Relationship",
+"rel.th4": "Nasdaq removed", "rel.th5": "n · span", "rel.th6": "Relationship",
+"rel.m2note": `<strong>Why is China's M2 only ‘weak’ here?</strong> This table measures whether things move
+  together <strong>at the same time</strong>. But China's M2 is the kind that <strong>moves first, with
+  Bitcoin following about a year later</strong> — in the same month it is near zero (−0.15), yet
+  <strong>pulled forward 11 months it rises to +0.44.</strong> So it looks low here, but it is the one of
+  60 that was adopted, shown separately on the <a href="__LIQUIDITY_URL__">04 Liquidity</a> page.`,
 "rel.why.eyebrow": "<em>03</em> — So what",
 "rel.why.h2": "If it is related, why keep it out of the score",
 "rel.why.p": `The answer is <strong>not “because it isn't related.”</strong> It is related — but
@@ -356,7 +361,7 @@ window.__I18N__ = {
 "nav.news": "News",
 "news.eyebrow": "<em>06</em> — News",
 "news.h1": "What is happening in Bitcoin right now",
-"news.lead": `<strong>Only the essential articles</strong>, filtered from public RSS feeds and rebaked
+"news.lead": `<strong>Only the essential articles</strong>, filtered from public RSS feeds and refreshed
   four times a day. What selects them is not a person but a <strong>published scoring rule</strong>
   (keywords, recency, deduplication) that lives in this repository as <code>tools/fetch_news.py</code>.
   Titles and summaries are verbatim from the sources and are not this site's opinion.`,
