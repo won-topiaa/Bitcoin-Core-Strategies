@@ -877,12 +877,12 @@ window.__I18N__ = {
 "rel.why.p": `The answer is <strong>not “because it isn't related.”</strong> It is related — but
   <strong>three things stand in the way</strong> of trusting it with direction.`,
 "rel.why.th1": "What stands in the way", "rel.why.th2": "What that means",
-"rel.why.rows": `<tr><td><strong>It moves at the same time</strong></td>
-        <td>The Nasdaq moves in the <strong>same week</strong> as Bitcoin. You cannot know it in advance, so it is useless for timing</td></tr>
-      <tr><td><strong>It is backdrop, not direction</strong></td>
-        <td>Risk appetite says nothing about “where Bitcoin sits in its own cycle”</td></tr>
-      <tr><td><strong>It appears and disappears by era</strong></td>
-        <td>The relationship did not exist in 2013–16. Nothing guarantees it exists in the next era</td></tr>`,
+"rel.why.rows": `<tr><td class="lbl"><strong>It moves at the same time</strong></td>
+        <td class="sub">The Nasdaq moves in the <strong>same week</strong> as Bitcoin. You cannot know it in advance, so it is useless for timing</td></tr>
+      <tr><td class="lbl"><strong>It is backdrop, not direction</strong></td>
+        <td class="sub">Risk appetite says nothing about “where Bitcoin sits in its own cycle”</td></tr>
+      <tr><td class="lbl"><strong>It appears and disappears by era</strong></td>
+        <td class="sub">The relationship did not exist in 2013–16. Nothing guarantees it exists in the next era</td></tr>`,
 "rel.why.after": `So macro is used only for execution <strong>size</strong> (0.75–1.25×), never for the
   score (direction). It is related, so it is not thrown away; the three things above stand in the way, so
   it is placed only where being wrong costs little. Exactly <strong>one of the 60 candidates</strong>
@@ -2408,7 +2408,10 @@ function metricCards(){
   if (vals.length){
     const lo = Math.min.apply(null, vals), hi = Math.max.apply(null, vals);
     const below = vals.filter(v => v < 0.5).length;
-    setText("ind-note", t("indNote", below, D.indMeta.length, (lo*100).toFixed(0),
+    // 분모는 '계산된 지표 수'(vals.length)여야 한다. 전체 9(D.indMeta.length)를
+    // 쓰면, 한 소스에 구멍이 나 한 지표가 계산되지 않은 날 "9개 중 5개"처럼 적혀
+    // 안 계산된 지표를 비싼 쪽에 앉힌 것처럼 오해된다. 분자·분모가 같은 집합.
+    setText("ind-note", t("indNote", below, vals.length, (lo*100).toFixed(0),
       (hi*100).toFixed(0), ((hi-lo)*100).toFixed(0)));
   }
 }
@@ -2931,7 +2934,16 @@ renderAll();
 function nameScrollRegions(){
   document.querySelectorAll(".tblwrap").forEach(w => {
     const scrolls = w.scrollWidth > w.clientWidth + 1;
-    if (!scrolls){ w.removeAttribute("role"); w.removeAttribute("aria-label"); return; }
+    if (!scrolls){
+      w.removeAttribute("role"); w.removeAttribute("aria-label");
+      // 폭이 넓어져 스크롤이 사라지면, 우리가 붙였던 tabindex 만 걷어낸다
+      // (본문에 손으로 박아 둔 tabindex 는 건드리지 않는다).
+      if (w.dataset.autoTab){ w.removeAttribute("tabindex"); delete w.dataset.autoTab; }
+      return;
+    }
+    // 가로 스크롤이 실제로 생기면 키보드로도 스크롤할 수 있어야 한다. 저자가
+    // tabindex 를 안 붙인 표(예: 05 관련성 순위표)에도 여기서 붙여 준다.
+    if (!w.hasAttribute("tabindex")){ w.setAttribute("tabindex", "0"); w.dataset.autoTab = "1"; }
     const cap = w.querySelector("caption");
     let name = cap && cap.textContent.trim();
     if (!name){
