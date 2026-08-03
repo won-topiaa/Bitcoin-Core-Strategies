@@ -27,9 +27,16 @@ MARK = "/*__BCS_NEWSDATA__*/"
 def news_js(path: str | Path) -> str:
     """news.json → 페이지에 넣을 JS 리터럴. 없거나 깨졌으면 "null".
 
-    **"</" 를 이스케이프한다.** 기사 제목·요약은 외부 입력이라, 수집기가 태그를
-    벗겨도 문자열 "</script>" 가 살아남으면 브라우저가 그 지점에서 스크립트 태그를
-    닫아 버린다. JSON 은 "<\\/" 를 "</" 와 같게 읽으므로 의미는 변하지 않는다.
+    **"<" 와 ">" 를 전부 유니코드 이스케이프한다.** 처음엔 "</" 만 바꿨는데,
+    적대적 검증이 그걸 뚫었다 — 제목 "<!--<script" 는 닫는 태그 없이도 HTML
+    파서를 script-data-double-escaped 상태로 밀어 넣어, 이 스크립트가 뒤따르는
+    페이지 전체를 삼키게 만든다(전면 다운). "<" 자체를 \\u003c 로 바꾸면 파서
+    관점에서 태그·주석 시작이 아예 존재하지 않아 그 계열 전부가 닫힌다.
+    JSON.parse 가 원문으로 복원하므로 데이터 의미는 변하지 않는다.
+
+    같은 이유로 "/*" 와 "*/" 도 이스케이프한다 — 기사 제목에 주입 마커
+    문자열(/*__BCS_NEWSDATA__*/)이 통째로 들어 있으면 다음 주입이 잘못된
+    구간을 자른다. 별표를 \\u002a 로 바꾸면 마커가 데이터 안에서 성립할 수 없다.
     """
     p = Path(path)
     if not p.exists():
@@ -39,18 +46,25 @@ def news_js(path: str | Path) -> str:
     except (json.JSONDecodeError, OSError, UnicodeDecodeError):
         return "null"
     try:
-        return json.dumps(data, ensure_ascii=False, separators=(",", ":"),
-                          allow_nan=False).replace("</", "<\\/")
+        js = json.dumps(data, ensure_ascii=False, separators=(",", ":"),
+                        allow_nan=False)
     except ValueError:          # NaN/inf — 무효 JSON 을 페이지에 싣지 않는다
         return "null"
+    return (js.replace("<", "\\u003c").replace(">", "\\u003e")
+              .replace("/*", "/\\u002a").replace("*/", "\\u002a/"))
 
 
 def replace_region(html: str, js: str) -> Optional[str]:
-    """마커 두 개 사이를 js 로 바꾼 HTML. 마커가 없으면 None."""
-    a = html.find(MARK)
-    b = html.find(MARK, a + len(MARK)) if a >= 0 else -1
-    if a < 0 or b < 0:
+    """마커 두 개 사이를 js 로 바꾼 HTML. **마커가 정확히 2개가 아니면 None.**
+
+    '앞에서 두 개'를 고르면, 어떤 경로로든 마커가 3개가 된 페이지에서 잘못된
+    구간을 자르고 — 주입할 때마다 마커가 늘어나 회복이 불가능해진다. 이제
+    news_js 가 별표를 이스케이프해 데이터 안엔 마커가 성립할 수 없지만,
+    방어는 겹으로: 개수가 안 맞으면 손대지 않고 실패를 알린다."""
+    if html.count(MARK) != 2:
         return None
+    a = html.find(MARK)
+    b = html.find(MARK, a + len(MARK))
     return html[:a + len(MARK)] + js + html[b:]
 
 

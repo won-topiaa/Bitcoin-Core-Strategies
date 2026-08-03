@@ -256,3 +256,43 @@ def test_cli_report_prints_planted_period_from_files(tmp_path, capsys):
     assert rc == 0
     out = capsys.readouterr().out
     assert "2021-05-01" in out and "MSTR 이 크게 앞선 구간" in out
+
+
+def test_site_payload_survives_real_scale_history_from_2010():
+    """스투크는 MSTR 이력을 2000년대부터 준다. 첫 공통 거래일(2010년)을 기준으로
+    잡으면 비율이 2e-5 규모가 되고, 소수 3자리 반올림이 전부 0.000 으로 뭉개
+    **차트 선이 조용히 끊긴다** — 적대적 검증이 실데이터 규모로 재현한 HIGH.
+    채택일(2020-08-11) 절단 + 유효숫자 반올림이 막는다."""
+    from datetime import date, timedelta
+    import math
+    base = date(2010, 7, 19)
+    n = (date(2026, 7, 30) - base).days
+    # BTC 8십만 배, MSTR 40배 — 실데이터의 자릿수를 흉내 낸다
+    btc = {base + timedelta(days=i): 0.08 * math.exp(i / 425) for i in range(n)}
+    mstr = {d: 8.5 * math.exp(i / 1600)
+            for i, d in enumerate(base + timedelta(days=i) for i in range(n))
+            if d.weekday() < 5}
+    pl = ms.site_payload(mstr, btc, base)
+    assert pl is not None
+    # 채택일 이전은 실리지 않는다
+    adoption_off = (ms.ADOPTION - base).days
+    assert all(off >= adoption_off for off, _ in pl["series"]), "채택 전 점이 실렸다"
+    # 어떤 점도 0 으로 뭉개지지 않는다 — 뭉개지면 차트가 그 구간을 버린다
+    assert all(v > 0 for _, v in pl["series"]), "반올림이 값을 0 으로 뭉갰다"
+    # 시작점은 1.0
+    assert pl["series"][0][1] == 1.0
+
+
+def test_parse_yahoo_null_timestamp_and_all_null_adjclose():
+    """적대적 검증 발견 2건: ① timestamp 에 null 이 섞이면 int(None) 으로 죽었다
+    ② adjclose 키는 있는데 전부 null 이면 close 가 멀쩡해도 빈손을 돌려줬다."""
+    import json as _json
+    import fetch_stock as fs
+    body = _json.dumps({"chart": {"result": [{
+        "timestamp": [1720000000, None, 1720172800],
+        "indicators": {"quote": [{"close": [10.0, 11.0, 12.0]}],
+                       "adjclose": [{"adjclose": [None, None, None]}]},
+    }]}})
+    out = fs.parse_yahoo(body)          # 죽지 않아야 한다
+    assert out is not None and len(out) == 2, out
+    assert sorted(out.values()) == [10.0, 12.0], "close 폴백이 안 됐다"

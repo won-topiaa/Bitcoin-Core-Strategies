@@ -286,7 +286,10 @@ def _truncate(text: str, limit: int = SUMMARY_LIMIT) -> str:
 def valid_url(raw: str) -> Optional[str]:
     """http/https 이고 호스트가 있는 URL 만. 그 외(javascript:·data:·상대경로)는
     None — 호출부가 항목째 버린다. 링크는 위생 처리로 '고칠' 수 없다."""
-    url = _CTRL_RE.sub("", (raw or "").strip())
+    # \t\n\r 까지 지운다 — urlsplit 은 스킴 검사에서 이 셋을 무시하므로, 남겨
+    # 두면 '검사한 문자열'과 '저장한 문자열'이 달라진다(서버는 통과·클라이언트는
+    # 거부하는 불일치 — 적대적 검증의 지적).
+    url = re.sub(r"[\x00-\x1f\x7f]", "", (raw or "").strip())
     try:
         parts = urllib.parse.urlsplit(url)      # scheme 은 소문자로 정규화된다
     except ValueError:

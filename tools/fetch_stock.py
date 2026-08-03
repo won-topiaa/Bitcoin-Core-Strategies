@@ -114,15 +114,22 @@ def parse_yahoo(text: str) -> Optional[dict[date, float]]:
         adj = res["indicators"].get("adjclose", [{}])[0].get("adjclose")
     except (ValueError, KeyError, IndexError, TypeError):
         return None
-    values = adj if adj else closes
+    # adjclose 키는 있는데 값이 전부 null 인 응답이 실제로 온다 — [None,...] 은
+    # truthy 라 `adj if adj else` 로는 close 로 못 내려간다(적대적 검증의 지적).
+    values = adj if (adj and any(x is not None for x in adj)) else closes
+    if len(stamps) != len(values):
+        # zip 이 꼬리를 조용히 자른다 — 야후가 진행 중인 마지막 봉을 비대칭으로
+        # 줄 때 최신 하루가 말없이 빠질 수 있으니, 최소한 보이게는 한다.
+        print(f"  ! yahoo: timestamp {len(stamps)}개 vs 종가 {len(values)}개 — "
+              "짧은 쪽에 맞춰 자름", file=sys.stderr)
     out: dict[date, float] = {}
     for t, v in zip(stamps, values):
-        if v is None:
+        if t is None or v is None:       # null 타임스탬프는 int(None) 으로 죽는다
             continue
         try:
             d = datetime.fromtimestamp(int(t), tz=timezone.utc).date()
             out[d] = float(v)
-        except (ValueError, OSError, OverflowError):
+        except (ValueError, TypeError, OSError, OverflowError):
             continue
     return out or None
 

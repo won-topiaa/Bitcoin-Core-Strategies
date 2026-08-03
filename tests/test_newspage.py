@@ -43,15 +43,18 @@ def _write_news(tmp: Path, items: list[dict]) -> Path:
 # --------------------------------------------------------------------------
 def test_a_script_closing_tag_in_a_title_cannot_break_out():
     """제목의 "</script>" 가 그대로 구워지면 브라우저가 거기서 스크립트를 닫고,
-    이어지는 기사 텍스트가 **HTML 로 실행된다.** JSON 의 "<\\/" 이스케이프가 막는다."""
+    이어지는 기사 텍스트가 **HTML 로 실행된다.**
+
+    메커니즘이 아니라 **성질**을 단언한다 — 출력에 "<" 가 아예 없으면 파서가
+    태그·주석을 시작할 방법이 없다. (처음엔 "</"→"<\\/" 치환이었는데 적대적
+    검증이 "<!--<script" 로 뚫어 \\u003c 전면 이스케이프로 바꿨다.)"""
     with tempfile.TemporaryDirectory() as tmp:
         news = _write_news(Path(tmp), [
             {"title": "</script><img src=x onerror=alert(1)>", "url": "https://a.example/",
              "source": "t", "published": "2026-08-02T00:00:00+00:00", "summary": "", "score": 1},
         ])
         js = inject_news.news_js(news)
-        assert "</script" not in js, "닫는 태그가 살아서 나갔습니다"
-        assert "<\\/script" in js
+        assert "<" not in js and ">" not in js, "꺾쇠가 살아서 나갔습니다"
         # 원래 문자열로 복원되는지 — 이스케이프가 데이터를 바꾸면 그것대로 문제다
         assert "</script>" in json.loads(js)["items"][0]["title"]
 
@@ -140,3 +143,37 @@ def test_inject_cli_round_trips_on_a_baked_page():
                            capture_output=True, text=True, timeout=60)
         assert r.returncode == 0, r.stderr
         assert "주입된 기사" not in page.read_text(encoding="utf-8")
+
+
+def test_a_comment_open_plus_script_cannot_swallow_the_page():
+    """"</script>" 탈출만 막았더니 적대적 검증이 "<!--<script" 로 뚫었다 —
+    닫는 태그 없이도 HTML 파서를 script-data-double-escaped 상태로 밀어 넣어
+    이 스크립트가 페이지 나머지를 통째로 삼킨다(전면 다운). "<" 자체를
+    \\u003c 로 바꾸면 그 계열 전부가 닫힌다."""
+    with tempfile.TemporaryDirectory() as tmp:
+        news = _write_news(Path(tmp), [
+            {"title": "<!--<script/ swallow", "url": "https://a.example/",
+             "source": "t", "published": "2026-08-02T00:00:00+00:00", "summary": "", "score": 1},
+        ])
+        js = inject_news.news_js(news)
+        assert "<" not in js and ">" not in js
+        assert json.loads(js)["items"][0]["title"] == "<!--<script/ swallow"
+
+
+def test_the_injection_marker_cannot_survive_inside_article_text():
+    """기사 제목에 마커 문자열이 통째로 들어 있으면, 다음 주입이 잘못된 구간을
+    잘라 페이지가 회복 불가로 망가진다(적대적 검증의 재현). 별표 이스케이프로
+    데이터 안에서는 마커가 성립할 수 없고, 혹시 다른 경로로 마커가 늘면
+    replace_region 이 손대지 않고 거부한다."""
+    with tempfile.TemporaryDirectory() as tmp:
+        news = _write_news(Path(tmp), [
+            {"title": f"Bitcoin {inject_news.MARK} collision", "url": "https://a.example/",
+             "source": "t", "published": "2026-08-02T00:00:00+00:00", "summary": "", "score": 1},
+        ])
+        js = inject_news.news_js(news)
+        assert inject_news.MARK not in js
+        assert json.loads(js)["items"][0]["title"] == f"Bitcoin {inject_news.MARK} collision"
+        # 그리고 마커가 2개가 아닌 페이지는 거부된다 — 개수 강제
+        assert inject_news.replace_region(
+            f"{inject_news.MARK}a{inject_news.MARK}b{inject_news.MARK}", "x") is None
+        assert inject_news.replace_region(f"{inject_news.MARK}only-one", "x") is None

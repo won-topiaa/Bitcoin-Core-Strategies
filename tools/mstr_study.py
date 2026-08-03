@@ -194,7 +194,13 @@ def site_payload(mstr: dict[date, float], btc: dict[date, float],
     구간·지수를 내면 없는 이야기를 만들게 된다."""
     if not mstr or not btc:
         return None
-    days = [d for d in sorted(set(mstr) & set(btc)) if mstr[d] > 0 and btc[d] > 0]
+    # **채택일(2020-08-11)부터만 싣는다.** 스투크는 MSTR 이력을 2000년대부터
+    # 주는데, 첫 공통 거래일(2010년)을 기준 1.0 으로 잡으면 BTC 가 80만 배
+    # 오르는 동안의 비율이 2e-5 규모가 되고 — 소수 3자리 반올림이 전부 0.000
+    # 으로 뭉개 차트 선이 조용히 끊긴다(적대적 검증이 실데이터 규모로 재현).
+    # 차트 제목도 '첫 매수 이후'다 — 서사와 눈금이 같은 곳을 가리키게 한다.
+    days = [d for d in sorted(set(mstr) & set(btc))
+            if d >= ADOPTION and mstr[d] > 0 and btc[d] > 0]
     if not days or (days[-1] - days[0]).days < WINDOW_DAYS:
         return None
     d0 = days[0]
@@ -204,8 +210,13 @@ def site_payload(mstr: dict[date, float], btc: dict[date, float],
         pts.insert(0, (d0, 1.0))         # 차트가 시작점 1.0 에서 출발하도록
     op = outperformance(mstr, btc)
     a = analyse(mstr, btc)
+
+    def sig(v: float) -> float:
+        """유효숫자 4자리 — 절대 반올림(round 3)은 1 에서 먼 규모를 뭉갠다."""
+        return float(f"{v:.4g}")
+
     return {
-        "series": [[(d - base).days, round(v, 3)] for d, v in pts],
+        "series": [[(d - base).days, sig(v)] for d, v in pts],
         "periods": [[(s - base).days, (e - base).days] for s, e, _ in op["up"]],
         "periodsDown": [[(s - base).days, (e - base).days] for s, e, _ in op["down"]],
         "corr": {"weekly": None if a["full_wk"] is None else round(a["full_wk"], 3),

@@ -62,7 +62,10 @@ import onchain_correlation as oc      # noqa: E402  (load_market 재사용)
 # 검증 못 한 후보는 싣지 않았다. (date, name, cls, kind, note)
 #   cls : company / country
 #   kind: surprise = 사전 신호 없던 공시
-#         flagged  = 자금조달 발표·법 통과 등으로 매수가 예고된 뒤의 공시
+#         flagged  = 자금조달 발표·법 통과 등으로 매수가 예고된 뒤의 공시.
+#                    **언론 유출·사전 보도도 사전 신호로 센다** — FT 유출(Trump
+#                    Media·Twenty One)과 CNBC 사전 보도(GameStop)를 같은 잣대로.
+#                    이 기준이 무너지면 검정이 사후편향 재생산기가 된다.
 # ---------------------------------------------------------------------------
 EVENTS: list[tuple[str, str, str, str, str]] = [
     # coindesk.com/markets/2020/08/11/microstrategy-buys-250m-in-bitcoin-calling-the-crypto-superior-to-cash
@@ -96,9 +99,11 @@ EVENTS: list[tuple[str, str, str, str, str]] = [
     # — 법은 06-08 통과, 09-07 발효가 예고돼 있었다: 매수(09-06 트윗)는 예고된 수순.
     ("2021-09-06", "엘살바도르 첫 400 BTC 매수", "country", "flagged",
      "법정통화 발효(09-07) 전날, 6월 법 통과로 예고됨"),
-    # bitcointreasuries.net/public-companies/metaplanet — 채택 공시 2024-04-08~09(JST),
-    # 보도가 8·9일로 갈려 9일(JST 공시일)을 쓴다. ±1일 창이 흡수한다.
-    ("2024-04-09", "Metaplanet 트레저리 채택", "company", "surprise",
+    # 채택 공시는 2024-04-08(JST 오후 = UTC 4-08) — 다수 후속 보도(ccn·
+    # bitcoinmagazine 등)가 4-08 로 기록하고 서구 보도가 4-09 에 몰린다.
+    # 4-08 로 확정한다. 당일 수익이 날짜에 민감(4-08 +3.3% vs 4-09 −3.7%)하다는
+    # 것 자체가 ±1일 창을 함께 봐야 하는 이유다(적대적 검증의 지적).
+    ("2024-04-08", "Metaplanet 트레저리 채택", "company", "surprise",
      "일본 상장사, 이후 반복 매수의 시작"),
     # cnbc.com/2024/05/28/med-tech-stock-semler-scientific-surges-on-new-bitcoin-treasury-strategy.html
     ("2024-05-28", "Semler Scientific $40M (581 BTC)", "company", "surprise",
@@ -118,10 +123,16 @@ EVENTS: list[tuple[str, str, str, str, str]] = [
     ("2024-11-25", "Rumble 최대 $20M", "company", "surprise",
      "MicroStrategy 55,500 BTC 공시와 같은 날 — 당일 창이 겹친다"),
     # globenewswire.com/news-release/2025/03/25/3049165/0/en/GameStop-Announces-Update-to-its-Investment-Policy-to-Add-Bitcoin-as-a-Treasury-Reserve-Asset.html
-    ("2025-03-25", "GameStop 이사회 승인", "company", "surprise", "정책 채택(매수는 5월)"),
+    # — 단 CNBC 가 2-13 에 '비트코인 투자 검토'를 보도해 GME 가 8%대 급등했다
+    #   (cnbc.com/2025/02/13). '언론에 먼저 알려진 매수'는 flagged 다 — 적대적
+    #   검증이 잡은 자체 기준(Trump Media) 위반을 바로잡았다.
+    ("2025-03-25", "GameStop 이사회 승인", "company", "flagged",
+     "2-13 CNBC 사전 보도로 예고 — 정책 채택(매수는 5월)"),
     # businesswire.com/news/home/20250423962305/en/ (Cantor·Tether·SoftBank)
-    ("2025-04-23", "Twenty One Capital 출범 (42,000 BTC)", "company", "surprise",
-     "SPAC 합병으로 3위 보유 기업 등장"),
+    # — FT 가 4-22 에 동일 딜($3B, 21 Capital 명칭까지)을 먼저 보도했고 로이터가
+    #   당일 받아썼다(kfgo.com 2025/04/22). Trump Media 와 같은 구조 = flagged.
+    ("2025-04-23", "Twenty One Capital 출범 (42,000 BTC)", "company", "flagged",
+     "FT 4-22 유출로 예고 — SPAC 합병으로 3위 보유 기업 등장"),
     # coindesk.com/markets/2025/05/27/trump-media-raising-25b-for-bitcoin-treasury-strategy
     # — FT 가 05-26 에 $3B 조달 계획을 먼저 보도했다(fxstreet 202505262123): 예고됨.
     ("2025-05-27", "Trump Media $2.5B 조달", "company", "flagged",
@@ -169,12 +180,17 @@ def build_grid(price: dict[date, float], ndq: Optional[dict[date, float]] = None
     if ndq:
         nds = [d for d in sorted(ndq) if ndq[d] > 0]
         logq = [math.log(ndq[d]) for d in nds]
+        # 사영은 '가장 가까운'이 아니라 **'그 날 이전 마지막'** 관측으로 한다.
+        # 가까운 관측을 고르면 일요일이 월요일 관측으로 앞당겨져, 월요일 공시
+        # (21건 중 10건!)의 당일 초과수익이 ja==jb 로 퇴화해 원수익과 같아진다
+        # — 적대적 검증이 잡았다. 이전 관측으로 사영하면 [일~월] 창이 [금~월]
+        # 나스닥 수익률을 빼게 되어 차감이 실제로 작동한다.
         near: list[Optional[int]] = []
-        j = 0
+        j = -1
         for d in ds:
-            while j + 1 < len(nds) and abs((nds[j + 1] - d).days) <= abs((nds[j] - d).days):
+            while j + 1 < len(nds) and nds[j + 1] <= d:
                 j += 1
-            near.append(j if abs((nds[j] - d).days) <= 5 else None)
+            near.append(j if j >= 0 and (d - nds[j]).days <= 5 else None)
         grid["logq"] = logq
         grid["near"] = near
     return grid
@@ -245,12 +261,17 @@ def perm_test(res: dict, n: int = 10000, seed: int = 7) -> dict:
     """
     grid, rows = res["grid"], res["rows"]
     N = len(grid["ds"])
+    # 유의: 구별 가능한 이동은 N-60개뿐이다. MC 10,000회는 그걸 복원추출한 것
+    # 이라 p 의 해상도가 1/(N-60) ≈ 0.0004 를 넘을 수 없다 — 그래서 아래서
+    # (ge+1)/(cnt+1) 보정을 쓴다. '0/10000 = p<0.0001' 은 과장이다(적대적 검증).
     obs = _subset_means(rows, "obs")
     rng = random.Random(seed)
     ge = {k: 0 for k, v in obs.items() if v is not None}   # null >= obs 횟수
     cnt = {k: 0 for k in ge}                                # 유효 null 횟수
     for _ in range(n):
-        s = rng.randrange(30, N - 30)
+        # 버퍼 61일 — 창 폭(전60일)보다 짧은 버퍼(±30)는 관측 창과 최대 30일
+        # 겹치는 널 추첨을 허용한다(적대적 검증). 겹침 없는 이동만 뽑는다.
+        s = rng.randrange(61, N - 61)
         shifted = []
         for r in rows:
             i = (r["i"] + s) % N
@@ -267,7 +288,10 @@ def perm_test(res: dict, n: int = 10000, seed: int = 7) -> dict:
             cnt[k] += 1
             if v >= obs[k]:
                 ge[k] += 1
-    pvals = {k: (ge[k] / cnt[k] if cnt[k] else float("nan")) for k in ge}
+    # (ge+1)/(cnt+1) — 관측 자신을 귀무분포의 한 표본으로 세는 표준 보정.
+    # 0/10000 이 '0.0000'으로 인쇄되면 검정 해상도(구별 가능한 이동 N-122개)를
+    # 넘는 정밀도를 주장하게 된다.
+    pvals = {k: ((ge[k] + 1) / (cnt[k] + 1) if cnt[k] else float("nan")) for k in ge}
     return {"obs": obs, "p": pvals, "n": n}
 
 
