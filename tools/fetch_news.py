@@ -74,6 +74,7 @@ FALLBACK = ("CryptoCompare", "https://min-api.cryptocompare.com/data/v2/news/?la
 TOP_NEW = 20                # 이번 run 에서 새로 올리는 최대 건수
 CAP = 40                    # 병합 후 파일 전체 상한 (페이지가 무한히 길어지지 않게)
 KEEP_DAYS = 7               # 기존 항목 유지 기한 — 이보다 오래되면 병합에서 제외
+FUTURE_SKEW_HOURS = 24.0    # 시계 오차 허용. 이보다 미래인 항목은 날짜 오류로 보고 버린다
 HALF_LIFE_HOURS = 48.0      # 최신성 반감기 — 이틀 지난 기사는 가중치가 절반
 SOURCE_DECAY = 0.8          # 같은 소스 k번째 항목은 ×0.8^k — 한 매체 쏠림 완화
 JACCARD_DUP = 0.6           # 제목 토큰 자카드가 이 이상이면 같은 기사로 본다
@@ -357,6 +358,12 @@ def rank(cands: list[dict], now: datetime) -> list[dict]:
     하드 쿼터가 아니라 부드러운 감점이다 — 한 매체가 정말 중요한 기사를 몰아
     냈다면 그래도 올라온다. 중복 제거는 감점 후 순서로 돌아, 살아남는 쪽이
     항상 최종 점수가 높은 쪽이다(자카드 0.6↑ = 통신사발 리라이트 수준의 겹침)."""
+    # 미래 날짜 항목을 먼저 버린다. 감쇠는 age 를 0 으로 클램프하므로 미래
+    # 날짜는 최대 최신성(0.5^0=1)을 받아 매 실행 맨 위에 붙고, 만료 필터
+    # (now-when > KEEP_DAYS)도 음수라 걸리지 않아 몇 년이고 눌러앉는다. 모든
+    # 표시·저장이 이 함수를 지나므로 여기 한 곳에서 막으면 새어 나가지 않는다.
+    cutoff = now + timedelta(hours=FUTURE_SKEW_HOURS)
+    cands = [c for c in cands if c["when"] <= cutoff]
     prelim = [(base_score(f"{c['title']} {c['summary']}", c["when"], now), c)
               for c in cands]
     prelim.sort(key=_order)

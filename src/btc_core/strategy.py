@@ -11,6 +11,7 @@
 from __future__ import annotations
 
 import json
+import os
 from dataclasses import dataclass, field
 from datetime import date, datetime
 from pathlib import Path
@@ -121,7 +122,13 @@ class ExecutionState:
     def save(self, path: str | Path) -> None:
         p = Path(path)
         p.parent.mkdir(parents=True, exist_ok=True)
-        p.write_text(json.dumps(self.as_dict(), ensure_ascii=False, indent=2), encoding="utf-8")
+        # 원자적 쓰기: 같은 폴더의 임시 파일에 다 쓴 뒤 제자리로 옮긴다. 한 번의
+        # write_text 는 중간에 죽으면(디스크 참, 컨테이너 회수) 반쯤 쓰인 파일을
+        # 남겨, 다음 load 의 json.loads 가 죽고 사다리·BCS 이력이 통째로 사라진다.
+        # os.replace 는 같은 파일시스템 안에서 원자적이라 그래서 같은 폴더에 쓴다.
+        tmp = p.with_name(f"{p.name}.tmp")
+        tmp.write_text(json.dumps(self.as_dict(), ensure_ascii=False, indent=2), encoding="utf-8")
+        os.replace(tmp, p)
 
     @classmethod
     def load(cls, path: str | Path) -> "ExecutionState":

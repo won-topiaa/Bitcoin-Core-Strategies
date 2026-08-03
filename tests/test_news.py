@@ -240,6 +240,24 @@ def test_jaccard_threshold_does_not_merge_different_stories():
     assert fn.jaccard(t1, t2) < fn.JACCARD_DUP
 
 
+def test_a_future_dated_item_is_dropped_not_pinned_to_the_top():
+    """미래 날짜 기사는 감쇠가 age 를 0 으로 클램프해 최대 최신성을 받고, 만료
+    필터도 음수라 걸리지 않아 몇 년이고 맨 위에 눌러앉는다. rank 가 모든 표시·
+    저장의 길목이므로 거기서 버린다(적대적 검증이 잡은 결함)."""
+    ranked = fn.rank([
+        _cand("Bitcoin surges to record high", "https://real.example/now", "R"),
+        _cand("Bitcoin to hit 1 million by decree", "https://bad.example/future", "B",
+              NOW + timedelta(days=365)),                    # 1년 미래 — 날짜 오류
+    ], NOW)
+    urls = [i["url"] for i in ranked]
+    assert "https://bad.example/future" not in urls, "미래 날짜 기사가 살아남았습니다"
+    assert "https://real.example/now" in urls
+    # 시계 오차 허용 범위(24h) 안쪽의 '살짝 미래'는 버리지 않는다
+    ok = fn.rank([_cand("Bitcoin steady", "https://ok.example/skew", "S",
+                        NOW + timedelta(hours=6))], NOW)
+    assert [i["url"] for i in ok] == ["https://ok.example/skew"]
+
+
 # --------------------------------------------------------------------------
 # 병합 — 상위 20 신규 · 7일 만료 · 상위 40 캡
 # --------------------------------------------------------------------------

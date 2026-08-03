@@ -165,14 +165,18 @@ def _bake(body_rel: str, page_key: str, title: str, extra_script: Optional[str],
     # 주소로 올릴 때는 절대 주소여야 해서 빌드 시점에 갈아 끼운다.
     for k, v in links.items():
         page = page.replace(k, v)
+    # 자리표시자 검사는 **신뢰되는 골격**에 대해서만, 뉴스 주입 **전에** 한다.
+    # 주입 뒤에 검사하면, 남이 쓴 기사 제목에 우연히 '__NEWS_URL__' 같은 토큰이
+    # 들어 있을 때 이 검사가 그걸 미치환 자리표시자로 오인해 하루 전체 재빌드를
+    # 통째로 죽인다(뉴스 데이터는 news_js 가 escape 하지만 밑줄은 건드리지 않는다).
+    leftover = [w for w in PLACEHOLDERS if w in page]
+    if leftover:
+        raise SystemExit(f"{out.name}: 치환되지 않은 자리표시자 {leftover}")
     # 뉴스 데이터는 공용 페이로드와 분리된 마커에 산다(뉴스 본문에만 있다) —
     # 주입 주기가 달라서다. 하루 네 번 갱신은 inject_news 가 같은 헬퍼로 한다.
     replaced = inject_news.replace_region(page, news_js)
     if replaced is not None:
         page = replaced
-    leftover = [w for w in PLACEHOLDERS if w in page]
-    if leftover:
-        raise SystemExit(f"{out.name}: 치환되지 않은 자리표시자 {leftover}")
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(page, encoding="utf-8")
     return out

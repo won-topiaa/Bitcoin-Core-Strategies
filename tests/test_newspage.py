@@ -86,6 +86,26 @@ def test_replace_region_swaps_only_between_the_markers():
     assert inject_news.replace_region("마커가 없다", "x") is None
 
 
+def test_news_text_containing_a_template_token_does_not_abort_the_build():
+    """남이 쓴 기사 제목에 우연히 '__NEWS_URL__' 같은 자리표시자 토큰이 들어 있어도
+    하루 전체 재빌드가 죽으면 안 된다. 자리표시자 검사는 신뢰되는 골격에 대해
+    뉴스 주입 '전에' 돌아야 한다(적대적 검증이 잡은 결함)."""
+    with tempfile.TemporaryDirectory() as tmp:
+        t = Path(tmp)
+        news = _write_news(t, [
+            {"title": "Bitcoin __NEWS_URL__ __PAGE__ __NAV__ token in a headline",
+             "url": "https://a.example/x", "source": "t",
+             "published": "2026-08-02T00:00:00+00:00", "summary": "__RULES_URL__", "score": 1},
+        ])
+        paths = {p.name: p for p in build_viz.build(_csv(), t, news_json=str(news))}
+        page = paths["news.html"].read_text(encoding="utf-8")
+        # 골격의 자리표시자는 전부 치환됐고(빌드가 안 죽었고), 기사 텍스트는 살아 있다
+        assert "주입된" not in page  # sanity
+        assert "token in a headline" in page
+        # 다른 다섯 장도 정상 생성됐다
+        assert len(paths) == len(build_viz.PAGES)
+
+
 def test_the_baked_news_page_keeps_its_markers_for_later_injection():
     """마커가 빌드 결과에 남아야 refresh-news.yml 이 재빌드 없이 주입할 수 있다.
     마커를 지우면 뉴스 갱신 경로 전체가 조용히 죽는다."""

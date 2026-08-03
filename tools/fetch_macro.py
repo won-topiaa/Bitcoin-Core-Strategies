@@ -351,12 +351,19 @@ def build_net_liquidity(columns: dict[str, dict[date, float]]) -> Optional[dict[
     **단위 정렬이 핵심.** WALCL·WTREGEN 은 백만 달러, RRPONTSYD 는 십억 달러라
     그대로 빼면 RRP 가 1000배 작아져 사실상 빠진다(에러 없이 조용히 틀린다). 그래서
     RRP 를 ×1000 한다. WALCL 은 주간, TGA·RRP 는 일간이라 각 주 날짜에서 10일 안의
-    가장 가까운 값을 쓴다. TGA·RRP 가 아직 0 이던 초기 구간은 그 항을 0 으로 둔다."""
+    가장 가까운 값을 쓴다.
+
+    **결측 항을 0 으로 때우지 않는다.** TGA·RRP 열을 이번 실행에서 아예 못 받았으면
+    (전송 실패) 재계산을 포기(None)한다 — 0 으로 두면 2021년 이후 RRP(~$2조)를 통째로
+    빠뜨린 값이 나오고, 그 틀린 값이 저장된 올바른 net_liq 를 병합에서 덮어쓴다. 열은
+    받았는데 특정 주 근처에 관측이 없는 초기 구간은 아래 nearest 가 그 주만 건너뛴다."""
     walcl = columns.get("_walcl")
     if not walcl:
         return None
-    tga = columns.get("_tga") or {}
-    rrp = columns.get("_rrp") or {}
+    tga = columns.get("_tga")
+    rrp = columns.get("_rrp")
+    if not tga or not rrp:            # 구성요소 열이 통째로 없으면 계산하지 않는다
+        return None
     tsorted, rsorted = sorted(tga), sorted(rrp)
 
     def nearest(dates_sorted: list[date], series: dict[date, float], d: date) -> Optional[float]:
@@ -369,9 +376,9 @@ def build_net_liquidity(columns: dict[str, dict[date, float]]) -> Optional[dict[
 
     out: dict[date, float] = {}
     for d, w in walcl.items():
-        t = nearest(tsorted, tga, d) if tga else 0.0
-        rp = nearest(rsorted, rrp, d) if rrp else 0.0
-        if t is None or rp is None:      # 근처 값이 아예 없으면 그 주는 건너뛴다
+        t = nearest(tsorted, tga, d)
+        rp = nearest(rsorted, rrp, d)
+        if t is None or rp is None:      # 근처 값이 아예 없으면(초기 구간 등) 그 주는 건너뛴다
             continue
         out[d] = w - t - rp * RRP_B_TO_M
     return out or None
@@ -386,10 +393,17 @@ def build_global(columns: dict[str, dict[date, float]]) -> Optional[dict[date, f
     """
     if "m2_us" not in columns:
         return None
+    # 합계는 **항상 같은 구성**(US+JP+GB+EU)이어야 한다. 이번 실행에서 합산국 하나가
+    # 전송에 실패해 열이 없으면, 그 나라를 뺀 부분합을 만들어 저장된 전체합을
+    # 덮어쓰면 그 지점에서 수준이 튀어 전년비가 깨진다(net_liq 결측 버그와 같은
+    # 부류). 그럴 땐 재계산을 포기(None)해 마지막 완전구성 값을 지킨다.
+    agg_ccs = [cc for cc, spec in GLOBAL.items() if spec.get("agg", True)]
+    for cc in agg_ccs:
+        if not columns.get(f"m2_{cc}") or not columns.get(f"fx_{cc}"):
+            return None
     parts = [{d: v * M2_US_TO_USD for d, v in columns["m2_us"].items()}]
-    for cc, spec in GLOBAL.items():
-        if not spec.get("agg", True):          # 합계 제외국(예: 중국, 커버리지 짧음)
-            continue
+    for cc in agg_ccs:
+        spec = GLOBAL[cc]
         m2 = columns.get(f"m2_{cc}")
         fx = columns.get(f"fx_{cc}")
         if not m2 or not fx:

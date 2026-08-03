@@ -161,6 +161,26 @@ def test_manual_can_fill_in_for_a_failed_auto_indicator(cfg):
     assert valuation.available
 
 
+def test_an_invalid_manual_floor_override_keeps_the_auto_value(cfg):
+    """수동 입력의 바닥선 오버라이드가 숫자로 안 읽히거나(오타 '3O000') 음수면,
+    멀쩡히 계산된 자동값을 버리지 않고 유지한다. 예전엔 잘못된 오버라이드로
+    자동값이 None 이 돼 기준바닥과 매수구간이 통째로 어긋났다(적대적 검증)."""
+    from btc_core.datasources.manual import ManualInput
+
+    md = MarketData(price=fixtures.price_series())
+    bundle = DataBundle(market=md, origin="price-only")
+    base, _ = evaluate(cfg, bundle=bundle)
+    auto = next(f for f in base.plan.floors if f.key == "ma200w").price
+    assert auto is not None, "자동 ma200w 가 계산되는 픽스처여야 한다"
+
+    for bad in ("3O000", -5, "not a number"):
+        snap, _ = evaluate(cfg, bundle=bundle,
+                           manual=ManualInput(as_of=None, floors={"ma200w": bad}))
+        got = next(f for f in snap.plan.floors if f.key == "ma200w").price
+        assert got == auto, f"잘못된 오버라이드 {bad!r} 가 자동값을 버렸습니다"
+        assert snap.plan.reference_floor == base.plan.reference_floor
+
+
 # --- 상태 누적 -------------------------------------------------------------
 
 def test_evaluation_records_bcs_history(cfg, bundle, manual_path):

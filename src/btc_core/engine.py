@@ -149,10 +149,15 @@ def evaluate(
         "lth_rp": _floor("lth_rp"),
         "cvdd": _floor("cvdd"),
     }
-    # 수동 입력이 자동 선을 직접 적었다면 그쪽을 존중한다
+    # 수동 입력이 자동 선을 직접 적었다면 그쪽을 존중한다 — 단 그 값이 실제로
+    # 숫자로 읽히고 양수일 때만. 오타(예: '3O000')나 음수면 _floor 가 None 을
+    # 돌려주는데, 그걸 그대로 앉히면 멀쩡히 계산된 자동값을 버리게 된다. 그 경우
+    # 자동값을 유지한다(_floor 안의 경고가 잘못된 입력은 이미 알린다).
     for auto_key in ("ma200w", "realized_price"):
         if manual.floors.get(auto_key) is not None:
-            floor_prices[auto_key] = _floor(auto_key)
+            override = _floor(auto_key)
+            if override is not None:
+                floor_prices[auto_key] = override
 
     if price is None:
         price = _floor("price")

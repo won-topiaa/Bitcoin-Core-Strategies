@@ -57,19 +57,21 @@ jobs:
           git add viz/site/news.html data/news.json
           MSG="뉴스 갱신"
           git commit -m "$MSG"
-          # 그 사이 데이터 갱신이나 사람이 밀었을 수 있다. non-fast-forward 로 죽는
-          # 대신, 원격 tip 위로 우리의 news.html·news.json 만 얹어 다시 커밋한다
-          # (market 데이터는 스테이지하지 않으므로 절대 건드리지 않는다).
-          for i in 1 2 3 4 5; do
+          # 그 사이 데이터 갱신이나 사람이 밀었으면 non-fast-forward 로 죽는다.
+          # ⚠️ reset --soft 로 트리를 통째로 다시 쓰면(예전 방식) 이 실행이
+          #    스테이지하지 않은 동시 변경(예: 데이터 갱신의 신선 index.html)을
+          #    base 판으로 되돌려 기준일이 뒤로 간다. rebase 는 '우리 커밋의
+          #    변경분'(news.html·news.json)만 원격 tip 위에 얹어 나머지를 보존한다.
+          for i in 1 2 3 4 5 6; do
             if git push origin "HEAD:${GITHUB_REF_NAME}"; then
               echo "푸시 성공."
               exit 0
             fi
-            echo "푸시 경합 — 원격을 받아 그 위로 다시 얹습니다 ($i/5)."
+            [ "$i" -eq 6 ] && break
+            echo "푸시 경합 — 원격 tip 위로 우리 커밋만 리베이스합니다 ($i/5)."
             # FETCH_HEAD 는 방금 받은 원격 브랜치 tip 을 확실히 가리킨다.
             git fetch origin "${GITHUB_REF_NAME}"
-            git reset --soft FETCH_HEAD
-            git commit -m "$MSG" || { echo "원격에 이미 반영됨."; exit 0; }
+            git rebase -X theirs FETCH_HEAD || git rebase --abort || true
             sleep $((i * 3))
           done
           echo "::error::뉴스 갱신 커밋을 원격에 밀지 못했습니다."

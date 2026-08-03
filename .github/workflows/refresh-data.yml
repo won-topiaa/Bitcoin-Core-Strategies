@@ -64,6 +64,20 @@ jobs:
         with:
           python-version: "3.11"
 
+      - name: 지난 실행의 market.csv 복원 (겹침 대조 가드용)
+        # data/market.csv 는 .gitignore 라 체크아웃에 없다. 그러면 refresh_data 의
+        # 핵심 안전장치인 '겹침 가격 대조'(어제 값과 오늘 값을 맞대 단위·자산이
+        # 조용히 바뀌었는지 본다)가 old 가 비어 매번 건너뛰어진다. 지난 실행 파일을
+        # 캐시로 되살려 그 대조가 실제로 돌게 한다. 없으면(첫 실행·캐시 만료) 그냥
+        # 첫 수집처럼 동작하므로 안전하게 degrade 한다. 병합은 전 구간 재수집이
+        # 우선이라(full==incremental 동일성은 test_refresh 가 보증) 결과는 같다.
+        uses: actions/cache@v4
+        with:
+          path: data/market.csv
+          key: market-csv-${{ github.run_id }}
+          restore-keys: |
+            market-csv-
+
       - name: 의존성
         # pytest 는 런타임 의존성이 아니라 requirements.txt 에 없다. 아래 '테스트'
         # 게이트가 이걸 쓰므로 여기서 함께 깔지 않으면 매 실행이 그 단계에서 죽는다.
@@ -137,20 +151,21 @@ jobs:
           MSG="데이터 갱신 — 기준일 ${ASOF:-미확인}"
           git commit -m "$MSG"
           # 그 사이 다른 워크플로(뉴스 갱신)나 사람이 밀었으면 bare push 는
-          # non-fast-forward 로 죽는다(예전엔 여기서 조용히 멈췄다). 원격 tip 위로
-          # 우리의 '신선 전체 재빌드' 트리를 얹어 다시 커밋하고 민다 — index·성적표는
-          # 이 워크플로만 만들고, 뉴스가 잠깐 달라지는 건 다음 뉴스 갱신이 바로잡는다.
-          for i in 1 2 3 4 5; do
+          # non-fast-forward 로 죽는다(예전엔 여기서 조용히 멈췄다).
+          # ⚠️ 예전엔 reset --soft 로 트리를 통째로 다시 썼는데, 그러면 이 실행이
+          #    스테이지하지 않은 동시 변경(사람이 민 소스 등)을 base 판으로 되돌린다.
+          #    rebase 는 '우리 커밋의 변경분'만 원격 tip 위에 얹어 동시 변경을 보존한다.
+          #    충돌 파일(뉴스 등)은 우리가 방금 구운 산출물을 쓴다(-X theirs = 얹는 쪽).
+          for i in 1 2 3 4 5 6; do
             if git push origin "HEAD:${GITHUB_REF_NAME}"; then
               echo "푸시 성공."
               exit 0
             fi
-            echo "푸시 경합 — 원격을 받아 그 위로 다시 얹습니다 ($i/5)."
-            # FETCH_HEAD 는 방금 받은 원격 브랜치 tip 을 확실히 가리킨다
-            # (origin/<branch> 원격추적 ref 설정에 의존하지 않는다).
+            [ "$i" -eq 6 ] && break
+            echo "푸시 경합 — 원격 tip 위로 우리 커밋만 리베이스합니다 ($i/5)."
+            # FETCH_HEAD 는 방금 받은 원격 브랜치 tip 을 확실히 가리킨다.
             git fetch origin "${GITHUB_REF_NAME}"
-            git reset --soft FETCH_HEAD
-            git commit -m "$MSG" || { echo "원격에 이미 반영됨."; exit 0; }
+            git rebase -X theirs FETCH_HEAD || git rebase --abort || true
             sleep $((i * 3))
           done
           echo "::error::데이터 갱신 커밋을 원격에 밀지 못했습니다."

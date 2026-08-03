@@ -203,14 +203,18 @@ def test_build_global_scales_us_to_the_same_units_as_foreign_legs():
     d = date(2020, 1, 31)
     cols = {
         "m2_us": {d: 20_000.0},        # 십억 달러 = $20조
-        "m2_jp": {d: 1_000_000.0},     # 엔 (원 단위)
+        "m2_jp": {d: 1_000_000.0},     # 엔 (원 단위) · fx_is_usd_per_unit=False → v/rate
         "fx_jp": {d: 100.0},           # 엔/달러 → $10,000
+        "m2_gb": {d: 3_000.0},         # 파운드 · usd_per_unit=True → v*rate
+        "fx_gb": {d: 1.3},             # → $3,900
+        "m2_eu": {d: 15_000.0},        # 유로 · usd_per_unit=True
+        "fx_eu": {d: 1.1},             # → $16,500
     }
     out = fm.build_global(cols)
     assert out and d in out
-    # 미국분이 제대로 환산됐다면 합계는 $20조 + $1만 ≈ 2e13 이다.
+    # 미국분이 제대로 환산됐다면 합계는 $20조 + 외국분 ≈ 2e13 이다.
     assert out[d] > 1e13, f"미국분이 증발했다(단위 불일치): {out[d]:.3e}"
-    assert abs(out[d] - (20_000.0 * fm.M2_US_TO_USD + 10_000.0)) < 1.0
+    assert abs(out[d] - (20_000.0 * fm.M2_US_TO_USD + 10_000.0 + 3_900.0 + 16_500.0)) < 1.0
 
 
 def test_gold_and_m2_columns_never_carry_non_finite_values():
@@ -420,14 +424,38 @@ def test_build_net_liquidity_aligns_rrp_to_the_other_legs():
     assert out[d] < 7_000_000.0, "RRP 단위 정렬 누락으로 보이는 값"
 
 
-def test_build_net_liquidity_survives_a_missing_leg():
-    """TGA·RRP 가 아직 0 이던 초기(또는 소스가 잠깐 빠진) 구간에서도 죽지 않고
-    있는 항으로만 계산한다 — WALCL 만 있으면 net_liq = WALCL 로 이어진다."""
+def test_build_net_liquidity_skips_when_a_leg_is_not_fetched():
+    """TGA·RRP 열을 이번 실행에서 통째로 못 받았으면 그 항을 0 으로 때우지 않고
+    재계산을 포기(None)한다. 예전엔 결측을 0 으로 봐 WALCL 만으로 계산했는데,
+    그러면 2021년 이후 RRP(~$2조)를 빠뜨린 값이 나와 저장된 올바른 net_liq 를
+    병합에서 덮어썼다(적대적 검증이 잡은 조용한 오염)."""
     import fetch_macro as fm
 
-    d = date(2011, 1, 5)
-    out = fm.build_net_liquidity({"_walcl": {d: 2_400_000.0}})
-    assert out and abs(out[d] - 2_400_000.0) < 1e-6
+    d = date(2022, 6, 1)
+    # RRP 만 빠진 실행 — 계산하면 net_liq 가 ~$2조 부풀지만, None 이어야 한다
+    assert fm.build_net_liquidity({"_walcl": {d: 8_900_000.0}, "_tga": {d: 700_000.0}}) is None
+    # TGA 도 빠지면 마찬가지
+    assert fm.build_net_liquidity({"_walcl": {d: 8_900_000.0}}) is None
+    # 세 열이 다 있으면 정상 계산(회귀 방지)
+    out = fm.build_net_liquidity(
+        {"_walcl": {d: 8_900_000.0}, "_tga": {d: 700_000.0}, "_rrp": {d: 2_200.0}})
+    assert out and d in out
+
+
+def test_build_global_skips_when_an_agg_country_is_missing():
+    """합산국(JP·GB·EU) 하나가 이번 실행에서 빠지면, 그 나라를 뺀 부분합으로
+    저장된 전체합을 덮어써 수준이 튀지 않도록 재계산을 포기(None)한다."""
+    import fetch_macro as fm
+
+    d = date(2020, 1, 31)
+    full = {"m2_us": {d: 20_000.0},
+            "m2_jp": {d: 1_000_000.0}, "fx_jp": {d: 100.0},
+            "m2_gb": {d: 3_000.0}, "fx_gb": {d: 1.3},
+            "m2_eu": {d: 15_000.0}, "fx_eu": {d: 1.1}}
+    assert fm.build_global(full) is not None
+    # EU 가 빠진 실행 → None (부분합으로 저장값을 덮어쓰지 않는다)
+    partial = {k: v for k, v in full.items() if k not in ("m2_eu", "fx_eu")}
+    assert fm.build_global(partial) is None
 
 
 # ---------------------------------------------------------------------------

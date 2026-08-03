@@ -38,6 +38,24 @@ def steady(value, days=10, end=TODAY):
     return state_with_history([value] * days, end)
 
 
+def test_state_save_is_atomic_and_leaves_no_temp(tmp_path):
+    """저장은 임시 파일 → os.replace 라, 중간에 죽어도 반쯤 쓰인 상태 파일을
+    남기지 않는다(다음 load 의 json.loads 가 죽어 사다리·BCS 이력이 통째로
+    날아가는 것을 막는다). 최소한 왕복이 되고 .tmp 잔여가 없어야 한다."""
+    p = tmp_path / "state.json"
+    st = state_with_history([10.0, -5.0, 20.0])
+    st.save(p)
+    assert p.exists()
+    assert not (tmp_path / "state.json.tmp").exists()      # 임시 파일이 남지 않는다
+    back = ExecutionState.load(p)
+    assert [v for _, v in back.bcs_history] == [10.0, -5.0, 20.0]
+    # 덮어쓰기(재저장)도 깨지지 않고 여전히 잔여 없음
+    st.record_bcs(TODAY, 33.0)
+    st.save(p)
+    assert not (tmp_path / "state.json.tmp").exists()
+    assert ExecutionState.load(p).bcs_history[-1][1] == 33.0
+
+
 # --- 밴드 ------------------------------------------------------------------
 
 @pytest.mark.parametrize(
