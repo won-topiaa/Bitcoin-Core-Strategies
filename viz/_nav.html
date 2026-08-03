@@ -19,3 +19,9 @@
     <button class="ctlbtn" id="theme-btn" type="button">어둡게</button>
   </div>
 </div>
+<!-- 맨 위로. 이 장들은 길어서(어떤 장은 4,000px+) 상단 내비·언어·테마 버튼이
+     스크롤로 사라지면 돌아갈 길이 없다. 한참 내리면 나타나고 누르면 위로 간다.
+     스크립트가 없으면 숨은 채로 둔다(순수 부가기능). -->
+<button class="backtop" id="backtop" type="button" aria-label="맨 위로" data-t-aria="nav.backtop">
+  <svg viewBox="0 0 24 24" aria-hidden="true" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V6M6 12l6-6 6 6"/></svg>
+</button>

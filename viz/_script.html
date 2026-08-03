@@ -1834,7 +1834,17 @@ function heroFill(){
   const c = D.current; if (!c) return;
   setText("hero-eyebrow", t("heroNow"));
   setText("hero-price", c.price != null ? money(c.price) : "—");
-  setText("hero-sub", t("heroSub", c.d));
+  // 갱신이 3일 넘게 멈추면 히어로 가격 바로 밑에서 붉게 경고한다 — '오늘
+  // 가격인가?'가 첫 질문이라, 낡음 표시가 위쪽 작은 줄에만 있으면 놓친다.
+  const latSub = (D.latest || D.current || {}).d;
+  const subDays = latSub ? Math.max(0, Math.floor(
+    (Date.now() - Date.parse(latSub + "T00:00:00Z")) / DAY)) : 0;
+  const subEl = $("hero-sub");
+  if (subEl){
+    const stale = subDays > 3;
+    subEl.className = "hero-sub" + (stale ? " stale" : "");
+    subEl.textContent = stale ? t("freshStale", subDays) : t("heroSub", c.d);
+  }
   const pct = c.rank != null ? Math.round(c.rank * 100) : null;
   const chipCls = c.bcs < 0 ? "cool" : (c.bcs > 0 ? "warm" : "flat");
   setHTML("hero-answer",
@@ -2049,6 +2059,21 @@ if (themeBtn) themeBtn.addEventListener("click", () => {
   store.set(LS_THEME, next);
   paintControls();                 // 다시 그리기는 아래 MutationObserver 가 맡는다
 });
+
+// 맨 위로 — 한 화면 반쯤 내리면 나타나고, 누르면 위로 간다(움직임 최소 설정이면
+// 즉시). 이 장들은 4,000px 를 넘어, 내리면 상단 내비로 돌아갈 길이 없었다.
+const backtop = $("backtop");
+if (backtop){
+  const onScroll = () => backtop.classList.toggle(
+    "show", (window.scrollY || window.pageYOffset || 0) > window.innerHeight * 1.5);
+  window.addEventListener("scroll", onScroll, {passive:true});
+  onScroll();
+  backtop.addEventListener("click", () => {
+    const reduce = window.matchMedia
+      && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({top:0, behavior: reduce ? "auto" : "smooth"});
+  });
+}
 
 let timer = null;
 const ro = new ResizeObserver(() => {
