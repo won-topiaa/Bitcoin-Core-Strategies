@@ -403,11 +403,10 @@ def build_global(columns: dict[str, dict[date, float]]) -> Optional[dict[date, f
             return None
     parts = [{d: v * M2_US_TO_USD for d, v in columns["m2_us"].items()}]
     for cc in agg_ccs:
+        # 위 전수 확인을 통과했으므로 이 시점엔 m2·fx 가 항상 있다.
         spec = GLOBAL[cc]
-        m2 = columns.get(f"m2_{cc}")
-        fx = columns.get(f"fx_{cc}")
-        if not m2 or not fx:
-            continue
+        m2 = columns[f"m2_{cc}"]
+        fx = columns[f"fx_{cc}"]
         usd: dict[date, float] = {}
         fxd = sorted(fx)
         for d, v in m2.items():

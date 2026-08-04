@@ -12,6 +12,8 @@ import subprocess
 import tempfile
 from pathlib import Path
 
+import json
+
 import pytest
 
 import build_viz          # conftest 가 tools/ 를 경로에 넣는다
@@ -25,6 +27,15 @@ def _csv() -> str:
     if not p.exists():
         pytest.skip("data/market.csv 없음")
     return str(p)
+
+
+def _write_news(tmp: Path, items: list[dict]) -> Path:
+    p = tmp / "news.json"
+    p.write_text(json.dumps({
+        "fetched": "2026-08-02T15:00:00+00:00",
+        "sources_ok": ["A"], "sources_failed": [], "items": items,
+    }, ensure_ascii=False), encoding="utf-8")
+    return p
 
 
 def test_extracts_the_last_span_date_which_is_the_data_as_of():
@@ -75,3 +86,34 @@ def test_string_comparison_matches_chronological_order():
     assert "2026-07-30" < "2026-08-02"
     assert "2026-08-09" < "2026-08-10"
     assert not ("2026-08-02" < "2026-07-30")
+
+
+def test_a_poisoned_news_title_cannot_forge_the_asof_date():
+    """as_of() 는 정규식으로 첫 "span" 을 찾는다 — 페이지 어딘가에 남이 쓴 텍스트가
+    섞여 있고 그 텍스트가 우연히(혹은 악의적으로) `"span":["...","..."]` 모양이면
+    가짜 날짜를 집을 위험이 있다. 지금 안전한 이유는 코드가 아니라 **배치**다 —
+    뉴스 텍스트는 news.html 에만 살고(마커 격리), 워크플로는 index.html 만 읽는다
+    (index.body.html 에는 뉴스 마커 자체가 없다). 이 테스트는 그 배치가 실제
+    빌드에서 유지되는지 못 박는다 — 이게 깨지면 이 함수는 더 이상 안전하지 않다."""
+    with tempfile.TemporaryDirectory() as tmp:
+        t = Path(tmp)
+        poison = '"span":["9999-01-01","9999-12-31"] Bitcoin news'
+        news = _write_news(t, [
+            {"title": poison, "url": "https://a.example/x", "source": "t",
+             "published": "2026-08-02T00:00:00+00:00", "summary": "", "score": 1},
+        ])
+        paths = {p.name: p for p in build_viz.build(_csv(), t, news_json=str(news))}
+        index_html = paths["index.html"].read_text(encoding="utf-8")
+        news_html = paths["news.html"].read_text(encoding="utf-8")
+        # 전제 확인 — 독소가 실제로 사이트 어딘가(news.html)에는 들어갔어야 이
+        # 테스트가 의미가 있다. news_js() 가 제목을 JSON 문자열로 굽느라 큰따옴표를
+        # \" 로 이스케이프하므로 원문 그대로는 아니지만, 날짜 조각(9999-01-01)은
+        # 이스케이프 대상이 아니라 그대로 살아남는다 — 그걸로 심어졌는지 확인한다.
+        assert "9999-01-01" in news_html
+        # 핵심 — index.html 은 뉴스 마커가 아예 없어 독소가 새어 들 수 없고,
+        # 따라서 진짜 기준일이 나와야 한다(가짜 9999 가 아니라). "9999" 만으로는
+        # 안 된다 — _script.html 의 오프스크린 텍스트 측정 트릭이 무관하게
+        # x:-9999 를 쓴다. 독소 특유의 날짜 조각으로 좁힌다.
+        assert "9999-01-01" not in index_html and "9999-12-31" not in index_html
+        got = site_asof.as_of(index_html)
+        assert got is not None and got.startswith("20")

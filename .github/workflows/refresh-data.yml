@@ -124,6 +124,10 @@ jobs:
         # 굽지도 커밋도 하지 않고 멈춘다. 정상 경로에선 새로 받은 데이터가 같거나
         # 더 최신이라 통과한다. 후퇴는 상류(데이터 소스) 이상이거나 낡은 빌드가
         # 새어 든 것이므로, 조용히 배포하는 대신 실패시켜 알림이 뜨게 한다.
+        #
+        # 반드시 index.html 만 본다 — news.html 은 남의 기사 텍스트가 구워지는
+        # 장이라, 그 텍스트가 우연히 "span":[...] 모양이면 site_asof.py 가
+        # 가짜 날짜를 집을 수 있다(tools/site_asof.py 상단 경고 참고).
         run: |
           NEW=$(python3 tools/site_asof.py viz/site/index.html || true)
           OLD=$(git show HEAD:viz/site/index.html 2>/dev/null | python3 tools/site_asof.py - || true)

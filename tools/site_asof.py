@@ -16,6 +16,16 @@
 전체 JSON 을 파싱하지 않는다(그리고 파싱하려 해도 다른 뉴스 마커가 섞여 있어
 간단치 않다).
 
+⚠️ **반드시 index.html 처럼 남의 텍스트가 없는 장에만 써야 한다.** 정규식은
+페이지에서 처음 만나는 "span" 을 그대로 믿는다 — news.html 처럼 외부 기사
+제목·요약이 구워지는 장에 쓰면, 그 텍스트가 우연히(혹은 악의적으로)
+`"span":["…","…"]` 모양이면 가짜 날짜를 대신 집을 수 있다. 지금은 그게
+불가능한데, 코드가 막아서가 아니라 **배치**가 막아서다 — 뉴스 텍스트는
+news.html 에만 살고(마커 격리, inject_news.py), index.body.html 에는 뉴스
+마커 자체가 없다. 이 불변식은 tests/test_site_asof.py 의
+``test_a_poisoned_news_title_cannot_forge_the_asof_date`` 가 못 박는다 — 이
+도구를 news.html 에도 돌리는 쪽으로 확장하려면 그 배치부터 다시 생각할 것.
+
     python3 tools/site_asof.py viz/site/index.html   # 파일에서
     ... | python3 tools/site_asof.py -               # 표준입력에서 (git show 용)
 
