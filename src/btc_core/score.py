@@ -82,7 +82,14 @@ def score_indicator(
     weight = adaptive_weight if weight is None else float(weight)
 
     if history and len(history) >= 90:
-        adaptive = percentile_rank(value, history)
+        # history 는 원시 시계열이라 invert 가 반영돼 있지 않다. value 만 뒤집고
+        # history 는 그대로 두면, 뒤집힌 오늘 값이 안 뒤집힌 과거 분포에서 엉뚱한
+        # 퍼센타일을 받는다(예: 원래 상위 10%였던 값이 부호만 바뀌어 하위 10%
+        # 근처로 취급됨). 지금은 invert 쓰는 유일한 지표(dxy_trend)가 어디서도
+        # history 와 함께 호출되지 않아 실제로 발현하지 않지만, 나중에 퍼센타일
+        # 혼합을 쓰는 반전 지표가 추가되면 조용히 틀린다 — 여기서 미리 맞춰 둔다.
+        hist = [-h for h in history] if spec.get("invert") else history
+        adaptive = percentile_rank(value, hist)
         score = blend(fixed, adaptive, weight)
         if weight < 1.0 and abs(fixed - adaptive) > 0.45:
             note = (

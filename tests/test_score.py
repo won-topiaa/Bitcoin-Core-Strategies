@@ -119,6 +119,28 @@ def test_dxy_is_inverted_because_a_weak_dollar_helps_bitcoin(cfg):
     assert falling.score > 0 > rising.score
 
 
+def test_inverted_indicators_flip_history_too_before_ranking(cfg):
+    """invert 는 오늘 값만 뒤집고 history 는 그대로 두면, 뒤집힌 오늘 값이
+    안 뒤집힌 과거 분포에서 엉뚱한 퍼센타일을 받는다. 지금 유일한 invert
+    지표(dxy_trend)는 어디서도 history 와 함께 안 불려 실제로는 안 터지지만,
+    앞으로 퍼센타일 혼합을 쓰는 반전 지표가 추가될 때를 대비해 함수 자체가
+    옳아야 한다.
+
+    history=[0..100](원시, 달러가 대체로 강세였던 시기) 에서 오늘 원시값
+    80(강한 달러, 원시 분포 상위 80% 부근)이 왔다고 하자. invert 후 오늘의
+    '점수용' 값은 -80 이다. **옳게 계산하면** -80 은 뒤집힌 과거 분포
+    [-100..0] 안에서 하위 20% 부근 → 약 -0.59 가 나온다. history 를 뒤집지
+    않은 채로 계산하면(예전 버그), -80 은 뒤집히지 않은 [0..100] 전부보다
+    작아 무조건 최하위(-1.0 정확히)로 나온다 — 두 값이 뚜렷이 갈려 회귀를
+    잡아낸다."""
+    spec = dict(cfg.lrs_components["dxy_trend"])
+    spec["adaptive_weight"] = 1.0          # 퍼센타일만 보이게 — 고정 앵커 섞임 제거
+    history = [float(i) for i in range(101)]           # 원시(비반전) 과거: 0..100
+    r = score_indicator(cfg, "dxy_trend", 80.0, history=history, spec=spec)
+    assert r.score == pytest.approx(-0.594059, abs=1e-5)
+    assert r.score != pytest.approx(-1.0)  # history 를 안 뒤집었을 때 나오는 값
+
+
 def test_percentile_blending_pulls_toward_the_historical_distribution(cfg):
     history = [0.0] * 200            # 과거는 전부 0 → 지금 값은 최상위
     plain = score_indicator(cfg, "mvrv_z", 2.0)
