@@ -486,15 +486,21 @@ def main(argv: Optional[list[str]] = None) -> int:
                 cur = [nxt]
         runs.append(cur)
         px_lut = dict(zip(dates, prices))
+        # 순방향 수익은 **신호가 처음 켜진 날(d0)** 기준이다. 예전에는 구간의
+        # 마지막 날(d1)에서 쟀는데, d1 은 신호가 꺼진 뒤에야 알 수 있는 날짜라
+        # 실시간으로는 고를 수 없다(사후편향). 게다가 '시작가' 열은 d0 의
+        # 가격을 찍으면서 수익률만 d1 가격 기준이라 두 숫자가 서로 다른 날의
+        # 것이었다. 이 표는 "그날 신호를 보고 들어갔다면"을 재는 것이므로
+        # 진입 시점과 기준가가 같아야 한다.
         add("| 구간 | 지점 | 시작가 | 이후 180일 | 이후 365일 |")
         add("|---|---:|---:|---:|---:|")
         for run in runs:
             d0, d1 = run[0][0], run[-1][0]
             p0 = run[0][1]
 
-            def fwd(n: int, px_lut=px_lut, d1=d1, run=run) -> str:  # 루프 변수 묶기 — 즉시 호출이라 안전하나 명시
-                q = px_lut.get(d1 + timedelta(days=n))
-                return f"{(q/run[-1][1]-1)*100:+.0f}%" if q else "—"
+            def fwd(n: int, px_lut=px_lut, d0=d0, p0=p0) -> str:
+                q = px_lut.get(d0 + timedelta(days=n))
+                return f"{(q/p0-1)*100:+.0f}%" if q else "—"
 
             add(f"| {d0} ~ {d1} | {len(run)} | ${p0:,.0f} | {fwd(180)} | {fwd(365)} |")
         add("")

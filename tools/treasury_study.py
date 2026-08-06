@@ -2,7 +2,7 @@
 """비트코인 트레저리 기업 이벤트 검정 — "기업이 사겠다고 공시하면 오르는가".
 
     python3 tools/treasury_study.py            # 전체 (순열 10,000회)
-    python3 tools/treasury_study.py --quick    # 순열 1,000회로 빠르게
+    python3 tools/treasury_study.py --quick    # 요일효과 순열만 1,000회로 빠르게
 
 ## 이 검정의 함정 두 개 — 사후편향, 그리고 **내생성**
 
@@ -261,17 +261,18 @@ def perm_test(res: dict, n: int = 10000, seed: int = 7) -> dict:
     """
     grid, rows = res["grid"], res["rows"]
     N = len(grid["ds"])
-    # 유의: 구별 가능한 이동은 N-60개뿐이다. MC 10,000회는 그걸 복원추출한 것
-    # 이라 p 의 해상도가 1/(N-60) ≈ 0.0004 를 넘을 수 없다 — 그래서 아래서
-    # (ge+1)/(cnt+1) 보정을 쓴다. '0/10000 = p<0.0001' 은 과장이다(적대적 검증).
+    # **구별 가능한 이동을 전수로 돈다.** 원형이동으로 만들 수 있는 서로 다른
+    # 귀무 표본은 N-122개(≈2,600)뿐인데, 예전에는 그걸 10,000회 복원추출하고
+    # 분모에 10,000을 썼다. 없는 정밀도를 주장하는 셈이라 p 가 0.000 으로
+    # 인쇄됐고(docs/34 는 같은 수치를 0.0004 로 적는다), --quick 여부에 따라
+    # 값이 달라지기까지 했다. 전수는 10,000회보다 **오히려 싸다**.
     obs = _subset_means(rows, "obs")
-    rng = random.Random(seed)
+    shifts = range(61, N - 61)
     ge = {k: 0 for k, v in obs.items() if v is not None}   # null >= obs 횟수
     cnt = {k: 0 for k in ge}                                # 유효 null 횟수
-    for _ in range(n):
+    for s in shifts:
         # 버퍼 61일 — 창 폭(전60일)보다 짧은 버퍼(±30)는 관측 창과 최대 30일
-        # 겹치는 널 추첨을 허용한다(적대적 검증). 겹침 없는 이동만 뽑는다.
-        s = rng.randrange(61, N - 61)
+        # 겹치는 널을 허용한다(적대적 검증). 겹침 없는 이동만 센다.
         shifted = []
         for r in rows:
             i = (r["i"] + s) % N
@@ -289,10 +290,10 @@ def perm_test(res: dict, n: int = 10000, seed: int = 7) -> dict:
             if v >= obs[k]:
                 ge[k] += 1
     # (ge+1)/(cnt+1) — 관측 자신을 귀무분포의 한 표본으로 세는 표준 보정.
-    # 0/10000 이 '0.0000'으로 인쇄되면 검정 해상도(구별 가능한 이동 N-122개)를
-    # 넘는 정밀도를 주장하게 된다.
+    # 이제 cnt 는 실제로 센 서로 다른 이동의 수라, p 의 하한이 검정의 진짜
+    # 해상도(1/(N-121))와 일치한다.
     pvals = {k: ((ge[k] + 1) / (cnt[k] + 1) if cnt[k] else float("nan")) for k in ge}
-    return {"obs": obs, "p": pvals, "n": n}
+    return {"obs": obs, "p": pvals, "n": len(shifts)}
 
 
 # ---------------------------------------------------------------------------
@@ -364,6 +365,16 @@ def report(res: dict, pt: dict, wd: dict) -> str:
     add(f"  귀무분포 = 이벤트 날짜 원형 이동 {pt['n']:,}회 ({res['grid']['ds'][0]}~ 구간 안)")
 
     add("")
+    # p 를 %.3f 로 찍으면 0.00038 이 '0.000' 이 된다 — 검정이 가진 것보다 큰
+    # 확신을 주장하는 인쇄다(docs/34 는 같은 값을 0.0004 로 적는다). 해상도
+    # 하한(1/(구별 가능한 이동+1))보다 작아지면 그 하한을 그대로 보여 준다.
+    _p_floor = 1.0 / (pt.get("n", 0) + 1) if pt.get("n") else 0.0
+
+    def fmt_p(p_: Optional[float]) -> str:
+        if p_ is None:
+            return "—"
+        return f"{p_:.4f}" if p_ < 0.001 else f"{p_:.3f}"
+
     add("  [창 평균과 순열 p — 단측(양의 방향)]")
     add(f"    {'집합':12}{'창':10}{'원수익 평균':>12}{'p':>8}{'초과 평균':>12}{'p':>8}")
     add("    " + "-" * 62)
@@ -376,7 +387,7 @@ def report(res: dict, pt: dict, wd: dict) -> str:
             pe = pt["p"].get((sub, wlabel, "exc"))
 
             def g(v, p_):
-                return (f"{v:+10.2f}%{p_:8.3f}" if v is not None and p_ is not None
+                return (f"{v:+10.2f}%{fmt_p(p_):>8}" if v is not None and p_ is not None
                         else f"{'—':>11}{'—':>8}")
             add(f"    {label}({n_sub}건){'':2}{wlabel:10}{g(vr, pr)}  {g(ve, pe)}")
     add("")
@@ -389,7 +400,8 @@ def report(res: dict, pt: dict, wd: dict) -> str:
         v = pt["obs"].get((sub, "전60일", "raw"))
         p_ = pt["p"].get((sub, "전60일", "raw"))
         if v is not None:
-            add(f"    {label:6} 평균 {v:+7.1f}%   순열 p = {p_:.3f}")
+            add(f"    {label:6} 평균 {v:+7.1f}%   순열 p = {fmt_p(p_)}"
+                + (f" (검정 해상도 하한 {_p_floor:.4f})" if p_ is not None and p_ <= _p_floor else ""))
     add("    → 공시 전에 이미 올라 있었다면, '기업이 사서 올랐다'가 아니라 '올라서")
     add("      기업이 샀다'가 데이터와 부합한다. 이 축의 인과는 그래서 판정 불능이다.")
 
@@ -431,7 +443,8 @@ def main(argv: Optional[list[str]] = None) -> int:
     ap.add_argument("--csv", default="data/market.csv")
     ap.add_argument("--macro", default="data/macro.csv")
     ap.add_argument("--out", default=None)
-    ap.add_argument("--quick", action="store_true", help="순열 1,000회로 빠르게")
+    ap.add_argument("--quick", action="store_true",
+                    help="요일효과 순열을 1,000회로 줄인다. 이벤트 순열검정은 전수라 영향 없다")
     args = ap.parse_args(argv)
 
     market = oc.load_market(args.csv)
@@ -446,7 +459,8 @@ def main(argv: Optional[list[str]] = None) -> int:
 
     n = 1000 if args.quick else 10000
     res = analyse(market["price"], ndq)
-    pt = perm_test(res, n=n)
+    # 이벤트 순열검정은 구별 가능한 이동을 전수로 돈다 — n 을 받지 않는다.
+    pt = perm_test(res)
     wd = weekday_study(market["price"], n=n)
     text = report(res, pt, wd)
     print(text)

@@ -78,8 +78,17 @@ def _nearest(target: date, idx: dict[date, int], span: int = 5) -> Optional[date
 def analyse(price: dict[date, float], events=EVENTS) -> dict:
     ds = sorted(price)
     idx = {d: i for i, d in enumerate(ds)}
+
+    # 귀무분포는 **사건이 실제로 놓인 기간**에서만 뽑는다. 비트코인의 일간
+    # 변동성은 2011년 5.8% → 2023년 1.5% 로 크게 줄었는데, 전 구간(2010~)에서
+    # 뽑으면 2020~2025년 사건의 반응이 훨씬 조용한 시대의 표본과 비교돼 p 가
+    # 과장된다. 이 파일은 아래 시대 분리에서 같은 이유로 초기 구간을 이미
+    # 빼고 있었는데, 정작 p 를 만드는 풀에는 그 원칙이 빠져 있었다.
+    ev_years = [date.fromisoformat(d).year for _, d, _, _ in events]
+    lo_year = min(ev_years) if ev_years else ds[0].year
     daily_abs = [abs((price[ds[i]] / price[ds[i - 1]] - 1) * 100)
-                 for i in range(1, len(ds)) if price[ds[i - 1]] > 0]
+                 for i in range(1, len(ds))
+                 if price[ds[i - 1]] > 0 and ds[i].year >= lo_year]
 
     rows = []
     for who, dstr, what, kind in events:
@@ -106,7 +115,10 @@ def _perm_p(sample: list[float], pool: list[float], seed: int = 7,
     obs = statistics.mean(sample)
     worse = sum(1 for _ in range(n)
                 if statistics.mean(rng.sample(pool, len(sample))) >= obs)
-    return worse / n
+    # (worse+1)/(n+1) — 관측 자신을 귀무분포의 한 표본으로 센다. 그냥 worse/n
+    # 으로 두면 한 번도 못 넘었을 때 p=0.0000 이 되어, 표본이 뒷받침할 수 없는
+    # 확신을 주장하게 된다.
+    return (worse + 1) / (n + 1)
 
 
 def report(res: dict) -> str:
