@@ -197,6 +197,20 @@ def resample_daily(series: Series) -> Series:
     return Series(tuple(out_dates), tuple(out_values), series.name)
 
 
+def last_pair(series: Series) -> tuple[Optional[float], Optional[date]]:
+    """마지막 비결측값과 **그 값이 실제로 속한 날짜**.
+
+    ``Series.last`` 는 값만 주고 ``last_date`` 는 마지막 날짜를 주는데, 꼬리에
+    결측이 있으면 그 둘이 서로 다른 날을 가리킨다. 두 시계열을 각각 ``.last``
+    로 집어 나누면 **다른 날의 값이 섞이고**, 그런데도 as_of 는 오늘로 찍힌다.
+    날짜를 값과 함께 돌려주어 그 어긋남을 없앤다.
+    """
+    for d, v in zip(reversed(series.dates), reversed(series.values)):
+        if v is not None:
+            return v, d
+    return None, None
+
+
 def history_of(series: Series, *, years: float = 4.0) -> list[float]:
     """최근 N년치 유효값 목록. 퍼센타일 정규화용."""
     if not series.dates:

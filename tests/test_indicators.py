@@ -89,6 +89,34 @@ def test_nupl_is_negative_when_realized_cap_exceeds_market_cap():
     assert "항복" in iv.detail["phase"]
 
 
+def test_valuation_never_divides_values_from_different_dates():
+    """꼬리에 결측이 있으면 두 시계열의 '마지막 값'은 서로 다른 날의 값이다.
+
+    커뮤니티 티어는 최신 하루의 실현시총이 비는 일이 흔한데(docs/18), 각
+    시계열에서 마지막 비결측값을 따로 집어 나누면 **어제 실현시총 ÷ 오늘 시총**
+    이 되고 as_of 는 '오늘'로 찍힌다. 값도 날짜도 실제와 다른 숫자가 오늘 값인
+    척 나가는 것이라, 같은 날짜 쌍으로만 계산하고 그 날짜를 보고해야 한다.
+    """
+    days = 40
+    m = const(1000.0, days=days)
+    rv = list(const(250.0, days=days).values)
+    rv[-1] = None                      # 마지막 날 실현시총만 결측
+    r = Series(m.dates, tuple(rv), "realized_cap")
+    # 마지막 날 시총만 다른 값으로 둔다 — 날짜가 섞이면 결과가 달라지도록
+    mv = list(m.values); mv[-1] = 2000.0
+    m2 = Series(m.dates, tuple(mv), "market_cap")
+
+    iv = ind.nupl(m2, r)
+    # 날짜를 섞으면 (2000-250)/2000 = 0.875 가 나온다. 같은 날(끝-1)로 맞추면 0.75.
+    assert iv.value == pytest.approx(0.75), "다른 날짜의 값끼리 나눴습니다"
+    assert iv.as_of == m.dates[-2], "값의 실제 날짜가 아니라 오늘로 보고했습니다"
+
+    # 바닥선도 같은 규칙 — 실현가격 = 실현시총 ÷ 유통량
+    sv = list(const(10.0, days=days).values); sv[-1] = 20.0
+    s = Series(m.dates, tuple(sv), "supply")
+    assert ind.realized_price_level(r, s) == pytest.approx(25.0)   # 250/10, 250/20 아님
+
+
 @pytest.mark.parametrize(
     "value, expected",
     [(0.80, "도취"), (0.60, "확신"), (0.30, "낙관"), (0.10, "희망"), (-0.10, "항복")],
@@ -192,6 +220,25 @@ def test_hash_ribbons_detects_recovery_after_capitulation():
         + [90.0 + 7.0 * i for i in range(45)]   # 반등 → 재돌파
     )
     assert ind.hash_ribbons(hashrate_from(values)).value == "recovery"
+
+
+def test_a_one_day_brush_is_not_the_end_of_capitulation():
+    """recovery 는 이 시스템의 유일한 −1.00, 가장 강한 매수 신호다.
+
+    두 이동평균이 서로를 자주 스치는데, 예전에는 그 **하루짜리 교차 하나**가
+    45일간 최강 신호를 켰다. 실측하면 전 구간의 18.6%가 recovery 였다 —
+    '항복의 끝'이라는 이름과 맞지 않는다. 직전 항복이 실제로 이어졌을 때만
+    인정한다(HASH_MIN_CAPITULATION).
+    """
+    # 30일선이 60일선 아래로 아주 잠깐만 내려갔다가 곧장 회복하는 모양
+    values = ([100.0 + i for i in range(150)]
+              + [250.0 - 9.0 * i for i in range(4)]     # 짧은 하락 — 스치듯 교차
+              + [220.0 + 6.0 * i for i in range(45)])
+    assert ind.hash_ribbons(hashrate_from(values)).value != "recovery"
+
+    # 반면 충분히 이어진 항복 뒤의 재돌파는 여전히 recovery 여야 한다
+    # (위의 test_hash_ribbons_detects_recovery_after_capitulation 이 그 경우다)
+    assert ind.HASH_MIN_CAPITULATION >= 5, "임계가 사실상 꺼지면 이 방어가 무의미하다"
 
 
 def test_hash_ribbons_expansion_on_sustained_acceleration():

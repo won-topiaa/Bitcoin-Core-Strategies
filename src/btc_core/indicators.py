@@ -18,6 +18,7 @@ from .series import (
     Series,
     expanding_stdev,
     history_of,
+    last_pair,
     ratio,
     resample_daily,
     sma,
@@ -61,6 +62,19 @@ HASH_SLOW = 60
 
 HASH_RECOVERY_WINDOW = 45     # 재돌파 후 이 기간까지를 '회복' 신호로 본다
 HASH_EXPANSION_RATIO = 1.08   # 30일선이 60일선을 8% 이상 웃돌면 '팽창'
+# '회복'으로 인정하려면 **직전 항복이 이만큼은 이어졌어야** 한다.
+#
+# 이 조건이 없을 때 recovery 는 전체 6,353일 중 18.6%(1,183일)에서 발화했다.
+# recovery 는 이 시스템에서 유일한 −1.00, 즉 가장 강한 매수 신호다. 두 이동평균이
+# 서로를 자주 스치므로, 하루짜리 교차 하나가 45일간 최강 신호를 켜 주고 있었다.
+# '항복의 끝'이라는 이름과 맞지 않는다(원문 4.4 는 채굴자가 실제로 장비를 끄는
+# 국면을 말한다).
+#
+# 값은 실측으로 골랐다 — 실측 저점 4곳(btc_core.cycles.MEASURED_BOTTOMS)을
+# ±90일 안에 전부 포착하면서 발화율을 가장 크게 낮추는 지점이다:
+#     0일 18.6% (4/4) · 5일 15.2% (4/4) · **10일 13.5% (4/4)** · 14일 12.0% (3/4)
+# 14일부터는 저점 하나를 놓치므로 10일이 그 경계다.
+HASH_MIN_CAPITULATION = 10
 
 # 서멀캡은 '창세 이래' 누적이라야 의미가 있다. 발행액 시계열이 이 날짜보다
 # 늦게 시작하면 분모가 그만큼 작아져 배수가 부풀려진다.
@@ -289,13 +303,17 @@ def nupl(market_cap: Optional[Series], realized_cap: Optional[Series]) -> Indica
     """(시가총액 − 실현시총) ÷ 시가총액."""
     if market_cap is None or realized_cap is None:
         return IndicatorValue("nupl", None, None, note="시총/실현시총 데이터 없음")
-    m, r = market_cap.last, realized_cap.last
-    if m in (None, 0) or r is None:
-        return IndicatorValue("nupl", None, market_cap.last_date, note="시총/실현시총 값 없음")
-    val = (m - r) / m
+    # **같은 날짜의 두 값으로만 계산한다.** 각 시계열의 마지막 비결측값을 따로
+    # 집어 나누면 서로 다른 날의 값이 섞인다 — 커뮤니티 티어는 최신 하루의
+    # 실현시총이 비는 일이 흔해서(docs/18) 실제로 벌어지는 일이고, 그런데도
+    # as_of 는 '오늘'로 찍혀 어긋난 값이 오늘 값처럼 보고됐다. map_with 가
+    # 날짜로 정렬해 주므로 그 결과의 마지막 비결측값을 쓴다.
     series = market_cap.map_with(realized_cap, lambda a, b: (a - b) / a if a else None)
+    val, on = last_pair(series)
+    if val is None:
+        return IndicatorValue("nupl", None, market_cap.last_date, note="시총/실현시총 값 없음")
     return IndicatorValue(
-        "nupl", val, market_cap.last_date,
+        "nupl", val, on,
         detail={"phase": nupl_phase(val), "history_4y": history_of(series, years=4.0)},
     )
 
@@ -520,15 +538,23 @@ def hash_ribbons(hashrate: Optional[Series]) -> IndicatorValue:
     if f_last < s_last:
         state = "capitulation"
     else:
-        # 마지막 상향 교차 시점을 뒤에서부터 찾는다
+        # 마지막 상향 교차 시점과, **그 직전 항복이 며칠이었는지**를 함께 본다.
+        # 스치듯 하루 교차한 것까지 '항복의 끝'으로 세면 최강 신호가 남발된다.
         days_since_cross: Optional[int] = None
+        capitulation_days = 0
         for i in range(len(pairs) - 1, 0, -1):
             prev_f, prev_s = pairs[i - 1][1], pairs[i - 1][2]
             cur_f, cur_s = pairs[i][1], pairs[i][2]
             if prev_f < prev_s and cur_f >= cur_s:
                 days_since_cross = (last_date - pairs[i][0]).days
+                k = i - 1
+                while k >= 0 and pairs[k][1] < pairs[k][2]:
+                    capitulation_days += 1
+                    k -= 1
                 break
-        if days_since_cross is not None and days_since_cross <= HASH_RECOVERY_WINDOW:
+        if (days_since_cross is not None
+                and days_since_cross <= HASH_RECOVERY_WINDOW
+                and capitulation_days >= HASH_MIN_CAPITULATION):
             state = "recovery"
         elif s_last and f_last / s_last >= HASH_EXPANSION_RATIO:
             state = "expansion"
@@ -567,10 +593,11 @@ def realized_price_level(
     """
     if realized_cap is None or supply is None:
         return None
-    rc, s = realized_cap.last, supply.last
-    if rc is None or not s:
-        return None
-    return rc / s
+    # 같은 날짜의 실현시총 ÷ 유통량. 각자 마지막 값을 집으면 실현시총만 결측인
+    # 날(커뮤니티 티어에서 흔하다)에 며칠 전 실현시총을 오늘 유통량으로 나눠
+    # 바닥선이 조용히 어긋난다 — 이 선은 매수구간 가격을 직접 만든다.
+    val, _ = last_pair(realized_cap.map_with(supply, lambda rc, s: rc / s if s else None))
+    return val
 
 
 def drawdown_from_ath(price: Series) -> tuple[Optional[float], Optional[int], Optional[float]]:
