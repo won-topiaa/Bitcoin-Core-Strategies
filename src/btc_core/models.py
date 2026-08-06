@@ -176,9 +176,17 @@ class BottomProfile:
         return any(c.value is not None for c in self.conditions)
 
     def as_dict(self) -> dict[str, Any]:
+        # evaluable 을 반드시 함께 내보낸다. 콘솔·마크다운은 이 값으로 블록을
+        # 통째로 숨기는데(report.py), JSON 만 그걸 빼고 label·detail 을 실어
+        # 보내서 — 조건 5개가 전부 None 인 날에도 hits=0 이 최하 구간에
+        # 매칭돼 "이후 1년 수익 중앙값은 음수였다" 같은 단정이 나갔다.
+        # 근거가 없으면 판정 문구도 비운다.
+        ok = self.evaluable
         return {
+            "evaluable": ok,
             "hits": self.hits, "total": self.total,
-            "label": self.label, "detail": self.detail,
+            "label": self.label if ok else "",
+            "detail": self.detail if ok else "",
             "conditions": [c.as_dict() for c in self.conditions],
         }
 

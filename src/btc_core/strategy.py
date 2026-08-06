@@ -299,6 +299,30 @@ def _budget_exceeded(cfg: StrategyConfig, state: ExecutionState,
     return None
 
 
+def execution_block(
+    cfg: StrategyConfig,
+    coverage: float,
+    consensus: Optional[Consensus],
+) -> Optional[str]:
+    """사다리 실행을 막는 사유. 막을 것이 없으면 None.
+
+    **이 판정은 여기 한 곳만 소유한다.** 예전에는 build_plan 안에만 있어서,
+    `commit` 명령이 next_ladder_step 을 직접 부르며 blocked_by 를 안 넘겼고,
+    그 결과 `score` 가 "커버리지 40% < 최소 60% — 실행 금지"라고 막은 바로 그
+    입력에서 `commit` 이 같은 계단을 장부에 기록해 버렸다(exit 0). 사람이 보는
+    경고와 장부에 남는 사실이 갈리면 이후 누적·재무장 계산이 전부 어긋난다.
+
+    우선순위: 커버리지 하한이 먼저다 — 데이터가 모자라면 합의 판정 자체를
+    믿을 수 없기 때문이다.
+    """
+    min_cov = float(cfg.coverage.get("min_coverage_for_action", 0.0))
+    if coverage < min_cov:
+        return f"커버리지 {coverage:.0%} < 최소 {min_cov:.0%} — 사다리 실행 금지"
+    if consensus is not None and not consensus.passed:
+        return consensus.reason
+    return None
+
+
 def next_ladder_step(
     cfg: StrategyConfig,
     ladder: str,
@@ -525,14 +549,10 @@ def build_plan(
     band_key = band["key"]
     dca_mult = float(cfg.ladders["dca_multiplier"][band_key])
 
-    # 실행을 막는 사유들 — 우선순위 순
-    blocked: Optional[str] = None
-    min_cov = float(cfg.coverage.get("min_coverage_for_action", 0.0))
-    if coverage < min_cov:
-        blocked = f"커버리지 {coverage:.0%} < 최소 {min_cov:.0%} — 사다리 실행 금지"
-        notes.append(blocked)
-    elif consensus is not None and not consensus.passed:
-        blocked = consensus.reason
+    # 실행을 막는 사유들 — 우선순위 순. 판정은 execution_block 하나가 소유한다.
+    blocked = execution_block(cfg, coverage, consensus)
+    if blocked is not None and coverage < float(cfg.coverage.get("min_coverage_for_action", 0.0)):
+        notes.append(blocked)          # 커버리지 사유만 메모에 남긴다(합의 사유는 따로 표시된다)
 
     actions: list[Action] = []
 

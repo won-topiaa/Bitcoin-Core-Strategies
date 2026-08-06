@@ -24,7 +24,7 @@ from .datasources.csv_source import load_csv_bundle, save_csv_bundle
 from .datasources.manual import write_template
 from .engine import evaluate
 from .report import gauge, render_console, render_json, render_markdown
-from .strategy import ExecutionState, commit_action, next_ladder_step
+from .strategy import ExecutionState, commit_action, execution_block, next_ladder_step
 
 DEFAULT_STATE = Path("data/state.json")
 DEFAULT_MANUAL = Path("data/manual_input.yaml")
@@ -214,8 +214,13 @@ def _cmd_commit(args, cfg) -> int:
     bundle = None
     try:
         bundle = _load_bundle(args.csv)
-    except FetchError:
-        pass
+    except FetchError as exc:
+        # 조용히 넘기면 안 된다 — 시계열 없이 수동 입력만으로 계산한 BCS 가
+        # 실제와 다른 계단을 골라 장부에 남고, 그 뒤 누적·재무장 계산이 전부
+        # 그 위에 쌓인다. score 와 같은 방식으로 반드시 알린다.
+        print(f"! 시계열을 불러오지 못했습니다: {exc}", file=sys.stderr)
+        print("  수동 입력만으로 계산합니다 — 장부에 남는 값이니 확인하세요.\n",
+              file=sys.stderr)
 
     manual = load_manual(args.manual, reference=on)
     macro_signals = load_macro_signals(args.macro, reference=on)
@@ -226,8 +231,14 @@ def _cmd_commit(args, cfg) -> int:
     if snap.bcs is None:
         print("BCS 를 산출할 수 없어 기록하지 않습니다.", file=sys.stderr)
         return 1
+    for w in snap.warnings:
+        print(f"  ! {w}", file=sys.stderr)
 
-    action = next_ladder_step(cfg, args.ladder, snap.bcs, snap.lrs, state, on)
+    # 커버리지·합의 게이트는 build_plan 과 **같은 함수**로 판정한다. 예전에는
+    # 여기서 blocked_by 를 안 넘겨, score 가 막은 계단을 commit 이 기록했다.
+    blocked = execution_block(cfg, snap.coverage, snap.consensus)
+    action = next_ladder_step(cfg, args.ladder, snap.bcs, snap.lrs, state, on,
+                              blocked_by=blocked)
     if action is None:
         print(f"현재 BCS {snap.bcs:+.1f} 에서 밟을 {args.ladder} 계단이 없습니다.", file=sys.stderr)
         return 1

@@ -95,7 +95,12 @@ def fetch(
             if api_name in row:
                 buckets[our_name].append((d, _as_float(row[api_name])))
 
-    if not buckets["price"]:
+    # 목록이 비었는지가 아니라 **쓸 수 있는 값이 하나라도 있는지**를 본다.
+    # 한 지표만 장애로 전부 null 이 와도 행 자체는 오므로, 길이만 재면 통과해
+    # '가격 5일'처럼 찍고 정상 종료한 뒤 16년치 CSV 를 값 없는 껍데기로
+    # 덮어쓴다(save_csv_bundle 은 백업을 남기지 않는다). csv_source 의 읽는
+    # 쪽은 이미 같은 방식으로 검사한다.
+    if not any(v is not None for _, v in buckets["price"]):
         raise FetchError("가격(PriceUSD) 데이터를 받지 못했습니다.")
 
     market = MarketData(

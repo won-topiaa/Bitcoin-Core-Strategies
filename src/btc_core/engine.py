@@ -7,6 +7,7 @@
 
 from __future__ import annotations
 
+import math
 from datetime import date
 from typing import Optional
 
@@ -211,6 +212,12 @@ def _as_float(v) -> Optional[float]:
     if v in (None, ""):
         return None
     try:
-        return float(v)
+        f = float(v)
     except (TypeError, ValueError):
         return None
+    # NaN·±inf 는 결측으로 돌린다. 이 값이 바닥선(floors)으로 흘러가면
+    # json.dumps 가 NaN/Infinity 라는 **무효 JSON 토큰**을 써서, 브라우저의
+    # JSON.parse·jq·Go 등 파이썬 밖의 모든 소비자가 문서를 통째로 거부한다
+    # (파이썬 json.load 만 관대해서 테스트로는 안 잡혔다). csv_source._as_float
+    # 는 이미 같은 가드를 갖고 있다 — 여기만 빠져 있었다.
+    return f if math.isfinite(f) else None

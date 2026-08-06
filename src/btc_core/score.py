@@ -299,6 +299,17 @@ def evaluate_consensus(
             f"비가격 계열 {len(non_price)}개 < 필요 {need_non_price}개{scaled} — "
             f"가격 이동평균에만 의존한 신호, 관망",
         )
+    # 살아 있는 계열 자체가 하한보다 적으면 '합의'라고 부를 수 없다. 위의
+    # 비례 완화는 요구 수를 남은 계열 수까지만 낮추므로(그 성질이 필요하다),
+    # 계열이 하나뿐이면 '1개 중 1개 동의'로 통과해 버렸다 — 설정이 약속한
+    # "아무리 낮춰도 2계열 미만으로는 안 내려간다"와 정반대다. 판정의 재료가
+    # 부족한 것이므로 닫히는 쪽으로 실패한다.
+    floor = int(cfg.consensus.get("min_agreeing_floor", 2))
+    if len(available) < floor:
+        return Consensus(
+            False, direction, keys, np_keys,
+            f"살아 있는 계열 {len(available)}개 < 최소 {floor}개 — 합의를 판정할 재료가 부족합니다, 관망",
+        )
     return Consensus(
         True, direction, keys, np_keys,
         f"계열 {len(agreeing)}개 합의(비가격 {len(non_price)}개){scaled} — 실행 조건 충족",
@@ -337,6 +348,11 @@ def _requirements(cfg, rules, available: Sequence[FamilyScore]) -> tuple[int, in
     if n >= total:
         return need_total, need_non_price, ""
 
+    # 여기는 '몇 개가 동의해야 하는가'를 **비례로 완화**하는 자리다. 요구 수가
+    # 살아 있는 계열 수를 넘지 않는다는 성질을 지킨다(그 성질이 깨지면 계열이
+    # 적을수록 기준이 엄해지는 역전이 생긴다 — 그래서 min(..., n) 이 있다).
+    # '판정할 만큼 계열이 남았는가'라는 별개의 질문은 evaluate_consensus 의
+    # 하한 검사가 맡는다.
     floor_total = int(rules.get("min_agreeing_floor", 2))
     scaled_total = min(max(floor_total, round(need_total * n / total)) if total else need_total, n)
 

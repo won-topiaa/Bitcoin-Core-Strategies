@@ -198,7 +198,14 @@ def _lookup(s: Optional[Series]) -> dict:
 
 
 def _fmt(v: Optional[float]) -> str:
-    return "" if v is None else repr(float(v))
+    # NaN·inf 는 절대 파일에 쓰지 않는다. 한 번 들어가면 다음 실행부터
+    # read_cells 의 '숫자로 안 읽히는 칸' 검사에 걸려 갱신이 계속 실패하고,
+    # CSV 는 캐시로 되살아나므로 사람이 손으로 고칠 때까지 파이프라인이
+    # 멈춘다. 빈 칸(결측)으로 떨어뜨리는 편이 회복 가능하다.
+    if v is None:
+        return ""
+    f = float(v)
+    return repr(f) if math.isfinite(f) else ""
 
 
 def _as_float(v) -> Optional[float]:

@@ -313,15 +313,20 @@ def carry_analysis(btc: dict[date, float], usdjpy: dict[date, float],
     rows = []
     for a, b in zip(ks, ks[1:]):
         if wb[a] > 0 and wj[a] > 0 and wb[b] > 0 and wj[b] > 0:
-            rows.append((b, math.log(wj[b] / wj[a]), math.log(wb[b] / wb[a])))
+            # 직전 주(a)를 행이 직접 들고 간다. 아래 ΔVIX 통제가 rows 와
+            # zip(ks, ks[1:]) 을 다시 짝지으면, 위 조건에 걸려 건너뛴 주가
+            # 하나만 있어도 이후 모든 행의 '직전 주'가 밀려 엉뚱한 구간의
+            # ΔVIX 를 통제하게 된다 — 단순상관은 멀쩡해 보이는데 부분상관만
+            # 조용히 뒤집혀서, 통제 후 결론이 반대로 나온다.
+            rows.append((b, math.log(wj[b] / wj[a]), math.log(wb[b] / wb[a]), a))
     if len(rows) < 30:
         return {"n": 0}
-    xs = [j for _, j, _ in rows]
-    ys = [b for _, _, b in rows]
+    xs = [j for _, j, _, _ in rows]
+    ys = [b for _, _, b, _ in rows]
     full = pearson(xs, ys)
 
     def era(lo, hi):
-        sub = [(j, b) for k, j, b in rows if lo <= k[0] <= hi]
+        sub = [(j, b) for k, j, b, _ in rows if lo <= k[0] <= hi]
         return (pearson([j for j, _ in sub], [b for _, b in sub]), len(sub))
 
     # ΔVIX 통제 부분상관 — 엔이 '독립적으로' 설명하는 몫이 있는지
@@ -329,7 +334,7 @@ def carry_analysis(btc: dict[date, float], usdjpy: dict[date, float],
     if vix:
         wv = wk(vix)
         trio = []
-        for (k, j, b), (a, _) in zip(rows, zip(ks, ks[1:])):
+        for k, j, b, a in rows:          # 직전 주는 행이 들고 있다(정렬 어긋남 방지)
             if k in wv and a in wv:
                 trio.append((j, b, wv[k] - wv[a]))
         if len(trio) >= 30:
@@ -338,7 +343,8 @@ def carry_analysis(btc: dict[date, float], usdjpy: dict[date, float],
     return {"n": len(rows), "full": full, "partial_vix": partial,
             "eras": {"2010~2017": era(2010, 2017), "2018~2021": era(2018, 2021),
                      "2022~현재": era(2022, 2100)},
-            "span": (rows[0][0], rows[-1][0])}
+            "span": (rows[0][0], rows[-1][0]),
+            "n_partial": len(trio) if (vix and partial is not None) else 0}
 
 
 # ---------------------------------------------------------------------------

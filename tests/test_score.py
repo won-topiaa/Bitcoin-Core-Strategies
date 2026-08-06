@@ -395,6 +395,26 @@ def test_price_family_alone_can_never_pass_the_gate(cfg):
         assert "가격 이동평균에만 의존" in c.reason
 
 
+def test_a_single_surviving_family_is_never_called_consensus(cfg):
+    """계열이 하나만 남으면 '합의'가 성립할 수 없다.
+
+    비례 완화는 요구 수를 남은 계열 수까지만 낮추는데(그 성질 자체는 필요하다
+    — 아래 테스트가 지킨다), 그 때문에 계열이 하나뿐일 때 '1개 중 1개 동의'로
+    게이트가 **통과**했다. 설정은 정반대를 약속한다(min_agreeing_floor: 2,
+    "아무리 낮춰도 2계열 미만으로는 안 내려간다"). 커버리지 하한이 실제 매매는
+    막아 주고 있었지만, 화면에는 '합의 게이트 ✔ 통과'가 떴다.
+    """
+    floor = int(cfg.consensus.get("min_agreeing_floor", 2))
+    assert floor >= 2, "이 테스트는 하한이 2 이상인 설정을 전제한다"
+    for key in ("valuation", "supply", "holder"):
+        if key not in cfg.bcs_families:
+            continue
+        alone = [FamilyScore(key, key, cfg.bcs_families[key]["weight"], 100.0, -0.9)]
+        c = evaluate_consensus(cfg, alone, -50.0)
+        assert not c.passed, f"{key} 계열 하나로 합의가 통과했습니다"
+        assert "재료가 부족" in c.reason
+
+
 def test_requirements_never_ask_for_more_non_price_than_exist(cfg):
     """가격 계열이 없는 조합이 오히려 더 엄격해지는 역전이 있었다."""
     import itertools
