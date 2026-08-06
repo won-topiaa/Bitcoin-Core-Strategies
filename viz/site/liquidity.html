@@ -2993,9 +2993,14 @@ function nameScrollRegions(){
   document.querySelectorAll(".tblwrap").forEach(w => {
     const scrolls = w.scrollWidth > w.clientWidth + 1;
     if (!scrolls){
-      w.removeAttribute("role"); w.removeAttribute("aria-label");
-      // 폭이 넓어져 스크롤이 사라지면, 우리가 붙였던 tabindex 만 걷어낸다
-      // (본문에 손으로 박아 둔 tabindex 는 건드리지 않는다).
+      // 걷어내는 것은 **우리가 붙인 것만**이다. 본문에 손으로 박아 둔
+      // role="region"/tabindex(02·03 장의 표들)까지 지우면, 그 표는 이름도
+      // 역할도 없는데 포커스만 잡히는 칸이 되어 낭독기가 정체불명의 정거장을
+      // 읽는다 — 이 함수가 막으려던 것보다 나쁜 상태가 된다.
+      if (w.dataset.autoRole){
+        w.removeAttribute("role"); w.removeAttribute("aria-label");
+        delete w.dataset.autoRole;
+      }
       if (w.dataset.autoTab){ w.removeAttribute("tabindex"); delete w.dataset.autoTab; }
       return;
     }
@@ -3012,8 +3017,10 @@ function nameScrollRegions(){
         n = n.previousElementSibling;
       }
     }
-    w.setAttribute("role", "region");
-    if (name) w.setAttribute("aria-label", name);
+    if (!w.hasAttribute("role")){ w.setAttribute("role", "region"); w.dataset.autoRole = "1"; }
+    if (name && (w.dataset.autoRole || !w.hasAttribute("aria-labelledby"))){
+      w.setAttribute("aria-label", name);   // 저자가 aria-labelledby 를 준 표는 그대로 둔다
+    }
   });
 }
 // 본문에 정적으로 박혀 있는 접힘 버튼(아홉 지표·거시 배경)을 배선한다. 계기판·
