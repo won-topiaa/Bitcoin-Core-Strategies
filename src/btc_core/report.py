@@ -97,10 +97,24 @@ def short_label(label: str) -> str:
     return label.split(" (")[0].strip()
 
 
-def _fmt_raw(r: Reading) -> str:
+def _fmt_raw(r: Reading, cfg: Optional[StrategyConfig] = None) -> str:
+    """원시값 표시. 상태값은 **사람이 읽는 이름**으로 바꾼다.
+
+    상태 지표(Hash Ribbons·연준 스탠스)의 raw 는 'capitulation' 같은 키인데,
+    그걸 그대로 찍으면 화면에 영어 키가 뜬다. 설정에 그러라고 state_labels 를
+    두었고 사이트는 쓰고 있었는데, 콘솔·마크다운만 이 함수를 거치며 빠져 있었다
+    (config 주석이 "실제로 그랬다"고 적어 둔 그 회귀가 CLI 에 살아 있었다).
+    """
     if r.raw is None:
         return "—"
     if isinstance(r.raw, str):
+        if cfg is not None:
+            # BCS 지표와 LRS 구성요소가 섞여 들어온다. cfg.indicator() 는 없는
+            # 키에 ConfigError 를 던지므로 사전에서 직접 찾는다.
+            spec = cfg.indicators.get(r.key) or cfg.lrs_components.get(r.key) or {}
+            label = (spec.get("state_labels") or {}).get(r.raw)
+            if label:
+                return str(label)
         return r.raw
     return f"{r.raw:,.4f}".rstrip("0").rstrip(".")
 
@@ -166,7 +180,7 @@ def render_console(snap: Snapshot, cfg: StrategyConfig) -> str:
         for m in f.members:
             ms = f"{m.score:+.2f}" if m.available else "  —  "
             flag = "" if m.available else "  ✗ 결측"
-            add(f"      {pad(short_label(m.label), 34)} {_fmt_raw(m):>12}  → {ms}{flag}")
+            add(f"      {pad(short_label(m.label), 34)} {_fmt_raw(m, cfg):>12}  → {ms}{flag}")
         add("")
 
     # --- 합의 ---
@@ -296,7 +310,7 @@ def render_markdown(snap: Snapshot, cfg: StrategyConfig) -> str:
         add("| 구성요소 | 입력값 | 점수 |")
         add("|---|---:|---:|")
         for r in snap.lrs_readings:
-            add(f"| {short_label(r.label)} | {_fmt_raw(r)} | "
+            add(f"| {short_label(r.label)} | {_fmt_raw(r, cfg)} | "
                 f"{f'{r.score:+.2f}' if r.available else '결측'} |")
         add("")
 

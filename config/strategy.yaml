@@ -379,6 +379,14 @@ lrs:
         neutral:       0.00
         pause_easing:  0.50
         cutting_qe:    1.00
+      # 상태 키를 그대로 보여주면 화면에 'pause_easing' 이라고 적힌다.
+      # Hash Ribbons 와 같은 이유로 사람이 읽는 이름을 따로 둔다.
+      state_labels:
+        qt_hiking:    "긴축 + 금리인상"
+        qt_hold:      "긴축 유지"
+        neutral:      "중립"
+        pause_easing: "인상 중단 · 완화 조짐"
+        cutting_qe:   "금리인하 + 양적완화"
     etf_flow:
       label: "현물 ETF 30일 누적 순유입 (십억 달러)"
       weight: 20

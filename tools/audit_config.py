@@ -128,37 +128,45 @@ def check_bands_and_ladders(cfg, a: Audit) -> None:
         d0 = min(float(s["trigger_bcs"]) for s in cfg.ladders["distribute"]["steps"])
         a0 = max(float(s["trigger_bcs"]) for s in cfg.ladders["accumulate"]["steps"])
         if -opp < a0:
+            # 조건은 '아래다'인데 예전 문구는 '위다'라고 적고, 결과도 반대 경우의
+            # 것을 말했다. 진단을 그대로 따르면 임계를 더 잘못된 방향으로 옮기게 된다.
             a.fail("히스테리시스",
-                   f"분배 재무장 임계 {-opp:+.0f} 가 매집 첫 계단 {a0:+.0f} 보다 위다 "
-                   "— 매집이 시작되기도 전에 분배가 재무장된다")
+                   f"분배 재무장 임계 {-opp:+.0f} 가 매집 첫 계단 {a0:+.0f} 보다 아래다 "
+                   "— 분배가 재무장되려면 매집 첫 계단을 지나 더 내려가야 한다")
         if opp > d0:
             a.fail("히스테리시스",
                    f"매집 재무장 임계 {opp:+.0f} 가 분배 첫 계단 {d0:+.0f} 보다 위다 "
                    "— 분배가 시작되기도 전에는 매집이 재무장되지 않는다")
 
 
-def check_bottom_profile(cfg, a: Audit) -> None:
-    """저점 프로파일 조건이 서로 중복되지 않는지."""
-    spec = cfg.bottom_profile
-    if not spec.get("enabled"):
-        return
-    keys = {c["key"] for c in spec.get("conditions", [])}
+def check_profiles(cfg, a: Audit) -> None:
+    """저점·고점 프로파일의 조건 중복과 해석 구간 정합성.
 
-    for pair, why in EQUIVALENT_CONDITIONS:
-        if pair <= keys:
-            a.fail("저점 프로파일",
-                   f"{sorted(pair)} 가 함께 들어 있다 — {why}. "
-                   "하나의 사실이 두 표를 행사하게 된다")
+    예전에는 저점만 봤다. 고점 프로파일은 구조가 똑같은데 아무도 검사하지
+    않아서, min_hits 를 조건 수보다 크게 적어도 '모순 없음'으로 통과했다 —
+    '역사적 고점권'이 영원히 안 뜨는 설정이 조용히 지나간다.
+    """
+    for spec, name in ((cfg.bottom_profile, "저점 프로파일"),
+                       (cfg.top_profile, "고점 프로파일")):
+        if not spec.get("enabled"):
+            continue
+        keys = {c["key"] for c in spec.get("conditions", [])}
 
-    n = len(spec.get("conditions", []))
-    readings = sorted(spec.get("readings", []), key=lambda r: -int(r["min_hits"]))
-    if readings and int(readings[0]["min_hits"]) != n:
-        a.fail("저점 프로파일",
-               f"최상위 해석의 min_hits({readings[0]['min_hits']}) 가 "
-               f"조건 수({n}) 와 다르다 — 만점이 영원히 안 나오거나 너무 쉽게 나온다")
-    hits = [int(r["min_hits"]) for r in readings]
-    if hits != sorted(hits, reverse=True) or len(set(hits)) != len(hits):
-        a.fail("저점 프로파일", f"해석 구간의 min_hits 가 내림차순 유일값이 아니다: {hits}")
+        for pair, why in EQUIVALENT_CONDITIONS:
+            if pair <= keys:
+                a.fail(name,
+                       f"{sorted(pair)} 가 함께 들어 있다 — {why}. "
+                       "하나의 사실이 두 표를 행사하게 된다")
+
+        n = len(spec.get("conditions", []))
+        readings = sorted(spec.get("readings", []), key=lambda r: -int(r["min_hits"]))
+        if readings and int(readings[0]["min_hits"]) != n:
+            a.fail(name,
+                   f"최상위 해석의 min_hits({readings[0]['min_hits']}) 가 "
+                   f"조건 수({n}) 와 다르다 — 만점이 영원히 안 나오거나 너무 쉽게 나온다")
+        hits = [int(r["min_hits"]) for r in readings]
+        if hits != sorted(hits, reverse=True) or len(set(hits)) != len(hits):
+            a.fail(name, f"해석 구간의 min_hits 가 내림차순 유일값이 아니다: {hits}")
 
 
 def check_lrs(cfg, a: Audit) -> None:
@@ -212,7 +220,7 @@ def main() -> int:
     cfg = load_config(args.config)        # 형식 검증은 여기서 이미 돈다
     a = Audit()
     for check in (check_consensus, check_coverage_reachability, check_bands_and_ladders,
-                  check_bottom_profile, check_lrs, check_indicator_shares):
+                  check_profiles, check_lrs, check_indicator_shares):
         check(cfg, a)
 
     print(f"감사 대상: {cfg.path}")

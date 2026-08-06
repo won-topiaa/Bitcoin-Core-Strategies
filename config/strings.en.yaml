@@ -126,10 +126,18 @@ bands:
   deep_value:    {label: "Near a bottom",  stance: "Start deploying reserve cash"}
   capitulation:  {label: "Floor",          stance: "Deploy reserve cash heavily"}
 
-# 지표 하나가 숫자가 아니라 상태를 낸다 (Hash Ribbons).
-# 키는 strategy.yaml 의 indicators.hash_ribbons.states 와 같아야 한다.
+# 숫자가 아니라 상태를 내는 것들. 키는 strategy.yaml 의 해당 states 와 같아야 한다.
+# (Hash Ribbons = BCS 지표, 연준 스탠스 = LRS 구성요소)
 states:
   recovery: "recovering"
   capitulation: "miners leaving"
   normal: "normal"
   expansion: "mining expanding"
+
+# 연준 스탠스 (LRS) — lrs.components.fed_stance.states
+lrs_states:
+  qt_hiking: "tightening + hiking"
+  qt_hold: "tightening, on hold"
+  neutral: "neutral"
+  pause_easing: "hikes paused, easing ahead"
+  cutting_qe: "cutting + QE"

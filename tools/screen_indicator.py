@@ -262,13 +262,21 @@ def main() -> int:
     args = ap.parse_args()
 
     bundle = load_csv_bundle(args.csv)
-    blocks = [
-        render(screen(bundle.market), "전체 기간"),
-        "",
-        render(screen(bundle.market, start=date(2017, 1, 1)), "2017년 이후"),
-        "",
-        render(screen(bundle.market, start=date(2020, 1, 1)), "2020년 이후"),
-    ]
+    # --since 는 예전에 파싱만 하고 아무 데도 쓰이지 않았다. 이 도구의 출력이
+    # config 에서 지표 편입 근거로 인용되므로(strategy.yaml), "2023년 이후로
+    # 걸러 봤다"고 믿은 사람이 실제로는 16년 전체 표본을 보게 되는 상태였다.
+    if args.since:
+        floor = date.fromisoformat(args.since)
+        spans = [(floor, f"{args.since} 이후")]
+    else:
+        spans = [(None, "전체 기간"), (date(2017, 1, 1), "2017년 이후"),
+                 (date(2020, 1, 1), "2020년 이후")]
+    blocks: list[str] = []
+    for start, label in spans:
+        if blocks:
+            blocks.append("")
+        blocks.append(render(screen(bundle.market, start=start) if start
+                             else screen(bundle.market), label))
     text = (
         "# 지표 선별 검정\n\n"
         "ρ = 지표값과 이후 수익률의 순위상관. **과열 지표는 음수여야 한다**\n"
