@@ -199,7 +199,11 @@ def test_a_short_sample_is_flagged_so_it_is_not_read_like_the_others():
     (신용 스프레드 — 원자료가 2023-08 부터만 온다). 그 사실이 표에 안 보이면
     순위표가 사람을 오도한다. 표시는 데이터에서 나와야 하고, 특정 계열 이름을
     코드에 박아서는 안 된다."""
-    full, n = 2400, 200                        # 6.6년 vs 0.5년 — 문턱은 5년
+    # 이 장은 모든 행을 월간 격자에서 잰다(Epps 효과로 순위가 뒤집히는 것을
+    # 막으려고). 그래서 '짧은 표본'도 월 12개는 넘어야 값 자체가 나온다 —
+    # 그보다 짧으면 상관을 못 내고 행이 아예 빠진다. 700일(≈23개월)은 값은
+    # 나오되 5년 문턱에는 한참 못 미치는, 이 테스트가 노리는 구간이다.
+    full, n = 2400, 700                        # 6.6년 vs 1.9년 — 문턱은 5년
     price = _series(full, lambda i: 1000 * math.exp(i / 900 + 0.25 * math.sin(i / 60)))
     short = _series(n, lambda i: 50 + 10 * math.sin(i / 9.0),
                     start=date(2013, 1, 1) + timedelta(days=full - n))
@@ -212,11 +216,15 @@ def test_a_short_sample_is_flagged_so_it_is_not_read_like_the_others():
 
 
 def test_the_span_is_reported_in_years_not_just_row_count():
-    """주간 156개가 3년인지 3주인지 n 만으로는 알 수 없다."""
+    """표본 48개가 4년인지 4개월인지 n 만으로는 알 수 없다.
+
+    월간 격자라 양 끝의 반쪽 달은 빠진다 — 1400일(≈46개월)이 44~46개월로
+    잡히므로 3.6~3.9년이면 맞다.
+    """
     price = _series(1400, lambda i: 1000 * math.exp(i / 900 + 0.2 * math.sin(i / 60)))
     pl = rm.payload({"price": price}, {"oil": _series(1400, lambda i: 60 + 12 * math.sin(i / 17.3))})
     yrs = next(r["years"] for r in pl["ranked"] if r["key"] == "oil")
-    assert 3.7 < yrs < 3.9, f"1400일 ≈ 3.8년이어야 하는데 {yrs}"
+    assert 3.6 <= yrs <= 3.9, f"1400일 ≈ 3.8년이어야 하는데 {yrs}"
 
 
 def test_the_short_flag_threshold_is_a_named_constant_not_a_literal():

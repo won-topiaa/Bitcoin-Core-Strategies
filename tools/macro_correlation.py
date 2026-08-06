@@ -454,7 +454,8 @@ def _partial(dk: dict, bk: dict, ctrl_change: dict, monthly: bool) -> Optional[f
 def candidate_analysis(btc: dict[date, float], driver: dict[date, float],
                        vix: Optional[dict[date, float]] = None,
                        nasdaq: Optional[dict[date, float]] = None,
-                       use_log: bool = True, max_lag: int = 6) -> dict:
+                       use_log: bool = True, max_lag: int = 6,
+                       force_monthly: bool = False) -> dict:
     """거시 후보 하나를 금·엔캐리와 **같은 잣대**로 검정한다(docs/27).
 
     주간·월간 로그수익률 상관 + 국면분할 + 선행/후행 + **ΔVIX·나스닥 통제 부분상관**.
@@ -468,13 +469,20 @@ def candidate_analysis(btc: dict[date, float], driver: dict[date, float],
     격자에 물리면 '1개월 수익률 vs 1주 수익률'을 비교하게 돼 값이 통째로 틀린다
     (nasdaq_analysis 가 `_is_monthly` 로 막는 것과 같은 함정). 그래서 후보가 월간이면
     주요 프레임도, **부분상관도** 월간 격자에서 잰다.
+
+    ``force_monthly=True`` 는 후보의 빈도와 무관하게 월간으로 고정한다. 여러
+    후보를 **한 표에 나란히 세워 순위를 매길 때** 필요하다 — 주간 후보와 월간
+    후보를 섞어 놓으면 표본 빈도만으로 크기가 갈려(Epps 효과) 순위가 뒤집힌다.
+    실제로 사이트 05 장이 나스닥(주간 +0.130)을 S&P500(월간 +0.223) 아래에
+    적고 있었는데, 같은 월간 격자에서는 나스닥 +0.253 > S&P500 +0.223 이다.
     """
     def keyed(chg: dict, monthly: bool) -> dict:
         def key(d: date):
             return (d.year, d.month) if monthly else d.isocalendar()[:2]
         return {key(d): v for d, v in sorted(chg.items())}
 
-    prim_monthly = _is_monthly(driver)      # 후보의 관측 빈도가 주요 프레임을 정한다
+    # 후보의 관측 빈도가 주요 프레임을 정한다(force_monthly 면 월간으로 고정)
+    prim_monthly = True if force_monthly else _is_monthly(driver)
     res: dict = {"use_log": use_log, "monthly_only": prim_monthly,
                  "primary": "월간" if prim_monthly else "주간"}
     dk_pr = bk_pr = None

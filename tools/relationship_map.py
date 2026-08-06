@@ -21,7 +21,12 @@
 1. **수준이 아니라 변화율로 잰다.** BTC·나스닥·M2 는 전부 장기 우상향이라 수준끼리
    재면 "같이 올랐다"만 나온다(허위 상관). 이 저장소의 제1원칙이다(docs/25 2절).
 2. **국면을 나눠 본다.** 전 구간 하나로 뭉개면 잘못 읽힌다 — 나스닥은 전 구간
-   +0.13 이지만 2013~16 −0.01 / 2022~23 **+0.39** 로, **2020년부터 생긴 관계**다.
+   +0.25 이지만 2013~16 +0.23 / 2022~23 **+0.60** 으로, **2020년부터 뚜렷해진
+   관계**다.
+4. **모든 행을 같은 빈도(월간)로 잰다.** 후보마다 자기 빈도로 재면 표본 빈도만으로
+   상관 크기가 갈려(Epps 효과) 순위가 뒤집힌다. 실제로 나스닥(주간 +0.13)이
+   S&P500(월간 +0.22) 아래에 적혀 있었는데, 같은 월간 격자에서는 나스닥
+   +0.25 > S&P500 +0.22 다.
 3. **파생과 외부를 구분한다.** MVRV·드로다운처럼 가격에서 계산되는 값은 상관이 높은
    것이 당연하다(항등식에 가깝다). '비트코인 밖의 무언가와 관련 있는가'라는 질문에
    답하는 것은 **외부 계열뿐**이다.
@@ -100,10 +105,19 @@ SHORT_YEARS = 5.0
 
 
 def measure(price, ser, vix, ndq, use_log=None):
+    """이 장의 모든 행을 **같은 월간 격자**에서 잰다.
+
+    이 표는 여러 후보를 나란히 세워 순위를 매기고 밴드('뚜렷함'/'약함'...)를
+    붙이는 곳이다. 후보마다 자기 빈도(주간/월간)로 재면 표본 빈도만으로 크기가
+    갈려(Epps 효과) 순위가 뒤집힌다 — 실제로 나스닥은 주간 +0.130, S&P500 은
+    월간 +0.223 이라 "비트코인은 S&P500 과 더 관련 있다"로 읽혔지만, 같은 월간
+    격자에서는 나스닥 +0.253 > S&P500 +0.223 이다. 국면 표(era_scan)도 같은
+    이유로 월간으로 맞춘다.
+    """
     r = mc.candidate_analysis(price, ser, vix, ndq,
-                              use_log=(min(ser.values()) > 0) if use_log is None else use_log)
-    prim = r["full_mo"] if r["monthly_only"] else r["full_wk"]
-    return prim, r.get("partial_ndq"), r.get("n_primary", 0), r["primary"], _years(r)
+                              use_log=(min(ser.values()) > 0) if use_log is None else use_log,
+                              force_monthly=True)
+    return r["full_mo"], r.get("partial_ndq"), r.get("n_primary", 0), r["primary"], _years(r)
 
 
 def _years(r: dict) -> float:
@@ -122,24 +136,29 @@ def _years(r: dict) -> float:
 
 
 def era_scan(price, ser, use_log=None):
-    """국면별 상관 — 관련성이 언제 생겼는지 본다."""
-    freq = mc.weekly if not mc._is_monthly(ser) else mc.month_end
-    monthly = mc._is_monthly(ser)
+    """국면별 상관 — 관련성이 언제 생겼는지 본다.
+
+    **월간 격자로 고정한다.** 이 값들은 한 차트에 여러 계열을 겹쳐 그리는 데
+    쓰이므로, 계열마다 빈도가 다르면 선끼리 비교가 성립하지 않는다(measure 와
+    같은 이유). 한 국면은 2~5년이라 월간으로도 24~60점이 나온다.
+    """
     pos = min(ser.values()) > 0 if use_log is None else use_log
 
     def keyed(chg):
-        def k(d):
-            return (d.year, d.month) if monthly else d.isocalendar()[:2]
-        return {k(d): v for d, v in sorted(chg.items())}
+        return {(d.year, d.month): v for d, v in sorted(chg.items())}
 
-    dk = keyed(mc._change(freq(ser), pos))
-    bk = keyed(mc.log_returns(freq(price)))
+    dk = keyed(mc._change(mc.month_end(ser), pos))
+    bk = keyed(mc.log_returns(mc.month_end(price)))
     common = sorted(set(dk) & set(bk))
     out = []
     for lo, hi, lab in ERAS:
         ks = [c for c in common if lo <= c[0] <= hi]
+        # 국면 길이의 절반은 덮어야 그 국면의 값이라고 부를 수 있다. 예전에는
+        # 빈도와 무관하게 15점만 넘으면 값을 냈는데, 그러면 5개월치 조각이
+        # '2022~23' 이라는 두 해짜리 칸에 그려졌다(신용 스프레드가 실제로 그랬다).
+        need = max(12, int((hi - lo + 1) * 12 * 0.5)) if hi < 2100 else 12
         out.append((lab, mc.pearson([dk[c] for c in ks], [bk[c] for c in ks])
-                    if len(ks) >= 15 else None, len(ks)))
+                    if len(ks) >= need else None, len(ks)))
     return out
 
 
@@ -242,8 +261,19 @@ def render(pl: dict) -> str:
         add(f"  {row['label']:16}" + "".join(
             f"{(f'{v:+.2f}' if v is not None else '—'):>10}" for v in row["v"]))
     add("")
-    add("  → 답: **비트코인은 '위험자산'과 관련 있고, 그 관계는 2020년부터 생겼다.**")
-    add("     나스닥 −0.01(2013~16) → +0.39(2022~23), VIX 도 같은 방향으로 확증된다.")
+    # 이 문장의 숫자는 위 표에서 그대로 읽는다. 손으로 적어 두면 격자를 바꾸거나
+    # 데이터가 갱신될 때 표와 문장이 조용히 갈라진다(실제로 그랬다 — 주간 격자
+    # 시절의 −0.01/+0.39 가 월간으로 바꾼 뒤에도 남아 있었다).
+    nd_row = next((r for r in pl["eras"] if r["label"] == "나스닥"), None)
+    if nd_row and nd_row["v"] and len(nd_row["v"]) >= 2:
+        first = next(((pl["eraLabels"][i], v) for i, v in enumerate(nd_row["v"])
+                      if v is not None), None)
+        last = next(((pl["eraLabels"][i], v) for i, v in reversed(list(enumerate(nd_row["v"])))
+                     if v is not None), None)
+        add("  → 답: **비트코인은 '위험자산'과 관련 있고, 그 관계는 2020년부터 뚜렷해졌다.**")
+        if first and last and first[0] != last[0]:
+            add(f"     나스닥 {first[1]:+.2f}({first[0]}) → {last[1]:+.2f}({last[0]}), "
+                "VIX 도 같은 방향으로 확증된다.")
     add("     개별 자산(금·엔·원유·구리·부동산 등)과의 관련성은 대부분 그 관계의 그림자다.")
     add("=" * 84)
     return "\n".join(L)

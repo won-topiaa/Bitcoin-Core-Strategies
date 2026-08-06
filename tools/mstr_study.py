@@ -13,7 +13,7 @@ data/market.csv, 나스닥 통제는 data/macro.csv 에서 읽는다. **분석�
              통제해야 'BTC 와 독립으로 붙는 몫'이 보인다. 국면은 2020-08-11
              (첫 BTC 매입 공시) 전후로 가르고, 채택 후는 연 단위로 본다.
   상대성과 — 90일(달력) 롤링 로그수익률 스프레드(MSTR−BTC). 스프레드가
-             OUTPERF_SPREAD(0.5 ≈ 90일 수익률 격차 +65%p)를 넘는 날들을 연속
+             OUTPERF_SPREAD(0.5 ≈ 총수익 기준 1.65배)를 넘는 날들을 연속
              구간으로 묶는다. 반대 방향(BTC 우위)도 같은 문턱으로.
 
 ## 조심할 것 — 격자와 정의
@@ -44,7 +44,11 @@ sys.path.insert(0, str(ROOT / "tools"))
 import macro_correlation as mc        # noqa: E402
 
 # 90일 롤링 로그수익률 스프레드가 이걸 넘으면 '크게 앞선' 구간으로 본다.
-# 0.5 ≈ e^0.5 − 1 = +65%p — 베타(MSTR 는 BTC 의 ~1.5배로 움직인다)만으로는
+# 0.5 는 **로그 수익률의 차**다. e^0.5 = 1.65 이므로 "MSTR 의 총수익이 BTC 의
+# 1.65배"라는 뜻이지, 두 수익률의 차가 65%p 라는 뜻이 **아니다** — 같은 0.5 가
+# MSTR +200%/BTC +82%(격차 118%p)에서도, MSTR −20%/BTC −52%(격차 32%p)에서도
+# 나온다. %p 로 적으면 최대 4배까지 틀리고 방향도 일정하지 않다.
+# 베타(MSTR 는 BTC 의 ~1.5배로 움직인다)만으로는
 # 웬만해선 못 넘고, 프리미엄 확장 같은 국면 사건이 있어야 넘는 크기다.
 OUTPERF_SPREAD = 0.5
 WINDOW_DAYS = 90          # 롤링 창(달력일)
@@ -258,20 +262,20 @@ def report(mstr: dict[date, float], btc: dict[date, float],
     op = outperformance(mstr, btc)
     add(f"\n[2] 90일 롤링 로그수익률 스프레드 (MSTR−BTC), 문턱 ±{OUTPERF_SPREAD}")
     add("-" * 78)
-    add(f"  스프레드 {OUTPERF_SPREAD} ≈ 90일 수익률 격차 "
-        f"{math.expm1(OUTPERF_SPREAD):+.0%}p")
+    add(f"  스프레드 {OUTPERF_SPREAD} ≈ 90일 총수익 기준 "
+        f"×{math.exp(OUTPERF_SPREAD):.2f}배")
     if op["up"]:
         add("  MSTR 이 크게 앞선 구간:")
         for s, e, m in op["up"]:
             add(f"    {s} ~ {e}  ({(e - s).days + 1:>3}일)"
-                f"  최대 {m:+.2f} (≈{math.expm1(m):+.0%}p)")
+                f"  최대 {m:+.2f} (≈×{math.exp(m):.2f}배)")
     else:
         add("  MSTR 이 크게 앞선 구간: 없음")
     if op["down"]:
         add("  BTC 가 크게 앞선 구간:")
         for s, e, m in op["down"]:
             add(f"    {s} ~ {e}  ({(e - s).days + 1:>3}일)"
-                f"  최심 {m:+.2f} (≈{math.expm1(m):+.0%}p)")
+                f"  최심 {m:+.2f} (≈×{math.exp(m):.2f}배)")
     else:
         add("  BTC 가 크게 앞선 구간: 없음")
 

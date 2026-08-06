@@ -241,9 +241,12 @@ ko: {
     `관련은 뚜렷하지만 <b>동시에</b> 움직이는 관계라 타이밍에는 못 씁니다.`,
   relNone: "—",
   altRelEra: (first, last, vf, vl, vix) =>
-    `국면별 상관을 그린 선 그래프. 나스닥과의 주간수익률 상관이 ${first} ${vf} 에서 ` +
+    `국면별 상관을 그린 선 그래프. 나스닥과의 월간수익률 상관이 ${first} ${vf} 에서 ` +
     `${last} ${vl} 로 커졌고, VIX 는 같은 기간 반대 부호로 ${vix} 입니다. ` +
     `옅은 선은 나머지 후보이고 대부분 0 근처입니다.`,
+  relEraFallback: (first, last) =>
+    `국면별 상관을 그린 선 그래프. ${first} 부터 ${last} 까지 후보별 상관을 ` +
+    `국면마다 이어 놓았습니다.`,
   altKbd: "화살표 키로 날짜를 옮겨 가며 값을 읽을 수 있습니다.",
   kbdHint: "← → 날짜 이동 · Shift 또는 PageUp/Down 은 크게 · Home·End 처음·끝 · Esc 해제",
   rangeAll: "전체",
@@ -418,9 +421,11 @@ en: {
     `The link is clear, but it moves <b>at the same time</b>, so it is useless for timing.`,
   relNone: "—",
   altRelEra: (first, last, vf, vl, vix) =>
-    `A line chart of correlation by era. The weekly-return correlation with the Nasdaq grew from ` +
+    `A line chart of correlation by era. The monthly-return correlation with the Nasdaq grew from ` +
     `${vf} in ${first} to ${vl} in ${last}, while VIX over the same period runs the opposite way at ` +
     `${vix}. The faint lines are the other candidates and most stay near zero.`,
+  relEraFallback: (first, last) =>
+    `A line chart of correlation by era, tracing each candidate's correlation from ${first} to ${last}.`,
   altKbd: "Use the arrow keys to step through dates and read the values.",
   kbdHint: "← → step a date · Shift or PageUp/Down jumps · Home/End first/last · Esc clears",
   rangeAll: "ALL",
@@ -741,7 +746,15 @@ function rangeSel(){
     b.addEventListener("click", () => {
       const v = b.getAttribute("data-ry");
       RANGE_Y = v ? Number(v) : null;
-      rangeSel();                 // aria-pressed 갱신
+      // aria-pressed 만 제자리에서 고친다. 예전에는 rangeSel() 을 다시 불러
+      // innerHTML 을 통째로 갈아 끼웠는데, 그러면 **지금 이 이벤트를 처리 중인
+      // 버튼이 사라져** 포커스가 <body> 로 떨어진다. 키보드 사용자는 다음 Tab
+      // 이 4,000px 페이지 맨 위에서 다시 시작하고, 새 aria-pressed 는 포커스가
+      // 옮겨 가지 않아 낭독되지도 않는다.
+      box.querySelectorAll(".rbtn").forEach(x => {
+        const xv = x.getAttribute("data-ry");
+        x.setAttribute("aria-pressed", String((xv ? Number(xv) : null) === RANGE_Y));
+      });
       drawHist(); drawPrice();    // 두 차트의 가로축을 함께 좁힌다
     });
   });
@@ -846,9 +859,13 @@ function drawHist(){
   ]), V);
 
   const st = D.stats;
-  setText("hist-cap", t("histCap", S.length, st.median, st.mean));
-  describe(svg, t("altHist", D.span[0], D.span[1], nf(cur.bcs, 1),
-    labelOf(cur.band)));
+  // 캡션·대체텍스트는 **지금 그려진 것**을 말해야 한다. 범위 버튼(1년/3년…)을
+  // 누르면 V 만 줄어드는데 예전에는 여기서 전 구간(S.length, D.span)을 계속
+  // 읽어, 52점짜리 1년 그림에 "점 1,648개", "2010-07-19 부터"가 붙었다.
+  // 낭독기 사용자는 화살표로 짚는 날짜와 그림 이름이 어긋나 보인다.
+  setText("hist-cap", t("histCap", V.length, st.median, st.mean));
+  describe(svg, t("altHist", iso(dateOf(V[0][0])), iso(dateOf(V[V.length - 1][0])),
+    nf(cur.bcs, 1), labelOf(cur.band)));
 }
 
 function drawPrice(){
@@ -890,7 +907,9 @@ function drawPrice(){
   attachCrosshair(svg, "price-tt", host, X, PL, iw, PT, ih, r => ([
     [t("ttPrice"), money(r[1])], ["BCS", nf(r[2],1)]
   ]), V);
-  describe(svg, t("altPrice", D.span[0], D.span[1], money(D.current.price)));
+  // 가격 차트도 같은 V 를 그리므로 설명 범위를 V 에서 읽는다(위 주석 참고).
+  describe(svg, t("altPrice", iso(dateOf(V[0][0])), iso(dateOf(V[V.length - 1][0])),
+    money(D.current.price)));
 }
 
 /* =====================================================================
@@ -1089,6 +1108,10 @@ function drawRelEra(){
     describe(svg, t("altRelEra", L[g.a], L[g.b], relFmt(nd.v[g.a]), relFmt(nd.v[g.b]), vv));
   } else {
     setHTML("rel-era-read", "");
+    // 나스닥 열이 없어도(주가 소스가 막히는 날이 있다) 그림 자체는 그려진다.
+    // 그때 describe 를 건너뛰면 이 차트만 이름 없는 그래픽이 되어, 낭독기가
+    // 아무것도 읽지 않는다 — 사이트의 다른 그림은 전부 설명이 붙어 있다.
+    describe(svg, t("relEraFallback", L[0], L[L.length - 1]));
   }
 }
 
