@@ -180,7 +180,9 @@ def render_console(snap: Snapshot, cfg: StrategyConfig) -> str:
         for m in f.members:
             ms = f"{m.score:+.2f}" if m.available else "  —  "
             flag = "" if m.available else "  ✗ 결측"
-            add(f"      {pad(short_label(m.label), 34)} {_fmt_raw(m, cfg):>12}  → {ms}{flag}")
+            # 상태 지표(Hash Ribbons 등)는 '항복' 같은 한글로 찍히므로 str 서식의
+            # ':>12'(코드포인트 수)로는 열이 어긋난다. pad 가 동아시아 폭을 센다.
+            add(f"      {pad(short_label(m.label), 34)} {pad(_fmt_raw(m, cfg), 12, '>')}  → {ms}{flag}")
         add("")
 
     # --- 합의 ---

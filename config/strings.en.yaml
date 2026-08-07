@@ -134,10 +134,10 @@ states:
   normal: "normal"
   expansion: "mining expanding"
 
-# 연준 스탠스 (LRS) — lrs.components.fed_stance.states
-lrs_states:
-  qt_hiking: "tightening + hiking"
-  qt_hold: "tightening, on hold"
-  neutral: "neutral"
-  pause_easing: "hikes paused, easing ahead"
-  cutting_qe: "cutting + QE"
+# 연준 스탠스(LRS 구성요소)의 영어 이름은 여기 두지 않는다. 읽는 곳이 없다 —
+# 사이트는 LRS 중 m2_impulse 하나만 싣고, 그 상태 이름을 화면에 찍지 않는다.
+# 터미널 리포트(src/btc_core/report.py)는 한국어 전용이라 config/strategy.yaml 의
+# state_labels 를 그대로 쓴다. 예전에는 여기에 lrs_states 블록이 있었지만 어떤
+# 코드도 읽지 않아, 번역이 갖춰진 것처럼 보이기만 하고 실제로는 아무 데도 안
+# 닿았다. LRS 상태를 영어 화면에 띄우게 되면 그때 이 자리에 다시 넣고,
+# tools/export_viz.py 의 states_en 과 tests/test_i18n.py 에 함께 이어야 한다.

@@ -222,23 +222,48 @@ def test_hash_ribbons_detects_recovery_after_capitulation():
     assert ind.hash_ribbons(hashrate_from(values)).value == "recovery"
 
 
-def test_a_one_day_brush_is_not_the_end_of_capitulation():
+def _dip_then_recover(dip_days: int):
+    """상승 → dip_days 만큼 하락 → 재상승. 하락 길이로 항복 기간을 조절한다."""
+    vals = [100.0 + i for i in range(150)]
+    base = vals[-1]
+    vals += [base - 6.0 * i for i in range(dip_days)]
+    b2 = vals[-1]
+    vals += [b2 + 9.0 * i for i in range(20)]
+    return hashrate_from(vals)
+
+
+def test_a_brief_brush_is_not_the_end_of_capitulation():
     """recovery 는 이 시스템의 유일한 −1.00, 가장 강한 매수 신호다.
 
-    두 이동평균이 서로를 자주 스치는데, 예전에는 그 **하루짜리 교차 하나**가
-    45일간 최강 신호를 켰다. 실측하면 전 구간의 18.6%가 recovery 였다 —
-    '항복의 끝'이라는 이름과 맞지 않는다. 직전 항복이 실제로 이어졌을 때만
-    인정한다(HASH_MIN_CAPITULATION).
-    """
-    # 30일선이 60일선 아래로 아주 잠깐만 내려갔다가 곧장 회복하는 모양
-    values = ([100.0 + i for i in range(150)]
-              + [250.0 - 9.0 * i for i in range(4)]     # 짧은 하락 — 스치듯 교차
-              + [220.0 + 6.0 * i for i in range(45)])
-    assert ind.hash_ribbons(hashrate_from(values)).value != "recovery"
+    두 이동평균이 서로를 자주 스치는데, 예전에는 그 **짧은 교차 하나**가 45일간
+    최강 신호를 켰다. 실측하면 전 구간의 18.6%가 recovery 였다 — '항복의 끝'
+    이라는 이름과 맞지 않는다. 직전 항복이 실제로 이어졌을 때만 인정한다.
 
-    # 반면 충분히 이어진 항복 뒤의 재돌파는 여전히 recovery 여야 한다
-    # (위의 test_hash_ribbons_detects_recovery_after_capitulation 이 그 경우다)
-    assert ind.HASH_MIN_CAPITULATION >= 5, "임계가 사실상 꺼지면 이 방어가 무의미하다"
+    **이 픽스처는 임계를 실제로 지킨다.** 처음 쓴 테스트는 항복 구간에 아예
+    들어가지도 않아서 HASH_MIN_CAPITULATION 을 0 으로 낮춰도 그대로 통과했다
+    (적대적 검증이 잡았다). 아래 두 경우는 임계를 끄면 판정이 갈린다 —
+    하락 12일은 항복이 2관측뿐이라 normal, 끄면 recovery 가 된다.
+    """
+    short = ind.hash_ribbons(_dip_then_recover(12))   # 항복 2관측 (< 임계)
+    long_ = ind.hash_ribbons(_dip_then_recover(14))   # 항복 17관측 (≥ 임계)
+    assert short.value != "recovery", "짧게 스친 교차가 최강 신호를 켰습니다"
+    assert long_.value == "recovery", "충분히 이어진 항복 뒤의 재돌파는 회복이어야 합니다"
+
+
+def test_the_site_and_the_engine_use_one_hash_ribbons_rule():
+    """규칙이 두 벌이면 반드시 갈라진다 — 실제로 갈라졌다.
+
+    엔진(indicators.hash_ribbons)에만 항복 길이 조건을 넣었더니, 사이트를 만드는
+    쪽(export_viz → backtest.hash_ribbon_states)은 옛 규칙 그대로여서 화면에는
+    고치기 전 신호가 계속 나갔다. 실측 6,353일 중 328일이 엇갈렸다. 두 경로가
+    같은 구현을 쓰는지 여기서 못 박는다.
+    """
+    import backtest as bt          # conftest 가 tools/ 를 경로에 넣는다
+
+    for dip in (12, 14, 30):
+        h = _dip_then_recover(dip)
+        series_last = [v for v in bt.hash_ribbon_states(h).values if v is not None][-1]
+        assert series_last == ind.hash_ribbons(h).value, f"dip={dip} 에서 두 경로가 갈립니다"
 
 
 def test_hash_ribbons_expansion_on_sustained_acceleration():

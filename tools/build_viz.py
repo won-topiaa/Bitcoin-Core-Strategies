@@ -23,6 +23,7 @@ import argparse
 import json
 import sys
 from datetime import date
+from functools import lru_cache
 from pathlib import Path
 from typing import Optional
 
@@ -32,6 +33,7 @@ sys.path.insert(0, str(ROOT / "tools"))
 
 import export_viz  # noqa: E402
 import inject_news  # noqa: E402  # 뉴스 데이터 주입 — 이스케이프 규칙을 한 곳에 둔다
+import site_stale  # noqa: E402  # 소스 SHA 표식 — 굽는 쪽과 감시자가 같은 정의를 쓴다
 
 from btc_core.config import load_config  # noqa: E402
 
@@ -142,6 +144,12 @@ def _read(rel: str) -> str:
     return p.read_text(encoding="utf-8")
 
 
+@lru_cache(maxsize=1)
+def _source_sha() -> Optional[str]:
+    """이번 굽기의 소스 SHA. 페이지마다 git 을 부르지 않도록 한 번만 읽는다."""
+    return site_stale.source_sha()
+
+
 PLACEHOLDERS = ("__INDEX_URL__", "__VERIFY_URL__", "__RULES_URL__",
                 "__LIQUIDITY_URL__", "__RELATION_URL__", "__NEWS_URL__",
                 "__TITLE__", "__NAV__", "__PAGE__")
@@ -177,6 +185,12 @@ def _bake(body_rel: str, page_key: str, title: str, extra_script: Optional[str],
     replaced = inject_news.replace_region(page, news_js)
     if replaced is not None:
         page = replaced
+    # **어떤 소스로 구웠는지**를 맨 끝에 찍는다. 감시자(tools/site_stale.py)가
+    # 이걸 현재 소스 SHA 와 비교해 '고쳤는데 안 구운' 상태를 잡는다. 커밋 시각
+    # 비교로는 못 잡는다 — 뉴스 커밋이 viz/site 를 건드려 검사를 덮어 버리고,
+    # 같은 날 재빌드는 바이트가 같아 커밋 자체가 안 생긴다. SHA 를 찍으면
+    # 소스만 바뀐 재빌드도 결과가 반드시 달라져 커밋이 남는다.
+    page = page.rstrip("\n") + "\n" + site_stale.stamp_line(_source_sha()) + "\n"
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(page, encoding="utf-8")
     return out

@@ -31,8 +31,9 @@ from btc_core.datasources.csv_source import load_csv_bundle
 from btc_core.datasources.derive import backfill_bundle   # noqa: E402
 from btc_core.indicators import (                             # noqa: E402
     ACTIVE_ADDR_WINDOW,
-    GRM_BASE, HASH_EXPANSION_RATIO, HASH_FAST, HASH_RECOVERY_WINDOW, HASH_SLOW,
+    GRM_BASE, HASH_FAST, HASH_SLOW,
     MA_2Y, MA_200W, PI_FAST, PI_SLOW, PUELL_WINDOW,
+    hash_ribbon_walk,
 )
 from btc_core.models import Reading                           # noqa: E402
 from btc_core.score import compute_bcs, evaluate_consensus, score_indicator  # noqa: E402
@@ -123,29 +124,18 @@ def build_indicator_series(market) -> dict[str, Series]:
 
 
 def hash_ribbon_states(hashrate: Series) -> Series:
-    """Hash Ribbons 상태를 시계열로. 문자열을 값으로 담는다."""
-    fast, slow = sma(hashrate, HASH_FAST), sma(hashrate, HASH_SLOW)
-    states: list[Optional[str]] = []
-    last_cross: Optional[date] = None
-    prev: Optional[tuple[float, float]] = None
+    """Hash Ribbons 상태를 시계열로. 문자열을 값으로 담는다.
 
-    for d, f, s in zip(fast.dates, fast.values, slow.values):
-        if f is None or s is None:
-            states.append(None)
-            continue
-        if prev is not None and prev[0] < prev[1] and f >= s:
-            last_cross = d
-        prev = (f, s)
-
-        if f < s:
-            states.append("capitulation")
-        elif last_cross is not None and (d - last_cross).days <= HASH_RECOVERY_WINDOW:
-            states.append("recovery")
-        elif s and f / s >= HASH_EXPANSION_RATIO:
-            states.append("expansion")
-        else:
-            states.append("normal")
-    return Series(fast.dates, tuple(states), "hash_ribbons")
+    **규칙을 여기서 다시 쓰지 않는다.** 예전에는 이 함수가 자기만의 사본을
+    들고 있었고, 엔진 쪽(indicators.hash_ribbons)에만 '항복이 충분히 이어졌어야
+    회복'이라는 조건이 들어가면서 둘이 갈라졌다. 그런데 **사이트를 만드는 것은
+    이쪽**(export_viz → build_indicator_series)이라, 고쳤다고 적어 둔 규칙이
+    화면에는 반영되지 않았다 — 6,353일 중 328일이 엇갈렸고 BCS 가 최대 13.5점
+    벌어졌다. 이제 한 구현(indicators.hash_ribbon_walk)을 두 경로가 함께 쓴다.
+    """
+    walk = {d: st for d, st, _, _ in hash_ribbon_walk(hashrate)}
+    fast = sma(hashrate, HASH_FAST)
+    return Series(fast.dates, tuple(walk.get(d) for d in fast.dates), "hash_ribbons")
 
 
 # ---------------------------------------------------------------------------

@@ -11,21 +11,33 @@
 # 것이다. 원인을 막는 것만으로는 다음 번 새로운 원인을 못 막는다. 그래서 원인이
 # 무엇이든 **결과를 보고 되살리는** 감시자를 둔다.
 #
+# 무엇을 '결과'로 보는가 — 네 가지를 본다. 앞의 셋은 저장소 안의 결과이고,
+# 마지막 하나는 **사람이 실제로 보는 주소**다. 배포만 깨졌을 때 저장소만 보면
+# 전부 멀쩡해 보이기 때문이다.
+#
+#   1) 구운 페이지의 기준일이 너무 오래됐나        (데이터가 멈춤)
+#   2) 구운 페이지의 소스 SHA 가 지금 소스와 다른가  (고쳤는데 안 구움)
+#   3) 마지막으로 **성공한** 정기 갱신이 26시간을 넘었나 (실행 자체가 실패)
+#   4) 배포된 페이지의 기준일이 저장소 것과 다른가   (구웠는데 배포 실패)
+#
 # 판정은 tools/site_stale.py 가 하고(tests/test_site_stale.py 가 경계를 지킨다),
 # 여기서는 그 판정에 따라 '데이터 갱신'을 부르기만 한다.
 name: 갱신 감시
 
 on:
   schedule:
-    # 3시간마다. 매일 02:20 UTC 정기 갱신이 실패하거나 유실돼도 늦어도 3시간 안에
-    # 되살아난다. 정상일 때는 30초짜리 검사만 돌고 끝난다.
+    # 3시간마다. 정기 갱신(02:20 UTC)이 실패하거나 유실되면 3)번 검사가 그날
+    # 안에 잡아내므로, 되살리기까지 걸리는 시간은 최대 3시간이다. 예전 주석은
+    # "3시간 안에 되살아난다"고만 적었는데, 그때는 데이터가 사흘 낡기 전까지
+    # 아무것도 안 울려서 실제로는 사흘이 걸릴 수 있었다.
     - cron: "40 */3 * * *"
   workflow_dispatch:
 
 permissions:
   contents: read
-  actions: write     # 뒤처졌을 때 '데이터 갱신'을 부른다
+  actions: write     # 뒤처졌을 때 '데이터 갱신'을 부르고, 그 이력을 읽는다
   issues: write      # 되살리기까지 실패하면 사람을 부른다
+  pages: read        # 배포된 주소를 확인한다
 
 concurrency:
   group: watchdog
@@ -35,8 +47,10 @@ jobs:
   check:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      # 소스와 viz/site 의 마지막 커밋 시각을 비교하므로 전체 이력이 필요하다.
+      # 소스 SHA 를 계산하므로 전체 이력이 필요하다.
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
@@ -45,43 +59,124 @@ jobs:
         with:
           python-version: "3.11"
 
+      # 마지막으로 **성공한** 정기 갱신 시각. 실패한 실행은 세지 않는다 —
+      # "돌긴 돌았다"가 아니라 "결과가 나왔다"를 보는 게 이 감시자의 요점이다.
+      - name: 마지막 성공한 갱신 찾기
+        id: last
+        run: |
+          TS=$(gh run list --workflow refresh-data.yml --status success \
+                 --limit 1 --json updatedAt --jq '.[0].updatedAt' 2>/dev/null || true)
+          if [ -n "$TS" ]; then
+            EPOCH=$(date -u -d "$TS" +%s)
+            echo "마지막 성공: $TS"
+          else
+            EPOCH=""
+            echo "성공한 갱신 기록을 찾지 못했습니다"
+          fi
+          echo "epoch=$EPOCH" >> "$GITHUB_OUTPUT"
+
       - name: 뒤처졌는지 판정
         id: check
         run: |
           ASOF=$(python3 tools/site_asof.py viz/site/index.html || true)
           echo "구운 페이지 기준일: ${ASOF:-읽지 못함}"
-          if python3 tools/site_stale.py --asof "$ASOF"; then
+          ARGS=(--asof "$ASOF" --site viz/site/index.html)
+          if [ -n "${{ steps.last.outputs.epoch }}" ]; then
+            ARGS+=(--last-refresh "${{ steps.last.outputs.epoch }}")
+          else
+            echo "※ 갱신 이력을 못 읽어 3)번 검사는 건너뜁니다."
+          fi
+          if python3 tools/site_stale.py "${ARGS[@]}"; then
             echo "stale=false" >> "$GITHUB_OUTPUT"
           else
             echo "stale=true" >> "$GITHUB_OUTPUT"
           fi
 
+      # 4) 배포된 페이지도 본다. 저장소는 최신인데 Pages 배포만 실패한 경우는
+      #    위 셋으로 절대 안 잡힌다 — 사람이 보는 것은 이쪽이다.
+      - name: 배포된 페이지 확인
+        id: live
+        continue-on-error: true
+        run: |
+          URL=$(gh api "repos/${GITHUB_REPOSITORY}/pages" --jq .html_url 2>/dev/null || true)
+          if [ -z "$URL" ]; then
+            echo "Pages 주소를 읽지 못했습니다 — 이 검사는 건너뜁니다."
+            echo "drift=false" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          echo "배포 주소: $URL"
+          OK=""
+          for i in 1 2 3; do
+            if curl -fsSL --max-time 30 "${URL%/}/index.html" -o /tmp/live.html; then OK=1; break; fi
+            sleep $((i * 5))
+          done
+          if [ -z "$OK" ]; then
+            echo "배포된 페이지를 세 번 다 받지 못했습니다 — 뒤처짐으로 봅니다."
+            echo "drift=true" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          LIVE=$(python3 tools/site_asof.py /tmp/live.html || true)
+          REPO=$(python3 tools/site_asof.py viz/site/index.html || true)
+          echo "배포 기준일: ${LIVE:-읽지 못함} · 저장소 기준일: ${REPO:-읽지 못함}"
+          if [ -n "$LIVE" ] && [ "$LIVE" = "$REPO" ]; then
+            echo "drift=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "배포된 페이지가 저장소와 다릅니다 — 배포가 밀렸습니다."
+            echo "drift=true" >> "$GITHUB_OUTPUT"
+          fi
+
       # 뒤처졌으면 '데이터 갱신'을 부른다. 그 워크플로가 최신 데이터로 다시 굽고
       # 커밋하며, 배포(pages.yml)는 거기에 workflow_run 으로 이어 붙는다.
       - name: 되살리기 — 데이터 갱신 호출
-        if: steps.check.outputs.stale == 'true'
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        if: steps.check.outputs.stale == 'true' || steps.live.outputs.drift == 'true'
         run: |
           echo "뒤처짐을 확인했습니다 — 데이터 갱신을 부릅니다."
           gh workflow run refresh-data.yml --ref "${GITHUB_REF_NAME}"
 
-      # 되살리기를 시도했다는 사실 자체를 남긴다. 매번 뒤처져 있다면 되살리기가
-      # 듣지 않는다는 뜻이고, 그건 사람이 봐야 한다.
-      - name: 되살리기 실패 시 알림
-        if: failure()
+      # **되살리기가 듣지 않는 경우**를 잡는다. 아직 뒤처져 있는데 정기 갱신이
+      # 방금(3시간 안에) 성공했다면, 앞선 감시가 부른 되살리기가 성공적으로
+      # 돌고도 상태를 못 고쳤다는 뜻이다. 그건 사람이 봐야 한다.
+      #
+      # 예전에는 이 알림이 `if: failure()` 였는데, 뒤처짐은 스텝을 실패시키지
+      # 않으므로(if/else 로 흡수한다) **영원히 울리지 않는 알림**이었다.
+      - name: 되살리기가 듣지 않으면 알림
+        id: verdict
+        if: always()
+        env:
+          STALE: ${{ steps.check.outputs.stale }}
+          DRIFT: ${{ steps.live.outputs.drift }}
+          LAST: ${{ steps.last.outputs.epoch }}
+          FAILED: ${{ job.status == 'failure' }}
+        run: |
+          NOTIFY=no; WHY=""
+          if [ "$FAILED" = "true" ]; then
+            NOTIFY=yes; WHY="감시 자체가 실패했습니다 (되살리기 호출이 막혔을 수 있습니다)."
+          elif { [ "$STALE" = "true" ] || [ "$DRIFT" = "true" ]; } && [ -n "$LAST" ]; then
+            AGE=$(( $(date -u +%s) - LAST ))
+            if [ "$AGE" -lt 10800 ]; then
+              NOTIFY=yes
+              WHY="정기 갱신이 $((AGE / 60))분 전에 **성공**했는데도 여전히 뒤처져 있습니다 — 되살리기가 상태를 고치지 못합니다."
+            fi
+          fi
+          echo "notify=$NOTIFY" >> "$GITHUB_OUTPUT"
+          echo "why=$WHY" >> "$GITHUB_OUTPUT"
+          echo "알림 필요: $NOTIFY $WHY"
+
+      - name: 이슈 열기 / 덧붙이기
+        if: always() && steps.verdict.outputs.notify == 'yes'
         uses: actions/github-script@v7
         with:
           script: |
-            const title = '⚠️ 자동 갱신 감시 — 되살리기 실패';
+            const title = '⚠️ 자동 갱신 감시 — 되살리기가 듣지 않습니다';
             const runUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
             const body = [
-              '갱신이 뒤처진 것을 확인했지만 **되살리기까지 실패**했습니다.',
+              process.env.WHY || '갱신이 뒤처진 것을 확인했습니다.',
               '',
               `- 실행 로그: ${runUrl}`,
               '',
-              '`python3 tools/site_stale.py --asof "$(python3 tools/site_asof.py viz/site/index.html)"`',
-              '를 로컬에서 돌리면 무엇이 뒤처졌는지 같은 판정을 볼 수 있습니다.',
+              '로컬에서 같은 판정을 보려면:',
+              '',
+              '```bash',
+              'python3 tools/site_stale.py --asof "$(python3 tools/site_asof.py viz/site/index.html)"',
+              '```',
             ].join('\n');
             const found = await github.rest.search.issuesAndPullRequests({
               q: `repo:${context.repo.owner}/${context.repo.repo} is:issue is:open in:title ${JSON.stringify(title)}`,
@@ -97,3 +192,5 @@ jobs:
                 owner: context.repo.owner, repo: context.repo.repo, title, body,
               });
             }
+        env:
+          WHY: ${{ steps.verdict.outputs.why }}

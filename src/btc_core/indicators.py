@@ -511,56 +511,66 @@ def puell_multiple(
     return IndicatorValue("puell", None, price.last_date, note="1460일 평균 산출 불가")
 
 
-def hash_ribbons(hashrate: Optional[Series]) -> IndicatorValue:
-    """해시레이트 30일선과 60일선의 관계를 상태로 환원한다.
+def hash_ribbon_walk(hashrate: Optional[Series]) -> list[tuple[date, str, float, float]]:
+    """해시레이트를 하루씩 걸으며 상태를 정한다 — **이 규칙의 유일한 구현.**
 
     - capitulation: 30일선 < 60일선 (채굴자가 장비를 끄는 중)
-    - recovery:     재돌파 후 45일 이내 (원문 4.4 가 말하는 '항복의 끝')
+    - recovery:     충분히 이어진 항복 뒤의 재돌파, 그로부터 45일 이내
+                    (원문 4.4 가 말하는 '항복의 끝')
     - expansion:    30일선이 60일선을 8% 이상 초과
     - normal:       그 외
+
+    **왜 함수 하나로 합쳤나.** 예전에는 이 규칙이 두 벌 있었다 — 여기(현재값
+    한 점)와 tools/backtest.py(시계열 전체). 그래서 여기에만 항복 길이 조건을
+    넣었더니, 사이트를 만드는 쪽(export_viz → backtest)은 옛 규칙 그대로여서
+    **화면에는 고치기 전 신호가 계속 나갔다.** 실측으로 6,353일 중 328일이
+    엇갈렸고 BCS 가 최대 13.5점 벌어졌다. 규칙이 두 벌이면 반드시 갈라진다.
+
+    돌려주는 것은 (날짜, 상태, 30일선, 60일선) 목록이고, 이동평균이 아직 없는
+    앞부분은 아예 빠진다. 현재값만 필요하면 마지막 원소를 쓴다.
     """
     if hashrate is None or len(hashrate) < HASH_SLOW:
-        return IndicatorValue("hash_ribbons", None, None, note="해시레이트 데이터 부족")
+        return []
+    fast, slow = sma(hashrate, HASH_FAST), sma(hashrate, HASH_SLOW)
 
-    fast = sma(hashrate, HASH_FAST)
-    slow = sma(hashrate, HASH_SLOW)
+    out: list[tuple[date, str, float, float]] = []
+    cap_run = 0           # 지금 이어지고 있는 항복 관측 수
+    cap_before_cross = 0  # 마지막 상향 교차 **직전** 항복이 몇 관측이었나
+    last_cross: Optional[date] = None
+    prev_below: Optional[bool] = None
 
-    pairs = [
-        (d, f, s)
-        for d, f, s in zip(fast.dates, fast.values, slow.values)
-        if f is not None and s is not None
-    ]
-    if not pairs:
-        return IndicatorValue("hash_ribbons", None, hashrate.last_date, note="이동평균 산출 불가")
-
-    last_date, f_last, s_last = pairs[-1]
-
-    if f_last < s_last:
-        state = "capitulation"
-    else:
-        # 마지막 상향 교차 시점과, **그 직전 항복이 며칠이었는지**를 함께 본다.
-        # 스치듯 하루 교차한 것까지 '항복의 끝'으로 세면 최강 신호가 남발된다.
-        days_since_cross: Optional[int] = None
-        capitulation_days = 0
-        for i in range(len(pairs) - 1, 0, -1):
-            prev_f, prev_s = pairs[i - 1][1], pairs[i - 1][2]
-            cur_f, cur_s = pairs[i][1], pairs[i][2]
-            if prev_f < prev_s and cur_f >= cur_s:
-                days_since_cross = (last_date - pairs[i][0]).days
-                k = i - 1
-                while k >= 0 and pairs[k][1] < pairs[k][2]:
-                    capitulation_days += 1
-                    k -= 1
-                break
-        if (days_since_cross is not None
-                and days_since_cross <= HASH_RECOVERY_WINDOW
-                and capitulation_days >= HASH_MIN_CAPITULATION):
-            state = "recovery"
-        elif s_last and f_last / s_last >= HASH_EXPANSION_RATIO:
-            state = "expansion"
+    for d, f, s in zip(fast.dates, fast.values, slow.values):
+        if f is None or s is None:
+            continue
+        below = f < s
+        if below:
+            cap_run += 1
+            state = "capitulation"
         else:
-            state = "normal"
+            if prev_below:                    # 방금 위로 뚫었다
+                last_cross = d
+                cap_before_cross = cap_run
+            cap_run = 0
+            within = last_cross is not None and (d - last_cross).days <= HASH_RECOVERY_WINDOW
+            if within and cap_before_cross >= HASH_MIN_CAPITULATION:
+                state = "recovery"
+            elif s and f / s >= HASH_EXPANSION_RATIO:
+                state = "expansion"
+            else:
+                state = "normal"
+        prev_below = below
+        out.append((d, state, f, s))
+    return out
 
+
+def hash_ribbons(hashrate: Optional[Series]) -> IndicatorValue:
+    """현재의 Hash Ribbons 상태. 규칙은 hash_ribbon_walk 하나가 소유한다."""
+    if hashrate is None or len(hashrate) < HASH_SLOW:
+        return IndicatorValue("hash_ribbons", None, None, note="해시레이트 데이터 부족")
+    walk = hash_ribbon_walk(hashrate)
+    if not walk:
+        return IndicatorValue("hash_ribbons", None, hashrate.last_date, note="이동평균 산출 불가")
+    last_date, state, f_last, s_last = walk[-1]
     return IndicatorValue(
         "hash_ribbons", state, last_date,
         detail={"ma30": f_last, "ma60": s_last, "ratio": f_last / s_last if s_last else None},

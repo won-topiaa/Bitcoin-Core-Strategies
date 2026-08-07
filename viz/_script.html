@@ -83,7 +83,8 @@ ko: {
   ttRange: "BCS 구간", ttPoint: "대표값", ttBand: "구간", ttPrice: "가격",
   ttGate: "둘 이상 동의", gatePass: "충족", gateFail: "미달",
   histCap: (n, med, mean) =>
-    `점 ${n}개로 그렸습니다 (주 1회, 전환점 주변과 최근 400일은 하루 단위). ` +
+    `지금 보이는 구간을 점 ${n}개로 그렸습니다 ` +
+    `(계열 자체는 주 1회로 뽑되, 전환점 주변과 최근 400일은 하루 단위입니다). ` +
     `띠의 폭은 ${YRS}년 전체에서 보통 ${med}점, 평균 ${mean}점입니다. ` +
     `띠가 유난히 두꺼운 구간은 지표들이 서로 다른 이야기를 하던 때이고, ` +
     `얇은 구간은 아홉 개가 한목소리를 내던 때입니다.`,
@@ -270,7 +271,8 @@ en: {
   ttRange: "BCS range", ttPoint: "headline", ttBand: "band", ttPrice: "price",
   ttGate: "two agree", gatePass: "met", gateFail: "not met",
   histCap: (n, med, mean) =>
-    `Drawn from ${n} points (weekly, daily around turning points and for the last 400 days). ` +
+    `Drawn from ${n} points over the range shown ` +
+    `(the series itself is sampled weekly, and daily around turning points and for the last 400 days). ` +
     `Across the ${YRS} years the band is typically ${med} points wide, ${mean} on average. ` +
     `Stretches where it is unusually thick are where the indicators disagreed; ` +
     `thin stretches are where the nine spoke with one voice.`,
