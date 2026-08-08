@@ -1,5 +1,5 @@
 {
- "fetched": "2026-08-08T19:16:03+00:00",
+ "fetched": "2026-08-08T22:01:51+00:00",
  "sources_ok": [
   "CoinDesk",
   "Cointelegraph",
@@ -14,7 +14,7 @@
    "source": "Cointelegraph",
    "published": "2026-08-08T16:20:17+00:00",
    "summary": "The spot Bitcoin exchange-traded funds registered their third-strongest showing since October as institutional demand showed signs of renewed momentum.",
-   "score": 2.8757
+   "score": 2.7632
   },
   {
    "title": "Bitcoin Shrugs off Coldcard Hack and Clarity Act Delays, Price Chops Higher as Investors Buy ETFs",
@@ -22,7 +22,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-07T16:29:44+00:00",
    "summary": "Bitcoin Magazine Bitcoin Shrugs off Coldcard Hack and Clarity Act Delays, Price Chops Higher as Investors Buy ETFs The Bitcoin price seems unfazed by recent negative news. This post Bitcoin Shrugs off Coldcard Hack and Clarity Act Delays, Price Chops Higher as Investors Buy ETFs…",
-   "score": 2.7174
+   "score": 2.6111
   },
   {
    "title": "Bitcoin whales load up on $1.2 billion in BTC as ETFs attract $750 million",
@@ -30,7 +30,7 @@
    "source": "CoinDesk",
    "published": "2026-08-07T05:45:21+00:00",
    "summary": "",
-   "score": 2.2107
+   "score": 2.1242
   },
   {
    "title": "Bitcoin ETFs Add Nearly $800 Million in the Wake of Coldcard Exploit",
@@ -38,7 +38,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-07T16:00:50+00:00",
    "summary": "Bitcoin Magazine Bitcoin ETFs Add Nearly $800 Million in the Wake of Coldcard Exploit One of the biggest Bitcoin security stories of the year unfolded last week as a firmware exploit affecting certain Coldcard hardware wallets renewed industry debate around self-custody and oper…",
-   "score": 2.1589
+   "score": 2.0744
   },
   {
    "title": "Bitcoin ETF inflows surge after Coldcard hack, but link is unclear: Bloomberg analyst",
@@ -46,7 +46,7 @@
    "source": "Cointelegraph",
    "published": "2026-08-06T18:17:57+00:00",
    "summary": "A week-long streak of inflows into US spot Bitcoin ETFs has coincided with the Coldcard wallet exploit, fueling debate over whether some investors are shifting away from self-custody.",
-   "score": 1.8933
+   "score": 1.8193
   },
   {
    "title": "Bitcoin ETF Inflows Surge Following $130M Coldcard Hack",
@@ -54,7 +54,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-06T15:44:39+00:00",
    "summary": "Bitcoin Magazine Bitcoin ETF Inflows Surge Following $130M Coldcard Hack Could investors be moving their funds from cold storage to exchange-traded funds managed by the likes of BlackRock following the massive Coldcard exploit? This post Bitcoin ETF Inflows Surge Following $130M…",
-   "score": 1.4598
+   "score": 1.4027
   },
   {
    "title": "Here’s what happened in crypto today",
@@ -62,7 +62,7 @@
    "source": "Cointelegraph",
    "published": "2026-08-08T17:19:56+00:00",
    "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
-   "score": 1.3692
+   "score": 1.3156
   },
   {
    "title": "Another Bitcoin infrastructure exploit hits, this time draining Lightning payment servers",
@@ -70,7 +70,15 @@
    "source": "CoinDesk",
    "published": "2026-08-08T07:46:04+00:00",
    "summary": "",
-   "score": 1.3552
+   "score": 1.3022
+  },
+  {
+   "title": "Bitcoin’s BIP-110 enters mandatory signaling with miner support below 3%",
+   "url": "https://cointelegraph.com/news/bitcoin-bip-110-mandatory-signaling?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-08-08T21:17:08+00:00",
+   "summary": "The deployment milestone tests whether enforcing nodes can sustain the change amid limited miner signaling and discussion of a hard-fork fallback.",
+   "score": 1.013
   },
   {
    "title": "Bitcoin Tests Market’s Patience as Zcash Gives Holders Hope: Analysis",
@@ -78,15 +86,7 @@
    "source": "Decrypt",
    "published": "2026-08-05T18:33:34+00:00",
    "summary": "Will Bitcoin breakout of its death cross? Can Zcash continue to make holders forget about that mid-June crash? Here’s what the charts say.",
-   "score": 0.9799
-  },
-  {
-   "title": "Bitcoin price tags $65.3K August high as low US jobs numbers cool Fed rate bets",
-   "url": "https://cointelegraph.com/markets/bitcoin-price-tags-653k-august-high-as-low-us-jobs-numbers-cool-fed-rate-bets?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-08-07T15:23:15+00:00",
-   "summary": "Bitcoin hit month-to-date highs above $65,000 as risk-assets gained on low US nonfarm payrolls data.",
-   "score": 0.8558
+   "score": 0.9415
   },
   {
    "title": "Why Bitcoin's BIP-110 refuses to die despite near-zero miner support",
@@ -94,7 +94,7 @@
    "source": "CoinDesk",
    "published": "2026-08-07T11:45:49+00:00",
    "summary": "",
-   "score": 0.8121
+   "score": 0.7804
   },
   {
    "title": "Bitcoin Red Team Says AI Is Finding Critical Exploits Across Core Projects",
@@ -102,7 +102,7 @@
    "source": "Decrypt",
    "published": "2026-08-08T17:31:03+00:00",
    "summary": "A volunteer security effort says it has scanned 150 Bitcoin repositories, disclosed more than a dozen vulnerabilities, and is building an open-source AI platform to automate software security reviews.",
-   "score": 0.78
+   "score": 0.7495
   },
   {
    "title": "Coldcard Bitcoin Hack: Victims Report Median Loss of 1 BTC as Theft Tops $111 Million",
@@ -110,7 +110,15 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-07T18:02:38+00:00",
    "summary": "Bitcoin Magazine Coldcard Bitcoin Hack: Victims Report Median Loss of 1 BTC as Theft Tops $111 Million The amount of Bitcoin stolen has been confirmed at $111 million, but is likely much higher — and could stand at over $130 million. This post Coldcard Bitcoin Hack: Victims Repo…",
-   "score": 0.7114
+   "score": 0.6836
+  },
+  {
+   "title": "Bitcoin price tags $65.3K August high as low US jobs numbers cool Fed rate bets",
+   "url": "https://cointelegraph.com/markets/bitcoin-price-tags-653k-august-high-as-low-us-jobs-numbers-cool-fed-rate-bets?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-08-07T15:23:15+00:00",
+   "summary": "Bitcoin hit month-to-date highs above $65,000 as risk-assets gained on low US nonfarm payrolls data.",
+   "score": 0.6578
   },
   {
    "title": "XRP, Bitcoin Whales Are Accumulating—Is the Bear Market Nearly Over?",
@@ -118,7 +126,7 @@
    "source": "Decrypt",
    "published": "2026-08-06T18:13:40+00:00",
    "summary": "On-chain data shows big holders quietly buying XRP near $1, yet the daily chart is still trapped below a death cross.",
-   "score": 0.5674
+   "score": 0.5452
   },
   {
    "title": "Coldcard fallout shows up onchain as 210,000 bitcoin leaves old wallets",
@@ -126,15 +134,7 @@
    "source": "CoinDesk",
    "published": "2026-08-07T09:24:00+00:00",
    "summary": "",
-   "score": 0.5651
-  },
-  {
-   "title": "Bitcoin ETFs pull in $244M, 3-day inflow streak tops $626M",
-   "url": "https://cointelegraph.com/markets/bitcoin-etf-244-million-three-day-inflow-streak-626-million?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-08-06T06:57:31+00:00",
-   "summary": "US-listed Bitcoin ETFs attracted $244.4 million on Wednesday, marking three consecutive inflow days for a combined $626 million.",
-   "score": 0.5143
+   "score": 0.543
   },
   {
    "title": "Live updates: 'This can't last forever': Mulling bitcoin's lame price action as risk markets rally",
@@ -142,7 +142,7 @@
    "source": "CoinDesk",
    "published": "2026-08-07T07:44:57+00:00",
    "summary": "",
-   "score": 0.4414
+   "score": 0.4242
   },
   {
    "title": "Bitcoin Treasury Firm Strategy Pledges $250 a Year to Employee Trump Accounts",
@@ -150,15 +150,15 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-05T13:57:09+00:00",
    "summary": "Bitcoin Magazine Bitcoin Treasury Firm Strategy Pledges $250 a Year to Employee Trump Accounts Bitcoin treasury company Strategy has said it will contribute to Trump Accounts for the children of its U.S. employees, becoming the latest major public company to layer corporate mone…",
-   "score": 0.4158
+   "score": 0.3995
   },
   {
-   "title": "Bitcoin ETFs log inflows as cold wallet hack reignites custody debate",
-   "url": "https://cointelegraph.com/markets/bitcoin-etfs-inflows-cold-wallet-hack-custody-debate?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "title": "Bitcoin ETFs pull in $244M, 3-day inflow streak tops $626M",
+   "url": "https://cointelegraph.com/markets/bitcoin-etf-244-million-three-day-inflow-streak-626-million?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
    "source": "Cointelegraph",
-   "published": "2026-08-05T10:43:05+00:00",
-   "summary": "US spot Bitcoin ETFs drew $382 million in two-day inflows, with Galaxy’s Bitcoin ETF returning to gains as the Coldcard incident renewed custody concerns.",
-   "score": 0.4096
+   "published": "2026-08-06T06:57:31+00:00",
+   "summary": "US-listed Bitcoin ETFs attracted $244.4 million on Wednesday, marking three consecutive inflow days for a combined $626 million.",
+   "score": 0.3954
   },
   {
    "title": "Hashdex to Shut Down Bitcoin ETF After Struggling to Gain Assets",
@@ -166,7 +166,7 @@
    "source": "Decrypt",
    "published": "2026-08-04T16:43:46+00:00",
    "summary": "The Brazil-based crypto asset manager will liquidate its U.S. spot Bitcoin ETF later this month, ending a fund that entered the market in 2024.",
-   "score": 0.3702
+   "score": 0.3557
   },
   {
    "title": "Coldcard exploit could boost demand for regulated bitcoin exposure, analysts say",
@@ -174,7 +174,15 @@
    "source": "CoinDesk",
    "published": "2026-08-05T15:44:08+00:00",
    "summary": "",
-   "score": 0.3523
+   "score": 0.3385
+  },
+  {
+   "title": "Bitcoin ETFs log inflows as cold wallet hack reignites custody debate",
+   "url": "https://cointelegraph.com/markets/bitcoin-etfs-inflows-cold-wallet-hack-custody-debate?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-08-05T10:43:05+00:00",
+   "summary": "US spot Bitcoin ETFs drew $382 million in two-day inflows, with Galaxy’s Bitcoin ETF returning to gains as the Coldcard incident renewed custody concerns.",
+   "score": 0.3149
   },
   {
    "title": "The End of the Closed-Source Era Is at Hand: Obscurity Was Never Security",
@@ -182,15 +190,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-06T18:43:13+00:00",
    "summary": "Bitcoin Magazine The End of the Closed-Source Era Is at Hand: Obscurity Was Never Security The Coldcard hack is a preview. When machines can read what humans couldn't (or just didn't), closed source stops being a category. This post The End of the Closed-Source Era Is at Hand: O…",
-   "score": 0.3251
-  },
-  {
-   "title": "CleanSpark misses Wall Street revenue estimates as shares sink",
-   "url": "https://cointelegraph.com/news/cleanspark-wall-street-revenue-estimates-shares-sink?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-08-07T09:25:56+00:00",
-   "summary": "CleanSpark’s shares fell 5.5% on Thursday after the Bitcoin miner reported $138 million in quarterly revenue, narrowly missing Wall Street’s consensus estimate.",
-   "score": 0.3216
+   "score": 0.3124
   },
   {
    "title": "Bitcoin Payment Service BTCPay Warns Critical Flaw Is Under Active Attack",
@@ -198,7 +198,7 @@
    "source": "Decrypt",
    "published": "2026-08-07T20:00:34+00:00",
    "summary": "Bitcoin company BTCPay Server told users to install the latest version of the server and replace credentials that may have been exposed.",
-   "score": 0.2928
+   "score": 0.2813
   },
   {
    "title": "A bitcoin pattern taking shape right now could send prices soaring to $76,000",
@@ -206,7 +206,15 @@
    "source": "CoinDesk",
    "published": "2026-08-07T04:28:17+00:00",
    "summary": "",
-   "score": 0.2695
+   "score": 0.2589
+  },
+  {
+   "title": "CleanSpark misses Wall Street revenue estimates as shares sink",
+   "url": "https://cointelegraph.com/news/cleanspark-wall-street-revenue-estimates-shares-sink?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-08-07T09:25:56+00:00",
+   "summary": "CleanSpark’s shares fell 5.5% on Thursday after the Bitcoin miner reported $138 million in quarterly revenue, narrowly missing Wall Street’s consensus estimate.",
+   "score": 0.2472
   },
   {
    "title": "SEC Commissioner Hester ‘Crypto Mom’ Peirce Optimistic About Clarity Act",
@@ -214,15 +222,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-04T20:53:22+00:00",
    "summary": "Bitcoin Magazine SEC Commissioner Hester ‘Crypto Mom’ Peirce Optimistic About Clarity Act The regulator is hopeful the long-awaited crypto market structure bill will pass. This post SEC Commissioner Hester ‘Crypto Mom’ Peirce Optimistic About Clarity Act first appeared on Bitcoi…",
-   "score": 0.2482
-  },
-  {
-   "title": "Bitcoin treasury trade ‘breaking’ and fund holdings drop 10%: Analysis",
-   "url": "https://cointelegraph.com/markets/bitcoin-treasury-trade-breaking-and-fund-holdings-drop-10-analysis?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-08-06T11:48:37+00:00",
-   "summary": "Doubts emerge over the Bitcoin corporate treasury model as institutional BTC investment vehicles cut holdings.",
-   "score": 0.2354
+   "score": 0.2385
   },
   {
    "title": "Bitcoin Still in Death Cross as Jobs Miss Cuts Rate-Hike Odds",
@@ -230,23 +230,23 @@
    "source": "Decrypt",
    "published": "2026-08-07T16:07:12+00:00",
    "summary": "A soft July payrolls print pulled September rate-hike odds down. It gives investors in risk assets hope, but Bitcoin remains in bear territory.",
-   "score": 0.2214
+   "score": 0.2127
   },
   {
-   "title": "Trillions in institutional money to flow into bitcoin, says Bitwise's Matt Hougan",
-   "url": "https://www.coindesk.com/business/2026/08/08/trillions-in-institutional-money-to-flow-into-bitcoin-says-bitwise-s-matt-hougan",
+   "title": "Bitcoin hits block 961,632 as the controversial BIP-110 soft fork attempt begins",
+   "url": "https://www.coindesk.com/tech/2026/08/07/frame-bitcoin-s-bip-110-enters-mandatory-signaling-with-less-than-3-miner-support",
    "source": "CoinDesk",
-   "published": "2026-08-08T14:00:00+00:00",
+   "published": "2026-08-08T20:06:47+00:00",
    "summary": "",
-   "score": 0.1944
+   "score": 0.204
   },
   {
-   "title": "MARA swings to Q2 loss as Bitcoin’s slump masks higher output",
-   "url": "https://cointelegraph.com/markets/mara-swings-to-q2-loss-as-bitcoins-slump-masks-higher-output?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "title": "Bitcoin treasury trade ‘breaking’ and fund holdings drop 10%: Analysis",
+   "url": "https://cointelegraph.com/markets/bitcoin-treasury-trade-breaking-and-fund-holdings-drop-10-analysis?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
    "source": "Cointelegraph",
-   "published": "2026-08-07T02:17:07+00:00",
-   "summary": "Bitcoin miner MARA posted its highest quarterly Bitcoin production in over a year, but was overshadowed by a 28% decline in the average price of Bitcoin.",
-   "score": 0.1857
+   "published": "2026-08-06T11:48:37+00:00",
+   "summary": "Doubts emerge over the Bitcoin corporate treasury model as institutional BTC investment vehicles cut holdings.",
+   "score": 0.1809
   },
   {
    "title": "Bitcoin Wallet Dormant Since 2011 Moves Millions in BTC",
@@ -254,7 +254,7 @@
    "source": "Decrypt",
    "published": "2026-08-07T15:27:35+00:00",
    "summary": "A Bitcoin address that had stayed silent for 15 years just sent its coins out for the first time.",
-   "score": 0.1754
+   "score": 0.1686
   },
   {
    "title": "Russia Passes Law to Regulate Crypto Exchanges, Keeps Payment Ban in Place",
@@ -262,7 +262,23 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-05T17:39:39+00:00",
    "summary": "Bitcoin Magazine Russia Passes Law to Regulate Crypto Exchanges, Keeps Payment Ban in Place New crypto regulations have been signed into law. But citizens in the country won't be able to buy coffee with Bitcoin anytime soon. This post Russia Passes Law to Regulate Crypto Exchang…",
-   "score": 0.1594
+   "score": 0.1531
+  },
+  {
+   "title": "Trillions in institutional money to flow into bitcoin, says Bitwise's Matt Hougan",
+   "url": "https://www.coindesk.com/business/2026/08/08/trillions-in-institutional-money-to-flow-into-bitcoin-says-bitwise-s-matt-hougan",
+   "source": "CoinDesk",
+   "published": "2026-08-08T14:00:00+00:00",
+   "summary": "",
+   "score": 0.1494
+  },
+  {
+   "title": "MARA swings to Q2 loss as Bitcoin’s slump masks higher output",
+   "url": "https://cointelegraph.com/markets/mara-swings-to-q2-loss-as-bitcoins-slump-masks-higher-output?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-08-07T02:17:07+00:00",
+   "summary": "Bitcoin miner MARA posted its highest quarterly Bitcoin production in over a year, but was overshadowed by a 28% decline in the average price of Bitcoin.",
+   "score": 0.1427
   },
   {
    "title": "Morning Minute: MetaMask Hands AI Agents a Wallet",
@@ -270,23 +286,7 @@
    "source": "Decrypt",
    "published": "2026-08-07T12:00:35+00:00",
    "summary": "MetaMask's Agent Wallet lets AI agents trade crypto on their own. Plus, Bitcoin reclaims $65k despite the Clarity Act facing a new delay.",
-   "score": 0.1335
-  },
-  {
-   "title": "Bitcoin holders risk losing real BTC if they sell coins from BIP-110 fork, says developer",
-   "url": "https://www.coindesk.com/tech/2026/08/08/bitcoin-holders-risk-losing-real-btc-if-they-sell-coins-from-bip-110-fork-says-developer",
-   "source": "CoinDesk",
-   "published": "2026-08-08T02:30:00+00:00",
-   "summary": "",
-   "score": 0.1317
-  },
-  {
-   "title": "Bitcoin miners’ AI pivot loses Wall Street’s wow factor",
-   "url": "https://cointelegraph.com/news/bitcoin-miners-ai-infrastructure-deals-wall-street-reaction?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-08-06T16:42:33+00:00",
-   "summary": "New analysis finds AI infrastructure contracts are becoming larger and more profitable, but investors now demand stronger execution before rewarding bitcoin mining stocks.",
-   "score": 0.1293
+   "score": 0.1283
   },
   {
    "title": "Trump Media Pulls Back From Crypto Deals: Report",
@@ -294,7 +294,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-07T21:15:05+00:00",
    "summary": "Bitcoin Magazine Trump Media Pulls Back From Crypto Deals: Report Trump Media wants to focus on other business ventures, according to an Axios report. This post Trump Media Pulls Back From Crypto Deals: Report first appeared on Bitcoin Magazine and is written by Mathew Di Salvo .",
-   "score": 0.1221
+   "score": 0.1173
   },
   {
    "title": "Morning Minute: Saylor Sells Bitcoin Again",
@@ -302,15 +302,23 @@
    "source": "Decrypt",
    "published": "2026-08-04T12:33:21+00:00",
    "summary": "Strategy sold $104M in Bitcoin last week to help prop up STRC, a financial product they created to… help them buy more Bitcoin.",
-   "score": 0.1066
+   "score": 0.1024
   },
   {
-   "title": "Bitcoin will never fall below $60K again: Nansen founder",
-   "url": "https://cointelegraph.com/magazine/bitcoin-will-never-fall-below-60k-again-nansen-founder?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "title": "Bitcoin holders risk losing real BTC if they sell coins from BIP-110 fork, says developer",
+   "url": "https://www.coindesk.com/tech/2026/08/08/bitcoin-holders-risk-losing-real-btc-if-they-sell-coins-from-bip-110-fork-says-developer",
+   "source": "CoinDesk",
+   "published": "2026-08-08T02:30:00+00:00",
+   "summary": "",
+   "score": 0.1012
+  },
+  {
+   "title": "Bitcoin miners’ AI pivot loses Wall Street’s wow factor",
+   "url": "https://cointelegraph.com/news/bitcoin-miners-ai-infrastructure-deals-wall-street-reaction?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
    "source": "Cointelegraph",
-   "published": "2026-08-08T13:30:00+00:00",
-   "summary": "Crypto is growing up thanks to trading in real world assets, and Bitcoin will never dip below $60K again, says Nansen founder founder Alex Svanevik.",
-   "score": 0.0988
+   "published": "2026-08-06T16:42:33+00:00",
+   "summary": "New analysis finds AI infrastructure contracts are becoming larger and more profitable, but investors now demand stronger execution before rewarding bitcoin mining stocks.",
+   "score": 0.0994
   },
   {
    "title": "Senators Cynthia Lummis and Angela Alsobrooks Say Bipartisan Work on Clarity Act Continues Despite Delays",
@@ -318,15 +326,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-07T20:42:33+00:00",
    "summary": "Bitcoin Magazine Senators Cynthia Lummis and Angela Alsobrooks Say Bipartisan Work on Clarity Act Continues Despite Delays The long-awaited crypto Clarity Act bill has been stalled. Still, lawmakers from both parties say the fight isn't over. This post Senators Cynthia Lummis an…",
-   "score": 0.0969
-  },
-  {
-   "title": "First U.S. spot bitcoin ETF to close as inflows dwindle, investors chase AI returns",
-   "url": "https://www.coindesk.com/business/2026/08/04/first-u-s-spot-bitcoin-etf-to-close-as-inflows-dwindle-investors-chase-ai-returns",
-   "source": "CoinDesk",
-   "published": "2026-08-04T09:54:02+00:00",
-   "summary": "",
-   "score": 0.0879
+   "score": 0.0931
   }
  ]
 }
