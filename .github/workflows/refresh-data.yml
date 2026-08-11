@@ -47,6 +47,7 @@ on:
 permissions:
   contents: write
   issues: write   # 실패 시 조용히 멈추지 않도록 알림 이슈를 연다
+  actions: write  # 커밋한 뒤 배포(pages.yml)를 **직접** 부른다 — 아래 참고
 
 concurrency:
   group: refresh-data
@@ -66,7 +67,15 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
+      # ⚠️ fetch-depth: 0 이 **필수**다. 기본값(깊이 1)이면 이력에 커밋이 하나뿐이라
+      #    `git log -1 -- <경로>` 가 경로를 못 걸러 내고 tip 을 그대로 돌려준다. 그러면
+      #    tools/build_viz.py 가 페이지에 찍는 소스 SHA 가 '데이터 갱신' 커밋이 되고,
+      #    감시자(깊이 0)가 계산한 진짜 소스 SHA 와 **영원히** 어긋나 3시간마다
+      #    재빌드를 부르는 고리가 된다(실제로 16회 연속 돌았다).
+      #    tests/test_workflows.py 가 이 줄이 사라지지 않게 지킨다.
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-python@v5
         with:
@@ -146,10 +155,12 @@ jobs:
           fi
 
       - name: 커밋·푸시
+        id: commit
         if: ${{ inputs.dry_run != true }}
         run: |
           if git diff --quiet -- viz/site data/macro.csv data/stocks.csv data/news.json; then
             echo "바뀐 페이지가 없습니다."
+            echo "pushed=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
           git config user.name  "github-actions[bot]"
@@ -171,6 +182,7 @@ jobs:
           for i in 1 2 3 4 5 6; do
             if git push origin "HEAD:${GITHUB_REF_NAME}"; then
               echo "푸시 성공."
+              echo "pushed=true" >> "$GITHUB_OUTPUT"
               exit 0
             fi
             [ "$i" -eq 6 ] && break
@@ -181,6 +193,45 @@ jobs:
             sleep $((i * 3))
           done
           echo "::error::데이터 갱신 커밋을 원격에 밀지 못했습니다."
+          exit 1
+
+      # ⚠️ **배포를 직접 부른다.** pages.yml 은 workflow_run 으로도 이어 붙어 있지만,
+      #    그 경로는 이 실행이 schedule 로 시작했을 때만 작동한다. 감시자가
+      #    GITHUB_TOKEN 으로 부른 workflow_dispatch 실행은 완료돼도 workflow_run
+      #    이벤트를 내지 못한다 — 토큰이 낸 이벤트는 새 실행을 만들지 못한다는
+      #    규칙에서 workflow_dispatch/repository_dispatch 만 예외이기 때문이다.
+      #    실측으로 확인했다: dispatch 로 시작한 성공 실행 16건 중 배포로 이어진
+      #    것이 **0건**, schedule 은 1/1. 그동안 저장소에는 새 기준일이 들어와 있는데
+      #    화면은 옛것이었고, 감시자는 되살리기를 부르고도 결과를 못 바꿨다.
+      #    workflow_dispatch 는 그 규칙의 예외라 이 호출은 트리거 종류와 무관하게 뜬다.
+      #    tests/test_workflows.py 가 이 단계가 사라지지 않게 지킨다.
+      - name: 배포 호출 (workflow_run 에 기대지 않는다)
+        if: steps.commit.outputs.pushed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "커밋을 밀었습니다 — Pages 배포를 직접 부릅니다."
+          echo "STARTED=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_ENV"
+          gh workflow run pages.yml --ref "${GITHUB_REF_NAME}"
+
+      # 부른다고 **떴는지**까지 본다. 5차 사고가 바로 '불렀는데 안 떴다'였고,
+      # 그때 아무도 몰랐다. 배포 실행이 생겼는지만 확인한다 — 화면 내용까지 보면
+      # CDN 캐시 때문에 헛알람이 난다. 실행 생성 여부는 그런 흔들림이 없다.
+      - name: 배포가 실제로 떴는지 확인
+        if: steps.commit.outputs.pushed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          for i in $(seq 1 10); do
+            N=$(gh run list --workflow pages.yml --limit 5 \
+                  --json createdAt --jq "[.[] | select(.createdAt > \"${STARTED}\")] | length" 2>/dev/null || echo 0)
+            if [ "${N:-0}" -gt 0 ]; then
+              echo "배포 실행이 떴습니다 ($N 건)."
+              exit 0
+            fi
+            sleep 15
+          done
+          echo "::error::배포를 불렀는데 Pages 실행이 뜨지 않았습니다. 저장소에는 새 기준일이 커밋됐지만 화면은 옛것으로 남습니다."
           exit 1
 
       - name: 실패 알림 (조용히 멈추지 않게)

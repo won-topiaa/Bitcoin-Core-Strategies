@@ -146,8 +146,20 @@ def _read(rel: str) -> str:
 
 @lru_cache(maxsize=1)
 def _source_sha() -> Optional[str]:
-    """이번 굽기의 소스 SHA. 페이지마다 git 을 부르지 않도록 한 번만 읽는다."""
-    return site_stale.source_sha()
+    """이번 굽기의 소스 SHA. 페이지마다 git 을 부르지 않도록 한 번만 읽는다.
+
+    못 읽으면 크게 알린다 — 조용히 'unknown' 을 찍으면 감시자의 소스 검사가
+    눈을 감은 채로 며칠이 지나간다(그 상태를 실제로 겪었다).
+    """
+    sha = site_stale.source_sha()
+    if sha is None:
+        why = ("얕은 클론이라 경로 필터가 듣지 않습니다 — 워크플로에 "
+               "fetch-depth: 0 이 필요합니다" if site_stale.is_shallow()
+               else "git 을 읽지 못했습니다")
+        print(f"⚠️  소스 SHA 를 찍지 못합니다 ({why}). "
+              "감시자의 '소스 어긋남' 검사가 이 빌드에 대해서는 판정을 보류합니다.",
+              file=sys.stderr)
+    return sha
 
 
 PLACEHOLDERS = ("__INDEX_URL__", "__VERIFY_URL__", "__RULES_URL__",

@@ -149,8 +149,29 @@ def _git(args: list[str]) -> Optional[str]:
     return s or None
 
 
+def is_shallow() -> bool:
+    """이 작업 트리가 얕은(깊이 제한) 클론인가."""
+    return _git(["git", "rev-parse", "--is-shallow-repository"]) == "true"
+
+
 def source_sha() -> Optional[str]:
-    """사이트를 만드는 코드를 마지막으로 건드린 커밋 SHA."""
+    """사이트를 만드는 코드를 마지막으로 건드린 커밋 SHA. 모르면 None.
+
+    **얕은 클론에서는 답하지 않는다.** `actions/checkout` 의 기본값은 깊이 1
+    이라 이력에 커밋이 하나뿐인데, 그러면 `git log -1 -- <경로>` 가 경로를
+    걸러 내지 못하고 **tip 커밋을 그대로 돌려준다.** 실제로 그 상태가 있었다:
+    굽는 쪽(깊이 1)은 tip 인 '데이터 갱신' 커밋을 소스 SHA 로 찍고, 감시자
+    (깊이 0)는 진짜 소스 커밋을 계산해서, 둘이 **영원히** 어긋났다. 감시자는
+    3시간마다 재빌드를 부르고 재빌드는 또 tip 을 찍는 — 자기 꼬리를 무는
+    고리가 16회 연속 돌았다.
+
+    틀린 답보다 '모른다'가 낫다. None 을 돌려주면 표식이 'unknown' 이 되고
+    source_changed 가 판정을 보류하므로, 헛알람도 무한 재빌드도 생기지 않는다.
+    올바른 답이 필요하면 워크플로가 `fetch-depth: 0` 을 줘야 하고, 그건
+    tests/test_workflows.py 가 강제한다.
+    """
+    if is_shallow():
+        return None
     return _git(["git", "log", "-1", "--format=%H", "--", *SOURCE_SPEC])
 
 

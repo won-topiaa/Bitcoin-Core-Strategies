@@ -18,6 +18,18 @@
 #   워크플로의 push 이벤트를 **트리거하지 않는다**(무한루프 방지). 그래서 push
 #   대신 workflow_run 으로 그 둘이 끝난 뒤에 이어 붙여 배포가 빠지지 않게 한다.
 #
+# ⚠️ workflow_run 만으로는 부족하다 (2026-08 실측).
+#   같은 '토큰이 낸 이벤트는 새 실행을 만들지 못한다'는 규칙이 workflow_run 에도
+#   걸린다. 감시자가 GITHUB_TOKEN 으로 '데이터 갱신'을 workflow_dispatch 로
+#   부르면 그 실행은 성공해도 **workflow_run 이벤트를 내지 못해** 여기가 안 뜬다.
+#   실측: dispatch 로 시작한 성공 실행 16건 중 배포 0건, schedule 은 1/1.
+#   그래서 저장소에는 새 기준일이 들어와 있는데 화면은 옛것으로 남았다.
+#   지금은 '데이터 갱신'·'뉴스 갱신'이 푸시에 성공하면 **직접**
+#   `gh workflow run pages.yml` 로 아래 workflow_dispatch 를 부른다
+#   (workflow_dispatch 는 그 규칙의 명시적 예외라 항상 뜬다).
+#   workflow_run 은 그대로 둔다 — 겹쳐도 concurrency 가 정리하고, 직접 호출이
+#   막히는 날의 두 번째 겹이 된다.
+#
 # 최초 1회: configure-pages 가 enablement:true 로 Pages 를 자동으로 켜 본다. 조직/
 # 저장소 정책이 막으면 Settings → Pages → Source 를 'GitHub Actions' 로 한 번만
 # 바꾼 뒤 이 워크플로를 다시 돌리면 된다.
@@ -34,10 +46,13 @@ permissions:
   pages: write
   id-token: write
 
-# 앞 배포가 끝나기 전에 다음이 시작하면 최신 것만 남기고 취소한다.
+# 배포는 하나씩. **진행 중인 것은 취소하지 않는다** — actions/deploy-pages 를
+# 중간에 끊으면 배포가 어중간한 상태로 남을 수 있어서, GitHub 이 배포 워크플로에
+# 권하는 설정이 false 다. 대기 중인 것은 최신 하나만 남으므로 겹쳐 불려도 안전하다
+# (이제 workflow_run 과 직접 호출이 함께 뜰 수 있다).
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   deploy:

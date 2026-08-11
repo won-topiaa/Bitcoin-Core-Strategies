@@ -123,13 +123,22 @@ jobs:
             echo "drift=true" >> "$GITHUB_OUTPUT"
           fi
 
-      # 뒤처졌으면 '데이터 갱신'을 부른다. 그 워크플로가 최신 데이터로 다시 굽고
-      # 커밋하며, 배포(pages.yml)는 거기에 workflow_run 으로 이어 붙는다.
+      # 되살리기는 **증상에 맞는 것**을 불러야 한다. 예전에는 무엇이 어긋났든
+      # '데이터 갱신'만 불렀는데, 저장소는 멀쩡하고 배포만 밀린 경우에는 그게
+      # 듣지 않는다 — 다시 구워도 결과가 같아 커밋이 안 생기고, 커밋이 없으면
+      # 배포도 없다. 그래서 두 갈래로 나눈다.
       - name: 되살리기 — 데이터 갱신 호출
-        if: steps.check.outputs.stale == 'true' || steps.live.outputs.drift == 'true'
+        if: steps.check.outputs.stale == 'true'
         run: |
-          echo "뒤처짐을 확인했습니다 — 데이터 갱신을 부릅니다."
+          echo "저장소가 뒤처졌습니다 — 데이터 갱신을 부릅니다."
           gh workflow run refresh-data.yml --ref "${GITHUB_REF_NAME}"
+
+      # 저장소는 최신인데 화면만 옛것이면 다시 구울 필요가 없다. 배포만 부른다.
+      - name: 되살리기 — 배포만 다시 (저장소는 최신인데 화면만 옛것일 때)
+        if: steps.check.outputs.stale != 'true' && steps.live.outputs.drift == 'true'
+        run: |
+          echo "저장소는 최신인데 배포가 밀렸습니다 — Pages 배포만 다시 부릅니다."
+          gh workflow run pages.yml --ref "${GITHUB_REF_NAME}"
 
       # **되살리기가 듣지 않는 경우**를 잡는다. 아직 뒤처져 있는데 정기 갱신이
       # 방금(3시간 안에) 성공했다면, 앞선 감시가 부른 되살리기가 성공적으로

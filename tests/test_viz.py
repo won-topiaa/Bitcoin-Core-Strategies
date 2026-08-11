@@ -171,6 +171,39 @@ def test_every_placeholder_gets_replaced():
             assert "<title>" in html and "__TITLE__" not in html
 
 
+def test_every_page_is_stamped_with_the_source_it_was_baked_from():
+    """감시자의 '고쳤는데 안 구웠다' 검사는 **이 표식 하나**에 통째로 의존한다.
+
+    표식이 없으면 site_stale.source_changed 가 늘 '판정하지 않습니다'로 빠져,
+    감시가 조용히 꺼진 채로 며칠이 지나간다(그 상태를 실제로 겪었다). 여기서
+    막지 않으면 build_viz 에서 한 줄만 사라져도 아무 테스트도 안 깨진다.
+    """
+    import tempfile
+
+    sys.path.insert(0, str(ROOT / "tools"))
+    csv = ROOT / "data" / "market.csv"
+    if not csv.exists():
+        csv = ROOT / "data" / "sample_synthetic.csv"
+    if not csv.exists():
+        pytest.skip("입력 CSV 없음")
+
+    import build_viz
+    import site_stale
+
+    expected = site_stale.source_sha()      # 얕은 클론이면 None → 'unknown'
+    with tempfile.TemporaryDirectory() as tmp:
+        for path in build_viz.build(str(csv), Path(tmp)):
+            html = path.read_text(encoding="utf-8")
+            assert site_stale.STAMP_RE.search(html), (
+                f"{path.name}: 소스 표식이 없습니다 — 감시자의 소스 검사가 꺼집니다")
+            assert site_stale.read_stamp(html) == expected, (
+                f"{path.name}: 표식이 지금 소스 SHA 와 다릅니다 "
+                f"({site_stale.read_stamp(html)!r} vs {expected!r})")
+            # 굽는 쪽과 읽는 쪽이 같은 형식을 쓰는지 — 형식이 갈라지면 감시가 눈을 감는다.
+            assert html.rstrip().endswith(site_stale.stamp_line(expected)), (
+                f"{path.name}: 표식이 페이지 맨 끝에 있지 않습니다")
+
+
 def test_rank_is_measured_over_every_day_not_the_thinned_series():
     """첫 화면의 "아래에서 14% 지점" 이 이 함수에서 나온다.
 
