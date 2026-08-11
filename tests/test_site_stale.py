@@ -144,8 +144,17 @@ def test_no_successful_run_at_all_is_stale():
 
 
 def test_a_future_timestamp_does_not_cry_wolf():
-    """러너 시계가 어긋나 미래로 기록되는 일이 있다. 그걸로 알람을 울리지 않는다."""
-    assert not ss.refresh_is_overdue(NOW + 3600, NOW)[0]
+    """러너 시계가 어긋나 미래로 기록되는 일이 있다. 그걸로 알람을 울리지 않는다.
+
+    **판정(False)만 봐서는 이 가드를 지킬 수 없다** — 가드를 빼도 음수 시간은
+    어차피 문턱을 못 넘어 False 가 나온다(돌연변이 검사에서 이 테스트가
+    통째로 살아남았다). 그러면 로그에 '마지막 성공한 갱신 -1.0시간 전 — 정상'
+    같은 말이 찍힌다. 사람이 읽는 것은 그 줄이므로 메시지까지 못 박는다.
+    """
+    stale, why = ss.refresh_is_overdue(NOW + 3600, NOW)
+    assert not stale
+    assert "미래" in why and "판정하지 않습니다" in why, why
+    assert "-" not in why, f"음수 시간이 그대로 찍힙니다: {why}"
 
 
 # --------------------------------------------------------------------------

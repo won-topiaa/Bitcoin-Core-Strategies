@@ -27,6 +27,19 @@ COLUMNS = ("price", "market_cap", "realized_cap", "issuance_btc", "issuance_usd"
            "supply", "hashrate", "active_addresses",
            "exchange_supply", "exchange_inflow", "exchange_outflow")
 
+# 0 이하가 **물리적으로 불가능한** 열. 가격이 0 이거나 실현시총이 0 인 날은
+# 존재하지 않는다 — 그런 값이 들어왔다면 상류가 망가진 것이지 시장이 그랬던 게
+# 아니다. 그런데 예전에는 그대로 받아 점수를 냈다. 실측 프로브에서 실현시총을
+# 0 으로 채우자 **BCS 100(광기)** 이, 가격을 음수로 채우자 BCS 45 가 아무 경고
+# 없이 나왔다. 망가진 피드로 "지금 팔아라"를 띄우는 셈이라 결측으로 돌린다.
+#
+# 여기 없는 열은 이유가 있다:
+#   supply·active_addresses — 실데이터에 0 이 6건씩 있다(초기 구간). 지금 값을
+#     바꾸지 않으려고 건드리지 않는다.
+#   exchange_inflow·outflow — 흐름이라 0 이 정상이다(실데이터에 13·18건).
+POSITIVE_ONLY = ("price", "market_cap", "realized_cap", "issuance_btc",
+                 "issuance_usd", "hashrate", "exchange_supply")
+
 
 def load_csv_bundle(path: str | Path) -> DataBundle:
     p = Path(path)
@@ -57,6 +70,11 @@ def load_csv_bundle(path: str | Path) -> DataBundle:
                 v = _as_float(cell)
                 if v is None and str(cell or "").strip():
                     bad.setdefault(col, []).append(f"{row_no}행 {str(cell).strip()!r}")
+                elif v is not None and col in POSITIVE_ONLY and v <= 0:
+                    # 숫자로는 읽히지만 있을 수 없는 값 — 못 읽은 것과 같이 취급하고
+                    # 같은 경고 통로로 알린다. 조용히 버리면 상류 고장이 안 보인다.
+                    bad.setdefault(col, []).append(f"{row_no}행 {v:g} (0 이하)")
+                    v = None
                 buckets[col].append((d, v))
 
     if not [v for _, v in buckets["price"] if v is not None]:

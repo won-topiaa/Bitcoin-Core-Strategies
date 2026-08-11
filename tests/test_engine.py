@@ -582,3 +582,90 @@ def test_slicing_reproduces_a_known_turning_point(cfg):
                        as_of=date(2021, 11, 10), record=False)
     assert snap.bcs == pytest.approx(52.0, abs=1.5)
     assert snap.price == pytest.approx(64756, rel=0.01)
+
+# ---------------------------------------------------------------------------
+# 무효 JSON 토큰 — 파이썬만 관대해서 테스트로 안 잡히던 자리
+# ---------------------------------------------------------------------------
+def test_a_nan_floor_is_dropped_not_carried_into_the_payload():
+    """NaN·inf 가 바닥선으로 흘러가면 **문서 전체가 무효 JSON** 이 된다.
+
+    json.dumps 는 기본값으로 NaN/Infinity 라는 비표준 토큰을 쓴다. 파이썬
+    json.load 만 그걸 관대하게 읽어 주고, 브라우저의 JSON.parse·jq·Go 는
+    문서를 통째로 거부한다 — 화면이 백지가 된다. 그래서 엔진 입구에서 결측으로
+    돌려야 하는데, 돌연변이 검사에서 이 가드를 빼도 아무 테스트도 깨지지
+    않았다(257개 전부 통과). 여기서 막는다.
+    """
+    import json
+    import math
+
+    from btc_core.engine import _as_float
+
+    for bad in (float("nan"), float("inf"), float("-inf"), "nan", "inf", "-inf", "NaN"):
+        assert _as_float(bad) is None, f"{bad!r} 이 결측으로 안 돌아갑니다"
+
+    # 정상값은 그대로 통과해야 한다 — 가드가 과하게 먹으면 바닥선이 사라진다.
+    for good, want in ((0, 0.0), ("1234.5", 1234.5), (-3, -3.0), (1e300, 1e300)):
+        assert _as_float(good) == want
+
+    # 그리고 실제로 무효 토큰이 나가지 않는지 — 엄격 모드로 확인한다.
+    payload = {"floor": _as_float(float("nan"))}
+    json.dumps(payload, allow_nan=False)        # 여기서 터지면 가드가 뚫린 것이다
+    assert not any(isinstance(v, float) and not math.isfinite(v) for v in payload.values())
+
+
+def test_impossible_values_are_refused_not_scored():
+    """가격 0·음수, 실현시총 0 은 시장이 아니라 **상류가 망가진 것**이다.
+
+    경계 입력 프로브에서 나왔다 — 실현시총을 0 으로 채우자 BCS **100(광기)** 이,
+    가격을 음수로 채우자 BCS 45 가 아무 경고 없이 나왔다. 망가진 피드로 "지금
+    팔아라"를 띄우는 셈이다. 이제 결측으로 돌리고, 그래서 계산할 날이 없으면
+    거절한다.
+    """
+    import tempfile
+
+    from btc_core.datasources.base import FetchError
+    from btc_core.datasources.csv_source import POSITIVE_ONLY, load_csv_bundle
+
+    head = ("date,price,market_cap,realized_cap,issuance_btc,issuance_usd,"
+            "hashrate,active_addresses\n")
+
+    def write(rows):
+        f = tempfile.NamedTemporaryFile("w", suffix=".csv", delete=False, encoding="utf-8")
+        f.write(head + rows); f.close()
+        return f.name
+
+    ok = "".join(f"2026-01-{d:02d},50000,1e12,5e11,900,4.5e7,6e20,900000\n"
+                 for d in range(1, 29))
+    bundle = load_csv_bundle(write(ok))
+    assert bundle.market.price.last == 50000
+
+    # 가격이 전부 0 이면 쓸 값이 없다 → 거절
+    zero = "".join(f"2026-01-{d:02d},0,1e12,5e11,900,4.5e7,6e20,900000\n"
+                   for d in range(1, 29))
+    with pytest.raises(FetchError):
+        load_csv_bundle(write(zero))
+
+    # 음수도 마찬가지
+    neg = "".join(f"2026-01-{d:02d},-5,1e12,5e11,900,4.5e7,6e20,900000\n"
+                  for d in range(1, 29))
+    with pytest.raises(FetchError):
+        load_csv_bundle(write(neg))
+
+    # 실현시총만 0 이면 그 열만 빠지고, **경고가 남아야** 한다(조용히 버리면 안 된다).
+    rc0 = "".join(f"2026-01-{d:02d},50000,1e12,0,900,4.5e7,6e20,900000\n"
+                  for d in range(1, 29))
+    b = load_csv_bundle(write(rc0))
+    assert b.market.realized_cap is None or b.market.realized_cap.last is None
+    assert any("realized_cap" in w for w in b.warnings), (
+        f"0 이하를 조용히 버렸습니다 — 경고가 없습니다: {b.warnings}")
+
+    # 한 줄만 망가진 경우: 그 날만 빠지고 나머지는 산다.
+    mixed = ok.replace("2026-01-05,50000", "2026-01-05,0")
+    b2 = load_csv_bundle(write(mixed))
+    assert len(b2.market.price) == 27, f"한 날만 빠져야 합니다: {len(b2.market.price)}"
+    assert any("price" in w for w in b2.warnings)
+
+    # 흐름 열은 0 이 정상이라 이 목록에 없어야 한다.
+    assert "exchange_inflow" not in POSITIVE_ONLY
+    assert "exchange_outflow" not in POSITIVE_ONLY
+

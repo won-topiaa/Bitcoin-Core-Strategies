@@ -206,3 +206,68 @@ def test_a_broken_config_exits_with_a_message(tmp_path, capsys):
     bad.write_text("meta: {name: x}\n", encoding="utf-8")
     assert run("--config", str(bad), "explain") == 2
     assert "설정 오류" in capsys.readouterr().err
+
+# ---------------------------------------------------------------------------
+# 상태값 표시 — 사이트는 고쳤는데 콘솔만 영어 키가 뜨던 자리
+# ---------------------------------------------------------------------------
+def test_state_indicators_print_a_human_name_not_the_raw_key():
+    """Hash Ribbons 의 raw 는 'capitulation' 같은 **키**다.
+
+    설정(state_labels)이 화면 이름을 갖고 있고 사이트는 쓰고 있었는데, 콘솔·
+    마크다운 경로만 그걸 안 거쳐 영어 키가 그대로 찍혔다. 고쳤지만 돌연변이
+    검사에서 매핑을 통째로 빼도 아무 테스트도 안 깨졌다 — 여기서 못 박는다.
+    """
+    from btc_core.config import load_config
+    from btc_core.models import Reading
+    from btc_core.report import _fmt_raw
+
+    cfg = load_config()
+    labels = (cfg.indicators.get("hash_ribbons") or {}).get("state_labels") or {}
+    if not labels:
+        pytest.skip("hash_ribbons 에 state_labels 가 없습니다")
+
+    def reading(raw):
+        return Reading(key="hash_ribbons", label="Hash Ribbons", family="mining",
+                       raw=raw, score=0.0, source="auto")
+
+    for key, want in labels.items():
+        got = _fmt_raw(reading(key), cfg)
+        assert got == str(want), f"{key!r} → {got!r} (기대 {want!r})"
+        assert got != key, "영어 키가 그대로 화면에 나갑니다"
+
+    # 설정을 안 주면 키를 그대로 돌려준다(호출부가 cfg 를 못 가진 경로).
+    assert _fmt_raw(reading("capitulation"), None) == "capitulation"
+
+    # 숫자 지표는 영향을 받지 않아야 한다.
+    n = Reading(key="mvrv_z", label="MVRV", family="valuation",
+                raw=1.2345, score=0.0, source="auto")
+    assert _fmt_raw(n, cfg) == "1.2345"
+
+
+def test_an_unevaluable_bottom_profile_makes_no_claim():
+    """근거가 하나도 없는 날에 판정 문구가 나가면 그건 **없는 근거로 단정**하는 것이다.
+
+    조건 다섯 개가 전부 결측이면 hits=0 이 되는데, 0 은 '최하 구간'에 매칭돼
+    "이후 1년 수익 중앙값은 음수였다" 같은 문장을 끌고 온다. 콘솔은 evaluable
+    로 블록을 통째로 숨기지만 JSON(사이트)은 그 값을 안 실어 보내 그대로
+    나갔다. 고쳤는데 돌연변이 검사에서 되돌려도 아무 테스트도 안 깨졌다.
+    """
+    from btc_core.models import BottomCondition, BottomProfile
+
+    def cond(value):
+        return BottomCondition(key="k", label="라벨", op="<=", threshold=1.0,
+                               unit="", value=value, met=False)
+
+    blind = BottomProfile(conditions=(cond(None), cond(None)),
+                          label="바닥 근처", detail="이후 1년 수익 중앙값은 음수였다")
+    d = blind.as_dict()
+    assert d["evaluable"] is False, "근거가 없는데 평가된 것으로 나갑니다"
+    assert d["label"] == "" and d["detail"] == "", (
+        f"근거가 없는데 판정 문구가 나갑니다: {d['label']!r} / {d['detail']!r}")
+
+    # 근거가 하나라도 있으면 평소대로 실어 보낸다.
+    seen = BottomProfile(conditions=(cond(0.5), cond(None)),
+                         label="바닥 근처", detail="설명")
+    d2 = seen.as_dict()
+    assert d2["evaluable"] is True
+    assert d2["label"] == "바닥 근처" and d2["detail"] == "설명"
