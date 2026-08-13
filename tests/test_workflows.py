@@ -174,6 +174,30 @@ def test_the_deploy_call_is_verified_not_assumed(path):
         f"{path.name}: 배포가 안 떴을 때 실패시키지 않습니다 — 조용히 넘어갑니다")
 
 
+def test_the_data_refresh_runs_more_than_once_a_day():
+    """하루 한 번으로는 매일 아침 몇 시간씩 '이틀 전'이 뜬다.
+
+    두 가지가 겹쳐서다. ① GitHub 이 예약을 상습적으로 1~2시간 미룬다(실측
+    94·96·110·119분). ② 원본이 일일 종가라 가장 신선해도 '어제'이고, UTC 자정에
+    나이가 하루 늘어난다. 그래서 예전에는 한국 시간 09:00~13:20 동안 매일
+    '이틀 전'으로 보였다. 주기를 짧게 잡아야 원본이 그날치를 내는 즉시 따라잡고,
+    예약 하나가 유실돼도 하루를 잃지 않는다.
+    """
+    on = load(DATA).get("on") or load(DATA).get(True)
+    crons = [c["cron"] for c in (on.get("schedule") or [])]
+    assert crons, "refresh-data 에 예약이 없습니다"
+    # '*/N' 시간 간격이거나, 시간 목록이 여러 개여야 한다
+    hourly = any("*/" in c.split()[1] for c in crons)
+    listed = sum(len(c.split()[1].split(",")) for c in crons)
+    assert hourly or listed >= 4, (
+        f"갱신이 하루 {listed}회뿐입니다({crons}) — 예약 지연과 원본의 하루 지연이 "
+        "겹치면 매일 아침 '이틀 전'이 뜹니다")
+
+    # 감시자의 '너무 오래 안 돌았다' 문턱이 그 주기와 앞뒤가 맞아야 한다.
+    import site_stale as ss
+    assert ss.MAX_REFRESH_GAP_HOURS <= 24
+
+
 def test_pages_accepts_a_direct_call():
     """직접 부르려면 pages.yml 이 workflow_dispatch 를 받아야 한다."""
     doc = load(PAGES)

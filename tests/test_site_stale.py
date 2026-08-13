@@ -126,16 +126,27 @@ def test_a_recent_successful_refresh_is_normal():
     assert not ss.refresh_is_overdue(NOW - 3600, NOW)[0]
 
 
-def test_a_missed_daily_run_is_flagged_the_same_day():
-    """하루 한 번 도는 갱신이 한 번 걸러지면 26시간이 넘는다. 그때 잡아야
+def test_a_missed_run_is_flagged_long_before_the_data_looks_old():
+    """세 시간마다 도는 갱신이 연속으로 걸러지면 문턱을 넘는다. 그때 잡아야
     데이터가 사흘 낡기를 기다리지 않는다."""
-    stale, why = ss.refresh_is_overdue(NOW - 27 * 3600, NOW)
-    assert stale and "27.0시간" in why
+    gap = ss.MAX_REFRESH_GAP_HOURS + 1
+    stale, why = ss.refresh_is_overdue(NOW - gap * 3600, NOW)
+    assert stale and f"{gap}.0시간" in why
 
 
 def test_the_refresh_boundary_is_max_hours():
-    assert not ss.refresh_is_overdue(NOW - 26 * 3600, NOW)[0]        # 정확히 26시간
-    assert ss.refresh_is_overdue(NOW - 26 * 3600 - 60, NOW)[0]
+    h = ss.MAX_REFRESH_GAP_HOURS
+    assert not ss.refresh_is_overdue(NOW - h * 3600, NOW)[0]         # 정확히 문턱
+    assert ss.refresh_is_overdue(NOW - h * 3600 - 60, NOW)[0]
+
+
+def test_the_gap_threshold_leaves_room_for_github_delaying_the_cron():
+    """예약이 1~2시간 밀리는 것은 정상이다. 문턱이 주기에 너무 붙으면 감시자가
+    정상 지연마다 되살리기를 부른다 — 예전에 3시간마다 헛돌던 그 모양이다."""
+    assert ss.MAX_REFRESH_GAP_HOURS >= 3 * 2, (
+        f"주기(3시간) 대비 문턱 {ss.MAX_REFRESH_GAP_HOURS}시간은 너무 빡빡합니다")
+    assert ss.MAX_REFRESH_GAP_HOURS <= 24, (
+        "문턱이 하루를 넘으면 하루치 유실을 못 잡습니다")
 
 
 def test_no_successful_run_at_all_is_stale():

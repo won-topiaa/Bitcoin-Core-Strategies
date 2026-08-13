@@ -139,8 +139,13 @@ ko: {
   // -- 머리글
   srcDays: (n, k) => `${n}일 · 지표 ${k}개`,
   freshToday: "데이터 오늘 기준",
-  freshDays: n => `데이터 ${n}일 전`,
-  freshStale: n => `데이터 ${n}일 전 — 갱신이 멈췄을 수 있습니다`,
+  // 원본은 **일일 종가**다. 그래서 가장 신선해도 '어제'이고, UTC 자정부터
+  // 원본이 그날치를 낼 때까지는 필연적으로 '이틀 전'이 된다. 예전에는 그 숫자만
+  // 띄워서, 정상 상태(1~2일)가 매일 아침 고장처럼 보였다 — 한국 시간 09:00 에
+  // 2일로 넘어가 갱신이 도는 13시경까지 4시간 넘게 그렇게 떠 있었다.
+  // 그래서 평소에는 **날짜**를 말하고, 진짜 멈췄을 때만 며칠인지 말한다.
+  freshDays: (n, d) => `데이터 ${d} 종가`,
+  freshStale: (n, d) => `데이터 ${d} 종가 · ${n}일 전 — 갱신이 멈췄을 수 있습니다`,
   asOf: (d, p) => `기준 ${d} · ${p}`,
   dLabels: {d1: "어제", d7: "지난주", d30: "지난달"},
   deltaVs: label => `${label} 대비`,
@@ -322,8 +327,8 @@ en: {
     `The range fits entirely inside one band on only ${st.stable_pct}% of the ${YRS} years.`,
   srcDays: (n, k) => `${n} days · ${k} indicators`,
   freshToday: "data as of today",
-  freshDays: n => `data ${n} day${n === 1 ? "" : "s"} old`,
-  freshStale: n => `data ${n} days old — the refresh may have stopped`,
+  freshDays: (n, d) => `data: ${d} close`,
+  freshStale: (n, d) => `data: ${d} close · ${n} days old — the refresh may have stopped`,
   asOf: (d, p) => `as of ${d} · ${p}`,
   dLabels: {d1: "yesterday", d7: "last week", d30: "last month"},
   deltaVs: label => `vs ${label}`,
@@ -1849,7 +1854,7 @@ function freshness(){
   const stale = days > 3;
   host.className = stale ? "stale" : "";
   host.textContent = days === 0 ? t("freshToday")
-    : (stale ? t("freshStale", days) : t("freshDays", days));
+    : (stale ? t("freshStale", days, lat) : t("freshDays", days, lat));
 }
 
 /* 시장 스냅샷 히어로 — 가격 + '핵심 답 한 줄'만. 위치 상세(범위·구간·눈금)는
@@ -1868,7 +1873,7 @@ function heroFill(){
   if (subEl){
     const stale = subDays > 3;
     subEl.className = "hero-sub" + (stale ? " stale" : "");
-    subEl.textContent = stale ? t("freshStale", subDays) : t("heroSub", c.d);
+    subEl.textContent = stale ? t("freshStale", subDays, latSub) : t("heroSub", c.d);
   }
   const pct = c.rank != null ? Math.round(c.rank * 100) : null;
   const chipCls = c.bcs < 0 ? "cool" : (c.bcs > 0 ? "warm" : "flat");
