@@ -1,5 +1,5 @@
 {
- "fetched": "2026-08-14T03:09:35+00:00",
+ "fetched": "2026-08-14T05:18:26+00:00",
  "sources_ok": [
   "CoinDesk",
   "Cointelegraph",
@@ -14,7 +14,7 @@
    "source": "CoinDesk",
    "published": "2026-08-13T09:39:52+00:00",
    "summary": "",
-   "score": 3.9614
+   "score": 3.8404
   },
   {
    "title": "UBS Ups Bitcoin Position, Buys More Shares in BlackRock’s ETF",
@@ -22,7 +22,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-13T18:32:49+00:00",
    "summary": "Bitcoin Magazine UBS Ups Bitcoin Position, Buys More Shares in BlackRock’s ETF The Swiss bank has quietly upped its position in the popular Bitcoin fund since 2024. This post UBS Ups Bitcoin Position, Buys More Shares in BlackRock’s ETF first appeared on Bitcoin Magazine and is…",
-   "score": 2.6491
+   "score": 2.5683
   },
   {
    "title": "Metaplanet Denies Selling $320M in Bitcoin as Firm Launches BitBonds",
@@ -30,7 +30,7 @@
    "source": "Decrypt",
    "published": "2026-08-13T16:40:49+00:00",
    "summary": "The company's CEO said a 5,014 BTC transfer was a custody move, not a sale, as the Tokyo-listed Bitcoin treasury company rolls out a fixed-rate debt program.",
-   "score": 2.1489
+   "score": 2.0833
   },
   {
    "title": "Goldman Sachs to acquire ETF manager NEOS in $2.25B deal",
@@ -38,7 +38,7 @@
    "source": "Cointelegraph",
    "published": "2026-08-12T20:37:55+00:00",
    "summary": "The deal would add NEOS’ $30 billion ETF business, including Bitcoin- and Ether-linked income funds, to Goldman Sachs Asset Management.",
-   "score": 1.9305
+   "score": 1.8715
   },
   {
    "title": "Goldman Sachs to Acquire NEOS Investments in $2.25B Deal, Adding Bitcoin Income ETFs to Lineup",
@@ -46,7 +46,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-12T21:20:05+00:00",
    "summary": "Bitcoin Magazine Goldman Sachs to Acquire NEOS Investments in $2.25B Deal, Adding Bitcoin Income ETFs to Lineup The deal gives the bank a ready-made foothold in Bitcoin-income ETFs space. This post Goldman Sachs to Acquire NEOS Investments in $2.25B Deal, Adding Bitcoin Income E…",
-   "score": 1.5601
+   "score": 1.5125
   },
   {
    "title": "Live updates: Bitcoin slips back even as Fed rate hike expectations dwindle",
@@ -54,7 +54,7 @@
    "source": "CoinDesk",
    "published": "2026-08-13T09:18:19+00:00",
    "summary": "",
-   "score": 1.5455
+   "score": 1.4983
   },
   {
    "title": "Goldman Sachs' $2.25B NEOS Deal Hands It Ready-Made Bitcoin Income ETF Business",
@@ -62,7 +62,7 @@
    "source": "Decrypt",
    "published": "2026-08-12T18:58:26+00:00",
    "summary": "The cash-and-equity deal for the options-income specialist folds in NEOS's roughly $1 billion Bitcoin covered-call fund, giving Goldman instant scale in a crypto ETF niche it had only just entered on paper.",
-   "score": 1.5079
+   "score": 1.4618
   },
   {
    "title": "Public Bitcoin miners cut hashrate 13.4% as AI infrastructure revenue grows",
@@ -70,7 +70,7 @@
    "source": "Cointelegraph",
    "published": "2026-08-13T16:00:23+00:00",
    "summary": "AI and HPC are reshaping mining economics as operators repurpose power and data centers, while a smaller group of miners continues to expand Bitcoin capacity.",
-   "score": 1.362
+   "score": 1.3204
   },
   {
    "title": "Bitcoin treasury company Metaplanet unveils BitBonds with $1.3 million private debt sale",
@@ -78,7 +78,7 @@
    "source": "CoinDesk",
    "published": "2026-08-13T09:14:15+00:00",
    "summary": "",
-   "score": 1.2352
+   "score": 1.1974
   },
   {
    "title": "Here’s what happened in crypto today",
@@ -86,7 +86,7 @@
    "source": "Cointelegraph",
    "published": "2026-08-13T06:00:00+00:00",
    "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
-   "score": 1.0373
+   "score": 1.0056
   },
   {
    "title": "Bitcoin Yawns As Fed’s Favorite Inflation Gauge Eases",
@@ -94,7 +94,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-12T15:20:07+00:00",
    "summary": "Bitcoin Magazine Bitcoin Yawns As Fed’s Favorite Inflation Gauge Eases Bitcoin's price was largely flat on news that US inflation was subdued in July. This post Bitcoin Yawns As Fed’s Favorite Inflation Gauge Eases first appeared on Bitcoin Magazine and is written by Mathew Di S…",
-   "score": 0.9538
+   "score": 0.9247
   },
   {
    "title": "Goldman Sachs leaps into bitcoin income ETFs with $2.25 billion NEOS buyout",
@@ -102,7 +102,7 @@
    "source": "CoinDesk",
    "published": "2026-08-12T17:21:03+00:00",
    "summary": "",
-   "score": 0.9427
+   "score": 0.9139
   },
   {
    "title": "After Coldcard Was Hacked, $15 Billion in Bitcoin Moved to Safety",
@@ -110,7 +110,7 @@
    "source": "Decrypt",
    "published": "2026-08-12T18:16:04+00:00",
    "summary": "Casa CEO Nick Neuman says the mass Bitcoin migration after the $130M Coldcard exploit proves distributed self-custody is Bitcoin's immune system—not its vulnerability.",
-   "score": 0.796
+   "score": 0.7717
   },
   {
    "title": "Bitcoin eyes $63K as US CPI relief sends September Fed rate pause odds to 60%",
@@ -118,7 +118,7 @@
    "source": "Cointelegraph",
    "published": "2026-08-12T15:00:10+00:00",
    "summary": "Bitcoin price action did not reflect relief in US CPI inflation numbers matching expectations amid a warning over $63,000 failing as support.",
-   "score": 0.7594
+   "score": 0.7362
   },
   {
    "title": "Bitcoin slips near $63,500 as traders look past CPI to Fed’s next tests",
@@ -126,7 +126,7 @@
    "source": "CoinDesk",
    "published": "2026-08-13T03:39:06+00:00",
    "summary": "",
-   "score": 0.7292
+   "score": 0.707
   },
   {
    "title": "OCC Says It’s ‘Open for Business’ as Crypto Firms Line Up for Bank Charters",
@@ -134,7 +134,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-12T17:05:06+00:00",
    "summary": "Bitcoin Magazine OCC Says It’s ‘Open for Business’ as Crypto Firms Line Up for Bank Charters Top crypto companies have received conditional approval from the U.S. federal banking regulator. This post OCC Says It’s ‘Open for Business’ as Crypto Firms Line Up for Bank Charters fir…",
-   "score": 0.6886
+   "score": 0.6676
   },
   {
    "title": "Morning Minute: Saylor's Strategy Sells Bitcoin for Second Week in a Row",
@@ -142,7 +142,7 @@
    "source": "Decrypt",
    "published": "2026-08-11T12:22:13+00:00",
    "summary": "Strategy dumped $108M in BTC at a loss and a whopping $650M of MSTR stock, and yet MSTR stock barely flinched. What gives?",
-   "score": 0.579
+   "score": 0.5613
   },
   {
    "title": "Bitcoin drops to one-week low as retail buys gold at highest prices since June",
@@ -150,7 +150,7 @@
    "source": "Cointelegraph",
    "published": "2026-08-11T16:24:48+00:00",
    "summary": "Bitcoin price action sank to one-week lows ahead of US CPI data, while retail investors piled into gold ETFs and XAU/USD hit its highest levels in nine weeks.",
-   "score": 0.5261
+   "score": 0.51
   },
   {
    "title": "Bitcoin Exchange-Traded Funds See Spike In Inflows Following Huge Hack",
@@ -158,7 +158,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-10T19:35:34+00:00",
    "summary": "Bitcoin Magazine Bitcoin Exchange-Traded Funds See Spike In Inflows Following Huge Hack The Bitcoin ETFs are experiencing massive inflows, despite the negative news from last month's Coldcard hack. This post Bitcoin Exchange-Traded Funds See Spike In Inflows Following Huge Hack…",
-   "score": 0.5193
+   "score": 0.5034
   },
   {
    "title": "Bitcoin stuck as ETF inflows offset selling, but inflation data could spark a move",
@@ -166,7 +166,7 @@
    "source": "CoinDesk",
    "published": "2026-08-11T21:38:13+00:00",
    "summary": "",
-   "score": 0.4538
+   "score": 0.44
   },
   {
    "title": "'Bitcoin Is Burning': Red Team Turns to Chinese AI to Find Flaws",
@@ -174,7 +174,7 @@
    "source": "Decrypt",
    "published": "2026-08-13T22:36:07+00:00",
    "summary": "Bitcoin Red Team member Calle said Chinese models, including Moonshot AI’s Kimi K3, are finding bugs across Bitcoin’s open-source software.",
-   "score": 0.3835
+   "score": 0.3718
   },
   {
    "title": "Why Bitcoin Mining and AI Are Merging, Not Colliding",
@@ -182,7 +182,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-12T12:28:35+00:00",
    "summary": "Bitcoin Magazine Why Bitcoin Mining and AI Are Merging, Not Colliding AI is pricing Bitcoin miners off the main power grid. Headlines call it a surrender, but a massive infrastructure win is hiding inside the eviction. This post Why Bitcoin Mining and AI Are Merging, Not Collidi…",
-   "score": 0.3749
+   "score": 0.3634
   },
   {
    "title": "Bitcoin miners earn under 0.7% of revenue from fees in new 10-year low",
@@ -190,7 +190,7 @@
    "source": "Cointelegraph",
    "published": "2026-08-12T10:06:05+00:00",
    "summary": "Bitcoin miners showed a “concerning” trend of pivoting to AI amid a profit squeeze as transaction-fee income barely bounced from 10-year lows of 0.52% of revenue.",
-   "score": 0.3622
+   "score": 0.3512
   },
   {
    "title": "Strategy, Metaplanet unrealized bitcoin losses highlight risk of concentrating on just one token",
@@ -198,7 +198,7 @@
    "source": "CoinDesk",
    "published": "2026-08-13T11:35:53+00:00",
    "summary": "",
-   "score": 0.335
+   "score": 0.3248
   },
   {
    "title": "BTCPay Backers Offer Bitcoin Bounty After Wallet Exploit",
@@ -206,7 +206,7 @@
    "source": "Decrypt",
    "published": "2026-08-11T21:16:03+00:00",
    "summary": "The reward aims to recover Bitcoin stolen after attackers gained access to connected LND wallets.",
-   "score": 0.301
+   "score": 0.2918
   },
   {
    "title": "Twenty One to Become ‘More Than a Bitcoin Treasury,’ Says New CEO",
@@ -214,7 +214,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-11T18:20:39+00:00",
    "summary": "Bitcoin Magazine Twenty One to Become ‘More Than a Bitcoin Treasury,’ Says New CEO Twenty One just revealed its quarterly earnings. The company is reassuring investors that it has big plans following Jack Maller's departure as CEO. This post Twenty One to Become ‘More Than a Bit…",
-   "score": 0.2885
+   "score": 0.2797
   },
   {
    "title": "Coldcard hack losses: How investigators trace stolen Bitcoin",
@@ -222,7 +222,7 @@
    "source": "Cointelegraph",
    "published": "2026-08-11T10:14:39+00:00",
    "summary": "The Coldcard hack has no definitive loss figure yet as investigators rely on victim reports and onchain analysis that produce varying estimates.",
-   "score": 0.2875
+   "score": 0.2787
   },
   {
    "title": "Bitcoin holds near $64,000 as U.S. inflation data looms, Harmony exploit rattles altcoins",
@@ -230,7 +230,7 @@
    "source": "CoinDesk",
    "published": "2026-08-12T10:30:10+00:00",
    "summary": "",
-   "score": 0.2332
+   "score": 0.2261
   },
   {
    "title": "Bitcoin Companies Want Help From AI Labs to Guard Against Hackers",
@@ -238,7 +238,7 @@
    "source": "Decrypt",
    "published": "2026-08-13T17:11:04+00:00",
    "summary": "More than 40 bitcoin and crypto firms asked the biggest AI labs this week to let independent security researchers use their strongest models before public release.",
-   "score": 0.227
+   "score": 0.22
   },
   {
    "title": "Bitdeer increased Bitcoin mining output by nearly fivefold in Q2",
@@ -246,7 +246,7 @@
    "source": "Cointelegraph",
    "published": "2026-08-10T13:07:42+00:00",
    "summary": "Bitdeer mined 2,694 BTC in Q2, but ended the quarter holding just 150 BTC after liquidating its treasury earlier this year.",
-   "score": 0.2119
+   "score": 0.2054
   },
   {
    "title": "CFTC Charges Goliath Ventures With $400M Bitcoin Fraud",
@@ -254,7 +254,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-11T20:14:24+00:00",
    "summary": "Bitcoin Magazine CFTC Charges Goliath Ventures With $400M Bitcoin Fraud Regulator says roughly 1,600 customers lost money in Bitcoin and crypto operation whose CEO has already pleaded guilty This post CFTC Charges Goliath Ventures With $400M Bitcoin Fraud first appeared on Bitco…",
-   "score": 0.2087
+   "score": 0.2024
   },
   {
    "title": "Morning Minute: Bitcoin ETFs See Biggest Inflows Since May",
@@ -262,7 +262,7 @@
    "source": "Decrypt",
    "published": "2026-08-10T12:32:19+00:00",
    "summary": "And the ETH inflows were even bigger, when factoring in market cap.",
-   "score": 0.1801
+   "score": 0.1746
   },
   {
    "title": "Live updates: AI stocks surge on Q2 beats, bitcoin falls below $64,000 as inflation hits estimates",
@@ -270,7 +270,7 @@
    "source": "CoinDesk",
    "published": "2026-08-12T07:04:53+00:00",
    "summary": "",
-   "score": 0.1598
+   "score": 0.1549
   },
   {
    "title": "Bitcoin’s Bear Cycle Looks Familiar — And That Might Be the Bullish Case",
@@ -278,7 +278,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-13T21:19:32+00:00",
    "summary": "Bitcoin Magazine Bitcoin’s Bear Cycle Looks Familiar — And That Might Be the Bullish Case Bitcoin is doing what it always has done, according to market observers. This post Bitcoin’s Bear Cycle Looks Familiar — And That Might Be the Bullish Case first appeared on Bitcoin Magazin…",
-   "score": 0.1542
+   "score": 0.1495
   },
   {
    "title": "BlackRock launches 2 Canada ETFs, with one allocating 3% to Bitcoin",
@@ -286,7 +286,7 @@
    "source": "Cointelegraph",
    "published": "2026-08-10T15:59:06+00:00",
    "summary": "BlackRock Canada’s new IBQT fund combines global equity exposure with a 3% Bitcoin allocation through the firm’s Canadian iShares Bitcoin ETF.",
-   "score": 0.1514
+   "score": 0.1468
   },
   {
    "title": "Bitcoin ETFs Draw $854M Over Five Days as Rate-Hike Bets Fade",
@@ -294,7 +294,7 @@
    "source": "Decrypt",
    "published": "2026-08-10T12:14:57+00:00",
    "summary": "Daily totals shrank as the week wore on, and analysts are split on whether the return of institutional money marks a genuine turn.",
-   "score": 0.1435
+   "score": 0.1391
   },
   {
    "title": "White House to Host Crypto Industry Execs Next Week: Report",
@@ -302,7 +302,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-13T20:33:37+00:00",
    "summary": "Bitcoin Magazine White House to Host Crypto Industry Execs Next Week: Report Crypto and prediction market bigwigs are set to gather at the White House next week, according to a Thursday report from POLITICO. The report, citing people with knowledge of the matter, said the indust…",
-   "score": 0.122
+   "score": 0.1183
   },
   {
    "title": "Russia proposes exchange trading of Bitcoin, Ether and Tether’s USDT",
@@ -310,7 +310,7 @@
    "source": "Cointelegraph",
    "published": "2026-08-11T12:09:38+00:00",
    "summary": "Russia’s central bank proposed allowing Bitcoin, Ether and USDT to trade on regulated exchanges, following a law signed by President Vladimir Putin last week.",
-   "score": 0.1189
+   "score": 0.1153
   },
   {
    "title": "BTCPay offers $190,000 bounty after bitcoin payment servers drained in exploit",
@@ -318,7 +318,7 @@
    "source": "CoinDesk",
    "published": "2026-08-11T06:19:07+00:00",
    "summary": "",
-   "score": 0.0993
+   "score": 0.0963
   },
   {
    "title": "Tether Finally Completes Independent Audit of Reserves With KPMG",
@@ -326,7 +326,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-13T20:01:40+00:00",
    "summary": "Bitcoin Magazine Tether Finally Completes Independent Audit of Reserves With KPMG The stablecoin giant for years struggled to get a Big Four accounting firm to audit its reserves. No more. This post Tether Finally Completes Independent Audit of Reserves With KPMG first appeared…",
-   "score": 0.0969
+   "score": 0.0939
   }
  ]
 }
