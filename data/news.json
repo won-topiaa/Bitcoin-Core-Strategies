@@ -1,5 +1,5 @@
 {
- "fetched": "2026-08-17T10:07:21+00:00",
+ "fetched": "2026-08-17T11:37:15+00:00",
  "sources_ok": [
   "CoinDesk",
   "Cointelegraph",
@@ -9,12 +9,28 @@
  "sources_failed": [],
  "items": [
   {
+   "title": "Paul Tudor Jones' Firm Buys Back Into BlackRock Bitcoin ETF After a Year of Selling",
+   "url": "https://decrypt.co/375745/paul-tudor-jones-buys-blackrock-bitcoin-etf",
+   "source": "Decrypt",
+   "published": "2026-08-17T10:31:04+00:00",
+   "summary": "The macro fund raised its iShares Bitcoin Trust stake 18.9% to 688,529 shares worth $22.9 million in Q2, while sharply cutting its call options—a shift from leveraged bets toward direct spot exposure.",
+   "score": 2.9526
+  },
+  {
+   "title": "Bitcoin tracks equity bounce, but $390 million ETF outflow week keeps bulls on back foot",
+   "url": "https://www.coindesk.com/markets/2026/08/17/bitcoin-tracks-equity-bounce-but-usd390-million-etf-outflow-week-keeps-bulls-on-back-foot",
+   "source": "CoinDesk",
+   "published": "2026-08-17T09:59:55+00:00",
+   "summary": "",
+   "score": 2.9305
+  },
+  {
    "title": "Crypto Biz: Bitcoin’s $116M self-custody wake-up call",
    "url": "https://cointelegraph.com/news/crypto-biz-bitcoin-self-custody-etf-inflows-strategy-riot-ai?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
    "source": "Cointelegraph",
    "published": "2026-08-14T15:29:13+00:00",
    "summary": "A $116 million Bitcoin wallet exploit puts self-custody under scrutiny as ETF inflows rebound, Strategy eyes more BTC and miners chase billions in AI deals.",
-   "score": 2.1394
+   "score": 2.0936
   },
   {
    "title": "Swiss mega-bank UBS ramps up its Bitcoin exposure with a massive 24-fold surge in ETF call options",
@@ -22,15 +38,7 @@
    "source": "CoinDesk",
    "published": "2026-08-15T15:56:05+00:00",
    "summary": "",
-   "score": 2.0664
-  },
-  {
-   "title": "Paul Tudor Jones’ investment firm increases stake in BlackRock's bitcoin ETF after year of selling",
-   "url": "https://www.coindesk.com/business/2026/08/15/paul-tudor-jones-investment-firm-increases-blackrock-s-bitcoin-etf-stake-after-year-of-selling",
-   "source": "CoinDesk",
-   "published": "2026-08-15T15:12:29+00:00",
-   "summary": "",
-   "score": 1.2914
+   "score": 1.6177
   },
   {
    "title": "Bitcoin Treasury Strategy Bites Back After MSCI Announces Possible Index Removal",
@@ -38,15 +46,15 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-14T17:24:58+00:00",
    "summary": "Bitcoin Magazine Bitcoin Treasury Strategy Bites Back After MSCI Announces Possible Index Removal Bitcoin treasury Strategy could be dropped from the MSCI. It doesn't appear to care. This post Bitcoin Treasury Strategy Bites Back After MSCI Announces Possible Index Removal first…",
-   "score": 1.2177
+   "score": 1.1917
   },
   {
-   "title": "SafePal Bitcoin Wallet Data Breach Stokes Fears of Physical Attacks",
-   "url": "https://decrypt.co/375743/safepal-bitcoin-wallet-data-breach",
-   "source": "Decrypt",
-   "published": "2026-08-17T09:31:04+00:00",
-   "summary": "A flaw in an order-tracking plug-in of bitcoin wallet provider SafePal exposed names, addresses and phone numbers of nearly 40,000 customers.",
-   "score": 0.9913
+   "title": "Bitcoin's biggest holders, Strategy and Metaplanet, are betting on math, not price",
+   "url": "https://www.coindesk.com/daybook-us/2026/08/17/bitcoin-s-biggest-holders-strategy-and-metaplanet-are-betting-on-math-not-price",
+   "source": "CoinDesk",
+   "published": "2026-08-17T11:28:41+00:00",
+   "summary": "",
+   "score": 1.0219
   },
   {
    "title": "Dartmouth endowment’s crypto exposure drops by $2M amid falling prices",
@@ -54,15 +62,23 @@
    "source": "Cointelegraph",
    "published": "2026-08-14T18:57:04+00:00",
    "summary": "The value of the university endowment’s holdings in the Bitwise Solana staking ETF, Grayscale Ethereum staking ETF and BlackRock’s iShares Bitcoin ETF dropped to about $12 million.",
-   "score": 0.9639
+   "score": 0.9433
   },
   {
-   "title": "Brazil’s largest bitcoin treasury firm plans ETF with 95% allocation to Strategy's STRC",
-   "url": "https://www.coindesk.com/business/2026/08/13/brazil-s-largest-bitcoin-treasury-firm-plans-etf-with-95-allocation-to-strategy-s-strc",
+   "title": "Paul Tudor Jones’ investment firm increases stake in BlackRock's bitcoin ETF after year of selling",
+   "url": "https://www.coindesk.com/business/2026/08/15/paul-tudor-jones-investment-firm-increases-blackrock-s-bitcoin-etf-stake-after-year-of-selling",
    "source": "CoinDesk",
-   "published": "2026-08-13T09:39:52+00:00",
+   "published": "2026-08-15T15:12:29+00:00",
    "summary": "",
-   "score": 0.8106
+   "score": 0.8088
+  },
+  {
+   "title": "SafePal Bitcoin Wallet Data Breach Stokes Fears of Physical Attacks",
+   "url": "https://decrypt.co/375743/safepal-bitcoin-wallet-data-breach",
+   "source": "Decrypt",
+   "published": "2026-08-17T09:31:04+00:00",
+   "summary": "A flaw in an order-tracking plug-in of bitcoin wallet provider SafePal exposed names, addresses and phone numbers of nearly 40,000 customers.",
+   "score": 0.7761
   },
   {
    "title": "Here’s what happened in crypto today",
@@ -70,7 +86,7 @@
    "source": "Cointelegraph",
    "published": "2026-08-15T14:40:24+00:00",
    "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
-   "score": 0.7518
+   "score": 0.7357
   },
   {
    "title": "Abu Dhabi Sovereign Wealth Funds Keep Big Bitcoin Positions",
@@ -78,15 +94,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-14T21:17:12+00:00",
    "summary": "Bitcoin Magazine Abu Dhabi Sovereign Wealth Funds Keep Big Bitcoin Positions Bitcoin is the most important asset in two of Abu Dhabi sovereign wealth funds, according to regulatory filings. Abu Dhabi’s Mubadala Investment Company disclosed Friday that it held a $490 million stak…",
-   "score": 0.7311
-  },
-  {
-   "title": "Israel’s Largest Bank Will Give Bitcoin Trading Another Try",
-   "url": "https://decrypt.co/375665/israel-largest-bank-leumi-bitcoin-trading",
-   "source": "Decrypt",
-   "published": "2026-08-14T17:14:02+00:00",
-   "summary": "Bank Leumi's 2022 attempt died at the Bank of Israel. A softer regulatory line and Galaxy's custody stack now give it another shot in early 2027.",
-   "score": 0.6896
+   "score": 0.7155
   },
   {
    "title": "Morgan Stanley’s BlackRock Bitcoin ETF holdings rise 23% in Q2",
@@ -94,15 +102,15 @@
    "source": "Cointelegraph",
    "published": "2026-08-14T14:22:57+00:00",
    "summary": "Morgan Stanley’s reported IBIT holdings rose to 16.5 million shares in Q2, while Ether ETF positions and several crypto-linked stocks also increased.",
-   "score": 0.5775
+   "score": 0.5652
   },
   {
-   "title": "Why the world’s second-largest Bitcoin mining power is shutting down rigs in its capital city",
-   "url": "https://www.coindesk.com/policy/2026/08/15/why-the-world-s-second-largest-bitcoin-mining-power-is-shutting-down-rigs-in-its-capital-city",
-   "source": "CoinDesk",
-   "published": "2026-08-15T15:21:15+00:00",
-   "summary": "",
-   "score": 0.5522
+   "title": "Israel’s Largest Bank Will Give Bitcoin Trading Another Try",
+   "url": "https://decrypt.co/375665/israel-largest-bank-leumi-bitcoin-trading",
+   "source": "Decrypt",
+   "published": "2026-08-14T17:14:02+00:00",
+   "summary": "Bank Leumi's 2022 attempt died at the Bank of Israel. A softer regulatory line and Galaxy's custody stack now give it another shot in early 2027.",
+   "score": 0.5398
   },
   {
    "title": "UBS Ups Bitcoin Position, Buys More Shares in BlackRock’s ETF",
@@ -110,15 +118,15 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-13T18:32:49+00:00",
    "summary": "Bitcoin Magazine UBS Ups Bitcoin Position, Buys More Shares in BlackRock’s ETF The Swiss bank has quietly upped its position in the popular Bitcoin fund since 2024. This post UBS Ups Bitcoin Position, Buys More Shares in BlackRock’s ETF first appeared on Bitcoin Magazine and is…",
-   "score": 0.5421
+   "score": 0.5305
   },
   {
-   "title": "Another Bitcoin Miner Sells Off BTC to Fund AI Data Center Pivot",
-   "url": "https://decrypt.co/375655/bitcoin-miner-sells-btc-ai-pivot-hyperscale",
-   "source": "Decrypt",
-   "published": "2026-08-14T16:23:20+00:00",
-   "summary": "Bitcoin miner Hyperscale sold most of its Bitcoin but said it plans to rebuild its holdings through mining and future purchases.",
-   "score": 0.4954
+   "title": "Brazil’s largest bitcoin treasury firm plans ETF with 95% allocation to Strategy's STRC",
+   "url": "https://www.coindesk.com/business/2026/08/13/brazil-s-largest-bitcoin-treasury-firm-plans-etf-with-95-allocation-to-strategy-s-strc",
+   "source": "CoinDesk",
+   "published": "2026-08-13T09:39:52+00:00",
+   "summary": "",
+   "score": 0.5077
   },
   {
    "title": "JPMorgan boosts Bitcoin, Ether ETF positions in Q2 filing",
@@ -126,23 +134,23 @@
    "source": "Cointelegraph",
    "published": "2026-08-14T14:14:06+00:00",
    "summary": "JPMorgan reported a 25% increase in its Bitcoin ETF position and more than quadrupled its Ether ETF position in the second quarter.",
-   "score": 0.461
+   "score": 0.4512
   },
   {
-   "title": "Bitcoin slips as U.S. inflation fails to spark gains, ETFs see August's first two-day drawdown",
-   "url": "https://www.coindesk.com/markets/2026/08/14/bitcoin-slips-as-u-s-inflation-fails-to-spark-gains-etfs-see-august-s-first-two-day-drawdown",
-   "source": "CoinDesk",
-   "published": "2026-08-14T11:06:12+00:00",
-   "summary": "",
-   "score": 0.4406
-  },
-  {
-   "title": "Metaplanet Denies Selling $320M in Bitcoin as Firm Launches BitBonds",
-   "url": "https://decrypt.co/375562/metaplanet-denies-bitcoin-sale-launches-bitbonds",
+   "title": "Another Bitcoin Miner Sells Off BTC to Fund AI Data Center Pivot",
+   "url": "https://decrypt.co/375655/bitcoin-miner-sells-btc-ai-pivot-hyperscale",
    "source": "Decrypt",
-   "published": "2026-08-13T16:40:49+00:00",
-   "summary": "The company's CEO said a 5,014 BTC transfer was a custody move, not a sale, as the Tokyo-listed Bitcoin treasury company rolls out a fixed-rate debt program.",
-   "score": 0.3518
+   "published": "2026-08-14T16:23:20+00:00",
+   "summary": "Bitcoin miner Hyperscale sold most of its Bitcoin but said it plans to rebuild its holdings through mining and future purchases.",
+   "score": 0.3878
+  },
+  {
+   "title": "Why the world’s second-largest Bitcoin mining power is shutting down rigs in its capital city",
+   "url": "https://www.coindesk.com/policy/2026/08/15/why-the-world-s-second-largest-bitcoin-mining-power-is-shutting-down-rigs-in-its-capital-city",
+   "source": "CoinDesk",
+   "published": "2026-08-15T15:21:15+00:00",
+   "summary": "",
+   "score": 0.3458
   },
   {
    "title": "Bitcoin price drops to $62.5K as trader warns weekly close may spark more losses",
@@ -150,15 +158,7 @@
    "source": "Cointelegraph",
    "published": "2026-08-14T14:38:27+00:00",
    "summary": "Bitcoin falls further toward new August lows, ignoring positive US inflation trends while US stocks continue to circle all-time highs.",
-   "score": 0.3463
-  },
-  {
-   "title": "Live updates: Bitcoin flat near $63,500; lapsing US-Iran ceasefire revives the oil threat",
-   "url": "https://www.coindesk.com/markets/2026/08/17/live-updates-bitcoin-flat-near-usd63-500-but-the-flows-have-quietly-turned",
-   "source": "CoinDesk",
-   "published": "2026-08-17T08:38:26+00:00",
-   "summary": "",
-   "score": 0.3207
+   "score": 0.3388
   },
   {
    "title": "Goldman Sachs to Acquire NEOS Investments in $2.25B Deal, Adding Bitcoin Income ETFs to Lineup",
@@ -166,7 +166,31 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-12T21:20:05+00:00",
    "summary": "Bitcoin Magazine Goldman Sachs to Acquire NEOS Investments in $2.25B Deal, Adding Bitcoin Income ETFs to Lineup The deal gives the bank a ready-made foothold in Bitcoin-income ETFs space. This post Goldman Sachs to Acquire NEOS Investments in $2.25B Deal, Adding Bitcoin Income E…",
-   "score": 0.3193
+   "score": 0.3124
+  },
+  {
+   "title": "Bitcoin slips as U.S. inflation fails to spark gains, ETFs see August's first two-day drawdown",
+   "url": "https://www.coindesk.com/markets/2026/08/14/bitcoin-slips-as-u-s-inflation-fails-to-spark-gains-etfs-see-august-s-first-two-day-drawdown",
+   "source": "CoinDesk",
+   "published": "2026-08-14T11:06:12+00:00",
+   "summary": "",
+   "score": 0.276
+  },
+  {
+   "title": "Metaplanet Denies Selling $320M in Bitcoin as Firm Launches BitBonds",
+   "url": "https://decrypt.co/375562/metaplanet-denies-bitcoin-sale-launches-bitbonds",
+   "source": "Decrypt",
+   "published": "2026-08-13T16:40:49+00:00",
+   "summary": "The company's CEO said a 5,014 BTC transfer was a custody move, not a sale, as the Tokyo-listed Bitcoin treasury company rolls out a fixed-rate debt program.",
+   "score": 0.2754
+  },
+  {
+   "title": "Live updates: Bitcoin flat near $63,500; lapsing US-Iran ceasefire revives the oil threat",
+   "url": "https://www.coindesk.com/markets/2026/08/17/live-updates-bitcoin-flat-near-usd63-500-but-the-flows-have-quietly-turned",
+   "source": "CoinDesk",
+   "published": "2026-08-17T08:38:26+00:00",
+   "summary": "",
+   "score": 0.2009
   },
   {
    "title": "Goldman Sachs' $2.25B NEOS Deal Hands It Ready-Made Bitcoin Income ETF Business",
@@ -174,15 +198,7 @@
    "source": "Decrypt",
    "published": "2026-08-12T18:58:26+00:00",
    "summary": "The cash-and-equity deal for the options-income specialist folds in NEOS's roughly $1 billion Bitcoin covered-call fund, giving Goldman instant scale in a crypto ETF niche it had only just entered on paper.",
-   "score": 0.2468
-  },
-  {
-   "title": "The bitcoin futures market looks like a crowded club with a tiny exit – and it could cause pain",
-   "url": "https://www.coindesk.com/markets/2026/08/17/the-bitcoin-futures-market-has-a-crowded-club-tiny-exit-problem-and-it-could-cause-pain",
-   "source": "CoinDesk",
-   "published": "2026-08-17T05:51:18+00:00",
-   "summary": "",
-   "score": 0.2465
+   "score": 0.1932
   },
   {
    "title": "Bitcoin Yawns As Fed’s Favorite Inflation Gauge Eases",
@@ -190,15 +206,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-12T15:20:07+00:00",
    "summary": "Bitcoin Magazine Bitcoin Yawns As Fed’s Favorite Inflation Gauge Eases Bitcoin's price was largely flat on news that US inflation was subdued in July. This post Bitcoin Yawns As Fed’s Favorite Inflation Gauge Eases first appeared on Bitcoin Magazine and is written by Mathew Di S…",
-   "score": 0.1952
-  },
-  {
-   "title": "Bitcoin nears $64,000 in Asia morning hours as HYPE jumps 8% on the week",
-   "url": "https://www.coindesk.com/markets/2026/08/17/bitcoin-tops-usd64-000-in-asia-morning-hours-as-hype-jumps-8-on-the-week",
-   "source": "CoinDesk",
-   "published": "2026-08-17T04:14:00+00:00",
-   "summary": "",
-   "score": 0.1926
+   "score": 0.191
   },
   {
    "title": "Goldman Sachs to acquire ETF manager NEOS in $2.25B deal",
@@ -206,7 +214,15 @@
    "source": "Cointelegraph",
    "published": "2026-08-12T20:37:55+00:00",
    "summary": "The deal would add NEOS’ $30 billion ETF business, including Bitcoin- and Ether-linked income funds, to Goldman Sachs Asset Management.",
-   "score": 0.1618
+   "score": 0.1583
+  },
+  {
+   "title": "The bitcoin futures market looks like a crowded club with a tiny exit – and it could cause pain",
+   "url": "https://www.coindesk.com/markets/2026/08/17/the-bitcoin-futures-market-has-a-crowded-club-tiny-exit-problem-and-it-could-cause-pain",
+   "source": "CoinDesk",
+   "published": "2026-08-17T05:51:18+00:00",
+   "summary": "",
+   "score": 0.1544
   },
   {
    "title": "OCC Says It’s ‘Open for Business’ as Crypto Firms Line Up for Bank Charters",
@@ -214,23 +230,15 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-12T17:05:06+00:00",
    "summary": "Bitcoin Magazine OCC Says It’s ‘Open for Business’ as Crypto Firms Line Up for Bank Charters Top crypto companies have received conditional approval from the U.S. federal banking regulator. This post OCC Says It’s ‘Open for Business’ as Crypto Firms Line Up for Bank Charters fir…",
-   "score": 0.1409
+   "score": 0.1379
   },
   {
-   "title": "France Tax Data Leak Could Fuel Scams, Attacks Targeting Bitcoin Holders",
-   "url": "https://decrypt.co/375715/france-tax-data-leak-wrench-attacks-bitcoin",
-   "source": "Decrypt",
-   "published": "2026-08-14T21:03:35+00:00",
-   "summary": "A hacker is reportedly selling personal and financial records tied to more than 678,000 taxpayers and businesses in France.",
-   "score": 0.1357
-  },
-  {
-   "title": "The 'long bitcoin, short the bankers' era is officially over as TradFi giants embrace digital assets",
-   "url": "https://www.coindesk.com/business/2026/08/13/the-long-bitcoin-short-the-bankers-era-is-officially-over-as-tradfi-giants-embrace-digital-assets",
+   "title": "Bitcoin nears $64,000 in Asia morning hours as HYPE jumps 8% on the week",
+   "url": "https://www.coindesk.com/markets/2026/08/17/bitcoin-tops-usd64-000-in-asia-morning-hours-as-hype-jumps-8-on-the-week",
    "source": "CoinDesk",
-   "published": "2026-08-16T12:00:00+00:00",
+   "published": "2026-08-17T04:14:00+00:00",
    "summary": "",
-   "score": 0.1219
+   "score": 0.1206
   },
   {
    "title": "Public Bitcoin miners cut hashrate 13.4% as AI infrastructure revenue grows",
@@ -238,7 +246,7 @@
    "source": "Cointelegraph",
    "published": "2026-08-13T16:00:23+00:00",
    "summary": "AI and HPC are reshaping mining economics as operators repurpose power and data centers, while a smaller group of miners continues to expand Bitcoin capacity.",
-   "score": 0.1142
+   "score": 0.1117
   },
   {
    "title": "Edelman Financial, Tudor Investment Reveal Significant Bitcoin Holdings",
@@ -246,15 +254,15 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-14T22:18:16+00:00",
    "summary": "Bitcoin Magazine Edelman Financial, Tudor Investment Reveal Significant Bitcoin Holdings The two massive investment firms are big into Bitcoin. This post Edelman Financial, Tudor Investment Reveal Significant Bitcoin Holdings first appeared on Bitcoin Magazine and is written by…",
-   "score": 0.1105
+   "score": 0.1081
   },
   {
-   "title": "After Coldcard Was Hacked, $15 Billion in Bitcoin Moved to Safety",
-   "url": "https://decrypt.co/375450/coldcard-hack-15-billion-bitcoin-moved-safety",
+   "title": "France Tax Data Leak Could Fuel Scams, Attacks Targeting Bitcoin Holders",
+   "url": "https://decrypt.co/375715/france-tax-data-leak-wrench-attacks-bitcoin",
    "source": "Decrypt",
-   "published": "2026-08-12T18:16:04+00:00",
-   "summary": "Casa CEO Nick Neuman says the mass Bitcoin migration after the $130M Coldcard exploit proves distributed self-custody is Bitcoin's immune system—not its vulnerability.",
-   "score": 0.1043
+   "published": "2026-08-14T21:03:35+00:00",
+   "summary": "A hacker is reportedly selling personal and financial records tied to more than 678,000 taxpayers and businesses in France.",
+   "score": 0.1062
   },
   {
    "title": "Bitcoin could bottom in October, altcoins are ‘basically dead,’ Swan CEO says",
@@ -262,7 +270,7 @@
    "source": "Cointelegraph",
    "published": "2026-08-15T12:57:58+00:00",
    "summary": "Klippsten said Bitcoin could bottom about a year after its previous peak and argued that crypto’s best outcome is to become part of TradFi.",
-   "score": 0.0874
+   "score": 0.0855
   },
   {
    "title": "Bitcoiners Warned After French Tax Authority Confirms Data Breach Affecting Hundreds of Thousands",
@@ -270,23 +278,23 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-14T20:42:48+00:00",
    "summary": "Bitcoin Magazine Bitcoiners Warned After French Tax Authority Confirms Data Breach Affecting Hundreds of Thousands France is already the epicenter of wrench attacks, where investors are targeted and forced to hand over their crypto. This post Bitcoiners Warned After French Tax A…",
-   "score": 0.0864
+   "score": 0.0845
   },
   {
-   "title": "Live updates: Bitcoin slips back even as Fed rate hike expectations dwindle",
-   "url": "https://www.coindesk.com/tech/2026/08/13/live-markets-u-s-inflation-is-stickier-than-july-s-mild-cpi-suggests",
-   "source": "CoinDesk",
-   "published": "2026-08-13T09:18:19+00:00",
-   "summary": "",
-   "score": 0.0829
-  },
-  {
-   "title": "Coldcard Bitcoin Thefts Slow, But Losses Could Top $150 Million: Galaxy",
-   "url": "https://decrypt.co/375656/coldcard-bitcoin-thefts-slow-losses-top-150-million",
+   "title": "After Coldcard Was Hacked, $15 Billion in Bitcoin Moved to Safety",
+   "url": "https://decrypt.co/375450/coldcard-hack-15-billion-bitcoin-moved-safety",
    "source": "Decrypt",
-   "published": "2026-08-14T17:46:06+00:00",
-   "summary": "Galaxy Research says the lull likely means vulnerable holders migrated, or were already emptied.",
-   "score": 0.0828
+   "published": "2026-08-12T18:16:04+00:00",
+   "summary": "Casa CEO Nick Neuman says the mass Bitcoin migration after the $130M Coldcard exploit proves distributed self-custody is Bitcoin's immune system—not its vulnerability.",
+   "score": 0.0816
+  },
+  {
+   "title": "The 'long bitcoin, short the bankers' era is officially over as TradFi giants embrace digital assets",
+   "url": "https://www.coindesk.com/business/2026/08/13/the-long-bitcoin-short-the-bankers-era-is-officially-over-as-tradfi-giants-embrace-digital-assets",
+   "source": "CoinDesk",
+   "published": "2026-08-16T12:00:00+00:00",
+   "summary": "",
+   "score": 0.0763
   },
   {
    "title": "Citi CEO Wants ‘Good’ Crypto Clarity Act To Get Passed",
@@ -294,15 +302,15 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-14T20:03:41+00:00",
    "summary": "Bitcoin Magazine Citi CEO Wants ‘Good’ Crypto Clarity Act To Get Passed Citigroup CEO Jane Fraser has said that while some improvements need to be made to the crypto Clarity Act, the bank wants a “good bill to go through.” The banking executive said that the bank was a “leader i…",
-   "score": 0.0685
+   "score": 0.067
   },
   {
-   "title": "Bitcoin treasury company Metaplanet unveils BitBonds with $1.3 million private debt sale",
-   "url": "https://www.coindesk.com/markets/2026/08/13/bitcoin-treasury-company-metaplanet-unveils-bitbonds-with-usd1-3-million-private-debt-sale",
-   "source": "CoinDesk",
-   "published": "2026-08-13T09:14:15+00:00",
-   "summary": "",
-   "score": 0.0663
+   "title": "Coldcard Bitcoin Thefts Slow, But Losses Could Top $150 Million: Galaxy",
+   "url": "https://decrypt.co/375656/coldcard-bitcoin-thefts-slow-losses-top-150-million",
+   "source": "Decrypt",
+   "published": "2026-08-14T17:46:06+00:00",
+   "summary": "Galaxy Research says the lull likely means vulnerable holders migrated, or were already emptied.",
+   "score": 0.0648
   },
   {
    "title": "Bitcoin eyes $63K as US CPI relief sends September Fed rate pause odds to 60%",
@@ -310,15 +318,7 @@
    "source": "Cointelegraph",
    "published": "2026-08-12T15:00:10+00:00",
    "summary": "Bitcoin price action did not reflect relief in US CPI inflation numbers matching expectations amid a warning over $63,000 failing as support.",
-   "score": 0.0636
-  },
-  {
-   "title": "Morning Minute: Saylor's Strategy Sells Bitcoin for Second Week in a Row",
-   "url": "https://decrypt.co/375304/morning-minute-saylors-strategy-sells-bitcoin-for-second-week-in-a-row",
-   "source": "Decrypt",
-   "published": "2026-08-11T12:22:13+00:00",
-   "summary": "Strategy dumped $108M in BTC at a loss and a whopping $650M of MSTR stock, and yet MSTR stock barely flinched. What gives?",
-   "score": 0.0607
+   "score": 0.0623
   },
   {
    "title": "Bitcoin Exchange-Traded Funds See Spike In Inflows Following Huge Hack",
@@ -326,7 +326,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-10T19:35:34+00:00",
    "summary": "Bitcoin Magazine Bitcoin Exchange-Traded Funds See Spike In Inflows Following Huge Hack The Bitcoin ETFs are experiencing massive inflows, despite the negative news from last month's Coldcard hack. This post Bitcoin Exchange-Traded Funds See Spike In Inflows Following Huge Hack…",
-   "score": 0.0544
+   "score": 0.0532
   }
  ]
 }
