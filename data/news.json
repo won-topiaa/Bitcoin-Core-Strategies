@@ -1,5 +1,5 @@
 {
- "fetched": "2026-08-19T13:27:31+00:00",
+ "fetched": "2026-08-19T16:00:26+00:00",
  "sources_ok": [
   "CoinDesk",
   "Cointelegraph",
@@ -9,12 +9,20 @@
  "sources_failed": [],
  "items": [
   {
+   "title": "Bitcoin price hits 11-week high as US Treasury doubles debt buyback size",
+   "url": "https://cointelegraph.com/markets/bitcoin-price-hits-11-week-high-as-us-treasury-doubles-debt-buyback-size?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-08-19T15:44:09+00:00",
+   "summary": "Bitcoin joined US stocks in a broad rally after the US Treasury announced that it was at least doubling the amount of its debt buyback operations from September.",
+   "score": 3.2871
+  },
+  {
    "title": "Fed decision making comes into focus as bitcoin holds steady, bond yields surge",
    "url": "https://www.coindesk.com/daybook-us/2026/08/19/fed-decision-making-comes-into-focus-as-bitcoin-holds-steady-bond-yields-surge",
    "source": "CoinDesk",
    "published": "2026-08-19T11:14:50+00:00",
    "summary": "",
-   "score": 3.1963
+   "score": 3.0808
   },
   {
    "title": "SEC Proposes Crypto Rulebook as Clarity Act Stalls",
@@ -22,7 +30,15 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-18T19:46:11+00:00",
    "summary": "Bitcoin Magazine SEC Proposes Crypto Rulebook as Clarity Act Stalls Regulators are pushing ahead with legislation despite the Clarity Act stalling. This post SEC Proposes Crypto Rulebook as Clarity Act Stalls first appeared on Bitcoin Magazine and is written by Mathew Di Salvo .",
-   "score": 2.8659
+   "score": 2.7624
+  },
+  {
+   "title": "Chinese InsurTech Firm Zhibao Adds 2,380 Bitcoin in $154.7M Treasury Pivot",
+   "url": "https://decrypt.co/375935/china-zhibao-bitcoin-treasury-pivot",
+   "source": "Decrypt",
+   "published": "2026-08-19T13:31:04+00:00",
+   "summary": "The Shanghai-based InsurTech firm closed a $154.7 million private placement funded entirely in crypto, with investors contributing Bitcoin directly rather than cash.",
+   "score": 2.4117
   },
   {
    "title": "Bitcoin ETFs add $189M as August net inflows approach $1B",
@@ -30,7 +46,7 @@
    "source": "Cointelegraph",
    "published": "2026-08-19T07:59:16+00:00",
    "summary": "US spot Bitcoin ETFs took in $189 million on Tuesday, lifting August net inflows to $951 million, while Ether ETFs added $71.5 million.",
-   "score": 2.7721
+   "score": 2.1376
   },
   {
    "title": "Bitcoin is flashing 8 of 12 capitulation signals, but bottom's not yet in, says VanEck",
@@ -38,7 +54,15 @@
    "source": "CoinDesk",
    "published": "2026-08-19T12:45:35+00:00",
    "summary": "",
-   "score": 2.2175
+   "score": 2.1374
+  },
+  {
+   "title": "Bitcoin Blasts Past $68,000 After US Treasury Doubles Debt Buybacks",
+   "url": "https://bitcoinmagazine.com/news/bitcoin-blasts-past-68000",
+   "source": "Bitcoin Magazine",
+   "published": "2026-08-19T15:53:42+00:00",
+   "summary": "Bitcoin Magazine Bitcoin Blasts Past $68,000 After US Treasury Doubles Debt Buybacks Bitcoin blew past $68,000 on Wednesday, jumping nearly 3% over a 24-hour period after news dropped that the U.S. Treasury planned to more than double the size of its government debt repurchases.…",
+   "score": 1.9968
   },
   {
    "title": "Bitcoin has ‘largely purged’ froth that preceded 50% drop from $126K: BlackRock",
@@ -46,7 +70,15 @@
    "source": "Cointelegraph",
    "published": "2026-08-19T11:06:13+00:00",
    "summary": "Bitcoin maintained its appeal as a diversification investment despite dropping more than 50% from all-time high, a BlackRock report stated.",
-   "score": 2.1651
+   "score": 1.6695
+  },
+  {
+   "title": "Live updates: Bitcoin hits $69,700 as Treasury move pushes yields lower",
+   "url": "https://www.coindesk.com/markets/2026/08/19/live-updates-bitcoin-holds-firm-above-usd64-000-as-south-korea-s-kospi-sinks-5-8",
+   "source": "CoinDesk",
+   "published": "2026-08-19T09:05:45+00:00",
+   "summary": "",
+   "score": 1.448
   },
   {
    "title": "Japan's Metaplanet Plants Its Flag in the US With $132M Bitcoin Treasury Deal",
@@ -54,7 +86,7 @@
    "source": "Decrypt",
    "published": "2026-08-18T15:19:45+00:00",
    "summary": "The Tokyo-listed firm will seed gaming media company Super League—to be renamed Superplanet and trade as SUPA—with 2,100 BTC.",
-   "score": 1.8162
+   "score": 1.4004
   },
   {
    "title": "Sweden’s H100 reports $26M H1 loss driven by falling Bitcoin value",
@@ -62,7 +94,7 @@
    "source": "Cointelegraph",
    "published": "2026-08-19T11:59:30+00:00",
    "summary": "Sweden’s H100 reported a $26 million loss for the first half of the year, as it completed its acquisitions to become Europe’s second-largest Bitcoin treasury by holdings.",
-   "score": 1.5665
+   "score": 1.2079
   },
   {
    "title": "US Treasury Asks For Public Input on Landmark Genius Act Crypto Legislation",
@@ -70,15 +102,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-17T16:36:51+00:00",
    "summary": "Bitcoin Magazine US Treasury Asks For Public Input on Landmark Genius Act Crypto Legislation The U.S. Department of the Treasury is moving fast with crypto regulation, with the government body asking for public comment on the landmark GENIUS Act. In a Monday announcement, the Tr…",
-   "score": 1.549
-  },
-  {
-   "title": "Live updates: Bitcoin takes aim at $65,000 as Treasury move sends yields lower",
-   "url": "https://www.coindesk.com/markets/2026/08/19/live-updates-bitcoin-holds-firm-above-usd64-000-as-south-korea-s-kospi-sinks-5-8",
-   "source": "CoinDesk",
-   "published": "2026-08-19T09:05:45+00:00",
-   "summary": "",
-   "score": 1.5023
+   "score": 1.1944
   },
   {
    "title": "Strategy Leaves Bitcoin Untouched, Raises $334M Selling MSTR Stock",
@@ -86,7 +110,7 @@
    "source": "Decrypt",
    "published": "2026-08-17T12:56:55+00:00",
    "summary": "The Bitcoin treasury firm halted BTC sales after three weeks, with equity issuance covering dividends, a STRC buyback and the dollar reserve.",
-   "score": 1.2309
+   "score": 0.9491
   },
   {
    "title": "Metaplanet expands Bitcoin treasury strategy to US with 2,100-BTC Nasdaq play",
@@ -94,15 +118,7 @@
    "source": "Cointelegraph",
    "published": "2026-08-18T16:21:58+00:00",
    "summary": "The proposed deal with Nasdaq-listed Super League Enterprise would give the Tokyo-based company a foothold in US capital markets while using existing Bitcoin rather than additional purchases.",
-   "score": 1.1704
-  },
-  {
-   "title": "Jane Street Reveals Nearly $1B Bitcoin Position",
-   "url": "https://bitcoinmagazine.com/news/jane-street-bitcoin-position",
-   "source": "Bitcoin Magazine",
-   "published": "2026-08-17T20:37:07+00:00",
-   "summary": "Bitcoin Magazine Jane Street Reveals Nearly $1B Bitcoin Position Top Wall Street firm Jane Street has bought Bitcoin via the spot ETFs. This post Jane Street Reveals Nearly $1B Bitcoin Position first appeared on Bitcoin Magazine and is written by Mathew Di Salvo .",
-   "score": 1.0646
+   "score": 0.9025
   },
   {
    "title": "Maya Protocol exploit drains bitcoin and other assets as pool value drops by $11 million",
@@ -110,7 +126,15 @@
    "source": "CoinDesk",
    "published": "2026-08-19T06:36:11+00:00",
    "summary": "",
-   "score": 0.9275
+   "score": 0.894
+  },
+  {
+   "title": "Jane Street Reveals Nearly $1B Bitcoin Position",
+   "url": "https://bitcoinmagazine.com/news/jane-street-bitcoin-position",
+   "source": "Bitcoin Magazine",
+   "published": "2026-08-17T20:37:07+00:00",
+   "summary": "Bitcoin Magazine Jane Street Reveals Nearly $1B Bitcoin Position Top Wall Street firm Jane Street has bought Bitcoin via the spot ETFs. This post Jane Street Reveals Nearly $1B Bitcoin Position first appeared on Bitcoin Magazine and is written by Mathew Di Salvo .",
+   "score": 0.8209
   },
   {
    "title": "Paul Tudor Jones' Firm Buys Back Into BlackRock Bitcoin ETF After a Year of Selling",
@@ -118,23 +142,7 @@
    "source": "Decrypt",
    "published": "2026-08-17T10:31:04+00:00",
    "summary": "The macro fund raised its iShares Bitcoin Trust stake 18.9% to 688,529 shares worth $22.9 million in Q2, while sharply cutting its call options—a shift from leveraged bets toward direct spot exposure.",
-   "score": 0.9201
-  },
-  {
-   "title": "Here’s what happened in crypto today",
-   "url": "https://cointelegraph.com/news/what-happened-in-crypto-today?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-08-19T13:10:52+00:00",
-   "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
-   "score": 0.8975
-  },
-  {
-   "title": "Investors Cash Out Fast of Bitcoin ETFs but Price Remains Stable",
-   "url": "https://bitcoinmagazine.com/news/investors-cash-out-of-bitcoin-etfs",
-   "source": "Bitcoin Magazine",
-   "published": "2026-08-17T18:04:52+00:00",
-   "summary": "Bitcoin Magazine Investors Cash Out Fast of Bitcoin ETFs but Price Remains Stable The Bitcoin investment vehicles were on a hot streak but investor sentiment last week changed. This post Investors Cash Out Fast of Bitcoin ETFs but Price Remains Stable first appeared on Bitcoin M…",
-   "score": 0.821
+   "score": 0.7095
   },
   {
    "title": "Japan's Metaplanet launching U.S. bitcoin treasury company through $135 million nanocap deal",
@@ -142,7 +150,23 @@
    "source": "CoinDesk",
    "published": "2026-08-18T14:35:08+00:00",
    "summary": "",
-   "score": 0.736
+   "score": 0.7094
+  },
+  {
+   "title": "Here’s what happened in crypto today",
+   "url": "https://cointelegraph.com/news/what-happened-in-crypto-today?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-08-19T13:10:52+00:00",
+   "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
+   "score": 0.6921
+  },
+  {
+   "title": "Investors Cash Out Fast of Bitcoin ETFs but Price Remains Stable",
+   "url": "https://bitcoinmagazine.com/news/investors-cash-out-of-bitcoin-etfs",
+   "source": "Bitcoin Magazine",
+   "published": "2026-08-17T18:04:52+00:00",
+   "summary": "Bitcoin Magazine Investors Cash Out Fast of Bitcoin ETFs but Price Remains Stable The Bitcoin investment vehicles were on a hot streak but investor sentiment last week changed. This post Investors Cash Out Fast of Bitcoin ETFs but Price Remains Stable first appeared on Bitcoin M…",
+   "score": 0.6331
   },
   {
    "title": "DMND Integrates Mempool Accelerator With Miner Revenue Sharing Using StratumV2",
@@ -150,7 +174,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-18T16:01:35+00:00",
    "summary": "Bitcoin Magazine DMND Integrates Mempool Accelerator With Miner Revenue Sharing Using StratumV2 DMND announces Mempool Accelerator revenue sharing with miners powered by Stratum V2. This post DMND Integrates Mempool Accelerator With Miner Revenue Sharing Using StratumV2 first ap…",
-   "score": 0.6011
+   "score": 0.4635
   },
   {
    "title": "Bitcoin miners’ AI pivot pays off, but mining could revive with one twist",
@@ -158,15 +182,7 @@
    "source": "CoinDesk",
    "published": "2026-08-18T14:41:31+00:00",
    "summary": "",
-   "score": 0.4717
-  },
-  {
-   "title": "Bitcoin Wallet Maker BitBox Says AI Found Severe Flaws in Firmware",
-   "url": "https://decrypt.co/375886/bitcoin-wallet-bitbox-ai-severe-flaws-firmware",
-   "source": "Decrypt",
-   "published": "2026-08-18T18:06:42+00:00",
-   "summary": "The Swiss hardware-wallet maker found two severe bugs with the help of frontier AI models, and warns that older firmware leaves you exposed.",
-   "score": 0.3872
+   "score": 0.4547
   },
   {
    "title": "Bitcoin tracks equity bounce, but $390 million ETF outflow week keeps bulls on back foot",
@@ -174,7 +190,15 @@
    "source": "CoinDesk",
    "published": "2026-08-17T09:59:55+00:00",
    "summary": "",
-   "score": 0.3741
+   "score": 0.3605
+  },
+  {
+   "title": "Bitcoin Wallet Maker BitBox Says AI Found Severe Flaws in Firmware",
+   "url": "https://decrypt.co/375886/bitcoin-wallet-bitbox-ai-severe-flaws-firmware",
+   "source": "Decrypt",
+   "published": "2026-08-18T18:06:42+00:00",
+   "summary": "The Swiss hardware-wallet maker found two severe bugs with the help of frontier AI models, and warns that older firmware leaves you exposed.",
+   "score": 0.2986
   },
   {
    "title": "Losses Top $115M In Coldcard Bitcoin Hack: Galaxy Research",
@@ -182,23 +206,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-17T21:32:34+00:00",
    "summary": "Bitcoin Magazine Losses Top $115M In Coldcard Bitcoin Hack: Galaxy Research The amount of bitcoin stolen has been confirmed at $115 million, according to Galaxy Digital's latest figures. This post Losses Top $115M In Coldcard Bitcoin Hack: Galaxy Research first appeared on Bitco…",
-   "score": 0.3683
-  },
-  {
-   "title": "Crypto Biz: Bitcoin’s $116M self-custody wake-up call",
-   "url": "https://cointelegraph.com/news/crypto-biz-bitcoin-self-custody-etf-inflows-strategy-riot-ai?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-08-14T15:29:13+00:00",
-   "summary": "A $116 million Bitcoin wallet exploit puts self-custody under scrutiny as ETF inflows rebound, Strategy eyes more BTC and miners chase billions in AI deals.",
-   "score": 0.334
-  },
-  {
-   "title": "Citi to Launch Bitcoin Custody as Wall Street Pushes Deeper Into Crypto",
-   "url": "https://decrypt.co/375880/citi-bitcoin-custody-wall-street-crypto",
-   "source": "Decrypt",
-   "published": "2026-08-18T15:56:05+00:00",
-   "summary": "The banking giant plans to let institutional clients hold Bitcoin and traditional assets through the same custody framework.",
-   "score": 0.3002
+   "score": 0.284
   },
   {
    "title": "Global bond yields surge as debt fears test bitcoin’s hedge narrative",
@@ -206,7 +214,31 @@
    "source": "CoinDesk",
    "published": "2026-08-18T14:40:41+00:00",
    "summary": "",
-   "score": 0.2717
+   "score": 0.2618
+  },
+  {
+   "title": "Crypto Biz: Bitcoin’s $116M self-custody wake-up call",
+   "url": "https://cointelegraph.com/news/crypto-biz-bitcoin-self-custody-etf-inflows-strategy-riot-ai?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-08-14T15:29:13+00:00",
+   "summary": "A $116 million Bitcoin wallet exploit puts self-custody under scrutiny as ETF inflows rebound, Strategy eyes more BTC and miners chase billions in AI deals.",
+   "score": 0.2576
+  },
+  {
+   "title": "Citi to Launch Bitcoin Custody as Wall Street Pushes Deeper Into Crypto",
+   "url": "https://decrypt.co/375880/citi-bitcoin-custody-wall-street-crypto",
+   "source": "Decrypt",
+   "published": "2026-08-18T15:56:05+00:00",
+   "summary": "The banking giant plans to let institutional clients hold Bitcoin and traditional assets through the same custody framework.",
+   "score": 0.2315
+  },
+  {
+   "title": "Bitcoin’s Volatility May Be Down But Expect a ‘Meaningful Move’ Soon, Says Fidelity",
+   "url": "https://bitcoinmagazine.com/news/bitcoin-volatility-is-down-says-fidelity",
+   "source": "Bitcoin Magazine",
+   "published": "2026-08-19T15:05:32+00:00",
+   "summary": "Bitcoin Magazine Bitcoin’s Volatility May Be Down But Expect a ‘Meaningful Move’ Soon, Says Fidelity Bitcoin isn't moving. Analysts think that's a sign it could soon do something significant. This post Bitcoin’s Volatility May Be Down But Expect a ‘Meaningful Move’ Soon, Says Fi…",
+   "score": 0.207
   },
   {
    "title": "Bitcoin Wallet Untouched for 15 Years Suddenly Springs to Life",
@@ -214,15 +246,15 @@
    "source": "Decrypt",
    "published": "2026-08-18T14:03:34+00:00",
    "summary": "The address received 8.54 BTC in June 2011 when the coin traded around $14 and stayed silent for 15 years before moving roughly $538,000 in a single transaction.",
-   "score": 0.2337
+   "score": 0.1802
   },
   {
-   "title": "Strategy Goes Another Week Without Buying — Or Selling — Bitcoin, Builds Up Cash Reserve",
-   "url": "https://bitcoinmagazine.com/news/strategy-goes-another-week-without-buying",
-   "source": "Bitcoin Magazine",
-   "published": "2026-08-17T14:23:17+00:00",
-   "summary": "Bitcoin Magazine Strategy Goes Another Week Without Buying — Or Selling — Bitcoin, Builds Up Cash Reserve Strategy last week sold MSTR shares for approximately $333.7 million and did not buy or sell any Bitcoin. This post Strategy Goes Another Week Without Buying — Or Selling —…",
-   "score": 0.2125
+   "title": "Bitcoin nears key technical breakout that could propel prices to $76,000",
+   "url": "https://www.coindesk.com/markets/2026/08/19/bitcoin-nears-key-technical-breakout-that-could-propel-prices-to-usd76-000",
+   "source": "CoinDesk",
+   "published": "2026-08-19T15:22:47+00:00",
+   "summary": "",
+   "score": 0.1663
   },
   {
    "title": "Strategy raises $334M through stock sales but buys no Bitcoin",
@@ -230,15 +262,15 @@
    "source": "Cointelegraph",
    "published": "2026-08-17T12:51:03+00:00",
    "summary": "Proceeds funded STRC dividends and repurchases, while $149.1 million was added to Strategy’s US dollar reserve, which reached $4.8 billion.",
-   "score": 0.2079
+   "score": 0.1603
   },
   {
-   "title": "BitBox Warns Bitcoiners After Discovering ‘Severe’ Vulnerability In Firmware",
-   "url": "https://bitcoinmagazine.com/news/bitbox-warns-users-about-vulnerability",
+   "title": "Strategy Goes Another Week Without Buying — Or Selling — Bitcoin, Builds Up Cash Reserve",
+   "url": "https://bitcoinmagazine.com/news/strategy-goes-another-week-without-buying",
    "source": "Bitcoin Magazine",
-   "published": "2026-08-18T21:06:52+00:00",
-   "summary": "Bitcoin Magazine BitBox Warns Bitcoiners After Discovering ‘Severe’ Vulnerability In Firmware Bitcoin wallet manufacturer BitBox has told users it was able to fix “severe vulnerabilities” with its hardware wallet’s firmware, and reassured users that no funds were taken. Yet it s…",
-   "score": 0.1656
+   "published": "2026-08-17T14:23:17+00:00",
+   "summary": "Bitcoin Magazine Strategy Goes Another Week Without Buying — Or Selling — Bitcoin, Builds Up Cash Reserve Strategy last week sold MSTR shares for approximately $333.7 million and did not buy or sell any Bitcoin. This post Strategy Goes Another Week Without Buying — Or Selling —…",
+   "score": 0.1311
   },
   {
    "title": "Swiss mega-bank UBS ramps up its Bitcoin exposure with a massive 24-fold surge in ETF call options",
@@ -246,7 +278,7 @@
    "source": "CoinDesk",
    "published": "2026-08-15T15:56:05+00:00",
    "summary": "",
-   "score": 0.1652
+   "score": 0.1274
   },
   {
    "title": "Bitcoin tags $65K as S&P 500 rebounds from 2-week lows on US-Iran rhetoric",
@@ -254,7 +286,15 @@
    "source": "Cointelegraph",
    "published": "2026-08-18T15:27:13+00:00",
    "summary": "Bitcoin returned to $65,000 for the first time in a week as fresh BTC price volatility accompanied US claims that the Strait of Hormuz was “open and operating.”",
-   "score": 0.1526
+   "score": 0.1177
+  },
+  {
+   "title": "BitBox Warns Bitcoiners After Discovering ‘Severe’ Vulnerability In Firmware",
+   "url": "https://bitcoinmagazine.com/news/bitbox-warns-users-about-vulnerability",
+   "source": "Bitcoin Magazine",
+   "published": "2026-08-18T21:06:52+00:00",
+   "summary": "Bitcoin Magazine BitBox Warns Bitcoiners After Discovering ‘Severe’ Vulnerability In Firmware Bitcoin wallet manufacturer BitBox has told users it was able to fix “severe vulnerabilities” with its hardware wallet’s firmware, and reassured users that no funds were taken. Yet it s…",
+   "score": 0.1022
   },
   {
    "title": "Bitcoin stuck in a six-week range as global bond yields hit highest levels for decades",
@@ -262,15 +302,7 @@
    "source": "CoinDesk",
    "published": "2026-08-19T10:29:57+00:00",
    "summary": "",
-   "score": 0.1286
-  },
-  {
-   "title": "Bitcoin’s Wild Swings Go Quiet, Even as the Bears Won’t Let Go",
-   "url": "https://bitcoinmagazine.com/news/bitcoin-volatility-dampens-vaneck",
-   "source": "Bitcoin Magazine",
-   "published": "2026-08-18T18:30:04+00:00",
-   "summary": "Bitcoin Magazine Bitcoin’s Wild Swings Go Quiet, Even as the Bears Won’t Let Go Bitcoin's volatility has dampened significantly, according to new VanEck research. This post Bitcoin’s Wild Swings Go Quiet, Even as the Bears Won’t Let Go first appeared on Bitcoin Magazine and is w…",
-   "score": 0.1276
+   "score": 0.0992
   },
   {
    "title": "SafePal Bitcoin Wallet Data Breach Stokes Fears of Physical Attacks",
@@ -278,7 +310,7 @@
    "source": "Decrypt",
    "published": "2026-08-17T09:31:04+00:00",
    "summary": "A flaw in an order-tracking plug-in of bitcoin wallet provider SafePal exposed names, addresses and phone numbers of nearly 40,000 customers.",
-   "score": 0.1238
+   "score": 0.0955
   },
   {
    "title": "Bitcoin price spike to $64.5K was ‘low-volume liquidity trap’: Analysis",
@@ -286,47 +318,15 @@
    "source": "Cointelegraph",
    "published": "2026-08-18T09:31:15+00:00",
    "summary": "Bitcoin derivatives markets created a short squeeze that took BTC price action 3% higher on Monday.",
-   "score": 0.1121
+   "score": 0.0864
   },
   {
-   "title": "Citi to Debut Bitcoin Custody for Institutional Investors",
-   "url": "https://bitcoinmagazine.com/news/citi-to-debut-bitcoin-custody",
+   "title": "Bitcoin’s Wild Swings Go Quiet, Even as the Bears Won’t Let Go",
+   "url": "https://bitcoinmagazine.com/news/bitcoin-volatility-dampens-vaneck",
    "source": "Bitcoin Magazine",
-   "published": "2026-08-18T15:24:52+00:00",
-   "summary": "Bitcoin Magazine Citi to Debut Bitcoin Custody for Institutional Investors The bank's new Custody+ service will allow institutional investors to hold Bitcoin alongside other assets on one platform. This post Citi to Debut Bitcoin Custody for Institutional Investors first appeare…",
-   "score": 0.0976
-  },
-  {
-   "title": "Bitcoin holds $64,000 and solana leads gains amid 7% Korean chip stock slide",
-   "url": "https://www.coindesk.com/markets/2026/08/19/solana-leads-bitcoin-and-ether-higher-while-korean-chip-stocks-slide-7",
-   "source": "CoinDesk",
-   "published": "2026-08-19T04:25:42+00:00",
-   "summary": "",
-   "score": 0.0942
-  },
-  {
-   "title": "Israel’s Largest Bank Will Give Bitcoin Trading Another Try",
-   "url": "https://decrypt.co/375665/israel-largest-bank-leumi-bitcoin-trading",
-   "source": "Decrypt",
-   "published": "2026-08-14T17:14:02+00:00",
-   "summary": "Bank Leumi's 2022 attempt died at the Bank of Israel. A softer regulatory line and Galaxy's custody stack now give it another shot in early 2027.",
-   "score": 0.0861
-  },
-  {
-   "title": "Dartmouth endowment’s crypto exposure drops by $2M amid falling prices",
-   "url": "https://cointelegraph.com/news/dartmouth-endowment-crypto-investments-btc-eth-sol-dropped?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-08-14T18:57:04+00:00",
-   "summary": "The value of the university endowment’s holdings in the Bitwise Solana staking ETF, Grayscale Ethereum staking ETF and BlackRock’s iShares Bitcoin ETF dropped to about $12 million.",
-   "score": 0.0771
-  },
-  {
-   "title": "The Pack Is the Painting: Evil Biscuit and the Schizocollage Movement Come to Hong Kong",
-   "url": "https://bitcoinmagazine.com/culture/the-pack-is-the-painting-evil-biscuit-and-the-schizocollage-movement-come-to-hong-kong",
-   "source": "Bitcoin Magazine",
-   "published": "2026-08-18T12:45:19+00:00",
-   "summary": "Bitcoin Magazine The Pack Is the Painting: Evil Biscuit and the Schizocollage Movement Come to Hong Kong In 1956, at an exhibition hall in Tokyo, a Japanese artist named Saburō Murakami ran through a row of paper screens, leaving a torn, human-shaped hole in each one. The audien…",
-   "score": 0.0752
+   "published": "2026-08-18T18:30:04+00:00",
+   "summary": "Bitcoin Magazine Bitcoin’s Wild Swings Go Quiet, Even as the Bears Won’t Let Go Bitcoin's volatility has dampened significantly, according to new VanEck research. This post Bitcoin’s Wild Swings Go Quiet, Even as the Bears Won’t Let Go first appeared on Bitcoin Magazine and is w…",
+   "score": 0.0787
   }
  ]
 }
