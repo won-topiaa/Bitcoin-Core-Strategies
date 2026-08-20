@@ -1,5 +1,5 @@
 {
- "fetched": "2026-08-20T05:44:50+00:00",
+ "fetched": "2026-08-20T07:25:28+00:00",
  "sources_ok": [
   "CoinDesk",
   "Cointelegraph",
@@ -9,12 +9,12 @@
  "sources_failed": [],
  "items": [
   {
-   "title": "Bitcoin surges above $68,000, liquidating $1.4 billion shorts as Treasury buybacks boost risk appetite",
-   "url": "https://www.coindesk.com/markets/2026/08/19/bitcoin-surges-above-usd68-000-liquidating-usd1-4-billion-shorts-as-treasury-buybacks-boost-risk-appetite",
+   "title": "Live updates: Bitcoin ETFs draw $517 million, ether pulls $189 million in biggest inflows in months",
+   "url": "https://www.coindesk.com/tech/2026/08/20/live-updates-bitcoin-etfs-draw-usd517-million-ether-pulls-usd189-million-in-biggest-inflows-in-months",
    "source": "CoinDesk",
-   "published": "2026-08-19T16:18:04+00:00",
+   "published": "2026-08-20T06:21:17+00:00",
    "summary": "",
-   "score": 2.7176
+   "score": 2.954
   },
   {
    "title": "Bitcoin Surges Toward $70K as $1.14 Billion in Crypto Shorts Get Rekt in an Hour",
@@ -22,7 +22,7 @@
    "source": "Decrypt",
    "published": "2026-08-19T16:10:04+00:00",
    "summary": "A White House sitdown with crypto's biggest names and softer Fed signals lit the fuse. But the charts show why the pain for bears might not be over yet.",
-   "score": 2.7124
+   "score": 2.6475
   },
   {
    "title": "Bitcoin price hits 11-week high as US Treasury doubles debt buyback size",
@@ -30,7 +30,7 @@
    "source": "Cointelegraph",
    "published": "2026-08-19T15:44:09+00:00",
    "summary": "Bitcoin joined US stocks in a broad rally after the US Treasury announced that it was at least doubling the amount of its debt buyback operations from September.",
-   "score": 2.6955
+   "score": 2.631
   },
   {
    "title": "SEC Proposes Crypto Rulebook as Clarity Act Stalls",
@@ -38,23 +38,23 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-18T19:46:11+00:00",
    "summary": "Bitcoin Magazine SEC Proposes Crypto Rulebook as Clarity Act Stalls Regulators are pushing ahead with legislation despite the Clarity Act stalling. This post SEC Proposes Crypto Rulebook as Clarity Act Stalls first appeared on Bitcoin Magazine and is written by Mathew Di Salvo .",
-   "score": 2.2652
+   "score": 2.211
   },
   {
-   "title": "Fed decision making comes into focus as bitcoin holds steady, bond yields surge",
-   "url": "https://www.coindesk.com/daybook-us/2026/08/19/fed-decision-making-comes-into-focus-as-bitcoin-holds-steady-bond-yields-surge",
+   "title": "Bitcoin surges above $68,000, liquidating $1.4 billion shorts as Treasury buybacks boost risk appetite",
+   "url": "https://www.coindesk.com/markets/2026/08/19/bitcoin-surges-above-usd68-000-liquidating-usd1-4-billion-shorts-as-treasury-buybacks-boost-risk-appetite",
    "source": "CoinDesk",
-   "published": "2026-08-19T11:14:50+00:00",
+   "published": "2026-08-19T16:18:04+00:00",
    "summary": "",
-   "score": 2.0211
+   "score": 2.1221
   },
   {
-   "title": "Bitcoin ETFs add $189M as August net inflows approach $1B",
-   "url": "https://cointelegraph.com/markets/bitcoin-etf-august-net-inflows-approach-1b?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "title": "Here’s what happened in crypto today",
+   "url": "https://cointelegraph.com/news/what-happened-in-crypto-today?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
    "source": "Cointelegraph",
-   "published": "2026-08-19T07:59:16+00:00",
-   "summary": "US spot Bitcoin ETFs took in $189 million on Tuesday, lifting August net inflows to $951 million, while Ether ETFs added $71.5 million.",
-   "score": 1.7529
+   "published": "2026-08-20T06:03:50+00:00",
+   "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
+   "score": 1.7258
   },
   {
    "title": "Bitcoin Blasts Past $68,000 After US Treasury Doubles Debt Buybacks",
@@ -62,7 +62,15 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-19T15:53:42+00:00",
    "summary": "Bitcoin Magazine Bitcoin Blasts Past $68,000 After US Treasury Doubles Debt Buybacks Bitcoin blew past $68,000 on Wednesday, jumping nearly 3% over a 24-hour period after news dropped that the U.S. Treasury planned to more than double the size of its government debt repurchases.…",
-   "score": 1.6374
+   "score": 1.5982
+  },
+  {
+   "title": "Fed decision making comes into focus as bitcoin holds steady, bond yields surge",
+   "url": "https://www.coindesk.com/daybook-us/2026/08/19/fed-decision-making-comes-into-focus-as-bitcoin-holds-steady-bond-yields-surge",
+   "source": "CoinDesk",
+   "published": "2026-08-19T11:14:50+00:00",
+   "summary": "",
+   "score": 1.5782
   },
   {
    "title": "Chinese InsurTech Firm Zhibao Adds 2,380 Bitcoin in $154.7M Treasury Pivot",
@@ -70,7 +78,15 @@
    "source": "Decrypt",
    "published": "2026-08-19T13:31:04+00:00",
    "summary": "The Shanghai-based InsurTech firm closed a $154.7 million private placement funded entirely in crypto, with investors contributing Bitcoin directly rather than cash.",
-   "score": 1.5821
+   "score": 1.5443
+  },
+  {
+   "title": "Bitcoin ETFs add $189M as August net inflows approach $1B",
+   "url": "https://cointelegraph.com/markets/bitcoin-etf-august-net-inflows-approach-1b?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-08-19T07:59:16+00:00",
+   "summary": "US spot Bitcoin ETFs took in $189 million on Tuesday, lifting August net inflows to $951 million, while Ether ETFs added $71.5 million.",
+   "score": 1.3687
   },
   {
    "title": "Bitcoin is flashing 8 of 12 capitulation signals, but bottom's not yet in, says VanEck",
@@ -78,7 +94,7 @@
    "source": "CoinDesk",
    "published": "2026-08-19T12:45:35+00:00",
    "summary": "",
-   "score": 1.4022
+   "score": 1.0949
   },
   {
    "title": "Bitcoin has ‘largely purged’ froth that preceded 50% drop from $126K: BlackRock",
@@ -86,7 +102,7 @@
    "source": "Cointelegraph",
    "published": "2026-08-19T11:06:13+00:00",
    "summary": "Bitcoin maintained its appeal as a diversification investment despite dropping more than 50% from all-time high, a BlackRock report stated.",
-   "score": 1.369
+   "score": 1.069
   },
   {
    "title": "Six-Bug Exploit Halts Maya Protocol After $1.4 Million in Bitcoin Stolen",
@@ -94,15 +110,7 @@
    "source": "Decrypt",
    "published": "2026-08-19T18:20:35+00:00",
    "summary": "The cross-chain protocol said an attacker exploited six software flaws to drain Bitcoin and other assets, sending its CACAO token plunging.",
-   "score": 1.0856
-  },
-  {
-   "title": "Standard Chartered analyst eyes $100K BTC as US Treasury doubles long-end buybacks",
-   "url": "https://cointelegraph.com/markets/bitcoin-price-100k-standard-chartered-treasury-buybacks?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-08-19T16:00:03+00:00",
-   "summary": "Bitcoin’s rebound toward $69,000 is gaining momentum as Geoff Kendrick points to improving liquidity conditions and a potential cycle bottom.",
-   "score": 1.0495
+   "score": 1.0597
   },
   {
    "title": "US Treasury Asks For Public Input on Landmark Genius Act Crypto Legislation",
@@ -110,15 +118,15 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-17T16:36:51+00:00",
    "summary": "Bitcoin Magazine US Treasury Asks For Public Input on Landmark Genius Act Crypto Legislation The U.S. Department of the Treasury is moving fast with crypto regulation, with the government body asking for public comment on the landmark GENIUS Act. In a Monday announcement, the Tr…",
-   "score": 0.9795
+   "score": 0.956
   },
   {
-   "title": "Live updates: Bitcoin and gold jump but rejected at key level as Treasury move pushes yields lower",
-   "url": "https://www.coindesk.com/markets/2026/08/19/live-updates-bitcoin-holds-firm-above-usd64-000-as-south-korea-s-kospi-sinks-5-8",
-   "source": "CoinDesk",
-   "published": "2026-08-19T09:05:45+00:00",
-   "summary": "",
-   "score": 0.9499
+   "title": "Standard Chartered analyst eyes $100K BTC as US Treasury doubles long-end buybacks",
+   "url": "https://cointelegraph.com/markets/bitcoin-price-100k-standard-chartered-treasury-buybacks?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-08-19T16:00:03+00:00",
+   "summary": "Bitcoin’s rebound toward $69,000 is gaining momentum as Geoff Kendrick points to improving liquidity conditions and a potential cycle bottom.",
+   "score": 0.8195
   },
   {
    "title": "Bitcoin's Sharpest Rally in Five Months Flips Markets From Bearish to Coin Flip",
@@ -126,23 +134,15 @@
    "source": "Decrypt",
    "published": "2026-08-19T22:18:01+00:00",
    "summary": "Bitcoin's steepest daily gain since March caught traders off guard, and Myriad's pump-or-dump market swung from 70-30 odds to nearly even in a single day.",
-   "score": 0.8276
+   "score": 0.8078
   },
   {
-   "title": "Sweden’s H100 reports $26M H1 loss driven by falling Bitcoin value",
-   "url": "https://cointelegraph.com/news/swedens-h100-26m-h1-loss-falling-bitcoin-value?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-08-19T11:59:30+00:00",
-   "summary": "Sweden’s H100 reported a $26 million loss for the first half of the year, as it completed its acquisitions to become Europe’s second-largest Bitcoin treasury by holdings.",
-   "score": 0.7924
-  },
-  {
-   "title": "Bearish crypto bets lose record $2.7 billion as bitcoin surges toward $70,000",
-   "url": "https://www.coindesk.com/markets/2026/08/20/bearish-crypto-bets-lose-record-usd2-7-billion-as-bitcoin-surges-toward-usd70-000",
+   "title": "Live updates: Bitcoin and gold jump but rejected at key level as Treasury move pushes yields lower",
+   "url": "https://www.coindesk.com/markets/2026/08/19/live-updates-bitcoin-holds-firm-above-usd64-000-as-south-korea-s-kospi-sinks-5-8",
    "source": "CoinDesk",
-   "published": "2026-08-20T04:29:56+00:00",
+   "published": "2026-08-19T09:05:45+00:00",
    "summary": "",
-   "score": 0.7241
+   "score": 0.7418
   },
   {
    "title": "Jane Street Reveals Nearly $1B Bitcoin Position",
@@ -150,15 +150,15 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-17T20:37:07+00:00",
    "summary": "Bitcoin Magazine Jane Street Reveals Nearly $1B Bitcoin Position Top Wall Street firm Jane Street has bought Bitcoin via the spot ETFs. This post Jane Street Reveals Nearly $1B Bitcoin Position first appeared on Bitcoin Magazine and is written by Mathew Di Salvo .",
-   "score": 0.6731
+   "score": 0.657
   },
   {
-   "title": "Here’s what happened in crypto today",
-   "url": "https://cointelegraph.com/news/what-happened-in-crypto-today?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "title": "Sweden’s H100 reports $26M H1 loss driven by falling Bitcoin value",
+   "url": "https://cointelegraph.com/news/swedens-h100-26m-h1-loss-falling-bitcoin-value?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
    "source": "Cointelegraph",
-   "published": "2026-08-19T19:50:07+00:00",
-   "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
-   "score": 0.6248
+   "published": "2026-08-19T11:59:30+00:00",
+   "summary": "Sweden’s H100 reported a $26 million loss for the first half of the year, as it completed its acquisitions to become Europe’s second-largest Bitcoin treasury by holdings.",
+   "score": 0.6188
   },
   {
    "title": "Japan's Metaplanet Plants Its Flag in the US With $132M Bitcoin Treasury Deal",
@@ -166,15 +166,15 @@
    "source": "Decrypt",
    "published": "2026-08-18T15:19:45+00:00",
    "summary": "The Tokyo-listed firm will seed gaming media company Super League—to be renamed Superplanet and trade as SUPA—with 2,100 BTC.",
-   "score": 0.588
+   "score": 0.5739
   },
   {
-   "title": "Ether jumps 18% to $2,250 as bitcoin tops $69,000 in broad crypto rally",
-   "url": "https://www.coindesk.com/markets/2026/08/20/ether-jumps-18-to-usd2-250-as-bitcoin-tops-usd69-000-in-broad-crypto-rally",
+   "title": "Bearish crypto bets lose record $2.7 billion as bitcoin surges toward $70,000",
+   "url": "https://www.coindesk.com/markets/2026/08/20/bearish-crypto-bets-lose-record-usd2-7-billion-as-bitcoin-surges-toward-usd70-000",
    "source": "CoinDesk",
-   "published": "2026-08-20T04:10:40+00:00",
+   "published": "2026-08-20T04:29:56+00:00",
    "summary": "",
-   "score": 0.5766
+   "score": 0.5654
   },
   {
    "title": "Investors Cash Out Fast of Bitcoin ETFs but Price Remains Stable",
@@ -182,7 +182,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-17T18:04:52+00:00",
    "summary": "Bitcoin Magazine Investors Cash Out Fast of Bitcoin ETFs but Price Remains Stable The Bitcoin investment vehicles were on a hot streak but investor sentiment last week changed. This post Investors Cash Out Fast of Bitcoin ETFs but Price Remains Stable first appeared on Bitcoin M…",
-   "score": 0.5191
+   "score": 0.5067
   },
   {
    "title": "Metaplanet expands Bitcoin treasury strategy to US with 2,100-BTC Nasdaq play",
@@ -190,7 +190,15 @@
    "source": "Cointelegraph",
    "published": "2026-08-18T16:21:58+00:00",
    "summary": "The proposed deal with Nasdaq-listed Super League Enterprise would give the Tokyo-based company a foothold in US capital markets while using existing Bitcoin rather than additional purchases.",
-   "score": 0.4737
+   "score": 0.4623
+  },
+  {
+   "title": "Ether jumps 18% to $2,250 as bitcoin tops $69,000 in broad crypto rally",
+   "url": "https://www.coindesk.com/markets/2026/08/20/ether-jumps-18-to-usd2-250-as-bitcoin-tops-usd69-000-in-broad-crypto-rally",
+   "source": "CoinDesk",
+   "published": "2026-08-20T04:10:40+00:00",
+   "summary": "",
+   "score": 0.4502
   },
   {
    "title": "Crypto Stocks Rip Higher as Strategy Jumps 12%, Coinbase Climbs 9%",
@@ -198,7 +206,7 @@
    "source": "Decrypt",
    "published": "2026-08-19T19:51:11+00:00",
    "summary": "Strategy, Coinbase, Circle, and BitMine are riding Bitcoin's short squeeze toward $70K—and two of them may be squeezing equity bears of their own.",
-   "score": 0.4545
+   "score": 0.4436
   },
   {
    "title": "DMND Integrates Mempool Accelerator With Miner Revenue Sharing Using StratumV2",
@@ -206,15 +214,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-18T16:01:35+00:00",
    "summary": "Bitcoin Magazine DMND Integrates Mempool Accelerator With Miner Revenue Sharing Using StratumV2 DMND announces Mempool Accelerator revenue sharing with miners powered by Stratum V2. This post DMND Integrates Mempool Accelerator With Miner Revenue Sharing Using StratumV2 first ap…",
-   "score": 0.3801
-  },
-  {
-   "title": "Maya Protocol exploit drains bitcoin and other assets as pool value drops by $11 million",
-   "url": "https://www.coindesk.com/markets/2026/08/19/maya-protocol-exploit-drains-bitcoin-and-other-assets-as-pool-value-drops-usd11-million",
-   "source": "CoinDesk",
-   "published": "2026-08-19T06:36:11+00:00",
-   "summary": "",
-   "score": 0.3753
+   "score": 0.371
   },
   {
    "title": "Strategy Leaves Bitcoin Untouched, Raises $334M Selling MSTR Stock",
@@ -222,15 +222,15 @@
    "source": "Decrypt",
    "published": "2026-08-17T12:56:55+00:00",
    "summary": "The Bitcoin treasury firm halted BTC sales after three weeks, with equity issuance covering dividends, a STRC buyback and the dollar reserve.",
-   "score": 0.3188
+   "score": 0.3112
   },
   {
-   "title": "Japan's Metaplanet launching U.S. bitcoin treasury company through $135 million nanocap deal",
-   "url": "https://www.coindesk.com/business/2026/08/18/japan-s-metaplanet-launching-u-s-bitcoin-treasury-company-through-usd135-million-nanocap-deal",
+   "title": "Maya Protocol exploit drains bitcoin and other assets as pool value drops by $11 million",
+   "url": "https://www.coindesk.com/markets/2026/08/19/maya-protocol-exploit-drains-bitcoin-and-other-assets-as-pool-value-drops-usd11-million",
    "source": "CoinDesk",
-   "published": "2026-08-18T14:35:08+00:00",
+   "published": "2026-08-19T06:36:11+00:00",
    "summary": "",
-   "score": 0.2978
+   "score": 0.2931
   },
   {
    "title": "Paul Tudor Jones' Firm Buys Back Into BlackRock Bitcoin ETF After a Year of Selling",
@@ -238,7 +238,15 @@
    "source": "Decrypt",
    "published": "2026-08-17T10:31:04+00:00",
    "summary": "The macro fund raised its iShares Bitcoin Trust stake 18.9% to 688,529 shares worth $22.9 million in Q2, while sharply cutting its call options—a shift from leveraged bets toward direct spot exposure.",
-   "score": 0.2383
+   "score": 0.2326
+  },
+  {
+   "title": "Japan's Metaplanet launching U.S. bitcoin treasury company through $135 million nanocap deal",
+   "url": "https://www.coindesk.com/business/2026/08/18/japan-s-metaplanet-launching-u-s-bitcoin-treasury-company-through-usd135-million-nanocap-deal",
+   "source": "CoinDesk",
+   "published": "2026-08-18T14:35:08+00:00",
+   "summary": "",
+   "score": 0.2326
   },
   {
    "title": "Losses Top $115M In Coldcard Bitcoin Hack: Galaxy Research",
@@ -246,15 +254,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-17T21:32:34+00:00",
    "summary": "Bitcoin Magazine Losses Top $115M In Coldcard Bitcoin Hack: Galaxy Research The amount of bitcoin stolen has been confirmed at $115 million, according to Galaxy Digital's latest figures. This post Losses Top $115M In Coldcard Bitcoin Hack: Galaxy Research first appeared on Bitco…",
-   "score": 0.2329
-  },
-  {
-   "title": "Bitcoin miners’ AI pivot pays off, but mining could revive with one twist",
-   "url": "https://www.coindesk.com/business/2026/08/18/bitcoin-miners-ai-pivot-pays-off-but-mining-could-revive-with-one-twist",
-   "source": "CoinDesk",
-   "published": "2026-08-18T14:41:31+00:00",
-   "summary": "",
-   "score": 0.1909
+   "score": 0.2273
   },
   {
    "title": "Trump Urges Senate to Pass Crypto’s CLARITY Act, Teases More Bitcoin Buys",
@@ -262,7 +262,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-19T20:39:25+00:00",
    "summary": "Bitcoin Magazine Trump Urges Senate to Pass Crypto’s CLARITY Act, Teases More Bitcoin Buys After gathering with digital asset executives, Trump urged lawmakers to get the crypto market structure bill over the line. This post Trump Urges Senate to Pass Crypto’s CLARITY Act, Tease…",
-   "score": 0.1839
+   "score": 0.1795
   },
   {
    "title": "Crypto Biz: Bitcoin’s $116M self-custody wake-up call",
@@ -270,15 +270,15 @@
    "source": "Cointelegraph",
    "published": "2026-08-14T15:29:13+00:00",
    "summary": "A $116 million Bitcoin wallet exploit puts self-custody under scrutiny as ETF inflows rebound, Strategy eyes more BTC and miners chase billions in AI deals.",
-   "score": 0.169
+   "score": 0.1649
   },
   {
-   "title": "Bitcoin tracks equity bounce, but $390 million ETF outflow week keeps bulls on back foot",
-   "url": "https://www.coindesk.com/markets/2026/08/17/bitcoin-tracks-equity-bounce-but-usd390-million-etf-outflow-week-keeps-bulls-on-back-foot",
+   "title": "Bitcoin miners’ AI pivot pays off, but mining could revive with one twist",
+   "url": "https://www.coindesk.com/business/2026/08/18/bitcoin-miners-ai-pivot-pays-off-but-mining-could-revive-with-one-twist",
    "source": "CoinDesk",
-   "published": "2026-08-17T09:59:55+00:00",
+   "published": "2026-08-18T14:41:31+00:00",
    "summary": "",
-   "score": 0.1514
+   "score": 0.1491
   },
   {
    "title": "President Trump To Host Crypto Execs at White House",
@@ -286,15 +286,15 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-19T16:58:03+00:00",
    "summary": "Bitcoin Magazine President Trump To Host Crypto Execs at White House The meeting with crypto execs comes after a vote on the Clarity Act was stalled. This post President Trump To Host Crypto Execs at White House first appeared on Bitcoin Magazine and is written by Mathew Di Salv…",
-   "score": 0.1395
+   "score": 0.1362
   },
   {
-   "title": "Global bond yields surge as debt fears test bitcoin’s hedge narrative",
-   "url": "https://www.coindesk.com/markets/2026/08/18/global-bond-yields-surge-as-debt-fears-test-bitcoin-s-hedge-narrative",
+   "title": "Bitcoin tracks equity bounce, but $390 million ETF outflow week keeps bulls on back foot",
+   "url": "https://www.coindesk.com/markets/2026/08/17/bitcoin-tracks-equity-bounce-but-usd390-million-etf-outflow-week-keeps-bulls-on-back-foot",
    "source": "CoinDesk",
-   "published": "2026-08-18T14:40:41+00:00",
+   "published": "2026-08-17T09:59:55+00:00",
    "summary": "",
-   "score": 0.1099
+   "score": 0.1182
   },
   {
    "title": "Bitcoin’s Volatility May Be Down But Expect a ‘Meaningful Move’ Soon, Says Fidelity",
@@ -302,7 +302,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-19T15:05:32+00:00",
    "summary": "Bitcoin Magazine Bitcoin’s Volatility May Be Down But Expect a ‘Meaningful Move’ Soon, Says Fidelity Bitcoin isn't moving. Analysts think that's a sign it could soon do something significant. This post Bitcoin’s Volatility May Be Down But Expect a ‘Meaningful Move’ Soon, Says Fi…",
-   "score": 0.1086
+   "score": 0.106
   },
   {
    "title": "Strategy raises $334M through stock sales but buys no Bitcoin",
@@ -310,7 +310,7 @@
    "source": "Cointelegraph",
    "published": "2026-08-17T12:51:03+00:00",
    "summary": "Proceeds funded STRC dividends and repurchases, while $149.1 million was added to Strategy’s US dollar reserve, which reached $4.8 billion.",
-   "score": 0.1052
+   "score": 0.1026
   },
   {
    "title": "Bitcoin Wallet Maker BitBox Says AI Found Severe Flaws in Firmware",
@@ -318,15 +318,15 @@
    "source": "Decrypt",
    "published": "2026-08-18T18:06:42+00:00",
    "summary": "The Swiss hardware-wallet maker found two severe bugs with the help of frontier AI models, and warns that older firmware leaves you exposed.",
-   "score": 0.1003
+   "score": 0.0979
   },
   {
-   "title": "Citi to Launch Bitcoin Custody as Wall Street Pushes Deeper Into Crypto",
-   "url": "https://decrypt.co/375880/citi-bitcoin-custody-wall-street-crypto",
-   "source": "Decrypt",
-   "published": "2026-08-18T15:56:05+00:00",
-   "summary": "The banking giant plans to let institutional clients hold Bitcoin and traditional assets through the same custody framework.",
-   "score": 0.0777
+   "title": "Global bond yields surge as debt fears test bitcoin’s hedge narrative",
+   "url": "https://www.coindesk.com/markets/2026/08/18/global-bond-yields-surge-as-debt-fears-test-bitcoin-s-hedge-narrative",
+   "source": "CoinDesk",
+   "published": "2026-08-18T14:40:41+00:00",
+   "summary": "",
+   "score": 0.0858
   }
  ]
 }
