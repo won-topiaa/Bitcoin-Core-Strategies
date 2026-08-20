@@ -1,5 +1,5 @@
 {
- "fetched": "2026-08-20T13:29:32+00:00",
+ "fetched": "2026-08-20T16:02:33+00:00",
  "sources_ok": [
   "CoinDesk",
   "Cointelegraph",
@@ -14,7 +14,7 @@
    "source": "Cointelegraph",
    "published": "2026-08-20T11:16:41+00:00",
    "summary": "Investors have poured more than $1 billion into US spot Bitcoin ETFs this week as BTC neared $72,000 and Ether climbed 19% to about $2,286 on Thursday.",
-   "score": 2.9056
+   "score": 2.8005
   },
   {
    "title": "Live updates: Bitcoin jumps above $72,000, ETFs draw $700 million in biggest inflows in months",
@@ -22,7 +22,7 @@
    "source": "CoinDesk",
    "published": "2026-08-20T06:21:17+00:00",
    "summary": "",
-   "score": 2.7062
+   "score": 2.6083
   },
   {
    "title": "Bitcoin Surges Toward $70K as $1.14 Billion in Crypto Shorts Get Rekt in an Hour",
@@ -30,7 +30,7 @@
    "source": "Decrypt",
    "published": "2026-08-19T16:10:04+00:00",
    "summary": "A White House sitdown with crypto's biggest names and softer Fed signals lit the fuse. But the charts show why the pain for bears might not be over yet.",
-   "score": 2.4254
+   "score": 2.3377
   },
   {
    "title": "SEC Proposes Crypto Rulebook as Clarity Act Stalls",
@@ -38,7 +38,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-18T19:46:11+00:00",
    "summary": "Bitcoin Magazine SEC Proposes Crypto Rulebook as Clarity Act Stalls Regulators are pushing ahead with legislation despite the Clarity Act stalling. This post SEC Proposes Crypto Rulebook as Clarity Act Stalls first appeared on Bitcoin Magazine and is written by Mathew Di Salvo .",
-   "score": 2.0255
+   "score": 1.9523
   },
   {
    "title": "Bitcoin surges above $68,000, liquidating $1.4 billion shorts as Treasury buybacks boost risk appetite",
@@ -46,7 +46,7 @@
    "source": "CoinDesk",
    "published": "2026-08-19T16:18:04+00:00",
    "summary": "",
-   "score": 1.944
+   "score": 1.8737
   },
   {
    "title": "Bitcoin price hits 11-week high as US Treasury doubles debt buyback size",
@@ -54,7 +54,7 @@
    "source": "Cointelegraph",
    "published": "2026-08-19T15:44:09+00:00",
    "summary": "Bitcoin joined US stocks in a broad rally after the US Treasury announced that it was at least doubling the amount of its debt buyback operations from September.",
-   "score": 1.9282
+   "score": 1.8585
   },
   {
    "title": "Fed liquidity promises, dollar weakness could determine bitcoin's next move",
@@ -62,7 +62,7 @@
    "source": "CoinDesk",
    "published": "2026-08-20T11:31:10+00:00",
    "summary": "",
-   "score": 1.5551
+   "score": 1.4988
   },
   {
    "title": "Bitcoin Blasts Past $68,000 After US Treasury Doubles Debt Buybacks",
@@ -70,7 +70,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-19T15:53:42+00:00",
    "summary": "Bitcoin Magazine Bitcoin Blasts Past $68,000 After US Treasury Doubles Debt Buybacks Bitcoin blew past $68,000 on Wednesday, jumping nearly 3% over a 24-hour period after news dropped that the U.S. Treasury planned to more than double the size of its government debt repurchases.…",
-   "score": 1.4641
+   "score": 1.4112
   },
   {
    "title": "Chinese InsurTech Firm Zhibao Adds 2,380 Bitcoin in $154.7M Treasury Pivot",
@@ -78,7 +78,7 @@
    "source": "Decrypt",
    "published": "2026-08-19T13:31:04+00:00",
    "summary": "The Shanghai-based InsurTech firm closed a $154.7 million private placement funded entirely in crypto, with investors contributing Bitcoin directly rather than cash.",
-   "score": 1.4147
+   "score": 1.3636
   },
   {
    "title": "Here’s what happened in crypto today",
@@ -86,7 +86,7 @@
    "source": "Cointelegraph",
    "published": "2026-08-20T13:12:56+00:00",
    "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
-   "score": 1.4024
+   "score": 1.3517
   },
   {
    "title": "Bitcoin hits $72,000 as Strategy and Coinbase continue rally",
@@ -94,7 +94,15 @@
    "source": "CoinDesk",
    "published": "2026-08-20T09:25:03+00:00",
    "summary": "",
-   "score": 1.1586
+   "score": 1.1167
+  },
+  {
+   "title": "Bitcoin Rockets Past $72,000 After Trump Pushes For Clarity Act",
+   "url": "https://bitcoinmagazine.com/news/bitcoin-price-rockets-past-72000",
+   "source": "Bitcoin Magazine",
+   "published": "2026-08-20T13:40:27+00:00",
+   "summary": "Bitcoin Magazine Bitcoin Rockets Past $72,000 After Trump Pushes For Clarity Act Bitcoin’s price surged further on Thursday, blowing past $72,000 the day after President Trump held a meeting with crypto executives and urged lawmakers to get the long-awaited Clarity Act over the…",
+   "score": 1.1133
   },
   {
    "title": "Bitcoin ETFs add $189M as August net inflows approach $1B",
@@ -102,7 +110,7 @@
    "source": "Cointelegraph",
    "published": "2026-08-19T07:59:16+00:00",
    "summary": "US spot Bitcoin ETFs took in $189 million on Tuesday, lifting August net inflows to $951 million, while Ether ETFs added $71.5 million.",
-   "score": 1.0031
+   "score": 0.9669
   },
   {
    "title": "Six-Bug Exploit Halts Maya Protocol After $1.4 Million in Bitcoin Stolen",
@@ -110,7 +118,7 @@
    "source": "Decrypt",
    "published": "2026-08-19T18:20:35+00:00",
    "summary": "The cross-chain protocol said an attacker exploited six software flaws to drain Bitcoin and other assets, sending its CACAO token plunging.",
-   "score": 0.9708
+   "score": 0.9357
   },
   {
    "title": "Fed decision making comes into focus as bitcoin holds steady, bond yields surge",
@@ -118,15 +126,7 @@
    "source": "CoinDesk",
    "published": "2026-08-19T11:14:50+00:00",
    "summary": "",
-   "score": 0.9253
-  },
-  {
-   "title": "US Treasury Asks For Public Input on Landmark Genius Act Crypto Legislation",
-   "url": "https://bitcoinmagazine.com/news/us-treasury-asks-for-input-on-genius-act",
-   "source": "Bitcoin Magazine",
-   "published": "2026-08-17T16:36:51+00:00",
-   "summary": "Bitcoin Magazine US Treasury Asks For Public Input on Landmark Genius Act Crypto Legislation The U.S. Department of the Treasury is moving fast with crypto regulation, with the government body asking for public comment on the landmark GENIUS Act. In a Monday announcement, the Tr…",
-   "score": 0.8758
+   "score": 0.8918
   },
   {
    "title": "Bitcoin has ‘largely purged’ froth that preceded 50% drop from $126K: BlackRock",
@@ -134,7 +134,7 @@
    "source": "Cointelegraph",
    "published": "2026-08-19T11:06:13+00:00",
    "summary": "Bitcoin maintained its appeal as a diversification investment despite dropping more than 50% from all-time high, a BlackRock report stated.",
-   "score": 0.7835
+   "score": 0.7551
   },
   {
    "title": "Bitcoin's Sharpest Rally in Five Months Flips Markets From Bearish to Coin Flip",
@@ -142,7 +142,15 @@
    "source": "Decrypt",
    "published": "2026-08-19T22:18:01+00:00",
    "summary": "Bitcoin's steepest daily gain since March caught traders off guard, and Myriad's pump-or-dump market swung from 70-30 odds to nearly even in a single day.",
-   "score": 0.7401
+   "score": 0.7133
+  },
+  {
+   "title": "US Treasury Asks For Public Input on Landmark Genius Act Crypto Legislation",
+   "url": "https://bitcoinmagazine.com/news/us-treasury-asks-for-input-on-genius-act",
+   "source": "Bitcoin Magazine",
+   "published": "2026-08-17T16:36:51+00:00",
+   "summary": "Bitcoin Magazine US Treasury Asks For Public Input on Landmark Genius Act Crypto Legislation The U.S. Department of the Treasury is moving fast with crypto regulation, with the government body asking for public comment on the landmark GENIUS Act. In a Monday announcement, the Tr…",
+   "score": 0.6753
   },
   {
    "title": "Bitcoin is flashing 8 of 12 capitulation signals, but bottom's not yet in, says VanEck",
@@ -150,15 +158,7 @@
    "source": "CoinDesk",
    "published": "2026-08-19T12:45:35+00:00",
    "summary": "",
-   "score": 0.6419
-  },
-  {
-   "title": "Jane Street Reveals Nearly $1B Bitcoin Position",
-   "url": "https://bitcoinmagazine.com/news/jane-street-bitcoin-position",
-   "source": "Bitcoin Magazine",
-   "published": "2026-08-17T20:37:07+00:00",
-   "summary": "Bitcoin Magazine Jane Street Reveals Nearly $1B Bitcoin Position Top Wall Street firm Jane Street has bought Bitcoin via the spot ETFs. This post Jane Street Reveals Nearly $1B Bitcoin Position first appeared on Bitcoin Magazine and is written by Mathew Di Salvo .",
-   "score": 0.6019
+   "score": 0.6187
   },
   {
    "title": "Standard Chartered analyst eyes $100K BTC as US Treasury doubles long-end buybacks",
@@ -166,7 +166,7 @@
    "source": "Cointelegraph",
    "published": "2026-08-19T16:00:03+00:00",
    "summary": "Bitcoin’s rebound toward $69,000 is gaining momentum as Geoff Kendrick points to improving liquidity conditions and a potential cycle bottom.",
-   "score": 0.6006
+   "score": 0.5789
   },
   {
    "title": "Japan's Metaplanet Plants Its Flag in the US With $132M Bitcoin Treasury Deal",
@@ -174,15 +174,15 @@
    "source": "Decrypt",
    "published": "2026-08-18T15:19:45+00:00",
    "summary": "The Tokyo-listed firm will seed gaming media company Super League—to be renamed Superplanet and trade as SUPA—with 2,100 BTC.",
-   "score": 0.5258
+   "score": 0.5068
   },
   {
-   "title": "Investors Cash Out Fast of Bitcoin ETFs but Price Remains Stable",
-   "url": "https://bitcoinmagazine.com/news/investors-cash-out-of-bitcoin-etfs",
+   "title": "Jane Street Reveals Nearly $1B Bitcoin Position",
+   "url": "https://bitcoinmagazine.com/news/jane-street-bitcoin-position",
    "source": "Bitcoin Magazine",
-   "published": "2026-08-17T18:04:52+00:00",
-   "summary": "Bitcoin Magazine Investors Cash Out Fast of Bitcoin ETFs but Price Remains Stable The Bitcoin investment vehicles were on a hot streak but investor sentiment last week changed. This post Investors Cash Out Fast of Bitcoin ETFs but Price Remains Stable first appeared on Bitcoin M…",
-   "score": 0.4642
+   "published": "2026-08-17T20:37:07+00:00",
+   "summary": "Bitcoin Magazine Jane Street Reveals Nearly $1B Bitcoin Position Top Wall Street firm Jane Street has bought Bitcoin via the spot ETFs. This post Jane Street Reveals Nearly $1B Bitcoin Position first appeared on Bitcoin Magazine and is written by Mathew Di Salvo .",
+   "score": 0.4641
   },
   {
    "title": "Bitcoin rally sparks debate whether Clarity Act is already priced in",
@@ -190,7 +190,7 @@
    "source": "CoinDesk",
    "published": "2026-08-20T10:47:35+00:00",
    "summary": "",
-   "score": 0.4538
+   "score": 0.4374
   },
   {
    "title": "Sweden’s H100 reports $26M H1 loss driven by falling Bitcoin value",
@@ -198,7 +198,7 @@
    "source": "Cointelegraph",
    "published": "2026-08-19T11:59:30+00:00",
    "summary": "Sweden’s H100 reported a $26 million loss for the first half of the year, as it completed its acquisitions to become Europe’s second-largest Bitcoin treasury by holdings.",
-   "score": 0.4535
+   "score": 0.4371
   },
   {
    "title": "Crypto Stocks Rip Higher as Strategy Jumps 12%, Coinbase Climbs 9%",
@@ -206,7 +206,15 @@
    "source": "Decrypt",
    "published": "2026-08-19T19:51:11+00:00",
    "summary": "Strategy, Coinbase, Circle, and BitMine are riding Bitcoin's short squeeze toward $70K—and two of them may be squeezing equity bears of their own.",
-   "score": 0.4064
+   "score": 0.3917
+  },
+  {
+   "title": "Investors Cash Out Fast of Bitcoin ETFs but Price Remains Stable",
+   "url": "https://bitcoinmagazine.com/news/investors-cash-out-of-bitcoin-etfs",
+   "source": "Bitcoin Magazine",
+   "published": "2026-08-17T18:04:52+00:00",
+   "summary": "Bitcoin Magazine Investors Cash Out Fast of Bitcoin ETFs but Price Remains Stable The Bitcoin investment vehicles were on a hot streak but investor sentiment last week changed. This post Investors Cash Out Fast of Bitcoin ETFs but Price Remains Stable first appeared on Bitcoin M…",
+   "score": 0.3579
   },
   {
    "title": "Live updates: Bitcoin and gold jump but rejected at key level as Treasury move pushes yields lower",
@@ -214,15 +222,7 @@
    "source": "CoinDesk",
    "published": "2026-08-19T09:05:45+00:00",
    "summary": "",
-   "score": 0.3479
-  },
-  {
-   "title": "DMND Integrates Mempool Accelerator With Miner Revenue Sharing Using StratumV2",
-   "url": "https://bitcoinmagazine.com/news/dmnd-integrates-mempool-accelerator-with-miner-revenue-sharing-using-stratumv2",
-   "source": "Bitcoin Magazine",
-   "published": "2026-08-18T16:01:35+00:00",
-   "summary": "Bitcoin Magazine DMND Integrates Mempool Accelerator With Miner Revenue Sharing Using StratumV2 DMND announces Mempool Accelerator revenue sharing with miners powered by Stratum V2. This post DMND Integrates Mempool Accelerator With Miner Revenue Sharing Using StratumV2 first ap…",
-   "score": 0.3399
+   "score": 0.3353
   },
   {
    "title": "Metaplanet expands Bitcoin treasury strategy to US with 2,100-BTC Nasdaq play",
@@ -230,7 +230,7 @@
    "source": "Cointelegraph",
    "published": "2026-08-18T16:21:58+00:00",
    "summary": "The proposed deal with Nasdaq-listed Super League Enterprise would give the Tokyo-based company a foothold in US capital markets while using existing Bitcoin rather than additional purchases.",
-   "score": 0.3388
+   "score": 0.3266
   },
   {
    "title": "Strategy Leaves Bitcoin Untouched, Raises $334M Selling MSTR Stock",
@@ -238,7 +238,15 @@
    "source": "Decrypt",
    "published": "2026-08-17T12:56:55+00:00",
    "summary": "The Bitcoin treasury firm halted BTC sales after three weeks, with equity issuance covering dividends, a STRC buyback and the dollar reserve.",
-   "score": 0.2851
+   "score": 0.2748
+  },
+  {
+   "title": "DMND Integrates Mempool Accelerator With Miner Revenue Sharing Using StratumV2",
+   "url": "https://bitcoinmagazine.com/news/dmnd-integrates-mempool-accelerator-with-miner-revenue-sharing-using-stratumv2",
+   "source": "Bitcoin Magazine",
+   "published": "2026-08-18T16:01:35+00:00",
+   "summary": "Bitcoin Magazine DMND Integrates Mempool Accelerator With Miner Revenue Sharing Using StratumV2 DMND announces Mempool Accelerator revenue sharing with miners powered by Stratum V2. This post DMND Integrates Mempool Accelerator With Miner Revenue Sharing Using StratumV2 first ap…",
+   "score": 0.2621
   },
   {
    "title": "Bearish crypto bets lose record $2.7 billion as bitcoin surges toward $70,000",
@@ -246,7 +254,15 @@
    "source": "CoinDesk",
    "published": "2026-08-20T04:29:56+00:00",
    "summary": "",
-   "score": 0.2652
+   "score": 0.2556
+  },
+  {
+   "title": "Coinbase CEO Brian Armstrong Says Bitcoin Will Likely Hit $400,000 By 2030",
+   "url": "https://bitcoinmagazine.com/news/coinbase-ceo-says-bitcoin-will-hit-300000",
+   "source": "Bitcoin Magazine",
+   "published": "2026-08-20T15:39:56+00:00",
+   "summary": "Bitcoin Magazine Coinbase CEO Brian Armstrong Says Bitcoin Will Likely Hit $400,000 By 2030 Coinbase CEO Brian Armstrong has said that it’s “very likely” Bitcoin will hit between $300,000 to $400,000 by 2030. Speaking on Fox Business Thursday, the crypto entrepreneur also said t…",
+   "score": 0.2086
   },
   {
    "title": "Paul Tudor Jones' Firm Buys Back Into BlackRock Bitcoin ETF After a Year of Selling",
@@ -254,7 +270,7 @@
    "source": "Decrypt",
    "published": "2026-08-17T10:31:04+00:00",
    "summary": "The macro fund raised its iShares Bitcoin Trust stake 18.9% to 688,529 shares worth $22.9 million in Q2, while sharply cutting its call options—a shift from leveraged bets toward direct spot exposure.",
-   "score": 0.2131
+   "score": 0.2054
   },
   {
    "title": "Ether jumps 18% to $2,250 as bitcoin tops $69,000 in broad crypto rally",
@@ -262,23 +278,7 @@
    "source": "CoinDesk",
    "published": "2026-08-20T04:10:40+00:00",
    "summary": "",
-   "score": 0.2112
-  },
-  {
-   "title": "Losses Top $115M In Coldcard Bitcoin Hack: Galaxy Research",
-   "url": "https://bitcoinmagazine.com/news/losses-top-115-million-in-coldcard-hack",
-   "source": "Bitcoin Magazine",
-   "published": "2026-08-17T21:32:34+00:00",
-   "summary": "Bitcoin Magazine Losses Top $115M In Coldcard Bitcoin Hack: Galaxy Research The amount of bitcoin stolen has been confirmed at $115 million, according to Galaxy Digital's latest figures. This post Losses Top $115M In Coldcard Bitcoin Hack: Galaxy Research first appeared on Bitco…",
-   "score": 0.2082
-  },
-  {
-   "title": "Trump Urges Senate to Pass Crypto’s CLARITY Act, Teases More Bitcoin Buys",
-   "url": "https://bitcoinmagazine.com/news/trump-teases-bitcoin-buys",
-   "source": "Bitcoin Magazine",
-   "published": "2026-08-19T20:39:25+00:00",
-   "summary": "Bitcoin Magazine Trump Urges Senate to Pass Crypto’s CLARITY Act, Teases More Bitcoin Buys After gathering with digital asset executives, Trump urged lawmakers to get the crypto market structure bill over the line. This post Trump Urges Senate to Pass Crypto’s CLARITY Act, Tease…",
-   "score": 0.1645
+   "score": 0.2036
   },
   {
    "title": "Maya Protocol exploit drains bitcoin and other assets as pool value drops by $11 million",
@@ -286,15 +286,15 @@
    "source": "CoinDesk",
    "published": "2026-08-19T06:36:11+00:00",
    "summary": "",
-   "score": 0.1375
+   "score": 0.1325
   },
   {
-   "title": "President Trump To Host Crypto Execs at White House",
-   "url": "https://bitcoinmagazine.com/news/trump-to-host-crypto-execs",
+   "title": "Losses Top $115M In Coldcard Bitcoin Hack: Galaxy Research",
+   "url": "https://bitcoinmagazine.com/news/losses-top-115-million-in-coldcard-hack",
    "source": "Bitcoin Magazine",
-   "published": "2026-08-19T16:58:03+00:00",
-   "summary": "Bitcoin Magazine President Trump To Host Crypto Execs at White House The meeting with crypto execs comes after a vote on the Clarity Act was stalled. This post President Trump To Host Crypto Execs at White House first appeared on Bitcoin Magazine and is written by Mathew Di Salv…",
-   "score": 0.1247
+   "published": "2026-08-17T21:32:34+00:00",
+   "summary": "Bitcoin Magazine Losses Top $115M In Coldcard Bitcoin Hack: Galaxy Research The amount of bitcoin stolen has been confirmed at $115 million, according to Galaxy Digital's latest figures. This post Losses Top $115M In Coldcard Bitcoin Hack: Galaxy Research first appeared on Bitco…",
+   "score": 0.1284
   },
   {
    "title": "Crypto Biz: Bitcoin’s $116M self-custody wake-up call",
@@ -302,7 +302,7 @@
    "source": "Cointelegraph",
    "published": "2026-08-14T15:29:13+00:00",
    "summary": "A $116 million Bitcoin wallet exploit puts self-custody under scrutiny as ETF inflows rebound, Strategy eyes more BTC and miners chase billions in AI deals.",
-   "score": 0.1209
+   "score": 0.1165
   },
   {
    "title": "Japan's Metaplanet launching U.S. bitcoin treasury company through $135 million nanocap deal",
@@ -310,15 +310,15 @@
    "source": "CoinDesk",
    "published": "2026-08-18T14:35:08+00:00",
    "summary": "",
-   "score": 0.1091
+   "score": 0.1051
   },
   {
-   "title": "Bitcoin’s Volatility May Be Down But Expect a ‘Meaningful Move’ Soon, Says Fidelity",
-   "url": "https://bitcoinmagazine.com/news/bitcoin-volatility-is-down-says-fidelity",
+   "title": "Trump Urges Senate to Pass Crypto’s CLARITY Act, Teases More Bitcoin Buys",
+   "url": "https://bitcoinmagazine.com/news/trump-teases-bitcoin-buys",
    "source": "Bitcoin Magazine",
-   "published": "2026-08-19T15:05:32+00:00",
-   "summary": "Bitcoin Magazine Bitcoin’s Volatility May Be Down But Expect a ‘Meaningful Move’ Soon, Says Fidelity Bitcoin isn't moving. Analysts think that's a sign it could soon do something significant. This post Bitcoin’s Volatility May Be Down But Expect a ‘Meaningful Move’ Soon, Says Fi…",
-   "score": 0.0971
+   "published": "2026-08-19T20:39:25+00:00",
+   "summary": "Bitcoin Magazine Trump Urges Senate to Pass Crypto’s CLARITY Act, Teases More Bitcoin Buys After gathering with digital asset executives, Trump urged lawmakers to get the crypto market structure bill over the line. This post Trump Urges Senate to Pass Crypto’s CLARITY Act, Tease…",
+   "score": 0.1014
   },
   {
    "title": "Bitcoin Wallet Maker BitBox Says AI Found Severe Flaws in Firmware",
@@ -326,7 +326,7 @@
    "source": "Decrypt",
    "published": "2026-08-18T18:06:42+00:00",
    "summary": "The Swiss hardware-wallet maker found two severe bugs with the help of frontier AI models, and warns that older firmware leaves you exposed.",
-   "score": 0.0897
+   "score": 0.0864
   }
  ]
 }
