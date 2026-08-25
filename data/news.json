@@ -1,5 +1,5 @@
 {
- "fetched": "2026-08-25T11:40:25+00:00",
+ "fetched": "2026-08-25T13:31:16+00:00",
  "sources_ok": [
   "CoinDesk",
   "Cointelegraph",
@@ -14,7 +14,15 @@
    "source": "Cointelegraph",
    "published": "2026-08-25T10:20:14+00:00",
    "summary": "Thailand’s SEC opened consultations on local Bitcoin and Ether ETF rules and qualification standards for foreign digital asset custodians.",
-   "score": 4.414
+   "score": 4.2978
+  },
+  {
+   "title": "Grayscale Launches Zcash ETF Following Critical Privacy Flaw That Rocked the Cryptocurrency",
+   "url": "https://decrypt.co/376420/grayscale-launches-zcash-etf-following-critical-privacy-flaw-that-rocked-the-cryptocurrency",
+   "source": "Decrypt",
+   "published": "2026-08-25T12:01:03+00:00",
+   "summary": "The fund gives brokerage investors exposure to ZEC as Grayscale bets on demand for crypto assets beyond Bitcoin and Ethereum.",
+   "score": 2.9356
   },
   {
    "title": "Bitcoin Rally Accelerates, With $80,000 in Sight After ETFs Have Stellar Week",
@@ -22,15 +30,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-24T16:18:56+00:00",
    "summary": "Bitcoin Magazine Bitcoin Rally Accelerates, With $80,000 in Sight After ETFs Have Stellar Week Bitcoin’s price surged further on Monday, flirting with $80,000 after U.S. exchange-traded funds had their best week since October. The leading cryptocurrency was recently trading more…",
-   "score": 2.8733
-  },
-  {
-   "title": "Why the Bitcoin Rally Looks Like a Vote Against the Dollar",
-   "url": "https://decrypt.co/376394/bitcoins-price-rally-trade-against-dollar",
-   "source": "Decrypt",
-   "published": "2026-08-24T20:16:03+00:00",
-   "summary": "Bitcoin and gold rose as the dollar weakened following expanded Treasury bond buybacks, reflecting concerns about U.S. fiscal policy, analysts say.",
-   "score": 2.6418
+   "score": 2.7977
   },
   {
    "title": "Bitcoin ETFs add $338M as six-day inflow streak hits $2.26B",
@@ -38,15 +38,15 @@
    "source": "Cointelegraph",
    "published": "2026-08-25T07:38:29+00:00",
    "summary": "Bitcoin ETFs have drawn $2.26 billion over six trading days, while year-to-date net outflows have narrowed to about $2.57 billion.",
-   "score": 2.2642
+   "score": 2.2046
   },
   {
-   "title": "Morning Minute: Saylor’s Strategy Back in Green As BTC Soars to $78k",
-   "url": "https://decrypt.co/376321/morning-minute-saylors-strategy-back-in-green-as-btc-soars-to-78k",
+   "title": "Why the Bitcoin Rally Looks Like a Vote Against the Dollar",
+   "url": "https://decrypt.co/376394/bitcoins-price-rally-trade-against-dollar",
    "source": "Decrypt",
-   "published": "2026-08-24T12:54:23+00:00",
-   "summary": "Bitcoin just closed its biggest weekly candle of all time in notional value, and 10 alt leaders put up 50%+ gains in massive crypto rebound.",
-   "score": 2.073
+   "published": "2026-08-24T20:16:03+00:00",
+   "summary": "Bitcoin and gold rose as the dollar weakened following expanded Treasury bond buybacks, reflecting concerns about U.S. fiscal policy, analysts say.",
+   "score": 2.0578
   },
   {
    "title": "Fed experiment shows how bitcoin rallies attract new crypto buyers",
@@ -54,7 +54,15 @@
    "source": "CoinDesk",
    "published": "2026-08-24T09:56:17+00:00",
    "summary": "",
-   "score": 1.724
+   "score": 1.6786
+  },
+  {
+   "title": "Morning Minute: Saylor’s Strategy Back in Green As BTC Soars to $78k",
+   "url": "https://decrypt.co/376321/morning-minute-saylors-strategy-back-in-green-as-btc-soars-to-78k",
+   "source": "Decrypt",
+   "published": "2026-08-24T12:54:23+00:00",
+   "summary": "Bitcoin just closed its biggest weekly candle of all time in notional value, and 10 alt leaders put up 50%+ gains in massive crypto rebound.",
+   "score": 1.6148
   },
   {
    "title": "Strive buys 1,110 Bitcoin for $81.5M, holdings top 21K BTC; ASST shares surge 11%",
@@ -62,15 +70,7 @@
    "source": "Cointelegraph",
    "published": "2026-08-24T16:44:55+00:00",
    "summary": "Strive’s Nasdaq-traded shares surged more than 11% as the Bitcoin treasury company said it paid an average of $73,409 per BTC, pushing its holdings to 21,356 Bitcoin.",
-   "score": 1.607
-  },
-  {
-   "title": "Bitcoin, Ethereum ETFs Grew $23 Billion Last Week—Only $2.6 Billion Was New Money",
-   "url": "https://decrypt.co/376349/bitcoin-ethereum-etfs-23-billion-aum-inflows",
-   "source": "Decrypt",
-   "published": "2026-08-24T17:07:32+00:00",
-   "summary": "Bitcoin and Ethereum ETFs booked their strongest inflow week since October, but most of the gain came from coins investors already owned getting more valuable.",
-   "score": 1.4688
+   "score": 1.5647
   },
   {
    "title": "Live updates: Bitcoin rejected at $81,000 as 50-week moving average caps rally",
@@ -78,7 +78,23 @@
    "source": "CoinDesk",
    "published": "2026-08-25T07:40:11+00:00",
    "summary": "",
-   "score": 1.3591
+   "score": 1.3233
+  },
+  {
+   "title": "Bitcoin, Ethereum ETFs Grew $23 Billion Last Week—Only $2.6 Billion Was New Money",
+   "url": "https://decrypt.co/376349/bitcoin-ethereum-etfs-23-billion-aum-inflows",
+   "source": "Decrypt",
+   "published": "2026-08-24T17:07:32+00:00",
+   "summary": "Bitcoin and Ethereum ETFs booked their strongest inflow week since October, but most of the gain came from coins investors already owned getting more valuable.",
+   "score": 1.1441
+  },
+  {
+   "title": "Here’s what happened in crypto today",
+   "url": "https://cointelegraph.com/news/what-happened-in-crypto-today?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-08-25T13:19:39+00:00",
+   "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
+   "score": 1.1233
   },
   {
    "title": "Strive Stock Soars After 1,110 Bitcoin Buy",
@@ -86,7 +102,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-24T19:04:45+00:00",
    "summary": "Bitcoin Magazine Strive Stock Soars After 1,110 Bitcoin Buy The Nasdaq-listed company made its biggest bitcoin buy in months. This post Strive Stock Soars After 1,110 Bitcoin Buy first appeared on Bitcoin Magazine and is written by Mathew Di Salvo .",
-   "score": 1.1332
+   "score": 1.1033
   },
   {
    "title": "Bitcoin tops $80,000, solana jumps 8% but rally now runs into overbought warning",
@@ -94,7 +110,7 @@
    "source": "CoinDesk",
    "published": "2026-08-25T05:25:11+00:00",
    "summary": "",
-   "score": 1.0525
+   "score": 1.0248
   },
   {
    "title": "Bitcoin ETF inflows hit $1.9B in strongest week since October 2025",
@@ -102,23 +118,7 @@
    "source": "Cointelegraph",
    "published": "2026-08-24T08:56:52+00:00",
    "summary": "US spot Bitcoin ETFs attracted $1.92 billion last week, their strongest weekly inflow since October 2025, as Bitcoin briefly climbed above $78,000 on Friday.",
-   "score": 1.0442
-  },
-  {
-   "title": "Bitcoin's Next Test Is $80,000 as Jackson Hole Meeting Looms",
-   "url": "https://decrypt.co/376315/bitcoins-next-test-is-80000-as-jackson-hole-meeting-looms",
-   "source": "Decrypt",
-   "published": "2026-08-24T10:49:00+00:00",
-   "summary": "Kevin Warsh gives his first Jackson Hole keynote as Fed chair on Friday, with futures now pricing a September rate hike at 36%.",
-   "score": 0.894
-  },
-  {
-   "title": "Here’s what happened in crypto today",
-   "url": "https://cointelegraph.com/news/what-happened-in-crypto-today?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-08-25T05:48:17+00:00",
-   "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
-   "score": 0.8279
+   "score": 0.8134
   },
   {
    "title": "Strategy Again Skips Bitcoin Buy And Establishes USD Cash Dollar Reserve",
@@ -126,7 +126,15 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-24T14:48:17+00:00",
    "summary": "Bitcoin Magazine Strategy Again Skips Bitcoin Buy And Establishes USD Cash Dollar Reserve Strategy went another week without buying or selling bitcoin but has a new pool of cash. This post Strategy Again Skips Bitcoin Buy And Establishes USD Cash Dollar Reserve first appeared on…",
-   "score": 0.7576
+   "score": 0.7376
+  },
+  {
+   "title": "Bitcoin's Next Test Is $80,000 as Jackson Hole Meeting Looms",
+   "url": "https://decrypt.co/376315/bitcoins-next-test-is-80000-as-jackson-hole-meeting-looms",
+   "source": "Decrypt",
+   "published": "2026-08-24T10:49:00+00:00",
+   "summary": "Kevin Warsh gives his first Jackson Hole keynote as Fed chair on Friday, with futures now pricing a September rate hike at 36%.",
+   "score": 0.6963
   },
   {
    "title": "Galaxy puts Coldcard hack losses at 1,789 BTC, with 87% unmoved",
@@ -134,7 +142,7 @@
    "source": "Cointelegraph",
    "published": "2026-08-25T08:46:47+00:00",
    "summary": "Galaxy Research’s latest tally shows that more than half of 221 Coldcard hack victim reports involved individual losses exceeding 1 Bitcoin.",
-   "score": 0.6285
+   "score": 0.612
   },
   {
    "title": "Live updates: Bitcoin moves closer to $80,000, but rally could bring profit taking",
@@ -142,7 +150,7 @@
    "source": "CoinDesk",
    "published": "2026-08-24T08:05:57+00:00",
    "summary": "",
-   "score": 0.6189
+   "score": 0.6026
   },
   {
    "title": "Bessent's $4 billion bond buyback wanted lower yields. It got a bitcoin surge instead.",
@@ -150,15 +158,7 @@
    "source": "CoinDesk",
    "published": "2026-08-24T05:12:56+00:00",
    "summary": "",
-   "score": 0.4749
-  },
-  {
-   "title": "Strategy Raises $2B Selling MSTR Stock, Establishes 'USD Cash' Pot",
-   "url": "https://decrypt.co/376325/strategy-raises-2b-selling-mstr-stock-establishes-usd-cash-pot",
-   "source": "Decrypt",
-   "published": "2026-08-24T12:49:33+00:00",
-   "summary": "The company has not bought Bitcoin since June, and has now created a liquidity account it said may be spent on more of it.",
-   "score": 0.4712
+   "score": 0.4624
   },
   {
    "title": "Cypher Tank Returns to Lugano, Expanding Its Bet on Bitcoin Founders",
@@ -166,7 +166,15 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-25T02:00:32+00:00",
    "summary": "Bitcoin Magazine Cypher Tank Returns to Lugano, Expanding Its Bet on Bitcoin Founders Cypher Tank Returns to Lugano for Second Season following last year's debut. This post Cypher Tank Returns to Lugano, Expanding Its Bet on Bitcoin Founders first appeared on Bitcoin Magazine an…",
-   "score": 0.4453
+   "score": 0.4336
+  },
+  {
+   "title": "Strategy Raises $2B Selling MSTR Stock, Establishes 'USD Cash' Pot",
+   "url": "https://decrypt.co/376325/strategy-raises-2b-selling-mstr-stock-establishes-usd-cash-pot",
+   "source": "Decrypt",
+   "published": "2026-08-24T12:49:33+00:00",
+   "summary": "The company has not bought Bitcoin since June, and has now created a liquidity account it said may be spent on more of it.",
+   "score": 0.367
   },
   {
    "title": "How a Treasury buyback tweak helped bitcoin surge 25% to nearly $80,000 in days",
@@ -174,7 +182,7 @@
    "source": "CoinDesk",
    "published": "2026-08-22T05:05:13+00:00",
    "summary": "",
-   "score": 0.3476
+   "score": 0.3385
   },
   {
    "title": "Fed study finds crypto investors driven by beliefs, easily swayed by returns",
@@ -182,7 +190,7 @@
    "source": "Cointelegraph",
    "published": "2026-08-23T15:30:53+00:00",
    "summary": "A Federal Reserve Bank of Cleveland study finds crypto investors hold sharply different views on returns and risk, while information about Bitcoin’s past gains can increase both desired allocations and actual crypto purchases.",
-   "score": 0.3464
+   "score": 0.3373
   },
   {
    "title": "UK Banks Still Blocking Bitcoin, Policy Group Tells Parliament",
@@ -190,15 +198,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-24T19:56:45+00:00",
    "summary": "Bitcoin Magazine UK Banks Still Blocking Bitcoin, Policy Group Tells Parliament Bitcoin Policy UK says that 40% of bank-to-exchange transfers are being blocked in Britain. This post UK Banks Still Blocking Bitcoin, Policy Group Tells Parliament first appeared on Bitcoin Magazine…",
-   "score": 0.3264
-  },
-  {
-   "title": "Wall Street and Washington Fuel Bitcoin Rally: Here's What's Going On",
-   "url": "https://decrypt.co/376244/wall-street-washington-bitcoin-rally",
-   "source": "Decrypt",
-   "published": "2026-08-21T20:07:05+00:00",
-   "summary": "Institutional buying, improving macro conditions and a friendlier regulatory outlook are supporting Bitcoin's rally, while billions in short liquidations have accelerated the move.",
-   "score": 0.2776
+   "score": 0.3178
   },
   {
    "title": "Bitget CEO isn’t buying the Bitcoin rally — She’s waiting for $50K",
@@ -206,7 +206,7 @@
    "source": "Cointelegraph",
    "published": "2026-08-24T13:30:00+00:00",
    "summary": "Bitget CEO Gracy Chen doesn’t believe the current Bitcoin rally is sustainable, and she aims to buy more BTC around the $50K mark later in 2026 or early next year.",
-   "score": 0.2741
+   "score": 0.2668
   },
   {
    "title": "Bitcoin's surging price faces 1 key level that could signal if the bear market is really over",
@@ -214,15 +214,15 @@
    "source": "CoinDesk",
    "published": "2026-08-25T11:15:02+00:00",
    "summary": "",
-   "score": 0.2605
+   "score": 0.2537
   },
   {
-   "title": "Strategy Swings From $13 Billion Bitcoin Loss to $1.4 Billion Profit as BTC Rallies",
-   "url": "https://decrypt.co/376230/strategy-profit-bitcoin-holdings-btc-rallies",
+   "title": "Wall Street and Washington Fuel Bitcoin Rally: Here's What's Going On",
+   "url": "https://decrypt.co/376244/wall-street-washington-bitcoin-rally",
    "source": "Decrypt",
-   "published": "2026-08-21T17:28:55+00:00",
-   "summary": "The Bitcoin treasury giant is sitting on roughly $1.4 billion in unrealized gains after Bitcoin climbed above its average acquisition price.",
-   "score": 0.2209
+   "published": "2026-08-21T20:07:05+00:00",
+   "summary": "Institutional buying, improving macro conditions and a friendlier regulatory outlook are supporting Bitcoin's rally, while billions in short liquidations have accelerated the move.",
+   "score": 0.2163
   },
   {
    "title": "A bitcoin short squeeze for the ages as futures open interest collapses",
@@ -230,7 +230,7 @@
    "source": "CoinDesk",
    "published": "2026-08-25T10:57:02+00:00",
    "summary": "",
-   "score": 0.2075
+   "score": 0.2021
   },
   {
    "title": "Standard Chartered wavers on $100K Bitcoin year-end call, says it may be ‘too low’",
@@ -238,7 +238,7 @@
    "source": "Cointelegraph",
    "published": "2026-08-21T11:58:10+00:00",
    "summary": "Standard Chartered’s Geoff Kendrick said Bitcoin could move toward its $126,000 all-time high after Oct. 6 as spot Bitcoin ETF inflows recover.",
-   "score": 0.2022
+   "score": 0.1969
   },
   {
    "title": "Pakistan’s Crypto Pitch: “Come Build Here” as Virtual Assets Act Moves Forward",
@@ -246,23 +246,23 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-21T16:59:45+00:00",
    "summary": "Bitcoin Magazine Pakistan’s Crypto Pitch: “Come Build Here” as Virtual Assets Act Moves Forward Pakistan has announced a new regulatory framework for crypto after banning the asset class for close to a decade, Announcing the news in an X post Friday, Bilal Bin Saqib, the special…",
-   "score": 0.1946
+   "score": 0.1895
   },
   {
-   "title": "Bitcoin ETFs Just Had Their Biggest Day Since May—BlackRock Took 83% of It",
-   "url": "https://decrypt.co/376211/bitcoin-etfs-biggest-day-since-may",
+   "title": "Strategy Swings From $13 Billion Bitcoin Loss to $1.4 Billion Profit as BTC Rallies",
+   "url": "https://decrypt.co/376230/strategy-profit-bitcoin-holdings-btc-rallies",
    "source": "Decrypt",
-   "published": "2026-08-21T16:29:01+00:00",
-   "summary": "U.S. spot Bitcoin ETFs pulled in $606 million Thursday, the biggest haul since May. And altcoin funds finally showed up too.",
-   "score": 0.1686
+   "published": "2026-08-21T17:28:55+00:00",
+   "summary": "The Bitcoin treasury giant is sitting on roughly $1.4 billion in unrealized gains after Bitcoin climbed above its average acquisition price.",
+   "score": 0.1721
   },
   {
-   "title": "Zcash jumps 48% to over $800 as Grayscale spot ETF push adds to ‘next bitcoin’ buzz",
-   "url": "https://www.coindesk.com/markets/2026/08/22/zcash-tops-usd800-for-first-time-since-2016",
+   "title": "Bitcoin extends 7-day advance to roughly 25%",
+   "url": "https://www.coindesk.com/markets/2026/08/25/bitcoin-extends-7-day-advance-to-roughly-25",
    "source": "CoinDesk",
-   "published": "2026-08-22T05:37:43+00:00",
+   "published": "2026-08-25T10:52:03+00:00",
    "summary": "",
-   "score": 0.1631
+   "score": 0.1615
   },
   {
    "title": "Strategy launches $1.6B cash pool after $2B common shares raise, maintains hold on BTC buys",
@@ -270,7 +270,7 @@
    "source": "Cointelegraph",
    "published": "2026-08-24T12:45:00+00:00",
    "summary": "Strategy held off on new Bitcoin buying, maintaining holdings at 840,447 BTC as it launched a $1.59 billion cash pool after raising $2 billion from MSTR stock sales.",
-   "score": 0.1542
+   "score": 0.1502
   },
   {
    "title": "Bitcoin Price Roars Towards $80,000 Following Positive Regulatory News, US Buyback Pledge",
@@ -278,15 +278,23 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-21T15:24:23+00:00",
    "summary": "Bitcoin Magazine Bitcoin Price Roars Towards $80,000 Following Positive Regulatory News, US Buyback Pledge Bitcoin has continued its rocket upwards, and blew past $79,000 on Friday. This post Bitcoin Price Roars Towards $80,000 Following Positive Regulatory News, US Buyback Pled…",
-   "score": 0.1522
+   "score": 0.1482
   },
   {
-   "title": "Bitcoin traders place $2.9 million bet on a rapid price jump above $82,000",
-   "url": "https://www.coindesk.com/markets/2026/08/25/bitcoin-traders-place-usd2-9-million-bet-on-a-rapid-price-jump-above-usd82-000",
+   "title": "Bitcoin ETFs Just Had Their Biggest Day Since May—BlackRock Took 83% of It",
+   "url": "https://decrypt.co/376211/bitcoin-etfs-biggest-day-since-may",
+   "source": "Decrypt",
+   "published": "2026-08-21T16:29:01+00:00",
+   "summary": "U.S. spot Bitcoin ETFs pulled in $606 million Thursday, the biggest haul since May. And altcoin funds finally showed up too.",
+   "score": 0.1313
+  },
+  {
+   "title": "Zcash jumps 48% to over $800 as Grayscale spot ETF push adds to ‘next bitcoin’ buzz",
+   "url": "https://www.coindesk.com/markets/2026/08/22/zcash-tops-usd800-for-first-time-since-2016",
    "source": "CoinDesk",
-   "published": "2026-08-25T05:51:52+00:00",
+   "published": "2026-08-22T05:37:43+00:00",
    "summary": "",
-   "score": 0.1234
+   "score": 0.127
   },
   {
    "title": "Bitcoin rally sends crypto stocks soaring as miners, treasury companies jump",
@@ -294,7 +302,7 @@
    "source": "Cointelegraph",
    "published": "2026-08-21T16:11:07+00:00",
    "summary": "Bitcoin’s rally above $79,000 lifted miners and treasury companies, with Canaan, Strive and Metaplanet posting double-digit gains as crypto stocks surged.",
-   "score": 0.1232
+   "score": 0.12
   },
   {
    "title": "Bitcoin ETFs Add Over $1B as Investor Sentiment Turns Bullish",
@@ -302,7 +310,15 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-20T17:19:30+00:00",
    "summary": "Bitcoin Magazine Bitcoin ETFs Add Over $1B as Investor Sentiment Turns Bullish Investors have been buying shares in the American funds this week. This post Bitcoin ETFs Add Over $1B as Investor Sentiment Turns Bullish first appeared on Bitcoin Magazine and is written by Mathew D…",
-   "score": 0.1207
+   "score": 0.1175
+  },
+  {
+   "title": "Bitcoin traders place $2.9 million bet on a rapid price jump above $82,000",
+   "url": "https://www.coindesk.com/markets/2026/08/25/bitcoin-traders-place-usd2-9-million-bet-on-a-rapid-price-jump-above-usd82-000",
+   "source": "CoinDesk",
+   "published": "2026-08-25T05:51:52+00:00",
+   "summary": "",
+   "score": 0.0961
   },
   {
    "title": "Bitcoin Is Pumping But Prediction Market Traders Aren't Convinced",
@@ -310,23 +326,7 @@
    "source": "Decrypt",
    "published": "2026-08-20T19:16:05+00:00",
    "summary": "Bitcoin's sharpest rally in five months flipped prediction-market odds from bearish to a coin flip—but the longer-term bets still price in a crash.",
-   "score": 0.1191
-  },
-  {
-   "title": "Live updates: Bitcoin, ether ETFs pull in $800 million as inflows surge for a second day",
-   "url": "https://www.coindesk.com/tech/2026/08/21/live-updates-bitcoin-ether-etfs-pull-in-usd800-million-as-inflows-surge-for-a-second-day",
-   "source": "CoinDesk",
-   "published": "2026-08-21T06:43:24+00:00",
-   "summary": "",
-   "score": 0.095
-  },
-  {
-   "title": "We are so back! Bitcoin’s 23% rally on US debt policy: Hodler’s Digest",
-   "url": "https://cointelegraph.com/magazine/we-are-back-bitcoins-23-rally-on-us-debt-policy-hodlers-digest?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-08-23T23:56:00+00:00",
-   "summary": "The US may face a debt crisis within three years according to Ray Dalio, and debt-related issues helped fuel a rally in Bitcoin that could mark the beginning of a new cycle.",
-   "score": 0.0923
+   "score": 0.0928
   }
  ]
 }
