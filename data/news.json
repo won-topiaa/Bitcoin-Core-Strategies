@@ -1,5 +1,5 @@
 {
- "fetched": "2026-08-29T18:48:25+00:00",
+ "fetched": "2026-08-29T19:43:09+00:00",
  "sources_ok": [
   "CoinDesk",
   "Cointelegraph",
@@ -14,7 +14,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-28T22:06:02+00:00",
    "summary": "Bitcoin Magazine Bitcoin Cools Off After $3 Billion ETF-Driven Surge Bitcoin's run slowed down Friday after the Federal Reserve chief said inflation was too hot. Its run was charged by speculators throwing billions at the popular investment vehicles. This post Bitcoin Cools Off…",
-   "score": 3.9302
+   "score": 3.8788
   },
   {
    "title": "What Is Strategy (MSTR)? The Bitcoin Treasury Company",
@@ -22,7 +22,7 @@
    "source": "Decrypt",
    "published": "2026-08-28T16:08:02+00:00",
    "summary": "Strategy’s co-founder Michael Saylor pioneered the Bitcoin treasury playbook. Here’s what you need to know.",
-   "score": 2.9254
+   "score": 2.8871
   },
   {
    "title": "Bitcoin ETFs end 9-day inflow streak as BTC dips below $78K",
@@ -30,7 +30,7 @@
    "source": "Cointelegraph",
    "published": "2026-08-29T06:47:12+00:00",
    "summary": "US spot Bitcoin ETFs posted $201.8 million in net outflows Friday, led by ARK 21Shares, as total fund assets slipped back below $100 billion.",
-   "score": 2.5219
+   "score": 2.4889
   },
   {
    "title": "Bitcoin Rally Stalls, But Long-Term Sentiment Remains Bullish",
@@ -38,7 +38,7 @@
    "source": "Decrypt",
    "published": "2026-08-28T21:16:04+00:00",
    "summary": "BTC gave back some of its gains after Fed Chair Kevin Warsh talked tough on inflation, but prediction market traders are still leaning bullish.",
-   "score": 1.9343
+   "score": 1.909
   },
   {
    "title": "Here’s what happened in crypto today",
@@ -46,7 +46,7 @@
    "source": "Cointelegraph",
    "published": "2026-08-29T12:39:59+00:00",
    "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
-   "score": 1.6106
+   "score": 1.5896
   },
   {
    "title": "Capital B Raises €21M From Adam Back and TOBAM To Buy More BTC",
@@ -54,7 +54,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-28T18:10:42+00:00",
    "summary": "Bitcoin Magazine Capital B Raises €21M From Adam Back and TOBAM To Buy More BTC The French bitcoin treasury currently holds 3,145 bitcoins worth over $245 million at today's prices. This post Capital B Raises €21M From Adam Back and TOBAM To Buy More BTC first appeared on Bitcoi…",
-   "score": 1.4014
+   "score": 1.3831
   },
   {
    "title": "Bitcoin tests its largest supply wall at $80,000, near ETF holders’ average price",
@@ -62,7 +62,7 @@
    "source": "CoinDesk",
    "published": "2026-08-27T10:54:24+00:00",
    "summary": "",
-   "score": 1.3383
+   "score": 1.3208
   },
   {
    "title": "Ethereum ETFs Take $226M in a Day, Almost Matching Bitcoin's Haul",
@@ -70,7 +70,7 @@
    "source": "Decrypt",
    "published": "2026-08-28T14:17:21+00:00",
    "summary": "Nine straight sessions have brought in $1.4 billion, with Thursday marking the funds' strongest day in 10 months.",
-   "score": 1.2719
+   "score": 1.2553
   },
   {
    "title": "Bitcoin Drops Before Shrugging Off Fed Chair’s Inflation Comments",
@@ -78,7 +78,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-28T15:49:18+00:00",
    "summary": "Bitcoin Magazine Bitcoin Drops Before Shrugging Off Fed Chair’s Inflation Comments Bitcoin dropped, then popped after Federal Reserve Chair Kevin Warsh gave his first major speech as head of the U.S. central bank and said he had “more work to do” to fight inflation. The leading…",
-   "score": 1.0836
+   "score": 1.0695
   },
   {
    "title": "Bitcoin dips to $78.4K as Fed’s Warsh downplays softer inflation prints",
@@ -86,7 +86,7 @@
    "source": "Cointelegraph",
    "published": "2026-08-28T15:31:25+00:00",
    "summary": "Bitcoin failed to make a decisive break above $80,000 as traders digested Fed Chair Kevin Warsh’s Jackson Hole keynote speech, which remained wary of US inflation trends.",
-   "score": 1.079
+   "score": 1.0649
   },
   {
    "title": "Bitcoin steadies above $79,000 as ETF inflows hit longest streak since April",
@@ -94,7 +94,7 @@
    "source": "CoinDesk",
    "published": "2026-08-27T10:31:21+00:00",
    "summary": "",
-   "score": 1.0647
+   "score": 1.0508
   },
   {
    "title": "Bitcoin Traders Watch Fed Chair Warsh for Clues—And Get Nothing",
@@ -102,7 +102,7 @@
    "source": "Decrypt",
    "published": "2026-08-28T15:14:11+00:00",
    "summary": "Fed Chair Warsh's first Jackson Hole keynote doubled down on giving markets zero rate hints as inflation runs hot and Bitcoin traders wait on September's call.",
-   "score": 0.8596
+   "score": 0.8484
   },
   {
    "title": "Crypto Biz: Bitcoin pumps, Wall Street does the paperwork",
@@ -110,7 +110,7 @@
    "source": "Cointelegraph",
    "published": "2026-08-28T14:53:40+00:00",
    "summary": "Bitcoin’s $80,000 rebound lifts crypto stocks as Circle, Strategy and Solana show how capital markets, stablecoins and onchain growth are driving crypto’s recovery.",
-   "score": 0.8212
+   "score": 0.8104
   },
   {
    "title": "Bitcoin’s Moment Has Come for the Far East, Says Metaplanet CEO",
@@ -118,7 +118,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-28T20:39:49+00:00",
    "summary": "Bitcoin Magazine Bitcoin’s Moment Has Come for the Far East, Says Metaplanet CEO Just as the regulatory landscape changes, Asians are looking for places to park their cash. The opportunity is Bitcoin, Metaplanet CEO Simon Gerovich argued at Bitcoin Asia. This post Bitcoin’s Mome…",
-   "score": 0.8181
+   "score": 0.8074
   },
   {
    "title": "Capital B raises $24.5M for its Bitcoin treasury amid market uncertainty with BlockStream’s Adam Back chipping in",
@@ -126,7 +126,7 @@
    "source": "Cointelegraph",
    "published": "2026-08-28T11:36:43+00:00",
    "summary": "The French Bitcoin treasury firm’s private placement drew support from Adam Back and TOBAM, with warrant exercises potentially unlocking another $158 million.",
-   "score": 0.6526
+   "score": 0.6441
   },
   {
    "title": "Bitcoin below $79,000, XRP leads losses as traders start betting on a Fed hike",
@@ -134,7 +134,7 @@
    "source": "CoinDesk",
    "published": "2026-08-27T04:35:18+00:00",
    "summary": "",
-   "score": 0.6515
+   "score": 0.643
   },
   {
    "title": "Billions Pour Into Bitcoin ETFs as Rally Rolls On",
@@ -142,7 +142,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-26T20:56:47+00:00",
    "summary": "Bitcoin Magazine Billions Pour Into Bitcoin ETFs as Rally Rolls On The popular investment vehicles have continued to receive new cash the past couple of days after last week's huge run. Will it last? This post Billions Pour Into Bitcoin ETFs as Rally Rolls On first appeared on B…",
-   "score": 0.5676
+   "score": 0.5601
   },
   {
    "title": "Bitcoin Miner IREN Shares Fall as AI Conversion Costs Mount",
@@ -150,7 +150,7 @@
    "source": "Decrypt",
    "published": "2026-08-28T16:04:37+00:00",
    "summary": "AI cloud revenue topped Bitcoin mining for the first time as IREN accelerated its data center conversion.",
-   "score": 0.5569
+   "score": 0.5496
   },
   {
    "title": "Bitcoin takes a breather after adding 23% in 7 days as ETF demand holds steady",
@@ -158,7 +158,7 @@
    "source": "CoinDesk",
    "published": "2026-08-26T10:45:29+00:00",
    "summary": "",
-   "score": 0.4835
+   "score": 0.4771
   },
   {
    "title": "Pakistan Built Its Crypto Regulatory Regime Using Just 8% of Its Budget, Minister Bilal Bin Saqib Reveals at Bitcoin Asia",
@@ -166,7 +166,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-28T09:22:08+00:00",
    "summary": "Bitcoin Magazine Pakistan Built Its Crypto Regulatory Regime Using Just 8% of Its Budget, Minister Bilal Bin Saqib Reveals at Bitcoin Asia Pakistan has launched its virtual asset regulatory regime in less than six months while using just 8% of the budget allocated to build it, a…",
-   "score": 0.4448
+   "score": 0.439
   },
   {
    "title": "Bitcoin’s 23% rally sends beaten-down miners soaring past AI stocks",
@@ -174,7 +174,7 @@
    "source": "Cointelegraph",
    "published": "2026-08-27T16:04:15+00:00",
    "summary": "Canaan, American Bitcoin and Cango jumped as much as 67% as renewed crypto demand showed BTC exposure can still drive mining equities despite the industry’s AI push.",
-   "score": 0.441
+   "score": 0.4352
   },
   {
    "title": "Bitcoin ETFs Draw $2.8B in Eight-Day Streak as BTC Tests $80K",
@@ -182,7 +182,7 @@
    "source": "Decrypt",
    "published": "2026-08-27T10:39:10+00:00",
    "summary": "August is heading for its strongest month of inflows since October 2025 if the pace holds, one analyst noted.",
-   "score": 0.4369
+   "score": 0.4312
   },
   {
    "title": "BlackRock cuts bitcoin ETF swap minimum to $1 million: Report",
@@ -190,7 +190,7 @@
    "source": "CoinDesk",
    "published": "2026-08-26T05:52:53+00:00",
    "summary": "",
-   "score": 0.3605
+   "score": 0.3558
   },
   {
    "title": "Genius Group Sets $2B Dual Treasury Target Months After Liquidating Bitcoin Holdings",
@@ -198,7 +198,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-27T20:17:43+00:00",
    "summary": "Bitcoin Magazine Genius Group Sets $2B Dual Treasury Target Months After Liquidating Bitcoin Holdings Genius Group has announced a new plan to buy bitcoin — just months after selling its entire stash. The NYSE-listed AI-powered education company said in a Thursday statement that…",
-   "score": 0.3348
+   "score": 0.3304
   },
   {
    "title": "Bitcoin ETF inflows slow to $232M as BTC holds under $80K",
@@ -206,7 +206,7 @@
    "source": "Cointelegraph",
    "published": "2026-08-27T07:01:19+00:00",
    "summary": "US spot Bitcoin ETF inflows slowed to $232.1 million as an eight-day streak reached $2.8 billion, while XRP funds posted their biggest inflow since Jan. 5.",
-   "score": 0.3317
+   "score": 0.3273
   },
   {
    "title": "Bitcoin Eyes Major Resistance as Jackson Hole Kicks Off With Unusual Fed Agenda",
@@ -214,7 +214,7 @@
    "source": "Decrypt",
    "published": "2026-08-27T17:36:04+00:00",
    "summary": "BTC is holding above $80,000 into a Fed symposium that, for the first time in 40 years, is built around crypto's own turf—payments and financial infrastructure.",
-   "score": 0.322
+   "score": 0.3178
   },
   {
    "title": "Bitcoin wallets untouched for 10 years moved $40 million. Most avoided exchanges",
@@ -222,7 +222,7 @@
    "source": "CoinDesk",
    "published": "2026-08-29T04:30:00+00:00",
    "summary": "",
-   "score": 0.2665
+   "score": 0.263
   },
   {
    "title": "Bitcoin Again Flirts With $81,000 Ahead of Fed’s Jackson Hole Meeting",
@@ -230,7 +230,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-27T19:38:38+00:00",
    "summary": "Bitcoin Magazine Bitcoin Again Flirts With $81,000 Ahead of Fed’s Jackson Hole Meeting Bitcoin's price is up ahead of Kevin Warsh’s first major speech as chairman of the Federal Reserve. This post Bitcoin Again Flirts With $81,000 Ahead of Fed’s Jackson Hole Meeting first appear…",
-   "score": 0.2653
+   "score": 0.2619
   },
   {
    "title": "Thailand moves closer to Bitcoin, Ether ETFs with draft rules",
@@ -238,7 +238,7 @@
    "source": "Cointelegraph",
    "published": "2026-08-25T10:20:14+00:00",
    "summary": "Thailand’s SEC opened consultations on local Bitcoin and Ether ETF rules and qualification standards for foreign digital asset custodians.",
-   "score": 0.2088
+   "score": 0.206
   },
   {
    "title": "Nvidia shares surge 8% on earnings beat, lifting technology stocks and bitcoin",
@@ -246,7 +246,7 @@
    "source": "CoinDesk",
    "published": "2026-08-27T09:19:26+00:00",
    "summary": "",
-   "score": 0.2057
+   "score": 0.203
   },
   {
    "title": "Live updates: Bitcoin reclaims $80,000 as software stocks lead market rally",
@@ -254,7 +254,7 @@
    "source": "CoinDesk",
    "published": "2026-08-27T08:51:37+00:00",
    "summary": "",
-   "score": 0.1635
+   "score": 0.1614
   },
   {
    "title": "Bitcoin ETFs tear through 2026 outflows in 7-day hot streak",
@@ -262,7 +262,7 @@
    "source": "Cointelegraph",
    "published": "2026-08-26T07:30:31+00:00",
    "summary": "The funds are $390 million short of October 2025’s inflow total after cutting their year-to-date net outflow deficit by more than half.",
-   "score": 0.1512
+   "score": 0.1492
   },
   {
    "title": "Grayscale Launches Zcash ETF Following Critical Privacy Flaw That Rocked the Cryptocurrency",
@@ -270,7 +270,7 @@
    "source": "Decrypt",
    "published": "2026-08-25T12:01:03+00:00",
    "summary": "The fund gives brokerage investors exposure to ZEC as Grayscale bets on demand for crypto assets beyond Bitcoin and Ethereum.",
-   "score": 0.1426
+   "score": 0.1407
   },
   {
    "title": "SEC Sends Proposal to White House To Modernize Crypto Custody",
@@ -278,7 +278,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-26T15:29:13+00:00",
    "summary": "Bitcoin Magazine SEC Sends Proposal to White House To Modernize Crypto Custody A vote on the Clarity Act has stalled but regulators are pushing ahead with policy regardless. This post SEC Sends Proposal to White House To Modernize Crypto Custody first appeared on Bitcoin Magazin…",
-   "score": 0.1413
+   "score": 0.1395
   },
   {
    "title": "Lesser-tracked bitcoin market dynamic lends credibility to August surge to $80,000",
@@ -286,7 +286,7 @@
    "source": "CoinDesk",
    "published": "2026-08-27T04:02:57+00:00",
    "summary": "",
-   "score": 0.122
+   "score": 0.1204
   },
   {
    "title": "Strategy’s $66B Bitcoin machine hinges on capital markets, not BTC price: Report",
@@ -294,7 +294,7 @@
    "source": "Cointelegraph",
    "published": "2026-08-25T16:49:00+00:00",
    "summary": "Strategy’s biggest risk may not be a Bitcoin crash, but losing access to the capital markets that help it service $1.76 billion in annual obligations.",
-   "score": 0.1109
+   "score": 0.1094
   },
   {
    "title": "What Traders Are Watching for Bitcoin's Next Move",
@@ -302,7 +302,7 @@
    "source": "Decrypt",
    "published": "2026-08-26T20:22:17+00:00",
    "summary": "Bitcoin's monster rally just hit its first real test. Here's why each catalyst matters and how they could move the price from here.",
-   "score": 0.1092
+   "score": 0.1078
   },
   {
    "title": "Bitcoin experts prefer this defined-risk strategy for the next leg higher in prices",
@@ -310,7 +310,7 @@
    "source": "CoinDesk",
    "published": "2026-08-27T11:11:08+00:00",
    "summary": "",
-   "score": 0.0962
+   "score": 0.0949
   },
   {
    "title": "StarkWare tests quantum-resistant Bitcoin transaction on mainnet",
@@ -318,7 +318,7 @@
    "source": "Cointelegraph",
    "published": "2026-08-27T04:14:48+00:00",
    "summary": "StarkWare said the experimental transaction demonstrated quantum-resistant Bitcoin spending without a fork, but it cost up to $200 and required direct miner submission.",
-   "score": 0.087
+   "score": 0.0859
   },
   {
    "title": "Bitcoin Rally Accelerates, With $80,000 in Sight After ETFs Have Stellar Week",
@@ -326,7 +326,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-24T16:18:56+00:00",
    "summary": "Bitcoin Magazine Bitcoin Rally Accelerates, With $80,000 in Sight After ETFs Have Stellar Week Bitcoin’s price surged further on Monday, flirting with $80,000 after U.S. exchange-traded funds had their best week since October. The leading cryptocurrency was recently trading more…",
-   "score": 0.087
+   "score": 0.0858
   }
  ]
 }
