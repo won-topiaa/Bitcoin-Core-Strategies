@@ -1,5 +1,5 @@
 {
- "fetched": "2026-09-02T15:05:00+00:00",
+ "fetched": "2026-09-02T16:49:58+00:00",
  "sources_ok": [
   "CoinDesk",
   "Cointelegraph",
@@ -14,7 +14,7 @@
    "source": "CoinDesk",
    "published": "2026-09-02T08:31:00+00:00",
    "summary": "",
-   "score": 2.7286
+   "score": 2.6605
   },
   {
    "title": "Bitcoin ETFs notch best month of 2026 as BTC gains 25% in August",
@@ -22,7 +22,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-02T07:59:43+00:00",
    "summary": "US spot Bitcoin ETFs reduced their year-to-date net outflows by 66% as Bitcoin gained about 25% in August, while Ether ETFs turned positive YTD at $732 million and XRP ETFs reached $502 million.",
-   "score": 2.7081
+   "score": 2.6406
   },
   {
    "title": "BlackRock’s iShares Bitcoin Trust Is Beating Top S&P 500 ETF",
@@ -30,7 +30,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-01T16:35:17+00:00",
    "summary": "Bitcoin Magazine BlackRock’s iShares Bitcoin Trust Is Beating Top S&P 500 ETF The asset manager's flagship bitcoin fund is delivering better returns than Vanguard's S&P 500 ETF. This post BlackRock’s iShares Bitcoin Trust Is Beating Top S&P 500 ETF first appeared on Bitcoin Maga…",
-   "score": 2.1679
+   "score": 2.1138
   },
   {
    "title": "Cathie Wood’s Ark Invest Buys $37 Million in Bitcoin and Payments Firm Block",
@@ -38,7 +38,7 @@
    "source": "Decrypt",
    "published": "2026-09-01T16:13:28+00:00",
    "summary": "The investment firm bought 456,059 Block shares across three ETFs and added $3.4 million in Circle stock.",
-   "score": 2.1566
+   "score": 2.1028
   },
   {
    "title": "Capital B aims to add 376 BTC to bitcoin treasury following $8.8 million Adam Back investment",
@@ -46,7 +46,7 @@
    "source": "CoinDesk",
    "published": "2026-09-02T11:45:16+00:00",
    "summary": "",
-   "score": 1.9061
+   "score": 1.8586
   },
   {
    "title": "Here’s what happened in crypto today",
@@ -54,7 +54,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-02T13:30:00+00:00",
    "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
-   "score": 1.7202
+   "score": 1.6773
   },
   {
    "title": "Morning Minute: Saylor’s Back Buying Bitcoin",
@@ -62,7 +62,7 @@
    "source": "Decrypt",
    "published": "2026-09-01T12:21:23+00:00",
    "summary": "Strategy somehow threaded the needle of buying Bitcoin and STRC while also raising cash. Now how will the market respond?",
-   "score": 1.5228
+   "score": 1.4848
   },
   {
    "title": "A Fed rate increase would be a mistake, some observers say as bitcoin, gold, stocks fall",
@@ -70,7 +70,7 @@
    "source": "CoinDesk",
    "published": "2026-09-02T11:14:58+00:00",
    "summary": "",
-   "score": 1.5138
+   "score": 1.4761
   },
   {
    "title": "Strategy Opposes MSCI Proposal, Says Bitcoin Treasury Firms Are Being Targeted a Second Time",
@@ -78,7 +78,23 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-31T20:44:36+00:00",
    "summary": "Bitcoin Magazine Strategy Opposes MSCI Proposal, Says Bitcoin Treasury Firms Are Being Targeted a Second Time Bitcoin treasury Strategy has blasted Morgan Stanley Capital International’s proposal to exclude it from its Global Investable Market Indexes, calling it “misguided” and…",
-   "score": 1.3456
+   "score": 1.312
+  },
+  {
+   "title": "Bitcoin’s apparent demand turns negative as price struggles with $77K",
+   "url": "https://cointelegraph.com/markets/bitcoins-apparent-demand-turns-negative-price-struggles-with-77k?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-09-02T16:35:56+00:00",
+   "summary": "One of Bitcoin’s onchain demand indicators turns negative again after a brief August rebound, as BTC price slipped below $77,000 amid a broader bond and equities sell-off.",
+   "score": 1.1481
+  },
+  {
+   "title": "Strategy CEO Defends Bitcoin Sale as the ‘Right Trade’",
+   "url": "https://bitcoinmagazine.com/news/strategy-ceo-phong-le-defends-bitcoin-sale",
+   "source": "Bitcoin Magazine",
+   "published": "2026-09-02T15:20:59+00:00",
+   "summary": "Bitcoin Magazine Strategy CEO Defends Bitcoin Sale as the ‘Right Trade’ Strategy CEO has reassured investors that the company has only sold a \"miniscule\" amount of its bitcoin. This post Strategy CEO Defends Bitcoin Sale as the ‘Right Trade’ first appeared on Bitcoin Magazine an…",
+   "score": 1.0023
   },
   {
    "title": "BlackRock drives $217M Bitcoin ETF rebound as altcoin funds continue streaks",
@@ -86,15 +102,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-01T04:48:47+00:00",
    "summary": "Ether ETFs extended their inflow streak to 11 trading sessions, while XRP and Solana funds each logged a 10th consecutive positive session.",
-   "score": 1.1705
-  },
-  {
-   "title": "Strategy Resumes Bitcoin Buying After 10-Week Hiatus",
-   "url": "https://bitcoinmagazine.com/news/strategy-resumes-bitcoin-buys",
-   "source": "Bitcoin Magazine",
-   "published": "2026-08-31T15:18:11+00:00",
-   "summary": "Bitcoin Magazine Strategy Resumes Bitcoin Buying After 10-Week Hiatus The bitcoin treasury last week spent nearly $370 million on the big orange coin after taking a break to rebalance its cash reserves. This post Strategy Resumes Bitcoin Buying After 10-Week Hiatus first appeare…",
-   "score": 0.9951
+   "score": 0.913
   },
   {
    "title": "Strive Adds $143 Million in Bitcoin as Treasury Firms Pile Back In",
@@ -102,15 +110,15 @@
    "source": "Decrypt",
    "published": "2026-08-31T21:01:05+00:00",
    "summary": "The Nasdaq-listed asset manager paid an average of $79,431 per coin, lifting its total stash to 23,156 BTC amid a wave of renewed treasury buying.",
-   "score": 0.8716
+   "score": 0.8498
   },
   {
-   "title": "Japan’s Remixpoint dumps altcoins, leaves 1,506 BTC as sole crypto bet",
-   "url": "https://cointelegraph.com/news/remixpoint-dumps-altcoins-1506-btc-sole-crypto-bet?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-09-02T12:00:00+00:00",
-   "summary": "Remixpoint sold $5.5 million in ETH, SOL, XRP and DOGE, booking a $736,000 net gain as it narrowed its crypto strategy to focus on Bitcoin.",
-   "score": 0.7835
+   "title": "Strategy Resumes Bitcoin Buying After 10-Week Hiatus",
+   "url": "https://bitcoinmagazine.com/news/strategy-resumes-bitcoin-buys",
+   "source": "Bitcoin Magazine",
+   "published": "2026-08-31T15:18:11+00:00",
+   "summary": "Bitcoin Magazine Strategy Resumes Bitcoin Buying After 10-Week Hiatus The bitcoin treasury last week spent nearly $370 million on the big orange coin after taking a break to rebalance its cash reserves. This post Strategy Resumes Bitcoin Buying After 10-Week Hiatus first appeare…",
+   "score": 0.7763
   },
   {
    "title": "Bitcoin steady above $78,000, HYPE leads as majors slip on hawkish Fed bets",
@@ -118,7 +126,7 @@
    "source": "CoinDesk",
    "published": "2026-09-01T04:30:28+00:00",
    "summary": "",
-   "score": 0.7769
+   "score": 0.7575
   },
   {
    "title": "Strategy’s Bitcoin Is $2.8 Billion in Profit—Is Saylor Teeing Up a Buy?",
@@ -126,23 +134,15 @@
    "source": "Decrypt",
    "published": "2026-08-30T19:39:55+00:00",
    "summary": "A Bitcoin rally to around $79,000 lifted the company's 840,447 BTC roughly $2.8 billion above its cost basis, as Saylor's \"We're Back\" post fueled speculation that Strategy may resume buying.",
-   "score": 0.6962
+   "score": 0.6789
   },
   {
-   "title": "Strive Becomes Fifth-Largest Bitcoin Treasury, Stock Jumps on Latest Buy",
-   "url": "https://bitcoinmagazine.com/news/strive-becomes-fifth-biggest-treasury",
-   "source": "Bitcoin Magazine",
-   "published": "2026-08-31T17:22:58+00:00",
-   "summary": "Bitcoin Magazine Strive Becomes Fifth-Largest Bitcoin Treasury, Stock Jumps on Latest Buy The company last week spent $143 million on bitcoin last week, bringing its holdings to 23,156. This post Strive Becomes Fifth-Largest Bitcoin Treasury, Stock Jumps on Latest Buy first appe…",
-   "score": 0.6616
-  },
-  {
-   "title": "Strategy buys $370M Bitcoin in first corporate purchase since June",
-   "url": "https://cointelegraph.com/news/strategy-buys-370m-bitcoin-first-acquisition-june?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "title": "Japan’s Remixpoint dumps altcoins, leaves 1,506 BTC as sole crypto bet",
+   "url": "https://cointelegraph.com/news/remixpoint-dumps-altcoins-1506-btc-sole-crypto-bet?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
    "source": "Cointelegraph",
-   "published": "2026-08-31T12:45:12+00:00",
-   "summary": "Strategy added to its BTC treasury for the first time in two months, while continuing to bolster its cash reserves and buy back its perpetual STRC preferred stock.",
-   "score": 0.6139
+   "published": "2026-09-02T12:00:00+00:00",
+   "summary": "Remixpoint sold $5.5 million in ETH, SOL, XRP and DOGE, booking a $736,000 net gain as it narrowed its crypto strategy to focus on Bitcoin.",
+   "score": 0.6112
   },
   {
    "title": "Bitcoin's Next Move: Bullish Bets Run Up Against a Historical Wall",
@@ -150,7 +150,15 @@
    "source": "Decrypt",
    "published": "2026-09-01T18:22:09+00:00",
    "summary": "Bitcoin just had one its best months in years amid a price rally that broke the crypto winter pattern. But the charts tell a complicated story.",
-   "score": 0.5467
+   "score": 0.533
+  },
+  {
+   "title": "Strive Becomes Fifth-Largest Bitcoin Treasury, Stock Jumps on Latest Buy",
+   "url": "https://bitcoinmagazine.com/news/strive-becomes-fifth-biggest-treasury",
+   "source": "Bitcoin Magazine",
+   "published": "2026-08-31T17:22:58+00:00",
+   "summary": "Bitcoin Magazine Strive Becomes Fifth-Largest Bitcoin Treasury, Stock Jumps on Latest Buy The company last week spent $143 million on bitcoin last week, bringing its holdings to 23,156. This post Strive Becomes Fifth-Largest Bitcoin Treasury, Stock Jumps on Latest Buy first appe…",
+   "score": 0.5161
   },
   {
    "title": "Bitcoin enters ‘Rektember’ as rate-hike risk combines with seasonality to threaten rally",
@@ -158,15 +166,15 @@
    "source": "CoinDesk",
    "published": "2026-09-01T13:55:26+00:00",
    "summary": "",
-   "score": 0.5127
+   "score": 0.4999
   },
   {
-   "title": "Bitcoin Cools Off After $3 Billion ETF-Driven Surge",
-   "url": "https://bitcoinmagazine.com/news/bitcoin-cools-following-etf-investment",
-   "source": "Bitcoin Magazine",
-   "published": "2026-08-28T22:06:02+00:00",
-   "summary": "Bitcoin Magazine Bitcoin Cools Off After $3 Billion ETF-Driven Surge Bitcoin's run slowed down Friday after the Federal Reserve chief said inflation was too hot. Its run was charged by speculators throwing billions at the popular investment vehicles. This post Bitcoin Cools Off…",
-   "score": 0.4247
+   "title": "Strategy buys $370M Bitcoin in first corporate purchase since June",
+   "url": "https://cointelegraph.com/news/strategy-buys-370m-bitcoin-first-acquisition-june?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-08-31T12:45:12+00:00",
+   "summary": "Strategy added to its BTC treasury for the first time in two months, while continuing to bolster its cash reserves and buy back its perpetual STRC preferred stock.",
+   "score": 0.4788
   },
   {
    "title": "Bitcoin Holds Steady as US Strikes on Iran Rattle Stocks and Lift Oil",
@@ -174,15 +182,7 @@
    "source": "Decrypt",
    "published": "2026-08-31T16:55:46+00:00",
    "summary": "The largest cryptocurrency is on track for its best month since 2017, holding above $78,000 even as a hawkish Fed and renewed Middle East conflict drag on stocks and lift crude.",
-   "score": 0.4207
-  },
-  {
-   "title": "Bitcoin begins volatile monthly close as US bond yields eye new 20-year high",
-   "url": "https://cointelegraph.com/markets/bitcoin-begins-volatile-monthly-close-as-us-bond-yields-eye-new-20-year-high?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-08-31T16:38:51+00:00",
-   "summary": "Bitcoin price action saw sharp moves within its local range as US Treasury Secretary Scott Bessent addressed US bond yields.",
-   "score": 0.419
+   "score": 0.4102
   },
   {
    "title": "Bitcoin consolidates near $78,000 as Arbitrum surges 30% on Robinhood Chain revenue",
@@ -190,15 +190,23 @@
    "source": "CoinDesk",
    "published": "2026-09-01T10:29:00+00:00",
    "summary": "",
-   "score": 0.3903
+   "score": 0.3805
   },
   {
-   "title": "Does the Bitcoin rally mean we haven’t wasted our lives in crypto?",
-   "url": "https://cointelegraph.com/magazine/does-bitcoins-rally-mean-we-havent-wasted-our-lives-in-crypto?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "title": "Bitcoin Cools Off After $3 Billion ETF-Driven Surge",
+   "url": "https://bitcoinmagazine.com/news/bitcoin-cools-following-etf-investment",
+   "source": "Bitcoin Magazine",
+   "published": "2026-08-28T22:06:02+00:00",
+   "summary": "Bitcoin Magazine Bitcoin Cools Off After $3 Billion ETF-Driven Surge Bitcoin's run slowed down Friday after the Federal Reserve chief said inflation was too hot. Its run was charged by speculators throwing billions at the popular investment vehicles. This post Bitcoin Cools Off…",
+   "score": 0.3313
+  },
+  {
+   "title": "Bitcoin begins volatile monthly close as US bond yields eye new 20-year high",
+   "url": "https://cointelegraph.com/markets/bitcoin-begins-volatile-monthly-close-as-us-bond-yields-eye-new-20-year-high?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
    "source": "Cointelegraph",
-   "published": "2026-09-01T13:30:00+00:00",
-   "summary": "Crypto is showing signs of life again, but its biggest wins look different from what early believers imagined. After a decade of building, has it all been worth it?",
-   "score": 0.3261
+   "published": "2026-08-31T16:38:51+00:00",
+   "summary": "Bitcoin price action saw sharp moves within its local range as US Treasury Secretary Scott Bessent addressed US bond yields.",
+   "score": 0.3268
   },
   {
    "title": "Bitcoin ETFs Snap Nine-Day Inflow Streak as Ethereum Funds Extend Their Run",
@@ -206,7 +214,7 @@
    "source": "Decrypt",
    "published": "2026-08-30T21:31:04+00:00",
    "summary": "Spot Bitcoin ETFs shed $201.9 million on Aug. 28, ending a nine-day inflow run, even as Ethereum funds extended a 10-day streak with fresh cash.",
-   "score": 0.3051
+   "score": 0.2975
   },
   {
    "title": "Live updates: Bitcoin slumps as oil surges to three-month high on new Iran strikes",
@@ -214,7 +222,23 @@
    "source": "CoinDesk",
    "published": "2026-09-01T08:35:57+00:00",
    "summary": "",
-   "score": 0.3038
+   "score": 0.2963
+  },
+  {
+   "title": "The Quantum Issue: Letter From The Editor",
+   "url": "https://bitcoinmagazine.com/print/the-quantum-issue-letter-from-the-editor",
+   "source": "Bitcoin Magazine",
+   "published": "2026-09-02T16:44:04+00:00",
+   "summary": "Bitcoin Magazine The Quantum Issue: Letter From The Editor The Quantum Issue takes a look at the risk of quantum computing to Bitcoin, how exposed the network is, and the current state of solutions to protect it. This post The Quantum Issue: Letter From The Editor first appeared…",
+   "score": 0.2618
+  },
+  {
+   "title": "Does the Bitcoin rally mean we haven’t wasted our lives in crypto?",
+   "url": "https://cointelegraph.com/magazine/does-bitcoins-rally-mean-we-havent-wasted-our-lives-in-crypto?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-09-01T13:30:00+00:00",
+   "summary": "Crypto is showing signs of life again, but its biggest wins look different from what early believers imagined. After a decade of building, has it all been worth it?",
+   "score": 0.2544
   },
   {
    "title": "Metaplanet moves 4,800 BTC worth $377M to Coinbase",
@@ -222,7 +246,7 @@
    "source": "Cointelegraph",
    "published": "2026-08-31T13:19:00+00:00",
    "summary": "The Japanese Bitcoin treasury company has transferred 10,270 BTC to Coinbase Prime this week, an amount equal to more than 29% of its reported holdings.",
-   "score": 0.2555
+   "score": 0.1993
   },
   {
    "title": "The bearish 'Bart Simpson' pattern is back as bitcoin and XRP prices pull back",
@@ -230,23 +254,7 @@
    "source": "CoinDesk",
    "published": "2026-09-02T12:13:26+00:00",
    "summary": "",
-   "score": 0.2012
-  },
-  {
-   "title": "Markets pivot to September Fed rate hike: Five things to know in Bitcoin this week",
-   "url": "https://cointelegraph.com/markets/markets-pivot-to-september-fed-rate-hike-five-things-to-know-in-bitcoin-this-week?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-08-31T10:51:49+00:00",
-   "summary": "Bitcoin approached the August monthly close below key resistance with markets once again pricing in a Federal Reserve interest-rate hike in September.",
-   "score": 0.1973
-  },
-  {
-   "title": "Bitcoin Unfazed by Trump’s Iran Threats",
-   "url": "https://bitcoinmagazine.com/markets/bitcoin-unfazed-by-trumps-iran-threats",
-   "source": "Bitcoin Magazine",
-   "published": "2026-08-31T19:49:17+00:00",
-   "summary": "Bitcoin Magazine Bitcoin Unfazed by Trump’s Iran Threats Bitcoin's price used to be sensitive to geopolitical developments. Not anymore. This post Bitcoin Unfazed by Trump’s Iran Threats first appeared on Bitcoin Magazine and is written by Mathew Di Salvo .",
-   "score": 0.1754
+   "score": 0.1962
   },
   {
    "title": "What Is Strategy (MSTR)? The Bitcoin Treasury Company",
@@ -254,7 +262,15 @@
    "source": "Decrypt",
    "published": "2026-08-28T16:08:02+00:00",
    "summary": "Strategy’s co-founder Michael Saylor pioneered the Bitcoin treasury playbook. Here’s what you need to know.",
-   "score": 0.1618
+   "score": 0.1578
+  },
+  {
+   "title": "Markets pivot to September Fed rate hike: Five things to know in Bitcoin this week",
+   "url": "https://cointelegraph.com/markets/markets-pivot-to-september-fed-rate-hike-five-things-to-know-in-bitcoin-this-week?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-08-31T10:51:49+00:00",
+   "summary": "Bitcoin approached the August monthly close below key resistance with markets once again pricing in a Federal Reserve interest-rate hike in September.",
+   "score": 0.1539
   },
   {
    "title": "Bitcoin slips below $76,500 as U.S. strikes on Iran send oil above $93",
@@ -262,15 +278,7 @@
    "source": "CoinDesk",
    "published": "2026-09-02T10:50:38+00:00",
    "summary": "",
-   "score": 0.1578
-  },
-  {
-   "title": "Bitfinex Securities lists tokenized notes tied to Strategy, Metaplanet",
-   "url": "https://cointelegraph.com/news/bitfinex-tokenized-strategy-metaplanet-notes?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-09-01T10:00:00+00:00",
-   "summary": "Five equity-backed notes issued through Luxembourg’s ORO II fund will trade against dollars, USDT and Bitcoin for eligible non-US investors.",
-   "score": 0.1411
+   "score": 0.1539
   },
   {
    "title": "Luke Dashjr exits mining pool Ocean after split over Bitcoin mining’s future",
@@ -278,23 +286,23 @@
    "source": "CoinDesk",
    "published": "2026-08-31T08:04:54+00:00",
    "summary": "",
-   "score": 0.1213
+   "score": 0.1183
   },
   {
-   "title": "Capital B Raises €21M From Adam Back and TOBAM To Buy More BTC",
-   "url": "https://bitcoinmagazine.com/news/capital-b-raises-money-for-bitcoin",
-   "source": "Bitcoin Magazine",
-   "published": "2026-08-28T18:10:42+00:00",
-   "summary": "Bitcoin Magazine Capital B Raises €21M From Adam Back and TOBAM To Buy More BTC The French bitcoin treasury currently holds 3,145 bitcoins worth over $245 million at today's prices. This post Capital B Raises €21M From Adam Back and TOBAM To Buy More BTC first appeared on Bitcoi…",
-   "score": 0.1211
-  },
-  {
-   "title": "Saylor signals Strategy is ‘Back’ to Bitcoin buying",
-   "url": "https://cointelegraph.com/news/saylor-signals-strategy-is-back-to-bitcoin-buying?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "title": "Bitfinex Securities lists tokenized notes tied to Strategy, Metaplanet",
+   "url": "https://cointelegraph.com/news/bitfinex-tokenized-strategy-metaplanet-notes?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
    "source": "Cointelegraph",
-   "published": "2026-08-30T17:59:00+00:00",
-   "summary": "Michael Saylor’s “We’re Back” post hints Strategy may resume Bitcoin buying after a two-month pause to strengthen its balance sheet.",
-   "score": 0.1108
+   "published": "2026-09-01T10:00:00+00:00",
+   "summary": "Five equity-backed notes issued through Luxembourg’s ORO II fund will trade against dollars, USDT and Bitcoin for eligible non-US investors.",
+   "score": 0.1101
+  },
+  {
+   "title": "Bitcoin Unfazed by Trump’s Iran Threats",
+   "url": "https://bitcoinmagazine.com/markets/bitcoin-unfazed-by-trumps-iran-threats",
+   "source": "Bitcoin Magazine",
+   "published": "2026-08-31T19:49:17+00:00",
+   "summary": "Bitcoin Magazine Bitcoin Unfazed by Trump’s Iran Threats Bitcoin's price used to be sensitive to geopolitical developments. Not anymore. This post Bitcoin Unfazed by Trump’s Iran Threats first appeared on Bitcoin Magazine and is written by Mathew Di Salvo .",
+   "score": 0.1095
   },
   {
    "title": "Bitcoin Rally Stalls, But Long-Term Sentiment Remains Bullish",
@@ -302,15 +310,7 @@
    "source": "Decrypt",
    "published": "2026-08-28T21:16:04+00:00",
    "summary": "BTC gave back some of its gains after Fed Chair Kevin Warsh talked tough on inflation, but prediction market traders are still leaning bullish.",
-   "score": 0.107
-  },
-  {
-   "title": "Bitcoin Drops Before Shrugging Off Fed Chair’s Inflation Comments",
-   "url": "https://bitcoinmagazine.com/markets/bitcoin-shrugs-off-fed-chair-comments",
-   "source": "Bitcoin Magazine",
-   "published": "2026-08-28T15:49:18+00:00",
-   "summary": "Bitcoin Magazine Bitcoin Drops Before Shrugging Off Fed Chair’s Inflation Comments Bitcoin dropped, then popped after Federal Reserve Chair Kevin Warsh gave his first major speech as head of the U.S. central bank and said he had “more work to do” to fight inflation. The leading…",
-   "score": 0.0937
+   "score": 0.1043
   },
   {
    "title": "Bitcoin withstands $90 oil and rising yields while gold slides. A firm dollar is the catch",
@@ -318,15 +318,15 @@
    "source": "CoinDesk",
    "published": "2026-09-02T04:40:36+00:00",
    "summary": "",
-   "score": 0.0924
+   "score": 0.0901
   },
   {
-   "title": "Bitcoin’s Moment Has Come for the Far East, Says Metaplanet CEO",
-   "url": "https://bitcoinmagazine.com/news/bitcoin-moment-here-for-asia",
-   "source": "Bitcoin Magazine",
-   "published": "2026-08-28T20:39:49+00:00",
-   "summary": "Bitcoin Magazine Bitcoin’s Moment Has Come for the Far East, Says Metaplanet CEO Just as the regulatory landscape changes, Asians are looking for places to park their cash. The opportunity is Bitcoin, Metaplanet CEO Simon Gerovich argued at Bitcoin Asia. This post Bitcoin’s Mome…",
-   "score": 0.0707
+   "title": "Saylor signals Strategy is ‘Back’ to Bitcoin buying",
+   "url": "https://cointelegraph.com/news/saylor-signals-strategy-is-back-to-bitcoin-buying?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-08-30T17:59:00+00:00",
+   "summary": "Michael Saylor’s “We’re Back” post hints Strategy may resume Bitcoin buying after a two-month pause to strengthen its balance sheet.",
+   "score": 0.0865
   }
  ]
 }
