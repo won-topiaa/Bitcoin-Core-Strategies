@@ -1,5 +1,5 @@
 {
- "fetched": "2026-09-03T21:17:16+00:00",
+ "fetched": "2026-09-03T23:30:38+00:00",
  "sources_ok": [
   "CoinDesk",
   "Cointelegraph",
@@ -14,7 +14,7 @@
    "source": "Decrypt",
    "published": "2026-09-03T18:15:07+00:00",
    "summary": "Ethereum funds broke a 12-day winning run and XRP snapped an 11-session streak on Wednesday, while Bitcoin ETFs bounced back with $101.15 million in one day after their worst outflow since July.",
-   "score": 2.8713
+   "score": 2.7806
   },
   {
    "title": "‘Crypto Capital of the World’: SEC Chair Expects Clarity Act to Pass This Month",
@@ -22,7 +22,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-02T21:40:17+00:00",
    "summary": "Bitcoin Magazine ‘Crypto Capital of the World’: SEC Chair Expects Clarity Act to Pass This Month Securities and Exchange Commission Chair Paul Atkins has been pushing ahead with crypto regulation despite a delay in a vote on the Clarity Act. This post ‘Crypto Capital of the Worl…",
-   "score": 2.6308
+   "score": 2.5477
   },
   {
    "title": "Ether, XRP ETF inflow streaks end as Bitcoin funds rebound",
@@ -30,7 +30,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-03T07:22:00+00:00",
    "summary": "Ether ETFs posted $48 million in outflows after attracting $1.62 billion over 12 trading days, while XRP funds ended an 11-session inflow run.",
-   "score": 2.4537
+   "score": 2.3762
   },
   {
    "title": "Bitcoin back above $77,500, XRP leads majors as Fed hike odds slide to 62%",
@@ -38,7 +38,7 @@
    "source": "CoinDesk",
    "published": "2026-09-03T04:22:40+00:00",
    "summary": "",
-   "score": 1.9583
+   "score": 1.8965
   },
   {
    "title": "Bitcoin Pumps as Fed Signals Rate Pause, $415 Million in Shorts Get Rekt",
@@ -46,7 +46,7 @@
    "source": "Decrypt",
    "published": "2026-09-03T16:38:17+00:00",
    "summary": "Stocks and crypto rallied together after Governor Christopher Waller said he could back holding rates steady, with short sellers absorbing the brunt of the squeeze.",
-   "score": 1.8701
+   "score": 1.811
   },
   {
    "title": "Here’s what happened in crypto today",
@@ -54,7 +54,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-03T20:30:14+00:00",
    "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
-   "score": 1.7402
+   "score": 1.6852
   },
   {
    "title": "Live updates: BlackRock's IBIT drives $236 million bitcoin ETF outflow",
@@ -62,7 +62,7 @@
    "source": "CoinDesk",
    "published": "2026-09-02T08:31:00+00:00",
    "summary": "",
-   "score": 1.4112
+   "score": 1.3667
   },
   {
    "title": "CFTC Asks Judge to Dismiss CME Lawsuit Over Crypto Perpetual Futures",
@@ -70,7 +70,7 @@
    "source": "Decrypt",
    "published": "2026-09-03T17:31:04+00:00",
    "summary": "The regulator argues that CME cannot challenge its approval of Kalshi’s Bitcoin perpetual contract without showing concrete financial harm.",
-   "score": 1.3334
+   "score": 1.2913
   },
   {
    "title": "BlackRock’s iShares Bitcoin Trust Is Beating Top S&P 500 ETF",
@@ -78,7 +78,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-01T16:35:17+00:00",
    "summary": "Bitcoin Magazine BlackRock’s iShares Bitcoin Trust Is Beating Top S&P 500 ETF The asset manager's flagship bitcoin fund is delivering better returns than Vanguard's S&P 500 ETF. This post BlackRock’s iShares Bitcoin Trust Is Beating Top S&P 500 ETF first appeared on Bitcoin Maga…",
-   "score": 1.1213
+   "score": 1.0858
   },
   {
    "title": "Bitcoin ETFs notch best month of 2026 as BTC gains 25% in August",
@@ -86,7 +86,15 @@
    "source": "Cointelegraph",
    "published": "2026-09-02T07:59:43+00:00",
    "summary": "US spot Bitcoin ETFs reduced their year-to-date net outflows by 66% as Bitcoin gained about 25% in August, while Ether ETFs turned positive YTD at $732 million and XRP ETFs reached $502 million.",
-   "score": 1.1205
+   "score": 1.0851
+  },
+  {
+   "title": "Bitcoin Miner Ditches Site for AI Deal That Could Top $1.2 Billion",
+   "url": "https://decrypt.co/377363/bitcoin-mine-ai-deal-1-2-billion",
+   "source": "Decrypt",
+   "published": "2026-09-03T21:31:05+00:00",
+   "summary": "The projected revenue requires two contract extensions, while an option for more computing capacity could bring the total above $3 billion.",
+   "score": 0.995
   },
   {
    "title": "Capital B aims to add 376 BTC to bitcoin treasury following $8.8 million Adam Back investment",
@@ -94,15 +102,7 @@
    "source": "CoinDesk",
    "published": "2026-09-02T11:45:16+00:00",
    "summary": "",
-   "score": 0.9859
-  },
-  {
-   "title": "Is Bitcoin About to Flash Crash? What a 'Bart Simpson' Pattern Would Actually Take",
-   "url": "https://decrypt.co/377185/bitcoin-flash-crash-real-bart-simpson-pattern",
-   "source": "Decrypt",
-   "published": "2026-09-02T18:30:06+00:00",
-   "summary": "Bitcoin traders are calling August's spike-and-fade a Bart Simpson hairline. Here's what separates an actual flash crash from an ordinary correction.",
-   "score": 0.9737
+   "score": 0.9547
   },
   {
    "title": "Hyperscale Data ends Michigan BTC mining as holdings fall 79%",
@@ -110,7 +110,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-03T04:57:55+00:00",
    "summary": "Hyperscale Data’s Bitcoin holdings have fallen about 79% since late July to 215 BTC as it redirects capital toward its Michigan AI data center.",
-   "score": 0.809
+   "score": 0.7834
   },
   {
    "title": "Bitcoin recovers toward $78,000 as pons and arbitrum extend Robinhood Chain rally",
@@ -118,15 +118,15 @@
    "source": "CoinDesk",
    "published": "2026-09-03T10:29:52+00:00",
    "summary": "",
-   "score": 0.7886
+   "score": 0.7637
   },
   {
-   "title": "Japan’s Remixpoint Dumps Ethereum, XRP in Shift to Bitcoin-Only Treasury",
-   "url": "https://decrypt.co/377228/remixpoint-xrp-ethereum-bitcoin-only",
+   "title": "Is Bitcoin About to Flash Crash? What a 'Bart Simpson' Pattern Would Actually Take",
+   "url": "https://decrypt.co/377185/bitcoin-flash-crash-real-bart-simpson-pattern",
    "source": "Decrypt",
-   "published": "2026-09-02T21:31:05+00:00",
-   "summary": "The Japanese company booked a ¥117.8 million profit after selling its ETH, SOL, XRP and DOGE, leaving roughly 1,506 BTC as its only cryptocurrency holding.",
-   "score": 0.7265
+   "published": "2026-09-02T18:30:06+00:00",
+   "summary": "Bitcoin traders are calling August's spike-and-fade a Bart Simpson hairline. Here's what separates an actual flash crash from an ordinary correction.",
+   "score": 0.7544
   },
   {
    "title": "Strategy Opposes MSCI Proposal, Says Bitcoin Treasury Firms Are Being Targeted a Second Time",
@@ -134,7 +134,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-31T20:44:36+00:00",
    "summary": "Bitcoin Magazine Strategy Opposes MSCI Proposal, Says Bitcoin Treasury Firms Are Being Targeted a Second Time Bitcoin treasury Strategy has blasted Morgan Stanley Capital International’s proposal to exclude it from its Global Investable Market Indexes, calling it “misguided” and…",
-   "score": 0.696
+   "score": 0.674
   },
   {
    "title": "A Fed rate increase would be a mistake, some observers say as bitcoin, gold, stocks fall",
@@ -142,7 +142,15 @@
    "source": "CoinDesk",
    "published": "2026-09-02T11:14:58+00:00",
    "summary": "",
-   "score": 0.6264
+   "score": 0.6066
+  },
+  {
+   "title": "Japan’s Remixpoint Dumps Ethereum, XRP in Shift to Bitcoin-Only Treasury",
+   "url": "https://decrypt.co/377228/remixpoint-xrp-ethereum-bitcoin-only",
+   "source": "Decrypt",
+   "published": "2026-09-02T21:31:05+00:00",
+   "summary": "The Japanese company booked a ¥117.8 million profit after selling its ETH, SOL, XRP and DOGE, leaving roughly 1,506 BTC as its only cryptocurrency holding.",
+   "score": 0.5628
   },
   {
    "title": "Strategy CEO Defends Bitcoin Sale as the ‘Right Trade’",
@@ -150,7 +158,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-02T15:20:59+00:00",
    "summary": "Bitcoin Magazine Strategy CEO Defends Bitcoin Sale as the ‘Right Trade’ Strategy CEO has reassured investors that the company has only sold a \"miniscule\" amount of its bitcoin. This post Strategy CEO Defends Bitcoin Sale as the ‘Right Trade’ first appeared on Bitcoin Magazine an…",
-   "score": 0.5317
+   "score": 0.5149
   },
   {
    "title": "Bitcoin’s apparent demand turns negative as price struggles with $77K",
@@ -158,23 +166,15 @@
    "source": "Cointelegraph",
    "published": "2026-09-02T16:35:56+00:00",
    "summary": "One of Bitcoin’s onchain demand indicators turns negative again after a brief August rebound, as BTC price slipped below $77,000 amid a broader bond and equities sell-off.",
-   "score": 0.4872
+   "score": 0.4718
   },
   {
-   "title": "Cathie Wood’s Ark Invest Buys $37 Million in Bitcoin and Payments Firm Block",
-   "url": "https://decrypt.co/377046/cathie-wood-ark-invest-buys-more-block",
-   "source": "Decrypt",
-   "published": "2026-09-01T16:13:28+00:00",
-   "summary": "The investment firm bought 456,059 Block shares across three ETFs and added $3.4 million in Circle stock.",
-   "score": 0.4569
-  },
-  {
-   "title": "Strategy Resumes Bitcoin Buying After 10-Week Hiatus",
-   "url": "https://bitcoinmagazine.com/news/strategy-resumes-bitcoin-buys",
+   "title": "Bitcoin Bear Market May Not Yet Be Over, Says Fidelity",
+   "url": "https://bitcoinmagazine.com/news/bitcoin-bear-market-not-over-says-fidelity",
    "source": "Bitcoin Magazine",
-   "published": "2026-08-31T15:18:11+00:00",
-   "summary": "Bitcoin Magazine Strategy Resumes Bitcoin Buying After 10-Week Hiatus The bitcoin treasury last week spent nearly $370 million on the big orange coin after taking a break to rebalance its cash reserves. This post Strategy Resumes Bitcoin Buying After 10-Week Hiatus first appeare…",
-   "score": 0.4118
+   "published": "2026-09-03T22:19:41+00:00",
+   "summary": "Bitcoin Magazine Bitcoin Bear Market May Not Yet Be Over, Says Fidelity Fidelity argues that bitcoin may have seen its bottom in July. But there's still evidence it could drop again to a new low later this year. This post Bitcoin Bear Market May Not Yet Be Over, Says Fidelity fi…",
+   "score": 0.4027
   },
   {
    "title": "BlackRock drives $217M Bitcoin ETF rebound as altcoin funds continue streaks",
@@ -182,23 +182,23 @@
    "source": "Cointelegraph",
    "published": "2026-09-01T04:48:47+00:00",
    "summary": "Ether ETFs extended their inflow streak to 11 trading sessions, while XRP and Solana funds each logged a 10th consecutive positive session.",
-   "score": 0.3875
+   "score": 0.3752
   },
   {
-   "title": "Morning Minute: Strategy CEO Says Selling The Bottom Was Correct Move",
-   "url": "https://decrypt.co/377264/morning-minute-strategy-ceo-says-selling-the-bottom-was-correct-move",
+   "title": "Cathie Wood’s Ark Invest Buys $37 Million in Bitcoin and Payments Firm Block",
+   "url": "https://decrypt.co/377046/cathie-wood-ark-invest-buys-more-block",
    "source": "Decrypt",
-   "published": "2026-09-03T11:43:14+00:00",
-   "summary": "Strategy sold millions in Bitcoin in the low $60k range and just rebought at $80k. Now they’re sharing the rationale behind the moves.",
-   "score": 0.3653
+   "published": "2026-09-01T16:13:28+00:00",
+   "summary": "The investment firm bought 456,059 Block shares across three ETFs and added $3.4 million in Circle stock.",
+   "score": 0.3539
   },
   {
-   "title": "French Hill Eyes Bipartisan Path for Clarity Act Ahead of September Vote",
-   "url": "https://bitcoinmagazine.com/news/hill-eyes-bipartisan-work-on-clarity-act",
+   "title": "Strategy Resumes Bitcoin Buying After 10-Week Hiatus",
+   "url": "https://bitcoinmagazine.com/news/strategy-resumes-bitcoin-buys",
    "source": "Bitcoin Magazine",
-   "published": "2026-09-03T20:41:30+00:00",
-   "summary": "Bitcoin Magazine French Hill Eyes Bipartisan Path for Clarity Act Ahead of September Vote The lawmaker said that Democrats and Republicans have narrowed their differences when it comes to passing the bill. This post French Hill Eyes Bipartisan Path for Clarity Act Ahead of Septe…",
-   "score": 0.3249
+   "published": "2026-08-31T15:18:11+00:00",
+   "summary": "Bitcoin Magazine Strategy Resumes Bitcoin Buying After 10-Week Hiatus The bitcoin treasury last week spent nearly $370 million on the big orange coin after taking a break to rebalance its cash reserves. This post Strategy Resumes Bitcoin Buying After 10-Week Hiatus first appeare…",
+   "score": 0.319
   },
   {
    "title": "Bitcoin steady above $78,000, HYPE leads as majors slip on hawkish Fed bets",
@@ -206,7 +206,23 @@
    "source": "CoinDesk",
    "published": "2026-09-01T04:30:28+00:00",
    "summary": "",
-   "score": 0.3215
+   "score": 0.3113
+  },
+  {
+   "title": "Morning Minute: Strategy CEO Says Selling The Bottom Was Correct Move",
+   "url": "https://decrypt.co/377264/morning-minute-strategy-ceo-says-selling-the-bottom-was-correct-move",
+   "source": "Decrypt",
+   "published": "2026-09-03T11:43:14+00:00",
+   "summary": "Strategy sold millions in Bitcoin in the low $60k range and just rebought at $80k. Now they’re sharing the rationale behind the moves.",
+   "score": 0.283
+  },
+  {
+   "title": "Bitcoin-Gold Correlation Hits Six-Year High as Debasement Fears Mount",
+   "url": "https://bitcoinmagazine.com/news/bitcoin-gold-correlation-soars",
+   "source": "Bitcoin Magazine",
+   "published": "2026-09-03T21:31:34+00:00",
+   "summary": "Bitcoin Magazine Bitcoin-Gold Correlation Hits Six-Year High as Debasement Fears Mount Bitcoin is trading with gold — something it does when investors lose confidence in the dollar. This post Bitcoin-Gold Correlation Hits Six-Year High as Debasement Fears Mount first appeared on…",
+   "score": 0.2547
   },
   {
    "title": "Japan’s Remixpoint dumps altcoins, leaves 1,506 BTC as sole crypto bet",
@@ -214,23 +230,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-02T12:00:00+00:00",
    "summary": "Remixpoint sold $5.5 million in ETH, SOL, XRP and DOGE, booking a $736,000 net gain as it narrowed its crypto strategy to focus on Bitcoin.",
-   "score": 0.2594
-  },
-  {
-   "title": "Morning Minute: Saylor’s Back Buying Bitcoin",
-   "url": "https://decrypt.co/377014/morning-minute-saylors-back-buying-bitcoin",
-   "source": "Decrypt",
-   "published": "2026-09-01T12:21:23+00:00",
-   "summary": "Strategy somehow threaded the needle of buying Bitcoin and STRC while also raising cash. Now how will the market respond?",
-   "score": 0.2581
-  },
-  {
-   "title": "Kraken and SoFi Link Crypto Trading To Banking Rails",
-   "url": "https://bitcoinmagazine.com/news/kraken-sofi-partnership",
-   "source": "Bitcoin Magazine",
-   "published": "2026-09-03T18:49:39+00:00",
-   "summary": "Bitcoin Magazine Kraken and SoFi Link Crypto Trading To Banking Rails The new deal is designed to enhance banking, payments and digital asset markets, and comes after SoFi last year debuted bitcoin trading. This post Kraken and SoFi Link Crypto Trading To Banking Rails first app…",
-   "score": 0.253
+   "score": 0.2512
   },
   {
    "title": "FX has stopped reading bond yields the old way. Bitcoin should too.",
@@ -238,7 +238,23 @@
    "source": "CoinDesk",
    "published": "2026-09-03T11:26:00+00:00",
    "summary": "",
-   "score": 0.2274
+   "score": 0.2202
+  },
+  {
+   "title": "French Hill Eyes Bipartisan Path for Clarity Act Ahead of September Vote",
+   "url": "https://bitcoinmagazine.com/news/hill-eyes-bipartisan-work-on-clarity-act",
+   "source": "Bitcoin Magazine",
+   "published": "2026-09-03T20:41:30+00:00",
+   "summary": "Bitcoin Magazine French Hill Eyes Bipartisan Path for Clarity Act Ahead of September Vote The lawmaker said that Democrats and Republicans have narrowed their differences when it comes to passing the bill. This post French Hill Eyes Bipartisan Path for Clarity Act Ahead of Septe…",
+   "score": 0.2013
+  },
+  {
+   "title": "Morning Minute: Saylor’s Back Buying Bitcoin",
+   "url": "https://decrypt.co/377014/morning-minute-saylors-back-buying-bitcoin",
+   "source": "Decrypt",
+   "published": "2026-09-01T12:21:23+00:00",
+   "summary": "Strategy somehow threaded the needle of buying Bitcoin and STRC while also raising cash. Now how will the market respond?",
+   "score": 0.1999
   },
   {
    "title": "Strategy buys $370M Bitcoin in first corporate purchase since June",
@@ -246,23 +262,7 @@
    "source": "Cointelegraph",
    "published": "2026-08-31T12:45:12+00:00",
    "summary": "Strategy added to its BTC treasury for the first time in two months, while continuing to bolster its cash reserves and buy back its perpetual STRC preferred stock.",
-   "score": 0.2032
-  },
-  {
-   "title": "Bitcoin Rallies Over $81,000 — And Brings BTC-Related Stocks With It",
-   "url": "https://bitcoinmagazine.com/markets/bitcoin-rallies-over-81000",
-   "source": "Bitcoin Magazine",
-   "published": "2026-09-03T16:46:05+00:00",
-   "summary": "Bitcoin Magazine Bitcoin Rallies Over $81,000 — And Brings BTC-Related Stocks With It Bitcoin rallied again on Thursday, bringing crypto stocks with it. This post Bitcoin Rallies Over $81,000 — And Brings BTC-Related Stocks With It first appeared on Bitcoin Magazine and is writt…",
-   "score": 0.1965
-  },
-  {
-   "title": "'The Right Trade': Strategy CEO Has No Regrets Selling Bitcoin at $60K Before Buying Back Higher",
-   "url": "https://decrypt.co/377215/right-trade-strategy-no-regrets-selling-bitcoin",
-   "source": "Decrypt",
-   "published": "2026-09-02T19:15:06+00:00",
-   "summary": "Phong Le said Strategy’s cost of capital—not Bitcoin’s price—drove its decision to sell nearly 7,000 BTC before resuming purchases above $80,000.",
-   "score": 0.1843
+   "score": 0.1968
   },
   {
    "title": "Bitcoin’s fabled golden cross is coming. And USDT may be the real signal this time",
@@ -270,15 +270,23 @@
    "source": "CoinDesk",
    "published": "2026-09-03T07:01:28+00:00",
    "summary": "",
-   "score": 0.1707
+   "score": 0.1653
   },
   {
-   "title": "Standard Chartered Debuts Bitcoin Trading In the United Arab Emirates",
-   "url": "https://bitcoinmagazine.com/news/standard-chartered-debuts-bitcoin-trading",
+   "title": "Kraken and SoFi Link Crypto Trading To Banking Rails",
+   "url": "https://bitcoinmagazine.com/news/kraken-sofi-partnership",
    "source": "Bitcoin Magazine",
-   "published": "2026-09-03T15:14:25+00:00",
-   "summary": "Bitcoin Magazine Standard Chartered Debuts Bitcoin Trading In the United Arab Emirates The bank has in recent years debuted spot bitcoin trading elsewhere. This post Standard Chartered Debuts Bitcoin Trading In the United Arab Emirates first appeared on Bitcoin Magazine and is w…",
-   "score": 0.1537
+   "published": "2026-09-03T18:49:39+00:00",
+   "summary": "Bitcoin Magazine Kraken and SoFi Link Crypto Trading To Banking Rails The new deal is designed to enhance banking, payments and digital asset markets, and comes after SoFi last year debuted bitcoin trading. This post Kraken and SoFi Link Crypto Trading To Banking Rails first app…",
+   "score": 0.1568
+  },
+  {
+   "title": "'The Right Trade': Strategy CEO Has No Regrets Selling Bitcoin at $60K Before Buying Back Higher",
+   "url": "https://decrypt.co/377215/right-trade-strategy-no-regrets-selling-bitcoin",
+   "source": "Decrypt",
+   "published": "2026-09-02T19:15:06+00:00",
+   "summary": "Phong Le said Strategy’s cost of capital—not Bitcoin’s price—drove its decision to sell nearly 7,000 BTC before resuming purchases above $80,000.",
+   "score": 0.1428
   },
   {
    "title": "Bitcoin begins volatile monthly close as US bond yields eye new 20-year high",
@@ -286,7 +294,7 @@
    "source": "Cointelegraph",
    "published": "2026-08-31T16:38:51+00:00",
    "summary": "Bitcoin price action saw sharp moves within its local range as US Treasury Secretary Scott Bessent addressed US bond yields.",
-   "score": 0.1387
+   "score": 0.1343
   },
   {
    "title": "Bitcoin enters ‘Rektember’ as rate-hike risk combines with seasonality to threaten rally",
@@ -294,23 +302,15 @@
    "source": "CoinDesk",
    "published": "2026-09-01T13:55:26+00:00",
    "summary": "",
-   "score": 0.1358
+   "score": 0.1315
   },
   {
-   "title": "Strive Adds $143 Million in Bitcoin as Treasury Firms Pile Back In",
-   "url": "https://decrypt.co/376992/strive-adds-143-million-bitcoin",
-   "source": "Decrypt",
-   "published": "2026-08-31T21:01:05+00:00",
-   "summary": "The Nasdaq-listed asset manager paid an average of $79,431 per coin, lifting its total stash to 23,156 BTC amid a wave of renewed treasury buying.",
-   "score": 0.1182
-  },
-  {
-   "title": "Strive Becomes Fifth-Largest Bitcoin Treasury, Stock Jumps on Latest Buy",
-   "url": "https://bitcoinmagazine.com/news/strive-becomes-fifth-biggest-treasury",
+   "title": "Bitcoin Rallies Over $81,000 — And Brings BTC-Related Stocks With It",
+   "url": "https://bitcoinmagazine.com/markets/bitcoin-rallies-over-81000",
    "source": "Bitcoin Magazine",
-   "published": "2026-08-31T17:22:58+00:00",
-   "summary": "Bitcoin Magazine Strive Becomes Fifth-Largest Bitcoin Treasury, Stock Jumps on Latest Buy The company last week spent $143 million on bitcoin last week, bringing its holdings to 23,156. This post Strive Becomes Fifth-Largest Bitcoin Treasury, Stock Jumps on Latest Buy first appe…",
-   "score": 0.1121
+   "published": "2026-09-03T16:46:05+00:00",
+   "summary": "Bitcoin Magazine Bitcoin Rallies Over $81,000 — And Brings BTC-Related Stocks With It Bitcoin rallied again on Thursday, bringing crypto stocks with it. This post Bitcoin Rallies Over $81,000 — And Brings BTC-Related Stocks With It first appeared on Bitcoin Magazine and is writt…",
+   "score": 0.1218
   },
   {
    "title": "Does the Bitcoin rally mean we haven’t wasted our lives in crypto?",
@@ -318,7 +318,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-01T13:30:00+00:00",
    "summary": "Crypto is showing signs of life again, but its biggest wins look different from what early believers imagined. After a decade of building, has it all been worth it?",
-   "score": 0.1079
+   "score": 0.1045
   },
   {
    "title": "Dogecoin becomes only losing bet for Japan-listed firm as it sells altcoins for bitcoin",
@@ -326,7 +326,7 @@
    "source": "CoinDesk",
    "published": "2026-09-03T04:58:05+00:00",
    "summary": "",
-   "score": 0.106
+   "score": 0.1027
   }
  ]
 }
