@@ -1,5 +1,5 @@
 {
- "fetched": "2026-09-04T23:01:52+00:00",
+ "fetched": "2026-09-04T23:19:56+00:00",
  "sources_ok": [
   "CoinDesk",
   "Cointelegraph",
@@ -14,7 +14,7 @@
    "source": "Decrypt",
    "published": "2026-09-04T16:24:46+00:00",
    "summary": "The privacy coin's squeeze rode a Fed-driven crypto rally that reversed hours later, when a stronger-than-expected jobs report sent Bitcoin back under $80,000.",
-   "score": 2.9992
+   "score": 2.9862
   },
   {
    "title": "Surprise nonfarm payrolls print sends Bitcoin back below 80K",
@@ -22,7 +22,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-04T20:30:47+00:00",
    "summary": "The US economy added far more jobs than expected in August, pressuring Bitcoin lower as traders repriced the odds of a Federal Reserve rate cut this month.",
-   "score": 2.4107
+   "score": 2.4003
   },
   {
    "title": "Bitcoin Dips Below $80,000 on Strong US Jobs Report",
@@ -30,7 +30,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-04T17:17:53+00:00",
    "summary": "Bitcoin Magazine Bitcoin Dips Below $80,000 on Strong US Jobs Report Bitcoin dipped on news that the Federal Reserve may hike interest rates this month. This post Bitcoin Dips Below $80,000 on Strong US Jobs Report first appeared on Bitcoin Magazine and is written by Mathew Di S…",
-   "score": 2.3014
+   "score": 2.2914
   },
   {
    "title": "Bitcoin ETF inflows hit $731M, highest since January as BTC reclaims $80K",
@@ -38,7 +38,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-04T07:37:13+00:00",
    "summary": "US Bitcoin ETFs drew $730.9 million on Thursday as Bitcoin reclaimed $80,000, though CryptoQuant flagged weak fresh demand and a key $83,000 test.",
-   "score": 1.9212
+   "score": 1.9128
   },
   {
    "title": "Morning Minute: Crypto Stages Major Rally on Rate Hopes",
@@ -46,7 +46,7 @@
    "source": "Decrypt",
    "published": "2026-09-04T12:31:31+00:00",
    "summary": "Bitcoin soared past $81k, HYPE and ZEC hit smashing new ATHs and the onchain rally leveled up. Is this the first stage of the next leg up?",
-   "score": 1.7872
+   "score": 1.7795
   },
   {
    "title": "Bitcoin clears $81,000 as privacy coins lead a broad crypto rally",
@@ -54,7 +54,7 @@
    "source": "CoinDesk",
    "published": "2026-09-04T09:57:01+00:00",
    "summary": "",
-   "score": 1.4902
+   "score": 1.4837
   },
   {
    "title": "‘Crypto Capital of the World’: SEC Chair Expects Clarity Act to Pass This Month",
@@ -62,7 +62,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-02T21:40:17+00:00",
    "summary": "Bitcoin Magazine ‘Crypto Capital of the World’: SEC Chair Expects Clarity Act to Pass This Month Securities and Exchange Commission Chair Paul Atkins has been pushing ahead with crypto regulation despite a delay in a vote on the Clarity Act. This post ‘Crypto Capital of the Worl…",
-   "score": 1.4512
+   "score": 1.4449
   },
   {
    "title": "Bitcoin Slides as Blowout Jobs Report Revives Fed Hike Odds",
@@ -70,7 +70,7 @@
    "source": "Decrypt",
    "published": "2026-09-04T15:13:28+00:00",
    "summary": "The Dow dropped 226 points and Bitcoin erased some of its gains after August payrolls tripled estimates, pushing September rate-hike odds to 58%.",
-   "score": 1.4294
+   "score": 1.4232
   },
   {
    "title": "Here’s what happened in crypto today",
@@ -78,7 +78,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-04T18:31:34+00:00",
    "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
-   "score": 1.3193
+   "score": 1.3136
   },
   {
    "title": "Bitcoin back above $77,500, XRP leads majors as Fed hike odds slide to 62%",
@@ -86,7 +86,7 @@
    "source": "CoinDesk",
    "published": "2026-09-03T04:22:40+00:00",
    "summary": "",
-   "score": 1.0803
+   "score": 1.0756
   },
   {
    "title": "Bitcoin ETFs Rebound as Ethereum and XRP ETFs End Winning Streaks",
@@ -94,7 +94,7 @@
    "source": "Decrypt",
    "published": "2026-09-03T18:15:07+00:00",
    "summary": "Ethereum funds broke a 12-day winning run and XRP snapped an 11-session streak on Wednesday, while Bitcoin ETFs bounced back with $101.15 million in one day after their worst outflow since July.",
-   "score": 1.0137
+   "score": 1.0093
   },
   {
    "title": "Ether, XRP ETF inflow streaks end as Bitcoin funds rebound",
@@ -102,7 +102,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-03T07:22:00+00:00",
    "summary": "Ether ETFs posted $48 million in outflows after attracting $1.62 billion over 12 trading days, while XRP funds ended an 11-session inflow run.",
-   "score": 0.8662
+   "score": 0.8625
   },
   {
    "title": "Live updates: BlackRock's IBIT drives $236 million bitcoin ETF outflow",
@@ -110,7 +110,7 @@
    "source": "CoinDesk",
    "published": "2026-09-02T08:31:00+00:00",
    "summary": "",
-   "score": 0.7785
+   "score": 0.7751
   },
   {
    "title": "Bitcoin Pumps as Fed Signals Rate Pause, $415 Million in Shorts Get Rekt",
@@ -118,7 +118,7 @@
    "source": "Decrypt",
    "published": "2026-09-03T16:38:17+00:00",
    "summary": "Stocks and crypto rallied together after Governor Christopher Waller said he could back holding rates steady, with short sellers absorbing the brunt of the squeeze.",
-   "score": 0.6602
+   "score": 0.6574
   },
   {
    "title": "Hargreaves Lansdown Reverses Course, Rolls Out Bitcoin Trading",
@@ -126,7 +126,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-04T21:16:39+00:00",
    "summary": "Bitcoin Magazine Hargreaves Lansdown Reverses Course, Rolls Out Bitcoin Trading British investment firm Hargreaves Lansdown last year said bitcoin was too volatile. This post Hargreaves Lansdown Reverses Course, Rolls Out Bitcoin Trading first appeared on Bitcoin Magazine and is…",
-   "score": 0.624
+   "score": 0.6213
   },
   {
    "title": "Capital B aims to add 376 BTC to bitcoin treasury following $8.8 million Adam Back investment",
@@ -134,7 +134,7 @@
    "source": "CoinDesk",
    "published": "2026-09-02T11:45:16+00:00",
    "summary": "",
-   "score": 0.5438
+   "score": 0.5415
   },
   {
    "title": "BlackRock’s iShares Bitcoin Trust Is Beating Top S&P 500 ETF",
@@ -142,7 +142,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-01T16:35:17+00:00",
    "summary": "Bitcoin Magazine BlackRock’s iShares Bitcoin Trust Is Beating Top S&P 500 ETF The asset manager's flagship bitcoin fund is delivering better returns than Vanguard's S&P 500 ETF. This post BlackRock’s iShares Bitcoin Trust Is Beating Top S&P 500 ETF first appeared on Bitcoin Maga…",
-   "score": 0.4948
+   "score": 0.4927
   },
   {
    "title": "Bitcoin ETFs notch best month of 2026 as BTC gains 25% in August",
@@ -150,7 +150,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-02T07:59:43+00:00",
    "summary": "US spot Bitcoin ETFs reduced their year-to-date net outflows by 66% as Bitcoin gained about 25% in August, while Ether ETFs turned positive YTD at $732 million and XRP ETFs reached $502 million.",
-   "score": 0.4945
+   "score": 0.4923
   },
   {
    "title": "CFTC Asks Judge to Dismiss CME Lawsuit Over Crypto Perpetual Futures",
@@ -158,7 +158,7 @@
    "source": "Decrypt",
    "published": "2026-09-03T17:31:04+00:00",
    "summary": "The regulator argues that CME cannot challenge its approval of Kalshi’s Bitcoin perpetual contract without showing concrete financial harm.",
-   "score": 0.4707
+   "score": 0.4687
   },
   {
    "title": "Bitcoin recovers toward $78,000 as pons and arbitrum extend Robinhood Chain rally",
@@ -166,7 +166,7 @@
    "source": "CoinDesk",
    "published": "2026-09-03T10:29:52+00:00",
    "summary": "",
-   "score": 0.435
+   "score": 0.4331
   },
   {
    "title": "Trezor Breach Worse Than Reported: Another 67,000 US Customers Exposed",
@@ -174,7 +174,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-04T20:30:14+00:00",
    "summary": "Bitcoin Magazine Trezor Breach Worse Than Reported: Another 67,000 US Customers Exposed Trezor said that its third party shipping partner, ShipMonk, had not erased customer data. This post Trezor Breach Worse Than Reported: Another 67,000 US Customers Exposed first appeared on B…",
-   "score": 0.3949
+   "score": 0.3932
   },
   {
    "title": "Bitcoin Miner Ditches Site for AI Deal That Could Top $1.2 Billion",
@@ -182,7 +182,7 @@
    "source": "Decrypt",
    "published": "2026-09-03T21:31:05+00:00",
    "summary": "The projected revenue requires two contract extensions, while an option for more computing capacity could bring the total above $3 billion.",
-   "score": 0.3627
+   "score": 0.3611
   },
   {
    "title": "Hyperscale Data ends Michigan BTC mining as holdings fall 79%",
@@ -190,7 +190,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-03T04:57:55+00:00",
    "summary": "Hyperscale Data’s Bitcoin holdings have fallen about 79% since late July to 215 BTC as it redirects capital toward its Michigan AI data center.",
-   "score": 0.357
+   "score": 0.3554
   },
   {
    "title": "A Fed rate increase would be a mistake, some observers say as bitcoin, gold, stocks fall",
@@ -198,7 +198,7 @@
    "source": "CoinDesk",
    "published": "2026-09-02T11:14:58+00:00",
    "summary": "",
-   "score": 0.3455
+   "score": 0.344
   },
   {
    "title": "El Salvador Isn’t Buying Bitcoin With Public Money, Says IMF",
@@ -206,7 +206,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-04T19:22:34+00:00",
    "summary": "Bitcoin Magazine El Salvador Isn’t Buying Bitcoin With Public Money, Says IMF El Salvador apparently received bitcoin from private donors rather than using government funds, according to the International Monetary Fund. This post El Salvador Isn’t Buying Bitcoin With Public Mone…",
-   "score": 0.3108
+   "score": 0.3095
   },
   {
    "title": "Is Bitcoin About to Flash Crash? What a 'Bart Simpson' Pattern Would Actually Take",
@@ -214,7 +214,7 @@
    "source": "Decrypt",
    "published": "2026-09-02T18:30:06+00:00",
    "summary": "Bitcoin traders are calling August's spike-and-fade a Bart Simpson hairline. Here's what separates an actual flash crash from an ordinary correction.",
-   "score": 0.275
+   "score": 0.2738
   },
   {
    "title": "Crypto Biz: AI took a back seat when Bitcoin started climbing",
@@ -222,7 +222,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-04T17:22:58+00:00",
    "summary": "Corporate crypto bets are getting bigger as rising markets reward direct exposure, putting balance-sheet strategies and institutional adoption back in focus.",
-   "score": 0.2416
+   "score": 0.2406
   },
   {
    "title": "National Sheriffs’ Association Drops Opposition to Clarity Act",
@@ -230,7 +230,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-04T16:05:36+00:00",
    "summary": "Bitcoin Magazine National Sheriffs’ Association Drops Opposition to Clarity Act The law enforcement organization previously opposed the bill. This post National Sheriffs’ Association Drops Opposition to Clarity Act first appeared on Bitcoin Magazine and is written by Mathew Di S…",
-   "score": 0.2372
+   "score": 0.2361
   },
   {
    "title": "We checked 6 years of bitcoin data. The NFP report isn't big price mover",
@@ -238,7 +238,7 @@
    "source": "CoinDesk",
    "published": "2026-09-04T11:29:05+00:00",
    "summary": "",
-   "score": 0.2219
+   "score": 0.2209
   },
   {
    "title": "Japan’s Remixpoint Dumps Ethereum, XRP in Shift to Bitcoin-Only Treasury",
@@ -246,7 +246,7 @@
    "source": "Decrypt",
    "published": "2026-09-02T21:31:05+00:00",
    "summary": "The Japanese company booked a ¥117.8 million profit after selling its ETH, SOL, XRP and DOGE, leaving roughly 1,506 BTC as its only cryptocurrency holding.",
-   "score": 0.2052
+   "score": 0.2043
   },
   {
    "title": "QuFi launches post-quantum verification platform with Bitcoin testnet proof",
@@ -254,7 +254,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-04T17:09:25+00:00",
    "summary": "QuFi’s new platform uses post-quantum cryptography to verify digital asset transactions without requiring changes to existing blockchain settlement networks.",
-   "score": 0.1927
+   "score": 0.1918
   },
   {
    "title": "IMF confirms El Salvador’s bitcoin growth was funded by private donations, not public money",
@@ -262,7 +262,7 @@
    "source": "CoinDesk",
    "published": "2026-09-04T09:47:15+00:00",
    "summary": "",
-   "score": 0.1732
+   "score": 0.1725
   },
   {
    "title": "Strategy Opposes MSCI Proposal, Says Bitcoin Treasury Firms Are Being Targeted a Second Time",
@@ -270,7 +270,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-31T20:44:36+00:00",
    "summary": "Bitcoin Magazine Strategy Opposes MSCI Proposal, Says Bitcoin Treasury Firms Are Being Targeted a Second Time Bitcoin treasury Strategy has blasted Morgan Stanley Capital International’s proposal to exclude it from its Global Investable Market Indexes, calling it “misguided” and…",
-   "score": 0.1572
+   "score": 0.1566
   },
   {
    "title": "Bitcoin’s apparent demand turns negative as price struggles with $77K",
@@ -278,7 +278,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-02T16:35:56+00:00",
    "summary": "One of Bitcoin’s onchain demand indicators turns negative again after a brief August rebound, as BTC price slipped below $77,000 amid a broader bond and equities sell-off.",
-   "score": 0.1376
+   "score": 0.137
   },
   {
    "title": "Live updates: Bitcoin tumbles after blowout August jobs print",
@@ -286,7 +286,7 @@
    "source": "CoinDesk",
    "published": "2026-09-04T07:34:07+00:00",
    "summary": "",
-   "score": 0.1342
+   "score": 0.1336
   },
   {
    "title": "Cathie Wood’s Ark Invest Buys $37 Million in Bitcoin and Payments Firm Block",
@@ -294,7 +294,7 @@
    "source": "Decrypt",
    "published": "2026-09-01T16:13:28+00:00",
    "summary": "The investment firm bought 456,059 Block shares across three ETFs and added $3.4 million in Circle stock.",
-   "score": 0.129
+   "score": 0.1285
   },
   {
    "title": "Strategy CEO Defends Bitcoin Sale as the ‘Right Trade’",
@@ -302,7 +302,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-02T15:20:59+00:00",
    "summary": "Bitcoin Magazine Strategy CEO Defends Bitcoin Sale as the ‘Right Trade’ Strategy CEO has reassured investors that the company has only sold a \"miniscule\" amount of its bitcoin. This post Strategy CEO Defends Bitcoin Sale as the ‘Right Trade’ first appeared on Bitcoin Magazine an…",
-   "score": 0.1201
+   "score": 0.1196
   },
   {
    "title": "BlackRock drives $217M Bitcoin ETF rebound as altcoin funds continue streaks",
@@ -310,7 +310,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-01T04:48:47+00:00",
    "summary": "Ether ETFs extended their inflow streak to 11 trading sessions, while XRP and Solana funds each logged a 10th consecutive positive session.",
-   "score": 0.1094
+   "score": 0.109
   },
   {
    "title": "One full bitcoin now buys a little more than 18 ounces of gold, the most since January",
@@ -318,7 +318,7 @@
    "source": "CoinDesk",
    "published": "2026-09-04T05:10:34+00:00",
    "summary": "",
-   "score": 0.1037
+   "score": 0.1033
   },
   {
    "title": "Morning Minute: Strategy CEO Says Selling The Bottom Was Correct Move",
@@ -326,7 +326,7 @@
    "source": "Decrypt",
    "published": "2026-09-03T11:43:14+00:00",
    "summary": "Strategy sold millions in Bitcoin in the low $60k range and just rebought at $80k. Now they’re sharing the rationale behind the moves.",
-   "score": 0.1032
+   "score": 0.1027
   }
  ]
 }
