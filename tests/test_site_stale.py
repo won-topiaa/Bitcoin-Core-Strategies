@@ -117,6 +117,58 @@ def test_no_stamp_at_all_is_none():
 
 
 # --------------------------------------------------------------------------
+# 2b. 원본보다 뒤처졌는가 — '최신인가'의 올바른 정의
+# --------------------------------------------------------------------------
+def test_being_behind_the_source_is_flagged_even_when_the_age_looks_fine():
+    """실제로 매일 아침 벌어지던 상태를 그대로 재현한다.
+
+    원본에 09-03 이 있는데 화면은 09-02. 나이는 2일이라 나이 검사(사흘)는
+    조용하다. 그 사이 GitHub 은 예약 실행을 여덟 번 중 세 번씩 건너뛰고 있었다.
+    """
+    assert not ss.data_is_stale("2026-09-02", date(2026, 9, 4))[0], (
+        "나이 검사만으로는 이 상태가 안 잡힌다는 전제가 깨졌습니다")
+    stale, why = ss.behind_source("2026-09-02", "2026-09-03")
+    assert stale and "아직 안 실렸습니다" in why
+
+
+def test_matching_the_source_is_the_definition_of_up_to_date():
+    assert not ss.behind_source("2026-09-03", "2026-09-03")[0]
+
+
+def test_the_source_check_converges():
+    """갱신이 성공해 원본과 같아지면 더는 울리지 않아야 한다.
+
+    수렴하지 않는 판정은 감시자를 3시간마다 헛돌게 만든다 — 소스 SHA 를 얕은
+    클론에서 잘못 읽던 때가 정확히 그랬다.
+    """
+    asof = "2026-09-02"
+    assert ss.behind_source(asof, "2026-09-03")[0]      # 뒤처짐 → 되살린다
+    asof = "2026-09-03"                                  # 갱신 성공
+    assert not ss.behind_source(asof, "2026-09-03")[0]   # 조용해진다
+
+
+def test_we_are_never_called_behind_when_we_are_ahead():
+    """원본이 잠깐 뒤로 갈 수 있다(부분 재집계). 그걸로 알람을 울리지 않는다."""
+    assert not ss.behind_source("2026-09-03", "2026-09-02")[0]
+
+
+def test_an_unreachable_source_does_not_raise_a_false_alarm():
+    """원본을 못 물어봤다고 뒤처짐이라 우기면 감시자가 무한히 헛돈다."""
+    assert not ss.behind_source("2026-09-02", None)[0]
+    assert not ss.behind_source(None, "2026-09-03")[0]
+    assert not ss.behind_source(None, None)[0]
+
+
+def test_cli_flags_being_behind_the_source():
+    assert ss.main(["--asof", "2026-09-02", "--today", "2026-09-04",
+                    "--source-latest", "2026-09-03",
+                    "--site", "does-not-exist.html"]) == 1
+    assert ss.main(["--asof", "2026-09-03", "--today", "2026-09-04",
+                    "--source-latest", "2026-09-03",
+                    "--site", "does-not-exist.html"]) == 0
+
+
+# --------------------------------------------------------------------------
 # 3. 정기 갱신이 아예 안 돌고 있는가 — 데이터 나이가 사흘이 되기 전에 잡는다
 # --------------------------------------------------------------------------
 NOW = 1_800_000_000

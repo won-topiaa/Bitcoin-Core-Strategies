@@ -46,6 +46,26 @@ DOG = WF / "watchdog.yml"
 NEEDS_FULL_HISTORY = ("tools/build_viz.py", "tools/site_stale.py")
 
 
+def cron_hours(field: str) -> int:
+    """cron 의 '시' 필드가 하루에 몇 번 걸리는가. '*'=24, '*/3'=8, '2,14'=2."""
+    total = 0
+    for part in field.split(","):
+        if part == "*":
+            total += 24
+        elif part.startswith("*/"):
+            total += len(range(0, 24, int(part[2:])))
+        elif "-" in part:
+            lo, hi = (int(x) for x in part.split("-"))
+            total += hi - lo + 1
+        else:
+            total += 1
+    return total
+
+
+def runs_per_day(crons: list[str]) -> int:
+    return sum(cron_hours(c.split()[1]) for c in crons)
+
+
 def load(p: Path) -> dict:
     return yaml.safe_load(p.read_text(encoding="utf-8"))
 
@@ -186,12 +206,15 @@ def test_the_data_refresh_runs_more_than_once_a_day():
     on = load(DATA).get("on") or load(DATA).get(True)
     crons = [c["cron"] for c in (on.get("schedule") or [])]
     assert crons, "refresh-data 에 예약이 없습니다"
-    # '*/N' 시간 간격이거나, 시간 목록이 여러 개여야 한다
-    hourly = any("*/" in c.split()[1] for c in crons)
-    listed = sum(len(c.split()[1].split(",")) for c in crons)
-    assert hourly or listed >= 4, (
-        f"갱신이 하루 {listed}회뿐입니다({crons}) — 예약 지연과 원본의 하루 지연이 "
-        "겹치면 매일 아침 '이틀 전'이 뜹니다")
+    # 하한을 12 로 잡은 근거: 실측 성공률이 5/8 = 62.5% 다. N 번 균등 시도하면
+    # 실제 간격은 대략 (24/N)/0.625 시간이 된다. 세 시간마다(N=8)면 4.8시간이라
+    # 매일 아침 창이 그대로 남고 — 실제로 남았다 — 12회면 3.2시간, 매시간이면
+    # 1.6시간이다. 그래서 8 은 통과시키지 않는다(이미 현장에서 실패한 값이다).
+    assert runs_per_day(crons) >= 12, (
+        f"갱신이 하루 {runs_per_day(crons)}회뿐입니다({crons}). GitHub 은 예약을 "
+        "여덟 번 중 세 번꼴로 **아예 건너뛰고** 나머지도 1~4시간 미룬다(실측: "
+        "09-01~03 하루 8회 예정에 5회 실행). 유실을 막을 수 없으니 시도 횟수로 "
+        "벌어야 한다 — 세 시간마다는 이미 부족한 것이 확인됐다.")
 
     # 감시자의 '너무 오래 안 돌았다' 문턱이 그 주기와 앞뒤가 맞아야 한다.
     import site_stale as ss
@@ -268,6 +291,19 @@ def test_the_watchdog_matches_the_remedy_to_the_symptom():
         "다시 구워도 커밋이 안 생겨 화면이 안 바뀝니다")
     assert "drift" in calls["pages.yml"], (
         f"배포 재호출이 배포 어긋남 조건에 걸려 있지 않습니다: {calls['pages.yml']!r}")
+
+
+def test_the_watchdog_asks_the_source_whether_we_are_behind():
+    """나이(사흘)로만 보면 '원본은 새 날짜를 냈는데 우리만 안 실은' 상태를 못 잡는다.
+
+    그 상태가 매일 아침 반복됐다 — 원본에 09-03 이 있고 화면은 09-02 인데
+    나이는 2일이라 아무것도 안 울렸다. 원본에 직접 묻는 것이 '최신인가'의
+    올바른 정의이고, 그 판정은 갱신이 성공하면 수렴한다.
+    """
+    text = run_text(load(DOG))
+    assert "--source-latest" in text, (
+        "감시자가 원본에 묻지 않습니다 — 나이 검사만으로는 원본보다 뒤처진 상태를 "
+        "절대 못 잡습니다(사흘이 지나야 울립니다).")
 
 
 def test_the_watchdog_can_open_an_issue_and_read_the_deployed_page():

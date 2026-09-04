@@ -13,7 +13,7 @@
 안 됐다는 사실 자체를 아무도 알아채지 못했다는 것. 원인을 하나씩 막는 것만으로는
 부족하고, **결과를 보는 감시자**가 있어야 한다. 이 파일이 그 판정을 맡는다.
 
-## 세 가지 뒤처짐
+## 네 가지 뒤처짐
 
 1. **데이터가 낡음** — 구운 페이지의 기준일이 오늘로부터 너무 멀다.
    원본(CoinMetrics 커뮤니티 티어)이 하루 늦는 것은 정상이라 여유를 둔다.
@@ -24,9 +24,15 @@
    격자로 고친 커밋 4개가 재빌드되지 않아, 저장소는 맞는데 화면은 옛 주간 값을
    계속 보여 줬다.
 
-3. **정기 갱신이 아예 안 돎** — 매일 도는 워크플로가 실패하거나 취소됐다.
+3. **정기 갱신이 아예 안 돎** — 도는 워크플로가 실패하거나 취소됐다.
    1번은 사흘이 지나야 울리므로 그 사이 이틀을 놓친다. 마지막으로 **성공한**
    갱신이 언제였는지를 따로 본다.
+
+4. **원본보다 뒤처짐** — 원본이 이미 새 날짜를 내놨는데 우리가 아직 안 실었다.
+   **이것이 '최신인가'의 올바른 정의다.** 1번(나이 사흘)으로는 절대 안 잡힌다 —
+   원본에 09-03 이 있고 화면이 09-02 여도 나이는 2일이라 조용하다. 실제로 매일
+   아침 그 상태였고, 그때 GitHub 이 예약 실행을 절반이나 건너뛰고 있었다
+   (하루 8회 예정 중 5회 실행, 지연 1~4시간).
 
 ## 2번을 시각이 아니라 **커밋 SHA** 로 재는 이유
 
@@ -109,6 +115,26 @@ def data_is_stale(site_asof: Optional[str], today: date,
     return False, f"기준일 {site_asof} · {age}일 전 — 정상"
 
 
+def behind_source(site_asof: Optional[str],
+                  source_latest: Optional[str]) -> tuple[bool, str]:
+    """원본이 이미 갖고 있는 날짜를 우리가 아직 안 실었는가.
+
+    **이것이 '최신인가'의 올바른 정의다.** 예전에는 나이(사흘)로만 봤는데, 그건
+    원본이 새 날짜를 내놓은 뒤에도 이틀을 잠자코 기다린다는 뜻이었다. 실제로
+    매일 아침 그 상태였다 — 원본에 09-03 이 있는데 화면은 09-02 였고, 나이가
+    2일이라 아무 검사도 안 울렸다.
+
+    나이 검사와 달리 이 판정은 **수렴한다**: 갱신이 성공하면 우리 기준일이
+    원본과 같아져 더는 울리지 않는다. 원본을 못 물어봤으면 판정하지 않는다.
+    """
+    if not site_asof or not source_latest:
+        return False, "원본에 물어보지 못해 판정하지 않습니다"
+    if source_latest > site_asof:      # YYYY-MM-DD 는 사전순 = 시간순
+        return True, (f"원본은 {source_latest} 까지 있는데 화면은 {site_asof} 입니다 "
+                      "— 아직 안 실렸습니다")
+    return False, f"원본과 같은 {site_asof} 까지 실려 있습니다 — 최신"
+
+
 def source_changed(stamped_sha: Optional[str],
                    current_sha: Optional[str]) -> tuple[bool, str]:
     """구울 때의 소스와 지금의 소스가 다른가.
@@ -187,6 +213,9 @@ def main(argv: Optional[list[str]] = None) -> int:
     ap.add_argument("--last-refresh", type=int, default=None,
                     help="마지막으로 성공한 정기 갱신의 epoch 초. 주지 않으면 이 검사를 건너뛴다")
     ap.add_argument("--now", type=int, default=None, help="현재 시각 epoch 초 (기본: 시스템)")
+    ap.add_argument("--source-latest", default=None,
+                    help="원본이 갖고 있는 가장 최신 날짜(YYYY-MM-DD). "
+                         "'ask' 를 주면 직접 물어본다")
     args = ap.parse_args(argv)
 
     today = date.fromisoformat(args.today) if args.today else date.today()
@@ -198,7 +227,20 @@ def main(argv: Optional[list[str]] = None) -> int:
         html = ""
     stale_src, why_src = source_changed(read_stamp(html), source_sha())
 
+    src_latest = args.source_latest
+    if src_latest == "ask":
+        try:
+            import sys as _sys
+            _sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parents[1] / "src"))
+            from btc_core.datasources.coinmetrics import latest_available
+            d = latest_available()
+            src_latest = d.isoformat() if d else None
+        except Exception:
+            src_latest = None
+    stale_behind, why_behind = behind_source(args.asof, src_latest)
+
     print(f"데이터  {why_data}")
+    print(f"원본    {why_behind}")
     print(f"소스    {why_src}")
 
     stale_run = False
@@ -207,7 +249,7 @@ def main(argv: Optional[list[str]] = None) -> int:
         stale_run, why_run = refresh_is_overdue(args.last_refresh, now)
         print(f"정기실행 {why_run}")
 
-    if stale_data or stale_src or stale_run:
+    if stale_data or stale_src or stale_run or stale_behind:
         print("판정: 뒤처짐 — 재빌드가 필요합니다")
         return 1
     print("판정: 최신")

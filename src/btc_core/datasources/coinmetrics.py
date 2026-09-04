@@ -141,6 +141,34 @@ def derive_realized_cap(
     return optional_series(pairs, "realized_cap")
 
 
+def latest_available(timeout: int = 30) -> Optional[date]:
+    """원본이 **지금** 갖고 있는 가장 최신 날짜. 못 물어보면 None.
+
+    감시자가 '우리가 원본보다 뒤처졌나'를 판정하는 데 쓴다. 예전에는 '데이터가
+    사흘보다 오래됐나'로만 봤는데, 그건 원본이 이미 새 날짜를 내놓은 뒤에도
+    이틀을 잠자코 기다린다는 뜻이었다. 실제로 그 상태가 매일 아침 반복됐다 —
+    원본에 09-03 이 있는데 화면은 09-02 였고, 나이는 2일이라 아무도 안 울렸다.
+
+    가격 하나만, 최근 열흘만 묻는다(응답 수 KB). 전체 수집(refresh_data)과 달리
+    이건 '판정용 질문'이라 싸야 한다. URL·헤더·오류 처리는 이 모듈이 이미
+    갖고 있는 것을 그대로 쓴다 — 주소를 두 벌 두면 반드시 갈라진다.
+    """
+    end = date.today()
+    start = end - timedelta(days=10)
+    try:
+        rows = _fetch_all_pages(["PriceUSD"], start, end, timeout)
+    except FetchError:
+        return None
+    days = []
+    for r in rows:
+        t = (r.get("time") or "")[:10]
+        try:
+            days.append(date.fromisoformat(t))
+        except ValueError:
+            continue
+    return max(days) if days else None
+
+
 def _fetch_all_pages(metrics: list[str], start: date, end: date, timeout: int) -> list[dict]:
     params = {
         "assets": "btc",

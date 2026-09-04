@@ -15,6 +15,7 @@
 # 마지막 하나는 **사람이 실제로 보는 주소**다. 배포만 깨졌을 때 저장소만 보면
 # 전부 멀쩡해 보이기 때문이다.
 #
+#   0) **원본이 이미 새 날짜를 내놨는데 우리가 안 실었나** (진짜 '최신인가')
 #   1) 구운 페이지의 기준일이 너무 오래됐나        (데이터가 멈춤)
 #   2) 구운 페이지의 소스 SHA 가 지금 소스와 다른가  (고쳤는데 안 구움)
 #   3) 마지막으로 **성공한** 정기 갱신이 26시간을 넘었나 (실행 자체가 실패)
@@ -80,7 +81,11 @@ jobs:
         run: |
           ASOF=$(python3 tools/site_asof.py viz/site/index.html || true)
           echo "구운 페이지 기준일: ${ASOF:-읽지 못함}"
-          ARGS=(--asof "$ASOF" --site viz/site/index.html)
+          # **원본에 직접 물어본다.** '나이가 사흘이 넘었나'로는 원본이 이미 새
+          # 날짜를 내놓은 상태를 절대 못 잡는다 — 나이 2일은 정상 범위라 조용하다.
+          # 실제로 매일 아침 그 상태였다. 이 판정은 수렴한다: 갱신이 성공하면
+          # 우리 기준일이 원본과 같아져 더는 울리지 않는다.
+          ARGS=(--asof "$ASOF" --site viz/site/index.html --source-latest ask)
           if [ -n "${{ steps.last.outputs.epoch }}" ]; then
             ARGS+=(--last-refresh "${{ steps.last.outputs.epoch }}")
           else
