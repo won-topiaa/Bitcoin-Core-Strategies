@@ -1,5 +1,5 @@
 {
- "fetched": "2026-09-07T05:13:34+00:00",
+ "fetched": "2026-09-07T10:13:15+00:00",
  "sources_ok": [
   "CoinDesk",
   "Cointelegraph",
@@ -14,7 +14,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-07T00:05:02+00:00",
    "summary": "Purported white hat hackers have taken 4000 Bitcoin from the Liquid sidechain in a major security breach. The Bitcoin ETFs see the best three weeks of inflows in 2026.",
-   "score": 2.7853
+   "score": 2.5915
   },
   {
    "title": "Bitcoin network used by exchanges hit by $320 million exploit. Hackers claim they're the 'good guys'",
@@ -22,7 +22,23 @@
    "source": "CoinDesk",
    "published": "2026-09-07T03:43:12+00:00",
    "summary": "",
-   "score": 1.957
+   "score": 1.8208
+  },
+  {
+   "title": "Here’s what happened in crypto today",
+   "url": "https://cointelegraph.com/news/what-happened-in-crypto-today?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-09-07T06:29:41+00:00",
+   "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
+   "score": 1.6678
+  },
+  {
+   "title": "Bitcoin struggles at $83,000 sell wall as whales distribution flip into net selling",
+   "url": "https://www.coindesk.com/markets/2026/09/07/bitcoin-investors-turn-to-selling-as-usd83-000-resistance-holds",
+   "source": "CoinDesk",
+   "published": "2026-09-07T09:48:51+00:00",
+   "summary": "",
+   "score": 1.4316
   },
   {
    "title": "Satoshi-era Bitcoin wakes after 16 years of dormancy as 600 BTC moves",
@@ -30,7 +46,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-06T13:03:00+00:00",
    "summary": "Whale Alert identified 12 mining rewards totaling 600 BTC that moved after 16 years of dormancy, with the onchain tracking platform finding no connection to Satoshi Nakamoto.",
-   "score": 1.7734
+   "score": 1.32
   },
   {
    "title": "Zcash Hits Highest Price in Nearly a Decade, Crushing Short Bets",
@@ -38,15 +54,7 @@
    "source": "Decrypt",
    "published": "2026-09-04T16:24:46+00:00",
    "summary": "The privacy coin's squeeze rode a Fed-driven crypto rally that reversed hours later, when a stronger-than-expected jobs report sent Bitcoin back under $80,000.",
-   "score": 1.3713
-  },
-  {
-   "title": "Here’s what happened in crypto today",
-   "url": "https://cointelegraph.com/news/what-happened-in-crypto-today?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-09-06T13:24:43+00:00",
-   "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
-   "score": 1.1205
+   "score": 1.2759
   },
   {
    "title": "Bitcoin Dips Below $80,000 on Strong US Jobs Report",
@@ -54,15 +62,15 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-04T17:17:53+00:00",
    "summary": "Bitcoin Magazine Bitcoin Dips Below $80,000 on Strong US Jobs Report Bitcoin dipped on news that the Federal Reserve may hike interest rates this month. This post Bitcoin Dips Below $80,000 on Strong US Jobs Report first appeared on Bitcoin Magazine and is written by Mathew Di S…",
-   "score": 1.0522
+   "score": 0.979
   },
   {
-   "title": "Morning Minute: Crypto Stages Major Rally on Rate Hopes",
-   "url": "https://decrypt.co/377393/morning-minute-crypto-stages-major-rally-on-rate-hopes",
+   "title": "'Purported White-Hat Hackers' Withdraw $320M in Bitcoin From Liquid",
+   "url": "https://decrypt.co/377528/purported-white-hat-hackers-withdraw-320m-in-bitcoin-from-liquid",
    "source": "Decrypt",
-   "published": "2026-09-04T12:31:31+00:00",
-   "summary": "Bitcoin soared past $81k, HYPE and ZEC hit smashing new ATHs and the onchain rally leveled up. Is this the first stage of the next leg up?",
-   "score": 0.8171
+   "published": "2026-09-07T09:55:42+00:00",
+   "summary": "Blockstream and the hackers are engaging with each other through PGP-signed messages in Bitcoin transactions.",
+   "score": 0.7966
   },
   {
    "title": "Bitcoin ETF inflows hit $3.8B in strongest three-week stretch of 2026",
@@ -70,15 +78,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-05T08:03:06+00:00",
    "summary": "US spot Bitcoin ETFs drew nearly $1 billion in the latest week as Friday inflows stayed positive despite Bitcoin briefly falling below $79,000.",
-   "score": 0.8
-  },
-  {
-   "title": "Oil up, bitcoin down as U.S. strikes Iranian crude carriers",
-   "url": "https://www.coindesk.com/markets/2026/09/07/oil-up-bitcoin-down-as-u-s-strikes-iranian-crude-carriers",
-   "source": "CoinDesk",
-   "published": "2026-09-07T04:44:16+00:00",
-   "summary": "",
-   "score": 0.7944
+   "score": 0.7443
   },
   {
    "title": "Alleged White-Hat Hackers Withdraw 4,000 bitcoin from Blockstream’s Liquid Network Federation Reserves",
@@ -86,15 +86,31 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-06T22:16:53+00:00",
    "summary": "Bitcoin Magazine Alleged White-Hat Hackers Withdraw 4,000 bitcoin from Blockstream’s Liquid Network Federation Reserves Liquid Network said purported white-hat hackers withdrew about 4,000 bitcoin from the federation wallet that backs L-BTC. Bridge nodes are disabled and the sid…",
-   "score": 0.7237
+   "score": 0.6733
   },
   {
-   "title": "Bitcoin Slides as Blowout Jobs Report Revives Fed Hike Odds",
-   "url": "https://decrypt.co/377414/bitcoin-slides-blowout-jobs-report-fed-hike-odds",
+   "title": "Coldcard hacker moves $7.7 million in BTC, 45% of bitcoin stolen in third attack wave",
+   "url": "https://www.coindesk.com/business/2026/09/07/coldcard-hacker-moves-45-of-bitcoin-stolen-in-third-attack-wave",
+   "source": "CoinDesk",
+   "published": "2026-09-07T09:32:05+00:00",
+   "summary": "",
+   "score": 0.6337
+  },
+  {
+   "title": "Morning Minute: Crypto Stages Major Rally on Rate Hopes",
+   "url": "https://decrypt.co/377393/morning-minute-crypto-stages-major-rally-on-rate-hopes",
    "source": "Decrypt",
-   "published": "2026-09-04T15:13:28+00:00",
-   "summary": "The Dow dropped 226 points and Bitcoin erased some of its gains after August payrolls tripled estimates, pushing September rate-hike odds to 58%.",
-   "score": 0.6536
+   "published": "2026-09-04T12:31:31+00:00",
+   "summary": "Bitcoin soared past $81k, HYPE and ZEC hit smashing new ATHs and the onchain rally leveled up. Is this the first stage of the next leg up?",
+   "score": 0.6082
+  },
+  {
+   "title": "Live updates: Bitcoin holds $79,000 as hike odds climb, zcash runs 45% in a week",
+   "url": "https://www.coindesk.com/business/2026/09/07/live-updates-bitcoin-holds-usd79-000-as-hike-odds-climb-zcash-runs-45-in-a-week",
+   "source": "CoinDesk",
+   "published": "2026-09-07T08:17:12+00:00",
+   "summary": "",
+   "score": 0.4979
   },
   {
    "title": "‘Crypto Capital of the World’: SEC Chair Expects Clarity Act to Pass This Month",
@@ -102,23 +118,15 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-02T21:40:17+00:00",
    "summary": "Bitcoin Magazine ‘Crypto Capital of the World’: SEC Chair Expects Clarity Act to Pass This Month Securities and Exchange Commission Chair Paul Atkins has been pushing ahead with crypto regulation despite a delay in a vote on the Clarity Act. This post ‘Crypto Capital of the Worl…",
-   "score": 0.5308
+   "score": 0.4939
   },
   {
-   "title": "Better and Coinbase’s bitcoin-backed mortgages can reuse borrowers’ collateral",
-   "url": "https://www.coindesk.com/business/2026/09/06/better-and-coinbase-s-bitcoin-backed-mortgages-can-reuse-borrowers-collateral",
-   "source": "CoinDesk",
-   "published": "2026-09-06T14:00:00+00:00",
-   "summary": "",
-   "score": 0.5137
-  },
-  {
-   "title": "Bitcoin ETFs Rebound as Ethereum and XRP ETFs End Winning Streaks",
-   "url": "https://decrypt.co/377284/bitcoin-etfs-rebound-ethereum-xrp-end-streaks",
+   "title": "Bitcoin Slides as Blowout Jobs Report Revives Fed Hike Odds",
+   "url": "https://decrypt.co/377414/bitcoin-slides-blowout-jobs-report-fed-hike-odds",
    "source": "Decrypt",
-   "published": "2026-09-03T18:15:07+00:00",
-   "summary": "Ethereum funds broke a 12-day winning run and XRP snapped an 11-session streak on Wednesday, while Bitcoin ETFs bounced back with $101.15 million in one day after their worst outflow since July.",
-   "score": 0.4635
+   "published": "2026-09-04T15:13:28+00:00",
+   "summary": "The Dow dropped 226 points and Bitcoin erased some of its gains after August payrolls tripled estimates, pushing September rate-hike odds to 58%.",
+   "score": 0.4865
   },
   {
    "title": "Surprise nonfarm payrolls print sends Bitcoin back below 80K",
@@ -126,7 +134,23 @@
    "source": "Cointelegraph",
    "published": "2026-09-04T20:30:47+00:00",
    "summary": "The US economy added far more jobs than expected in August, pressuring Bitcoin lower as traders repriced the odds of a Federal Reserve rate cut this month.",
-   "score": 0.4515
+   "score": 0.42
+  },
+  {
+   "title": "Oil up, bitcoin down as U.S. strikes Iranian crude carriers",
+   "url": "https://www.coindesk.com/markets/2026/09/07/oil-up-bitcoin-down-as-u-s-strikes-iranian-crude-carriers",
+   "source": "CoinDesk",
+   "published": "2026-09-07T04:44:16+00:00",
+   "summary": "",
+   "score": 0.3784
+  },
+  {
+   "title": "Bitcoin ETFs Rebound as Ethereum and XRP ETFs End Winning Streaks",
+   "url": "https://decrypt.co/377284/bitcoin-etfs-rebound-ethereum-xrp-end-streaks",
+   "source": "Decrypt",
+   "published": "2026-09-03T18:15:07+00:00",
+   "summary": "Ethereum funds broke a 12-day winning run and XRP snapped an 11-session streak on Wednesday, while Bitcoin ETFs bounced back with $101.15 million in one day after their worst outflow since July.",
+   "score": 0.345
   },
   {
    "title": "Bitcoin ETF inflows hit $731M, highest since January as BTC reclaims $80K",
@@ -134,15 +158,23 @@
    "source": "Cointelegraph",
    "published": "2026-09-04T07:37:13+00:00",
    "summary": "US Bitcoin ETFs drew $730.9 million on Thursday as Bitcoin reclaimed $80,000, though CryptoQuant flagged weak fresh demand and a key $83,000 test.",
-   "score": 0.3598
+   "score": 0.3347
   },
   {
-   "title": "Bitcoin clears $81,000 as privacy coins lead a broad crypto rally",
-   "url": "https://www.coindesk.com/markets/2026/09/04/bitcoin-clears-usd81-000-as-privacy-coins-lead-a-broad-crypto-rally",
+   "title": "Coldcard third-wave attacker moves 45% of stolen Bitcoin",
+   "url": "https://cointelegraph.com/news/coldcard-third-wave-attacker-moves-bitcoin-stolen?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-09-07T09:36:19+00:00",
+   "summary": "Galaxy said 82% of Bitcoin stolen across all Coldcard attacks remains in the original addresses, with 18% moved in apparent laundering.",
+   "score": 0.2598
+  },
+  {
+   "title": "Better and Coinbase’s bitcoin-backed mortgages can reuse borrowers’ collateral",
+   "url": "https://www.coindesk.com/business/2026/09/06/better-and-coinbase-s-bitcoin-backed-mortgages-can-reuse-borrowers-collateral",
    "source": "CoinDesk",
-   "published": "2026-09-04T09:57:01+00:00",
+   "published": "2026-09-06T14:00:00+00:00",
    "summary": "",
-   "score": 0.3488
+   "score": 0.2447
   },
   {
    "title": "Bitcoin Pumps as Fed Signals Rate Pause, $415 Million in Shorts Get Rekt",
@@ -150,15 +182,7 @@
    "source": "Decrypt",
    "published": "2026-09-03T16:38:17+00:00",
    "summary": "Stocks and crypto rallied together after Governor Christopher Waller said he could back holding rates steady, with short sellers absorbing the brunt of the squeeze.",
-   "score": 0.3019
-  },
-  {
-   "title": "Bitcoin back above $77,500, XRP leads majors as Fed hike odds slide to 62%",
-   "url": "https://www.coindesk.com/markets/2026/09/03/bitcoin-back-above-usd77-500-xrp-leads-majors-as-fed-hike-odds-near-66",
-   "source": "CoinDesk",
-   "published": "2026-09-03T04:22:40+00:00",
-   "summary": "",
-   "score": 0.2529
+   "score": 0.2247
   },
   {
    "title": "Hargreaves Lansdown Reverses Course, Rolls Out Bitcoin Trading",
@@ -166,31 +190,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-04T21:16:39+00:00",
    "summary": "Bitcoin Magazine Hargreaves Lansdown Reverses Course, Rolls Out Bitcoin Trading British investment firm Hargreaves Lansdown last year said bitcoin was too volatile. This post Hargreaves Lansdown Reverses Course, Rolls Out Bitcoin Trading first appeared on Bitcoin Magazine and is…",
-   "score": 0.2282
-  },
-  {
-   "title": "CFTC Asks Judge to Dismiss CME Lawsuit Over Crypto Perpetual Futures",
-   "url": "https://decrypt.co/377315/cftc-dismiss-cme-lawsuit-crypto-perpetual-futures",
-   "source": "Decrypt",
-   "published": "2026-09-03T17:31:04+00:00",
-   "summary": "The regulator argues that CME cannot challenge its approval of Kalshi’s Bitcoin perpetual contract without showing concrete financial harm.",
-   "score": 0.2152
-  },
-  {
-   "title": "Ether, XRP ETF inflow streaks end as Bitcoin funds rebound",
-   "url": "https://cointelegraph.com/markets/eth-xrp-etf-inflow-streaks-end-bitcoin-funds-rebound?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-09-03T07:22:00+00:00",
-   "summary": "Ether ETFs posted $48 million in outflows after attracting $1.62 billion over 12 trading days, while XRP funds ended an 11-session inflow run.",
-   "score": 0.2028
-  },
-  {
-   "title": "Timing the bitcoin market is exciting but nearly impossible. Here's why",
-   "url": "https://www.coindesk.com/markets/2026/09/05/why-crypto-experts-say-buying-and-holding-bitcoin-easily-beats-trying-to-time-the-market",
-   "source": "CoinDesk",
-   "published": "2026-09-05T18:05:11+00:00",
-   "summary": "",
-   "score": 0.1973
+   "score": 0.2124
   },
   {
    "title": "BlackRock’s iShares Bitcoin Trust Is Beating Top S&P 500 ETF",
@@ -198,23 +198,31 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-01T16:35:17+00:00",
    "summary": "Bitcoin Magazine BlackRock’s iShares Bitcoin Trust Is Beating Top S&P 500 ETF The asset manager's flagship bitcoin fund is delivering better returns than Vanguard's S&P 500 ETF. This post BlackRock’s iShares Bitcoin Trust Is Beating Top S&P 500 ETF first appeared on Bitcoin Maga…",
-   "score": 0.181
+   "score": 0.1684
   },
   {
-   "title": "Bitcoin Miner Ditches Site for AI Deal That Could Top $1.2 Billion",
-   "url": "https://decrypt.co/377363/bitcoin-mine-ai-deal-1-2-billion",
-   "source": "Decrypt",
-   "published": "2026-09-03T21:31:05+00:00",
-   "summary": "The projected revenue requires two contract extensions, while an option for more computing capacity could bring the total above $3 billion.",
-   "score": 0.1658
-  },
-  {
-   "title": "Live updates: BlackRock's IBIT drives $236 million bitcoin ETF outflow",
-   "url": "https://www.coindesk.com/business/2026/09/02/live-updates-blackrock-s-ibit-drives-usd236-million-bitcoin-etf-outflow",
+   "title": "Bitcoin clears $81,000 as privacy coins lead a broad crypto rally",
+   "url": "https://www.coindesk.com/markets/2026/09/04/bitcoin-clears-usd81-000-as-privacy-coins-lead-a-broad-crypto-rally",
    "source": "CoinDesk",
-   "published": "2026-09-02T08:31:00+00:00",
+   "published": "2026-09-04T09:57:01+00:00",
    "summary": "",
-   "score": 0.1458
+   "score": 0.1662
+  },
+  {
+   "title": "CFTC Asks Judge to Dismiss CME Lawsuit Over Crypto Perpetual Futures",
+   "url": "https://decrypt.co/377315/cftc-dismiss-cme-lawsuit-crypto-perpetual-futures",
+   "source": "Decrypt",
+   "published": "2026-09-03T17:31:04+00:00",
+   "summary": "The regulator argues that CME cannot challenge its approval of Kalshi’s Bitcoin perpetual contract without showing concrete financial harm.",
+   "score": 0.1602
+  },
+  {
+   "title": "Ether, XRP ETF inflow streaks end as Bitcoin funds rebound",
+   "url": "https://cointelegraph.com/markets/eth-xrp-etf-inflow-streaks-end-bitcoin-funds-rebound?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-09-03T07:22:00+00:00",
+   "summary": "Ether ETFs posted $48 million in outflows after attracting $1.62 billion over 12 trading days, while XRP funds ended an 11-session inflow run.",
+   "score": 0.1509
   },
   {
    "title": "Trezor Breach Worse Than Reported: Another 67,000 US Customers Exposed",
@@ -222,31 +230,23 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-04T20:30:14+00:00",
    "summary": "Bitcoin Magazine Trezor Breach Worse Than Reported: Another 67,000 US Customers Exposed Trezor said that its third party shipping partner, ShipMonk, had not erased customer data. This post Trezor Breach Worse Than Reported: Another 67,000 US Customers Exposed first appeared on B…",
-   "score": 0.1445
+   "score": 0.1344
   },
   {
-   "title": "Is Bitcoin About to Flash Crash? What a 'Bart Simpson' Pattern Would Actually Take",
-   "url": "https://decrypt.co/377185/bitcoin-flash-crash-real-bart-simpson-pattern",
+   "title": "Bitcoin Miner Ditches Site for AI Deal That Could Top $1.2 Billion",
+   "url": "https://decrypt.co/377363/bitcoin-mine-ai-deal-1-2-billion",
    "source": "Decrypt",
-   "published": "2026-09-02T18:30:06+00:00",
-   "summary": "Bitcoin traders are calling August's spike-and-fade a Bart Simpson hairline. Here's what separates an actual flash crash from an ordinary correction.",
-   "score": 0.1257
+   "published": "2026-09-03T21:31:05+00:00",
+   "summary": "The projected revenue requires two contract extensions, while an option for more computing capacity could bring the total above $3 billion.",
+   "score": 0.1234
   },
   {
-   "title": "Bitcoin ETFs notch best month of 2026 as BTC gains 25% in August",
-   "url": "https://cointelegraph.com/markets/bitcoin-etf-best-month-2026-btc-up-25-august?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-09-02T07:59:43+00:00",
-   "summary": "US spot Bitcoin ETFs reduced their year-to-date net outflows by 66% as Bitcoin gained about 25% in August, while Ether ETFs turned positive YTD at $732 million and XRP ETFs reached $502 million.",
-   "score": 0.1158
-  },
-  {
-   "title": "British investor thought he lost $2,000 in bitcoin in 2012. He just recovered $4.5 million",
-   "url": "https://www.coindesk.com/business/2026/09/02/british-investor-thought-he-lost-usd2-000-in-bitcoin-in-2012-he-just-recovered-usd4-5-million",
+   "title": "Bitcoin back above $77,500, XRP leads majors as Fed hike odds slide to 62%",
+   "url": "https://www.coindesk.com/markets/2026/09/03/bitcoin-back-above-usd77-500-xrp-leads-majors-as-fed-hike-odds-near-66",
    "source": "CoinDesk",
-   "published": "2026-09-05T12:00:00+00:00",
+   "published": "2026-09-03T04:22:40+00:00",
    "summary": "",
-   "score": 0.1156
+   "score": 0.1205
   },
   {
    "title": "El Salvador Isn’t Buying Bitcoin With Public Money, Says IMF",
@@ -254,15 +254,31 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-04T19:22:34+00:00",
    "summary": "Bitcoin Magazine El Salvador Isn’t Buying Bitcoin With Public Money, Says IMF El Salvador apparently received bitcoin from private donors rather than using government funds, according to the International Monetary Fund. This post El Salvador Isn’t Buying Bitcoin With Public Mone…",
-   "score": 0.1137
+   "score": 0.1058
   },
   {
-   "title": "Japan’s Remixpoint Dumps Ethereum, XRP in Shift to Bitcoin-Only Treasury",
-   "url": "https://decrypt.co/377228/remixpoint-xrp-ethereum-bitcoin-only",
+   "title": "Timing the bitcoin market is exciting but nearly impossible. Here's why",
+   "url": "https://www.coindesk.com/markets/2026/09/05/why-crypto-experts-say-buying-and-holding-bitcoin-easily-beats-trying-to-time-the-market",
+   "source": "CoinDesk",
+   "published": "2026-09-05T18:05:11+00:00",
+   "summary": "",
+   "score": 0.094
+  },
+  {
+   "title": "Is Bitcoin About to Flash Crash? What a 'Bart Simpson' Pattern Would Actually Take",
+   "url": "https://decrypt.co/377185/bitcoin-flash-crash-real-bart-simpson-pattern",
    "source": "Decrypt",
-   "published": "2026-09-02T21:31:05+00:00",
-   "summary": "The Japanese company booked a ¥117.8 million profit after selling its ETH, SOL, XRP and DOGE, leaving roughly 1,506 BTC as its only cryptocurrency holding.",
-   "score": 0.0938
+   "published": "2026-09-02T18:30:06+00:00",
+   "summary": "Bitcoin traders are calling August's spike-and-fade a Bart Simpson hairline. Here's what separates an actual flash crash from an ordinary correction.",
+   "score": 0.0936
+  },
+  {
+   "title": "Bitcoin ETFs notch best month of 2026 as BTC gains 25% in August",
+   "url": "https://cointelegraph.com/markets/bitcoin-etf-best-month-2026-btc-up-25-august?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-09-02T07:59:43+00:00",
+   "summary": "US spot Bitcoin ETFs reduced their year-to-date net outflows by 66% as Bitcoin gained about 25% in August, while Ether ETFs turned positive YTD at $732 million and XRP ETFs reached $502 million.",
+   "score": 0.0862
   },
   {
    "title": "National Sheriffs’ Association Drops Opposition to Clarity Act",
@@ -270,7 +286,23 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-04T16:05:36+00:00",
    "summary": "Bitcoin Magazine National Sheriffs’ Association Drops Opposition to Clarity Act The law enforcement organization previously opposed the bill. This post National Sheriffs’ Association Drops Opposition to Clarity Act first appeared on Bitcoin Magazine and is written by Mathew Di S…",
-   "score": 0.0867
+   "score": 0.0807
+  },
+  {
+   "title": "Japan’s Remixpoint Dumps Ethereum, XRP in Shift to Bitcoin-Only Treasury",
+   "url": "https://decrypt.co/377228/remixpoint-xrp-ethereum-bitcoin-only",
+   "source": "Decrypt",
+   "published": "2026-09-02T21:31:05+00:00",
+   "summary": "The Japanese company booked a ¥117.8 million profit after selling its ETH, SOL, XRP and DOGE, leaving roughly 1,506 BTC as its only cryptocurrency holding.",
+   "score": 0.0698
+  },
+  {
+   "title": "Live updates: BlackRock's IBIT drives $236 million bitcoin ETF outflow",
+   "url": "https://www.coindesk.com/business/2026/09/02/live-updates-blackrock-s-ibit-drives-usd236-million-bitcoin-etf-outflow",
+   "source": "CoinDesk",
+   "published": "2026-09-02T08:31:00+00:00",
+   "summary": "",
+   "score": 0.0694
   },
   {
    "title": "Hyperscale Data ends Michigan BTC mining as holdings fall 79%",
@@ -278,31 +310,15 @@
    "source": "Cointelegraph",
    "published": "2026-09-03T04:57:55+00:00",
    "summary": "Hyperscale Data’s Bitcoin holdings have fallen about 79% since late July to 215 BTC as it redirects capital toward its Michigan AI data center.",
-   "score": 0.0836
+   "score": 0.0622
   },
   {
-   "title": "Capital B aims to add 376 BTC to bitcoin treasury following $8.8 million Adam Back investment",
-   "url": "https://www.coindesk.com/business/2026/08/29/capital-b-aims-to-add-376-btc-to-bitcoin-treasury-following-usd8-8-million-adam-back-investment",
+   "title": "British investor thought he lost $2,000 in bitcoin in 2012. He just recovered $4.5 million",
+   "url": "https://www.coindesk.com/business/2026/09/02/british-investor-thought-he-lost-usd2-000-in-bitcoin-in-2012-he-just-recovered-usd4-5-million",
    "source": "CoinDesk",
-   "published": "2026-09-02T11:45:16+00:00",
+   "published": "2026-09-05T12:00:00+00:00",
    "summary": "",
-   "score": 0.0815
-  },
-  {
-   "title": "Bitcoin recovers toward $78,000 as pons and arbitrum extend Robinhood Chain rally",
-   "url": "https://www.coindesk.com/markets/2026/09/03/bitcoin-recovers-toward-usd78-000-as-pons-and-arbitrum-extend-robinhood-chain-rally",
-   "source": "CoinDesk",
-   "published": "2026-09-03T10:29:52+00:00",
-   "summary": "",
-   "score": 0.0652
-  },
-  {
-   "title": "Cathie Wood’s Ark Invest Buys $37 Million in Bitcoin and Payments Firm Block",
-   "url": "https://decrypt.co/377046/cathie-wood-ark-invest-buys-more-block",
-   "source": "Decrypt",
-   "published": "2026-09-01T16:13:28+00:00",
-   "summary": "The investment firm bought 456,059 Block shares across three ETFs and added $3.4 million in Circle stock.",
-   "score": 0.059
+   "score": 0.0551
   },
   {
    "title": "Strategy Opposes MSCI Proposal, Says Bitcoin Treasury Firms Are Being Targeted a Second Time",
@@ -310,23 +326,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-08-31T20:44:36+00:00",
    "summary": "Bitcoin Magazine Strategy Opposes MSCI Proposal, Says Bitcoin Treasury Firms Are Being Targeted a Second Time Bitcoin treasury Strategy has blasted Morgan Stanley Capital International’s proposal to exclude it from its Global Investable Market Indexes, calling it “misguided” and…",
-   "score": 0.0575
-  },
-  {
-   "title": "Crypto Biz: AI took a back seat when Bitcoin started climbing",
-   "url": "https://cointelegraph.com/news/crypto-biz-bitcoin-miners-strategy-strive-bitmine-stablecoins?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-09-04T17:22:58+00:00",
-   "summary": "Corporate crypto bets are getting bigger as rising markets reward direct exposure, putting balance-sheet strategies and institutional adoption back in focus.",
-   "score": 0.0566
-  },
-  {
-   "title": "A Fed rate increase would be a mistake, some observers say as bitcoin, gold, stocks fall",
-   "url": "https://www.coindesk.com/daybook-us/2026/09/02/a-fed-rate-increase-would-be-a-mistake-some-observers-say-as-bitcoin-gold-stocks-fall",
-   "source": "CoinDesk",
-   "published": "2026-09-02T11:14:58+00:00",
-   "summary": "",
-   "score": 0.0518
+   "score": 0.0535
   }
  ]
 }
