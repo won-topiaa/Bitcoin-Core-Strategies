@@ -1,5 +1,5 @@
 {
- "fetched": "2026-09-07T20:33:01+00:00",
+ "fetched": "2026-09-07T20:33:04+00:00",
  "sources_ok": [
   "CoinDesk",
   "Cointelegraph",
@@ -38,7 +38,7 @@
    "source": "Decrypt",
    "published": "2026-09-07T19:13:56+00:00",
    "summary": "Nearly 600 BTC remains outstanding after Blockstream told the actors in an on-chain message that Liquid’s bridge nodes had been patched.",
-   "score": 1.7661
+   "score": 1.766
   },
   {
    "title": "Yen intervention meets US inflation data: Five things to know in Bitcoin this week",
@@ -142,7 +142,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-05T08:03:06+00:00",
    "summary": "US spot Bitcoin ETFs drew nearly $1 billion in the latest week as Friday inflows stayed positive despite Bitcoin briefly falling below $79,000.",
-   "score": 0.4104
+   "score": 0.4103
   },
   {
    "title": "Bitcoin Starts the Week Flat, But Chainlink Is Flying—Here's Why",
