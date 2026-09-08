@@ -1,5 +1,5 @@
 {
- "fetched": "2026-09-08T16:50:38+00:00",
+ "fetched": "2026-09-08T18:35:39+00:00",
  "sources_ok": [
   "CoinDesk",
   "Cointelegraph",
@@ -14,7 +14,7 @@
    "source": "Decrypt",
    "published": "2026-09-08T13:57:16+00:00",
    "summary": "The Bitcoin treasury firm spent $176.3 million on its own preferred stock, and doubled the buyback program's authorization to $2 billion.",
-   "score": 2.9733
+   "score": 2.8991
   },
   {
    "title": "Bitcoin ETFs are still $1 billion shy of breaking even in 2026",
@@ -22,7 +22,15 @@
    "source": "CoinDesk",
    "published": "2026-09-08T11:26:27+00:00",
    "summary": "",
-   "score": 2.7748
+   "score": 2.7056
+  },
+  {
+   "title": "Capital B Buys 376 Bitcoins in Its Biggest Purchase of 2026",
+   "url": "https://bitcoinmagazine.com/news/capital-b-makes-biggest-2026-buy",
+   "source": "Bitcoin Magazine",
+   "published": "2026-09-08T17:53:33+00:00",
+   "summary": "Bitcoin Magazine Capital B Buys 376 Bitcoins in Its Biggest Purchase of 2026 Capital B is now the 25th biggest publicly traded bitcoin treasury following its latest buy. This post Capital B Buys 376 Bitcoins in Its Biggest Purchase of 2026 first appeared on Bitcoin Magazine and…",
+   "score": 2.4748
   },
   {
    "title": "Here’s what happened in crypto today",
@@ -30,7 +38,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-08T13:24:08+00:00",
    "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
-   "score": 2.0933
+   "score": 2.0411
   },
   {
    "title": "Bitcoin slips under $79,000, Zcash leads losses as Fed hike odds hold near 60%",
@@ -38,15 +46,7 @@
    "source": "CoinDesk",
    "published": "2026-09-08T04:40:57+00:00",
    "summary": "",
-   "score": 1.6779
-  },
-  {
-   "title": "Strategy Halted Its Bitcoin Buys Again Last Week",
-   "url": "https://bitcoinmagazine.com/news/strategy-halted-bitcoin-buys-last-week",
-   "source": "Bitcoin Magazine",
-   "published": "2026-09-08T15:38:26+00:00",
-   "summary": "Bitcoin Magazine Strategy Halted Its Bitcoin Buys Again Last Week The largest corporate holder of bitcoin is instead focusing on buying back its stock and building up its cash reserves. This post Strategy Halted Its Bitcoin Buys Again Last Week first appeared on Bitcoin Magazine…",
-   "score": 1.5724
+   "score": 1.636
   },
   {
    "title": "Bitcoin fund flows show investors trading Fed rate path, not exiting market: CoinShares",
@@ -54,15 +54,15 @@
    "source": "Cointelegraph",
    "published": "2026-09-07T17:29:27+00:00",
    "summary": "Bitcoin’s struggle to break $80,000 comes as markets price in a growing chance of a September rate hike, putting monetary conditions back in focus.",
-   "score": 1.4275
+   "score": 1.3919
   },
   {
-   "title": "Liquid Gets 3,400 BTC Back After On-Chain Talks; White Hats Keep 598.5 BTC",
-   "url": "https://bitcoinmagazine.com/news/liquid-gets-3400-btc-back-after-on-chain-talks-white-hats-keep-598-5-btc",
+   "title": "Strategy Halted Its Bitcoin Buys Again Last Week",
+   "url": "https://bitcoinmagazine.com/news/strategy-halted-bitcoin-buys-last-week",
    "source": "Bitcoin Magazine",
-   "published": "2026-09-07T22:02:19+00:00",
-   "summary": "Bitcoin Magazine Liquid Gets 3,400 BTC Back After On-Chain Talks; White Hats Keep 598.5 BTC A self-described white-hat party returned 3,400 BTC to Liquid Network’s federation wallet on Monday after Blockstream said bridge nodes were patched. About 598.5 BTC, near $47 million, re…",
-   "score": 1.0976
+   "published": "2026-09-08T15:38:26+00:00",
+   "summary": "Bitcoin Magazine Strategy Halted Its Bitcoin Buys Again Last Week The largest corporate holder of bitcoin is instead focusing on buying back its stock and building up its cash reserves. This post Strategy Halted Its Bitcoin Buys Again Last Week first appeared on Bitcoin Magazine…",
+   "score": 1.2265
   },
   {
    "title": "Bitcoin rally has more room as volatility shorts unwind, Two Prime CEO says",
@@ -70,7 +70,7 @@
    "source": "CoinDesk",
    "published": "2026-09-08T13:18:21+00:00",
    "summary": "",
-   "score": 1.0946
+   "score": 1.0673
   },
   {
    "title": "‘White hats’ take 4000 BTC from Liquid, ETFs see best inflows of 2026: Hodler’s Digest",
@@ -78,7 +78,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-07T00:05:02+00:00",
    "summary": "Purported white hat hackers have taken 4000 Bitcoin from the Liquid sidechain in a major security breach. The Bitcoin ETFs see the best three weeks of inflows in 2026.",
-   "score": 1.0658
+   "score": 1.0392
   },
   {
    "title": "Liquid Hackers Return $270M in Bitcoin After Swiping $320 Million",
@@ -86,7 +86,15 @@
    "source": "Decrypt",
    "published": "2026-09-07T19:13:56+00:00",
    "summary": "Nearly 600 BTC remains outstanding after Blockstream told the actors in an on-chain message that Liquid’s bridge nodes had been patched.",
-   "score": 1.054
+   "score": 1.0277
+  },
+  {
+   "title": "Liquid Gets 3,400 BTC Back After On-Chain Talks; White Hats Keep 598.5 BTC",
+   "url": "https://bitcoinmagazine.com/news/liquid-gets-3400-btc-back-after-on-chain-talks-white-hats-keep-598-5-btc",
+   "source": "Bitcoin Magazine",
+   "published": "2026-09-07T22:02:19+00:00",
+   "summary": "Bitcoin Magazine Liquid Gets 3,400 BTC Back After On-Chain Talks; White Hats Keep 598.5 BTC A self-described white-hat party returned 3,400 BTC to Liquid Network’s federation wallet on Monday after Blockstream said bridge nodes were patched. About 598.5 BTC, near $47 million, re…",
+   "score": 0.8561
   },
   {
    "title": "Yen intervention meets US inflation data: Five things to know in Bitcoin this week",
@@ -94,7 +102,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-07T12:10:22+00:00",
    "summary": "This week’s CPI and PPI prints, along with the Fed’s Sept. 16 rate decision, could determine whether Bitcoin can secure $80,000 as a support level.",
-   "score": 0.8461
+   "score": 0.8249
   },
   {
    "title": "Bitcoin blinks less than gold when Treasury yields move",
@@ -102,7 +110,7 @@
    "source": "CoinDesk",
    "published": "2026-09-07T11:15:00+00:00",
    "summary": "",
-   "score": 0.8349
+   "score": 0.814
   },
   {
    "title": "New Bitcoin whales spark sell-side risk as unrealized gains hit $9B",
@@ -110,7 +118,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-08T09:40:26+00:00",
    "summary": "Unrealized gains by whale speculators hit their highest levels on record last week, per data going back to 2016.",
-   "score": 0.6648
+   "score": 0.6482
   },
   {
    "title": "Live updates: Bitcoin below Friday's post-jobs report low as oil and copper surge higher",
@@ -118,7 +126,15 @@
    "source": "CoinDesk",
    "published": "2026-09-08T08:30:30+00:00",
    "summary": "",
-   "score": 0.6537
+   "score": 0.6374
+  },
+  {
+   "title": "Strive Buys $109 Million in Bitcoin, Pushes Preferred Stock Toward $1 Billion",
+   "url": "https://decrypt.co/377689/strive-buys-109-million-bitcoin-preferred-stock-1-billion",
+   "source": "Decrypt",
+   "published": "2026-09-08T17:46:05+00:00",
+   "summary": "The Vivek Ramaswamy-founded asset manager added 1,375 BTC last week, its third straight week of 5%-plus growth.",
+   "score": 0.6324
   },
   {
    "title": "Castle Opens Its Bitcoin Savings Stack to Individuals",
@@ -126,15 +142,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-08T15:38:33+00:00",
    "summary": "Bitcoin Magazine Castle Opens Its Bitcoin Savings Stack to Individuals The Miami startup is bringing 12% STRC yield to personal accounts — and letting customers route any slice of the payout straight into bitcoin. This post Castle Opens Its Bitcoin Savings Stack to Individuals f…",
-   "score": 0.629
-  },
-  {
-   "title": "Zcash Hits Highest Price in Nearly a Decade, Crushing Short Bets",
-   "url": "https://decrypt.co/377445/zcash-price-high-decade-shorts-rekt",
-   "source": "Decrypt",
-   "published": "2026-09-04T16:24:46+00:00",
-   "summary": "The privacy coin's squeeze rode a Fed-driven crypto rally that reversed hours later, when a stronger-than-expected jobs report sent Bitcoin back under $80,000.",
-   "score": 0.5247
+   "score": 0.4906
   },
   {
    "title": "Strategy skips Bitcoin buy to repurchase $176M of STRC preferred shares",
@@ -142,15 +150,15 @@
    "source": "Cointelegraph",
    "published": "2026-09-08T12:51:00+00:00",
    "summary": "Strategy repurchased $176 million worth of its STRC preferred stock and doubled the size of its digital securities repurchase program to $2 billion, while pausing on new Bitcoin buys.",
-   "score": 0.4949
+   "score": 0.4826
   },
   {
-   "title": "How One Executive Recruitment Firm Is Using M&A to Turn Earnings Into Bitcoin",
-   "url": "https://bitcoinmagazine.com/bitcoin-for-corporations/how-one-executive-recruitment-firm-is-using-ma-to-turn-earnings-into-bitcoin",
-   "source": "Bitcoin Magazine",
-   "published": "2026-09-08T12:15:40+00:00",
-   "summary": "Bitcoin Magazine How One Executive Recruitment Firm Is Using M&A to Turn Earnings Into Bitcoin XCE’s latest deal offers a case study in building the operating business and Bitcoin balance sheet side by side. This post How One Executive Recruitment Firm Is Using M&A to Turn Earni…",
-   "score": 0.4792
+   "title": "Zcash Hits Highest Price in Nearly a Decade, Crushing Short Bets",
+   "url": "https://decrypt.co/377445/zcash-price-high-decade-shorts-rekt",
+   "source": "Decrypt",
+   "published": "2026-09-04T16:24:46+00:00",
+   "summary": "The privacy coin's squeeze rode a Fed-driven crypto rally that reversed hours later, when a stronger-than-expected jobs report sent Bitcoin back under $80,000.",
+   "score": 0.4093
   },
   {
    "title": "Bitcoin network used by exchanges hit by $320 million exploit. Hackers claim they're the 'good guys'",
@@ -158,15 +166,15 @@
    "source": "CoinDesk",
    "published": "2026-09-07T03:43:12+00:00",
    "summary": "",
-   "score": 0.3834
+   "score": 0.3738
   },
   {
-   "title": "Middle East Crypto Activity Triples to $350 Billion Amid Ongoing Conflict, Report Finds",
-   "url": "https://decrypt.co/377597/middle-east-crypto-activity-350-billion",
-   "source": "Decrypt",
-   "published": "2026-09-07T18:16:04+00:00",
-   "summary": "The Iran conflict has increased demand for digital assets to preserve and transfer wealth, while Gulf crypto businesses have kept operating through disruption, the Bitcoin Policy Institute says.",
-   "score": 0.3696
+   "title": "How One Executive Recruitment Firm Is Using M&A to Turn Earnings Into Bitcoin",
+   "url": "https://bitcoinmagazine.com/bitcoin-for-corporations/how-one-executive-recruitment-firm-is-using-ma-to-turn-earnings-into-bitcoin",
+   "source": "Bitcoin Magazine",
+   "published": "2026-09-08T12:15:40+00:00",
+   "summary": "Bitcoin Magazine How One Executive Recruitment Firm Is Using M&A to Turn Earnings Into Bitcoin XCE’s latest deal offers a case study in building the operating business and Bitcoin balance sheet side by side. This post How One Executive Recruitment Firm Is Using M&A to Turn Earni…",
+   "score": 0.3738
   },
   {
    "title": "Satoshi-era Bitcoin wakes after 16 years of dormancy as 600 BTC moves",
@@ -174,7 +182,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-06T13:03:00+00:00",
    "summary": "Whale Alert identified 12 mining rewards totaling 600 BTC that moved after 16 years of dormancy, with the onchain tracking platform finding no connection to Satoshi Nakamoto.",
-   "score": 0.3474
+   "score": 0.3388
   },
   {
    "title": "Weekend altcoin rally runs out of road as bitcoin slips",
@@ -182,23 +190,15 @@
    "source": "CoinDesk",
    "published": "2026-09-07T10:26:33+00:00",
    "summary": "",
-   "score": 0.3042
+   "score": 0.2966
   },
   {
-   "title": "Malone Lam Faces Plea Hearing Over $245M Bitcoin Theft",
-   "url": "https://decrypt.co/377595/malone-lam-faces-plea-hearing-over-245m-bitcoin-theft",
+   "title": "Middle East Crypto Activity Triples to $350 Billion Amid Ongoing Conflict, Report Finds",
+   "url": "https://decrypt.co/377597/middle-east-crypto-activity-350-billion",
    "source": "Decrypt",
-   "published": "2026-09-07T17:41:55+00:00",
-   "summary": "A plea agreement hearing in Lam's case is set for Tuesday in Washington, nearly two years after his arrest in Miami.",
-   "score": 0.2932
-  },
-  {
-   "title": "Bitcoin Dips Below $80,000 on Strong US Jobs Report",
-   "url": "https://bitcoinmagazine.com/markets/bitcoin-dips-on-strong-jobs-report",
-   "source": "Bitcoin Magazine",
-   "published": "2026-09-04T17:17:53+00:00",
-   "summary": "Bitcoin Magazine Bitcoin Dips Below $80,000 on Strong US Jobs Report Bitcoin dipped on news that the Federal Reserve may hike interest rates this month. This post Bitcoin Dips Below $80,000 on Strong US Jobs Report first appeared on Bitcoin Magazine and is written by Mathew Di S…",
-   "score": 0.2577
+   "published": "2026-09-07T18:16:04+00:00",
+   "summary": "The Iran conflict has increased demand for digital assets to preserve and transfer wealth, while Gulf crypto businesses have kept operating through disruption, the Bitcoin Policy Institute says.",
+   "score": 0.2883
   },
   {
    "title": "Bitcoin struggles at $83,000 'wall' as whales flip into net selling",
@@ -206,15 +206,15 @@
    "source": "CoinDesk",
    "published": "2026-09-07T09:48:51+00:00",
    "summary": "",
-   "score": 0.2412
+   "score": 0.2351
   },
   {
-   "title": "Bitcoin Starts the Week Flat, But Chainlink Is Flying—Here's Why",
-   "url": "https://decrypt.co/377566/bitcoin-starts-flat-chainlink-price-flying",
+   "title": "Malone Lam Faces Plea Hearing Over $245M Bitcoin Theft",
+   "url": "https://decrypt.co/377595/malone-lam-faces-plea-hearing-over-245m-bitcoin-theft",
    "source": "Decrypt",
-   "published": "2026-09-07T15:42:34+00:00",
-   "summary": "LINK hit an eight-month high after Bottomline, a top-three SWIFT services provider moving $16 trillion a year, tapped Chainlink to connect 600-plus banks to blockchain settlement.",
-   "score": 0.2279
+   "published": "2026-09-07T17:41:55+00:00",
+   "summary": "A plea agreement hearing in Lam's case is set for Tuesday in Washington, nearly two years after his arrest in Miami.",
+   "score": 0.2287
   },
   {
    "title": "Bitcoin faces key support test at $78.3K as US crude oil hits three-month high",
@@ -222,23 +222,23 @@
    "source": "Cointelegraph",
    "published": "2026-09-08T15:41:11+00:00",
    "summary": "Bitcoin fell with US stocks on the opening of Tuesday’s Wall Street trading session as analysis warns that BTC price support at $78,300 must hold.",
-   "score": 0.2062
+   "score": 0.2011
   },
   {
-   "title": "Alleged White-Hat Hackers Withdraw 4,000 bitcoin from Blockstream’s Liquid Network Federation Reserves",
-   "url": "https://bitcoinmagazine.com/news/alleged-white-hat-hackers-withdraw-4000-bitcoin-from-blockstreams-liquid-network-federation-reserves",
+   "title": "Bitcoin Dips Below $80,000 on Strong US Jobs Report",
+   "url": "https://bitcoinmagazine.com/markets/bitcoin-dips-on-strong-jobs-report",
    "source": "Bitcoin Magazine",
-   "published": "2026-09-06T22:16:53+00:00",
-   "summary": "Bitcoin Magazine Alleged White-Hat Hackers Withdraw 4,000 bitcoin from Blockstream’s Liquid Network Federation Reserves Liquid Network said purported white-hat hackers withdrew about 4,000 bitcoin from the federation wallet that backs L-BTC. Bridge nodes are disabled and the sid…",
-   "score": 0.1772
+   "published": "2026-09-04T17:17:53+00:00",
+   "summary": "Bitcoin Magazine Bitcoin Dips Below $80,000 on Strong US Jobs Report Bitcoin dipped on news that the Federal Reserve may hike interest rates this month. This post Bitcoin Dips Below $80,000 on Strong US Jobs Report first appeared on Bitcoin Magazine and is written by Mathew Di S…",
+   "score": 0.201
   },
   {
-   "title": "Coldcard Hacker Moves $7.7M, Nearly Half of Third-Wave Bitcoin Haul",
-   "url": "https://decrypt.co/377537/coldcard-hacker-moves-7-7m-nearly-half-of-third-wave-bitcoin-haul",
+   "title": "Bitcoin Starts the Week Flat, But Chainlink Is Flying—Here's Why",
+   "url": "https://decrypt.co/377566/bitcoin-starts-flat-chainlink-price-flying",
    "source": "Decrypt",
-   "published": "2026-09-07T11:09:27+00:00",
-   "summary": "The attacker built 293 separate vaults for the stolen Bitcoin and is emptying them in order of size, largest first.",
-   "score": 0.1708
+   "published": "2026-09-07T15:42:34+00:00",
+   "summary": "LINK hit an eight-month high after Bottomline, a top-three SWIFT services provider moving $16 trillion a year, tapped Chainlink to connect 600-plus banks to blockchain settlement.",
+   "score": 0.1778
   },
   {
    "title": "Bitcoin’s complexity paradox: How layer-2 scalers became AI's main target",
@@ -246,7 +246,7 @@
    "source": "CoinDesk",
    "published": "2026-09-08T12:09:26+00:00",
    "summary": "",
-   "score": 0.1568
+   "score": 0.1529
   },
   {
    "title": "Bitcoin ETF inflows hit $3.8B in strongest three-week stretch of 2026",
@@ -254,23 +254,23 @@
    "source": "Cointelegraph",
    "published": "2026-09-05T08:03:06+00:00",
    "summary": "US spot Bitcoin ETFs drew nearly $1 billion in the latest week as Friday inflows stayed positive despite Bitcoin briefly falling below $79,000.",
-   "score": 0.1567
+   "score": 0.1528
   },
   {
-   "title": "'Purported White-Hat Hackers' Withdraw $320M in Bitcoin From Liquid",
-   "url": "https://decrypt.co/377528/purported-white-hat-hackers-withdraw-320m-in-bitcoin-from-liquid",
-   "source": "Decrypt",
-   "published": "2026-09-07T09:55:42+00:00",
-   "summary": "Blockstream and the hackers are engaging with each other through PGP-signed messages in Bitcoin transactions.",
-   "score": 0.1342
-  },
-  {
-   "title": "‘Crypto Capital of the World’: SEC Chair Expects Clarity Act to Pass This Month",
-   "url": "https://bitcoinmagazine.com/news/sec-chair-predict-clarity-act-passage",
+   "title": "Alleged White-Hat Hackers Withdraw 4,000 bitcoin from Blockstream’s Liquid Network Federation Reserves",
+   "url": "https://bitcoinmagazine.com/news/alleged-white-hat-hackers-withdraw-4000-bitcoin-from-blockstreams-liquid-network-federation-reserves",
    "source": "Bitcoin Magazine",
-   "published": "2026-09-02T21:40:17+00:00",
-   "summary": "Bitcoin Magazine ‘Crypto Capital of the World’: SEC Chair Expects Clarity Act to Pass This Month Securities and Exchange Commission Chair Paul Atkins has been pushing ahead with crypto regulation despite a delay in a vote on the Clarity Act. This post ‘Crypto Capital of the Worl…",
-   "score": 0.13
+   "published": "2026-09-06T22:16:53+00:00",
+   "summary": "Bitcoin Magazine Alleged White-Hat Hackers Withdraw 4,000 bitcoin from Blockstream’s Liquid Network Federation Reserves Liquid Network said purported white-hat hackers withdrew about 4,000 bitcoin from the federation wallet that backs L-BTC. Bridge nodes are disabled and the sid…",
+   "score": 0.1382
+  },
+  {
+   "title": "Coldcard Hacker Moves $7.7M, Nearly Half of Third-Wave Bitcoin Haul",
+   "url": "https://decrypt.co/377537/coldcard-hacker-moves-7-7m-nearly-half-of-third-wave-bitcoin-haul",
+   "source": "Decrypt",
+   "published": "2026-09-07T11:09:27+00:00",
+   "summary": "The attacker built 293 separate vaults for the stolen Bitcoin and is emptying them in order of size, largest first.",
+   "score": 0.1332
   },
   {
    "title": "Bitcoin slips to $78,800 as BNB and DeFi tokens buck the selloff",
@@ -278,7 +278,7 @@
    "source": "CoinDesk",
    "published": "2026-09-08T10:33:17+00:00",
    "summary": "",
-   "score": 0.1226
+   "score": 0.1195
   },
   {
    "title": "Liquid ‘white hats’ return $270M in Bitcoin as network prepares restart",
@@ -286,15 +286,23 @@
    "source": "Cointelegraph",
    "published": "2026-09-08T03:46:17+00:00",
    "summary": "The actors returned 85% of the Bitcoin withdrawn from Liquid’s federation wallet following the security incident.",
-   "score": 0.1111
+   "score": 0.1084
   },
   {
-   "title": "Morning Minute: Crypto Stages Major Rally on Rate Hopes",
-   "url": "https://decrypt.co/377393/morning-minute-crypto-stages-major-rally-on-rate-hopes",
+   "title": "'Purported White-Hat Hackers' Withdraw $320M in Bitcoin From Liquid",
+   "url": "https://decrypt.co/377528/purported-white-hat-hackers-withdraw-320m-in-bitcoin-from-liquid",
    "source": "Decrypt",
-   "published": "2026-09-04T12:31:31+00:00",
-   "summary": "Bitcoin soared past $81k, HYPE and ZEC hit smashing new ATHs and the onchain rally leveled up. Is this the first stage of the next leg up?",
-   "score": 0.1025
+   "published": "2026-09-07T09:55:42+00:00",
+   "summary": "Blockstream and the hackers are engaging with each other through PGP-signed messages in Bitcoin transactions.",
+   "score": 0.1047
+  },
+  {
+   "title": "‘Crypto Capital of the World’: SEC Chair Expects Clarity Act to Pass This Month",
+   "url": "https://bitcoinmagazine.com/news/sec-chair-predict-clarity-act-passage",
+   "source": "Bitcoin Magazine",
+   "published": "2026-09-02T21:40:17+00:00",
+   "summary": "Bitcoin Magazine ‘Crypto Capital of the World’: SEC Chair Expects Clarity Act to Pass This Month Securities and Exchange Commission Chair Paul Atkins has been pushing ahead with crypto regulation despite a delay in a vote on the Clarity Act. This post ‘Crypto Capital of the Worl…",
+   "score": 0.1014
   },
   {
    "title": "Bitcoin’s golden cross is here",
@@ -302,15 +310,15 @@
    "source": "CoinDesk",
    "published": "2026-09-08T05:56:23+00:00",
    "summary": "",
-   "score": 0.0917
+   "score": 0.0894
   },
   {
-   "title": "Bitcoin Slides as Blowout Jobs Report Revives Fed Hike Odds",
-   "url": "https://decrypt.co/377414/bitcoin-slides-blowout-jobs-report-fed-hike-odds",
+   "title": "Morning Minute: Crypto Stages Major Rally on Rate Hopes",
+   "url": "https://decrypt.co/377393/morning-minute-crypto-stages-major-rally-on-rate-hopes",
    "source": "Decrypt",
-   "published": "2026-09-04T15:13:28+00:00",
-   "summary": "The Dow dropped 226 points and Bitcoin erased some of its gains after August payrolls tripled estimates, pushing September rate-hike odds to 58%.",
-   "score": 0.0819
+   "published": "2026-09-04T12:31:31+00:00",
+   "summary": "Bitcoin soared past $81k, HYPE and ZEC hit smashing new ATHs and the onchain rally leveled up. Is this the first stage of the next leg up?",
+   "score": 0.0799
   },
   {
    "title": "Bitcoin chips away at weekend upside as $80K hangs in the balance",
@@ -318,15 +326,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-07T15:57:47+00:00",
    "summary": "Bitcoin price fell 2% in low-liquidity conditions as the US Labor Day holiday saw $80,000 once again slip from bulls’ grasp.",
-   "score": 0.075
-  },
-  {
-   "title": "Liquid Network gets back 3,400 bitcoin from whitehat hackers; talks underway for the rest",
-   "url": "https://www.coindesk.com/markets/2026/09/08/white-hat-hackers-return-most-of-usd320m-bitcoin-taken-from-liquid-network",
-   "source": "CoinDesk",
-   "published": "2026-09-08T04:41:17+00:00",
-   "summary": "",
-   "score": 0.0721
+   "score": 0.0731
   }
  ]
 }
