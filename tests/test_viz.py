@@ -16,6 +16,7 @@
 
 from __future__ import annotations
 
+import json
 import re
 import subprocess
 import sys
@@ -390,3 +391,102 @@ def test_the_liquidity_chart_constants_still_match_the_measurement():
         f"export_viz.macro_lead 와 viz/_i18n.html 의 산문을 함께 고치세요")
     assert abs(res["best_corr"] - corr) < 0.03, (
         f"측정 ρ {res['best_corr']:+.3f} vs 화면 상수 {corr:+.2f} — 같이 고치세요")
+
+
+# ---------------------------------------------------------------------------
+# 한 화면에 날짜가 둘 — 사용자가 실제로 본 상태
+# ---------------------------------------------------------------------------
+def freshness_body() -> str:
+    m = re.search(r"function freshness\(\)\{(.*?)\n\}", js_of("_script.html"), re.S)
+    assert m, "freshness() 를 못 찾았습니다"
+    return m.group(1)
+
+
+def test_the_header_and_the_hero_show_the_same_as_of_date():
+    """머리글은 latest, 히어로는 current 를 써서 하루가 갈렸던 자리.
+
+    실현시총은 계산으로 대체할 수 없고 커뮤니티 티어가 하루 늦다. 그래서 마지막
+    하루는 커버리지가 모자라 기준일에서 빠지는데(export_viz._last_full), 그날
+    머리글은 "데이터 09-08 종가", 히어로는 "기준일 09-07" 로 갈렸다. 정작 표시된
+    가격은 09-07 종가였다 — **화면에 없는 날짜를 데이터 날짜라고 적고 있었다.**
+
+    이 페이지의 숫자는 전부 current 에서 오므로 날짜도 current 하나여야 한다.
+    """
+    src = freshness_body()
+    ic, il = src.find("D.current"), src.find("D.latest")
+    assert ic != -1, "freshness() 가 current 를 안 봅니다"
+    assert il == -1 or ic < il, (
+        "freshness() 가 latest 를 기준으로 삼습니다 — 머리글과 히어로의 날짜가 "
+        "다시 갈라집니다")
+
+    hero = re.search(r"const latSub = ([^;]+);", js_of("_script.html"))
+    assert hero, "히어로의 기준일 계산을 못 찾았습니다"
+    assert hero.group(1).strip().startswith("(D.current"), (
+        f"히어로가 다른 기준을 씁니다: {hero.group(1)!r}")
+
+
+def test_a_held_back_day_is_explained_where_the_dates_differ():
+    """기준일이 자료 마지막 날보다 이르면 **그 자리에서** 이유를 말해야 한다.
+
+    머리글 위에 '2010-07-18 → 2026-09-08' 이 붙어 있어서, 설명이 없으면 끝
+    날짜와 기준일이 하루 어긋난 채로 남는다. 검증 페이지 각주(footLate)에만
+    적혀 있으면 첫 화면을 보는 사람은 못 본다.
+    """
+    js = js_of("_script.html")
+    assert "freshHeld" in freshness_body(), "freshness() 가 보류 사실을 안 알립니다"
+    held = re.findall(r"freshHeld: d => `([^`]*)`", js)
+    assert len(held) == 2, f"보류 설명이 두 언어에 다 있어야 합니다: {held}"
+    assert "점수에서 뺐" in held[0], f"한국어 설명이 이상합니다: {held[0]!r}"
+    assert "held back" in held[1], f"영어 설명이 이상합니다: {held[1]!r}"
+
+
+def test_the_as_of_date_actually_matches_what_is_displayed():
+    """머리글이 적는 날짜가 정말 **표시된 숫자의 날짜**인지 node 로 재현한다.
+
+    소스 검사는 '읽는 필드가 같다'까지만 보장한다. 같은 문자열이 나오는지는
+    돌려 봐야 안다.
+    """
+    harness = r"""
+const DAY = 86400000;
+const T = {
+  freshToday: "오늘",
+  freshDays: (n, d) => `데이터 ${d} 종가`,
+  freshStale: (n, d) => `데이터 ${d} 종가 · ${n}일 전 — 멈춤`,
+  freshHeld: d => ` · ${d} 보류`,
+};
+function t(k){ const v = T[k];
+  return typeof v === "function" ? v.apply(null, [].slice.call(arguments, 1)) : v; }
+let OUT = "";
+const $ = () => ({ set textContent(v){ OUT = v; }, set className(v){} });
+let D;
+function run(cur, lat, nowIso){
+  D = { current: cur ? {d: cur} : null, latest: lat ? {d: lat} : null };
+  const real = Date.now; Date.now = () => Date.parse(nowIso);
+  try { freshness(); } finally { Date.now = real; }
+  return OUT;
+}
+"""
+    cases = r"""
+console.log(JSON.stringify([
+  run("2026-09-07", "2026-09-08", "2026-09-09T00:30:00Z"),
+  run("2026-09-08", "2026-09-08", "2026-09-09T21:00:00Z"),
+  run("2026-09-01", "2026-09-01", "2026-09-09T21:00:00Z"),
+]));
+"""
+    body = "function freshness(){" + freshness_body() + "\n}"
+    try:
+        r = subprocess.run(["node", "-e", harness + body + cases],
+                           capture_output=True, text=True, timeout=30)
+    except (FileNotFoundError, subprocess.TimeoutExpired, OSError):
+        pytest.skip("node 없음")
+    assert r.returncode == 0, r.stderr[:800]
+    held, plain, stale = json.loads(r.stdout.strip())
+
+    # 보류가 있어도 기준일은 current(09-07) — 히어로가 적는 날과 같아야 한다
+    assert held.startswith("데이터 2026-09-07 종가"), held
+    assert "2026-09-08 보류" in held, f"보류 사실을 안 알립니다: {held}"
+    assert "데이터 2026-09-08 종가" not in held, (
+        f"표시되지 않은 날짜를 기준일로 적었습니다: {held}")
+
+    assert plain == "데이터 2026-09-08 종가", plain
+    assert "멈춤" in stale and "2026-09-01" in stale, stale

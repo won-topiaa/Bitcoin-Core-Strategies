@@ -146,6 +146,9 @@ ko: {
   // 그래서 평소에는 **날짜**를 말하고, 진짜 멈췄을 때만 며칠인지 말한다.
   freshDays: (n, d) => `데이터 ${d} 종가`,
   freshStale: (n, d) => `데이터 ${d} 종가 · ${n}일 전 — 갱신이 멈췄을 수 있습니다`,
+  // 받아는 왔지만 지표가 덜 들어와 점수에서 뺀 날. 이게 없으면 머리글의
+  // 날짜(기준일)와 위 '2010-07-18 → 2026-09-08' 의 끝 날짜가 하루 어긋나 보인다.
+  freshHeld: d => ` · ${d} 은 원가 데이터가 아직이라 점수에서 뺐습니다`,
   asOf: (d, p) => `기준 ${d} · ${p}`,
   dLabels: {d1: "어제", d7: "지난주", d30: "지난달"},
   deltaVs: label => `${label} 대비`,
@@ -329,6 +332,7 @@ en: {
   freshToday: "data as of today",
   freshDays: (n, d) => `data: ${d} close`,
   freshStale: (n, d) => `data: ${d} close · ${n} days old — the refresh may have stopped`,
+  freshHeld: d => ` · ${d} held back — cost-basis data not in yet`,
   asOf: (d, p) => `as of ${d} · ${p}`,
   dLabels: {d1: "yesterday", d7: "last week", d30: "last month"},
   deltaVs: label => `vs ${label}`,
@@ -1846,15 +1850,29 @@ function attachCrosshair(svg, ttId, host, X, PL, iw, PT, ih, rowsFn, rowsIn){
 /** 마지막 데이터가 며칠 전인가 — **보는 시점에** 센다.
     구워 넣은 "1일 전"은 하루만 지나면 거짓이 된다. */
 function freshness(){
-  const lat = (D.latest || D.current || {}).d;
+  /* **화면의 날짜는 하나여야 한다.**
+     이 페이지의 숫자(가격·점수·구간·백분위)는 전부 current 에서 온다. 그런데
+     예전에는 여기 머리글만 latest 를 적었다. 마지막 하루가 커버리지 부족으로
+     기준일에서 빠지는 날 — 실현시총은 계산으로 대체할 수 없고 커뮤니티 티어가
+     하루 늦다 — 머리글은 "데이터 09-08 종가", 히어로는 "기준일 09-07" 로 갈렸고
+     정작 표시된 가격은 09-07 종가였다. 사용자가 본 것이 그 상태다.
+
+     그래서 기준을 current 로 통일하고, 받아는 왔지만 뺀 날이 있으면 그 사실을
+     같은 줄에 덧붙인다. 낡음 판정도 current 로 잰다 — 원가 데이터만 끊겨
+     latest 는 계속 나아가는데 기준일이 멈추는 경우, latest 로 재면 그 고장이
+     영원히 안 보인다. */
+  const c = D.current || {}, l = D.latest || {};
+  const asof = c.d || l.d;
   const host = $("src-fresh");
-  if (!host || !lat) return;
+  if (!host || !asof) return;
   const days = Math.max(0, Math.floor(
-    (Date.now() - Date.parse(lat + "T00:00:00Z")) / DAY));
+    (Date.now() - Date.parse(asof + "T00:00:00Z")) / DAY));
   const stale = days > 3;
+  const held = (l.d && l.d > asof) ? l.d : null;
   host.className = stale ? "stale" : "";
-  host.textContent = days === 0 ? t("freshToday")
-    : (stale ? t("freshStale", days, lat) : t("freshDays", days, lat));
+  host.textContent = (days === 0 ? t("freshToday")
+    : (stale ? t("freshStale", days, asof) : t("freshDays", days, asof)))
+    + (held ? t("freshHeld", held) : "");
 }
 
 /* 시장 스냅샷 히어로 — 가격 + '핵심 답 한 줄'만. 위치 상세(범위·구간·눈금)는
@@ -1866,7 +1884,9 @@ function heroFill(){
   setText("hero-price", c.price != null ? money(c.price) : "—");
   // 갱신이 3일 넘게 멈추면 히어로 가격 바로 밑에서 붉게 경고한다 — '오늘
   // 가격인가?'가 첫 질문이라, 낡음 표시가 위쪽 작은 줄에만 있으면 놓친다.
-  const latSub = (D.latest || D.current || {}).d;
+  // 머리글과 같은 기준(current)으로 잰다 — 두 곳이 다른 날짜를 쓰면 같은 화면에서
+  // 하나는 경고, 하나는 정상으로 갈릴 수 있다.
+  const latSub = (D.current || D.latest || {}).d;
   const subDays = latSub ? Math.max(0, Math.floor(
     (Date.now() - Date.parse(latSub + "T00:00:00Z")) / DAY)) : 0;
   const subEl = $("hero-sub");
