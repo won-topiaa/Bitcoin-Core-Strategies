@@ -1,5 +1,5 @@
 {
- "fetched": "2026-09-09T19:44:54+00:00",
+ "fetched": "2026-09-09T19:44:44+00:00",
  "sources_ok": [
   "CoinDesk",
   "Cointelegraph",
@@ -14,7 +14,7 @@
    "source": "CoinDesk",
    "published": "2026-09-09T04:35:55+00:00",
    "summary": "",
-   "score": 2.4105
+   "score": 2.4106
   },
   {
    "title": "Bitcoin fails to reclaim $80K as Bessent fuels yen strength around 153 per dollar",
@@ -22,7 +22,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-09T16:28:19+00:00",
    "summary": "Bitcoin trended lower with US stocks on Iran escalation while US Treasury Secretary Scott Bessent contributed to fears of a yen carry-trade unwind.",
-   "score": 2.3845
+   "score": 2.3846
   },
   {
    "title": "Strategy's Return to Bitcoin Buying Lasted Exactly One Week",
@@ -30,7 +30,7 @@
    "source": "Decrypt",
    "published": "2026-09-08T13:57:16+00:00",
    "summary": "The Bitcoin treasury firm spent $176.3 million on its own preferred stock, and doubled the buyback program's authorization to $2 billion.",
-   "score": 2.0161
+   "score": 2.0162
   },
   {
    "title": "Capital B Buys 376 Bitcoins in Its Biggest Purchase of 2026",
@@ -38,7 +38,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-08T17:53:33+00:00",
    "summary": "Bitcoin Magazine Capital B Buys 376 Bitcoins in Its Biggest Purchase of 2026 Capital B is now the 25th biggest publicly traded bitcoin treasury following its latest buy. This post Capital B Buys 376 Bitcoins in Its Biggest Purchase of 2026 first appeared on Bitcoin Magazine and…",
-   "score": 1.721
+   "score": 1.7211
   },
   {
    "title": "Live updates: Bitcoin gives up gains as yields head higher following Treasury buyback announcement",
@@ -46,7 +46,7 @@
    "source": "CoinDesk",
    "published": "2026-09-09T07:20:51+00:00",
    "summary": "",
-   "score": 1.6721
+   "score": 1.6722
   },
   {
    "title": "Here’s what happened in crypto today",
@@ -86,7 +86,7 @@
    "source": "Decrypt",
    "published": "2026-09-08T20:46:34+00:00",
    "summary": "The hackers have returned 3,400 of the roughly 4,000 BTC drained from the sidechain, but about 600 BTC remains outstanding—and some doubt the actors' \"white hat\" claims.",
-   "score": 0.9186
+   "score": 0.9187
   },
   {
    "title": "Strategy Halted Its Bitcoin Buys Again Last Week",
@@ -110,7 +110,7 @@
    "source": "CoinDesk",
    "published": "2026-09-08T04:40:57+00:00",
    "summary": "",
-   "score": 0.7281
+   "score": 0.7282
   },
   {
    "title": "Steak ‘n Shake Says Sales Grew Double Digits Since Bitcoin Adoption",
@@ -142,7 +142,7 @@
    "source": "Decrypt",
    "published": "2026-09-09T16:46:05+00:00",
    "summary": "The company has built its first chips and begun testing prototypes as it seeks to manufacture quantum computers in larger quantities.",
-   "score": 0.4904
+   "score": 0.4905
   },
   {
    "title": "Bitcoin rally has more room as volatility shorts unwind, Two Prime CEO says",
@@ -166,7 +166,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-07T22:02:19+00:00",
    "summary": "Bitcoin Magazine Liquid Gets 3,400 BTC Back After On-Chain Talks; White Hats Keep 598.5 BTC A self-described white-hat party returned 3,400 BTC to Liquid Network’s federation wallet on Monday after Blockstream said bridge nodes were patched. About 598.5 BTC, near $47 million, re…",
-   "score": 0.381
+   "score": 0.3811
   },
   {
    "title": "‘White hats’ take 4000 BTC from Liquid, ETFs see best inflows of 2026: Hodler’s Digest",
