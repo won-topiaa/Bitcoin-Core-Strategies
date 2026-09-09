@@ -1,5 +1,5 @@
 {
- "fetched": "2026-09-09T16:53:42+00:00",
+ "fetched": "2026-09-09T19:44:54+00:00",
  "sources_ok": [
   "CoinDesk",
   "Cointelegraph",
@@ -14,7 +14,7 @@
    "source": "CoinDesk",
    "published": "2026-09-09T04:35:55+00:00",
    "summary": "",
-   "score": 2.5119
+   "score": 2.4105
   },
   {
    "title": "Bitcoin fails to reclaim $80K as Bessent fuels yen strength around 153 per dollar",
@@ -22,7 +22,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-09T16:28:19+00:00",
    "summary": "Bitcoin trended lower with US stocks on Iran escalation while US Treasury Secretary Scott Bessent contributed to fears of a yen carry-trade unwind.",
-   "score": 2.4848
+   "score": 2.3845
   },
   {
    "title": "Strategy's Return to Bitcoin Buying Lasted Exactly One Week",
@@ -30,7 +30,7 @@
    "source": "Decrypt",
    "published": "2026-09-08T13:57:16+00:00",
    "summary": "The Bitcoin treasury firm spent $176.3 million on its own preferred stock, and doubled the buyback program's authorization to $2 billion.",
-   "score": 2.1009
+   "score": 2.0161
   },
   {
    "title": "Capital B Buys 376 Bitcoins in Its Biggest Purchase of 2026",
@@ -38,7 +38,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-08T17:53:33+00:00",
    "summary": "Bitcoin Magazine Capital B Buys 376 Bitcoins in Its Biggest Purchase of 2026 Capital B is now the 25th biggest publicly traded bitcoin treasury following its latest buy. This post Capital B Buys 376 Bitcoins in Its Biggest Purchase of 2026 first appeared on Bitcoin Magazine and…",
-   "score": 1.7934
+   "score": 1.721
   },
   {
    "title": "Live updates: Bitcoin gives up gains as yields head higher following Treasury buyback announcement",
@@ -46,7 +46,7 @@
    "source": "CoinDesk",
    "published": "2026-09-09T07:20:51+00:00",
    "summary": "",
-   "score": 1.7424
+   "score": 1.6721
   },
   {
    "title": "Here’s what happened in crypto today",
@@ -54,7 +54,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-09T05:51:21+00:00",
    "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
-   "score": 1.5007
+   "score": 1.4401
   },
   {
    "title": "Bitcoin Holds, Wall Street Stalls as Oil Shock Revives Fed Hike Bets",
@@ -62,7 +62,7 @@
    "source": "Decrypt",
    "published": "2026-09-08T18:59:35+00:00",
    "summary": "Bitcoin is defending its golden zone support while the S&P 500 grinds inside its tightest range yet, both waiting on Friday's inflation report before the Fed's September 16 rate call.",
-   "score": 1.4577
+   "score": 1.3989
   },
   {
    "title": "Bitcoin ETFs are still $1 billion shy of breaking even in 2026",
@@ -70,7 +70,7 @@
    "source": "CoinDesk",
    "published": "2026-09-08T11:26:27+00:00",
    "summary": "",
-   "score": 1.2548
+   "score": 1.2042
   },
   {
    "title": "Bitcoin SOPR metric sees longest profit run of 2026 as new analysis challenges bear market",
@@ -78,7 +78,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-09T10:12:16+00:00",
    "summary": "Bitcoin aggregate onchain profit entered its fourth week, but a popular analyst warned that BTC price “downside risk” remained in place.",
-   "score": 1.0459
+   "score": 1.0037
   },
   {
    "title": "$47M Still Missing After Liquid Hack as Blockstream Bargains With 'White Hats'",
@@ -86,7 +86,7 @@
    "source": "Decrypt",
    "published": "2026-09-08T20:46:34+00:00",
    "summary": "The hackers have returned 3,400 of the roughly 4,000 BTC drained from the sidechain, but about 600 BTC remains outstanding—and some doubt the actors' \"white hat\" claims.",
-   "score": 0.9573
+   "score": 0.9186
   },
   {
    "title": "Strategy Halted Its Bitcoin Buys Again Last Week",
@@ -94,7 +94,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-08T15:38:26+00:00",
    "summary": "Bitcoin Magazine Strategy Halted Its Bitcoin Buys Again Last Week The largest corporate holder of bitcoin is instead focusing on buying back its stock and building up its cash reserves. This post Strategy Halted Its Bitcoin Buys Again Last Week first appeared on Bitcoin Magazine…",
-   "score": 0.8888
+   "score": 0.853
   },
   {
    "title": "New York town weighs crypto mining and AI data center ban",
@@ -102,7 +102,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-08T21:33:49+00:00",
    "summary": "One of the first towns in the US to ban Bitcoin mining for 18 months is considering another temporary moratorium extending to data centers and other crypto mining operations.",
-   "score": 0.7746
+   "score": 0.7433
   },
   {
    "title": "Bitcoin slips under $79,000, Zcash leads losses as Fed hike odds hold near 60%",
@@ -110,15 +110,23 @@
    "source": "CoinDesk",
    "published": "2026-09-08T04:40:57+00:00",
    "summary": "",
-   "score": 0.7588
+   "score": 0.7281
   },
   {
-   "title": "Liquid Gets 3,400 BTC Back After On-Chain Talks; White Hats Keep 598.5 BTC",
-   "url": "https://bitcoinmagazine.com/news/liquid-gets-3400-btc-back-after-on-chain-talks-white-hats-keep-598-5-btc",
+   "title": "Steak ‘n Shake Says Sales Grew Double Digits Since Bitcoin Adoption",
+   "url": "https://bitcoinmagazine.com/news/steak-n-shake-says-sales-grew",
    "source": "Bitcoin Magazine",
-   "published": "2026-09-07T22:02:19+00:00",
-   "summary": "Bitcoin Magazine Liquid Gets 3,400 BTC Back After On-Chain Talks; White Hats Keep 598.5 BTC A self-described white-hat party returned 3,400 BTC to Liquid Network’s federation wallet on Monday after Blockstream said bridge nodes were patched. About 598.5 BTC, near $47 million, re…",
-   "score": 0.6204
+   "published": "2026-09-09T18:37:31+00:00",
+   "summary": "Bitcoin Magazine Steak ‘n Shake Says Sales Grew Double Digits Since Bitcoin Adoption The burger franchise started accepting bitcoin over Lightning last year and claims business is booming. This post Steak ‘n Shake Says Sales Grew Double Digits Since Bitcoin Adoption first appear…",
+   "score": 0.6297
+  },
+  {
+   "title": "Iran Continues Using Bitcoin To Keep Economy Stable: Report",
+   "url": "https://bitcoinmagazine.com/news/iran-still-using-bitcoin-to-help-economy",
+   "source": "Bitcoin Magazine",
+   "published": "2026-09-09T18:23:22+00:00",
+   "summary": "Bitcoin Magazine Iran Continues Using Bitcoin To Keep Economy Stable: Report Rumors of Iran using bitcoin to skirt transactions have been abound for some time now. Business and regime insiders have reportedly said it's a tried and tested method. This post Iran Continues Using Bi…",
+   "score": 0.5021
   },
   {
    "title": "Bitcoin fund flows show investors trading Fed rate path, not exiting market: CoinShares",
@@ -126,7 +134,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-07T17:29:27+00:00",
    "summary": "Bitcoin’s struggle to break $80,000 comes as markets price in a growing chance of a September rate hike, putting monetary conditions back in focus.",
-   "score": 0.5164
+   "score": 0.4956
   },
   {
    "title": "While Bitcoin Devs Debate Next Moves, IonQ Unveils Superion 256 Quantum Computer",
@@ -134,15 +142,7 @@
    "source": "Decrypt",
    "published": "2026-09-09T16:46:05+00:00",
    "summary": "The company has built its first chips and begun testing prototypes as it seeks to manufacture quantum computers in larger quantities.",
-   "score": 0.5111
-  },
-  {
-   "title": "VerifiedX Launches $15 Million Financing Round to Deploy Institutional Bitcoin Infrastructure",
-   "url": "https://bitcoinmagazine.com/news/cantor-fitzgerald-working-with-verifiedx",
-   "source": "Bitcoin Magazine",
-   "published": "2026-09-09T14:36:50+00:00",
-   "summary": "Bitcoin Magazine VerifiedX Launches $15 Million Financing Round to Deploy Institutional Bitcoin Infrastructure Cantor Fitzgerald is the investment banker on the round. The funding facilitates custody at BitGo, listings on tier-one exchanges and Bitcoin lending programs. This pos…",
-   "score": 0.4954
+   "score": 0.4904
   },
   {
    "title": "Bitcoin rally has more room as volatility shorts unwind, Two Prime CEO says",
@@ -150,7 +150,7 @@
    "source": "CoinDesk",
    "published": "2026-09-08T13:18:21+00:00",
    "summary": "",
-   "score": 0.495
+   "score": 0.475
   },
   {
    "title": "Mexican Musician and Family Killed Over Bitcoin Cold Wallet Believed to Hold Millions",
@@ -158,7 +158,15 @@
    "source": "Decrypt",
    "published": "2026-09-09T16:16:04+00:00",
    "summary": "Mexican prosecutors allege suspects targeted Camilo Séptimo keyboardist Jonathan Meléndez and his family while searching for a cold wallet they believed contained millions in Bitcoin.",
-   "score": 0.4059
+   "score": 0.3895
+  },
+  {
+   "title": "Liquid Gets 3,400 BTC Back After On-Chain Talks; White Hats Keep 598.5 BTC",
+   "url": "https://bitcoinmagazine.com/news/liquid-gets-3400-btc-back-after-on-chain-talks-white-hats-keep-598-5-btc",
+   "source": "Bitcoin Magazine",
+   "published": "2026-09-07T22:02:19+00:00",
+   "summary": "Bitcoin Magazine Liquid Gets 3,400 BTC Back After On-Chain Talks; White Hats Keep 598.5 BTC A self-described white-hat party returned 3,400 BTC to Liquid Network’s federation wallet on Monday after Blockstream said bridge nodes were patched. About 598.5 BTC, near $47 million, re…",
+   "score": 0.381
   },
   {
    "title": "‘White hats’ take 4000 BTC from Liquid, ETFs see best inflows of 2026: Hodler’s Digest",
@@ -166,7 +174,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-07T00:05:02+00:00",
    "summary": "Purported white hat hackers have taken 4000 Bitcoin from the Liquid sidechain in a major security breach. The Bitcoin ETFs see the best three weeks of inflows in 2026.",
-   "score": 0.3856
+   "score": 0.37
   },
   {
    "title": "Bitcoin blinks less than gold when Treasury yields move",
@@ -174,15 +182,15 @@
    "source": "CoinDesk",
    "published": "2026-09-07T11:15:00+00:00",
    "summary": "",
-   "score": 0.3775
+   "score": 0.3623
   },
   {
-   "title": "Lummis Blasts Democrats Ahead of Clarity Act Vote — But Adds Bill Can Get Passed",
-   "url": "https://bitcoinmagazine.com/news/lummis-blasts-democrats-on-clarity-act",
+   "title": "VerifiedX Launches $15 Million Financing Round to Deploy Institutional Bitcoin Infrastructure",
+   "url": "https://bitcoinmagazine.com/news/cantor-fitzgerald-working-with-verifiedx",
    "source": "Bitcoin Magazine",
-   "published": "2026-09-08T20:56:30+00:00",
-   "summary": "Bitcoin Magazine Lummis Blasts Democrats Ahead of Clarity Act Vote — But Adds Bill Can Get Passed Pro-crypto senator Cynthia Lummis has said that the Clarity Act can still get through, but it'll need \"further compromise\" from Democrats. This post Lummis Blasts Democrats Ahead of…",
-   "score": 0.3071
+   "published": "2026-09-09T14:36:50+00:00",
+   "summary": "Bitcoin Magazine VerifiedX Launches $15 Million Financing Round to Deploy Institutional Bitcoin Infrastructure Cantor Fitzgerald is the investment banker on the round. The funding facilitates custody at BitGo, listings on tier-one exchanges and Bitcoin lending programs. This pos…",
+   "score": 0.3043
   },
   {
    "title": "Yen intervention meets US inflation data: Five things to know in Bitcoin this week",
@@ -190,7 +198,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-07T12:10:22+00:00",
    "summary": "This week’s CPI and PPI prints, along with the Fed’s Sept. 16 rate decision, could determine whether Bitcoin can secure $80,000 as a support level.",
-   "score": 0.3061
+   "score": 0.2937
   },
   {
    "title": "Liquid Hackers Return $270M in Bitcoin After Swiping $320 Million",
@@ -198,7 +206,7 @@
    "source": "Decrypt",
    "published": "2026-09-07T19:13:56+00:00",
    "summary": "Nearly 600 BTC remains outstanding after Blockstream told the actors in an on-chain message that Liquid’s bridge nodes had been patched.",
-   "score": 0.305
+   "score": 0.2927
   },
   {
    "title": "Live updates: Bitcoin below Friday's post-jobs report low as oil and copper surge higher",
@@ -206,15 +214,7 @@
    "source": "CoinDesk",
    "published": "2026-09-08T08:30:30+00:00",
    "summary": "",
-   "score": 0.2956
-  },
-  {
-   "title": "CoinCorner Launches Lloyd’s-Insured Multisig Bitcoin Vault with AnchorWatch",
-   "url": "https://bitcoinmagazine.com/news/coincorner-debuts-multisig-vault",
-   "source": "Bitcoin Magazine",
-   "published": "2026-09-08T20:16:20+00:00",
-   "summary": "Bitcoin Magazine CoinCorner Launches Lloyd’s-Insured Multisig Bitcoin Vault with AnchorWatch British bitcoin exchange CoinCorner is debuting a multisig custody service. This post CoinCorner Launches Lloyd’s-Insured Multisig Bitcoin Vault with AnchorWatch first appeared on Bitcoi…",
-   "score": 0.2433
+   "score": 0.2837
   },
   {
    "title": "New Bitcoin whales spark sell-side risk as unrealized gains hit $9B",
@@ -222,7 +222,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-08T09:40:26+00:00",
    "summary": "Unrealized gains by whale speculators hit their highest levels on record last week, per data going back to 2016.",
-   "score": 0.2405
+   "score": 0.2308
   },
   {
    "title": "Jack Dorsey's Block Applies for Bank Charter to Custody Bitcoin",
@@ -230,7 +230,7 @@
    "source": "Decrypt",
    "published": "2026-09-09T08:26:08+00:00",
    "summary": "Builders Bank would consolidate custody work Block now runs under more than 50 state money transmitter licenses.",
-   "score": 0.232
+   "score": 0.2226
   },
   {
    "title": "Bitcoin and Ethereum race quantum clock as U.S. backs $300 million hardware push",
@@ -238,15 +238,15 @@
    "source": "CoinDesk",
    "published": "2026-09-09T15:30:00+00:00",
    "summary": "",
-   "score": 0.2055
+   "score": 0.1972
   },
   {
-   "title": "Castle Opens Its Bitcoin Savings Stack to Individuals",
-   "url": "https://bitcoinmagazine.com/news/castle-opens-savings-stack-individuals",
+   "title": "Lummis Blasts Democrats Ahead of Clarity Act Vote — But Adds Bill Can Get Passed",
+   "url": "https://bitcoinmagazine.com/news/lummis-blasts-democrats-on-clarity-act",
    "source": "Bitcoin Magazine",
-   "published": "2026-09-08T15:38:33+00:00",
-   "summary": "Bitcoin Magazine Castle Opens Its Bitcoin Savings Stack to Individuals The Miami startup is bringing 12% STRC yield to personal accounts — and letting customers route any slice of the payout straight into bitcoin. This post Castle Opens Its Bitcoin Savings Stack to Individuals f…",
-   "score": 0.182
+   "published": "2026-09-08T20:56:30+00:00",
+   "summary": "Bitcoin Magazine Lummis Blasts Democrats Ahead of Clarity Act Vote — But Adds Bill Can Get Passed Pro-crypto senator Cynthia Lummis has said that the Clarity Act can still get through, but it'll need \"further compromise\" from Democrats. This post Lummis Blasts Democrats Ahead of…",
+   "score": 0.1886
   },
   {
    "title": "Strategy skips Bitcoin buy to repurchase $176M of STRC preferred shares",
@@ -254,7 +254,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-08T12:51:00+00:00",
    "summary": "Strategy repurchased $176 million worth of its STRC preferred stock and doubled the size of its digital securities repurchase program to $2 billion, while pausing on new Bitcoin buys.",
-   "score": 0.179
+   "score": 0.1718
   },
   {
    "title": "Germany moves to tax bitcoin like stocks as new draft bill targets tax-free gains",
@@ -262,7 +262,15 @@
    "source": "CoinDesk",
    "published": "2026-09-09T12:13:59+00:00",
    "summary": "",
-   "score": 0.1568
+   "score": 0.1505
+  },
+  {
+   "title": "CoinCorner Launches Lloyd’s-Insured Multisig Bitcoin Vault with AnchorWatch",
+   "url": "https://bitcoinmagazine.com/news/coincorner-debuts-multisig-vault",
+   "source": "Bitcoin Magazine",
+   "published": "2026-09-08T20:16:20+00:00",
+   "summary": "Bitcoin Magazine CoinCorner Launches Lloyd’s-Insured Multisig Bitcoin Vault with AnchorWatch British bitcoin exchange CoinCorner is debuting a multisig custody service. This post CoinCorner Launches Lloyd’s-Insured Multisig Bitcoin Vault with AnchorWatch first appeared on Bitcoi…",
+   "score": 0.1494
   },
   {
    "title": "Strive Buys $109 Million in Bitcoin, Pushes Preferred Stock Toward $1 Billion",
@@ -270,15 +278,7 @@
    "source": "Decrypt",
    "published": "2026-09-08T17:46:05+00:00",
    "summary": "The Vivek Ramaswamy-founded asset manager added 1,375 BTC last week, its third straight week of 5%-plus growth.",
-   "score": 0.1502
-  },
-  {
-   "title": "How One Executive Recruitment Firm Is Using M&A to Turn Earnings Into Bitcoin",
-   "url": "https://bitcoinmagazine.com/bitcoin-for-corporations/how-one-executive-recruitment-firm-is-using-ma-to-turn-earnings-into-bitcoin",
-   "source": "Bitcoin Magazine",
-   "published": "2026-09-08T12:15:40+00:00",
-   "summary": "Bitcoin Magazine How One Executive Recruitment Firm Is Using M&A to Turn Earnings Into Bitcoin XCE’s latest deal offers a case study in building the operating business and Bitcoin balance sheet side by side. This post How One Executive Recruitment Firm Is Using M&A to Turn Earni…",
-   "score": 0.1387
+   "score": 0.1441
   },
   {
    "title": "Satoshi-era Bitcoin wakes after 16 years of dormancy as 600 BTC moves",
@@ -286,7 +286,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-06T13:03:00+00:00",
    "summary": "Whale Alert identified 12 mining rewards totaling 600 BTC that moved after 16 years of dormancy, with the onchain tracking platform finding no connection to Satoshi Nakamoto.",
-   "score": 0.1257
+   "score": 0.1206
   },
   {
    "title": "Bitcoin climbs as oil tops $100, equities drop after Iran strikes",
@@ -294,7 +294,15 @@
    "source": "CoinDesk",
    "published": "2026-09-09T10:47:23+00:00",
    "summary": "",
-   "score": 0.1229
+   "score": 0.1179
+  },
+  {
+   "title": "Castle Opens Its Bitcoin Savings Stack to Individuals",
+   "url": "https://bitcoinmagazine.com/news/castle-opens-savings-stack-individuals",
+   "source": "Bitcoin Magazine",
+   "published": "2026-09-08T15:38:33+00:00",
+   "summary": "Bitcoin Magazine Castle Opens Its Bitcoin Savings Stack to Individuals The Miami startup is bringing 12% STRC yield to personal accounts — and letting customers route any slice of the payout straight into bitcoin. This post Castle Opens Its Bitcoin Savings Stack to Individuals f…",
+   "score": 0.1118
   },
   {
    "title": "Zcash Hits Highest Price in Nearly a Decade, Crushing Short Bets",
@@ -302,7 +310,7 @@
    "source": "Decrypt",
    "published": "2026-09-04T16:24:46+00:00",
    "summary": "The privacy coin's squeeze rode a Fed-driven crypto rally that reversed hours later, when a stronger-than-expected jobs report sent Bitcoin back under $80,000.",
-   "score": 0.0972
+   "score": 0.0933
   },
   {
    "title": "Jack Dorsey’s Block seeks US trust bank charter for Bitcoin, stablecoin",
@@ -310,7 +318,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-09T07:36:21+00:00",
    "summary": "The proposed Builders Bank would offer federally supervised digital asset custody but would not accept deposits or issue loans.",
-   "score": 0.0939
+   "score": 0.0901
   },
   {
    "title": "Bitcoin network used by exchanges hit by $320 million exploit. Hackers claim they're the 'good guys'",
@@ -318,15 +326,7 @@
    "source": "CoinDesk",
    "published": "2026-09-07T03:43:12+00:00",
    "summary": "",
-   "score": 0.0888
-  },
-  {
-   "title": "Bitcoin Dips Below $80,000 on Strong US Jobs Report",
-   "url": "https://bitcoinmagazine.com/markets/bitcoin-dips-on-strong-jobs-report",
-   "source": "Bitcoin Magazine",
-   "published": "2026-09-04T17:17:53+00:00",
-   "summary": "Bitcoin Magazine Bitcoin Dips Below $80,000 on Strong US Jobs Report Bitcoin dipped on news that the Federal Reserve may hike interest rates this month. This post Bitcoin Dips Below $80,000 on Strong US Jobs Report first appeared on Bitcoin Magazine and is written by Mathew Di S…",
-   "score": 0.0746
+   "score": 0.0852
   }
  ]
 }
