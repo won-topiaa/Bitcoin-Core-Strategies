@@ -149,6 +149,8 @@ ko: {
   // 받아는 왔지만 지표가 덜 들어와 점수에서 뺀 날. 이게 없으면 머리글의
   // 날짜(기준일)와 위 '2010-07-18 → 2026-09-08' 의 끝 날짜가 하루 어긋나 보인다.
   freshHeld: d => ` · ${d} 은 원가 데이터가 아직이라 점수에서 뺐습니다`,
+  // **"지금도 돌고 있나"에 화면이 직접 답한다.** 자세한 근거는 freshness() 주석.
+  freshAtSource: " — 원본도 이 날까지",
   asOf: (d, p) => `기준 ${d} · ${p}`,
   dLabels: {d1: "어제", d7: "지난주", d30: "지난달"},
   deltaVs: label => `${label} 대비`,
@@ -333,6 +335,7 @@ en: {
   freshDays: (n, d) => `data: ${d} close`,
   freshStale: (n, d) => `data: ${d} close · ${n} days old — the refresh may have stopped`,
   freshHeld: d => ` · ${d} held back — cost-basis data not in yet`,
+  freshAtSource: " — the source has nothing newer",
   asOf: (d, p) => `as of ${d} · ${p}`,
   dLabels: {d1: "yesterday", d7: "last week", d30: "last month"},
   deltaVs: label => `vs ${label}`,
@@ -1870,10 +1873,26 @@ function freshness(){
   const stale = days > 3;
   const held = (l.d && l.d > asof) ? l.d : null;
   host.className = stale ? "stale" : "";
+  /* **"지금도 돌고 있나"에 화면이 직접 답한다.**
+     원본이 일일 종가라 UTC 자정 전에는 그저께 날짜가 최선인데, 한국 달력으로
+     세면 이틀 차이라 멈춘 것처럼 보인다. 실제로 그 이유로 "자동 갱신이 안 된다"는
+     보고가 세 번 왔다(그때마다 파이프라인은 몇 분 전에 돌고 있었다).
+
+     매 실행이 전 구간을 새로 받으므로, 뺀 날이 없다면 우리가 가진 마지막 날이
+     곧 원본의 마지막 날이다. 다만 그 말은 **데이터가 물리적 최선일 때만** 참이다
+     — 갱신이 멈춰 하루씩 늙어 가는 중에도 같은 말을 하면 거짓이 된다. 그래서
+     '어제 종가'(days <= 1)일 때만 적는다. 애매하면 말하지 않는다.
+
+     빌드 시각을 실어 '몇 분 전 확인'을 적는 방법도 있었지만 버렸다 — 매 빌드마다
+     바뀌는 값이 공용 페이로드에 들어가면 데이터가 그대로여도 여섯 장이 전부
+     바뀌어, 시간마다 커밋·배포가 난다(tests/test_newspage.py 가 막는 설계다). */
+  const atSource = (!held && days <= 1) ? t("freshAtSource") : "";
   host.textContent = (days === 0 ? t("freshToday")
     : (stale ? t("freshStale", days, asof) : t("freshDays", days, asof)))
-    + (held ? t("freshHeld", held) : "");
+    + (held ? t("freshHeld", held) : atSource)
+;
 }
+
 
 /* 시장 스냅샷 히어로 — 가격 + '핵심 답 한 줄'만. 위치 상세(범위·구간·눈금)는
    바로 밑 계기판이 맡으므로 여기서 반복하지 않는다. 판단 문구·확신%·예측·

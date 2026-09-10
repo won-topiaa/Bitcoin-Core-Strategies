@@ -453,6 +453,7 @@ const T = {
   freshDays: (n, d) => `데이터 ${d} 종가`,
   freshStale: (n, d) => `데이터 ${d} 종가 · ${n}일 전 — 멈춤`,
   freshHeld: d => ` · ${d} 보류`,
+  freshAtSource: " — 원본도 이 날까지",
 };
 function t(k){ const v = T[k];
   return typeof v === "function" ? v.apply(null, [].slice.call(arguments, 1)) : v; }
@@ -488,5 +489,90 @@ console.log(JSON.stringify([
     assert "데이터 2026-09-08 종가" not in held, (
         f"표시되지 않은 날짜를 기준일로 적었습니다: {held}")
 
-    assert plain == "데이터 2026-09-08 종가", plain
+    # 뺀 날이 없으면 '원본도 이 날까지' 를 붙인다 — 달력으로 이틀 차이인 것이
+    # 고장이 아니라는 답이 화면에서 끝나야 한다("자동 갱신이 안 된다" 보고 3회).
+    assert plain == "데이터 2026-09-08 종가 — 원본도 이 날까지", plain
     assert "멈춤" in stale and "2026-09-01" in stale, stale
+    # 멈춤일 때는 '원본도 이 날까지' 를 말하면 안 된다 — 거짓이 된다
+    assert "원본도" not in stale, stale
+    # 뺀 날이 있을 때도 마찬가지(원본에는 더 최신이 있다)
+    assert "원본도" not in held, held
+
+
+def test_the_source_claim_is_only_made_when_the_data_is_at_its_floor():
+    """'원본도 이 날까지' 는 **어제 종가일 때만** 참이다.
+
+    매 실행이 전 구간을 새로 받으므로 뺀 날이 없으면 우리 마지막 날 = 원본의
+    마지막 날이다. 하지만 갱신이 멈춰 데이터가 하루씩 늙어 가는 중에도 같은
+    말을 하면 거짓이 된다. 그래서 days <= 1 일 때만 적는다 — 애매하면 말하지
+    않는 쪽이다(감시자에서 세운 원칙과 같다).
+    """
+    harness = r"""
+const DAY = 86400000;
+const T = {
+  freshToday: "오늘",
+  freshDays: (n, d) => `데이터 ${d} 종가`,
+  freshStale: (n, d) => `데이터 ${d} 종가 · ${n}일 전 — 멈춤`,
+  freshHeld: d => ` · ${d} 보류`,
+  freshAtSource: " — 원본도 이 날까지",
+};
+function t(k){ const v = T[k];
+  return typeof v === "function" ? v.apply(null, [].slice.call(arguments, 1)) : v; }
+let OUT = "";
+const $ = () => ({ set textContent(v){ OUT = v; }, set className(v){} });
+let D;
+function run(cur, lat, nowIso){
+  D = { current: {d: cur}, latest: {d: lat} };
+  const real = Date.now; Date.now = () => Date.parse(nowIso);
+  try { freshness(); } finally { Date.now = real; }
+  return OUT;
+}
+"""
+    cases = r"""
+console.log(JSON.stringify([
+  run("2026-09-08", "2026-09-08", "2026-09-09T23:38:00Z"),  // 어제 종가 = 최선
+  run("2026-09-08", "2026-09-08", "2026-09-10T12:00:00Z"),  // 이틀째 — 늙는 중
+  run("2026-09-08", "2026-09-08", "2026-09-13T12:00:00Z"),  // 멈춤
+  run("2026-09-07", "2026-09-08", "2026-09-09T23:38:00Z"),  // 뺀 날 있음
+]));
+"""
+    body = "function freshness(){" + freshness_body() + "\n}"
+    try:
+        r = subprocess.run(["node", "-e", harness + body + cases],
+                           capture_output=True, text=True, timeout=30)
+    except (FileNotFoundError, subprocess.TimeoutExpired, OSError):
+        pytest.skip("node 없음")
+    assert r.returncode == 0, r.stderr[:800]
+    floor, aging, stopped, held = json.loads(r.stdout.strip())
+
+    assert floor.endswith("— 원본도 이 날까지"), floor
+    assert "원본도" not in aging, f"늙어 가는 중에도 최신이라 말합니다: {aging}"
+    assert "원본도" not in stopped, f"멈췄는데 최신이라 말합니다: {stopped}"
+    assert "원본도" not in held, f"원본에 더 최신이 있는데 최신이라 말합니다: {held}"
+
+
+def test_rebuilding_the_same_data_produces_the_same_bytes():
+    """시간마다 갱신이 공짜인 근거가 이것이다.
+
+    데이터가 그대로면 산출물이 바이트 단위로 같아야 커밋도 배포도 안 일어난다.
+    빌드 시각처럼 매번 바뀌는 값을 공용 페이로드에 넣으면 이 성질이 깨져 시간마다
+    여섯 장이 전부 바뀐다 — 실제로 한 번 그렇게 만들었다가 되돌렸다.
+    """
+    import tempfile
+
+    sys.path.insert(0, str(ROOT / "tools"))
+    csv = ROOT / "data" / "market.csv"
+    if not csv.exists():
+        csv = ROOT / "data" / "sample_synthetic.csv"
+    if not csv.exists():
+        pytest.skip("입력 CSV 없음")
+
+    import build_viz
+
+    with tempfile.TemporaryDirectory() as tmp:
+        t = Path(tmp)
+        a = {p.name: p.read_bytes() for p in build_viz.build(str(csv), t / "a")}
+        b = {p.name: p.read_bytes() for p in build_viz.build(str(csv), t / "b")}
+        diff = [n for n in a if a[n] != b[n]]
+        assert not diff, (
+            f"같은 데이터로 두 번 구웠는데 달라진 장: {diff} — 시간마다 커밋·배포가 납니다")
