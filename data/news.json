@@ -1,5 +1,5 @@
 {
- "fetched": "2026-09-11T14:58:49+00:00",
+ "fetched": "2026-09-11T16:24:41+00:00",
  "sources_ok": [
   "CoinDesk",
   "Cointelegraph",
@@ -14,23 +14,31 @@
    "source": "Cointelegraph",
    "published": "2026-09-11T12:33:38+00:00",
    "summary": "ARK 21Shares accounted for $164 million of Thursday’s Bitcoin ETF withdrawals, while Ether and Solana funds also recorded net outflows.",
-   "score": 2.897
+   "score": 2.8377
   },
   {
-   "title": "Live updates: Bitcoin heads higher as investors look past looming Fed rate hike",
+   "title": "Bitcoin Price Spikes, Shrugs off Hot US Inflation Data",
+   "url": "https://bitcoinmagazine.com/news/bitcoin-price-spikes-on-hot-inflation-data",
+   "source": "Bitcoin Magazine",
+   "published": "2026-09-11T15:46:05+00:00",
+   "summary": "Bitcoin Magazine Bitcoin Price Spikes, Shrugs off Hot US Inflation Data The price of bitcoin is up, despite the fact that an interest rate hike could be just around the corner. This post Bitcoin Price Spikes, Shrugs off Hot US Inflation Data first appeared on Bitcoin Magazine an…",
+   "score": 2.4769
+  },
+  {
+   "title": "Bitcoin Rises as Markets Digest Inflation Data Ahead of Fed Rate Decision",
+   "url": "https://decrypt.co/377962/bitcoin-price-cpi-inflation-fed-rate-decision",
+   "source": "Decrypt",
+   "published": "2026-09-11T15:32:08+00:00",
+   "summary": "Inflation held at 3.4% and core cooled annually, but a hot monthly core reading kept Fed hike odds near 62% while crypto markets rallied broadly.",
+   "score": 2.4686
+  },
+  {
+   "title": "Live updates: Bitcoin gives up early gains as markets fully price in Fed rate hike",
    "url": "https://www.coindesk.com/business/2026/09/11/live-updates-bitcoin-sinks-to-usd77-000-as-cpi-lands-with-hike-odds-near-70",
    "source": "CoinDesk",
    "published": "2026-09-11T11:04:12+00:00",
    "summary": "",
-   "score": 2.3627
-  },
-  {
-   "title": "Bitcoin at $400K by 2030 Still 'Reasonable Target': Coinbase CEO",
-   "url": "https://decrypt.co/377875/bitcoin-at-400k-by-2030-still-reasonable-target-coinbase-ceo",
-   "source": "Decrypt",
-   "published": "2026-09-10T13:04:27+00:00",
-   "summary": "Brian Armstrong argues the bottom is in, a year into the downturn, with the next halving roughly 18 months out.",
-   "score": 2.0637
+   "score": 2.3144
   },
   {
    "title": "Bitcoin below $77,000, Zcash leads losses as traders bet on a Fed rate hike",
@@ -38,7 +46,7 @@
    "source": "CoinDesk",
    "published": "2026-09-11T04:46:15+00:00",
    "summary": "",
-   "score": 1.7258
+   "score": 1.6905
   },
   {
    "title": "Here’s what happened in crypto today",
@@ -46,23 +54,15 @@
    "source": "Cointelegraph",
    "published": "2026-09-11T12:57:24+00:00",
    "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
-   "score": 1.7093
+   "score": 1.6743
   },
   {
-   "title": "Blockstream Refuses Ransom for Return of $47M in Bitcoin from Liquid Hack: 'It Is Theft'",
-   "url": "https://decrypt.co/377959/blockstream-refuses-ransom-for-return-of-47m-in-bitcoin-from-liquid-hack-it-is-theft",
+   "title": "Bitcoin at $400K by 2030 Still 'Reasonable Target': Coinbase CEO",
+   "url": "https://decrypt.co/377875/bitcoin-at-400k-by-2030-still-reasonable-target-coinbase-ceo",
    "source": "Decrypt",
-   "published": "2026-09-11T14:17:38+00:00",
-   "summary": "With 598.5 BTC still outstanding, the company says it will go to law enforcement should the funds not be returned.",
-   "score": 1.5842
-  },
-  {
-   "title": "US Treasury Secretary Scott Bessent ‘Strongly Urges’ Senate To Pass Clarity Act",
-   "url": "https://bitcoinmagazine.com/news/scott-bessent-urges-clarity-act-action",
-   "source": "Bitcoin Magazine",
-   "published": "2026-09-09T21:20:51+00:00",
-   "summary": "Bitcoin Magazine US Treasury Secretary Scott Bessent ‘Strongly Urges’ Senate To Pass Clarity Act Senators will vote on the long-awaited crypto Clarity Act next week. This post US Treasury Secretary Scott Bessent ‘Strongly Urges’ Senate To Pass Clarity Act first appeared on Bitco…",
-   "score": 1.3704
+   "published": "2026-09-10T13:04:27+00:00",
+   "summary": "Brian Armstrong argues the bottom is in, a year into the downturn, with the next halving roughly 18 months out.",
+   "score": 1.6172
   },
   {
    "title": "Metaplanet equity backlash, SE Asia crypto funding doubles: Asia Express",
@@ -70,15 +70,23 @@
    "source": "Cointelegraph",
    "published": "2026-09-10T23:21:26+00:00",
    "summary": "Shareholders of Bitcoin treasury company Metaplanet are seething over equity allocations for insiders, while new figures cement Singapore’s role as the top Asian crypto hub.",
-   "score": 1.2769
+   "score": 1.2507
   },
   {
-   "title": "Morning Minute: AI Agents Cut BTC Quantum Attack Benchmark by 86%",
-   "url": "https://decrypt.co/377948/morning-minute-ai-agents-cut-btc-quantum-attack-benchmark-by-86",
+   "title": "Blockstream Refuses Ransom for Return of $47M in Bitcoin from Liquid Hack: 'It Is Theft'",
+   "url": "https://decrypt.co/377959/blockstream-refuses-ransom-for-return-of-47m-in-bitcoin-from-liquid-hack-it-is-theft",
    "source": "Decrypt",
-   "published": "2026-09-11T12:10:23+00:00",
-   "summary": "Crypto majors are shaky ahead of this morning’s CPI print, but onchain is heating up for another big potential weekend.",
-   "score": 1.1062
+   "published": "2026-09-11T14:17:38+00:00",
+   "summary": "With 598.5 BTC still outstanding, the company says it will go to law enforcement should the funds not be returned.",
+   "score": 1.2415
+  },
+  {
+   "title": "US Treasury Secretary Scott Bessent ‘Strongly Urges’ Senate To Pass Clarity Act",
+   "url": "https://bitcoinmagazine.com/news/scott-bessent-urges-clarity-act-action",
+   "source": "Bitcoin Magazine",
+   "published": "2026-09-09T21:20:51+00:00",
+   "summary": "Bitcoin Magazine US Treasury Secretary Scott Bessent ‘Strongly Urges’ Senate To Pass Clarity Act Senators will vote on the long-awaited crypto Clarity Act next week. This post US Treasury Secretary Scott Bessent ‘Strongly Urges’ Senate To Pass Clarity Act first appeared on Bitco…",
+   "score": 1.0739
   },
   {
    "title": "Bitcoin ETFs shed $167M after strongest three-week inflow run of 2026",
@@ -86,7 +94,15 @@
    "source": "Cointelegraph",
    "published": "2026-09-10T09:59:32+00:00",
    "summary": "ARKB led Wednesday’s Bitcoin ETF outflows as Ether and Solana funds returned to net inflows.",
-   "score": 1.0106
+   "score": 0.99
+  },
+  {
+   "title": "Morning Minute: AI Agents Cut BTC Quantum Attack Benchmark by 86%",
+   "url": "https://decrypt.co/377948/morning-minute-ai-agents-cut-btc-quantum-attack-benchmark-by-86",
+   "source": "Decrypt",
+   "published": "2026-09-11T12:10:23+00:00",
+   "summary": "Crypto majors are shaky ahead of this morning’s CPI print, but onchain is heating up for another big potential weekend.",
+   "score": 0.8669
   },
   {
    "title": "Bitcoin recovers toward $79,000 as Zcash records a $500 million ETF haul",
@@ -94,15 +110,7 @@
    "source": "CoinDesk",
    "published": "2026-09-09T04:35:55+00:00",
    "summary": "",
-   "score": 0.8263
-  },
-  {
-   "title": "Capital B Buys 376 Bitcoins in Its Biggest Purchase of 2026",
-   "url": "https://bitcoinmagazine.com/news/capital-b-makes-biggest-2026-buy",
-   "source": "Bitcoin Magazine",
-   "published": "2026-09-08T17:53:33+00:00",
-   "summary": "Bitcoin Magazine Capital B Buys 376 Bitcoins in Its Biggest Purchase of 2026 Capital B is now the 25th biggest publicly traded bitcoin treasury following its latest buy. This post Capital B Buys 376 Bitcoins in Its Biggest Purchase of 2026 first appeared on Bitcoin Magazine and…",
-   "score": 0.7375
+   "score": 0.8094
   },
   {
    "title": "Bitcoin buyers wary of July sub-$58K floor amid onchain data ‘anomaly’",
@@ -110,15 +118,15 @@
    "source": "Cointelegraph",
    "published": "2026-09-11T10:53:55+00:00",
    "summary": "Bitcoin HODL waves data revealed an unusually muted reaction to Bitcoin’s drop below $58,000, raising questions over its status as a bear-market floor.",
-   "score": 0.6951
+   "score": 0.6809
   },
   {
-   "title": "Bitcoin Rally Cools, But a Golden Cross Is Coming",
-   "url": "https://decrypt.co/377903/bitcoin-price-golden-cross-coming",
-   "source": "Decrypt",
-   "published": "2026-09-10T18:46:04+00:00",
-   "summary": "Bitcoin couldn't escape today's inflation-driven selloff, but a bearish pattern on its chart is about to flip for the first time since November.",
-   "score": 0.6883
+   "title": "Capital B Buys 376 Bitcoins in Its Biggest Purchase of 2026",
+   "url": "https://bitcoinmagazine.com/news/capital-b-makes-biggest-2026-buy",
+   "source": "Bitcoin Magazine",
+   "published": "2026-09-08T17:53:33+00:00",
+   "summary": "Bitcoin Magazine Capital B Buys 376 Bitcoins in Its Biggest Purchase of 2026 Capital B is now the 25th biggest publicly traded bitcoin treasury following its latest buy. This post Capital B Buys 376 Bitcoins in Its Biggest Purchase of 2026 first appeared on Bitcoin Magazine and…",
+   "score": 0.5779
   },
   {
    "title": "Live updates: Bitcoin slumps as oil and bond yields surge to new highs",
@@ -126,15 +134,15 @@
    "source": "CoinDesk",
    "published": "2026-09-10T07:45:46+00:00",
    "summary": "",
-   "score": 0.5872
+   "score": 0.5752
   },
   {
-   "title": "Ringleader of $245M Crypto Theft Pleads Guilty",
-   "url": "https://bitcoinmagazine.com/news/ringleader-in-bitcoin-theft-guilty",
-   "source": "Bitcoin Magazine",
-   "published": "2026-09-10T22:24:40+00:00",
-   "summary": "Bitcoin Magazine Ringleader of $245M Crypto Theft Pleads Guilty The 22-year-old criminal ringleader led one of the biggest bitcoin heists in U.S. history. This post Ringleader of $245M Crypto Theft Pleads Guilty first appeared on Bitcoin Magazine and is written by Mathew Di Salv…",
-   "score": 0.5038
+   "title": "Bitcoin Rally Cools, But a Golden Cross Is Coming",
+   "url": "https://decrypt.co/377903/bitcoin-price-golden-cross-coming",
+   "source": "Decrypt",
+   "published": "2026-09-10T18:46:04+00:00",
+   "summary": "Bitcoin couldn't escape today's inflation-driven selloff, but a bearish pattern on its chart is about to flip for the first time since November.",
+   "score": 0.5394
   },
   {
    "title": "Live updates: Bitcoin slips as yields head higher following Treasury buyback announcement",
@@ -142,15 +150,7 @@
    "source": "CoinDesk",
    "published": "2026-09-09T07:20:51+00:00",
    "summary": "",
-   "score": 0.4586
-  },
-  {
-   "title": "Strategy's Return to Bitcoin Buying Lasted Exactly One Week",
-   "url": "https://decrypt.co/377664/strategys-return-to-bitcoin-buying-lasted-exactly-one-week",
-   "source": "Decrypt",
-   "published": "2026-09-08T13:57:16+00:00",
-   "summary": "The Bitcoin treasury firm spent $176.3 million on its own preferred stock, and doubled the buyback program's authorization to $2 billion.",
-   "score": 0.4423
+   "score": 0.4492
   },
   {
    "title": "Bitcoin fails to reclaim $80K as Bessent fuels yen strength around 153 per dollar",
@@ -158,15 +158,23 @@
    "source": "Cointelegraph",
    "published": "2026-09-09T16:28:19+00:00",
    "summary": "Bitcoin trended lower with US stocks on Iran escalation while US Treasury Secretary Scott Bessent contributed to fears of a yen carry-trade unwind.",
-   "score": 0.4185
+   "score": 0.41
   },
   {
-   "title": "Trezor Reveals Another Data Breach After Scammers Target Marketing Platform",
-   "url": "https://bitcoinmagazine.com/news/trezor-reveals-another-data-breach",
+   "title": "Ringleader of $245M Crypto Theft Pleads Guilty",
+   "url": "https://bitcoinmagazine.com/news/ringleader-in-bitcoin-theft-guilty",
    "source": "Bitcoin Magazine",
-   "published": "2026-09-10T21:28:55+00:00",
-   "summary": "Bitcoin Magazine Trezor Reveals Another Data Breach After Scammers Target Marketing Platform Users of the bitcoin hardware wallet were targeted with phishing attacks. This post Trezor Reveals Another Data Breach After Scammers Target Marketing Platform first appeared on Bitcoin…",
-   "score": 0.3977
+   "published": "2026-09-10T22:24:40+00:00",
+   "summary": "Bitcoin Magazine Ringleader of $245M Crypto Theft Pleads Guilty The 22-year-old criminal ringleader led one of the biggest bitcoin heists in U.S. history. This post Ringleader of $245M Crypto Theft Pleads Guilty first appeared on Bitcoin Magazine and is written by Mathew Di Salv…",
+   "score": 0.3948
+  },
+  {
+   "title": "Strategy's Return to Bitcoin Buying Lasted Exactly One Week",
+   "url": "https://decrypt.co/377664/strategys-return-to-bitcoin-buying-lasted-exactly-one-week",
+   "source": "Decrypt",
+   "published": "2026-09-08T13:57:16+00:00",
+   "summary": "The Bitcoin treasury firm spent $176.3 million on its own preferred stock, and doubled the buyback program's authorization to $2 billion.",
+   "score": 0.3466
   },
   {
    "title": "Bitcoin falls on US PPI overshoot as 30-year bond yield hits new 19-year high",
@@ -174,7 +182,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-10T14:52:15+00:00",
    "summary": "Bitcoin fell with US stocks as high inflation and a further surge in oil prices coincided with another multidecade high for US bond yields.",
-   "score": 0.3331
+   "score": 0.3263
   },
   {
    "title": "Bitcoin ETFs are still $1 billion shy of breaking even in 2026",
@@ -182,7 +190,15 @@
    "source": "CoinDesk",
    "published": "2026-09-08T11:26:27+00:00",
    "summary": "",
-   "score": 0.3302
+   "score": 0.3235
+  },
+  {
+   "title": "Trezor Reveals Another Data Breach After Scammers Target Marketing Platform",
+   "url": "https://bitcoinmagazine.com/news/trezor-reveals-another-data-breach",
+   "source": "Bitcoin Magazine",
+   "published": "2026-09-10T21:28:55+00:00",
+   "summary": "Bitcoin Magazine Trezor Reveals Another Data Breach After Scammers Target Marketing Platform Users of the bitcoin hardware wallet were targeted with phishing attacks. This post Trezor Reveals Another Data Breach After Scammers Target Marketing Platform first appeared on Bitcoin…",
+   "score": 0.3116
   },
   {
    "title": "Updated Crypto Clarity Act Starts Circulating Days Before Key Vote",
@@ -190,15 +206,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-10T20:23:59+00:00",
    "summary": "Bitcoin Magazine Updated Crypto Clarity Act Starts Circulating Days Before Key Vote A new draft of the long-awaited bill has been circulated by Senate Republicans. This post Updated Crypto Clarity Act Starts Circulating Days Before Key Vote first appeared on Bitcoin Magazine and…",
-   "score": 0.3132
-  },
-  {
-   "title": "Bitcoin Holds, Wall Street Stalls as Oil Shock Revives Fed Hike Bets",
-   "url": "https://decrypt.co/377705/bitcoin-holds-wall-street-stalls-oil-shock-fed-hike",
-   "source": "Decrypt",
-   "published": "2026-09-08T18:59:35+00:00",
-   "summary": "Bitcoin is defending its golden zone support while the S&P 500 grinds inside its tightest range yet, both waiting on Friday's inflation report before the Fed's September 16 rate call.",
-   "score": 0.3069
+   "score": 0.2454
   },
   {
    "title": "Rising yields, oil prices leave bitcoin vulnerable ahead of U.S. inflation report",
@@ -206,23 +214,23 @@
    "source": "CoinDesk",
    "published": "2026-09-11T11:20:26+00:00",
    "summary": "",
-   "score": 0.2487
+   "score": 0.2436
   },
   {
-   "title": "Albuquerque Bans Bitcoin ATMs, Giving Operators 45 Days to Remove Them",
-   "url": "https://decrypt.co/377939/albuquerque-bans-bitcoin-atms-giving-operators-45-days-to-remove-them",
+   "title": "Bitcoin Holds, Wall Street Stalls as Oil Shock Revives Fed Hike Bets",
+   "url": "https://decrypt.co/377705/bitcoin-holds-wall-street-stalls-oil-shock-fed-hike",
    "source": "Decrypt",
-   "published": "2026-09-11T10:10:41+00:00",
-   "summary": "A councilor said 90% of crypto kiosk transactions in the city are tied to fraud, calling the machines a conduit for crime.",
-   "score": 0.2446
+   "published": "2026-09-08T18:59:35+00:00",
+   "summary": "Bitcoin is defending its golden zone support while the S&P 500 grinds inside its tightest range yet, both waiting on Friday's inflation report before the Fed's September 16 rate call.",
+   "score": 0.2405
   },
   {
-   "title": "Nasdaq Invests $100M in Kraken Parent Company: Report",
-   "url": "https://bitcoinmagazine.com/news/nasdaq-invests-in-kraken",
-   "source": "Bitcoin Magazine",
-   "published": "2026-09-10T17:05:28+00:00",
-   "summary": "Bitcoin Magazine Nasdaq Invests $100M in Kraken Parent Company: Report The deal between Kraken and Nasdaq will help build infrastructure for tokenization, according to a Bloomberg report. This post Nasdaq Invests $100M in Kraken Parent Company: Report first appeared on Bitcoin M…",
-   "score": 0.2389
+   "title": "Bitcoin spikes toward $80K as US CPI data delivers new 22-year high in bond yields",
+   "url": "https://cointelegraph.com/markets/bitcoin-spikes-toward-80k-as-us-cpi-data-delivers-new-22-year-high-in-bond-yields?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-09-11T16:03:37+00:00",
+   "summary": "Bitcoin briefly rebounded past $79,000 and US stocks turned green as US CPI inflation data met expectations.",
+   "score": 0.2087
   },
   {
    "title": "Bitcoin recovers toward $77,300 as zcash leverage unwinds",
@@ -230,31 +238,23 @@
    "source": "CoinDesk",
    "published": "2026-09-11T10:50:47+00:00",
    "summary": "",
-   "score": 0.1976
+   "score": 0.1935
   },
   {
-   "title": "Blockstream rejects ransom as Liquid hackers hold nearly 600 BTC",
-   "url": "https://cointelegraph.com/news/blockstream-rejects-ransom-liquid-hackers-return-bitcoin?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-09-11T08:43:19+00:00",
-   "summary": "Blockstream said it would work with law enforcement, exchanges and forensic specialists to recover the Bitcoin if the hackers do not return it.",
-   "score": 0.1916
-  },
-  {
-   "title": "Bitcoin Suffers On Renewed US-Iran Fighting",
-   "url": "https://bitcoinmagazine.com/markets/bitcoin-price-drops-on-us-iran-fighting",
-   "source": "Bitcoin Magazine",
-   "published": "2026-09-10T16:31:42+00:00",
-   "summary": "Bitcoin Magazine Bitcoin Suffers On Renewed US-Iran Fighting Bitcoin has stumbled on tensions flaring up in the Middle East again. This post Bitcoin Suffers On Renewed US-Iran Fighting first appeared on Bitcoin Magazine and is written by Mathew Di Salvo .",
-   "score": 0.1896
-  },
-  {
-   "title": "$47M Still Missing After Liquid Hack as Blockstream Bargains With 'White Hats'",
-   "url": "https://decrypt.co/377723/liquid-hack-47m-blockstream-bargains-white-hat",
+   "title": "Albuquerque Bans Bitcoin ATMs, Giving Operators 45 Days to Remove Them",
+   "url": "https://decrypt.co/377939/albuquerque-bans-bitcoin-atms-giving-operators-45-days-to-remove-them",
    "source": "Decrypt",
-   "published": "2026-09-08T20:46:34+00:00",
-   "summary": "The hackers have returned 3,400 of the roughly 4,000 BTC drained from the sidechain, but about 600 BTC remains outstanding—and some doubt the actors' \"white hat\" claims.",
-   "score": 0.1612
+   "published": "2026-09-11T10:10:41+00:00",
+   "summary": "A councilor said 90% of crypto kiosk transactions in the city are tied to fraud, calling the machines a conduit for crime.",
+   "score": 0.1917
+  },
+  {
+   "title": "Nasdaq Invests $100M in Kraken Parent Company: Report",
+   "url": "https://bitcoinmagazine.com/news/nasdaq-invests-in-kraken",
+   "source": "Bitcoin Magazine",
+   "published": "2026-09-10T17:05:28+00:00",
+   "summary": "Bitcoin Magazine Nasdaq Invests $100M in Kraken Parent Company: Report The deal between Kraken and Nasdaq will help build infrastructure for tokenization, according to a Bloomberg report. This post Nasdaq Invests $100M in Kraken Parent Company: Report first appeared on Bitcoin M…",
+   "score": 0.1872
   },
   {
    "title": "Bitcoin pulls back as another golden cross fails to deliver",
@@ -262,7 +262,31 @@
    "source": "CoinDesk",
    "published": "2026-09-11T10:13:44+00:00",
    "summary": "",
-   "score": 0.1566
+   "score": 0.1534
+  },
+  {
+   "title": "Blockstream rejects ransom as Liquid hackers hold nearly 600 BTC",
+   "url": "https://cointelegraph.com/news/blockstream-rejects-ransom-liquid-hackers-return-bitcoin?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-09-11T08:43:19+00:00",
+   "summary": "Blockstream said it would work with law enforcement, exchanges and forensic specialists to recover the Bitcoin if the hackers do not return it.",
+   "score": 0.1501
+  },
+  {
+   "title": "Bitcoin Suffers On Renewed US-Iran Fighting",
+   "url": "https://bitcoinmagazine.com/markets/bitcoin-price-drops-on-us-iran-fighting",
+   "source": "Bitcoin Magazine",
+   "published": "2026-09-10T16:31:42+00:00",
+   "summary": "Bitcoin Magazine Bitcoin Suffers On Renewed US-Iran Fighting Bitcoin has stumbled on tensions flaring up in the Middle East again. This post Bitcoin Suffers On Renewed US-Iran Fighting first appeared on Bitcoin Magazine and is written by Mathew Di Salvo .",
+   "score": 0.1485
+  },
+  {
+   "title": "$47M Still Missing After Liquid Hack as Blockstream Bargains With 'White Hats'",
+   "url": "https://decrypt.co/377723/liquid-hack-47m-blockstream-bargains-white-hat",
+   "source": "Decrypt",
+   "published": "2026-09-08T20:46:34+00:00",
+   "summary": "The hackers have returned 3,400 of the roughly 4,000 BTC drained from the sidechain, but about 600 BTC remains outstanding—and some doubt the actors' \"white hat\" claims.",
+   "score": 0.1264
   },
   {
    "title": "Coinbase CEO Brian Armstrong Says Clarity Act Will Pass — And That Bitcoin Bottom Is In",
@@ -270,7 +294,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-10T16:24:43+00:00",
    "summary": "Bitcoin Magazine Coinbase CEO Brian Armstrong Says Clarity Act Will Pass — And That Bitcoin Bottom Is In The Coinbase chief reiterated his prediction that bitcoin hitting $400,000 by 2030 was realistic. This post Coinbase CEO Brian Armstrong Says Clarity Act Will Pass — And That…",
-   "score": 0.1514
+   "score": 0.1186
   },
   {
    "title": "Bitcoin SOPR metric sees longest profit run of 2026 as new analysis challenges bear market",
@@ -278,7 +302,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-09T10:12:16+00:00",
    "summary": "Bitcoin aggregate onchain profit entered its fourth week, but a popular analyst warned that BTC price “downside risk” remained in place.",
-   "score": 0.1409
+   "score": 0.1104
   },
   {
    "title": "AI Agents Just Slashed the Cost of a Quantum Attack on Bitcoin",
@@ -286,23 +310,7 @@
    "source": "Decrypt",
    "published": "2026-09-10T20:34:50+00:00",
    "summary": "The ECDSA.Fail challenge cut a resource benchmark for one component of a potential quantum attack by 86%.",
-   "score": 0.1286
-  },
-  {
-   "title": "The Quantum Issue: WTF Is Quantum Computing?",
-   "url": "https://bitcoinmagazine.com/print/the-quantum-issue-wtf-is-quantum-computing",
-   "source": "Bitcoin Magazine",
-   "published": "2026-09-10T13:00:00+00:00",
-   "summary": "Bitcoin Magazine The Quantum Issue: WTF Is Quantum Computing? From The Quantum Issue: A high level look at quantum computer, what it even is, and how it is different from conventional computing. This post The Quantum Issue: WTF Is Quantum Computing? first appeared on Bitcoin Mag…",
-   "score": 0.1153
-  },
-  {
-   "title": "New York town weighs crypto mining and AI data center ban",
-   "url": "https://cointelegraph.com/news/new-york-plattsburgh-crypto-mining-ai-ban?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-09-08T21:33:49+00:00",
-   "summary": "One of the first towns in the US to ban Bitcoin mining for 18 months is considering another temporary moratorium extending to data centers and other crypto mining operations.",
-   "score": 0.1044
+   "score": 0.1008
   },
   {
    "title": "Bitcoin slips under $79,000, Zcash leads losses as Fed hike odds hold near 60%",
@@ -310,23 +318,15 @@
    "source": "CoinDesk",
    "published": "2026-09-08T04:40:57+00:00",
    "summary": "",
-   "score": 0.1022
+   "score": 0.1001
   },
   {
-   "title": "Strategy Halted Its Bitcoin Buys Again Last Week",
-   "url": "https://bitcoinmagazine.com/news/strategy-halted-bitcoin-buys-last-week",
+   "title": "The Quantum Issue: WTF Is Quantum Computing?",
+   "url": "https://bitcoinmagazine.com/print/the-quantum-issue-wtf-is-quantum-computing",
    "source": "Bitcoin Magazine",
-   "published": "2026-09-08T15:38:26+00:00",
-   "summary": "Bitcoin Magazine Strategy Halted Its Bitcoin Buys Again Last Week The largest corporate holder of bitcoin is instead focusing on buying back its stock and building up its cash reserves. This post Strategy Halted Its Bitcoin Buys Again Last Week first appeared on Bitcoin Magazine…",
-   "score": 0.0767
-  },
-  {
-   "title": "Bitcoin Bancorp snaps up thousands of defunct Bitcoin Depot ATMs for $620,000",
-   "url": "https://www.coindesk.com/business/2026/09/10/a-quarter-of-bankrupt-bitcoin-depot-s-atms-snapped-up-for-less-than-usd1-million",
-   "source": "CoinDesk",
-   "published": "2026-09-10T15:14:49+00:00",
-   "summary": "",
-   "score": 0.0762
+   "published": "2026-09-10T13:00:00+00:00",
+   "summary": "Bitcoin Magazine The Quantum Issue: WTF Is Quantum Computing? From The Quantum Issue: A high level look at quantum computer, what it even is, and how it is different from conventional computing. This post The Quantum Issue: WTF Is Quantum Computing? first appeared on Bitcoin Mag…",
+   "score": 0.0903
   }
  ]
 }
