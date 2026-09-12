@@ -1,5 +1,5 @@
 {
- "fetched": "2026-09-12T14:05:34+00:00",
+ "fetched": "2026-09-12T14:04:03+00:00",
  "sources_ok": [
   "CoinDesk",
   "Cointelegraph",
@@ -14,7 +14,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-11T17:28:32+00:00",
    "summary": "Bitcoin Magazine Government Defeated as Lords Back UK Digital Assets Strategy The act would force the UK Treasury to consult a strategy for the regulation of cryptoassets, stablecoins, tokenized securities and digital financial infrastructure. This post Government Defeated as Lo…",
-   "score": 3.1928
+   "score": 3.1939
   },
   {
    "title": "Bitcoin ETF outflows accelerate as investors pull $449M in three days",
@@ -22,7 +22,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-11T12:33:38+00:00",
    "summary": "ARK 21Shares accounted for $164 million of Thursday’s Bitcoin ETF withdrawals, while Ether and Solana funds also recorded net outflows.",
-   "score": 2.0749
+   "score": 2.0756
   },
   {
    "title": "Bitcoin Rises as Markets Digest Inflation Data Ahead of Fed Rate Decision",
@@ -30,7 +30,7 @@
    "source": "Decrypt",
    "published": "2026-09-11T15:32:08+00:00",
    "summary": "Inflation held at 3.4% and core cooled annually, but a hot monthly core reading kept Fed hike odds near 62% while crypto markets rallied broadly.",
-   "score": 1.805
+   "score": 1.8056
   },
   {
    "title": "Live updates: Bitcoin gives up early gains, with markets moving to price in multiple rate hikes",
@@ -38,7 +38,7 @@
    "source": "CoinDesk",
    "published": "2026-09-11T11:04:12+00:00",
    "summary": "",
-   "score": 1.6923
+   "score": 1.6929
   },
   {
    "title": "Bitcoin Price Spikes, Shrugs off Hot US Inflation Data",
@@ -46,7 +46,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-11T15:46:05+00:00",
    "summary": "Bitcoin Magazine Bitcoin Price Spikes, Shrugs off Hot US Inflation Data The price of bitcoin is up, despite the fact that an interest rate hike could be just around the corner. This post Bitcoin Price Spikes, Shrugs off Hot US Inflation Data first appeared on Bitcoin Magazine an…",
-   "score": 1.4488
+   "score": 1.4494
   },
   {
    "title": "Here’s what happened in crypto today",
@@ -54,7 +54,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-11T21:30:00+00:00",
    "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
-   "score": 1.385
+   "score": 1.3855
   },
   {
    "title": "Bitcoin below $77,000, Zcash leads losses as traders bet on a Fed rate hike",
@@ -62,7 +62,7 @@
    "source": "CoinDesk",
    "published": "2026-09-11T04:46:15+00:00",
    "summary": "",
-   "score": 1.2361
+   "score": 1.2365
   },
   {
    "title": "Bitcoin at $400K by 2030 Still 'Reasonable Target': Coinbase CEO",
@@ -70,7 +70,7 @@
    "source": "Decrypt",
    "published": "2026-09-10T13:04:27+00:00",
    "summary": "Brian Armstrong argues the bottom is in, a year into the downturn, with the next halving roughly 18 months out.",
-   "score": 1.1825
+   "score": 1.1829
   },
   {
    "title": "Metaplanet equity backlash, SE Asia crypto funding doubles: Asia Express",
@@ -78,7 +78,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-10T23:21:26+00:00",
    "summary": "Shareholders of Bitcoin treasury company Metaplanet are seething over equity allocations for insiders, while new figures cement Singapore’s role as the top Asian crypto hub.",
-   "score": 0.9145
+   "score": 0.9148
   },
   {
    "title": "Blockstream Refuses Ransom for Return of $47M in Bitcoin from Liquid Hack: 'It Is Theft'",
@@ -86,7 +86,7 @@
    "source": "Decrypt",
    "published": "2026-09-11T14:17:38+00:00",
    "summary": "With 598.5 BTC still outstanding, the company says it will go to law enforcement should the funds not be returned.",
-   "score": 0.9077
+   "score": 0.9081
   },
   {
    "title": "Bitcoin ETFs shed $167M after strongest three-week inflow run of 2026",
@@ -94,7 +94,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-10T09:59:32+00:00",
    "summary": "ARKB led Wednesday’s Bitcoin ETF outflows as Ether and Solana funds returned to net inflows.",
-   "score": 0.7238
+   "score": 0.7241
   },
   {
    "title": "Morning Minute: AI Agents Cut BTC Quantum Attack Benchmark by 86%",
@@ -102,7 +102,7 @@
    "source": "Decrypt",
    "published": "2026-09-11T12:10:23+00:00",
    "summary": "Crypto majors are shaky ahead of this morning’s CPI print, but onchain is heating up for another big potential weekend.",
-   "score": 0.6339
+   "score": 0.6341
   },
   {
    "title": "US Treasury Secretary Scott Bessent ‘Strongly Urges’ Senate To Pass Clarity Act",
@@ -110,7 +110,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-09T21:20:51+00:00",
    "summary": "Bitcoin Magazine US Treasury Secretary Scott Bessent ‘Strongly Urges’ Senate To Pass Clarity Act Senators will vote on the long-awaited crypto Clarity Act next week. This post US Treasury Secretary Scott Bessent ‘Strongly Urges’ Senate To Pass Clarity Act first appeared on Bitco…",
-   "score": 0.6282
+   "score": 0.6284
   },
   {
    "title": "Bitcoin activity, passports exposed after Revolut falls for fake government request",
@@ -118,7 +118,7 @@
    "source": "CoinDesk",
    "published": "2026-09-12T10:11:01+00:00",
    "summary": "",
-   "score": 0.6049
+   "score": 0.6051
   },
   {
    "title": "Bitcoin buyers wary of July sub-$58K floor amid onchain data ‘anomaly’",
@@ -126,7 +126,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-11T10:53:55+00:00",
    "summary": "Bitcoin HODL waves data revealed an unusually muted reaction to Bitcoin’s drop below $58,000, raising questions over its status as a bear-market floor.",
-   "score": 0.4978
+   "score": 0.498
   },
   {
    "title": "Bitcoin recovers toward $79,000 as Zcash records a $500 million ETF haul",
@@ -134,7 +134,7 @@
    "source": "CoinDesk",
    "published": "2026-09-09T04:35:55+00:00",
    "summary": "",
-   "score": 0.4735
+   "score": 0.4737
   },
   {
    "title": "Bitcoin’s ‘Unusual Mix’: Bearish Inflation Print, Bullish Buyback Failure",
@@ -142,7 +142,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-11T21:22:59+00:00",
    "summary": "Bitcoin Magazine Bitcoin’s ‘Unusual Mix’: Bearish Inflation Print, Bullish Buyback Failure A new CoinShares report said bitcoin's price could be hurt in the short-term but benefit in the long-term. This post Bitcoin’s ‘Unusual Mix’: Bearish Inflation Print, Bullish Buyback Failu…",
-   "score": 0.4022
+   "score": 0.4024
   },
   {
    "title": "Bitcoin Rally Cools, But a Golden Cross Is Coming",
@@ -150,7 +150,7 @@
    "source": "Decrypt",
    "published": "2026-09-10T18:46:04+00:00",
    "summary": "Bitcoin couldn't escape today's inflation-driven selloff, but a bearish pattern on its chart is about to flip for the first time since November.",
-   "score": 0.3944
+   "score": 0.3945
   },
   {
    "title": "Live updates: Bitcoin slumps as oil and bond yields surge to new highs",
@@ -158,7 +158,7 @@
    "source": "CoinDesk",
    "published": "2026-09-10T07:45:46+00:00",
    "summary": "",
-   "score": 0.3364
+   "score": 0.3366
   },
   {
    "title": "Blockstream Tells Hackers To Return Remaining Bitcoin Stolen in Liquid Theft",
@@ -166,7 +166,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-11T21:13:48+00:00",
    "summary": "Bitcoin Magazine Blockstream Tells Hackers To Return Remaining Bitcoin Stolen in Liquid Theft White hat hackers targeted Blocksteam's Liquid sidechain, taking over 4,000 bitcoins. They want to keep some of the bitcoins as a reward. Blockstream isn't happy. This post Blockstream…",
-   "score": 0.3211
+   "score": 0.3212
   },
   {
    "title": "Bitcoin fails to reclaim $80K as Bessent fuels yen strength around 153 per dollar",
@@ -174,7 +174,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-09T16:28:19+00:00",
    "summary": "Bitcoin trended lower with US stocks on Iran escalation while US Treasury Secretary Scott Bessent contributed to fears of a yen carry-trade unwind.",
-   "score": 0.2998
+   "score": 0.2999
   },
   {
    "title": "Live updates: Bitcoin slips as yields head higher following Treasury buyback announcement",
@@ -182,7 +182,7 @@
    "source": "CoinDesk",
    "published": "2026-09-09T07:20:51+00:00",
    "summary": "",
-   "score": 0.2627
+   "score": 0.2628
   },
   {
    "title": "Bitcoin Golden Cross Flickers Off as Rate-Hike Bets Firm Up",
@@ -190,7 +190,7 @@
    "source": "Decrypt",
    "published": "2026-09-11T20:53:39+00:00",
    "summary": "A rapidly changing interest rates market has changed the near-term outlook on the Bitcoin chart. Here’s why.",
-   "score": 0.2556
+   "score": 0.2557
   },
   {
    "title": "Italy’s Second Biggest Bank UniCredit Is Weighting up Crypto Custody: Report",
@@ -198,7 +198,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-11T18:47:07+00:00",
    "summary": "Bitcoin Magazine Italy’s Second Biggest Bank UniCredit Is Weighting up Crypto Custody: Report UniCredit is working on crypto custody as other European banks work on digital asset services. This post Italy’s Second Biggest Bank UniCredit Is Weighting up Crypto Custody: Report fir…",
-   "score": 0.2479
+   "score": 0.248
   },
   {
    "title": "Bitcoin falls on US PPI overshoot as 30-year bond yield hits new 19-year high",
@@ -206,7 +206,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-10T14:52:15+00:00",
    "summary": "Bitcoin fell with US stocks as high inflation and a further surge in oil prices coincided with another multidecade high for US bond yields.",
-   "score": 0.2386
+   "score": 0.2387
   },
   {
    "title": "Strategy's Return to Bitcoin Buying Lasted Exactly One Week",
@@ -222,7 +222,7 @@
    "source": "CoinDesk",
    "published": "2026-09-08T11:26:27+00:00",
    "summary": "",
-   "score": 0.1892
+   "score": 0.1893
   },
   {
    "title": "Capital B Buys 376 Bitcoins in Its Biggest Purchase of 2026",
@@ -246,7 +246,7 @@
    "source": "CoinDesk",
    "published": "2026-09-11T11:20:26+00:00",
    "summary": "",
-   "score": 0.1425
+   "score": 0.1426
   },
   {
    "title": "Bitcoin Holds, Wall Street Stalls as Oil Shock Revives Fed Hike Bets",
@@ -262,7 +262,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-10T22:24:40+00:00",
    "summary": "Bitcoin Magazine Ringleader of $245M Crypto Theft Pleads Guilty The 22-year-old criminal ringleader led one of the biggest bitcoin heists in U.S. history. This post Ringleader of $245M Crypto Theft Pleads Guilty first appeared on Bitcoin Magazine and is written by Mathew Di Salv…",
-   "score": 0.1182
+   "score": 0.1183
   },
   {
    "title": "Bitcoin recovers toward $77,300 as zcash leverage unwinds",
@@ -278,7 +278,7 @@
    "source": "Decrypt",
    "published": "2026-09-11T10:10:41+00:00",
    "summary": "A councilor said 90% of crypto kiosk transactions in the city are tied to fraud, calling the machines a conduit for crime.",
-   "score": 0.1121
+   "score": 0.1122
   },
   {
    "title": "Blockstream rejects ransom as Liquid hackers hold nearly 600 BTC",
@@ -294,7 +294,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-10T21:28:55+00:00",
    "summary": "Bitcoin Magazine Trezor Reveals Another Data Breach After Scammers Target Marketing Platform Users of the bitcoin hardware wallet were targeted with phishing attacks. This post Trezor Reveals Another Data Breach After Scammers Target Marketing Platform first appeared on Bitcoin…",
-   "score": 0.0933
+   "score": 0.0934
   },
   {
    "title": "Bitcoin pulls back as another golden cross fails to deliver",
