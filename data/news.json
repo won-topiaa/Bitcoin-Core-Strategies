@@ -1,5 +1,5 @@
 {
- "fetched": "2026-09-15T17:16:08+00:00",
+ "fetched": "2026-09-15T18:08:50+00:00",
  "sources_ok": [
   "CoinDesk",
   "Cointelegraph",
@@ -14,7 +14,7 @@
    "source": "Decrypt",
    "published": "2026-09-15T14:58:57+00:00",
    "summary": "Bitcoin just gave back its entire post-golden-cross rally in one red candle, with a make-or-break Senate vote landing this afternoon and the Fed staring down a rate hike.",
-   "score": 3.1928
+   "score": 3.1526
   },
   {
    "title": "Strategy Buys Back $139 Million of STRC, Bitcoin Stack Frozen for Second Week",
@@ -22,7 +22,7 @@
    "source": "Decrypt",
    "published": "2026-09-14T15:41:46+00:00",
    "summary": "The Bitcoin treasury firm slowed its preferred-stock buyback from last week's $176 million pace and left its 845,050 BTC untouched, per a Monday SEC filing.",
-   "score": 2.5437
+   "score": 2.5117
   },
   {
    "title": "Strike CEO Jack Mallers: Inflation Outlook, Bond Stress and BTC vs Gold",
@@ -30,7 +30,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-15T13:08:05+00:00",
    "summary": "Bitcoin Magazine Strike CEO Jack Mallers: Inflation Outlook, Bond Stress and BTC vs Gold US debt-to-GDP has pushed past 120%, and Jack Mallers thinks the debate over whether the Fed hikes or cuts is beside the point, both roads lead to inflation. This post Strike CEO Jack Maller…",
-   "score": 2.3551
+   "score": 2.3254
   },
   {
    "title": "Here’s what happened in crypto today",
@@ -38,7 +38,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-15T05:50:00+00:00",
    "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
-   "score": 1.8651
+   "score": 1.8416
   },
   {
    "title": "Strategy Buys Back Stock, Skips Bitcoin Purchase",
@@ -46,7 +46,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-14T15:33:44+00:00",
    "summary": "Bitcoin Magazine Strategy Buys Back Stock, Skips Bitcoin Purchase Bitcoin treasury Strategy is holding off buying bitcoin again. This post Strategy Buys Back Stock, Skips Bitcoin Purchase first appeared on Bitcoin Magazine and is written by Mathew Di Salvo .",
-   "score": 1.7109
+   "score": 1.6894
   },
   {
    "title": "Bitcoin ETFs shed $463M in weekly reversal as Ether ETFs gain $197M",
@@ -54,7 +54,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-14T07:07:54+00:00",
    "summary": "ARKB, GBTC and IBIT led Bitcoin ETF withdrawals, while BlackRock’s ETHA pushed Ether ETFs into weekly inflows.",
-   "score": 1.466
+   "score": 1.4475
   },
   {
    "title": "Strive adds 469 Bitcoin to reach 25,000 BTC treasury",
@@ -62,7 +62,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-14T17:50:12+00:00",
    "summary": "Strive’s latest Bitcoin purchase was funded entirely through its SATA preferred stock as the company continues its rapid climb among corporate BTC holders.",
-   "score": 1.1407
+   "score": 1.1263
   },
   {
    "title": "A hacker turned 25 cents of bitcoin into 46 billion fake BTC tokens on a DeFi bridge",
@@ -70,7 +70,7 @@
    "source": "CoinDesk",
    "published": "2026-09-15T13:43:50+00:00",
    "summary": "",
-   "score": 0.9502
+   "score": 0.9382
   },
   {
    "title": "CLARITY Act vote meets Fed rate hike: Five things to know in Bitcoin this week",
@@ -78,7 +78,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-14T10:02:00+00:00",
    "summary": "Bitcoin traders brace for volatility as the CLARITY Act awaits a Senate vote to move forward and the Fed is due to announce its latest rate decision.",
-   "score": 0.8153
+   "score": 0.805
   },
   {
    "title": "Bitcoin gives back Monday's gain as Clarity Act odds fade on Polymarket",
@@ -86,7 +86,7 @@
    "source": "CoinDesk",
    "published": "2026-09-15T10:41:35+00:00",
    "summary": "",
-   "score": 0.7275
+   "score": 0.7184
   },
   {
    "title": "Government Defeated as Lords Back UK Digital Assets Strategy",
@@ -94,7 +94,15 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-11T17:28:32+00:00",
    "summary": "Bitcoin Magazine Government Defeated as Lords Back UK Digital Assets Strategy The act would force the UK Treasury to consult a strategy for the regulation of cryptoassets, stablecoins, tokenized securities and digital financial infrastructure. This post Government Defeated as Lo…",
-   "score": 0.6901
+   "score": 0.6814
+  },
+  {
+   "title": "'It's Now or Never' for Clarity Act, Says 'Bitcoin Senator' Lummis",
+   "url": "https://decrypt.co/378268/now-or-never-clarity-act-bitcoin-cynthia-lummis",
+   "source": "Decrypt",
+   "published": "2026-09-15T17:43:01+00:00",
+   "summary": "The Wyoming Republican says the final text hands Democrats more than 120 of their own demands, including sweeping new ethics rules, as the Senate holds a make-or-break cloture vote Tuesday afternoon.",
+   "score": 0.636
   },
   {
    "title": "Nigel Farage-backed Stack BTC plans to acquire a gold dealer for $16 million to fund bitcoin buy",
@@ -102,15 +110,7 @@
    "source": "CoinDesk",
    "published": "2026-09-15T10:06:40+00:00",
    "summary": "",
-   "score": 0.5772
-  },
-  {
-   "title": "Strive's Bitcoin Stash Hits an Even 25,000 BTC After $36.6 Million Buy",
-   "url": "https://decrypt.co/378190/strive-bitcoin-25000-btc-after-buy",
-   "source": "Decrypt",
-   "published": "2026-09-15T09:01:05+00:00",
-   "summary": "The asset manager funded the entire purchase through preferred stock, pushing SATA's notional value past $1 billion for the first time.",
-   "score": 0.5681
+   "score": 0.5699
   },
   {
    "title": "Symbiosis says recovered 15 BTC from bridge hack, offers 20% bounty",
@@ -118,15 +118,23 @@
    "source": "Cointelegraph",
    "published": "2026-09-14T09:55:35+00:00",
    "summary": "Symbiosis is offering a 20% bounty for information leading to asset recovery after the hacker refused to return the stolen funds for the same white-hat bounty.",
-   "score": 0.521
+   "score": 0.5144
   },
   {
-   "title": "DOJ Seeks $61M in Iranian Oil Proceeds Laundered Through Binance Accounts",
-   "url": "https://bitcoinmagazine.com/news/iran-oil-was-laundered-on-binance",
+   "title": "AI Could Be Bitcoin’s Next Onboarding Engine, Nakamoto CEO Says",
+   "url": "https://bitcoinmagazine.com/news/ai-could-be-bitcoin-onboarder",
    "source": "Bitcoin Magazine",
-   "published": "2026-09-15T15:45:42+00:00",
-   "summary": "Bitcoin Magazine DOJ Seeks $61M in Iranian Oil Proceeds Laundered Through Binance Accounts The U.S. Department of Justice has filed to forfeit $61 million in crypto it says was generated from Iranian black-market oil sales. This post DOJ Seeks $61M in Iranian Oil Proceeds Launde…",
-   "score": 0.501
+   "published": "2026-09-15T17:34:26+00:00",
+   "summary": "Bitcoin Magazine AI Could Be Bitcoin’s Next Onboarding Engine, Nakamoto CEO Says Speaking to the investment bank, Nakamoto CEO David Bailey said that AI could drive Bitcoin adoption. This post AI Could Be Bitcoin’s Next Onboarding Engine, Nakamoto CEO Says first appeared on Bitc…",
+   "score": 0.5078
+  },
+  {
+   "title": "Strive's Bitcoin Stash Hits an Even 25,000 BTC After $36.6 Million Buy",
+   "url": "https://decrypt.co/378190/strive-bitcoin-25000-btc-after-buy",
+   "source": "Decrypt",
+   "published": "2026-09-15T09:01:05+00:00",
+   "summary": "The asset manager funded the entire purchase through preferred stock, pushing SATA's notional value past $1 billion for the first time.",
+   "score": 0.4488
   },
   {
    "title": "Live updates: Bitcoin slumps as Clarity Act passage odds fade",
@@ -134,23 +142,15 @@
    "source": "CoinDesk",
    "published": "2026-09-15T06:37:24+00:00",
    "summary": "",
-   "score": 0.439
+   "score": 0.4335
   },
   {
-   "title": "Will the Clarity Act Pass the Senate? | Connor Brown, Bitcoin Policy Institute",
-   "url": "https://bitcoinmagazine.com/videos/will-the-clarity-act-pass-the-senate",
+   "title": "DOJ Seeks $61M in Iranian Oil Proceeds Laundered Through Binance Accounts",
+   "url": "https://bitcoinmagazine.com/news/iran-oil-was-laundered-on-binance",
    "source": "Bitcoin Magazine",
-   "published": "2026-09-15T12:59:39+00:00",
-   "summary": "Bitcoin Magazine Will the Clarity Act Pass the Senate? | Connor Brown, Bitcoin Policy Institute The Clarity Act reaches a make-or-break moment as the Senate holds a cloture vote that requires 60 votes from a chamber Republicans hold 53 seats in. This post Will the Clarity Act Pa…",
-   "score": 0.3851
-  },
-  {
-   "title": "Bitcoin Climbs as AI Slowdown Calls Sink Nvidia, Intel and Other Chip Stocks",
-   "url": "https://decrypt.co/378157/bitcoin-climbs-ai-slowdown-nvidia-chip-stocks",
-   "source": "Decrypt",
-   "published": "2026-09-14T17:40:04+00:00",
-   "summary": "AI CEOs want the industry to pump the brakes on capability gains. Nvidia, Intel, and AMD didn't like the sound of that. Bitcoin didn't seem to mind.",
-   "score": 0.3641
+   "published": "2026-09-15T15:45:42+00:00",
+   "summary": "Bitcoin Magazine DOJ Seeks $61M in Iranian Oil Proceeds Laundered Through Binance Accounts The U.S. Department of Justice has filed to forfeit $61 million in crypto it says was generated from Iranian black-market oil sales. This post DOJ Seeks $61M in Iranian Oil Proceeds Launde…",
+   "score": 0.3957
   },
   {
    "title": "Bitcoin slips to $77,800 as Senate Clarity Act vote nears and oil prices climb",
@@ -158,7 +158,7 @@
    "source": "CoinDesk",
    "published": "2026-09-15T03:23:28+00:00",
    "summary": "",
-   "score": 0.3352
+   "score": 0.331
   },
   {
    "title": "Bitcoin price falls to $75.6K September low as global bonds hit multidecade highs",
@@ -166,23 +166,23 @@
    "source": "Cointelegraph",
    "published": "2026-09-15T16:02:01+00:00",
    "summary": "Bitcoin price action weakened over market nerves prior to the Senate CLARITY Act vote, while surging bond yields pressured risk assets across the board.",
-   "score": 0.3219
+   "score": 0.3178
   },
   {
-   "title": "Bitcoin Suisse to Cut Up to Half Its Swiss Jobs in Overseas Shift",
-   "url": "https://decrypt.co/378119/bitcoin-suisse-cut-half-swiss-jobs",
-   "source": "Decrypt",
-   "published": "2026-09-14T09:01:03+00:00",
-   "summary": "The Crypto Valley pioneer is moving up to 60 Zug jobs to Bratislava or Vietnam as it pivots from a Swiss crypto specialist into a global wealth manager.",
-   "score": 0.2571
-  },
-  {
-   "title": "Swiss Bitcoin Pay Shuts Down Servers After Data Breach",
-   "url": "https://bitcoinmagazine.com/news/swiss-bitcoin-pay-data-breach",
+   "title": "Will the Clarity Act Pass the Senate? | Connor Brown, Bitcoin Policy Institute",
+   "url": "https://bitcoinmagazine.com/videos/will-the-clarity-act-pass-the-senate",
    "source": "Bitcoin Magazine",
-   "published": "2026-09-14T20:55:25+00:00",
-   "summary": "Bitcoin Magazine Swiss Bitcoin Pay Shuts Down Servers After Data Breach Another day, another data breach. Swiss Bitcoin Pay, a non-custodial bitcoin payment processor, said that it had to temporarily shut down its servers following a data breach on Monday. The Neuchâtel, Switzer…",
-   "score": 0.2443
+   "published": "2026-09-15T12:59:39+00:00",
+   "summary": "Bitcoin Magazine Will the Clarity Act Pass the Senate? | Connor Brown, Bitcoin Policy Institute The Clarity Act reaches a make-or-break moment as the Senate holds a cloture vote that requires 60 votes from a chamber Republicans hold 53 seats in. This post Will the Clarity Act Pa…",
+   "score": 0.3042
+  },
+  {
+   "title": "Bitcoin Climbs as AI Slowdown Calls Sink Nvidia, Intel and Other Chip Stocks",
+   "url": "https://decrypt.co/378157/bitcoin-climbs-ai-slowdown-nvidia-chip-stocks",
+   "source": "Decrypt",
+   "published": "2026-09-14T17:40:04+00:00",
+   "summary": "AI CEOs want the industry to pump the brakes on capability gains. Nvidia, Intel, and AMD didn't like the sound of that. Bitcoin didn't seem to mind.",
+   "score": 0.2876
   },
   {
    "title": "Bitcoin short-term holders hit 30-day profit streak as bull-market odds improve: CryptoQuant",
@@ -190,7 +190,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-15T09:30:31+00:00",
    "summary": "Bitcoin short-term holders approached a full month in partial profit as analysis saw improving odds of an enduring bullish BTC price reversal.",
-   "score": 0.2344
+   "score": 0.2314
   },
   {
    "title": "Live updates: Bitcoin climbs near $79,000 as stocks narrow declines",
@@ -198,23 +198,23 @@
    "source": "CoinDesk",
    "published": "2026-09-14T11:44:21+00:00",
    "summary": "",
-   "score": 0.2139
+   "score": 0.2112
   },
   {
-   "title": "Bitcoin Rises as Markets Digest Inflation Data Ahead of Fed Rate Decision",
-   "url": "https://decrypt.co/377962/bitcoin-price-cpi-inflation-fed-rate-decision",
+   "title": "Bitcoin Suisse to Cut Up to Half Its Swiss Jobs in Overseas Shift",
+   "url": "https://decrypt.co/378119/bitcoin-suisse-cut-half-swiss-jobs",
    "source": "Decrypt",
-   "published": "2026-09-11T15:32:08+00:00",
-   "summary": "Inflation held at 3.4% and core cooled annually, but a hot monthly core reading kept Fed hike odds near 62% while crypto markets rallied broadly.",
-   "score": 0.1997
+   "published": "2026-09-14T09:01:03+00:00",
+   "summary": "The Crypto Valley pioneer is moving up to 60 Zug jobs to Bratislava or Vietnam as it pivots from a Swiss crypto specialist into a global wealth manager.",
+   "score": 0.2031
   },
   {
-   "title": "Mallers: Bitcoin and AI Could Give Humans Back Their Time",
-   "url": "https://bitcoinmagazine.com/news/jack-mallers-says-bitcoin-rewards-work",
+   "title": "Swiss Bitcoin Pay Shuts Down Servers After Data Breach",
+   "url": "https://bitcoinmagazine.com/news/swiss-bitcoin-pay-data-breach",
    "source": "Bitcoin Magazine",
-   "published": "2026-09-14T20:30:46+00:00",
-   "summary": "Bitcoin Magazine Mallers: Bitcoin and AI Could Give Humans Back Their Time Speaking to Bitcoin Magazine TV on Monday, Strike's CEO said that hard money could reward humans for their hard work again. This post Mallers: Bitcoin and AI Could Give Humans Back Their Time first appear…",
-   "score": 0.1943
+   "published": "2026-09-14T20:55:25+00:00",
+   "summary": "Bitcoin Magazine Swiss Bitcoin Pay Shuts Down Servers After Data Breach Another day, another data breach. Swiss Bitcoin Pay, a non-custodial bitcoin payment processor, said that it had to temporarily shut down its servers following a data breach on Monday. The Neuchâtel, Switzer…",
+   "score": 0.1929
   },
   {
    "title": "Bitcoin climbs to $78,000 as crypto sits out the AI selloff",
@@ -222,7 +222,23 @@
    "source": "CoinDesk",
    "published": "2026-09-14T10:09:41+00:00",
    "summary": "",
-   "score": 0.1673
+   "score": 0.1652
+  },
+  {
+   "title": "Bitcoin Rises as Markets Digest Inflation Data Ahead of Fed Rate Decision",
+   "url": "https://decrypt.co/377962/bitcoin-price-cpi-inflation-fed-rate-decision",
+   "source": "Decrypt",
+   "published": "2026-09-11T15:32:08+00:00",
+   "summary": "Inflation held at 3.4% and core cooled annually, but a hot monthly core reading kept Fed hike odds near 62% while crypto markets rallied broadly.",
+   "score": 0.1578
+  },
+  {
+   "title": "Mallers: Bitcoin and AI Could Give Humans Back Their Time",
+   "url": "https://bitcoinmagazine.com/news/jack-mallers-says-bitcoin-rewards-work",
+   "source": "Bitcoin Magazine",
+   "published": "2026-09-14T20:30:46+00:00",
+   "summary": "Bitcoin Magazine Mallers: Bitcoin and AI Could Give Humans Back Their Time Speaking to Bitcoin Magazine TV on Monday, Strike's CEO said that hard money could reward humans for their hard work again. This post Mallers: Bitcoin and AI Could Give Humans Back Their Time first appear…",
+   "score": 0.1534
   },
   {
    "title": "Bitcoin tops $79K, oil falls as Trump says Iran war could end",
@@ -230,23 +246,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-14T18:56:28+00:00",
    "summary": "Bitcoin’s price rose toward $80,000 after US President Donald Trump hinted that the US-Iran war would end, pushing oil prices lower.",
-   "score": 0.1519
-  },
-  {
-   "title": "Lummis Credits Trump for Ethics Deal as Clarity Act Faces Tuesday Vote",
-   "url": "https://bitcoinmagazine.com/news/lummis-credits-trump-on-clarity-act",
-   "source": "Bitcoin Magazine",
-   "published": "2026-09-14T18:29:29+00:00",
-   "summary": "Bitcoin Magazine Lummis Credits Trump for Ethics Deal as Clarity Act Faces Tuesday Vote Pro-crypto Cynthia Lummis says the Clarity Act has led to the \"toughest ethics reform\" the U.S. has had. This post Lummis Credits Trump for Ethics Deal as Clarity Act Faces Tuesday Vote first…",
-   "score": 0.1509
-  },
-  {
-   "title": "Bitcoin at $400K by 2030 Still 'Reasonable Target': Coinbase CEO",
-   "url": "https://decrypt.co/377875/bitcoin-at-400k-by-2030-still-reasonable-target-coinbase-ceo",
-   "source": "Decrypt",
-   "published": "2026-09-10T13:04:27+00:00",
-   "summary": "Brian Armstrong argues the bottom is in, a year into the downturn, with the next halving roughly 18 months out.",
-   "score": 0.1309
+   "score": 0.15
   },
   {
    "title": "Bitcoin bucks tech selloff as AI safety concerns weigh on stocks",
@@ -254,15 +254,15 @@
    "source": "CoinDesk",
    "published": "2026-09-14T08:07:16+00:00",
    "summary": "",
-   "score": 0.1299
+   "score": 0.1283
   },
   {
-   "title": "Morgan Stanley’s Bitcoin Investment Recommendation Explained w/ Amy Oldenburg",
-   "url": "https://bitcoinmagazine.com/videos/morgan-stanleys-bitcoin-investment-recommendation",
+   "title": "Lummis Credits Trump for Ethics Deal as Clarity Act Faces Tuesday Vote",
+   "url": "https://bitcoinmagazine.com/news/lummis-credits-trump-on-clarity-act",
    "source": "Bitcoin Magazine",
-   "published": "2026-09-14T17:29:44+00:00",
-   "summary": "Bitcoin Magazine Morgan Stanley’s Bitcoin Investment Recommendation Explained w/ Amy Oldenburg Morgan Stanley’s Digital Assets Head Amy Oldenburg joins Spencer Nichols to break down their $600M+ spot Bitcoin ETP, portfolio models, and more. This post Morgan Stanley’s Bitcoin Inv…",
-   "score": 0.119
+   "published": "2026-09-14T18:29:29+00:00",
+   "summary": "Bitcoin Magazine Lummis Credits Trump for Ethics Deal as Clarity Act Faces Tuesday Vote Pro-crypto Cynthia Lummis says the Clarity Act has led to the \"toughest ethics reform\" the U.S. has had. This post Lummis Credits Trump for Ethics Deal as Clarity Act Faces Tuesday Vote first…",
+   "score": 0.1192
   },
   {
    "title": "Bitcoin ETF outflows accelerate as investors pull $449M in three days",
@@ -270,15 +270,15 @@
    "source": "Cointelegraph",
    "published": "2026-09-11T12:33:38+00:00",
    "summary": "ARK 21Shares accounted for $164 million of Thursday’s Bitcoin ETF withdrawals, while Ether and Solana funds also recorded net outflows.",
-   "score": 0.1176
+   "score": 0.1161
   },
   {
-   "title": "Blockstream Refuses Ransom for Return of $47M in Bitcoin from Liquid Hack: 'It Is Theft'",
-   "url": "https://decrypt.co/377959/blockstream-refuses-ransom-for-return-of-47m-in-bitcoin-from-liquid-hack-it-is-theft",
+   "title": "Bitcoin at $400K by 2030 Still 'Reasonable Target': Coinbase CEO",
+   "url": "https://decrypt.co/377875/bitcoin-at-400k-by-2030-still-reasonable-target-coinbase-ceo",
    "source": "Decrypt",
-   "published": "2026-09-11T14:17:38+00:00",
-   "summary": "With 598.5 BTC still outstanding, the company says it will go to law enforcement should the funds not be returned.",
-   "score": 0.1004
+   "published": "2026-09-10T13:04:27+00:00",
+   "summary": "Brian Armstrong argues the bottom is in, a year into the downturn, with the next halving roughly 18 months out.",
+   "score": 0.1034
   },
   {
    "title": "Live updates: Bitcoin gives up early gains, with markets moving to price in multiple rate hikes",
@@ -286,7 +286,23 @@
    "source": "CoinDesk",
    "published": "2026-09-11T11:04:12+00:00",
    "summary": "",
-   "score": 0.0959
+   "score": 0.0947
+  },
+  {
+   "title": "Morgan Stanley’s Bitcoin Investment Recommendation Explained w/ Amy Oldenburg",
+   "url": "https://bitcoinmagazine.com/videos/morgan-stanleys-bitcoin-investment-recommendation",
+   "source": "Bitcoin Magazine",
+   "published": "2026-09-14T17:29:44+00:00",
+   "summary": "Bitcoin Magazine Morgan Stanley’s Bitcoin Investment Recommendation Explained w/ Amy Oldenburg Morgan Stanley’s Digital Assets Head Amy Oldenburg joins Spencer Nichols to break down their $600M+ spot Bitcoin ETP, portfolio models, and more. This post Morgan Stanley’s Bitcoin Inv…",
+   "score": 0.094
+  },
+  {
+   "title": "Blockstream Refuses Ransom for Return of $47M in Bitcoin from Liquid Hack: 'It Is Theft'",
+   "url": "https://decrypt.co/377959/blockstream-refuses-ransom-for-return-of-47m-in-bitcoin-from-liquid-hack-it-is-theft",
+   "source": "Decrypt",
+   "published": "2026-09-11T14:17:38+00:00",
+   "summary": "With 598.5 BTC still outstanding, the company says it will go to law enforcement should the funds not be returned.",
+   "score": 0.0793
   },
   {
    "title": "Strive Snaps Up More Bitcoin, Brings Holdings to 25,000 BTC",
@@ -294,23 +310,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-14T16:33:32+00:00",
    "summary": "Bitcoin Magazine Strive Snaps Up More Bitcoin, Brings Holdings to 25,000 BTC Strive continued buying bitcoin last week and now holds nearly $2 billion in the cryptocurrency. This post Strive Snaps Up More Bitcoin, Brings Holdings to 25,000 BTC first appeared on Bitcoin Magazine…",
-   "score": 0.0939
-  },
-  {
-   "title": "A Bitcoin Berkshire Model: Orange Juice",
-   "url": "https://bitcoinmagazine.com/bitcoin-for-corporations/bitcoin-berkshire-orange-juice",
-   "source": "Bitcoin Magazine",
-   "published": "2026-09-14T12:43:26+00:00",
-   "summary": "Bitcoin Magazine A Bitcoin Berkshire Model: Orange Juice Orange Juice is a new corporate Bitcoin playbook imitating Berkshire Hathaway. This post A Bitcoin Berkshire Model: Orange Juice first appeared on Bitcoin Magazine and is written by Allard Peng .",
-   "score": 0.0711
-  },
-  {
-   "title": "Morning Minute: AI Agents Cut BTC Quantum Attack Benchmark by 86%",
-   "url": "https://decrypt.co/377948/morning-minute-ai-agents-cut-btc-quantum-attack-benchmark-by-86",
-   "source": "Decrypt",
-   "published": "2026-09-11T12:10:23+00:00",
-   "summary": "Crypto majors are shaky ahead of this morning’s CPI print, but onchain is heating up for another big potential weekend.",
-   "score": 0.0701
+   "score": 0.0742
   },
   {
    "title": "Bitcoin below $77,000, Zcash leads losses as traders bet on a Fed rate hike",
@@ -318,7 +318,7 @@
    "source": "CoinDesk",
    "published": "2026-09-11T04:46:15+00:00",
    "summary": "",
-   "score": 0.07
+   "score": 0.0692
   },
   {
    "title": "Metaplanet equity backlash, SE Asia crypto funding doubles: Asia Express",
@@ -326,7 +326,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-10T23:21:26+00:00",
    "summary": "Shareholders of Bitcoin treasury company Metaplanet are seething over equity allocations for insiders, while new figures cement Singapore’s role as the top Asian crypto hub.",
-   "score": 0.0648
+   "score": 0.064
   }
  ]
 }
