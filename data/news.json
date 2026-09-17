@@ -1,5 +1,5 @@
 {
- "fetched": "2026-09-17T16:54:33+00:00",
+ "fetched": "2026-09-17T17:16:00+00:00",
  "sources_ok": [
   "CoinDesk",
   "Cointelegraph",
@@ -14,15 +14,23 @@
    "source": "CoinDesk",
    "published": "2026-09-17T10:41:15+00:00",
    "summary": "",
-   "score": 3.0164
+   "score": 3.0009
   },
   {
-   "title": "How MSCI Shifted from Objective Benchmark to Defacto Market Regulator",
-   "url": "https://bitcoinmagazine.com/news/msci-objective-benchmark-to-market-regulator",
+   "title": "SEC Green Lights Tokenized Stock Trading Despite Clarity Act Fail",
+   "url": "https://bitcoinmagazine.com/news/clarity-act-fails-sec-pushes-tokenization",
    "source": "Bitcoin Magazine",
-   "published": "2026-09-16T13:18:23+00:00",
-   "summary": "Bitcoin Magazine How MSCI Shifted from Objective Benchmark to Defacto Market Regulator MSCI's proposed index rules threaten corporate Bitcoin treasuries. Discover why this decision risks turning private index providers into market regulators. This post How MSCI Shifted from Obje…",
-   "score": 2.4837
+   "published": "2026-09-17T17:11:39+00:00",
+   "summary": "Bitcoin Magazine SEC Green Lights Tokenized Stock Trading Despite Clarity Act Fail Regulators like the SEC are pushing forward with crypto rulemaking even if lawmakers have held back the long-awaited Clarity Act. This post SEC Green Lights Tokenized Stock Trading Despite Clarity…",
+   "score": 2.4974
+  },
+  {
+   "title": "Bitcoin Bounces as Markets Brace for the Fed’s Next Move",
+   "url": "https://decrypt.co/378506/bitcoin-bounces-wall-street-fed-next-move",
+   "source": "Decrypt",
+   "published": "2026-09-17T17:01:03+00:00",
+   "summary": "The Federal Reserve's first rate increase since 2023 barely dented crypto prices, but what comes next could change calculations on Wall Street.",
+   "score": 2.491
   },
   {
    "title": "Bitcoin coils near $76.5K as US stocks rebound from Fed rate hike",
@@ -30,15 +38,15 @@
    "source": "Cointelegraph",
    "published": "2026-09-17T16:22:23+00:00",
    "summary": "Bitcoin made modest daily gains as US stocks saw upside in the aftermath of the US Federal Reserve’s first interest-rate hike since July 2023.",
-   "score": 2.4807
+   "score": 2.4679
   },
   {
-   "title": "House Committee Advances US Bitcoin Reserve Bill on Party-Line Split",
-   "url": "https://decrypt.co/378457/house-committee-advances-us-bitcoin-reserve-bill-on-party-line-split",
-   "source": "Decrypt",
-   "published": "2026-09-17T10:24:21+00:00",
-   "summary": "A substitute text adopted before the vote strips out the Federal Reserve funding routes and thins the transparency rules.",
-   "score": 2.2759
+   "title": "How MSCI Shifted from Objective Benchmark to Defacto Market Regulator",
+   "url": "https://bitcoinmagazine.com/news/msci-objective-benchmark-to-market-regulator",
+   "source": "Bitcoin Magazine",
+   "published": "2026-09-16T13:18:23+00:00",
+   "summary": "Bitcoin Magazine How MSCI Shifted from Objective Benchmark to Defacto Market Regulator MSCI's proposed index rules threaten corporate Bitcoin treasuries. Discover why this decision risks turning private index providers into market regulators. This post How MSCI Shifted from Obje…",
+   "score": 1.9767
   },
   {
    "title": "State hackers drive 420% surge in onchain malware, Chainalysis finds",
@@ -46,7 +54,15 @@
    "source": "Cointelegraph",
    "published": "2026-09-17T12:00:00+00:00",
    "summary": "North Korea-linked hackers used Tron, Aptos and BNB Chain to maintain malware infrastructure, while suspected Iran-linked actors embedded directions in Bitcoin transactions.",
-   "score": 1.9376
+   "score": 1.9277
+  },
+  {
+   "title": "House Committee Advances US Bitcoin Reserve Bill on Party-Line Split",
+   "url": "https://decrypt.co/378457/house-committee-advances-us-bitcoin-reserve-bill-on-party-line-split",
+   "source": "Decrypt",
+   "published": "2026-09-17T10:24:21+00:00",
+   "summary": "A substitute text adopted before the vote strips out the Federal Reserve funding routes and thins the transparency rules.",
+   "score": 1.8114
   },
   {
    "title": "Bitcoin faces 2022 parallels as Federal Reserve resumes rate increases",
@@ -54,15 +70,7 @@
    "source": "CoinDesk",
    "published": "2026-09-17T08:41:48+00:00",
    "summary": "",
-   "score": 1.7763
-  },
-  {
-   "title": "Bitcoin ETFs Had Their Worst Day Since June Following Failed Clarity Act Vote",
-   "url": "https://decrypt.co/378382/bitcoin-etfs-clarity-act-vote",
-   "source": "Decrypt",
-   "published": "2026-09-16T15:50:07+00:00",
-   "summary": "Bitcoin, Ethereum, and XRP ETFs shed roughly $593 million combined Tuesday, their heaviest single-day drawdown since June.",
-   "score": 1.6709
+   "score": 1.7672
   },
   {
    "title": "BitMEX faces Celsius lawsuit ahead of exchange closure",
@@ -70,15 +78,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-17T05:55:18+00:00",
    "summary": "The Celsius estate alleges BitMEX wrongfully liquidated and seized 6,360 BTC, worth nearly $490 million, during the March 2020 market crash.",
-   "score": 1.5291
-  },
-  {
-   "title": "Peter Schiff: “The Fed Has Already Lost The Battle Against Inflation” & BTC vs GOLD Debate",
-   "url": "https://bitcoinmagazine.com/videos/peter-schiff-the-fed-has-already-lost-the-battle",
-   "source": "Bitcoin Magazine",
-   "published": "2026-09-16T20:28:50+00:00",
-   "summary": "Bitcoin Magazine Peter Schiff: “The Fed Has Already Lost The Battle Against Inflation” & BTC vs GOLD Debate Peter Schiff says the bond market didn't break recently, it broke in 2020, and everything since has been a slow unwind. This post Peter Schiff: “The Fed Has Already Lost T…",
-   "score": 1.4891
+   "score": 1.5212
   },
   {
    "title": "Zcash jumps 23% as bitcoin and major tokens rise despite Fed’s first hike since 2023",
@@ -86,7 +86,15 @@
    "source": "CoinDesk",
    "published": "2026-09-17T04:47:27+00:00",
    "summary": "",
-   "score": 1.3431
+   "score": 1.3362
+  },
+  {
+   "title": "Bitcoin ETFs Had Their Worst Day Since June Following Failed Clarity Act Vote",
+   "url": "https://decrypt.co/378382/bitcoin-etfs-clarity-act-vote",
+   "source": "Decrypt",
+   "published": "2026-09-16T15:50:07+00:00",
+   "summary": "Bitcoin, Ethereum, and XRP ETFs shed roughly $593 million combined Tuesday, their heaviest single-day drawdown since June.",
+   "score": 1.3299
   },
   {
    "title": "Bitcoin treasury firms can outperform BTC... but is the risk worth taking?",
@@ -94,23 +102,15 @@
    "source": "Cointelegraph",
    "published": "2026-09-17T13:30:00+00:00",
    "summary": "Bitcoin treasury companies promise to amplify returns over investing in Bitcoin alone, but does the potential upside outweigh the risks to the downside?",
-   "score": 1.2185
+   "score": 1.2122
   },
   {
-   "title": "Bitcoin Price Wobbles Before Settling After Fed Raises Rates",
-   "url": "https://bitcoinmagazine.com/news/bitcoin-price-wobbles-after-rate-hike",
+   "title": "Peter Schiff: “The Fed Has Already Lost The Battle Against Inflation” & BTC vs GOLD Debate",
+   "url": "https://bitcoinmagazine.com/videos/peter-schiff-the-fed-has-already-lost-the-battle",
    "source": "Bitcoin Magazine",
-   "published": "2026-09-16T19:46:49+00:00",
-   "summary": "Bitcoin Magazine Bitcoin Price Wobbles Before Settling After Fed Raises Rates Bitcoin is down over the past week after traders had bet that the central bank would hike interest rates. This post Bitcoin Price Wobbles Before Settling After Fed Raises Rates first appeared on Bitcoi…",
-   "score": 1.1793
-  },
-  {
-   "title": "Fed Hikes Rates for the First Time Since 2023, Bitcoin Spikes",
-   "url": "https://decrypt.co/378417/fed-hikes-rates-first-time-since-2023-bitcoin",
-   "source": "Decrypt",
-   "published": "2026-09-16T18:15:38+00:00",
-   "summary": "The Federal Reserve delivered the hike Wall Street had almost unanimously priced in.",
-   "score": 1.1537
+   "published": "2026-09-16T20:28:50+00:00",
+   "summary": "Bitcoin Magazine Peter Schiff: “The Fed Has Already Lost The Battle Against Inflation” & BTC vs GOLD Debate Peter Schiff says the bond market didn't break recently, it broke in 2020, and everything since has been a slow unwind. This post Peter Schiff: “The Fed Has Already Lost T…",
+   "score": 1.1851
   },
   {
    "title": "Bitcoin ETFs shed $450 million as Clarity Act fails",
@@ -118,7 +118,23 @@
    "source": "CoinDesk",
    "published": "2026-09-16T10:48:44+00:00",
    "summary": "",
-   "score": 0.9946
+   "score": 0.9895
+  },
+  {
+   "title": "Bitcoin Price Wobbles Before Settling After Fed Raises Rates",
+   "url": "https://bitcoinmagazine.com/news/bitcoin-price-wobbles-after-rate-hike",
+   "source": "Bitcoin Magazine",
+   "published": "2026-09-16T19:46:49+00:00",
+   "summary": "Bitcoin Magazine Bitcoin Price Wobbles Before Settling After Fed Raises Rates Bitcoin is down over the past week after traders had bet that the central bank would hike interest rates. This post Bitcoin Price Wobbles Before Settling After Fed Raises Rates first appeared on Bitcoi…",
+   "score": 0.9386
+  },
+  {
+   "title": "Fed Hikes Rates for the First Time Since 2023, Bitcoin Spikes",
+   "url": "https://decrypt.co/378417/fed-hikes-rates-first-time-since-2023-bitcoin",
+   "source": "Decrypt",
+   "published": "2026-09-16T18:15:38+00:00",
+   "summary": "The Federal Reserve delivered the hike Wall Street had almost unanimously priced in.",
+   "score": 0.9182
   },
   {
    "title": "Bitcoin treasuries buy just 5.9K BTC in three months as paper losses linger",
@@ -126,15 +142,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-17T09:00:31+00:00",
    "summary": "Bitcoin corporate treasuries remained at an unrealized loss on their holdings as the price fell below $80,000 and fresh capital inflows dwindled.",
-   "score": 0.9136
-  },
-  {
-   "title": "Bitcoin Hovers at $76K as Analysts Argue the Fed Matters More Than Clarity Act",
-   "url": "https://decrypt.co/378351/bitcoin-hovers-at-76k-as-analysts-argue-the-fed-matters-more-than-clarity-act",
-   "source": "Decrypt",
-   "published": "2026-09-16T12:12:21+00:00",
-   "summary": "With Bitcoin sitting around $76,000, the argument from analysts is that dollar liquidity, not Congress, sets the floor from here.",
-   "score": 0.8457
+   "score": 0.9089
   },
   {
    "title": "Here’s what happened in crypto today",
@@ -142,7 +150,15 @@
    "source": "Cointelegraph",
    "published": "2026-09-17T13:53:14+00:00",
    "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
-   "score": 0.6901
+   "score": 0.6866
+  },
+  {
+   "title": "Bitcoin Hovers at $76K as Analysts Argue the Fed Matters More Than Clarity Act",
+   "url": "https://decrypt.co/378351/bitcoin-hovers-at-76k-as-analysts-argue-the-fed-matters-more-than-clarity-act",
+   "source": "Decrypt",
+   "published": "2026-09-16T12:12:21+00:00",
+   "summary": "With Bitcoin sitting around $76,000, the argument from analysts is that dollar liquidity, not Congress, sets the floor from here.",
+   "score": 0.673
   },
   {
    "title": "Bitcoin loses touch with the Dollar Index, U.S. stocks ahead of the Fed",
@@ -150,23 +166,7 @@
    "source": "CoinDesk",
    "published": "2026-09-16T11:16:51+00:00",
    "summary": "",
-   "score": 0.6676
-  },
-  {
-   "title": "Bitcoin Sinks as the Senate's Clarity Act Showdown Looms",
-   "url": "https://decrypt.co/378233/bitcoin-sinks-senate-clarity-act-showdown",
-   "source": "Decrypt",
-   "published": "2026-09-15T14:58:57+00:00",
-   "summary": "Bitcoin just gave back its entire post-golden-cross rally in one red candle, with a make-or-break Senate vote landing this afternoon and the Fed staring down a rate hike.",
-   "score": 0.6573
-  },
-  {
-   "title": "Strike CEO Jack Mallers: Inflation Outlook, Bond Stress and BTC vs Gold",
-   "url": "https://bitcoinmagazine.com/videos/strike-ceo-jack-mallers-inflation-outlook-bond-stress-and-btc-vs-gold",
-   "source": "Bitcoin Magazine",
-   "published": "2026-09-15T13:08:05+00:00",
-   "summary": "Bitcoin Magazine Strike CEO Jack Mallers: Inflation Outlook, Bond Stress and BTC vs Gold US debt-to-GDP has pushed past 120%, and Jack Mallers thinks the debate over whether the Fed hikes or cuts is beside the point, both roads lead to inflation. This post Strike CEO Jack Maller…",
-   "score": 0.606
+   "score": 0.6641
   },
   {
    "title": "Bitcoin absorbs Fed rate hike as officials see more tightening",
@@ -174,7 +174,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-17T02:52:08+00:00",
    "summary": "Bitcoin showed little immediate reaction to the Fed’s first rate increase since 2023, but 16 of 18 officials expect at least one more hike before the end of the year.",
-   "score": 0.5351
+   "score": 0.5323
   },
   {
    "title": "Bitcoin traders brace for Fed hike, but a surprise hold could pose bigger risk",
@@ -182,23 +182,23 @@
    "source": "CoinDesk",
    "published": "2026-09-16T11:00:00+00:00",
    "summary": "",
-   "score": 0.5319
+   "score": 0.5291
   },
   {
-   "title": "Strategy Buys Back $139 Million of STRC, Bitcoin Stack Frozen for Second Week",
-   "url": "https://decrypt.co/378134/strategy-buys-139-million-strc-bitcoin-frozen",
+   "title": "Bitcoin Sinks as the Senate's Clarity Act Showdown Looms",
+   "url": "https://decrypt.co/378233/bitcoin-sinks-senate-clarity-act-showdown",
    "source": "Decrypt",
-   "published": "2026-09-14T15:41:46+00:00",
-   "summary": "The Bitcoin treasury firm slowed its preferred-stock buyback from last week's $176 million pace and left its 845,050 BTC untouched, per a Monday SEC filing.",
-   "score": 0.5237
+   "published": "2026-09-15T14:58:57+00:00",
+   "summary": "Bitcoin just gave back its entire post-golden-cross rally in one red candle, with a make-or-break Senate vote landing this afternoon and the Fed staring down a rate hike.",
+   "score": 0.5231
   },
   {
-   "title": "Senate Blocks Clarity Act, Likely Killing It for 2026",
-   "url": "https://bitcoinmagazine.com/news/senate-blocks-clarity-act",
+   "title": "Strike CEO Jack Mallers: Inflation Outlook, Bond Stress and BTC vs Gold",
+   "url": "https://bitcoinmagazine.com/videos/strike-ceo-jack-mallers-inflation-outlook-bond-stress-and-btc-vs-gold",
    "source": "Bitcoin Magazine",
-   "published": "2026-09-15T19:58:39+00:00",
-   "summary": "Bitcoin Magazine Senate Blocks Clarity Act, Likely Killing It for 2026 In a blow to the digital asset industry, lawmakers blocked the landmark crypto legislation. This post Senate Blocks Clarity Act, Likely Killing It for 2026 first appeared on Bitcoin Magazine and is written by…",
-   "score": 0.471
+   "published": "2026-09-15T13:08:05+00:00",
+   "summary": "Bitcoin Magazine Strike CEO Jack Mallers: Inflation Outlook, Bond Stress and BTC vs Gold US debt-to-GDP has pushed past 120%, and Jack Mallers thinks the debate over whether the Fed hikes or cuts is beside the point, both roads lead to inflation. This post Strike CEO Jack Maller…",
+   "score": 0.4823
   },
   {
    "title": "Live updates: Bitcoin steady as stocks slide following Fed rate hike, Warsh press conference",
@@ -206,7 +206,15 @@
    "source": "CoinDesk",
    "published": "2026-09-16T10:37:46+00:00",
    "summary": "",
-   "score": 0.4232
+   "score": 0.4211
+  },
+  {
+   "title": "Strategy Buys Back $139 Million of STRC, Bitcoin Stack Frozen for Second Week",
+   "url": "https://decrypt.co/378134/strategy-buys-139-million-strc-bitcoin-frozen",
+   "source": "Decrypt",
+   "published": "2026-09-14T15:41:46+00:00",
+   "summary": "The Bitcoin treasury firm slowed its preferred-stock buyback from last week's $176 million pace and left its 845,050 BTC untouched, per a Monday SEC filing.",
+   "score": 0.4168
   },
   {
    "title": "Crypto stocks slide after CLARITY Act fails to advance in Senate",
@@ -214,23 +222,15 @@
    "source": "Cointelegraph",
    "published": "2026-09-15T20:37:34+00:00",
    "summary": "Circle and Coinbase shares fell about 10% as the failed Senate vote weighed on crypto-linked equities, with Bitcoin miners and treasury companies also declining.",
-   "score": 0.3872
+   "score": 0.3852
   },
   {
-   "title": "Strategy Buys Back Stock, Skips Bitcoin Purchase",
-   "url": "https://bitcoinmagazine.com/news/strategy-again-skips-bitcoin-buy",
+   "title": "Senate Blocks Clarity Act, Likely Killing It for 2026",
+   "url": "https://bitcoinmagazine.com/news/senate-blocks-clarity-act",
    "source": "Bitcoin Magazine",
-   "published": "2026-09-14T15:33:44+00:00",
-   "summary": "Bitcoin Magazine Strategy Buys Back Stock, Skips Bitcoin Purchase Bitcoin treasury Strategy is holding off buying bitcoin again. This post Strategy Buys Back Stock, Skips Bitcoin Purchase first appeared on Bitcoin Magazine and is written by Mathew Di Salvo .",
-   "score": 0.3522
-  },
-  {
-   "title": "Wall Street Bets on Fed Rate Hike: Here's What It Means for Bitcoin, Bonds and Trump",
-   "url": "https://decrypt.co/378306/wall-street-fed-rate-hike-bitcoin-bonds-trump",
-   "source": "Decrypt",
-   "published": "2026-09-15T21:46:03+00:00",
-   "summary": "Nearly every major bank now expects the Fed to raise rates for the first time in three years. Markets have mostly priced it in, but the political fallout could run deeper than one hike.",
-   "score": 0.3515
+   "published": "2026-09-15T19:58:39+00:00",
+   "summary": "Bitcoin Magazine Senate Blocks Clarity Act, Likely Killing It for 2026 In a blow to the digital asset industry, lawmakers blocked the landmark crypto legislation. This post Senate Blocks Clarity Act, Likely Killing It for 2026 first appeared on Bitcoin Magazine and is written by…",
+   "score": 0.3748
   },
   {
    "title": "Fed meeting is shaping up to be a nightmare for Warsh. Bitcoin might still shine",
@@ -238,7 +238,7 @@
    "source": "CoinDesk",
    "published": "2026-09-16T06:42:22+00:00",
    "summary": "",
-   "score": 0.3199
+   "score": 0.3183
   },
   {
    "title": "Bitcoin ETFs shed $450M in biggest outflow since June",
@@ -246,15 +246,23 @@
    "source": "Cointelegraph",
    "published": "2026-09-16T04:05:39+00:00",
    "summary": "The $450 million withdrawal came as Bitcoin fell 2.5% and the CLARITY Act failed to advance in the Senate, with Fidelity and BlackRock funds leading the outflows.",
-   "score": 0.2958
+   "score": 0.2942
   },
   {
-   "title": "Ric Edelman: Buying Bitcoin Today Is Like Buying Amazon in 1999",
-   "url": "https://bitcoinmagazine.com/news/ric-edelman-says-bitcoin-is-like-amazon",
+   "title": "Strategy Buys Back Stock, Skips Bitcoin Purchase",
+   "url": "https://bitcoinmagazine.com/news/strategy-again-skips-bitcoin-buy",
    "source": "Bitcoin Magazine",
-   "published": "2026-09-17T15:54:50+00:00",
-   "summary": "Bitcoin Magazine Ric Edelman: Buying Bitcoin Today Is Like Buying Amazon in 1999 The top financial advisor also thinks bitcoin's price will hit at least $500,000 by 2030. This post Ric Edelman: Buying Bitcoin Today Is Like Buying Amazon in 1999 first appeared on Bitcoin Magazine…",
-   "score": 0.2584
+   "published": "2026-09-14T15:33:44+00:00",
+   "summary": "Bitcoin Magazine Strategy Buys Back Stock, Skips Bitcoin Purchase Bitcoin treasury Strategy is holding off buying bitcoin again. This post Strategy Buys Back Stock, Skips Bitcoin Purchase first appeared on Bitcoin Magazine and is written by Mathew Di Salvo .",
+   "score": 0.2803
+  },
+  {
+   "title": "Wall Street Bets on Fed Rate Hike: Here's What It Means for Bitcoin, Bonds and Trump",
+   "url": "https://decrypt.co/378306/wall-street-fed-rate-hike-bitcoin-bonds-trump",
+   "source": "Decrypt",
+   "published": "2026-09-15T21:46:03+00:00",
+   "summary": "Nearly every major bank now expects the Fed to raise rates for the first time in three years. Markets have mostly priced it in, but the political fallout could run deeper than one hike.",
+   "score": 0.2797
   },
   {
    "title": "US lawmakers advance bill to lock Trump’s Bitcoin reserve into law",
@@ -262,7 +270,15 @@
    "source": "Cointelegraph",
    "published": "2026-09-17T00:23:44+00:00",
    "summary": "The legislation seeks to codify Trump’s Bitcoin reserve policy, locking up Bitcoin acquired through civil and criminal forfeiture for 20 years.",
-   "score": 0.2326
+   "score": 0.2314
+  },
+  {
+   "title": "Ric Edelman: Buying Bitcoin Today Is Like Buying Amazon in 1999",
+   "url": "https://bitcoinmagazine.com/news/ric-edelman-says-bitcoin-is-like-amazon",
+   "source": "Bitcoin Magazine",
+   "published": "2026-09-17T15:54:50+00:00",
+   "summary": "Bitcoin Magazine Ric Edelman: Buying Bitcoin Today Is Like Buying Amazon in 1999 The top financial advisor also thinks bitcoin's price will hit at least $500,000 by 2030. This post Ric Edelman: Buying Bitcoin Today Is Like Buying Amazon in 1999 first appeared on Bitcoin Magazine…",
+   "score": 0.2057
   },
   {
    "title": "Two Prime makes onchain finance push with $10 million-backed bitcoin yield vault",
@@ -270,7 +286,7 @@
    "source": "CoinDesk",
    "published": "2026-09-16T11:00:00+00:00",
    "summary": "",
-   "score": 0.1961
+   "score": 0.1951
   },
   {
    "title": "Bitcoin awaits Fed rate decision below $76K as analysis discounts ‘dovish surprise’ odds",
@@ -278,23 +294,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-16T15:30:49+00:00",
    "summary": "Bitcoin price support materialized around $68,000 as markets saw a 93% chance of the Fed hiking rates by 0.25% on Wednesday.",
-   "score": 0.186
-  },
-  {
-   "title": "CFTC Chairman Says Agency Will Write Crypto Rules After Clarity Act Vote Fails",
-   "url": "https://bitcoinmagazine.com/news/cftc-chair-will-write-rules-clarity-fail",
-   "source": "Bitcoin Magazine",
-   "published": "2026-09-16T18:27:14+00:00",
-   "summary": "Bitcoin Magazine CFTC Chairman Says Agency Will Write Crypto Rules After Clarity Act Vote Fails Commodity Futures Trading Commission Chair Mike Selig will work with President Trump to advance crypto rules. This post CFTC Chairman Says Agency Will Write Crypto Rules After Clarity…",
-   "score": 0.1516
-  },
-  {
-   "title": "Tonkeeper Becomes Keeper as Wallet Adds Bitcoin, Ethereum, and Tron",
-   "url": "https://decrypt.co/378265/tonkeeper-keeper-adds-bitcoin-ethereum-tron",
-   "source": "Decrypt",
-   "published": "2026-09-16T09:01:03+00:00",
-   "summary": "The self-custodial wallet is expanding beyond The Open Network, with support for seven blockchains and more financial products planned.",
-   "score": 0.1323
+   "score": 0.1851
   },
   {
    "title": "Crypto for Advisors: Beyond bitcoin and ether",
@@ -302,7 +302,7 @@
    "source": "CoinDesk",
    "published": "2026-09-17T14:57:11+00:00",
    "summary": "",
-   "score": 0.1305
+   "score": 0.1298
   },
   {
    "title": "Deutsche Bank awaits regulatory nod to launch institutional crypto custody solutions",
@@ -310,23 +310,23 @@
    "source": "Cointelegraph",
    "published": "2026-09-16T10:33:12+00:00",
    "summary": "Germany’s largest bank is awaiting regulatory approval to launch institutional custody solutions for Bitcoin, Ether and select stablecoins before expanding into tokenized assets.",
-   "score": 0.1219
+   "score": 0.1213
   },
   {
-   "title": "Bitcoin Is on Sale and Should Be Accumulated, Says Morgan Creek Capital CEO",
-   "url": "https://bitcoinmagazine.com/news/bitcoin-on-sale-says-mark-yusko",
+   "title": "CFTC Chairman Says Agency Will Write Crypto Rules After Clarity Act Vote Fails",
+   "url": "https://bitcoinmagazine.com/news/cftc-chair-will-write-rules-clarity-fail",
    "source": "Bitcoin Magazine",
-   "published": "2026-09-16T16:40:06+00:00",
-   "summary": "Bitcoin Magazine Bitcoin Is on Sale and Should Be Accumulated, Says Morgan Creek Capital CEO Mark Yusko has said that bitcoin is undervalued, and when something is undervalued, you buy it. This post Bitcoin Is on Sale and Should Be Accumulated, Says Morgan Creek Capital CEO firs…",
-   "score": 0.1182
+   "published": "2026-09-16T18:27:14+00:00",
+   "summary": "Bitcoin Magazine CFTC Chairman Says Agency Will Write Crypto Rules After Clarity Act Vote Fails Commodity Futures Trading Commission Chair Mike Selig will work with President Trump to advance crypto rules. This post CFTC Chairman Says Agency Will Write Crypto Rules After Clarity…",
+   "score": 0.1207
   },
   {
-   "title": "The Quantum Issue: To Freeze Coins Or Not",
-   "url": "https://bitcoinmagazine.com/print/the-quantum-issue-to-freeze-coins-or-not",
-   "source": "Bitcoin Magazine",
-   "published": "2026-09-16T16:39:01+00:00",
-   "summary": "Bitcoin Magazine The Quantum Issue: To Freeze Coins Or Not From The Quantum Issue: Jameson Lopp's massive essay on the contentious social decisions for Bitcoin quantum computing will force people to confront. This post The Quantum Issue: To Freeze Coins Or Not first appeared on…",
-   "score": 0.0946
+   "title": "Tonkeeper Becomes Keeper as Wallet Adds Bitcoin, Ethereum, and Tron",
+   "url": "https://decrypt.co/378265/tonkeeper-keeper-adds-bitcoin-ethereum-tron",
+   "source": "Decrypt",
+   "published": "2026-09-16T09:01:03+00:00",
+   "summary": "The self-custodial wallet is expanding beyond The Open Network, with support for seven blockchains and more financial products planned.",
+   "score": 0.1053
   }
  ]
 }
