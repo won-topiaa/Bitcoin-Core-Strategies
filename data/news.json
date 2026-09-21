@@ -1,5 +1,5 @@
 {
- "fetched": "2026-09-21T10:39:28+00:00",
+ "fetched": "2026-09-21T13:21:12+00:00",
  "sources_ok": [
   "CoinDesk",
   "Cointelegraph",
@@ -9,12 +9,28 @@
  "sources_failed": [],
  "items": [
   {
+   "title": "Strategy's Bitcoin Pile Nears June Record After $76M Purchase",
+   "url": "https://decrypt.co/378737/strategys-bitcoin-pile-nears-june-record-after-76m-purchase",
+   "source": "Decrypt",
+   "published": "2026-09-21T12:56:46+00:00",
+   "summary": "The Bitcoin treasury firm’s holdings bottomed at 840,447 BTC in August. They have since climbed 5,553 BTC, to within 0.2% of the high.",
+   "score": 3.0818
+  },
+  {
+   "title": "Live updates: Bitcoin tops $85,000, reclaims U.S. ETF cost basis for first time since January",
+   "url": "https://www.coindesk.com/business/2026/09/21/live-updates-bitcoin-rises-above-usd82-000-as-falling-oil-lifts-risk-assets",
+   "source": "CoinDesk",
+   "published": "2026-09-21T08:39:26+00:00",
+   "summary": "",
+   "score": 2.8033
+  },
+  {
    "title": "REX launches 2x leveraged ETF tied to Bitcoin treasury firm Strive",
    "url": "https://cointelegraph.com/news/rex-launches-2x-leveraged-etf-tied-to-bitcoin-treasury-firm-strive?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
    "source": "Cointelegraph",
    "published": "2026-09-19T19:18:00+00:00",
    "summary": "The new ASSX fund offers 2x daily exposure to Strive shares, giving traders a leveraged way to bet on the Bitcoin treasury company.",
-   "score": 2.5491
+   "score": 2.4517
   },
   {
    "title": "Strategy Founder Michael Saylor Argues Clarity Act Collapse Is a Win",
@@ -22,7 +38,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-21T00:52:50+00:00",
    "summary": "Bitcoin Magazine Strategy Founder Michael Saylor Argues Clarity Act Collapse Is a Win Saylor has argued that the digital asset industry can work well with regulators alone. This post Strategy Founder Michael Saylor Argues Clarity Act Collapse Is a Win first appeared on Bitcoin M…",
-   "score": 2.4313
+   "score": 2.3385
   },
   {
    "title": "Strategy CEO Phong Le: We Want to Be the JPMorgan of Bitcoin",
@@ -30,7 +46,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-20T13:06:46+00:00",
    "summary": "Bitcoin Magazine Strategy CEO Phong Le: We Want to Be the JPMorgan of Bitcoin CEO Phong Le explains how MicroStrategy plans to become the \"JPMorgan of Bitcoin\" by making markets and providing liquidity for an 8-billion-person economy. This post Strategy CEO Phong Le: We Want to…",
-   "score": 1.6411
+   "score": 1.5784
   },
   {
    "title": "Here’s what happened in crypto today",
@@ -38,7 +54,15 @@
    "source": "Cointelegraph",
    "published": "2026-09-21T04:44:48+00:00",
    "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
-   "score": 1.616
+   "score": 1.5543
+  },
+  {
+   "title": "Strategy returns to bitcoin buys, adding $75 million of BTC last week",
+   "url": "https://www.coindesk.com/markets/2026/09/21/strategy-returns-to-bitcoin-buys-adding-usd75-million-of-btc-last-week",
+   "source": "CoinDesk",
+   "published": "2026-09-21T12:08:02+00:00",
+   "summary": "",
+   "score": 1.2577
   },
   {
    "title": "T. Rowe Price’s Blue Macellari: Bitcoin is Now Core to the Debasement Conversation",
@@ -46,23 +70,15 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-20T13:24:37+00:00",
    "summary": "Bitcoin Magazine T. Rowe Price’s Blue Macellari: Bitcoin is Now Core to the Debasement Conversation T. Rowe Price’s Blue Macellari shares her insider perspective on the current state of the Treasury market. This post T. Rowe Price’s Blue Macellari: Bitcoin is Now Core to the Deb…",
-   "score": 1.1772
+   "score": 1.1323
   },
   {
-   "title": "'The orange tie stays': Michael Saylor responds to venture capitalist's bitcoin obituary",
-   "url": "https://www.coindesk.com/markets/2026/09/19/the-orange-tie-stays-michael-saylor-responds-to-venture-capitalist-s-bitcoin-obituary",
-   "source": "CoinDesk",
-   "published": "2026-09-19T12:13:57+00:00",
-   "summary": "",
-   "score": 1.1253
-  },
-  {
-   "title": "Bitcoin's Sharpest Rally in Two Years Ran Almost Entirely on Short Liquidations",
-   "url": "https://decrypt.co/378686/bitcoin-sharpest-rally-two-years-short-liquidations",
-   "source": "Decrypt",
-   "published": "2026-09-19T16:01:03+00:00",
-   "summary": "A Glassnode and Bybit report found Bitcoin climbed 24.6% in five August days even as active leverage fell, with short positions supplying 89% of every liquidated dollar.",
-   "score": 0.9724
+   "title": "Strategy buys 950 Bitcoin for $76M, repurchases $174M in STRC",
+   "url": "https://cointelegraph.com/news/strategy-950-btc-buy-strc-repurchase-174-million?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-09-21T12:48:21+00:00",
+   "summary": "Strategy bought 950 Bitcoin for $75.7 million after a two-week pause and spent another $174 million repurchasing its STRC preferred stock.",
+   "score": 1.0159
   },
   {
    "title": "Coinbase Policy Chief: Strategic Bitcoin Reserve Bill Outlook",
@@ -70,15 +86,23 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-20T13:15:42+00:00",
    "summary": "Bitcoin Magazine Coinbase Policy Chief: Strategic Bitcoin Reserve Bill Outlook The Clarity Act's cloture vote failed. Coinbase Chief Policy Officer Faryar Shirzad breaks down what went wrong and where regulation goes next. This post Coinbase Policy Chief: Strategic Bitcoin Reser…",
-   "score": 0.827
+   "score": 0.7954
   },
   {
-   "title": "Bitcoin hits $85,000 as short squeeze forces out $648 million of bearish bets",
-   "url": "https://www.coindesk.com/markets/2026/09/21/bitcoin-hits-usd85-000-as-short-squeeze-forces-out-usd648-million-of-bearish-bets",
+   "title": "Bitcoin Tops $85K as $648M in Crypto Shorts Liquidated",
+   "url": "https://decrypt.co/378729/bitcoin-tops-85k-as-648m-in-crypto-shorts-liquidated",
+   "source": "Decrypt",
+   "published": "2026-09-21T12:22:00+00:00",
+   "summary": "A short squeeze started the move, but spot buyers have sustained it, and one measure of selling pressure is near a record low.",
+   "score": 0.7887
+  },
+  {
+   "title": "'The orange tie stays': Michael Saylor responds to venture capitalist's bitcoin obituary",
+   "url": "https://www.coindesk.com/markets/2026/09/19/the-orange-tie-stays-michael-saylor-responds-to-venture-capitalist-s-bitcoin-obituary",
    "source": "CoinDesk",
-   "published": "2026-09-21T10:30:00+00:00",
+   "published": "2026-09-19T12:13:57+00:00",
    "summary": "",
-   "score": 0.7982
+   "score": 0.6927
   },
   {
    "title": "Bitcoin cycle bottom may already be in at $58K, says analyst James Check",
@@ -86,23 +110,15 @@
    "source": "Cointelegraph",
    "published": "2026-09-18T08:47:20+00:00",
    "summary": "Onchain analyst James Check says Bitcoin may have bottomed near $58,000 after two capitulations and warns against anchoring to an October low.",
-   "score": 0.7929
+   "score": 0.6101
   },
   {
-   "title": "Treasury Sanctions Crypto Exchange Behind Iran's Bitcoin Tolls on Hormuz Ships",
-   "url": "https://decrypt.co/378604/treasury-sanctions-crypto-exchange-behind-irans-bitcoin-tolls-on-hormuz-ships",
+   "title": "Bitcoin's Sharpest Rally in Two Years Ran Almost Entirely on Short Liquidations",
+   "url": "https://decrypt.co/378686/bitcoin-sharpest-rally-two-years-short-liquidations",
    "source": "Decrypt",
-   "published": "2026-09-18T09:01:55+00:00",
-   "summary": "OFAC says hundreds of millions of dollars in Bitcoin moved through BitBank to the Revolutionary Guards in two months.",
-   "score": 0.6907
-  },
-  {
-   "title": "X sues its own users for running a fake bitcoin news bot farm",
-   "url": "https://www.coindesk.com/markets/2026/09/21/x-sues-its-won-users-for-running-a-fake-bitcoin-news-bot-farm",
-   "source": "CoinDesk",
-   "published": "2026-09-21T10:15:44+00:00",
-   "summary": "",
-   "score": 0.6364
+   "published": "2026-09-19T16:01:03+00:00",
+   "summary": "A Glassnode and Bybit report found Bitcoin climbed 24.6% in five August days even as active leverage fell, with short positions supplying 89% of every liquidated dollar.",
+   "score": 0.5986
   },
   {
    "title": "Bitcoin Price Surges Over $81,000 Despite Clarity Act Fail and Interest Rate Hike",
@@ -110,7 +126,31 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-18T16:46:48+00:00",
    "summary": "Bitcoin Magazine Bitcoin Price Surges Over $81,000 Despite Clarity Act Fail and Interest Rate Hike Bitcoin’s price on Friday shot above $81,000 — despite a week of setbacks for the crypto industry. The biggest coin was recently trading for $80,982, after jumping as high as $81,0…",
-   "score": 0.5221
+   "score": 0.5021
+  },
+  {
+   "title": "Bitcoin's 44% gain in third quarter teases full-blown crypto bull run",
+   "url": "https://www.coindesk.com/daybook-us/2026/09/21/bitcoin-s-44-gain-in-third-quarter-teases-full-blown-crypto-bull-run",
+   "source": "CoinDesk",
+   "published": "2026-09-21T11:36:11+00:00",
+   "summary": "",
+   "score": 0.4992
+  },
+  {
+   "title": "Treasury Sanctions Crypto Exchange Behind Iran's Bitcoin Tolls on Hormuz Ships",
+   "url": "https://decrypt.co/378604/treasury-sanctions-crypto-exchange-behind-irans-bitcoin-tolls-on-hormuz-ships",
+   "source": "Decrypt",
+   "published": "2026-09-18T09:01:55+00:00",
+   "summary": "OFAC says hundreds of millions of dollars in Bitcoin moved through BitBank to the Revolutionary Guards in two months.",
+   "score": 0.4252
+  },
+  {
+   "title": "Perp futures linked to 'bitcoin VIX' debut on Hyperliquid",
+   "url": "https://www.coindesk.com/markets/2026/09/21/perp-futures-linked-to-bitcoin-vix-debut-on-hyperliquid",
+   "source": "CoinDesk",
+   "published": "2026-09-21T11:30:00+00:00",
+   "summary": "",
+   "score": 0.3988
   },
   {
    "title": "BTC price nears eight-month high above $85K: Five things to know in Bitcoin this week",
@@ -118,23 +158,23 @@
    "source": "Cointelegraph",
    "published": "2026-09-21T10:15:51+00:00",
    "summary": "Bitcoin hit $85,000 for the first time since January as markets focused on cooling oil prices.",
-   "score": 0.5091
+   "score": 0.3917
   },
   {
-   "title": "Ether and XRP ETFs post outflows as bitcoin moves above $77,000",
-   "url": "https://www.coindesk.com/markets/2026/09/18/ether-and-xrp-etfs-post-outflows-as-bitcoin-moves-above-usd77-000",
+   "title": "Billionaire Investor Tim Draper: “Irresponsible” for Apple & Meta NOT to Hold BTC",
+   "url": "https://bitcoinmagazine.com/videos/billionaire-investor-tim-draper-irresponsible-for-apple-meta-not-to-hold-btc",
+   "source": "Bitcoin Magazine",
+   "published": "2026-09-21T13:10:28+00:00",
+   "summary": "Bitcoin Magazine Billionaire Investor Tim Draper: “Irresponsible” for Apple & Meta NOT to Hold BTC Government spending hasn't slowed, and Tim Draper says that leaves only two real outcomes: hyperinflation or interest rates high enough to break banks. This post Billionaire Invest…",
+   "score": 0.3268
+  },
+  {
+   "title": "Bitcoin hits $85,000 as short squeeze forces out $648 million of bearish bets",
+   "url": "https://www.coindesk.com/markets/2026/09/21/bitcoin-hits-usd85-000-as-short-squeeze-forces-out-usd648-million-of-bearish-bets",
    "source": "CoinDesk",
-   "published": "2026-09-18T04:49:17+00:00",
+   "published": "2026-09-21T10:30:00+00:00",
    "summary": "",
-   "score": 0.4992
-  },
-  {
-   "title": "Why Holding Anything But Bitcoin Has Been a Losing Bet for Two Years",
-   "url": "https://decrypt.co/378695/holding-anything-but-bitcoin-losing-bet",
-   "source": "Decrypt",
-   "published": "2026-09-20T14:01:03+00:00",
-   "summary": "A Glassnode and Bybit report frames the divergence as the defining feature of this cycle, with froth pooling in the market's riskiest corners even as Bitcoin does the heavy lifting.",
-   "score": 0.475
+   "score": 0.3145
   },
   {
    "title": "X sues Bitcoin account operators over alleged $278K payout fraud",
@@ -142,23 +182,23 @@
    "source": "Cointelegraph",
    "published": "2026-09-21T09:35:25+00:00",
    "summary": "X alleges six Bitcoin-focused accounts coordinated posts and engagement to inflate creator payouts, with claimed and projected losses of at least $378,000.",
-   "score": 0.4033
+   "score": 0.3103
   },
   {
-   "title": "Live updates: Bitcoin hits $85,000 as short liquidations hit $300 million in an hour",
-   "url": "https://www.coindesk.com/business/2026/09/21/live-updates-bitcoin-rises-above-usd82-000-as-falling-oil-lifts-risk-assets",
-   "source": "CoinDesk",
-   "published": "2026-09-21T08:39:26+00:00",
-   "summary": "",
-   "score": 0.3979
-  },
-  {
-   "title": "XRP Surges 6.9% as Bitcoin Rebound Reopens Door to Golden Cross",
-   "url": "https://decrypt.co/378641/xrp-surges-bitcoin-rebound-reopens-golden-cross",
+   "title": "Why Holding Anything But Bitcoin Has Been a Losing Bet for Two Years",
+   "url": "https://decrypt.co/378695/holding-anything-but-bitcoin-losing-bet",
    "source": "Decrypt",
-   "published": "2026-09-18T16:42:32+00:00",
-   "summary": "XRP is roaring back as Bitcoin claws its way above $800,000 again, but the charts continue to give traders mixed signals.",
-   "score": 0.3556
+   "published": "2026-09-20T14:01:03+00:00",
+   "summary": "A Glassnode and Bybit report frames the divergence as the defining feature of this cycle, with froth pooling in the market's riskiest corners even as Bitcoin does the heavy lifting.",
+   "score": 0.2924
+  },
+  {
+   "title": "X sues its own users for running a fake bitcoin news bot farm",
+   "url": "https://www.coindesk.com/markets/2026/09/21/x-sues-its-won-users-for-running-a-fake-bitcoin-news-bot-farm",
+   "source": "CoinDesk",
+   "published": "2026-09-21T10:15:44+00:00",
+   "summary": "",
+   "score": 0.2507
   },
   {
    "title": "Bitcoin reclaims 50-week moving average as analysts eye end of bear market",
@@ -166,15 +206,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-21T04:29:59+00:00",
    "summary": "Bitcoin’s move above its 50-week moving average has historically marked the end of bear markets, but analysts say one weekly close isn’t enough to confirm a new bull run.",
-   "score": 0.2998
-  },
-  {
-   "title": "Bitcoin rises above $81,000, while NEAR jumps 23% on Zcash swap traffic",
-   "url": "https://www.coindesk.com/markets/2026/09/21/bitcoin-rises-above-usd81-000-while-near-jumps-23-on-zcash-swap-traffic",
-   "source": "CoinDesk",
-   "published": "2026-09-21T04:03:43+00:00",
-   "summary": "",
-   "score": 0.2979
+   "score": 0.2307
   },
   {
    "title": "CFTC Sends Proposal To Regulate Crypto Transactions Following Clarity Act Fail",
@@ -182,7 +214,23 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-18T20:00:13+00:00",
    "summary": "Bitcoin Magazine CFTC Sends Proposal To Regulate Crypto Transactions Following Clarity Act Fail The regulator has already sent a proposal to the White House following this week's failed vote. This post CFTC Sends Proposal To Regulate Crypto Transactions Following Clarity Act Fai…",
-   "score": 0.2917
+   "score": 0.2245
+  },
+  {
+   "title": "XRP Surges 6.9% as Bitcoin Rebound Reopens Door to Golden Cross",
+   "url": "https://decrypt.co/378641/xrp-surges-bitcoin-rebound-reopens-golden-cross",
+   "source": "Decrypt",
+   "published": "2026-09-18T16:42:32+00:00",
+   "summary": "XRP is roaring back as Bitcoin claws its way above $800,000 again, but the charts continue to give traders mixed signals.",
+   "score": 0.2189
+  },
+  {
+   "title": "Ether and XRP ETFs post outflows as bitcoin moves above $77,000",
+   "url": "https://www.coindesk.com/markets/2026/09/18/ether-and-xrp-etfs-post-outflows-as-bitcoin-moves-above-usd77-000",
+   "source": "CoinDesk",
+   "published": "2026-09-18T04:49:17+00:00",
+   "summary": "",
+   "score": 0.1967
   },
   {
    "title": "Bitcoin Bounces as Markets Brace for the Fed’s Next Move",
@@ -190,15 +238,7 @@
    "source": "Decrypt",
    "published": "2026-09-17T17:01:03+00:00",
    "summary": "The Federal Reserve's first rate increase since 2023 barely dented crypto prices, but what comes next could change calculations on Wall Street.",
-   "score": 0.2806
-  },
-  {
-   "title": "Bitcoin’s price has cleared a key hurdle that has historically preceded major bull runs",
-   "url": "https://www.coindesk.com/markets/2026/09/21/bitcoin-s-price-has-cleared-a-key-hurdle-that-has-historically-preceded-major-bull-runs",
-   "source": "CoinDesk",
-   "published": "2026-09-21T03:56:23+00:00",
-   "summary": "",
-   "score": 0.2379
+   "score": 0.1727
   },
   {
    "title": "Who needs CLARITY anyway? ARB could see 70X increase: Hodler’s Digest",
@@ -206,7 +246,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-20T23:37:39+00:00",
    "summary": "Crypto missed out on CLARITY, but tokenized stocks were legalized and the Bitcoin Reserve advanced. Meanwhile Standard Chartered says Arbitrum’s price could increase 70 times by 2030.",
-   "score": 0.2235
+   "score": 0.172
   },
   {
    "title": "Bitcoin ETFs Could Triple Gold Counterparts as Asset Matures: Expert",
@@ -214,7 +254,15 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-17T19:24:01+00:00",
    "summary": "Bitcoin Magazine Bitcoin ETFs Could Triple Gold Counterparts as Asset Matures: Expert Bloomberg ETF analyst Eric Balchunas said the younger generation could be drawn to bitcoin. This post Bitcoin ETFs Could Triple Gold Counterparts as Asset Matures: Expert first appeared on Bitc…",
-   "score": 0.2231
+   "score": 0.1716
+  },
+  {
+   "title": "Bitcoin rises above $81,000, while NEAR jumps 23% on Zcash swap traffic",
+   "url": "https://www.coindesk.com/markets/2026/09/21/bitcoin-rises-above-usd81-000-while-near-jumps-23-on-zcash-swap-traffic",
+   "source": "CoinDesk",
+   "published": "2026-09-21T04:03:43+00:00",
+   "summary": "",
+   "score": 0.1467
   },
   {
    "title": "House Committee Advances US Bitcoin Reserve Bill on Party-Line Split",
@@ -222,15 +270,7 @@
    "source": "Decrypt",
    "published": "2026-09-17T10:24:21+00:00",
    "summary": "A substitute text adopted before the vote strips out the Federal Reserve funding routes and thins the transparency rules.",
-   "score": 0.2041
-  },
-  {
-   "title": "Bitcoin weathers September storm as rate hikes and Clarity act setback test bulls",
-   "url": "https://www.coindesk.com/markets/2026/09/18/bitcoin-weathers-september-storm-as-rate-hikes-and-clarity-act-setback-test-bulls",
-   "source": "CoinDesk",
-   "published": "2026-09-18T10:07:33+00:00",
-   "summary": "",
-   "score": 0.1839
+   "score": 0.1256
   },
   {
    "title": "US sanctions Iran’s BitBank, saying it processes ‘Hormuz Safe’ Bitcoin payments",
@@ -238,7 +278,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-18T01:33:54+00:00",
    "summary": "US Treasury says the Iranian exchange processed payments received through Iran’s Strait of Hormuz maritime scheme and helped move hundreds of millions of dollars in Bitcoin to the IRGC.",
-   "score": 0.1626
+   "score": 0.1251
   },
   {
    "title": "Move Over Housing – Bitcoin is Gen Z’s New Wealth Building Asset",
@@ -246,23 +286,15 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-20T13:34:01+00:00",
    "summary": "Bitcoin Magazine Move Over Housing – Bitcoin is Gen Z’s New Wealth Building Asset Gen Z now makes up less than 5% of the new home market and Hunter Albright of SALT Lending thinks that changes what assets an entire generation chooses to build wealth with. This post Move Over Hou…",
-   "score": 0.1547
+   "score": 0.119
   },
   {
-   "title": "Bitcoin ETFs Had Their Worst Day Since June Following Failed Clarity Act Vote",
-   "url": "https://decrypt.co/378382/bitcoin-etfs-clarity-act-vote",
-   "source": "Decrypt",
-   "published": "2026-09-16T15:50:07+00:00",
-   "summary": "Bitcoin, Ethereum, and XRP ETFs shed roughly $593 million combined Tuesday, their heaviest single-day drawdown since June.",
-   "score": 0.1498
-  },
-  {
-   "title": "Corporate treasuries bought just 5,900 bitcoin in 3 months. Other demand signals look weak, too.",
-   "url": "https://www.coindesk.com/markets/2026/09/18/corporate-treasuries-bought-just-5-900-bitcoin-in-3-months-other-demand-signals-look-weak-too",
+   "title": "Bitcoin’s price has cleared a key hurdle that has historically preceded major bull runs",
+   "url": "https://www.coindesk.com/markets/2026/09/21/bitcoin-s-price-has-cleared-a-key-hurdle-that-has-historically-preceded-major-bull-runs",
    "source": "CoinDesk",
-   "published": "2026-09-18T05:43:21+00:00",
+   "published": "2026-09-21T03:56:23+00:00",
    "summary": "",
-   "score": 0.1381
+   "score": 0.1172
   },
   {
    "title": "Treasury Sanctions Iranian Crypto Exchange BitBank Over Bitcoin Transfers to IRGC",
@@ -270,7 +302,23 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-17T21:48:51+00:00",
    "summary": "Bitcoin Magazine Treasury Sanctions Iranian Crypto Exchange BitBank Over Bitcoin Transfers to IRGC The U.S. is targeting Iran's use of crypto — specifically bitcoin. This post Treasury Sanctions Iranian Crypto Exchange BitBank Over Bitcoin Transfers to IRGC first appeared on Bit…",
-   "score": 0.1232
+   "score": 0.0948
+  },
+  {
+   "title": "Bitcoin ETFs Had Their Worst Day Since June Following Failed Clarity Act Vote",
+   "url": "https://decrypt.co/378382/bitcoin-etfs-clarity-act-vote",
+   "source": "Decrypt",
+   "published": "2026-09-16T15:50:07+00:00",
+   "summary": "Bitcoin, Ethereum, and XRP ETFs shed roughly $593 million combined Tuesday, their heaviest single-day drawdown since June.",
+   "score": 0.0922
+  },
+  {
+   "title": "Bitcoin weathers September storm as rate hikes and Clarity act setback test bulls",
+   "url": "https://www.coindesk.com/markets/2026/09/18/bitcoin-weathers-september-storm-as-rate-hikes-and-clarity-act-setback-test-bulls",
+   "source": "CoinDesk",
+   "published": "2026-09-18T10:07:33+00:00",
+   "summary": "",
+   "score": 0.0906
   },
   {
    "title": "Bitcoin coils near $76.5K as US stocks rebound from Fed rate hike",
@@ -278,55 +326,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-17T16:22:23+00:00",
    "summary": "Bitcoin made modest daily gains as US stocks saw upside in the aftermath of the US Federal Reserve’s first interest-rate hike since July 2023.",
-   "score": 0.1139
-  },
-  {
-   "title": "Fed Hikes Rates for the First Time Since 2023, Bitcoin Spikes",
-   "url": "https://decrypt.co/378417/fed-hikes-rates-first-time-since-2023-bitcoin",
-   "source": "Decrypt",
-   "published": "2026-09-16T18:15:38+00:00",
-   "summary": "The Federal Reserve delivered the hike Wall Street had almost unanimously priced in.",
-   "score": 0.1034
-  },
-  {
-   "title": "Bitcoin Price Unlikely To Be Bothered by Interest Rate Hike: Grayscale",
-   "url": "https://bitcoinmagazine.com/news/bitcoin-not-bothered-by-fed-says-grayscale",
-   "source": "Bitcoin Magazine",
-   "published": "2026-09-17T21:08:51+00:00",
-   "summary": "Bitcoin Magazine Bitcoin Price Unlikely To Be Bothered by Interest Rate Hike: Grayscale The Federal Reserve hiked interest rates on Wednesday — and may do so again this year — but bitcoin's price is unlikely to be hurt, Grayscale argued. This post Bitcoin Price Unlikely To Be Bo…",
-   "score": 0.0976
-  },
-  {
-   "title": "Crypto traders braced for a total wipeout this week but Bitcoin had other plans",
-   "url": "https://www.coindesk.com/markets/2026/09/18/crypto-traders-braced-for-a-total-wipeout-this-week-but-bitcoin-had-other-plans",
-   "source": "CoinDesk",
-   "published": "2026-09-20T12:00:00+00:00",
-   "summary": "",
-   "score": 0.0968
-  },
-  {
-   "title": "State hackers drive 420% surge in onchain malware, Chainalysis finds",
-   "url": "https://cointelegraph.com/news/onchain-malware-writes-surge-420-north-korea-iran-chainalysis?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-09-17T12:00:00+00:00",
-   "summary": "North Korea-linked hackers used Tron, Aptos and BNB Chain to maintain malware infrastructure, while suspected Iran-linked actors embedded directions in Bitcoin transactions.",
-   "score": 0.0889
-  },
-  {
-   "title": "Bitcoin Hovers at $76K as Analysts Argue the Fed Matters More Than Clarity Act",
-   "url": "https://decrypt.co/378351/bitcoin-hovers-at-76k-as-analysts-argue-the-fed-matters-more-than-clarity-act",
-   "source": "Decrypt",
-   "published": "2026-09-16T12:12:21+00:00",
-   "summary": "With Bitcoin sitting around $76,000, the argument from analysts is that dollar liquidity, not Congress, sets the floor from here.",
-   "score": 0.0758
-  },
-  {
-   "title": "SEC Green Lights Tokenized Stock Trading Despite Clarity Act Fail",
-   "url": "https://bitcoinmagazine.com/news/clarity-act-fails-sec-pushes-tokenization",
-   "source": "Bitcoin Magazine",
-   "published": "2026-09-17T17:11:39+00:00",
-   "summary": "Bitcoin Magazine SEC Green Lights Tokenized Stock Trading Despite Clarity Act Fail Regulators like the SEC are pushing forward with crypto rulemaking even if lawmakers have held back the long-awaited Clarity Act. This post SEC Green Lights Tokenized Stock Trading Despite Clarity…",
-   "score": 0.0738
+   "score": 0.0876
   }
  ]
 }
