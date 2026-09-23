@@ -1,5 +1,5 @@
 {
- "fetched": "2026-09-23T17:27:48+00:00",
+ "fetched": "2026-09-23T20:18:20+00:00",
  "sources_ok": [
   "CoinDesk",
   "Cointelegraph",
@@ -14,15 +14,15 @@
    "source": "Decrypt",
    "published": "2026-09-23T15:56:03+00:00",
    "summary": "A CME futures listing and a fresh Grayscale ETF filing sent Bitcoin's two biggest forks soaring, even as the flagship coin cooled off its seven-month high.",
-   "score": 3.717
+   "score": 3.5675
   },
   {
-   "title": "Dave Weisberger on Why Bitcoin FOMO Hasn’t Even Started Yet",
-   "url": "https://bitcoinmagazine.com/videos/dave-weisberger-bitcoin-fomo-hasnt-started-yet",
+   "title": "CFTC Chair Selig Says Regulator Is Preparing for ‘24-7, On-Chain’ Markets",
+   "url": "https://bitcoinmagazine.com/news/cftc-is-preparing-for-onchain-markets",
    "source": "Bitcoin Magazine",
-   "published": "2026-09-23T13:31:49+00:00",
-   "summary": "Bitcoin Magazine Dave Weisberger on Why Bitcoin FOMO Hasn’t Even Started Yet CoinRoutes’ Dave Weisberger explains why ending Bitcoin's 100% bank collateral haircut will be bigger for institutions than ETFs or MSTR. This post Dave Weisberger on Why Bitcoin FOMO Hasn’t Even Starte…",
-   "score": 2.8344
+   "published": "2026-09-23T19:55:21+00:00",
+   "summary": "Bitcoin Magazine CFTC Chair Selig Says Regulator Is Preparing for ‘24-7, On-Chain’ Markets Mike Selig has said that the CFTC is looking forward to “exciting” crypto and AI markets as the agency presses on without the Clarity Act. This post CFTC Chair Selig Says Regulator Is Prep…",
+   "score": 2.9834
   },
   {
    "title": "Bitcoin ETFs take in $1.7B in 2 days as BTC tops holder cost basis",
@@ -30,7 +30,15 @@
    "source": "Cointelegraph",
    "published": "2026-09-23T07:25:05+00:00",
    "summary": "US spot Bitcoin ETFs recorded more than $1.7 billion in net inflows over two days as Bitcoin rose above investors’ estimated average cost basis.",
-   "score": 2.5949
+   "score": 2.4906
+  },
+  {
+   "title": "Dave Weisberger on Why Bitcoin FOMO Hasn’t Even Started Yet",
+   "url": "https://bitcoinmagazine.com/videos/dave-weisberger-bitcoin-fomo-hasnt-started-yet",
+   "source": "Bitcoin Magazine",
+   "published": "2026-09-23T13:31:49+00:00",
+   "summary": "Bitcoin Magazine Dave Weisberger on Why Bitcoin FOMO Hasn’t Even Started Yet CoinRoutes’ Dave Weisberger explains why ending Bitcoin's 100% bank collateral haircut will be bigger for institutions than ETFs or MSTR. This post Dave Weisberger on Why Bitcoin FOMO Hasn’t Even Starte…",
+   "score": 2.1763
   },
   {
    "title": "Morning Minute: Bitcoin Hits $86,000 as Oil Slides and ETFs Bid",
@@ -38,7 +46,7 @@
    "source": "Decrypt",
    "published": "2026-09-23T12:26:07+00:00",
    "summary": "Crypto majors continue their climb while alt leaders hit new ATHs. What’s driving the recent run up?",
-   "score": 2.2319
+   "score": 2.1422
   },
   {
    "title": "Spot bitcoin ETFs attracted nearly $1 billion on Monday, the 9th largest inflow ever",
@@ -46,7 +54,15 @@
    "source": "CoinDesk",
    "published": "2026-09-22T07:40:41+00:00",
    "summary": "",
-   "score": 1.8418
+   "score": 1.7677
+  },
+  {
+   "title": "Here’s what happened in crypto today",
+   "url": "https://cointelegraph.com/news/what-happened-in-crypto-today?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-09-23T19:39:24+00:00",
+   "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
+   "score": 1.7436
   },
   {
    "title": "Bitcoin Investors Buy Nearly $1B in BTC ETFs as Bull Market Returns",
@@ -54,15 +70,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-22T19:55:41+00:00",
    "summary": "Bitcoin Magazine Bitcoin Investors Buy Nearly $1B in BTC ETFs as Bull Market Returns The Bitcoin bulls are back — if ETF flows are to be believed. U.S. bitcoin exchange-traded funds received $999 million in new investment on Monday, according to Farside Investors data. That’s th…",
-   "score": 1.7585
-  },
-  {
-   "title": "Here’s what happened in crypto today",
-   "url": "https://cointelegraph.com/news/what-happened-in-crypto-today?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-09-23T13:39:08+00:00",
-   "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
-   "score": 1.6658
+   "score": 1.3503
   },
   {
    "title": "Bitcoin ETFs Take Nearly $1B in a Day as Average Holder Returns to Profit",
@@ -70,7 +78,7 @@
    "source": "Decrypt",
    "published": "2026-09-22T14:59:37+00:00",
    "summary": "The funds pulled in more on Monday than across the whole of last week, when they posted the weakest net inflow of their history.",
-   "score": 1.3101
+   "score": 1.2574
   },
   {
    "title": "Bitcoin consolidates near $86,000 as rally narrows and Brent slips below $100",
@@ -78,15 +86,7 @@
    "source": "CoinDesk",
    "published": "2026-09-23T10:28:11+00:00",
    "summary": "",
-   "score": 1.3017
-  },
-  {
-   "title": "Strategy and Strive Announce $182.7 Million Bitcoin Buy as Price Surges Past $86,000",
-   "url": "https://bitcoinmagazine.com/news/strategy-strive-buy-bitcoin",
-   "source": "Bitcoin Magazine",
-   "published": "2026-09-21T19:31:48+00:00",
-   "summary": "Bitcoin Magazine Strategy and Strive Announce $182.7 Million Bitcoin Buy as Price Surges Past $86,000 The two top bitcoin treasuries made big BTC buys last week. This post Strategy and Strive Announce $182.7 Million Bitcoin Buy as Price Surges Past $86,000 first appeared on Bitc…",
-   "score": 1.2858
+   "score": 1.2493
   },
   {
    "title": "Bitcoin ETFs flirt with $1B as inflows hit 2026 high",
@@ -94,23 +94,23 @@
    "source": "Cointelegraph",
    "published": "2026-09-22T07:33:37+00:00",
    "summary": "US spot Bitcoin ETFs drew nearly $1 billion on Monday, their largest daily inflow since October 2025, as Bitcoin briefly climbed above $87,000.",
-   "score": 1.1767
+   "score": 1.1294
   },
   {
-   "title": "Bitcoin Breaks Out as Nasdaq Hits Records and Oil Slides on Iran Hopes",
-   "url": "https://decrypt.co/378972/bitcoin-breaks-out-nasdaq-hits-records-oil-slides",
-   "source": "Decrypt",
-   "published": "2026-09-22T18:46:03+00:00",
-   "summary": "A stretched but firmly bullish Bitcoin chart is riding the same tailwind lifting stocks: falling oil, a record Nasdaq, and a Fed that hiked rates while quietly pumping liquidity into the system.",
-   "score": 0.9223
-  },
-  {
-   "title": "Jim Bianco: Macro Outlook, The 4th Turning and Bitcoin Adoption",
-   "url": "https://bitcoinmagazine.com/videos/jim-bianco-macro-outlook-bitcoin-adoption",
+   "title": "Strategy and Strive Announce $182.7 Million Bitcoin Buy as Price Surges Past $86,000",
+   "url": "https://bitcoinmagazine.com/news/strategy-strive-buy-bitcoin",
    "source": "Bitcoin Magazine",
-   "published": "2026-09-22T13:04:59+00:00",
-   "summary": "Bitcoin Magazine Jim Bianco: Macro Outlook, The 4th Turning and Bitcoin Adoption The Fed just hiked for the first time in more than three years, and Jim Bianco of Bianco Research says the bond market had been signaling this was necessary for two years. This post Jim Bianco: Macr…",
-   "score": 0.8496
+   "published": "2026-09-21T19:31:48+00:00",
+   "summary": "Bitcoin Magazine Strategy and Strive Announce $182.7 Million Bitcoin Buy as Price Surges Past $86,000 The two top bitcoin treasuries made big BTC buys last week. This post Strategy and Strive Announce $182.7 Million Bitcoin Buy as Price Surges Past $86,000 first appeared on Bitc…",
+   "score": 0.9873
+  },
+  {
+   "title": "Borrow Against Your Bitcoin at a Fixed Rate: Coinbase Expands Morpho Loans",
+   "url": "https://decrypt.co/379091/borrow-against-bitcoin-fixed-rate-coinbase-morpho",
+   "source": "Decrypt",
+   "published": "2026-09-23T18:15:06+00:00",
+   "summary": "The product lets users lock in their rate and repayment date when borrowing USDC against Bitcoin, marking the first enterprise-scale deployment of Morpho Midnight and a shift away from on-chain lending's variable-rate norm.",
+   "score": 0.8947
   },
   {
    "title": "Bitcoin bull market ‘confirmed’ but $90K presents profit-taking risk: Analysis",
@@ -118,7 +118,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-23T10:05:10+00:00",
    "summary": "BTC price analysis concluded that onchain signals had “confirmed” the new Bitcoin bull market.",
-   "score": 0.8285
+   "score": 0.7952
   },
   {
    "title": "Whitehats move 52 bitcoin from the Coldcard hack to a recovery trust",
@@ -126,23 +126,23 @@
    "source": "CoinDesk",
    "published": "2026-09-22T06:27:28+00:00",
    "summary": "",
-   "score": 0.7721
+   "score": 0.7411
   },
   {
-   "title": "Bitcoin ETF Holders Back in the Black as Price Barrels Towards $87,000",
-   "url": "https://bitcoinmagazine.com/news/bitcoin-etf-holders-back-in-profit",
-   "source": "Bitcoin Magazine",
-   "published": "2026-09-21T20:32:32+00:00",
-   "summary": "Bitcoin Magazine Bitcoin ETF Holders Back in the Black as Price Barrels Towards $87,000 Bitcoin exchange-traded fund holders are now in profit for the first time since January. This post Bitcoin ETF Holders Back in the Black as Price Barrels Towards $87,000 first appeared on Bit…",
-   "score": 0.6423
-  },
-  {
-   "title": "White-Hat Hackers Route Coldcard Exploit Bitcoin Into 'Recovery Trust'",
-   "url": "https://decrypt.co/378978/white-hat-hackers-coldcard-exploit-bitcoin-recovery-trust",
+   "title": "Bitcoin Breaks Out as Nasdaq Hits Records and Oil Slides on Iran Hopes",
+   "url": "https://decrypt.co/378972/bitcoin-breaks-out-nasdaq-hits-records-oil-slides",
    "source": "Decrypt",
-   "published": "2026-09-22T19:31:03+00:00",
-   "summary": "Galaxy Research says white-hat actors consolidated coins tied to the exploit into a fresh address tagged for a \"Crypto Recovery Trust,\" though the funds represent just 2.8% of the total haul.",
-   "score": 0.5967
+   "published": "2026-09-22T18:46:03+00:00",
+   "summary": "A stretched but firmly bullish Bitcoin chart is riding the same tailwind lifting stocks: falling oil, a record Nasdaq, and a Fed that hiked rates while quietly pumping liquidity into the system.",
+   "score": 0.7082
+  },
+  {
+   "title": "Jim Bianco: Macro Outlook, The 4th Turning and Bitcoin Adoption",
+   "url": "https://bitcoinmagazine.com/videos/jim-bianco-macro-outlook-bitcoin-adoption",
+   "source": "Bitcoin Magazine",
+   "published": "2026-09-22T13:04:59+00:00",
+   "summary": "Bitcoin Magazine Jim Bianco: Macro Outlook, The 4th Turning and Bitcoin Adoption The Fed just hiked for the first time in more than three years, and Jim Bianco of Bianco Research says the bond market had been signaling this was necessary for two years. This post Jim Bianco: Macr…",
+   "score": 0.6524
   },
   {
    "title": "Big Questions: Does Satoshi actually own 1.1 million Bitcoin?",
@@ -150,7 +150,15 @@
    "source": "Cointelegraph",
    "published": "2026-09-22T13:30:00+00:00",
    "summary": "Researchers can trace an estimated 1.1 million BTC to a distinctive early mining operation. The harder question is whether that miner was actually Satoshi.",
-   "score": 0.547
+   "score": 0.525
+  },
+  {
+   "title": "Bitcoin ETF Holders Back in the Black as Price Barrels Towards $87,000",
+   "url": "https://bitcoinmagazine.com/news/bitcoin-etf-holders-back-in-profit",
+   "source": "Bitcoin Magazine",
+   "published": "2026-09-21T20:32:32+00:00",
+   "summary": "Bitcoin Magazine Bitcoin ETF Holders Back in the Black as Price Barrels Towards $87,000 Bitcoin exchange-traded fund holders are now in profit for the first time since January. This post Bitcoin ETF Holders Back in the Black as Price Barrels Towards $87,000 first appeared on Bit…",
+   "score": 0.4932
   },
   {
    "title": "Live updates: Bitcoin tops $86,000, while Saylor returns to BTC buying",
@@ -158,23 +166,15 @@
    "source": "CoinDesk",
    "published": "2026-09-21T08:39:26+00:00",
    "summary": "",
-   "score": 0.4959
+   "score": 0.476
   },
   {
-   "title": "Strategy's Bitcoin Pile Nears June Record After $76M Purchase",
-   "url": "https://decrypt.co/378737/strategys-bitcoin-pile-nears-june-record-after-76m-purchase",
+   "title": "White-Hat Hackers Route Coldcard Exploit Bitcoin Into 'Recovery Trust'",
+   "url": "https://decrypt.co/378978/white-hat-hackers-coldcard-exploit-bitcoin-recovery-trust",
    "source": "Decrypt",
-   "published": "2026-09-21T12:56:46+00:00",
-   "summary": "The Bitcoin treasury firm’s holdings bottomed at 840,447 BTC in August. They have since climbed 5,553 BTC, to within 0.2% of the high.",
-   "score": 0.4758
-  },
-  {
-   "title": "White Hats Move Over $4.5 in Bitcoins From Coldcard to Recovery Trust",
-   "url": "https://bitcoinmagazine.com/news/white-hats-move-bitcoins-from-coldcard",
-   "source": "Bitcoin Magazine",
-   "published": "2026-09-22T17:20:11+00:00",
-   "summary": "Bitcoin Magazine White Hats Move Over $4.5 in Bitcoins From Coldcard to Recovery Trust White hats have moved bitcoin from the hacked Coldcard signing devices to a trust for would-be victims to reclaim, Galaxy Digital’s Alex Thorn has said. Writing on X on Monday, Thorn said that…",
-   "score": 0.4626
+   "published": "2026-09-22T19:31:03+00:00",
+   "summary": "Galaxy Research says white-hat actors consolidated coins tied to the exploit into a fresh address tagged for a \"Crypto Recovery Trust,\" though the funds represent just 2.8% of the total haul.",
+   "score": 0.4582
   },
   {
    "title": "White hats outrun Coldcard hackers in 52-Bitcoin evacuation",
@@ -182,7 +182,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-22T09:06:59+00:00",
    "summary": "White hats secured about 40% of the Bitcoin moved in the Coldcard exploit’s second wave, transferring it to a Wyoming trust for victims.",
-   "score": 0.4108
+   "score": 0.3943
   },
   {
    "title": "Bitcoin's $16 billion quarterly options settlement arrives with a 'call-heavy' book",
@@ -190,7 +190,23 @@
    "source": "CoinDesk",
    "published": "2026-09-23T13:02:43+00:00",
    "summary": "",
-   "score": 0.3843
+   "score": 0.3688
+  },
+  {
+   "title": "Strategy's Bitcoin Pile Nears June Record After $76M Purchase",
+   "url": "https://decrypt.co/378737/strategys-bitcoin-pile-nears-june-record-after-76m-purchase",
+   "source": "Decrypt",
+   "published": "2026-09-21T12:56:46+00:00",
+   "summary": "The Bitcoin treasury firm’s holdings bottomed at 840,447 BTC in August. They have since climbed 5,553 BTC, to within 0.2% of the high.",
+   "score": 0.3654
+  },
+  {
+   "title": "White Hats Move Over $4.5 in Bitcoins From Coldcard to Recovery Trust",
+   "url": "https://bitcoinmagazine.com/news/white-hats-move-bitcoins-from-coldcard",
+   "source": "Bitcoin Magazine",
+   "published": "2026-09-22T17:20:11+00:00",
+   "summary": "Bitcoin Magazine White Hats Move Over $4.5 in Bitcoins From Coldcard to Recovery Trust White hats have moved bitcoin from the hacked Coldcard signing devices to a trust for would-be victims to reclaim, Galaxy Digital’s Alex Thorn has said. Writing on X on Monday, Thorn said that…",
+   "score": 0.3552
   },
   {
    "title": "REX launches 2x leveraged ETF tied to Bitcoin treasury firm Strive",
@@ -198,23 +214,15 @@
    "source": "Cointelegraph",
    "published": "2026-09-19T19:18:00+00:00",
    "summary": "The new ASSX fund offers 2x daily exposure to Strive shares, giving traders a leveraged way to bet on the Bitcoin treasury company.",
-   "score": 0.3028
+   "score": 0.2907
   },
   {
-   "title": "Live updates: Bitcoin slips as higher rates and dollar pressure markets",
+   "title": "Live updates: Bitcoin pulls back to $84,000 as bond yields fly higher",
    "url": "https://www.coindesk.com/business/2026/09/23/live-updates-bitcoin-slips-under-usd86-000-as-money-rotates-into-bch-and-zec",
    "source": "CoinDesk",
    "published": "2026-09-23T11:29:30+00:00",
    "summary": "",
-   "score": 0.3006
-  },
-  {
-   "title": "Strategy Founder Michael Saylor Argues Clarity Act Collapse Is a Win",
-   "url": "https://bitcoinmagazine.com/news/saylor-argues-clarity-act-failure-is-a-win",
-   "source": "Bitcoin Magazine",
-   "published": "2026-09-21T00:52:50+00:00",
-   "summary": "Bitcoin Magazine Strategy Founder Michael Saylor Argues Clarity Act Collapse Is a Win Saylor has argued that the digital asset industry can work well with regulators alone. This post Strategy Founder Michael Saylor Argues Clarity Act Collapse Is a Win first appeared on Bitcoin M…",
-   "score": 0.2888
+   "score": 0.2885
   },
   {
    "title": "Crypto market cap reclaims $3 trillion as Bitcoin, altcoins rally",
@@ -222,23 +230,15 @@
    "source": "Cointelegraph",
    "published": "2026-09-22T09:58:26+00:00",
    "summary": "Bitcoin traded near $86,000 as major altcoins gained, while rising derivatives leverage pointed to growing speculative activity across crypto markets.",
-   "score": 0.2396
+   "score": 0.2299
   },
   {
-   "title": "Bitcoin Is Rallying Again—What Happens Next?",
-   "url": "https://decrypt.co/378767/bitcoin-rally-what-happens-next",
-   "source": "Decrypt",
-   "published": "2026-09-21T15:45:35+00:00",
-   "summary": "The rally cleared an eight-month ceiling on a short squeeze and falling oil prices. The next three weeks will decide if it sticks.",
-   "score": 0.2302
-  },
-  {
-   "title": "Russian Crypto Industry Could Be Operating Legally by Year-End: Central Bank",
-   "url": "https://bitcoinmagazine.com/news/russia-crypto-industry-could-be-operating",
+   "title": "Strategy Founder Michael Saylor Argues Clarity Act Collapse Is a Win",
+   "url": "https://bitcoinmagazine.com/news/saylor-argues-clarity-act-failure-is-a-win",
    "source": "Bitcoin Magazine",
-   "published": "2026-09-21T16:48:50+00:00",
-   "summary": "Bitcoin Magazine Russian Crypto Industry Could Be Operating Legally by Year-End: Central Bank Russia has been moving ahead with crypto regulation this year. This post Russian Crypto Industry Could Be Operating Legally by Year-End: Central Bank first appeared on Bitcoin Magazine…",
-   "score": 0.2285
+   "published": "2026-09-21T00:52:50+00:00",
+   "summary": "Bitcoin Magazine Strategy Founder Michael Saylor Argues Clarity Act Collapse Is a Win Saylor has argued that the digital asset industry can work well with regulators alone. This post Strategy Founder Michael Saylor Argues Clarity Act Collapse Is a Win first appeared on Bitcoin M…",
+   "score": 0.2218
   },
   {
    "title": "Coinbase users can now borrow USDC against bitcoin at a fixed rate",
@@ -246,23 +246,23 @@
    "source": "CoinDesk",
    "published": "2026-09-23T07:49:23+00:00",
    "summary": "",
-   "score": 0.2281
+   "score": 0.2189
   },
   {
-   "title": "Morning Minute: Kevin O’Leary Calls for $1 Million Bitcoin, With an Asterisk",
-   "url": "https://decrypt.co/378728/morning-minute-kevin-oleary-calls-for-1-million-bitcoin-with-an-asterisk",
+   "title": "Bitcoin Is Rallying Again—What Happens Next?",
+   "url": "https://decrypt.co/378767/bitcoin-rally-what-happens-next",
    "source": "Decrypt",
-   "published": "2026-09-21T14:33:03+00:00",
-   "summary": "Meanwhile, Bitcoin pushed up to $85,000 and a new local high and altcoins soared in a huge overnight rally.",
-   "score": 0.181
+   "published": "2026-09-21T15:45:35+00:00",
+   "summary": "The rally cleared an eight-month ceiling on a short squeeze and falling oil prices. The next three weeks will decide if it sticks.",
+   "score": 0.1768
   },
   {
-   "title": "Bitcoin Price Shrugs Off Clarity Act Fail, Blasts Past $86,000",
-   "url": "https://bitcoinmagazine.com/markets/bitcoin-price-blasts-past-86000",
+   "title": "Russian Crypto Industry Could Be Operating Legally by Year-End: Central Bank",
+   "url": "https://bitcoinmagazine.com/news/russia-crypto-industry-could-be-operating",
    "source": "Bitcoin Magazine",
-   "published": "2026-09-21T15:34:20+00:00",
-   "summary": "Bitcoin Magazine Bitcoin Price Shrugs Off Clarity Act Fail, Blasts Past $86,000 The price of Bitcoin is surging, despite key crypto legislation taking a hit. This post Bitcoin Price Shrugs Off Clarity Act Fail, Blasts Past $86,000 first appeared on Bitcoin Magazine and is writte…",
-   "score": 0.1796
+   "published": "2026-09-21T16:48:50+00:00",
+   "summary": "Bitcoin Magazine Russian Crypto Industry Could Be Operating Legally by Year-End: Central Bank Russia has been moving ahead with crypto regulation this year. This post Russian Crypto Industry Could Be Operating Legally by Year-End: Central Bank first appeared on Bitcoin Magazine…",
+   "score": 0.1755
   },
   {
    "title": "Bitcoin's on a streak it hasn't hit since 2012",
@@ -270,7 +270,7 @@
    "source": "CoinDesk",
    "published": "2026-09-23T05:12:42+00:00",
    "summary": "",
-   "score": 0.1757
+   "score": 0.1686
   },
   {
    "title": "Bitcoin long liquidations hit $280M as BTC price dips under $84K",
@@ -278,15 +278,23 @@
    "source": "Cointelegraph",
    "published": "2026-09-23T14:52:11+00:00",
    "summary": "Bitcoin long liquidations mounted as BTC/USD briefly traded below $84,000, while analysis flagged key support to hold.",
-   "score": 0.1616
+   "score": 0.1551
   },
   {
-   "title": "Jeff Walton: How Strive Supercharged its Bitcoin Buying Strategy",
-   "url": "https://bitcoinmagazine.com/videos/jeff-walton-how-strive-supercharged-its-bitcoin-buying-strategy",
+   "title": "Morning Minute: Kevin O’Leary Calls for $1 Million Bitcoin, With an Asterisk",
+   "url": "https://decrypt.co/378728/morning-minute-kevin-oleary-calls-for-1-million-bitcoin-with-an-asterisk",
+   "source": "Decrypt",
+   "published": "2026-09-21T14:33:03+00:00",
+   "summary": "Meanwhile, Bitcoin pushed up to $85,000 and a new local high and altcoins soared in a huge overnight rally.",
+   "score": 0.139
+  },
+  {
+   "title": "Bitcoin Price Shrugs Off Clarity Act Fail, Blasts Past $86,000",
+   "url": "https://bitcoinmagazine.com/markets/bitcoin-price-blasts-past-86000",
    "source": "Bitcoin Magazine",
-   "published": "2026-09-22T13:19:04+00:00",
-   "summary": "Bitcoin Magazine Jeff Walton: How Strive Supercharged its Bitcoin Buying Strategy Strive was one of the best performing stocks in the Russell 2000 over the past month, and Chief Risk Officer Jeff Walton says the company is on pace to double its Bitcoin holdings roughly every 12…",
-   "score": 0.143
+   "published": "2026-09-21T15:34:20+00:00",
+   "summary": "Bitcoin Magazine Bitcoin Price Shrugs Off Clarity Act Fail, Blasts Past $86,000 The price of Bitcoin is surging, despite key crypto legislation taking a hit. This post Bitcoin Price Shrugs Off Clarity Act Fail, Blasts Past $86,000 first appeared on Bitcoin Magazine and is writte…",
+   "score": 0.1379
   },
   {
    "title": "Zcash leads crypto majors with a 10% gain as bitcoin holds near $87,000",
@@ -294,15 +302,15 @@
    "source": "CoinDesk",
    "published": "2026-09-23T04:10:08+00:00",
    "summary": "",
-   "score": 0.1385
+   "score": 0.1329
   },
   {
-   "title": "The Quantum Issue: You Never Really Know The Future",
-   "url": "https://bitcoinmagazine.com/print/the-quantum-issue-you-never-really-know-the-future",
+   "title": "Jeff Walton: How Strive Supercharged its Bitcoin Buying Strategy",
+   "url": "https://bitcoinmagazine.com/videos/jeff-walton-how-strive-supercharged-its-bitcoin-buying-strategy",
    "source": "Bitcoin Magazine",
-   "published": "2026-09-23T17:10:13+00:00",
-   "summary": "Bitcoin Magazine The Quantum Issue: You Never Really Know The Future From The Quantum Issue: Shinobi considering why it might actually be possible a viable quantum computer is built in the near future. This post The Quantum Issue: You Never Really Know The Future first appeared…",
-   "score": 0.1069
+   "published": "2026-09-22T13:19:04+00:00",
+   "summary": "Bitcoin Magazine Jeff Walton: How Strive Supercharged its Bitcoin Buying Strategy Strive was one of the best performing stocks in the Russell 2000 over the past month, and Chief Risk Officer Jeff Walton says the company is on pace to double its Bitcoin holdings roughly every 12…",
+   "score": 0.1098
   },
   {
    "title": "Strategy buys 950 Bitcoin for $76M, repurchases $174M in STRC",
@@ -310,7 +318,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-21T12:48:21+00:00",
    "summary": "Strategy bought 950 Bitcoin for $75.7 million after a two-week pause and spent another $174 million repurchasing its STRC preferred stock.",
-   "score": 0.1004
+   "score": 0.0964
   },
   {
    "title": "Strategy returns to bitcoin buys, adding $75 million of BTC last week",
@@ -318,15 +326,7 @@
    "source": "CoinDesk",
    "published": "2026-09-21T12:08:02+00:00",
    "summary": "",
-   "score": 0.0994
-  },
-  {
-   "title": "X Sues Two Bitcoin Influencers Over Bot Army That Milked Creator Payouts",
-   "url": "https://decrypt.co/378877/x-sues-bitcoin-influencers-bot-army-creator-payout",
-   "source": "Decrypt",
-   "published": "2026-09-21T20:16:03+00:00",
-   "summary": "A lawsuit accuses UK users of running six coordinated accounts to pull at least $278,000 from X's now-defunct Creator Revenue Sharing Program.",
-   "score": 0.0874
+   "score": 0.0954
   }
  ]
 }
