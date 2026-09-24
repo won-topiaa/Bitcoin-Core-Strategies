@@ -1,5 +1,5 @@
 {
- "fetched": "2026-09-24T15:00:21+00:00",
+ "fetched": "2026-09-24T15:48:16+00:00",
  "sources_ok": [
   "CoinDesk",
   "Cointelegraph",
@@ -14,7 +14,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-24T10:15:03+00:00",
    "summary": "Bitcoin traded near $83,200 as Fed hike odds reached about 75% and Treasury prepared a $6 billion buyback of long-dated bonds.",
-   "score": 3.7346
+   "score": 3.6917
   },
   {
    "title": "Bloomberg’s James Seyffart: Why Trillions in Advisor Wealth Could Flow Into Bitcoin",
@@ -22,7 +22,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-24T12:58:37+00:00",
    "summary": "Bitcoin Magazine Bloomberg’s James Seyffart: Why Trillions in Advisor Wealth Could Flow Into Bitcoin Trillions in advisor wealth remain on the sidelines. Bloomberg analyst James Seyffart explains how strict wirehouse rules still cap Bitcoin ETF adoption. This post Bloomberg’s Ja…",
-   "score": 2.9134
+   "score": 2.88
   },
   {
    "title": "Bitcoin Dips, But Its Forks Are Flying Again",
@@ -30,7 +30,7 @@
    "source": "Decrypt",
    "published": "2026-09-23T15:56:03+00:00",
    "summary": "A CME futures listing and a fresh Grayscale ETF filing sent Bitcoin's two biggest forks soaring, even as the flagship coin cooled off its seven-month high.",
-   "score": 2.7233
+   "score": 2.692
   },
   {
    "title": "Traders price in 4 Fed rate hikes by June 2027 as bitcoin slides below $83,000",
@@ -38,7 +38,7 @@
    "source": "CoinDesk",
    "published": "2026-09-24T10:11:51+00:00",
    "summary": "",
-   "score": 2.3323
+   "score": 2.3056
   },
   {
    "title": "Bitcoin ETFs add $347M as BTC falls below $84K after topping $87K",
@@ -46,7 +46,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-24T09:32:44+00:00",
    "summary": "US spot Bitcoin ETF inflows slowed to $347 million on Wednesday as Bitcoin fell below $84,000, while five-day inflows reached $2.65 billion.",
-   "score": 2.218
+   "score": 2.1926
   },
   {
    "title": "Bitcoin Price Slips While US Treasury Yields Soar, Oil Prices Climb",
@@ -54,7 +54,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-23T21:08:27+00:00",
    "summary": "Bitcoin Magazine Bitcoin Price Slips While US Treasury Yields Soar, Oil Prices Climb Treasury yields soared on Wednesday to their highest level since 2007 while bitcoin’s price slumped. This post Bitcoin Price Slips While US Treasury Yields Soar, Oil Prices Climb first appeared…",
-   "score": 2.0397
+   "score": 2.0163
   },
   {
    "title": "Dogecoin down 8%, bitcoin under $84,000 as Treasury yields hit highest level since 2007",
@@ -62,7 +62,7 @@
    "source": "CoinDesk",
    "published": "2026-09-24T04:13:01+00:00",
    "summary": "",
-   "score": 1.7115
+   "score": 1.6918
   },
   {
    "title": "Morning Minute: Bitcoin Hits $86,000 as Oil Slides and ETFs Bid",
@@ -70,7 +70,7 @@
    "source": "Decrypt",
    "published": "2026-09-23T12:26:07+00:00",
    "summary": "Crypto majors continue their climb while alt leaders hit new ATHs. What’s driving the recent run up?",
-   "score": 1.6352
+   "score": 1.6165
   },
   {
    "title": "Former CFTC Commissioner Giancarlo: Why Rate Hikes Could Benefit Bitcoin",
@@ -78,7 +78,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-24T13:06:00+00:00",
    "summary": "Bitcoin Magazine Former CFTC Commissioner Giancarlo: Why Rate Hikes Could Benefit Bitcoin Former CFTC Chair Chris Giancarlo explains why BTC serves as digital gold and a future currency anchor. This post Former CFTC Commissioner Giancarlo: Why Rate Hikes Could Benefit Bitcoin fi…",
-   "score": 1.5566
+   "score": 1.5387
   },
   {
    "title": "Here’s what happened in crypto today",
@@ -86,7 +86,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-24T13:29:50+00:00",
    "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
-   "score": 1.3777
+   "score": 1.3619
   },
   {
    "title": "CFTC Chair Selig Says Regulator Is Preparing for ‘24-7, On-Chain’ Markets",
@@ -94,7 +94,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-23T19:55:21+00:00",
    "summary": "Bitcoin Magazine CFTC Chair Selig Says Regulator Is Preparing for ‘24-7, On-Chain’ Markets Mike Selig has said that the CFTC is looking forward to “exciting” crypto and AI markets as the agency presses on without the Clarity Act. This post CFTC Chair Selig Says Regulator Is Prep…",
-   "score": 1.166
+   "score": 1.1527
   },
   {
    "title": "Bitcoin ETFs take in $1.7B in 2 days as BTC tops holder cost basis",
@@ -102,7 +102,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-23T07:25:05+00:00",
    "summary": "US spot Bitcoin ETFs recorded more than $1.7 billion in net inflows over two days as Bitcoin rose above investors’ estimated average cost basis.",
-   "score": 0.9734
+   "score": 0.9622
   },
   {
    "title": "Bitcoin ETFs Take Nearly $1B in a Day as Average Holder Returns to Profit",
@@ -110,7 +110,7 @@
    "source": "Decrypt",
    "published": "2026-09-22T14:59:37+00:00",
    "summary": "The funds pulled in more on Monday than across the whole of last week, when they posted the weakest net inflow of their history.",
-   "score": 0.9598
+   "score": 0.9488
   },
   {
    "title": "Spot bitcoin ETFs attracted nearly $1 billion on Monday, the 9th largest inflow ever",
@@ -118,7 +118,7 @@
    "source": "CoinDesk",
    "published": "2026-09-22T07:40:41+00:00",
    "summary": "",
-   "score": 0.8636
+   "score": 0.8537
   },
   {
    "title": "Dave Weisberger on Why Bitcoin FOMO Hasn’t Even Started Yet",
@@ -126,7 +126,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-23T13:31:49+00:00",
    "summary": "Bitcoin Magazine Dave Weisberger on Why Bitcoin FOMO Hasn’t Even Started Yet CoinRoutes’ Dave Weisberger explains why ending Bitcoin's 100% bank collateral haircut will be bigger for institutions than ETFs or MSTR. This post Dave Weisberger on Why Bitcoin FOMO Hasn’t Even Starte…",
-   "score": 0.8506
+   "score": 0.8408
   },
   {
    "title": "Borrow Against Your Bitcoin at a Fixed Rate: Coinbase Expands Morpho Loans",
@@ -134,7 +134,7 @@
    "source": "Decrypt",
    "published": "2026-09-23T18:15:06+00:00",
    "summary": "The product lets users lock in their rate and repayment date when borrowing USDC against Bitcoin, marking the first enterprise-scale deployment of Morpho Midnight and a shift away from on-chain lending's variable-rate norm.",
-   "score": 0.6829
+   "score": 0.6751
   },
   {
    "title": "Bitcoin consolidates near $86,000 as rally narrows and Brent slips below $100",
@@ -142,7 +142,7 @@
    "source": "CoinDesk",
    "published": "2026-09-23T10:28:11+00:00",
    "summary": "",
-   "score": 0.6104
+   "score": 0.6034
   },
   {
    "title": "Bitcoin ETFs flirt with $1B as inflows hit 2026 high",
@@ -150,7 +150,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-22T07:33:37+00:00",
    "summary": "US spot Bitcoin ETFs drew nearly $1 billion on Monday, their largest daily inflow since October 2025, as Bitcoin briefly climbed above $87,000.",
-   "score": 0.5518
+   "score": 0.5454
   },
   {
    "title": "Bitcoin Breaks Out as Nasdaq Hits Records and Oil Slides on Iran Hopes",
@@ -158,7 +158,7 @@
    "source": "Decrypt",
    "published": "2026-09-22T18:46:03+00:00",
    "summary": "A stretched but firmly bullish Bitcoin chart is riding the same tailwind lifting stocks: falling oil, a record Nasdaq, and a Fed that hiked rates while quietly pumping liquidity into the system.",
-   "score": 0.5406
+   "score": 0.5344
   },
   {
    "title": "Bitcoin Investors Buy Nearly $1B in BTC ETFs as Bull Market Returns",
@@ -166,7 +166,15 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-22T19:55:41+00:00",
    "summary": "Bitcoin Magazine Bitcoin Investors Buy Nearly $1B in BTC ETFs as Bull Market Returns The Bitcoin bulls are back — if ETF flows are to be believed. U.S. bitcoin exchange-traded funds received $999 million in new investment on Monday, according to Farside Investors data. That’s th…",
-   "score": 0.5277
+   "score": 0.5217
+  },
+  {
+   "title": "Bitcoin’s bear markets are getting milder. Bull markets may be next",
+   "url": "https://www.coindesk.com/markets/2026/09/24/bitcoin-s-bear-markets-are-getting-milder-the-bull-markets-may-be-next",
+   "source": "CoinDesk",
+   "published": "2026-09-24T15:26:34+00:00",
+   "summary": "",
+   "score": 0.4075
   },
   {
    "title": "Bitcoin bull market ‘confirmed’ but $90K presents profit-taking risk: Analysis",
@@ -174,15 +182,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-23T10:05:10+00:00",
    "summary": "BTC price analysis concluded that onchain signals had “confirmed” the new Bitcoin bull market.",
-   "score": 0.3885
-  },
-  {
-   "title": "Live updates: Bitcoin climbs from session lows as interest rates ease",
-   "url": "https://www.coindesk.com/tech/2026/09/24/live-updates-bitcoin-edges-lower-as-bond-yields-take-center-stage",
-   "source": "CoinDesk",
-   "published": "2026-09-24T11:20:12+00:00",
-   "summary": "",
-   "score": 0.3885
+   "score": 0.384
   },
   {
    "title": "Strategy and Strive Announce $182.7 Million Bitcoin Buy as Price Surges Past $86,000",
@@ -190,7 +190,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-21T19:31:48+00:00",
    "summary": "Bitcoin Magazine Strategy and Strive Announce $182.7 Million Bitcoin Buy as Price Surges Past $86,000 The two top bitcoin treasuries made big BTC buys last week. This post Strategy and Strive Announce $182.7 Million Bitcoin Buy as Price Surges Past $86,000 first appeared on Bitc…",
-   "score": 0.3859
+   "score": 0.3814
   },
   {
    "title": "White-Hat Hackers Route Coldcard Exploit Bitcoin Into 'Recovery Trust'",
@@ -198,15 +198,15 @@
    "source": "Decrypt",
    "published": "2026-09-22T19:31:03+00:00",
    "summary": "Galaxy Research says white-hat actors consolidated coins tied to the exploit into a fresh address tagged for a \"Crypto Recovery Trust,\" though the funds represent just 2.8% of the total haul.",
-   "score": 0.3497
+   "score": 0.3457
   },
   {
-   "title": "Bitcoin slides to $83,300 as bond yields hit highest level since 2007",
-   "url": "https://www.coindesk.com/markets/2026/09/24/bitcoin-steadies-near-usd84-000-after-bond-yields-hit-a-2007-high",
+   "title": "Crypto for Advisors:The hidden costs of holding your own bitcoin",
+   "url": "https://www.coindesk.com/coindesk-indices/2026/09/24/crypto-for-advisors-the-hidden-costs-of-holding-your-own-bitcoin",
    "source": "CoinDesk",
-   "published": "2026-09-24T10:30:28+00:00",
+   "published": "2026-09-24T14:49:28+00:00",
    "summary": "",
-   "score": 0.3071
+   "score": 0.3231
   },
   {
    "title": "Strategy's Bitcoin Pile Nears June Record After $76M Purchase",
@@ -214,7 +214,7 @@
    "source": "Decrypt",
    "published": "2026-09-21T12:56:46+00:00",
    "summary": "The Bitcoin treasury firm’s holdings bottomed at 840,447 BTC in August. They have since climbed 5,553 BTC, to within 0.2% of the high.",
-   "score": 0.2789
+   "score": 0.2757
   },
   {
    "title": "Big Questions: Does Satoshi actually own 1.1 million Bitcoin?",
@@ -222,7 +222,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-22T13:30:00+00:00",
    "summary": "Researchers can trace an estimated 1.1 million BTC to a distinctive early mining operation. The harder question is whether that miner was actually Satoshi.",
-   "score": 0.2565
+   "score": 0.2536
   },
   {
    "title": "Jim Bianco: Macro Outlook, The 4th Turning and Bitcoin Adoption",
@@ -230,15 +230,23 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-22T13:04:59+00:00",
    "summary": "Bitcoin Magazine Jim Bianco: Macro Outlook, The 4th Turning and Bitcoin Adoption The Fed just hiked for the first time in more than three years, and Jim Bianco of Bianco Research says the bond market had been signaling this was necessary for two years. This post Jim Bianco: Macr…",
-   "score": 0.255
+   "score": 0.252
   },
   {
-   "title": "The data proves it: Bitcoin doesn't care about rising bond yields over long-term",
-   "url": "https://www.coindesk.com/markets/2026/09/24/the-data-proves-it-bitcoin-doesn-t-care-about-rising-bond-yields-over-long-term",
+   "title": "Live updates: Bitcoin slips alongside continued gains in interest rates and oil",
+   "url": "https://www.coindesk.com/tech/2026/09/24/live-updates-bitcoin-edges-lower-as-bond-yields-take-center-stage",
    "source": "CoinDesk",
-   "published": "2026-09-24T09:48:09+00:00",
+   "published": "2026-09-24T11:20:12+00:00",
    "summary": "",
-   "score": 0.2432
+   "score": 0.2458
+  },
+  {
+   "title": "Bitcoin slides to $83,300 as bond yields hit highest level since 2007",
+   "url": "https://www.coindesk.com/markets/2026/09/24/bitcoin-steadies-near-usd84-000-after-bond-yields-hit-a-2007-high",
+   "source": "CoinDesk",
+   "published": "2026-09-24T10:30:28+00:00",
+   "summary": "",
+   "score": 0.1943
   },
   {
    "title": "Institutions held crypto through 50% drawdown, Bitwise finds",
@@ -246,7 +254,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-24T09:18:16+00:00",
    "summary": "Every institution interviewed that owned crypto held Bitcoin, usually as its largest asset; some set exit conditions for Ether and Solana.",
-   "score": 0.1931
+   "score": 0.1909
   },
   {
    "title": "Bitcoin ETF Holders Back in the Black as Price Barrels Towards $87,000",
@@ -254,15 +262,15 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-21T20:32:32+00:00",
    "summary": "Bitcoin Magazine Bitcoin ETF Holders Back in the Black as Price Barrels Towards $87,000 Bitcoin exchange-traded fund holders are now in profit for the first time since January. This post Bitcoin ETF Holders Back in the Black as Price Barrels Towards $87,000 first appeared on Bit…",
-   "score": 0.1928
+   "score": 0.1905
   },
   {
-   "title": "Whitehats move 52 bitcoin from the Coldcard hack to a recovery trust",
-   "url": "https://www.coindesk.com/markets/2026/09/22/whitehats-move-52-bitcoin-from-the-coldcard-hack-to-a-recovery-trust",
+   "title": "The data proves it: Bitcoin doesn't care about rising bond yields over long-term",
+   "url": "https://www.coindesk.com/markets/2026/09/24/the-data-proves-it-bitcoin-doesn-t-care-about-rising-bond-yields-over-long-term",
    "source": "CoinDesk",
-   "published": "2026-09-22T06:27:28+00:00",
+   "published": "2026-09-24T09:48:09+00:00",
    "summary": "",
-   "score": 0.1854
+   "score": 0.1538
   },
   {
    "title": "White hats outrun Coldcard hackers in 52-Bitcoin evacuation",
@@ -270,15 +278,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-22T09:06:59+00:00",
    "summary": "White hats secured about 40% of the Bitcoin moved in the Coldcard exploit’s second wave, transferring it to a Wyoming trust for victims.",
-   "score": 0.1541
-  },
-  {
-   "title": "A week of AI coding cut a quantum-safe bitcoin transaction estimate from $320 to $66",
-   "url": "https://www.coindesk.com/tech/2026/09/24/a-week-of-ai-coding-cut-a-quantum-safe-bitcoin-transaction-estimate-from-usd320-to-usd66",
-   "source": "CoinDesk",
-   "published": "2026-09-24T05:24:56+00:00",
-   "summary": "",
-   "score": 0.1461
+   "score": 0.1523
   },
   {
    "title": "White Hats Move Over $4.5 in Bitcoins From Coldcard to Recovery Trust",
@@ -286,7 +286,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-22T17:20:11+00:00",
    "summary": "Bitcoin Magazine White Hats Move Over $4.5 in Bitcoins From Coldcard to Recovery Trust White hats have moved bitcoin from the hacked Coldcard signing devices to a trust for would-be victims to reclaim, Galaxy Digital’s Alex Thorn has said. Writing on X on Monday, Thorn said that…",
-   "score": 0.1388
+   "score": 0.1372
   },
   {
    "title": "Bitcoin Is Rallying Again—What Happens Next?",
@@ -294,7 +294,15 @@
    "source": "Decrypt",
    "published": "2026-09-21T15:45:35+00:00",
    "summary": "The rally cleared an eight-month ceiling on a short squeeze and falling oil prices. The next three weeks will decide if it sticks.",
-   "score": 0.1349
+   "score": 0.1334
+  },
+  {
+   "title": "Whitehats move 52 bitcoin from the Coldcard hack to a recovery trust",
+   "url": "https://www.coindesk.com/markets/2026/09/22/whitehats-move-52-bitcoin-from-the-coldcard-hack-to-a-recovery-trust",
+   "source": "CoinDesk",
+   "published": "2026-09-22T06:27:28+00:00",
+   "summary": "",
+   "score": 0.1173
   },
   {
    "title": "Bitcoin’s ‘last resort’ quantum-safe solution just got 79% cheaper: StarkWare",
@@ -302,7 +310,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-24T04:52:40+00:00",
    "summary": "A weeklong optimization challenge cut the estimated GPU cost of preparing an experimental quantum-resistant Bitcoin transaction to under $67, potentially making the “last-resort measure” a little easier on the wallet.",
-   "score": 0.116
+   "score": 0.1146
   },
   {
    "title": "[[alloc] init] Releases Shielded Bitcoin Proposal For Private Bitcoin Transactions",
@@ -310,7 +318,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-24T14:36:22+00:00",
    "summary": "Bitcoin Magazine [[alloc] init] Releases Shielded Bitcoin Proposal For Private Bitcoin Transactions Shielded Bitcoin, a proposal from [[alloc] init], would enable Bitcoin transactions with strong privacy. This post [[alloc] init] Releases Shielded Bitcoin Proposal For Private Bi…",
-   "score": 0.1068
+   "score": 0.1055
   },
   {
    "title": "Morning Minute: Kevin O’Leary Calls for $1 Million Bitcoin, With an Asterisk",
@@ -318,15 +326,7 @@
    "source": "Decrypt",
    "published": "2026-09-21T14:33:03+00:00",
    "summary": "Meanwhile, Bitcoin pushed up to $85,000 and a new local high and altcoins soared in a huge overnight rally.",
-   "score": 0.1061
-  },
-  {
-   "title": "Live updates: Bitcoin tops $86,000, while Saylor returns to BTC buying",
-   "url": "https://www.coindesk.com/business/2026/09/21/live-updates-bitcoin-rises-above-usd82-000-as-falling-oil-lifts-risk-assets",
-   "source": "CoinDesk",
-   "published": "2026-09-21T08:39:26+00:00",
-   "summary": "",
-   "score": 0.0953
+   "score": 0.1049
   }
  ]
 }
