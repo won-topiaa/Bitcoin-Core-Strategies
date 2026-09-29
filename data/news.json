@@ -1,5 +1,5 @@
 {
- "fetched": "2026-09-29T20:43:03+00:00",
+ "fetched": "2026-09-29T21:22:54+00:00",
  "sources_ok": [
   "CoinDesk",
   "Cointelegraph",
@@ -14,7 +14,7 @@
    "source": "Decrypt",
    "published": "2026-09-29T14:07:44+00:00",
    "summary": "Analysts point to crude prices capping non-yielding assets, while spot ETFs have taken money in for eight sessions running.",
-   "score": 4.0916
+   "score": 4.0525
   },
   {
    "title": "Crypto ETFs Surge as Bitcoin Funds Add $2.95 Billion in 30 Days",
@@ -22,7 +22,7 @@
    "source": "Decrypt",
    "published": "2026-09-29T18:18:33+00:00",
    "summary": "Bitcoin ETFs extended their inflow streak to eight straight days on Monday, bouncing back from the Clarity Act sell-off in a big way.",
-   "score": 2.9361
+   "score": 2.9081
   },
   {
    "title": "Bitcoin ETF inflows leave institutional demand unclear: CoinShares",
@@ -30,7 +30,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-29T12:40:12+00:00",
    "summary": "CoinShares says IBIT offers clues to institutional buying, but basis trades mean inflows are not necessarily bets on rising Bitcoin prices.",
-   "score": 2.6709
+   "score": 2.6454
   },
   {
    "title": "Live updates: Bitcoin turns lower as rates rise, consumer confidence plunges",
@@ -38,7 +38,7 @@
    "source": "CoinDesk",
    "published": "2026-09-29T10:14:41+00:00",
    "summary": "",
-   "score": 2.407
+   "score": 2.384
   },
   {
    "title": "André Dragosch: Why Bitcoin’s Fair Value is $197,000",
@@ -46,7 +46,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-29T13:32:32+00:00",
    "summary": "Bitcoin Magazine André Dragosch: Why Bitcoin’s Fair Value is $197,000 Bitwise’s André Dragosch breaks down rising 10-year yields, why rapid moves trigger stock market drops, and how a Fed pivot launches Bitcoin. This post André Dragosch: Why Bitcoin’s Fair Value is $197,000 firs…",
-   "score": 2.2539
+   "score": 2.2324
   },
   {
    "title": "US crypto ETF inflows cool after $3.3B week but streaks hold",
@@ -54,7 +54,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-29T10:15:19+00:00",
    "summary": "US spot crypto ETF inflows fell about 80% from Friday as Bitcoin, Ether, Solana and XRP funds attracted $64.8 million combined on Monday.",
-   "score": 2.0635
+   "score": 2.0438
   },
   {
    "title": "Strategy Sets New BTC Holdings Record After $143M Bitcoin Purchase",
@@ -62,7 +62,7 @@
    "source": "Decrypt",
    "published": "2026-09-28T12:45:41+00:00",
    "summary": "Michael Saylor's Bitcoin treasury firm bought 1,665 BTC last week, taking its holdings above its previous record to 847,666 BTC.",
-   "score": 1.7347
+   "score": 1.7182
   },
   {
    "title": "Analysts see 10-year Treasury yield hitting 6%. Bitcoin bulls shouldn't panic",
@@ -70,7 +70,7 @@
    "source": "CoinDesk",
    "published": "2026-09-29T09:06:11+00:00",
    "summary": "",
-   "score": 1.6912
+   "score": 1.675
   },
   {
    "title": "Strategy and Strive Scoop Up More Than 2,700 Bitcoin in a Week",
@@ -78,7 +78,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-28T16:33:54+00:00",
    "summary": "Bitcoin Magazine Strategy and Strive Scoop Up More Than 2,700 Bitcoin in a Week The two top bitcoin treasuries last week spent a combined $232.5 million on BTC. This post Strategy and Strive Scoop Up More Than 2,700 Bitcoin in a Week first appeared on Bitcoin Magazine and is wri…",
-   "score": 1.6516
+   "score": 1.6358
   },
   {
    "title": "Here’s what happened in crypto today",
@@ -86,7 +86,15 @@
    "source": "Cointelegraph",
    "published": "2026-09-29T19:42:02+00:00",
    "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
-   "score": 1.3875
+   "score": 1.3742
+  },
+  {
+   "title": "Bitget Customers Withdraw Over 4,000 Bitcoins in One Hour Following $388M Hack",
+   "url": "https://bitcoinmagazine.com/news/bitget-customers-withdraw-4000-bitcoins",
+   "source": "Bitcoin Magazine",
+   "published": "2026-09-29T21:14:45+00:00",
+   "summary": "Bitcoin Magazine Bitget Customers Withdraw Over 4,000 Bitcoins in One Hour Following $388M Hack Bitget this week resumed customer withdrawals and within one hour, users had taken over 4,000 bitcoins off the exchange. This post Bitget Customers Withdraw Over 4,000 Bitcoins in One…",
+   "score": 1.2775
   },
   {
    "title": "Morning Minute: Citi and Coinbase Just Made Stablecoins Invisible",
@@ -94,7 +102,7 @@
    "source": "Decrypt",
    "published": "2026-09-29T12:05:18+00:00",
    "summary": "Plus, crypto majors rebound as oil and yields fall and Saylor’s Strategy returns to buying Bitcoin.",
-   "score": 1.2656
+   "score": 1.2536
   },
   {
    "title": "Gary Cardone: Wall Street Is Taking Over Bitcoin — For Good",
@@ -102,7 +110,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-29T13:16:14+00:00",
    "summary": "Bitcoin Magazine Gary Cardone: Wall Street Is Taking Over Bitcoin — For Good Gary Cardone explains why Bitcoin shrugs off regulatory setbacks, why $75K is holding firm, and why he’d welcome a brief dip into the low $70s to buy more. This post Gary Cardone: Wall Street Is Taking…",
-   "score": 1.2644
+   "score": 1.0019
   },
   {
    "title": "Bitcoin is on track to shatter a major decade-long streak as September gains surge",
@@ -110,7 +118,7 @@
    "source": "CoinDesk",
    "published": "2026-09-29T09:45:31+00:00",
    "summary": "",
-   "score": 0.9834
+   "score": 0.974
   },
   {
    "title": "Bitcoin ETFs draw $2.4B in biggest inflow week since October 2025",
@@ -118,7 +126,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-28T08:24:40+00:00",
    "summary": "Daily inflows slowed as Bitcoin pulled back from above $87,100, while Ether and XRP ETFs also attracted fresh capital during the week.",
-   "score": 0.9093
+   "score": 0.9006
   },
   {
    "title": "Stretched Profits and Cooling Demand Put Bitcoin Rally on Pause — For Now: Report",
@@ -126,7 +134,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-29T18:05:47+00:00",
    "summary": "Bitcoin Magazine Stretched Profits and Cooling Demand Put Bitcoin Rally on Pause — For Now: Report A new report from CryptoQuant still declares a bitcoin bull market but says a “healthy correction” could be coming. This post Stretched Profits and Cooling Demand Put Bitcoin Rally…",
-   "score": 0.8874
+   "score": 0.7031
   },
   {
    "title": "Bitcoin falls to $83,000 while altcoins unwind Friday's rally",
@@ -134,7 +142,7 @@
    "source": "CoinDesk",
    "published": "2026-09-28T10:15:04+00:00",
    "summary": "",
-   "score": 0.5603
+   "score": 0.5549
   },
   {
    "title": "Bitget resumes Bitcoin withdrawals as hacker swaps ETH via THORChain",
@@ -142,7 +150,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-28T11:05:24+00:00",
    "summary": "Ether withdrawals are scheduled to return Tuesday and USDt on Wednesday as Bitget restores services following last week’s $388 million hack.",
-   "score": 0.5041
+   "score": 0.4993
   },
   {
    "title": "Bitcoin ETFs Notch Seven-Day Winning Streak as 2026 Flows Turn Green",
@@ -150,15 +158,7 @@
    "source": "Decrypt",
    "published": "2026-09-26T17:01:03+00:00",
    "summary": "Bitcoin ETFs have drawn nearly $3 billion over seven straight sessions, erasing post-Clarity Act losses and pushing 2026 flows back into positive territory.",
-   "score": 0.4118
-  },
-  {
-   "title": "Dan Tapiero: “We’ve Begun a Bull Phase” in Bitcoin",
-   "url": "https://bitcoinmagazine.com/videos/dan-tapiero-weve-begun-a-bull-phase-in-bitcoin",
-   "source": "Bitcoin Magazine",
-   "published": "2026-09-29T20:42:58+00:00",
-   "summary": "Bitcoin Magazine Dan Tapiero: “We’ve Begun a Bull Phase” in Bitcoin Dan Tapiero reveals why a new bull phase has begun, pointing to core revenue growth across stablecoins, tokenization, and Hyperliquid. This post Dan Tapiero: “We’ve Begun a Bull Phase” in Bitcoin first appeared…",
-   "score": 0.4096
+   "score": 0.4079
   },
   {
    "title": "Bitcoin surging to $100,000 may be in play, after outperforming gold",
@@ -166,7 +166,7 @@
    "source": "CoinDesk",
    "published": "2026-09-29T11:34:55+00:00",
    "summary": "",
-   "score": 0.359
+   "score": 0.3555
   },
   {
    "title": "Strategy buys 1,665 Bitcoin for $143M as BTC stack hits 847,666",
@@ -174,15 +174,15 @@
    "source": "Cointelegraph",
    "published": "2026-09-28T12:38:01+00:00",
    "summary": "Strategy sold 1.47 million MSTR shares for $246.2 million, using the proceeds for Bitcoin purchases and STRC preferred stock repurchases.",
-   "score": 0.3299
+   "score": 0.3267
   },
   {
-   "title": "HANetf Debuts Euro-Hedged Bitcoin Fund in World First",
-   "url": "https://bitcoinmagazine.com/news/hanetf-debuts-bitcoin-euro-etf",
+   "title": "Bitwise Head of Research: Sovereigns Selling Gold for Bitcoin | Ryan Rasmussen",
+   "url": "https://bitcoinmagazine.com/videos/bitwise-head-of-research-sovereigns-selling-gold-for-bitcoin-ryan-rasmussen",
    "source": "Bitcoin Magazine",
-   "published": "2026-09-29T19:08:47+00:00",
-   "summary": "Bitcoin Magazine HANetf Debuts Euro-Hedged Bitcoin Fund in World First European BTC investors can typically be exposed to both volatile swings in the cryptocurrency’s price as well as the dollar’s move against the euro. A new fund aims to fix that. This post HANetf Debuts Euro-H…",
-   "score": 0.3203
+   "published": "2026-09-29T20:54:37+00:00",
+   "summary": "Bitcoin Magazine Bitwise Head of Research: Sovereigns Selling Gold for Bitcoin | Ryan Rasmussen Bitwise’s Ryan Rasmussen breaks down institutional crypto adoption, revealing why pensions and sovereign funds bought the dip from $125K to $60K. This post Bitwise Head of Research: S…",
+   "score": 0.3255
   },
   {
    "title": "Is the Red September Curse Over? Bitcoin Set for Best September on Record",
@@ -190,7 +190,15 @@
    "source": "Decrypt",
    "published": "2026-09-29T16:50:46+00:00",
    "summary": "Bitcoin is up 7.33% in September, edging past 2024 as the best September on record, with one day left before the monthly candle closes.",
-   "score": 0.3099
+   "score": 0.3069
+  },
+  {
+   "title": "Tracy Shuchart: BTC & the Commodities Supercycle",
+   "url": "https://bitcoinmagazine.com/videos/tracy-shuchart-btc-the-commodities-supercycle",
+   "source": "Bitcoin Magazine",
+   "published": "2026-09-29T20:49:46+00:00",
+   "summary": "Bitcoin Magazine Tracy Shuchart: BTC & the Commodities Supercycle Tracy Shuchart breaks down Strait of Hormuz oil disruptions, warning that GCC output losses and crack spreads signal a worsening winter energy pinch. This post Tracy Shuchart: BTC & the Commodities Supercycle firs…",
+   "score": 0.2601
   },
   {
    "title": "Bitcoin holds $83,000 as ZEC drops 12% and oil climbs again",
@@ -198,15 +206,7 @@
    "source": "CoinDesk",
    "published": "2026-09-29T04:17:20+00:00",
    "summary": "",
-   "score": 0.2585
-  },
-  {
-   "title": "Alkanes Asian Market Drove 61% of Bitcoin Transactions for 90 Days, SUBFROST Data Shows",
-   "url": "https://bitcoinmagazine.com/news/alkanes-drove-61-of-bitcoin-transactions-for-90-days-subfrost-data-shows",
-   "source": "Bitcoin Magazine",
-   "published": "2026-09-29T17:40:37+00:00",
-   "summary": "Bitcoin Magazine Alkanes Asian Market Drove 61% of Bitcoin Transactions for 90 Days, SUBFROST Data Shows SUBFROST said Alkanes made up 61.1% of all Bitcoin transactions from June 23 to Sept. 20 — about 59.9 million txs across blocks 954,917–967,918. This post Alkanes Asian Marke…",
-   "score": 0.2509
+   "score": 0.256
   },
   {
    "title": "Bitcoin bounces to $84K after US 30-year bond yield sets 24-year high",
@@ -214,15 +214,15 @@
    "source": "Cointelegraph",
    "published": "2026-09-29T10:04:42+00:00",
    "summary": "Bitcoin price action consolidated after early-week losses while protecting a “trend-defining” support zone.",
-   "score": 0.2248
+   "score": 0.2227
   },
   {
-   "title": "Morgan Stanley Has ‘Digital Asset Lab’ To Test Crypto Products: Report",
-   "url": "https://bitcoinmagazine.com/news/morgan-stanley-digital-asset-lab",
+   "title": "Dan Tapiero: “We’ve Begun a Bull Phase” in Bitcoin",
+   "url": "https://bitcoinmagazine.com/videos/dan-tapiero-weve-begun-a-bull-phase-in-bitcoin",
    "source": "Bitcoin Magazine",
-   "published": "2026-09-29T16:00:21+00:00",
-   "summary": "Bitcoin Magazine Morgan Stanley Has ‘Digital Asset Lab’ To Test Crypto Products: Report Morgan Stanley has a special lab where it tests products that use Bitcoin’s underlying tech, according to a Bloomberg interview. This post Morgan Stanley Has ‘Digital Asset Lab’ To Test Crypt…",
-   "score": 0.1959
+   "published": "2026-09-29T20:42:58+00:00",
+   "summary": "Bitcoin Magazine Dan Tapiero: “We’ve Begun a Bull Phase” in Bitcoin Dan Tapiero reveals why a new bull phase has begun, pointing to core revenue growth across stablecoins, tokenization, and Hyperliquid. This post Dan Tapiero: “We’ve Begun a Bull Phase” in Bitcoin first appeared…",
+   "score": 0.2077
   },
   {
    "title": "Riot Platforms repays $200M credit facility, releases collateral",
@@ -230,7 +230,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-27T09:57:19+00:00",
    "summary": "The Bitcoin miner has continued to expand its data-center business as well.",
-   "score": 0.1795
+   "score": 0.1778
   },
   {
    "title": "Strive Buys $94.5 Million in Bitcoin, Pushing Holdings Past 27,000 BTC",
@@ -238,7 +238,7 @@
    "source": "Decrypt",
    "published": "2026-09-28T18:16:02+00:00",
    "summary": "Strive bought 1,107 BTC for $94.5 million last week, lifting its holdings to 27,462 BTC, with its SATA preferred stock supplying 85% of the capital.",
-   "score": 0.1789
+   "score": 0.1772
   },
   {
    "title": "Bitcoin ETF flows turn positive for 2026 after erasing $5.8 billion deficit",
@@ -246,15 +246,15 @@
    "source": "CoinDesk",
    "published": "2026-09-25T09:13:01+00:00",
    "summary": "",
-   "score": 0.1665
+   "score": 0.1649
   },
   {
-   "title": "Solari Capital Founder Scaramucci: Betting on Bitcoin & Exponential Technology",
-   "url": "https://bitcoinmagazine.com/videos/solari-capital-founder-scaramucci-betting-on-bitcoin-exponential-technology",
+   "title": "HANetf Debuts Euro-Hedged Bitcoin Fund in World First",
+   "url": "https://bitcoinmagazine.com/news/hanetf-debuts-bitcoin-euro-etf",
    "source": "Bitcoin Magazine",
-   "published": "2026-09-29T13:27:58+00:00",
-   "summary": "Bitcoin Magazine Solari Capital Founder Scaramucci: Betting on Bitcoin & Exponential Technology AJ Scaramucci reveals Solari Capital’s $350M launch and breaks down his “programmable reality” thesis across AI, biotech, and Bitcoin debasement. This post Solari Capital Founder Scar…",
-   "score": 0.1511
+   "published": "2026-09-29T19:08:47+00:00",
+   "summary": "Bitcoin Magazine HANetf Debuts Euro-Hedged Bitcoin Fund in World First European BTC investors can typically be exposed to both volatile swings in the cryptocurrency’s price as well as the dollar’s move against the euro. A new fund aims to fix that. This post HANetf Debuts Euro-H…",
+   "score": 0.1624
   },
   {
    "title": "Bitcoin Falls Lower as Trump's Iran Snub Sends Oil, Yields Higher",
@@ -262,7 +262,7 @@
    "source": "Decrypt",
    "published": "2026-09-28T15:26:28+00:00",
    "summary": "Bitcoin extends last week's pullback as Trump rejects Iran's ceasefire plan, sending oil above $100 and yields higher ahead of Wednesday's PCE report.",
-   "score": 0.1374
+   "score": 0.1361
   },
   {
    "title": "THORChain rejects Bitget request to block hacker as $6 million moves to bitcoin",
@@ -270,7 +270,15 @@
    "source": "CoinDesk",
    "published": "2026-09-28T12:13:09+00:00",
    "summary": "",
-   "score": 0.1312
+   "score": 0.1299
+  },
+  {
+   "title": "Alkanes Asian Market Drove 61% of Bitcoin Transactions for 90 Days, SUBFROST Data Shows",
+   "url": "https://bitcoinmagazine.com/news/alkanes-drove-61-of-bitcoin-transactions-for-90-days-subfrost-data-shows",
+   "source": "Bitcoin Magazine",
+   "published": "2026-09-29T17:40:37+00:00",
+   "summary": "Bitcoin Magazine Alkanes Asian Market Drove 61% of Bitcoin Transactions for 90 Days, SUBFROST Data Shows SUBFROST said Alkanes made up 61.1% of all Bitcoin transactions from June 23 to Sept. 20 — about 59.9 million txs across blocks 954,917–967,918. This post Alkanes Asian Marke…",
+   "score": 0.1272
   },
   {
    "title": "Strategy seeks shareholder approval for daily preferred stock dividends",
@@ -278,15 +286,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-25T16:34:16+00:00",
    "summary": "Strategy’s proposal would move STRC and its three other preferred stocks to daily dividend payments, following a similar move by Bitcoin treasury firm Strive.",
-   "score": 0.1225
-  },
-  {
-   "title": "Hunter Biden on Bitcoin, Operation Chokepoint 2.0, and $LAPTOP",
-   "url": "https://bitcoinmagazine.com/videos/hunter-biden-on-bitcoin-operation-chokepoint-2-0-and-laptop",
-   "source": "Bitcoin Magazine",
-   "published": "2026-09-29T13:21:28+00:00",
-   "summary": "Bitcoin Magazine Hunter Biden on Bitcoin, Operation Chokepoint 2.0, and $LAPTOP Hunter Biden explains why $LAPTOP crashed 98% post-launch, blaming a DEX market maker liquidity failure, and shares his long-term Bitcoin price prediction. This post Hunter Biden on Bitcoin, Operatio…",
-   "score": 0.1207
+   "score": 0.1213
   },
   {
    "title": "Live updates: Bitcoin remains under pressure as Iran denies report of peace progress",
@@ -294,7 +294,15 @@
    "source": "CoinDesk",
    "published": "2026-09-28T10:02:37+00:00",
    "summary": "",
-   "score": 0.1017
+   "score": 0.1007
+  },
+  {
+   "title": "Morgan Stanley Has ‘Digital Asset Lab’ To Test Crypto Products: Report",
+   "url": "https://bitcoinmagazine.com/news/morgan-stanley-digital-asset-lab",
+   "source": "Bitcoin Magazine",
+   "published": "2026-09-29T16:00:21+00:00",
+   "summary": "Bitcoin Magazine Morgan Stanley Has ‘Digital Asset Lab’ To Test Crypto Products: Report Morgan Stanley has a special lab where it tests products that use Bitcoin’s underlying tech, according to a Bloomberg interview. This post Morgan Stanley Has ‘Digital Asset Lab’ To Test Crypt…",
+   "score": 0.0994
   },
   {
    "title": "Bitcoin Breakout Cools as Fed Rate-Hike Bets Climb",
@@ -302,7 +310,7 @@
    "source": "Decrypt",
    "published": "2026-09-24T16:01:01+00:00",
    "summary": "Bitcoin has slipped back below $85,000 after tagging an eight-month high near $87,400 last week, with rising odds of an October Fed hike taking some air out of the rally.",
-   "score": 0.0914
+   "score": 0.0906
   },
   {
    "title": "Bitcoin ETF inflows slow to $191M as six-day streak reaches $2.8B",
@@ -310,7 +318,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-25T07:41:36+00:00",
    "summary": "US spot Bitcoin ETFs drew $191 million Thursday as daily inflows slowed for a third day, lifting year-to-date net flows to $787 million.",
-   "score": 0.0834
+   "score": 0.0826
   },
   {
    "title": "Caution builds in the bitcoin market even as prices stay well above summer lows",
@@ -318,15 +326,7 @@
    "source": "CoinDesk",
    "published": "2026-09-28T09:29:34+00:00",
    "summary": "",
-   "score": 0.0807
-  },
-  {
-   "title": "Bitcoin ETFs Extend Winning Streak With Nearly $3B in Inflows",
-   "url": "https://bitcoinmagazine.com/news/bitcoin-etfs-bring-in-nearly-3-billion",
-   "source": "Bitcoin Magazine",
-   "published": "2026-09-25T19:55:01+00:00",
-   "summary": "Bitcoin Magazine Bitcoin ETFs Extend Winning Streak With Nearly $3B in Inflows Over six days, investors have spent $2.8 billion buying shares in bitcoin exchange-traded funds. This post Bitcoin ETFs Extend Winning Streak With Nearly $3B in Inflows first appeared on Bitcoin Magaz…",
-   "score": 0.0796
+   "score": 0.0799
   }
  ]
 }
