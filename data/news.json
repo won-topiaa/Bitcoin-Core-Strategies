@@ -1,5 +1,5 @@
 {
- "fetched": "2026-09-30T19:13:10+00:00",
+ "fetched": "2026-09-30T20:17:55+00:00",
  "sources_ok": [
   "CoinDesk",
   "Cointelegraph",
@@ -14,7 +14,15 @@
    "source": "Decrypt",
    "published": "2026-09-30T17:27:43+00:00",
    "summary": "Bitcoin ETFs added $66 million Tuesday, matching August's nine-day run and topping it in dollars. How long will the streak stay alive?",
-   "score": 3.7048
+   "score": 3.6475
+  },
+  {
+   "title": "Bitcoin Surges 40% in Its Best Quarter Since Late 2024",
+   "url": "https://bitcoinmagazine.com/news/bitcoin-has-its-best-quarter-since-2024",
+   "source": "Bitcoin Magazine",
+   "published": "2026-09-30T20:10:24+00:00",
+   "summary": "Bitcoin Magazine Bitcoin Surges 40% in Its Best Quarter Since Late 2024 The price of bitcoin has surged — mostly since the Treasury announced its debt buyback program — putting it on course for one of its best quarters ever. This post Bitcoin Surges 40% in Its Best Quarter Since…",
+   "score": 3.294
   },
   {
    "title": "Bitcoin ETFs stretch $3.1B inflow streak as Ether funds turn red",
@@ -22,7 +30,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-30T10:12:28+00:00",
    "summary": "Ether ETFs shed $3 million Tuesday after seven days of inflows, following an $8 million outflow from Zcash funds at the start of the week.",
-   "score": 2.6339
+   "score": 2.5932
   },
   {
    "title": "Bitcoin Hovers at $84K as Treasury Yields Hold Near Multi-Year Highs",
@@ -30,7 +38,23 @@
    "source": "Decrypt",
    "published": "2026-09-29T14:07:44+00:00",
    "summary": "Analysts point to crude prices capping non-yielding assets, while spot ETFs have taken money in for eight sessions running.",
-   "score": 2.3652
+   "score": 2.3286
+  },
+  {
+   "title": "UK Brings Crypto Under Full FCA Oversight for the First Time",
+   "url": "https://bitcoinmagazine.com/news/uk-brings-crypto-under-fca-oversight",
+   "source": "Bitcoin Magazine",
+   "published": "2026-09-30T20:14:02+00:00",
+   "summary": "Bitcoin Magazine UK Brings Crypto Under Full FCA Oversight for the First Time The British regulator has started accepting applications from crypto companies ahead of a new regime taking effect next year. This post UK Brings Crypto Under Full FCA Oversight for the First Time firs…",
+   "score": 1.7583
+  },
+  {
+   "title": "Here’s what happened in crypto today",
+   "url": "https://cointelegraph.com/news/what-happened-in-crypto-today?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-09-30T19:37:13+00:00",
+   "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
+   "score": 1.7428
   },
   {
    "title": "Live updates: Bitcoin turns lower as rates rise, consumer confidence plunges",
@@ -38,7 +62,7 @@
    "source": "CoinDesk",
    "published": "2026-09-29T10:14:41+00:00",
    "summary": "",
-   "score": 1.7392
+   "score": 1.7123
   },
   {
    "title": "Crypto ETFs Surge as Bitcoin Funds Add $2.95 Billion in 30 Days",
@@ -46,23 +70,7 @@
    "source": "Decrypt",
    "published": "2026-09-29T18:18:33+00:00",
    "summary": "Bitcoin ETFs extended their inflow streak to eight straight days on Monday, bouncing back from the Clarity Act sell-off in a big way.",
-   "score": 1.6972
-  },
-  {
-   "title": "André Dragosch: Why Bitcoin’s Fair Value is $197,000",
-   "url": "https://bitcoinmagazine.com/videos/andre-dragosch-why-bitcoins-fair-value-is-197000",
-   "source": "Bitcoin Magazine",
-   "published": "2026-09-29T13:32:32+00:00",
-   "summary": "Bitcoin Magazine André Dragosch: Why Bitcoin’s Fair Value is $197,000 Bitwise’s André Dragosch breaks down rising 10-year yields, why rapid moves trigger stock market drops, and how a Fed pivot launches Bitcoin. This post André Dragosch: Why Bitcoin’s Fair Value is $197,000 firs…",
-   "score": 1.6286
-  },
-  {
-   "title": "Here’s what happened in crypto today",
-   "url": "https://cointelegraph.com/news/what-happened-in-crypto-today?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-09-30T13:18:35+00:00",
-   "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
-   "score": 1.616
+   "score": 1.671
   },
   {
    "title": "Bitcoin ETF inflows leave institutional demand unclear: CoinShares",
@@ -70,7 +78,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-29T12:40:12+00:00",
    "summary": "CoinShares says IBIT offers clues to institutional buying, but basis trades mean inflows are not necessarily bets on rising Bitcoin prices.",
-   "score": 1.2351
+   "score": 1.216
   },
   {
    "title": "Analysts see 10-year Treasury yield hitting 6%. Bitcoin bulls shouldn't panic",
@@ -78,7 +86,7 @@
    "source": "CoinDesk",
    "published": "2026-09-29T09:06:11+00:00",
    "summary": "",
-   "score": 1.222
+   "score": 1.2031
   },
   {
    "title": "Bitcoin Jumps on Cool PCE Inflation Data as Bond Yields Hit 20-Year Highs",
@@ -86,15 +94,15 @@
    "source": "Decrypt",
    "published": "2026-09-30T15:50:25+00:00",
    "summary": "The Fed's favorite inflation gauge came in cooler than expected, rate-hike odds fell and Bitcoin traders took the hint.",
-   "score": 1.219
+   "score": 1.2002
   },
   {
-   "title": "Strategy and Strive Scoop Up More Than 2,700 Bitcoin in a Week",
-   "url": "https://bitcoinmagazine.com/news/strategy-strive-buy-more-bitcoin",
+   "title": "André Dragosch: Why Bitcoin’s Fair Value is $197,000",
+   "url": "https://bitcoinmagazine.com/videos/andre-dragosch-why-bitcoins-fair-value-is-197000",
    "source": "Bitcoin Magazine",
-   "published": "2026-09-28T16:33:54+00:00",
-   "summary": "Bitcoin Magazine Strategy and Strive Scoop Up More Than 2,700 Bitcoin in a Week The two top bitcoin treasuries last week spent a combined $232.5 million on BTC. This post Strategy and Strive Scoop Up More Than 2,700 Bitcoin in a Week first appeared on Bitcoin Magazine and is wri…",
-   "score": 1.1934
+   "published": "2026-09-29T13:32:32+00:00",
+   "summary": "Bitcoin Magazine André Dragosch: Why Bitcoin’s Fair Value is $197,000 Bitwise’s André Dragosch breaks down rising 10-year yields, why rapid moves trigger stock market drops, and how a Fed pivot launches Bitcoin. This post André Dragosch: Why Bitcoin’s Fair Value is $197,000 firs…",
+   "score": 1.0262
   },
   {
    "title": "US crypto ETF inflows cool after $3.3B week but streaks hold",
@@ -102,7 +110,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-29T10:15:19+00:00",
    "summary": "US spot crypto ETF inflows fell about 80% from Friday as Bitcoin, Ether, Solana and XRP funds attracted $64.8 million combined on Monday.",
-   "score": 0.9542
+   "score": 0.9395
   },
   {
    "title": "Bitcoin rally shows signs of cooling even as a 'bull score' gauge nears its perfect score",
@@ -110,15 +118,7 @@
    "source": "CoinDesk",
    "published": "2026-09-30T04:38:18+00:00",
    "summary": "",
-   "score": 0.9333
-  },
-  {
-   "title": "Bitget Customers Withdraw Over 4,000 Bitcoins in One Hour Following $388M Hack",
-   "url": "https://bitcoinmagazine.com/news/bitget-customers-withdraw-4000-bitcoins",
-   "source": "Bitcoin Magazine",
-   "published": "2026-09-29T21:14:45+00:00",
-   "summary": "Bitcoin Magazine Bitget Customers Withdraw Over 4,000 Bitcoins in One Hour Following $388M Hack Bitget this week resumed customer withdrawals and within one hour, users had taken over 4,000 bitcoins off the exchange. This post Bitget Customers Withdraw Over 4,000 Bitcoins in One…",
-   "score": 0.932
+   "score": 0.9188
   },
   {
    "title": "Strategy Sets New BTC Holdings Record After $143M Bitcoin Purchase",
@@ -126,15 +126,23 @@
    "source": "Decrypt",
    "published": "2026-09-28T12:45:41+00:00",
    "summary": "Michael Saylor's Bitcoin treasury firm bought 1,665 BTC last week, taking its holdings above its previous record to 847,666 BTC.",
-   "score": 0.8022
+   "score": 0.7898
   },
   {
-   "title": "Gary Cardone: Wall Street Is Taking Over Bitcoin — For Good",
-   "url": "https://bitcoinmagazine.com/videos/gary-cardone-wall-street-is-taking-over-bitcoin-for-good",
+   "title": "Strategy and Strive Scoop Up More Than 2,700 Bitcoin in a Week",
+   "url": "https://bitcoinmagazine.com/news/strategy-strive-buy-more-bitcoin",
    "source": "Bitcoin Magazine",
-   "published": "2026-09-29T13:16:14+00:00",
-   "summary": "Bitcoin Magazine Gary Cardone: Wall Street Is Taking Over Bitcoin — For Good Gary Cardone explains why Bitcoin shrugs off regulatory setbacks, why $75K is holding firm, and why he’d welcome a brief dip into the low $70s to buy more. This post Gary Cardone: Wall Street Is Taking…",
-   "score": 0.7309
+   "published": "2026-09-28T16:33:54+00:00",
+   "summary": "Bitcoin Magazine Strategy and Strive Scoop Up More Than 2,700 Bitcoin in a Week The two top bitcoin treasuries last week spent a combined $232.5 million on BTC. This post Strategy and Strive Scoop Up More Than 2,700 Bitcoin in a Week first appeared on Bitcoin Magazine and is wri…",
+   "score": 0.7519
+  },
+  {
+   "title": "Bitget Customers Withdraw Over 4,000 Bitcoins in One Hour Following $388M Hack",
+   "url": "https://bitcoinmagazine.com/news/bitget-customers-withdraw-4000-bitcoins",
+   "source": "Bitcoin Magazine",
+   "published": "2026-09-29T21:14:45+00:00",
+   "summary": "Bitcoin Magazine Bitget Customers Withdraw Over 4,000 Bitcoins in One Hour Following $388M Hack Bitget this week resumed customer withdrawals and within one hour, users had taken over 4,000 bitcoins off the exchange. This post Bitget Customers Withdraw Over 4,000 Bitcoins in One…",
+   "score": 0.5872
   },
   {
    "title": "Morning Minute: Citi and Coinbase Just Made Stablecoins Invisible",
@@ -142,7 +150,7 @@
    "source": "Decrypt",
    "published": "2026-09-29T12:05:18+00:00",
    "summary": "Plus, crypto majors rebound as oil and yields fall and Saylor’s Strategy returns to buying Bitcoin.",
-   "score": 0.5853
+   "score": 0.5762
   },
   {
    "title": "Bitcoin is on track to shatter a major decade-long streak as September gains surge",
@@ -150,7 +158,7 @@
    "source": "CoinDesk",
    "published": "2026-09-29T09:45:31+00:00",
    "summary": "",
-   "score": 0.5685
+   "score": 0.5597
   },
   {
    "title": "Bitcoin ETFs draw $2.4B in biggest inflow week since October 2025",
@@ -158,15 +166,15 @@
    "source": "Cointelegraph",
    "published": "2026-09-28T08:24:40+00:00",
    "summary": "Daily inflows slowed as Bitcoin pulled back from above $87,100, while Ether and XRP ETFs also attracted fresh capital during the week.",
-   "score": 0.5256
+   "score": 0.5175
   },
   {
-   "title": "Stretched Profits and Cooling Demand Put Bitcoin Rally on Pause — For Now: Report",
-   "url": "https://bitcoinmagazine.com/news/stretched-profits-pause-bitcoin-rally",
+   "title": "Gary Cardone: Wall Street Is Taking Over Bitcoin — For Good",
+   "url": "https://bitcoinmagazine.com/videos/gary-cardone-wall-street-is-taking-over-bitcoin-for-good",
    "source": "Bitcoin Magazine",
-   "published": "2026-09-29T18:05:47+00:00",
-   "summary": "Bitcoin Magazine Stretched Profits and Cooling Demand Put Bitcoin Rally on Pause — For Now: Report A new report from CryptoQuant still declares a bitcoin bull market but says a “healthy correction” could be coming. This post Stretched Profits and Cooling Demand Put Bitcoin Rally…",
-   "score": 0.5129
+   "published": "2026-09-29T13:16:14+00:00",
+   "summary": "Bitcoin Magazine Gary Cardone: Wall Street Is Taking Over Bitcoin — For Good Gary Cardone explains why Bitcoin shrugs off regulatory setbacks, why $75K is holding firm, and why he’d welcome a brief dip into the low $70s to buy more. This post Gary Cardone: Wall Street Is Taking…",
+   "score": 0.4606
   },
   {
    "title": "A stronger dollar is a weaker threat to bitcoin than traders think",
@@ -174,15 +182,15 @@
    "source": "CoinDesk",
    "published": "2026-09-30T11:20:09+00:00",
    "summary": "",
-   "score": 0.3655
+   "score": 0.3599
   },
   {
-   "title": "Bitcoin Is More Than Just an Asset, Says TD Cowen",
-   "url": "https://bitcoinmagazine.com/news/bitcoin-is-more-than-an-asset-td-cowen",
+   "title": "Stretched Profits and Cooling Demand Put Bitcoin Rally on Pause — For Now: Report",
+   "url": "https://bitcoinmagazine.com/news/stretched-profits-pause-bitcoin-rally",
    "source": "Bitcoin Magazine",
-   "published": "2026-09-30T18:59:01+00:00",
-   "summary": "Bitcoin Magazine Bitcoin Is More Than Just an Asset, Says TD Cowen TD Cowen says institutions are talking more about how bitcoin can be used to support capital markets. This post Bitcoin Is More Than Just an Asset, Says TD Cowen first appeared on Bitcoin Magazine and is written…",
-   "score": 0.3266
+   "published": "2026-09-29T18:05:47+00:00",
+   "summary": "Bitcoin Magazine Stretched Profits and Cooling Demand Put Bitcoin Rally on Pause — For Now: Report A new report from CryptoQuant still declares a bitcoin bull market but says a “healthy correction” could be coming. This post Stretched Profits and Cooling Demand Put Bitcoin Rally…",
+   "score": 0.3232
   },
   {
    "title": "Bitget resumes Bitcoin withdrawals as hacker swaps ETH via THORChain",
@@ -190,7 +198,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-28T11:05:24+00:00",
    "summary": "Ether withdrawals are scheduled to return Tuesday and USDt on Wednesday as Bitget restores services following last week’s $388 million hack.",
-   "score": 0.2914
+   "score": 0.2869
   },
   {
    "title": "Live updates: Bitcoin closing out best quarter since 2024, ether its best since 2021",
@@ -198,15 +206,7 @@
    "source": "CoinDesk",
    "published": "2026-09-30T10:18:34+00:00",
    "summary": "",
-   "score": 0.2881
-  },
-  {
-   "title": "Bitcoin’s Price Jumps Above $85,000 on Lighter-Than-Expected Inflation Data",
-   "url": "https://bitcoinmagazine.com/news/bitcoin-price-jumps-on-inflation-data",
-   "source": "Bitcoin Magazine",
-   "published": "2026-09-30T16:49:17+00:00",
-   "summary": "Bitcoin Magazine Bitcoin’s Price Jumps Above $85,000 on Lighter-Than-Expected Inflation Data The August personal consumption expenditures price index came in lower than expected and bitcoin’s price jumped — a little. This post Bitcoin’s Price Jumps Above $85,000 on Lighter-Than-…",
-   "score": 0.2532
+   "score": 0.2837
   },
   {
    "title": "Ex-NCA Officer Must Repay $2.4M for Bitcoin He Stole When It Was Worth $77K",
@@ -214,7 +214,7 @@
    "source": "Decrypt",
    "published": "2026-09-30T15:17:45+00:00",
    "summary": "Paul Chowles took 50 BTC from a Silk Road 2.0 seizure in 2017. Prosecutors have now valued the theft at more than 30 times that.",
-   "score": 0.2477
+   "score": 0.2439
   },
   {
    "title": "Bitcoin stalls near $83,000 while lighter drops 17% on Robinhood perps plan",
@@ -222,7 +222,7 @@
    "source": "CoinDesk",
    "published": "2026-09-30T10:11:36+00:00",
    "summary": "",
-   "score": 0.2301
+   "score": 0.2265
   },
   {
    "title": "Crypto hardware wallets compared for 2026",
@@ -230,15 +230,15 @@
    "source": "Cointelegraph",
    "published": "2026-09-30T10:11:12+00:00",
    "summary": "From touchscreen and QR-code devices to NFC cards and Bitcoin-only models, this guide compares hardware wallets by security, connectivity, usability and recovery options to help users choose the right fit.",
-   "score": 0.2301
+   "score": 0.2265
   },
   {
-   "title": "Tax on Bitcoin Gains? Dutch Government to Introduce Capital Gains Tax From 2028",
-   "url": "https://bitcoinmagazine.com/news/dutch-government-introduce-capital-gains",
+   "title": "Bitcoin Is More Than Just an Asset, Says TD Cowen",
+   "url": "https://bitcoinmagazine.com/news/bitcoin-is-more-than-an-asset-td-cowen",
    "source": "Bitcoin Magazine",
-   "published": "2026-09-30T16:02:33+00:00",
-   "summary": "Bitcoin Magazine Tax on Bitcoin Gains? Dutch Government to Introduce Capital Gains Tax From 2028 The Dutch government plans to impose a capital gains levy from 2028 on major assets. Bitcoin may be included. This post Tax on Bitcoin Gains? Dutch Government to Introduce Capital Ga…",
-   "score": 0.2003
+   "published": "2026-09-30T18:59:01+00:00",
+   "summary": "Bitcoin Magazine Bitcoin Is More Than Just an Asset, Says TD Cowen TD Cowen says institutions are talking more about how bitcoin can be used to support capital markets. This post Bitcoin Is More Than Just an Asset, Says TD Cowen first appeared on Bitcoin Magazine and is written…",
+   "score": 0.2058
   },
   {
    "title": "How European investors can now buy bitcoin without taking on U.S. dollar risk",
@@ -246,15 +246,15 @@
    "source": "CoinDesk",
    "published": "2026-09-30T08:25:43+00:00",
    "summary": "",
-   "score": 0.1795
+   "score": 0.1767
   },
   {
-   "title": "David Lawant: Bitcoin Entering New “Bullish Regime” According to Options Market",
-   "url": "https://bitcoinmagazine.com/videos/david-lawant-bitcoin-entering-new-bullish-regime-according-to-options-market",
+   "title": "Bitcoin’s Price Jumps Above $85,000 on Lighter-Than-Expected Inflation Data",
+   "url": "https://bitcoinmagazine.com/news/bitcoin-price-jumps-on-inflation-data",
    "source": "Bitcoin Magazine",
-   "published": "2026-09-30T13:18:16+00:00",
-   "summary": "Bitcoin Magazine David Lawant: Bitcoin Entering New “Bullish Regime” According to Options Market Bitcoin open interest hits $50B. Anchorage Digital’s David Lawant breaks down rising spot volume and thin order books signaling an early market upturn. This post David Lawant: Bitcoi…",
-   "score": 0.154
+   "published": "2026-09-30T16:49:17+00:00",
+   "summary": "Bitcoin Magazine Bitcoin’s Price Jumps Above $85,000 on Lighter-Than-Expected Inflation Data The August personal consumption expenditures price index came in lower than expected and bitcoin’s price jumped — a little. This post Bitcoin’s Price Jumps Above $85,000 on Lighter-Than-…",
+   "score": 0.1596
   },
   {
    "title": "Strategy buys 1,665 Bitcoin for $143M as BTC stack hits 847,666",
@@ -262,7 +262,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-28T12:38:01+00:00",
    "summary": "Strategy sold 1.47 million MSTR shares for $246.2 million, using the proceeds for Bitcoin purchases and STRC preferred stock repurchases.",
-   "score": 0.1526
+   "score": 0.1502
   },
   {
    "title": "Bitcoin ETFs Notch Seven-Day Winning Streak as 2026 Flows Turn Green",
@@ -270,7 +270,7 @@
    "source": "Decrypt",
    "published": "2026-09-26T17:01:03+00:00",
    "summary": "Bitcoin ETFs have drawn nearly $3 billion over seven straight sessions, erasing post-Clarity Act losses and pushing 2026 flows back into positive territory.",
-   "score": 0.1524
+   "score": 0.15
   },
   {
    "title": "Bitcoin falls to $83,000 while altcoins unwind Friday's rally",
@@ -278,7 +278,15 @@
    "source": "CoinDesk",
    "published": "2026-09-28T10:15:04+00:00",
    "summary": "",
-   "score": 0.1327
+   "score": 0.1306
+  },
+  {
+   "title": "Tax on Bitcoin Gains? Dutch Government to Introduce Capital Gains Tax From 2028",
+   "url": "https://bitcoinmagazine.com/news/dutch-government-introduce-capital-gains",
+   "source": "Bitcoin Magazine",
+   "published": "2026-09-30T16:02:33+00:00",
+   "summary": "Bitcoin Magazine Tax on Bitcoin Gains? Dutch Government to Introduce Capital Gains Tax From 2028 The Dutch government plans to impose a capital gains levy from 2028 on major assets. Bitcoin may be included. This post Tax on Bitcoin Gains? Dutch Government to Introduce Capital Ga…",
+   "score": 0.1262
   },
   {
    "title": "Is the Red September Curse Over? Bitcoin Set for Best September on Record",
@@ -286,7 +294,7 @@
    "source": "Decrypt",
    "published": "2026-09-29T16:50:46+00:00",
    "summary": "Bitcoin is up 7.33% in September, edging past 2024 as the best September on record, with one day left before the monthly candle closes.",
-   "score": 0.1146
+   "score": 0.1129
   },
   {
    "title": "Bitcoin gives back gains as long-term holder supply keeps $85K out of reach",
@@ -294,15 +302,15 @@
    "source": "Cointelegraph",
    "published": "2026-09-29T16:26:11+00:00",
    "summary": "Bitcoin failed to make another run at $85,000 as sellers held the line above current levels, while surging US bond yields weighed on stocks and precious metals.",
-   "score": 0.114
+   "score": 0.1122
   },
   {
-   "title": "Bitwise Head of Research: Sovereigns Selling Gold for Bitcoin | Ryan Rasmussen",
-   "url": "https://bitcoinmagazine.com/videos/bitwise-head-of-research-sovereigns-selling-gold-for-bitcoin-ryan-rasmussen",
+   "title": "David Lawant: Bitcoin Entering New “Bullish Regime” According to Options Market",
+   "url": "https://bitcoinmagazine.com/videos/david-lawant-bitcoin-entering-new-bullish-regime-according-to-options-market",
    "source": "Bitcoin Magazine",
-   "published": "2026-09-29T20:54:37+00:00",
-   "summary": "Bitcoin Magazine Bitwise Head of Research: Sovereigns Selling Gold for Bitcoin | Ryan Rasmussen Bitwise’s Ryan Rasmussen breaks down institutional crypto adoption, revealing why pensions and sovereign funds bought the dip from $125K to $60K. This post Bitwise Head of Research: S…",
-   "score": 0.0973
+   "published": "2026-09-30T13:18:16+00:00",
+   "summary": "Bitcoin Magazine David Lawant: Bitcoin Entering New “Bullish Regime” According to Options Market Bitcoin open interest hits $50B. Anchorage Digital’s David Lawant breaks down rising spot volume and thin order books signaling an early market upturn. This post David Lawant: Bitcoi…",
+   "score": 0.0971
   },
   {
    "title": "Peter Brandt says Bitcoin may hit $600K by 2029, calls XRP a ‘fool coin’",
@@ -310,7 +318,7 @@
    "source": "Cointelegraph",
    "published": "2026-09-29T13:30:00+00:00",
    "summary": "An October pullback could offer a buying opportunity before Bitcoin’s next cycle peak, which Brandt expects between $300,000 and $600,000. He’s not sold on “fool coin” XRP.",
-   "score": 0.0874
+   "score": 0.086
   },
   {
    "title": "Bitcoin surging to $100,000 may be in play, after outperforming gold",
@@ -318,15 +326,7 @@
    "source": "CoinDesk",
    "published": "2026-09-29T11:34:55+00:00",
    "summary": "",
-   "score": 0.085
-  },
-  {
-   "title": "Tracy Shuchart: BTC & the Commodities Supercycle",
-   "url": "https://bitcoinmagazine.com/videos/tracy-shuchart-btc-the-commodities-supercycle",
-   "source": "Bitcoin Magazine",
-   "published": "2026-09-29T20:49:46+00:00",
-   "summary": "Bitcoin Magazine Tracy Shuchart: BTC & the Commodities Supercycle Tracy Shuchart breaks down Strait of Hormuz oil disruptions, warning that GCC output losses and crack spreads signal a worsening winter energy pinch. This post Tracy Shuchart: BTC & the Commodities Supercycle firs…",
-   "score": 0.0777
+   "score": 0.0837
   }
  ]
 }
