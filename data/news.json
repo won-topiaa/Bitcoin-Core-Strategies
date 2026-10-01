@@ -1,5 +1,5 @@
 {
- "fetched": "2026-10-01T05:44:30+00:00",
+ "fetched": "2026-10-01T10:27:29+00:00",
  "sources_ok": [
   "CoinDesk",
   "Cointelegraph",
@@ -9,12 +9,28 @@
  "sources_failed": [],
  "items": [
   {
+   "title": "Citigroup raises 12-month bitcoin target to $113,000 as ETF inflows resume",
+   "url": "https://www.coindesk.com/markets/2026/10/01/citigroup-raises-12-month-bitcoin-target-to-usd113-000-as-etf-inflows-resume",
+   "source": "CoinDesk",
+   "published": "2026-10-01T09:59:30+00:00",
+   "summary": "",
+   "score": 2.9799
+  },
+  {
    "title": "Bitcoin ETFs Extend Win Streak to 9 Days, Matching August Rally",
    "url": "https://decrypt.co/379731/bitcoin-etf-9-day-streak-august-rally",
    "source": "Decrypt",
    "published": "2026-09-30T17:27:43+00:00",
    "summary": "Bitcoin ETFs added $66 million Tuesday, matching August's nine-day run and topping it in dollars. How long will the streak stay alive?",
-   "score": 3.1825
+   "score": 2.973
+  },
+  {
+   "title": "Bitcoin think tank questions MSCI’s ‘invisible committee’ over Strategy, Metaplanet rule",
+   "url": "https://cointelegraph.com/news/msci-strategy-metaplanet-index-rule-bpi?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-10-01T06:05:51+00:00",
+   "summary": "A Bitcoin Policy Institute paper says MSCI’s proposed “non-operating company” rule could remove Strategy and Metaplanet from its indexes and may have roots in an earlier crypto treasury review.",
+   "score": 2.9108
   },
   {
    "title": "Bitcoin Surges 40% in Its Best Quarter Since Late 2024",
@@ -22,15 +38,15 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-30T20:10:24+00:00",
    "summary": "Bitcoin Magazine Bitcoin Surges 40% in Its Best Quarter Since Late 2024 The price of bitcoin has surged — mostly since the Treasury announced its debt buyback program — putting it on course for one of its best quarters ever. This post Bitcoin Surges 40% in Its Best Quarter Since…",
-   "score": 2.8741
+   "score": 2.6849
   },
   {
-   "title": "Bitcoin ETFs stretch $3.1B inflow streak as Ether funds turn red",
-   "url": "https://cointelegraph.com/markets/bitcoin-etf-streak-9-day-ether-zcash-flip-red?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "title": "Bitcoin ETFs draw $6.3B in Q3 as BTC price rises nearly 43%",
+   "url": "https://cointelegraph.com/markets/bitcoin-etf-6-3-billion-inflows-q3-btc-rise-43?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
    "source": "Cointelegraph",
-   "published": "2026-09-30T10:12:28+00:00",
-   "summary": "Ether ETFs shed $3 million Tuesday after seven days of inflows, following an $8 million outflow from Zcash funds at the start of the week.",
-   "score": 2.2626
+   "published": "2026-10-01T07:27:00+00:00",
+   "summary": "Bitcoin gained 42.71% in Q3, its best third-quarter performance since 2017, as US spot ETFs attracted $6.34 billion in net inflows.",
+   "score": 2.298
   },
   {
    "title": "Bitcoin Hovers at $84K as Treasury Yields Hold Near Multi-Year Highs",
@@ -38,7 +54,7 @@
    "source": "Decrypt",
    "published": "2026-09-29T14:07:44+00:00",
    "summary": "Analysts point to crude prices capping non-yielding assets, while spot ETFs have taken money in for eight sessions running.",
-   "score": 2.0318
+   "score": 1.898
   },
   {
    "title": "Mark Moss: The Bitcoin Endgame – BTC to $1 Million by 2030",
@@ -46,23 +62,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-01T00:45:15+00:00",
    "summary": "Bitcoin Magazine Mark Moss: The Bitcoin Endgame – BTC to $1 Million by 2030 Mark Moss explains why Bitcoin keeps climbing post-Fed rate hike, benefiting from both currency debasement and a booming tech future. This post Mark Moss: The Bitcoin Endgame – BTC to $1 Million by 2030…",
-   "score": 1.861
-  },
-  {
-   "title": "Here’s what happened in crypto today",
-   "url": "https://cointelegraph.com/news/what-happened-in-crypto-today?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-09-30T19:37:13+00:00",
-   "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
-   "score": 1.5207
-  },
-  {
-   "title": "Live updates: Bitcoin turns lower as rates rise, consumer confidence plunges",
-   "url": "https://www.coindesk.com/markets/2026/09/29/live-updates-bitcoin-rebounds-above-usd84-000-as-treasury-yields-steady",
-   "source": "CoinDesk",
-   "published": "2026-09-29T10:14:41+00:00",
-   "summary": "",
-   "score": 1.4941
+   "score": 1.7385
   },
   {
    "title": "Crypto ETFs Surge as Bitcoin Funds Add $2.95 Billion in 30 Days",
@@ -70,7 +70,15 @@
    "source": "Decrypt",
    "published": "2026-09-29T18:18:33+00:00",
    "summary": "Bitcoin ETFs extended their inflow streak to eight straight days on Monday, bouncing back from the Clarity Act sell-off in a big way.",
-   "score": 1.458
+   "score": 1.362
+  },
+  {
+   "title": "Bitcoin ETFs stretch $3.1B inflow streak as Ether funds turn red",
+   "url": "https://cointelegraph.com/markets/bitcoin-etf-streak-9-day-ether-zcash-flip-red?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-09-30T10:12:28+00:00",
+   "summary": "Ether ETFs shed $3 million Tuesday after seven days of inflows, following an $8 million outflow from Zcash funds at the start of the week.",
+   "score": 1.3527
   },
   {
    "title": "UK Brings Crypto Under Full FCA Oversight for the First Time",
@@ -78,23 +86,23 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-30T20:14:02+00:00",
    "summary": "Bitcoin Magazine UK Brings Crypto Under Full FCA Oversight for the First Time The British regulator has started accepting applications from crypto companies ahead of a new regime taking effect next year. This post UK Brings Crypto Under Full FCA Oversight for the First Time firs…",
-   "score": 1.2274
+   "score": 1.1466
   },
   {
-   "title": "Bitcoin ETF inflows leave institutional demand unclear: CoinShares",
-   "url": "https://cointelegraph.com/markets/bitcoin-etf-mixed-read-institutional-demand-coinshares?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-09-29T12:40:12+00:00",
-   "summary": "CoinShares says IBIT offers clues to institutional buying, but basis trades mean inflows are not necessarily bets on rising Bitcoin prices.",
-   "score": 1.061
-  },
-  {
-   "title": "Analysts see 10-year Treasury yield hitting 6%. Bitcoin bulls shouldn't panic",
-   "url": "https://www.coindesk.com/markets/2026/09/29/analysts-see-10-year-treasury-yield-hitting-6-bitcoin-bulls-shouldn-t-panic",
+   "title": "Live updates: Bitcoin turns lower as rates rise, consumer confidence plunges",
+   "url": "https://www.coindesk.com/markets/2026/09/29/live-updates-bitcoin-rebounds-above-usd84-000-as-treasury-yields-steady",
    "source": "CoinDesk",
-   "published": "2026-09-29T09:06:11+00:00",
+   "published": "2026-09-29T10:14:41+00:00",
    "summary": "",
-   "score": 1.0497
+   "score": 1.1166
+  },
+  {
+   "title": "Here’s what happened in crypto today",
+   "url": "https://cointelegraph.com/news/what-happened-in-crypto-today?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-10-01T06:00:00+00:00",
+   "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
+   "score": 1.0562
   },
   {
    "title": "Bitcoin Jumps on Cool PCE Inflation Data as Bond Yields Hit 20-Year Highs",
@@ -102,23 +110,15 @@
    "source": "Decrypt",
    "published": "2026-09-30T15:50:25+00:00",
    "summary": "The Fed's favorite inflation gauge came in cooler than expected, rate-hike odds fell and Bitcoin traders took the hint.",
-   "score": 1.0472
+   "score": 0.9782
   },
   {
-   "title": "US crypto ETF inflows cool after $3.3B week but streaks hold",
-   "url": "https://cointelegraph.com/markets/us-crypto-etf-inflows-cool-bitcoin-ether-solana-xrp?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-09-29T10:15:19+00:00",
-   "summary": "US spot crypto ETF inflows fell about 80% from Friday as Bitcoin, Ether, Solana and XRP funds attracted $64.8 million combined on Monday.",
-   "score": 0.8197
-  },
-  {
-   "title": "Bitcoin rally shows signs of cooling even as a 'bull score' gauge nears its perfect score",
-   "url": "https://www.coindesk.com/markets/2026/09/30/bitcoin-rally-shows-signs-of-cooling-even-as-a-bull-score-gauge-nears-its-perfect-score",
+   "title": "Analysts see 10-year Treasury yield hitting 6%. Bitcoin bulls shouldn't panic",
+   "url": "https://www.coindesk.com/markets/2026/09/29/analysts-see-10-year-treasury-yield-hitting-6-bitcoin-bulls-shouldn-t-panic",
    "source": "CoinDesk",
-   "published": "2026-09-30T04:38:18+00:00",
+   "published": "2026-09-29T09:06:11+00:00",
    "summary": "",
-   "score": 0.8017
+   "score": 0.7845
   },
   {
    "title": "André Dragosch: Why Bitcoin’s Fair Value is $197,000",
@@ -126,7 +126,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-29T13:32:32+00:00",
    "summary": "Bitcoin Magazine André Dragosch: Why Bitcoin’s Fair Value is $197,000 Bitwise’s André Dragosch breaks down rising 10-year yields, why rapid moves trigger stock market drops, and how a Fed pivot launches Bitcoin. This post André Dragosch: Why Bitcoin’s Fair Value is $197,000 firs…",
-   "score": 0.7163
+   "score": 0.6691
   },
   {
    "title": "Strategy Sets New BTC Holdings Record After $143M Bitcoin Purchase",
@@ -134,7 +134,23 @@
    "source": "Decrypt",
    "published": "2026-09-28T12:45:41+00:00",
    "summary": "Michael Saylor's Bitcoin treasury firm bought 1,665 BTC last week, taking its holdings above its previous record to 847,666 BTC.",
-   "score": 0.6891
+   "score": 0.6438
+  },
+  {
+   "title": "Bitcoin ETF inflows leave institutional demand unclear: CoinShares",
+   "url": "https://cointelegraph.com/markets/bitcoin-etf-mixed-read-institutional-demand-coinshares?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-09-29T12:40:12+00:00",
+   "summary": "CoinShares says IBIT offers clues to institutional buying, but basis trades mean inflows are not necessarily bets on rising Bitcoin prices.",
+   "score": 0.6343
+  },
+  {
+   "title": "Bitcoin rally shows signs of cooling even as a 'bull score' gauge nears its perfect score",
+   "url": "https://www.coindesk.com/markets/2026/09/30/bitcoin-rally-shows-signs-of-cooling-even-as-a-bull-score-gauge-nears-its-perfect-score",
+   "source": "CoinDesk",
+   "published": "2026-09-30T04:38:18+00:00",
+   "summary": "",
+   "score": 0.5991
   },
   {
    "title": "Strategy and Strive Scoop Up More Than 2,700 Bitcoin in a Week",
@@ -142,7 +158,15 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-28T16:33:54+00:00",
    "summary": "Bitcoin Magazine Strategy and Strive Scoop Up More Than 2,700 Bitcoin in a Week The two top bitcoin treasuries last week spent a combined $232.5 million on BTC. This post Strategy and Strive Scoop Up More Than 2,700 Bitcoin in a Week first appeared on Bitcoin Magazine and is wri…",
-   "score": 0.5249
+   "score": 0.4903
+  },
+  {
+   "title": "US crypto ETF inflows cool after $3.3B week but streaks hold",
+   "url": "https://cointelegraph.com/markets/us-crypto-etf-inflows-cool-bitcoin-ether-solana-xrp?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-09-29T10:15:19+00:00",
+   "summary": "US spot crypto ETF inflows fell about 80% from Friday as Bitcoin, Ether, Solana and XRP funds attracted $64.8 million combined on Monday.",
+   "score": 0.4901
   },
   {
    "title": "Morning Minute: Citi and Coinbase Just Made Stablecoins Invisible",
@@ -150,23 +174,7 @@
    "source": "Decrypt",
    "published": "2026-09-29T12:05:18+00:00",
    "summary": "Plus, crypto majors rebound as oil and yields fall and Saylor’s Strategy returns to buying Bitcoin.",
-   "score": 0.5028
-  },
-  {
-   "title": "Bitcoin's soft-inflation pop to $85,500 fades as bond yields refuse to fall",
-   "url": "https://www.coindesk.com/markets/2026/10/01/bitcoin-s-soft-inflation-pop-to-usd85-500-fades-as-bond-yields-refuse-to-fall",
-   "source": "CoinDesk",
-   "published": "2026-10-01T04:15:20+00:00",
-   "summary": "",
-   "score": 0.5011
-  },
-  {
-   "title": "Bitcoin ETFs draw $2.4B in biggest inflow week since October 2025",
-   "url": "https://cointelegraph.com/markets/bitcoin-etf-billion-biggest-inflow-week-october-2025?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-09-28T08:24:40+00:00",
-   "summary": "Daily inflows slowed as Bitcoin pulled back from above $87,100, while Ether and XRP ETFs also attracted fresh capital during the week.",
-   "score": 0.4515
+   "score": 0.4697
   },
   {
    "title": "Bitget Customers Withdraw Over 4,000 Bitcoins in One Hour Following $388M Hack",
@@ -174,15 +182,15 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-29T21:14:45+00:00",
    "summary": "Bitcoin Magazine Bitget Customers Withdraw Over 4,000 Bitcoins in One Hour Following $388M Hack Bitget this week resumed customer withdrawals and within one hour, users had taken over 4,000 bitcoins off the exchange. This post Bitget Customers Withdraw Over 4,000 Bitcoins in One…",
-   "score": 0.4099
+   "score": 0.3829
   },
   {
-   "title": "Bitcoin is on track to shatter a major decade-long streak as September gains surge",
-   "url": "https://www.coindesk.com/markets/2026/09/29/bitcoin-is-on-track-to-shatter-a-major-decade-long-streak-as-september-gains-surge",
+   "title": "Bitcoin's soft-inflation pop to $85,500 fades as bond yields refuse to fall",
+   "url": "https://www.coindesk.com/markets/2026/10/01/bitcoin-s-soft-inflation-pop-to-usd85-500-fades-as-bond-yields-refuse-to-fall",
    "source": "CoinDesk",
-   "published": "2026-09-29T09:45:31+00:00",
+   "published": "2026-10-01T04:15:20+00:00",
    "summary": "",
-   "score": 0.3907
+   "score": 0.3745
   },
   {
    "title": "Gary Cardone: Wall Street Is Taking Over Bitcoin — For Good",
@@ -190,23 +198,23 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-29T13:16:14+00:00",
    "summary": "Bitcoin Magazine Gary Cardone: Wall Street Is Taking Over Bitcoin — For Good Gary Cardone explains why Bitcoin shrugs off regulatory setbacks, why $75K is holding firm, and why he’d welcome a brief dip into the low $70s to buy more. This post Gary Cardone: Wall Street Is Taking…",
-   "score": 0.3215
+   "score": 0.3003
   },
   {
-   "title": "A stronger dollar is a weaker threat to bitcoin than traders think",
-   "url": "https://www.coindesk.com/daybook-us/2026/09/30/a-stronger-dollar-is-a-weaker-threat-to-bitcoin-than-traders-think",
+   "title": "Bitcoin is on track to shatter a major decade-long streak as September gains surge",
+   "url": "https://www.coindesk.com/markets/2026/09/29/bitcoin-is-on-track-to-shatter-a-major-decade-long-streak-as-september-gains-surge",
    "source": "CoinDesk",
-   "published": "2026-09-30T11:20:09+00:00",
+   "published": "2026-09-29T09:45:31+00:00",
    "summary": "",
-   "score": 0.2512
+   "score": 0.2919
   },
   {
-   "title": "Bitget resumes Bitcoin withdrawals as hacker swaps ETH via THORChain",
-   "url": "https://cointelegraph.com/news/bitget-btc-withdrawal-hacker-eth-swap-thorchain?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "title": "Bitcoin ETFs draw $2.4B in biggest inflow week since October 2025",
+   "url": "https://cointelegraph.com/markets/bitcoin-etf-billion-biggest-inflow-week-october-2025?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
    "source": "Cointelegraph",
-   "published": "2026-09-28T11:05:24+00:00",
-   "summary": "Ether withdrawals are scheduled to return Tuesday and USDt on Wednesday as Bitget restores services following last week’s $388 million hack.",
-   "score": 0.2503
+   "published": "2026-09-28T08:24:40+00:00",
+   "summary": "Daily inflows slowed as Bitcoin pulled back from above $87,100, while Ether and XRP ETFs also attracted fresh capital during the week.",
+   "score": 0.2699
   },
   {
    "title": "Stretched Profits and Cooling Demand Put Bitcoin Rally on Pause — For Now: Report",
@@ -214,7 +222,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-29T18:05:47+00:00",
    "summary": "Bitcoin Magazine Stretched Profits and Cooling Demand Put Bitcoin Rally on Pause — For Now: Report A new report from CryptoQuant still declares a bitcoin bull market but says a “healthy correction” could be coming. This post Stretched Profits and Cooling Demand Put Bitcoin Rally…",
-   "score": 0.2256
+   "score": 0.2108
   },
   {
    "title": "Ex-NCA Officer Must Repay $2.4M for Bitcoin He Stole When It Was Worth $77K",
@@ -222,7 +230,23 @@
    "source": "Decrypt",
    "published": "2026-09-30T15:17:45+00:00",
    "summary": "Paul Chowles took 50 BTC from a Silk Road 2.0 seizure in 2017. Prosecutors have now valued the theft at more than 30 times that.",
-   "score": 0.2128
+   "score": 0.1988
+  },
+  {
+   "title": "A stronger dollar is a weaker threat to bitcoin than traders think",
+   "url": "https://www.coindesk.com/daybook-us/2026/09/30/a-stronger-dollar-is-a-weaker-threat-to-bitcoin-than-traders-think",
+   "source": "CoinDesk",
+   "published": "2026-09-30T11:20:09+00:00",
+   "summary": "",
+   "score": 0.1877
+  },
+  {
+   "title": "Bitget resumes Bitcoin withdrawals as hacker swaps ETH via THORChain",
+   "url": "https://cointelegraph.com/news/bitget-btc-withdrawal-hacker-eth-swap-thorchain?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-09-28T11:05:24+00:00",
+   "summary": "Ether withdrawals are scheduled to return Tuesday and USDt on Wednesday as Bitget restores services following last week’s $388 million hack.",
+   "score": 0.1497
   },
   {
    "title": "Live updates: Bitcoin closing out best quarter since 2024, ether its best since 2021",
@@ -230,23 +254,7 @@
    "source": "CoinDesk",
    "published": "2026-09-30T10:18:34+00:00",
    "summary": "",
-   "score": 0.198
-  },
-  {
-   "title": "Crypto hardware wallets compared for 2026",
-   "url": "https://cointelegraph.com/magazine/crypto-hardware-wallets-compared-for-2026?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-09-30T10:11:12+00:00",
-   "summary": "From touchscreen and QR-code devices to NFC cards and Bitcoin-only models, this guide compares hardware wallets by security, connectivity, usability and recovery options to help users choose the right fit.",
-   "score": 0.1977
-  },
-  {
-   "title": "Bitcoin stalls near $83,000 while lighter drops 17% on Robinhood perps plan",
-   "url": "https://www.coindesk.com/markets/2026/09/30/bitcoin-stalls-near-usd83-000-while-lighter-drops-17-on-robinhood-perps-plan",
-   "source": "CoinDesk",
-   "published": "2026-09-30T10:11:36+00:00",
-   "summary": "",
-   "score": 0.1581
+   "score": 0.148
   },
   {
    "title": "Bitcoin Privacy Breakthrough a Zcash Killer? | Misha Komorov, Alloc Innit",
@@ -254,15 +262,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-01T00:57:35+00:00",
    "summary": "Bitcoin Magazine Bitcoin Privacy Breakthrough a Zcash Killer? | Misha Komorov, Alloc Innit Misha Komarov explains Shielded Bitcoin—a proposed ZK privacy protocol using Bitcoin PIPEs to hide transactions with no soft fork needed. This post Bitcoin Privacy Breakthrough a Zcash Kil…",
-   "score": 0.1566
-  },
-  {
-   "title": "Strategy buys 1,665 Bitcoin for $143M as BTC stack hits 847,666",
-   "url": "https://cointelegraph.com/news/strategy-1665-bitcoin-buy-holdings-847666-btc?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-09-28T12:38:01+00:00",
-   "summary": "Strategy sold 1.47 million MSTR shares for $246.2 million, using the proceeds for Bitcoin purchases and STRC preferred stock repurchases.",
-   "score": 0.131
+   "score": 0.1463
   },
   {
    "title": "Bitcoin ETFs Notch Seven-Day Winning Streak as 2026 Flows Turn Green",
@@ -270,7 +270,23 @@
    "source": "Decrypt",
    "published": "2026-09-26T17:01:03+00:00",
    "summary": "Bitcoin ETFs have drawn nearly $3 billion over seven straight sessions, erasing post-Clarity Act losses and pushing 2026 flows back into positive territory.",
-   "score": 0.1309
+   "score": 0.1223
+  },
+  {
+   "title": "Bitcoin stalls near $83,000 while lighter drops 17% on Robinhood perps plan",
+   "url": "https://www.coindesk.com/markets/2026/09/30/bitcoin-stalls-near-usd83-000-while-lighter-drops-17-on-robinhood-perps-plan",
+   "source": "CoinDesk",
+   "published": "2026-09-30T10:11:36+00:00",
+   "summary": "",
+   "score": 0.1182
+  },
+  {
+   "title": "Crypto hardware wallets compared for 2026",
+   "url": "https://cointelegraph.com/magazine/crypto-hardware-wallets-compared-for-2026?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-09-30T10:11:12+00:00",
+   "summary": "From touchscreen and QR-code devices to NFC cards and Bitcoin-only models, this guide compares hardware wallets by security, connectivity, usability and recovery options to help users choose the right fit.",
+   "score": 0.1182
   },
   {
    "title": "Bitcoin’s Institutional Era Has Arrived | Robinhood VP of Crypto Institutions Nicola White",
@@ -278,7 +294,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-01T00:52:03+00:00",
    "summary": "Bitcoin Magazine Bitcoin’s Institutional Era Has Arrived | Robinhood VP of Crypto Institutions Nicola White Robinhood VP Nicola White explains how 10x crypto perpetual futures arrived in the US and why Robinhood is pushing for 24/7 global markets. This post Bitcoin’s Institution…",
-   "score": 0.1251
+   "score": 0.1169
   },
   {
    "title": "How European investors can now buy bitcoin without taking on U.S. dollar risk",
@@ -286,7 +302,7 @@
    "source": "CoinDesk",
    "published": "2026-09-30T08:25:43+00:00",
    "summary": "",
-   "score": 0.1233
+   "score": 0.0922
   },
   {
    "title": "Is the Red September Curse Over? Bitcoin Set for Best September on Record",
@@ -294,15 +310,7 @@
    "source": "Decrypt",
    "published": "2026-09-29T16:50:46+00:00",
    "summary": "Bitcoin is up 7.33% in September, edging past 2024 as the best September on record, with one day left before the monthly candle closes.",
-   "score": 0.0985
-  },
-  {
-   "title": "Bitcoin gives back gains as long-term holder supply keeps $85K out of reach",
-   "url": "https://cointelegraph.com/markets/bitcoin-gives-back-gains-long-term-holder-supply-keeps-85k-out-of-reach?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-09-29T16:26:11+00:00",
-   "summary": "Bitcoin failed to make another run at $85,000 as sellers held the line above current levels, while surging US bond yields weighed on stocks and precious metals.",
-   "score": 0.0979
+   "score": 0.092
   },
   {
    "title": "Bitcoin Is More Than Just an Asset, Says TD Cowen",
@@ -310,23 +318,15 @@
    "source": "Bitcoin Magazine",
    "published": "2026-09-30T18:59:01+00:00",
    "summary": "Bitcoin Magazine Bitcoin Is More Than Just an Asset, Says TD Cowen TD Cowen says institutions are talking more about how bitcoin can be used to support capital markets. This post Bitcoin Is More Than Just an Asset, Says TD Cowen first appeared on Bitcoin Magazine and is written…",
-   "score": 0.0919
+   "score": 0.0859
   },
   {
-   "title": "Bitcoin falls to $83,000 while altcoins unwind Friday's rally",
-   "url": "https://www.coindesk.com/markets/2026/09/28/bitcoin-falls-to-usd83-000-while-altcoins-unwind-friday-s-rally",
-   "source": "CoinDesk",
-   "published": "2026-09-28T10:15:04+00:00",
-   "summary": "",
-   "score": 0.0912
-  },
-  {
-   "title": "Peter Brandt says Bitcoin may hit $600K by 2029, calls XRP a ‘fool coin’",
-   "url": "https://cointelegraph.com/magazine/peter-brandt-says-bitcoin-may-hit-600k-by-2029-calls-xrp-a-fool-coin?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "title": "Strategy buys 1,665 Bitcoin for $143M as BTC stack hits 847,666",
+   "url": "https://cointelegraph.com/news/strategy-1665-bitcoin-buy-holdings-847666-btc?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
    "source": "Cointelegraph",
-   "published": "2026-09-29T13:30:00+00:00",
-   "summary": "An October pullback could offer a buying opportunity before Bitcoin’s next cycle peak, which Brandt expects between $300,000 and $600,000. He’s not sold on “fool coin” XRP.",
-   "score": 0.0751
+   "published": "2026-09-28T12:38:01+00:00",
+   "summary": "Strategy sold 1.47 million MSTR shares for $246.2 million, using the proceeds for Bitcoin purchases and STRC preferred stock repurchases.",
+   "score": 0.0783
   }
  ]
 }
