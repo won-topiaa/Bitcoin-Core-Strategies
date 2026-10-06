@@ -1,5 +1,5 @@
 {
- "fetched": "2026-10-06T16:16:09+00:00",
+ "fetched": "2026-10-06T20:15:15+00:00",
  "sources_ok": [
   "CoinDesk",
   "Cointelegraph",
@@ -14,7 +14,7 @@
    "source": "Cointelegraph",
    "published": "2026-10-06T08:14:17+00:00",
    "summary": "US spot Bitcoin ETFs reversed two days of inflows as Bitcoin slipped below $86,000, trading roughly 32% below its October 2025 all-time high.",
-   "score": 4.2744
+   "score": 4.0354
   },
   {
    "title": "Coinbase’s Ryan VanGrack: CFTC Approval “Opens Many Doors” for Bitcoin",
@@ -22,7 +22,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-05T21:14:01+00:00",
    "summary": "Bitcoin Magazine Coinbase’s Ryan VanGrack: CFTC Approval “Opens Many Doors” for Bitcoin Proposed SEC rules could boost direct Bitcoin ownership for advisors. Coinbase’s Ryan VanGrack explains why ETFs and direct holding can both thrive. This post Coinbase’s Ryan VanGrack: CFTC A…",
-   "score": 3.4185
+   "score": 3.2273
   },
   {
    "title": "Treasury yields at 5% threaten extending Bitcoin’s best quarter since 2017",
@@ -30,7 +30,7 @@
    "source": "Cointelegraph",
    "published": "2026-10-05T16:53:08+00:00",
    "summary": "Weak US jobs data has narrowed expectations for another Fed hike in October, offering Bitcoin some relief as investors continue to embrace the debasement trade.",
-   "score": 2.283
+   "score": 2.1553
   },
   {
    "title": "'Uptober' Starts Green as Bitcoin ETFs Draw $134 Million",
@@ -38,7 +38,7 @@
    "source": "Decrypt",
    "published": "2026-10-04T15:01:03+00:00",
    "summary": "Spot Bitcoin ETFs took in $134.4 million over the first two trading days of October, rebounding from a Sept. 30 outflow as a weak jobs report cooled Fed rate-hike bets.",
-   "score": 2.2097
+   "score": 2.0861
   },
   {
    "title": "Strategy Reports Quarterly Profit on Bitcoin Rally",
@@ -46,7 +46,15 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-05T16:14:17+00:00",
    "summary": "Bitcoin Magazine Strategy Reports Quarterly Profit on Bitcoin Rally The OG bitcoin treasury reported paper gains of $21 billion in Q3’2026. This post Strategy Reports Quarterly Profit on Bitcoin Rally first appeared on Bitcoin Magazine and is written by Mathew Di Salvo .",
-   "score": 2.2052
+   "score": 2.0819
+  },
+  {
+   "title": "Bitcoin grinds toward $87K as US equities hit new record highs",
+   "url": "https://cointelegraph.com/markets/bitcoin-grinds-toward-87k-as-us-equities-hit-new-record-highs?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-10-06T17:19:58+00:00",
+   "summary": "Bitcoin price action was kept in check by overhead ask liquidity while US stocks broke out to new all-time highs.",
+   "score": 1.718
   },
   {
    "title": "SEC approves a 3x fix for bitcoin and ether traders who miss the wild swings",
@@ -54,7 +62,7 @@
    "source": "CoinDesk",
    "published": "2026-10-05T11:14:35+00:00",
    "summary": "",
-   "score": 1.644
+   "score": 1.5521
   },
   {
    "title": "Treasury Drops Crypto Surveillance Proposals",
@@ -62,7 +70,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-06T15:57:15+00:00",
    "summary": "Bitcoin Magazine Treasury Drops Crypto Surveillance Proposals In a major win for the industry, the Financial Crimes Enforcement Network has said it will scrap proposed rules targeting “unhosted wallets” and cryptocurrency mixing. This post Treasury Drops Crypto Surveillance Prop…",
-   "score": 1.5927
+   "score": 1.5037
   },
   {
    "title": "Strive Adds $169M Bitcoin in Its Biggest Buy in Four Months",
@@ -70,15 +78,7 @@
    "source": "Decrypt",
    "published": "2026-10-05T22:30:20+00:00",
    "summary": "The Nasdaq-listed bitcoin treasury company, co-founded by Vivek Ramaswamy, paid roughly $169 million for 2,000 coins last week and now holds 29,462 BTC.",
-   "score": 1.5475
-  },
-  {
-   "title": "Here’s what happened in crypto today",
-   "url": "https://cointelegraph.com/news/what-happened-in-crypto-today?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-10-06T13:41:33+00:00",
-   "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
-   "score": 1.3566
+   "score": 1.4609
   },
   {
    "title": "SEC Clears 3x Leveraged Bitcoin and Ethereum Funds for Trading",
@@ -86,7 +86,7 @@
    "source": "Decrypt",
    "published": "2026-10-05T18:12:28+00:00",
    "summary": "The agency approved a Cboe rule letting six Volatility Shares funds that triple the daily moves of Bitcoin, Ethereum, gold, silver, oil, and natural gas list on a U.S. exchange.",
-   "score": 1.1635
+   "score": 1.0984
   },
   {
    "title": "CryptoQuant: BTC “Bull Run Has Started” – 3x to 5x Cycle Outlook | Ki Young Ju",
@@ -94,15 +94,15 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-05T20:39:27+00:00",
    "summary": "Bitcoin Magazine CryptoQuant: BTC “Bull Run Has Started” – 3x to 5x Cycle Outlook | Ki Young Ju Will Bitcoin 10x or 3–5x? CryptoQuant’s Ki Young Ju sees a 3–5x gain from the lows as ETF inflows dampen volatility, signalling the bear market is over. This post CryptoQuant: BTC “Bu…",
-   "score": 1.1572
+   "score": 1.0925
   },
   {
-   "title": "Bitcoin ETFs notch third inflow week as Ether ETFs shed $138M",
-   "url": "https://cointelegraph.com/markets/bitcoin-etf-third-inflow-week-ether-funds-red?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "title": "Here’s what happened in crypto today",
+   "url": "https://cointelegraph.com/news/what-happened-in-crypto-today?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
    "source": "Cointelegraph",
-   "published": "2026-10-05T08:00:49+00:00",
-   "summary": "Bitcoin ETF inflows reached a third straight week, while Ether ETFs swung to outflows and Zcash funds posted their first weekly outflow.",
-   "score": 0.9641
+   "published": "2026-10-06T13:41:33+00:00",
+   "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
+   "score": 1.0246
   },
   {
    "title": "Ether's bitcoin-beating Q3 rally came with a catch. Liquidity thinned.",
@@ -110,7 +110,7 @@
    "source": "CoinDesk",
    "published": "2026-10-05T03:50:29+00:00",
    "summary": "",
-   "score": 0.851
+   "score": 0.8034
   },
   {
    "title": "Coinbase Business Chief: Big Banks Increasing BTC Exposure | Shan Aggarwal",
@@ -118,15 +118,15 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-05T21:08:40+00:00",
    "summary": "Bitcoin Magazine Coinbase Business Chief: Big Banks Increasing BTC Exposure | Shan Aggarwal New SEC rules could unlock advisor access to Bitcoin. Coinbase CBO Shan Aggarwal explains how Coinbase's custody infrastructure is paving the way. This post Coinbase Business Chief: Big B…",
-   "score": 0.7769
+   "score": 0.7334
   },
   {
-   "title": "Binance BTC outflows hit highest since mid-2023 as whales deposit stablecoins",
-   "url": "https://cointelegraph.com/markets/binance-btc-outflows-hit-highest-since-mid-2023-as-whales-deposit-stablecoins?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "title": "Bitcoin ETFs notch third inflow week as Ether ETFs shed $138M",
+   "url": "https://cointelegraph.com/markets/bitcoin-etf-third-inflow-week-ether-funds-red?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
    "source": "Cointelegraph",
-   "published": "2026-10-06T09:59:12+00:00",
-   "summary": "Binance BTC reserves fell by nearly 40,000 coins since Sept. 20 as whales returned stablecoin capital to their exchange wallets.",
-   "score": 0.6733
+   "published": "2026-10-05T08:00:49+00:00",
+   "summary": "Bitcoin ETF inflows reached a third straight week, while Ether ETFs swung to outflows and Zcash funds posted their first weekly outflow.",
+   "score": 0.7281
   },
   {
    "title": "Bitcoin Just Flashed a Second, Stronger Golden Cross: Here's What That Means",
@@ -134,7 +134,7 @@
    "source": "Decrypt",
    "published": "2026-10-05T16:10:00+00:00",
    "summary": "The Bitcoin rally keeps bumping into the same wall, but a classic bullish signal suggests the trend is built to last.",
-   "score": 0.6507
+   "score": 0.6143
   },
   {
    "title": "TD Cowen’s Lance Vitanza: BTC to $132k in 2027 & MSTR Price Outlook",
@@ -142,7 +142,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-05T21:03:57+00:00",
    "summary": "Bitcoin Magazine TD Cowen’s Lance Vitanza: BTC to $132k in 2027 & MSTR Price Outlook Institutions aren't asking IF to buy Bitcoin, but HOW. TD Cowen’s Lance Vitanza breaks down the rise of BTC corporate treasuries and capital markets products. This post TD Cowen’s Lance Vitanza:…",
-   "score": 0.6208
+   "score": 0.5861
   },
   {
    "title": "The VIX of bonds is rising but bitcoin and stocks aren't hearing it yet",
@@ -150,7 +150,15 @@
    "source": "CoinDesk",
    "published": "2026-10-06T11:30:00+00:00",
    "summary": "",
-   "score": 0.5974
+   "score": 0.564
+  },
+  {
+   "title": "Binance BTC outflows hit highest since mid-2023 as whales deposit stablecoins",
+   "url": "https://cointelegraph.com/markets/binance-btc-outflows-hit-highest-since-mid-2023-as-whales-deposit-stablecoins?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-10-06T09:59:12+00:00",
+   "summary": "Binance BTC reserves fell by nearly 40,000 coins since Sept. 20 as whales returned stablecoin capital to their exchange wallets.",
+   "score": 0.5085
   },
   {
    "title": "Live updates: Bitcoin remains locked in range as stocks notch another new record high",
@@ -158,15 +166,7 @@
    "source": "CoinDesk",
    "published": "2026-10-06T10:35:49+00:00",
    "summary": "",
-   "score": 0.4717
-  },
-  {
-   "title": "Former SEC boss made AI Czar, Bitcoin may hit $600K this cycle: Hodler’s Digest",
-   "url": "https://cointelegraph.com/magazine/former-sec-boss-made-ai-czar-bitcoin-may-hit-600k-this-cycle-hodlers-digest?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-10-04T22:31:12+00:00",
-   "summary": "Roman Storm and the XRP army aren’t happy former SEC boss Jay Clayton is Trump’s new AI czar, Peter Brandt flips bullish and says Bitcoin may reach as high as $600K by 2029.",
-   "score": 0.4483
+   "score": 0.4454
   },
   {
    "title": "Strategy Posts $21B Q3 Gain, Buys $29M in BTC, Repurchases $176M in STRC",
@@ -174,7 +174,7 @@
    "source": "Decrypt",
    "published": "2026-10-05T12:51:42+00:00",
    "summary": "The firm's Bitcoin holdings hit a record 848,000 BTC, while the quarterly gain is a fair-value mark carrying $1.88 billion in deferred tax.",
-   "score": 0.4412
+   "score": 0.4165
   },
   {
    "title": "CFTC Proposes New Crypto Oversight Rules",
@@ -182,7 +182,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-05T17:25:05+00:00",
    "summary": "Bitcoin Magazine CFTC Proposes New Crypto Oversight Rules The U.S. commodities regulator has proposed a new federal framework for cryptocurrency exchanges. This post CFTC Proposes New Crypto Oversight Rules first appeared on Bitcoin Magazine and is written by Mathew Di Salvo .",
-   "score": 0.4146
+   "score": 0.3914
   },
   {
    "title": "Smaller altcoins shine as bitcoin stills trades around $85,000",
@@ -190,7 +190,15 @@
    "source": "CoinDesk",
    "published": "2026-10-06T10:30:00+00:00",
    "summary": "",
-   "score": 0.3769
+   "score": 0.3558
+  },
+  {
+   "title": "Former SEC boss made AI Czar, Bitcoin may hit $600K this cycle: Hodler’s Digest",
+   "url": "https://cointelegraph.com/magazine/former-sec-boss-made-ai-czar-bitcoin-may-hit-600k-this-cycle-hodlers-digest?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-10-04T22:31:12+00:00",
+   "summary": "Roman Storm and the XRP army aren’t happy former SEC boss Jay Clayton is Trump’s new AI czar, Peter Brandt flips bullish and says Bitcoin may reach as high as $600K by 2029.",
+   "score": 0.3386
   },
   {
    "title": "VanEck’s Matthew Sigel: Path to $500k BTC Runs Through Gold",
@@ -198,7 +206,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-05T20:44:18+00:00",
    "summary": "Bitcoin Magazine VanEck’s Matthew Sigel: Path to $500k BTC Runs Through Gold Bitcoin miners with power contracts hold AI’s scarcest asset. VanEck’s Matthew Sigel explains how long-term AI leases unlock underappreciated value. This post VanEck’s Matthew Sigel: Path to $500k BTC R…",
-   "score": 0.3164
+   "score": 0.2987
   },
   {
    "title": "Why bitcoin is down 'just' 32% a year after its record high of $126,000",
@@ -206,15 +214,7 @@
    "source": "CoinDesk",
    "published": "2026-10-06T08:27:43+00:00",
    "summary": "",
-   "score": 0.2927
-  },
-  {
-   "title": "Metaplanet reveals net income strategy to fuel Bitcoin accumulation",
-   "url": "https://cointelegraph.com/news/metaplanet-net-income-strategy-bitcoin-accumulation?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-10-05T13:47:17+00:00",
-   "summary": "Metaplanet revealed a revised capital allocation framework proposing to allocate as much as 15% of total assets to strategic investments to fund its Bitcoin accumulation.",
-   "score": 0.2861
+   "score": 0.2764
   },
   {
    "title": "'Uptober' Off With a Bang as Bitcoin Surges to $86K",
@@ -222,15 +222,15 @@
    "source": "Decrypt",
    "published": "2026-10-02T12:58:25+00:00",
    "summary": "Cooler inflation and two dovish Fed speakers have shifted the odds toward a rate hold, with payrolls due and CPI landing on October 14.",
-   "score": 0.2578
+   "score": 0.2434
   },
   {
-   "title": "Strategy opts for bigger spending on STRC buybacks over BTC purchases",
-   "url": "https://cointelegraph.com/news/strategy-848k-bitcoin-strc-buybacks-outpace-btc-buys?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "title": "Metaplanet reveals net income strategy to fuel Bitcoin accumulation",
+   "url": "https://cointelegraph.com/news/metaplanet-net-income-strategy-bitcoin-accumulation?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
    "source": "Cointelegraph",
-   "published": "2026-10-05T13:22:16+00:00",
-   "summary": "Strategy bought 334 Bitcoin for $28.7 million last week while spending $176.3 million to repurchase about 1.77 million shares of STRC.",
-   "score": 0.2275
+   "published": "2026-10-05T13:47:17+00:00",
+   "summary": "Metaplanet revealed a revised capital allocation framework proposing to allocate as much as 15% of total assets to strategic investments to fund its Bitcoin accumulation.",
+   "score": 0.2161
   },
   {
    "title": "Bitcoin keeps getting rejected at $87,000 as stocks hover near records",
@@ -238,7 +238,7 @@
    "source": "CoinDesk",
    "published": "2026-10-06T04:41:10+00:00",
    "summary": "",
-   "score": 0.2218
+   "score": 0.2094
   },
   {
    "title": "It's the Start of Uptober. Will Bitcoin Live Up to It?",
@@ -246,23 +246,31 @@
    "source": "Decrypt",
    "published": "2026-10-01T17:11:44+00:00",
    "summary": "Bitcoin enters its historically strongest month after a record-pace September, but a Fed hike and 5.3% Treasury yields are testing the bulls.",
-   "score": 0.1879
+   "score": 0.1774
   },
   {
-   "title": "El Salvador receives $138 million from IMF after Bitcoin waivers granted",
-   "url": "https://cointelegraph.com/news/el-salvador-receives-138-million-from-imf-after-bitcoin-waivers-granted?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "title": "Strategy opts for bigger spending on STRC buybacks over BTC purchases",
+   "url": "https://cointelegraph.com/news/strategy-848k-bitcoin-strc-buybacks-outpace-btc-buys?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
    "source": "Cointelegraph",
-   "published": "2026-10-04T09:40:00+00:00",
-   "summary": "Efforts will continue to reduce the state’s involvement in Bitcoin-related activities and to strengthen crypto‑asset regulation and governance, the IMF said.",
-   "score": 0.1678
+   "published": "2026-10-05T13:22:16+00:00",
+   "summary": "Strategy bought 334 Bitcoin for $28.7 million last week while spending $176.3 million to repurchase about 1.77 million shares of STRC.",
+   "score": 0.1719
   },
   {
-   "title": "BlackRock Says AI Agents Could Be the Next Big Driver of Crypto Demand",
-   "url": "https://bitcoinmagazine.com/news/blackrock-says-ai-to-drive-crypto-demand",
+   "title": "The Real Estate Market Is Dead in Spain. Long Live Bitcoin.",
+   "url": "https://bitcoinmagazine.com/business/the-real-estate-market-is-dead-in-spain-long-live-bitcoin",
    "source": "Bitcoin Magazine",
-   "published": "2026-10-06T16:10:10+00:00",
-   "summary": "Bitcoin Magazine BlackRock Says AI Agents Could Be the Next Big Driver of Crypto Demand The asset manager says that artificial intelligence and digital assets are converging, and that AI adoption may be an underappreciated source of demand for crypto. This post BlackRock Says AI…",
-   "score": 0.1675
+   "published": "2026-10-06T20:13:35+00:00",
+   "summary": "Bitcoin Magazine The Real Estate Market Is Dead in Spain. Long Live Bitcoin. A 2% rent ceiling against 4.9% September inflation, plus compulsory five- and seven-year renewals, rewrites signed leases. The Bank of Spain still puts the housing deficit near 750,000 homes. This post…",
+   "score": 0.1677
+  },
+  {
+   "title": "OKX Gets New Funding From Circle, Standard Chartered at $25B Valuation",
+   "url": "https://bitcoinmagazine.com/news/okx-gets-new-funding-25-billion-valuation",
+   "source": "Bitcoin Magazine",
+   "published": "2026-10-06T19:01:29+00:00",
+   "summary": "Bitcoin Magazine OKX Gets New Funding From Circle, Standard Chartered at $25B Valuation The crypto exchange has raised new funding from the likes of Circle and Standard Chartered as it races to tokenize real-world assets. This post OKX Gets New Funding From Circle, Standard Char…",
+   "score": 0.1319
   },
   {
    "title": "Metaplanet Sold 10,000 Bitcoin and Bought Back 11,000 to Prove a Point",
@@ -270,7 +278,7 @@
    "source": "Decrypt",
    "published": "2026-10-05T12:04:01+00:00",
    "summary": "Rating agencies ask if a Bitcoin company will actually sell when obligations fall due. \"We answered by doing it,\" said CEO Simon Gerovich.",
-   "score": 0.1396
+   "score": 0.1318
   },
   {
    "title": "Metaplanet added 1,000 bitcoin net in the third quarter bringing holdings to 44,000 BTC",
@@ -278,7 +286,15 @@
    "source": "CoinDesk",
    "published": "2026-10-05T10:58:03+00:00",
    "summary": "",
-   "score": 0.1374
+   "score": 0.1297
+  },
+  {
+   "title": "El Salvador receives $138 million from IMF after Bitcoin waivers granted",
+   "url": "https://cointelegraph.com/news/el-salvador-receives-138-million-from-imf-after-bitcoin-waivers-granted?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-10-04T09:40:00+00:00",
+   "summary": "Efforts will continue to reduce the state’s involvement in Bitcoin-related activities and to strengthen crypto‑asset regulation and governance, the IMF said.",
+   "score": 0.1267
   },
   {
    "title": "Bitcoin resilience tested as U.S. dollar climbs to 18-month high",
@@ -286,7 +302,15 @@
    "source": "CoinDesk",
    "published": "2026-10-05T10:44:55+00:00",
    "summary": "",
-   "score": 0.1095
+   "score": 0.1034
+  },
+  {
+   "title": "BlackRock Says AI Agents Could Be the Next Big Driver of Crypto Demand",
+   "url": "https://bitcoinmagazine.com/news/blackrock-says-ai-to-drive-crypto-demand",
+   "source": "Bitcoin Magazine",
+   "published": "2026-10-06T16:10:10+00:00",
+   "summary": "Bitcoin Magazine BlackRock Says AI Agents Could Be the Next Big Driver of Crypto Demand The asset manager says that artificial intelligence and digital assets are converging, and that AI adoption may be an underappreciated source of demand for crypto. This post BlackRock Says AI…",
+   "score": 0.1012
   },
   {
    "title": "Bitcoin Heads Higher on Macro Moves: Where Does BTC Go Next?",
@@ -294,23 +318,7 @@
    "source": "Decrypt",
    "published": "2026-10-02T16:45:52+00:00",
    "summary": "A jobs report miss just erased the odds of an October rate hike, and BTC is now knocking on the door of its yearly ceiling.",
-   "score": 0.1056
-  },
-  {
-   "title": "Top Bitcoin Blockchain Visualizers For Your Home And Office",
-   "url": "https://bitcoinmagazine.com/culture/top-bitcoin-blockchain-visualizers-for-your-home-and-office",
-   "source": "Bitcoin Magazine",
-   "published": "2026-10-05T17:42:01+00:00",
-   "summary": "Bitcoin Magazine Top Bitcoin Blockchain Visualizers For Your Home And Office A September 2026 Omarchy release, OmPool, sonifies live Bitcoin mempool flow in the terminal. It sits next to Bitlisten, Proof of Sound, and self-hosted mempool.space as a home display rather than a tra…",
-   "score": 0.0969
-  },
-  {
-   "title": "Bitcoin treasuries may struggle to match Strategy, says Ammous",
-   "url": "https://cointelegraph.com/interview/bitcoin-treasuries-struggle-strategy-says-ammous?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-10-02T10:54:33+00:00",
-   "summary": "Strategy’s scale and cash reserves give it an edge over treasury rivals, according to Saifedean Ammous, author of “The Bitcoin Standard.”",
-   "score": 0.0963
+   "score": 0.0997
   },
   {
    "title": "Live updates: Bitcoin under pressure as rates continue to rise",
@@ -318,15 +326,7 @@
    "source": "CoinDesk",
    "published": "2026-10-05T10:39:57+00:00",
    "summary": "",
-   "score": 0.0875
-  },
-  {
-   "title": "SEC Proposes New Rules On Crypto Custody",
-   "url": "https://bitcoinmagazine.com/news/sec-proposes-crypto-custody-rules",
-   "source": "Bitcoin Magazine",
-   "published": "2026-10-01T21:09:53+00:00",
-   "summary": "Bitcoin Magazine SEC Proposes New Rules On Crypto Custody The regulator proposed new rules it ​said would ​help govern investment ⁠funds’ custody of ​crypto assets. This post SEC Proposes New Rules On Crypto Custody first appeared on Bitcoin Magazine and is written by Mathew Di…",
-   "score": 0.0754
+   "score": 0.0826
   }
  ]
 }
