@@ -11,8 +11,10 @@
            2024-08-07 의 MSTR 10:1 분할이 하루 −90% 로 튀지 않아야 정상이다.
            일일 요청 한도를 넘기면 200 응답에 CSV 아닌 안내문이 온다 —
            파싱이 빈손이 되고 야후 폴백으로 넘어간다.
-  [야후]   https://query1.finance.yahoo.com/v8/finance/chart/MSTR?range=max&interval=1d
-           JSON. close 는 분할 조정, adjclose 는 배당까지 조정 — adjclose 를
+  [야후]   https://query1.finance.yahoo.com/v8/finance/chart/MSTR?period1=0&period2=<지금>&interval=1d
+           JSON. ⚠️ ``range=max`` 를 쓰면 interval=1d 를 무시하고 **월봉**을 준다
+           (2026-10-10 CI 에서 341행 = 1998-07 ~ 월 1개씩이 실제로 들어왔다). 기간을
+           period1/period2 로 직접 줘야 일봉이 온다. close 는 분할 조정, adjclose 는 배당까지 조정 — adjclose 를
            우선한다(MSTR 는 무배당이라 실질 차이 없음).
 
 ## 이 환경에선 못 받는다 — CI 러너에서 돈다
@@ -66,10 +68,24 @@ STOOQ_URL = "https://stooq.com/q/d/l/?s={sym}&i=d"
 # 냈다(2026-08-03 ~ 10-10 표본 전부) — 한 번 쉬고 다른 호스트로 다시 묻는다.
 YAHOO_HOSTS = ("query1", "query2")
 YAHOO_URL = ("https://{host}.finance.yahoo.com/v8/finance/chart/"
-             "{sym}?range=max&interval=1d")
+             "{sym}?period1=0&period2={end}&interval=1d")
 # 야후는 curl UA 를 특히 빨리 429 로 막는다. 정체를 숨기지 않는 일반 UA 를 쓴다.
 YAHOO_UA = "Mozilla/5.0 (compatible; bitcoin-core-strategies/1.0)"
 YAHOO_RETRY_WAIT = 5.0
+
+# 일봉이라면 관측 간격의 중앙값이 1일(주말 끼면 3일)이다. 이보다 길면 월봉·주봉이
+# 섞여 온 것이다 — 90일 창 분석이 몇 개 점으로 계산되고, 그 파일에 일봉을 병합하면
+# 월초 날짜에 그 달 **말** 종가가 남아 가짜 급등락이 생긴다. 그래서 받지 않는다.
+MAX_MEDIAN_GAP_DAYS = 4
+
+
+def median_gap_days(series: dict[date, float]) -> Optional[float]:
+    ds = sorted(series)
+    if len(ds) < 3:
+        return None
+    gaps = sorted((b - a).days for a, b in zip(ds, ds[1:]))
+    return float(gaps[len(gaps) // 2])
+
 
 # 연속 관측 사이 |단순수익률| 이 이걸 넘으면 분할 미조정 의심. MSTR 10:1 분할이
 # 미조정이면 하루 −90% 라 확실히 걸리고, 조정가의 큰 변동일(±20~30%)은 안 걸린다.
@@ -163,7 +179,8 @@ def fetch_yahoo(sym: str, timeout: int = 40, sleep=None) -> Optional[dict[date, 
         if i:
             sleep(YAHOO_RETRY_WAIT)
             print(f"  다시 {sym} ← yahoo {host}")
-        text = _get(YAHOO_URL.format(host=host, sym=sym), timeout=timeout, ua=YAHOO_UA)
+        url = YAHOO_URL.format(host=host, sym=sym, end=int(time.time()))
+        text = _get(url, timeout=timeout, ua=YAHOO_UA)
         if not text:
             continue
         out = parse_yahoo(text)
@@ -236,6 +253,11 @@ def main(argv: Optional[list[str]] = None) -> int:
             except PolicyBlocked as blk:
                 policy.append(f"yahoo({blk})")
                 print(f"  ! 야후 정책 차단(403/407): {blk}", file=sys.stderr)
+        gap = median_gap_days(series) if series else None
+        if series and (gap is None or gap > MAX_MEDIAN_GAP_DAYS):
+            print(f"  ! {col}: 일봉이 아닙니다(관측 {len(series)}개, 간격 중앙값 {gap}일) — 버립니다",
+                  file=sys.stderr)
+            series = None
         if not series:
             continue
         clean, warns = check_integrity(series, col)

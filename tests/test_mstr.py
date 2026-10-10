@@ -353,3 +353,56 @@ def test_the_page_says_the_appendix_is_empty_instead_of_hiding_silently():
     m = re.search(r"function drawMstr\(\)\{(.*?)\n\}", js, re.S)
     assert m and 'setText("mstr-missing", t("mstrMissing"))' in m.group(1)
     assert len(re.findall(r"mstrMissing: \"", js)) == 2, "두 언어 모두 있어야 합니다"
+
+
+# --------------------------------------------------------------------------
+# 월봉이 섞여 들어오지 않는다 — 2026-10-10 CI 에서 실제로 월봉 341행이 들어왔다
+# --------------------------------------------------------------------------
+def test_yahoo_is_asked_for_an_explicit_period_not_range_max():
+    """range=max 는 interval=1d 를 무시하고 월봉을 준다."""
+    assert "range=max" not in fs.YAHOO_URL
+    assert "period1=" in fs.YAHOO_URL and "period2=" in fs.YAHOO_URL and "interval=1d" in fs.YAHOO_URL
+
+
+def _monthly_mstr():
+    out, y, m = {}, 2020, 1
+    for i in range(60):
+        out[date(y, m, 1)] = 100.0 + i
+        m += 1
+        if m > 12:
+            m, y = 1, y + 1
+    return out
+
+
+def test_a_monthly_series_is_refused_not_merged(tmp_path, monkeypatch, capsys):
+    p = tmp_path / "stocks.csv"
+    monkeypatch.setattr(fs, "fetch_stooq", lambda *a, **k: None)
+    monkeypatch.setattr(fs, "fetch_yahoo", lambda *a, **k: _monthly_mstr())
+    assert fs.main(["--out", str(p)]) == 1
+    assert not p.exists(), "월봉으로 파일을 만들었습니다"
+    assert "일봉이 아닙니다" in capsys.readouterr().err
+
+
+def test_a_daily_series_with_weekends_is_accepted(tmp_path, monkeypatch):
+    days = [d for d in days_between(date(2024, 1, 1), date(2024, 6, 30)) if d.weekday() < 5]
+    series = {d: 300.0 + i for i, d in enumerate(days)}
+    assert fs.median_gap_days(series) == 1.0
+    p = tmp_path / "stocks.csv"
+    monkeypatch.setattr(fs, "fetch_stooq", lambda *a, **k: None)
+    monkeypatch.setattr(fs, "fetch_yahoo", lambda *a, **k: series)
+    assert fs.main(["--out", str(p)]) == 0
+    assert p.exists()
+
+
+def test_the_committed_stock_file_is_daily_if_present():
+    """저장소에 월봉 파일이 남아 있으면 일봉이 그 위에 병합돼 월초 날짜에 월말 종가가 남는다."""
+    p = ROOT / "data" / "stocks.csv"
+    if not p.exists():
+        return
+    ser = {}
+    with p.open(encoding="utf-8", newline="") as fh:
+        for r in csv.DictReader(fh):
+            if r.get("mstr"):
+                ser[date.fromisoformat(r["date"])] = float(r["mstr"])
+    gap = fs.median_gap_days(ser)
+    assert gap is not None and gap <= fs.MAX_MEDIAN_GAP_DAYS, f"data/stocks.csv 가 일봉이 아닙니다(간격 {gap}일)"
