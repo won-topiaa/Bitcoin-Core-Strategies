@@ -221,7 +221,11 @@ def test_fetch_stock_merges_and_leaves_file_intact_on_total_failure(
     assert float(rows[0]["mstr"]) == 501.0
     before = p.read_bytes()
 
-    # 정책 403(둘 다) → 구분해 보고하고 0, 기존 파일 불변
+    # 정책 403(둘 다) → 구분해 보고하고 0, 기존 파일 불변. **이 에이전트 환경**의
+    # 동작이다 — CI 러너(GITHUB_ACTIONS=true)에서는 403 이 원서버 차단이라 1 이다
+    # (아래 test_a_403_on_the_ci_runner_...). 테스트가 CI 에서도 돌므로 환경을 고정한다.
+    monkeypatch.delenv("GITHUB_ACTIONS", raising=False)
+
     def blocked(*a, **k):
         raise fs.PolicyBlocked("stooq.com")
     monkeypatch.setattr(fs, "fetch_stooq", blocked)
