@@ -1,5 +1,5 @@
 {
- "fetched": "2026-10-10T08:21:15+00:00",
+ "fetched": "2026-10-10T08:25:54+00:00",
  "sources_ok": [
   "CoinDesk",
   "Cointelegraph",
@@ -14,7 +14,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-09T13:28:10+00:00",
    "summary": "Bitcoin Magazine Calamos Investments CEO John Koudounis: Bitcoin Will Hit $1M by 2030 Is Bitcoin headed for a $1M awakening by 2030? Calamos CEO John Koudounis explains why institutional bank lending and ETF access will drive the surge. This post Calamos Investments CEO John Kou…",
-   "score": 2.893
+   "score": 2.8898
   },
   {
    "title": "Bitcoin's volatility has plunged, but extreme price swings are more frequent than in 2018",
@@ -22,7 +22,7 @@
    "source": "CoinDesk",
    "published": "2026-10-10T05:43:00+00:00",
    "summary": "",
-   "score": 2.6954
+   "score": 2.6923
   },
   {
    "title": "Bitcoin ETFs Suffer Worst Loss Since June as Uptober Turns Red",
@@ -30,7 +30,7 @@
    "source": "Decrypt",
    "published": "2026-10-08T17:46:05+00:00",
    "summary": "Investors yanked $484.9 million out of spot Bitcoin ETFs in a single day. Oil is near $100, bond yields are at their highest since 2002, and the Fed isn't done hiking.",
-   "score": 2.5776
+   "score": 2.5747
   },
   {
    "title": "Bitcoin, Ether ETFs’ October outflows swell toward $1B",
@@ -38,7 +38,7 @@
    "source": "Cointelegraph",
    "published": "2026-10-09T07:34:44+00:00",
    "summary": "Bitcoin ETFs lost $244 million on Thursday, while Ether funds extended their outflow streak to eight sessions, shedding $641 million.",
-   "score": 2.0977
+   "score": 2.0954
   },
   {
    "title": "Bitcoin ETFs Shed $729M in Two Days as Investors Reverse Course",
@@ -46,7 +46,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-09T17:11:16+00:00",
    "summary": "Bitcoin Magazine Bitcoin ETFs Shed $729M in Two Days as Investors Reverse Course Investors have fast cashed out of bitcoin exchange-traded funds this week. It’s showing in the price. This post Bitcoin ETFs Shed $729M in Two Days as Investors Reverse Course first appeared on Bitc…",
-   "score": 1.9279
+   "score": 1.9258
   },
   {
    "title": "Thailand opens door to locally listed bitcoin and ether ETFs",
@@ -54,7 +54,7 @@
    "source": "CoinDesk",
    "published": "2026-10-09T10:16:55+00:00",
    "summary": "",
-   "score": 1.745
+   "score": 1.743
   },
   {
    "title": "Thailand finalizes rules paving way for Bitcoin, Ether ETFs",
@@ -62,7 +62,7 @@
    "source": "Cointelegraph",
    "published": "2026-10-09T03:08:51+00:00",
    "summary": "The rules are set to take effect next week, allowing crypto ETFs to trade exclusively on the Stock Exchange of Thailand.",
-   "score": 1.5741
+   "score": 1.5724
   },
   {
    "title": "From Uptober to Spooky Szn? Bitcoin Cuts September Gains in Half",
@@ -70,7 +70,7 @@
    "source": "Decrypt",
    "published": "2026-10-08T16:14:46+00:00",
    "summary": "Day traders are selling, leveraged longs are getting flushed and ETF money is heading for the door. The daily chart still holds the line, but its cushion is shrinking.",
-   "score": 1.3449
+   "score": 1.3433
   },
   {
    "title": "‘We Know Where It Is’: Treasury Secretary Threatens To Freeze $1B of Iran’s Crypto",
@@ -78,7 +78,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-09T20:10:14+00:00",
    "summary": "Bitcoin Magazine ‘We Know Where It Is’: Treasury Secretary Threatens To Freeze $1B of Iran’s Crypto The U.S. will seize $1 billion of Iran’s crypto this week, U.S. Treasury Secretary Scott Bessent has said. It isn’t clear which asset though. This post ‘We Know Where It Is’: Trea…",
-   "score": 1.3419
+   "score": 1.3404
   },
   {
    "title": "Live updates: Bitcoin climbs back above $83,000; XRP ETFs only crypto funds with inflows Thursday",
@@ -86,7 +86,7 @@
    "source": "CoinDesk",
    "published": "2026-10-09T06:51:32+00:00",
    "summary": "",
-   "score": 1.3286
+   "score": 1.3272
   },
   {
    "title": "Here’s what happened in crypto today",
@@ -94,7 +94,7 @@
    "source": "Cointelegraph",
    "published": "2026-10-09T18:30:11+00:00",
    "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
-   "score": 1.1527
+   "score": 1.1515
   },
   {
    "title": "Bitcoin Life Insurer Meanwhile Raises $37.5M as Wealthy Families Look to Pass On Their BTC",
@@ -102,7 +102,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-10T00:53:09+00:00",
    "summary": "Bitcoin Magazine Bitcoin Life Insurer Meanwhile Raises $37.5M as Wealthy Families Look to Pass On Their BTC The Bermuda-regulated startup, whose backers include Bain Capital Crypto and Sam Altman, has now raised more than $180 million. This post Bitcoin Life Insurer Meanwhile Ra…",
-   "score": 1.0112
+   "score": 1.0101
   },
   {
    "title": "Bitcoin consolidates near $82.5K as crypto weathers Ledger theft reports",
@@ -110,7 +110,7 @@
    "source": "Cointelegraph",
    "published": "2026-10-09T15:20:36+00:00",
    "summary": "Bitcoin and crypto markets eyed a recovery from Thursday’s drop despite concerns of another hardware wallet exploit.",
-   "score": 0.801
+   "score": 0.8001
   },
   {
    "title": "Bitcoin ETF investors head for the exit, and it's the biggest rush in months",
@@ -118,7 +118,7 @@
    "source": "CoinDesk",
    "published": "2026-10-08T11:15:00+00:00",
    "summary": "",
-   "score": 0.8008
+   "score": 0.7999
   },
   {
    "title": "StoneX Global Macro Director: French Bond Market Contagion & BTC Market Outlook | Vincent Deluard",
@@ -126,7 +126,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-08T13:22:27+00:00",
    "summary": "Bitcoin Magazine StoneX Global Macro Director: French Bond Market Contagion & BTC Market Outlook | Vincent Deluard Treasury yields and oil surge as StoneX's Vincent Deluard warns equities are next. He turns bearish on stocks post-November while staying bullish on Bitcoin. This p…",
-   "score": 0.7266
+   "score": 0.7258
   },
   {
    "title": "Bitcoin Dips Below $83K as Oil Shock Rattles Markets: What Happens Next?",
@@ -134,7 +134,7 @@
    "source": "Decrypt",
    "published": "2026-10-07T15:34:31+00:00",
    "summary": "Bitcoin fell sharply as oil topped $101 and the 30-year Treasury yield hit its highest since 2002. The daily chart still leans bullish. The four-hour chart disagrees.",
-   "score": 0.6279
+   "score": 0.6272
   },
   {
    "title": "US Bitcoin ETFs shed $485M in biggest daily outflow since June",
@@ -142,7 +142,7 @@
    "source": "Cointelegraph",
    "published": "2026-10-08T07:30:42+00:00",
    "summary": "Bitcoin ETFs erased October’s net inflows with $485 million in withdrawals, while Ether funds logged a seventh straight outflow session.",
-   "score": 0.607
+   "score": 0.6063
   },
   {
    "title": "MARA transfers $81.1 million in bitcoin to Galaxy Digital as strategy pivots to AI",
@@ -150,7 +150,7 @@
    "source": "CoinDesk",
    "published": "2026-10-09T09:08:09+00:00",
    "summary": "",
-   "score": 0.4687
+   "score": 0.4681
   },
   {
    "title": "Bitcoin Falls Below $81,000 as Oil Spikes, Fed Talks Tough",
@@ -158,7 +158,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-08T17:14:58+00:00",
    "summary": "Bitcoin Magazine Bitcoin Falls Below $81,000 as Oil Spikes, Fed Talks Tough The price of bitcoin has continued to drop this week, spurred by fears that the Federal Reserve is increasingly tempted to raise interest rates. This post Bitcoin Falls Below $81,000 as Oil Spikes, Fed T…",
-   "score": 0.4657
+   "score": 0.4652
   },
   {
    "title": "Bitcoin Rebounds After Rough Week, But Traders Are Pricing In More Downside",
@@ -166,7 +166,7 @@
    "source": "Decrypt",
    "published": "2026-10-09T17:36:26+00:00",
    "summary": "Bitcoin bounced after dipping to around $80,000. Traders are placing increasingly high odds BTC slips further before October is over.",
-   "score": 0.4138
+   "score": 0.4133
   },
   {
    "title": "Bitcoin ETFs shed $90M as BTC sits 32% below year-old ATH",
@@ -174,7 +174,7 @@
    "source": "Cointelegraph",
    "published": "2026-10-06T08:14:17+00:00",
    "summary": "US spot Bitcoin ETFs reversed two days of inflows as Bitcoin slipped below $86,000, trading roughly 32% below its October 2025 all-time high.",
-   "score": 0.3926
+   "score": 0.3921
   },
   {
    "title": "U.S. government moves $1 billion in bitcoin tied to Bitfinex hack, with no sign of sale",
@@ -182,7 +182,7 @@
    "source": "CoinDesk",
    "published": "2026-10-08T15:43:04+00:00",
    "summary": "",
-   "score": 0.3644
+   "score": 0.364
   },
   {
    "title": "Bitcoin Bleeds in Uptober—How Low Can It Go? Experts Weigh In",
@@ -190,7 +190,7 @@
    "source": "Decrypt",
    "published": "2026-10-09T13:20:12+00:00",
    "summary": "Experts highlight several support levels, from $83,000 down to $72,000, that Bitcoin may need to test in a bearish start to Uptober.",
-   "score": 0.3112
+   "score": 0.3109
   },
   {
    "title": "US government moves $1B in seized Bitcoin after $770M transfers",
@@ -198,7 +198,7 @@
    "source": "Cointelegraph",
    "published": "2026-10-08T15:24:16+00:00",
    "summary": "Blockchain analysts identified the US government wallet tied to the recovery of funds from the Bitfinex hack.",
-   "score": 0.2902
+   "score": 0.2899
   },
   {
    "title": "AI Coding Agents Drive Surge in Bitcoin Integration Requests: Breez",
@@ -206,7 +206,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-08T19:17:12+00:00",
    "summary": "Bitcoin Magazine AI Coding Agents Drive Surge in Bitcoin Integration Requests: Breez Bitcoin software company Breez said demand for its developer tools has surged since AI coding agents went mainstream, with partnership inquiries rising roughly 14-fold as developers, and increas…",
-   "score": 0.2763
+   "score": 0.276
   },
   {
    "title": "Empire Market Co-Creator Sentenced to 40 Years Over $430M Dark Web Bazaar",
@@ -214,7 +214,7 @@
    "source": "Decrypt",
    "published": "2026-10-09T10:11:51+00:00",
    "summary": "Raheim Hamilton forfeited some 1,230 BTC. His co-creator Thomas Pavey, who agreed to forfeit 1,584 BTC, is due to be sentenced this month.",
-   "score": 0.238
+   "score": 0.2377
   },
   {
    "title": "Bitcoin price drops to $82.7K October low as bond sell-off resumes on Iran nerves",
@@ -222,7 +222,7 @@
    "source": "Cointelegraph",
    "published": "2026-10-07T15:06:14+00:00",
    "summary": "Bitcoin fell below $83,000 to reach month-to-date lows as stocks reversed after all-time highs and bond yields spiked higher.",
-   "score": 0.2289
+   "score": 0.2286
   },
   {
    "title": "Housingwire’s Logan Mohtashami: Real Estate vs Bitcoin & Bond Market Outlook",
@@ -230,7 +230,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-06T21:28:54+00:00",
    "summary": "Bitcoin Magazine Housingwire’s Logan Mohtashami: Real Estate vs Bitcoin & Bond Market Outlook Mortgage rates hit 3-year highs as homebuyers retreat. HousingWire’s Logan Mohtashami explains why rising bond yields and Fed hawkishness drive the surge. This post Housingwire’s Logan…",
-   "score": 0.2091
+   "score": 0.2089
   },
   {
    "title": "Trump's Iran pledge underpins crypto gains as bitcoin bears face liquidation pressure",
@@ -238,7 +238,7 @@
    "source": "CoinDesk",
    "published": "2026-10-09T11:09:04+00:00",
    "summary": "",
-   "score": 0.193
+   "score": 0.1928
   },
   {
    "title": "Bitcoin ETFs rebound with $119M inflow as Ether extends losses",
@@ -246,7 +246,7 @@
    "source": "Cointelegraph",
    "published": "2026-10-07T09:03:38+00:00",
    "summary": "Bitcoin ETFs returned to net inflows with $119 million on Tuesday despite falling prices, while Ether funds reached a six-session outflow streak totaling $408 million.",
-   "score": 0.1798
+   "score": 0.1796
   },
   {
    "title": "James Van Straten: BTC Bull Market Has Begun – Rotation from Gold Driver Back to $126K",
@@ -254,7 +254,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-08T13:27:44+00:00",
    "summary": "Bitcoin Magazine James Van Straten: BTC Bull Market Has Begun – Rotation from Gold Driver Back to $126K Where will Bitcoin's next rally come from? CoinDesk's James Van Straten analyzes gold rotations, equity pullbacks, and stablecoin inflows as key drivers. This post James Van S…",
-   "score": 0.1626
+   "score": 0.1624
   },
   {
    "title": "'Uptober' Starts Green as Bitcoin ETFs Draw $134 Million",
@@ -262,7 +262,7 @@
    "source": "Decrypt",
    "published": "2026-10-04T15:01:03+00:00",
    "summary": "Spot Bitcoin ETFs took in $134.4 million over the first two trading days of October, rebounding from a Sept. 30 outflow as a weak jobs report cooled Fed rate-hike bets.",
-   "score": 0.1623
+   "score": 0.1622
   },
   {
    "title": "Bitcoin steadies near $82,500 after Trump rules out Iran strike before midterms",
@@ -270,7 +270,7 @@
    "source": "CoinDesk",
    "published": "2026-10-09T10:44:22+00:00",
    "summary": "",
-   "score": 0.1535
+   "score": 0.1533
   },
   {
    "title": "Sam Altman-backed Bitcoin life insurer, Meanwhile, raises more funds",
@@ -278,7 +278,7 @@
    "source": "Cointelegraph",
    "published": "2026-10-10T07:10:43+00:00",
    "summary": "The round follows increased international demand for Meanwhile’s Bitcoin life insurance policies amid broader macro instability.",
-   "score": 0.132
+   "score": 0.1318
   },
   {
    "title": "Coinbase’s Ryan VanGrack: CFTC Approval “Opens Many Doors” for Bitcoin",
@@ -286,7 +286,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-05T21:14:01+00:00",
    "summary": "Bitcoin Magazine Coinbase’s Ryan VanGrack: CFTC Approval “Opens Many Doors” for Bitcoin Proposed SEC rules could boost direct Bitcoin ownership for advisors. Coinbase’s Ryan VanGrack explains why ETFs and direct holding can both thrive. This post Coinbase’s Ryan VanGrack: CFTC A…",
-   "score": 0.1286
+   "score": 0.1284
   },
   {
    "title": "Satoshi-Era Bitcoin Worth $8.3 Million Moves After 16 Years",
@@ -294,7 +294,7 @@
    "source": "Decrypt",
    "published": "2026-10-08T18:46:04+00:00",
    "summary": "A batch of 100.02 BTC mined in July 2010 moved Wednesday after 16 years. It's worth about $8.3 million, but nothing in the transaction shows who owns it.",
-   "score": 0.1219
+   "score": 0.1217
   },
   {
    "title": "New tech to power bitcoin lending is set to debut with $500 million in commitments",
@@ -302,7 +302,7 @@
    "source": "CoinDesk",
    "published": "2026-10-09T06:40:54+00:00",
    "summary": "",
-   "score": 0.1158
+   "score": 0.1157
   },
   {
    "title": "CFTC Chair Says New Crypto Rulemaking Will Prevent Another FTX-Style Collapse",
@@ -310,7 +310,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-07T20:21:22+00:00",
    "summary": "Bitcoin Magazine CFTC Chair Says New Crypto Rulemaking Will Prevent Another FTX-Style Collapse CFTC Chair Mike Selig has said that the regulator wants to bring stringent regulations to the crypto world. This post CFTC Chair Says New Crypto Rulemaking Will Prevent Another FTX-Sty…",
-   "score": 0.0993
+   "score": 0.0992
   },
   {
    "title": "Bitcoin monthly ‘new money’ inflows near $5B as BTC price rally stalls",
@@ -318,7 +318,7 @@
    "source": "Cointelegraph",
    "published": "2026-10-08T09:56:07+00:00",
    "summary": "Bitcoin’s realized cap rise in the 30 days to Oct. 5 came mostly from existing holders, not fresh capital, Glassnode data showed.",
-   "score": 0.0989
+   "score": 0.0988
   },
   {
    "title": "US Government Moves $1 Billion in Bitcoin Seized From Bitfinex Hacker",
@@ -326,7 +326,7 @@
    "source": "Decrypt",
    "published": "2026-10-08T16:44:20+00:00",
    "summary": "A government wallet holding Bitcoin seized from the Bitfinex hacker sent 12,267 BTC to a new, unlabeled address, according to Arkham data.",
-   "score": 0.0947
+   "score": 0.0946
   }
  ]
 }
