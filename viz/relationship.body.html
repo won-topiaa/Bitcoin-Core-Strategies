@@ -94,9 +94,10 @@ __NAV__
   <strong>60종 중 하나</strong>, 중국 M2뿐입니다.</p>
 
   <!-- ============ 부록 — 스트래티지(MSTR) 상대성과 ============
-       데이터(data/stocks.csv)가 없으면 스크립트가 이 블록 전체를 숨긴다.
-       이 환경에서는 주가 소스가 막혀 있고, 매일 갱신 워크플로(러너는 이그레스가
-       열려 있다)가 채우면 나타난다. -->
+       데이터(data/stocks.csv)가 없으면 스크립트가 이 블록 전체를 숨기고, 그 자리에
+       '비어 있다'는 한 줄(mstr-missing)만 남긴다. 예전엔 말없이 숨겨, 주가 수집이
+       두 달 넘게 매번 실패하는 동안 부록이 있는지조차 알 수 없었다. -->
+  <p class="m2-read" id="mstr-missing"></p>
   <div class="sechead" style="margin-top:34px" id="mstr-head">
     <p class="eyebrow" data-t="rel.mstr.eyebrow">부록 — 트레저리 기업</p>
     <h2 data-t="rel.mstr.h2">스트래티지(MSTR)는 비트코인의 지렛대처럼 움직였다</h2>

@@ -165,7 +165,8 @@ def _cmd_score(args, cfg) -> int:
         print("  수동 입력만으로 계속 진행합니다.\n", file=sys.stderr)
 
     manual = load_manual(args.manual, reference=as_of or date.today())
-    macro_signals = load_macro_signals(args.macro, reference=as_of)
+    # '지금'이면 오늘을 넘긴다 — 그래야 멈춘 원본의 낡은 M2 를 지금 값으로 안 쓴다.
+    macro_signals = load_macro_signals(args.macro, reference=as_of or date.today())
     state = ExecutionState.load(args.state)
 
     snap, state = evaluate(

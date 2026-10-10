@@ -493,3 +493,40 @@ def test_partial_from_r_matches_the_textbook_formula():
     assert abs(mc.partial_from_r(xy, xz, yz) - want) < 1e-12
     assert mc.partial_from_r(None, xz, yz) is None
     assert mc.partial_from_r(xy, 1.0, yz) is None          # 완전 통제 → 정의 불가
+
+
+def test_the_global_plan_does_not_steal_a_core_column():
+    """DEXJPUS 는 usdjpy(CORE)이면서 fx_jp(전 세계 집계)다. 예전엔 --global 이 같은
+    키를 fx_jp 로 덮어써 usdjpy 가 2026-07-24 에서 멈췄다(CI 는 늘 --global)."""
+    import fetch_macro as fm
+
+    plain, glob = fm.build_plan(False), fm.build_plan(True)
+    for fid, col in fm.CORE.items():
+        assert col in plain[fid], f"{fid} → {col} 이 계획에 없습니다"
+        assert col in glob[fid], f"--global 이 {fid} → {col} 을 덮어썼습니다"
+    assert set(glob["DEXJPUS"]) == {"usdjpy", "fx_jp"}
+    for cc, spec in fm.GLOBAL.items():
+        assert f"m2_{cc}" in glob[spec["m2"]] and f"fx_{cc}" in glob[spec["fx"]]
+
+
+def test_a_shared_fred_series_fills_every_column_it_feeds(tmp_path, monkeypatch):
+    """한 번 받아 두 열을 채운다 — fx_ 열은 버려도 usdjpy 는 남아야 한다."""
+    import fetch_macro as fm
+
+    d = date(2026, 10, 2)
+    monkeypatch.setattr(fm, "fetch_series", lambda fid, timeout=40: {d: 157.81 if fid == "DEXJPUS" else 1.0})
+    monkeypatch.setattr(fm, "fetch_csv_api", lambda *a, **k: {})
+    saved = {}
+    monkeypatch.setattr(fm, "merge_to_csv", lambda cols, path: saved.update(cols))
+    assert fm.main(["--global", "--out", str(tmp_path / "m.csv")]) == 0
+    assert saved.get("usdjpy") == {d: 157.81}, "usdjpy 가 갱신되지 않습니다"
+    assert not any(k.startswith("fx_") for k in saved), "환율 열은 결과에서 빠져야 합니다"
+
+
+def test_vix_comes_from_fred_with_the_mirror_as_fallback():
+    """datahub VIX 미러가 2026-09-22 에서 멈췄다. FRED VIXCLS 가 같은 열을 덮어 최신을
+    잇고, 미러는 FRED 가 막힌 환경의 폴백으로만 남는다."""
+    import fetch_macro as fm
+
+    assert fm.CORE.get("VIXCLS") == "vix"
+    assert any("vix" in cols.values() for _u, _d, cols in fm.GITHUB_SOURCES), "폴백이 사라졌습니다"

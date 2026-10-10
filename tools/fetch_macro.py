@@ -74,7 +74,9 @@ GITHUB_SOURCES = [
     # 어떤 분석도 안 써서 받지 않는다 — 받아 두면 최근값이 0 으로 오염되기도 했다.)
     ("https://raw.githubusercontent.com/datasets/s-and-p-500/main/data/data.csv",
      "Date", {"SP500": "sp500"}),
-    # VIX(공포지수) — datahub, 일간.
+    # VIX(공포지수) — datahub, 일간. **폴백일 뿐이다** — 이 미러가 2026-09-22 에서
+    # 멈췄다. 같은 CBOE 종가를 FRED VIXCLS 가 최신까지 준다(겹치는 날 값이 같다).
+    # FRED 가 같은 열을 덮으므로 FRED 가 막힌 환경에서만 이 값이 남는다.
     ("https://raw.githubusercontent.com/datasets/finance-vix/main/data/vix-daily.csv",
      "DATE", {"CLOSE": "vix"}),
     # 금 현물(LBMA, USD) — datahub, 월간 1833~. '디지털 금' 서사 점검용. 검정
@@ -95,6 +97,9 @@ GITHUB_SOURCES = [
 # 옮겼다. 전 세계 합계(build_global)는 미국분을 ×1e9 로 외국분(원 달러)에 맞춰 더한다.
 CORE = {
     "NASDAQCOM": "nasdaq",             # 나스닥 종합, 일간, 1971~
+    # VIX — CBOE 종가, 일간, 1990~. datahub 미러가 2026-09-22 에서 멈춰 이쪽을 주
+    # 소스로 쓴다(관련성 지도의 강조 계열이다). 겹치는 날 값이 미러와 같다.
+    "VIXCLS": "vix",
     # 미국 M2 — 전에 쓰던 OECD 광의통화(MABMM301USM189S)는 2023-11 에 폐기됐다.
     # 활성 시리즈 M2SL(십억 달러, 월간, 현재까지)로 교체한다. GitHub 미러도 같은
     # M2SL 이라 정의·단위가 일관된다. (FRED 가 살아 있으면 미러보다 최신까지 채운다.)
@@ -443,6 +448,23 @@ def build_global(columns: dict[str, dict[date, float]]) -> Optional[dict[date, f
     return out or None
 
 
+def build_plan(do_global: bool) -> dict[str, list[str]]:
+    """FRED id → 채울 열들. **한 id 가 여러 열을 채울 수 있다.**
+
+    예전엔 id → 열 하나였다. 그런데 엔/달러(DEXJPUS)는 CORE 의 usdjpy 이면서 전 세계
+    집계의 fx_jp 이기도 해서, --global 이 같은 키를 fx_jp 로 **덮어썼고** fx_ 열은
+    집계 뒤 버려진다. CI 는 늘 --global 로 돌아 usdjpy 가 2026-07-24 에서 멈췄다.
+    """
+    plan: dict[str, list[str]] = {fid: [col] for fid, col in CORE.items()}
+    if do_global:
+        for cc, spec in GLOBAL.items():
+            for fid, col in ((spec["m2"], f"m2_{cc}"), (spec["fx"], f"fx_{cc}")):
+                cols = plan.setdefault(fid, [])
+                if col not in cols:
+                    cols.append(col)
+    return plan
+
+
 def main(argv: Optional[list[str]] = None) -> int:
     ap = argparse.ArgumentParser(description="FRED 에서 거시 시계열 받기 (무료)")
     ap.add_argument("--out", default="data/macro.csv")
@@ -454,16 +476,12 @@ def main(argv: Optional[list[str]] = None) -> int:
     ap.add_argument("--list", action="store_true", help="받을 시리즈 목록만")
     args = ap.parse_args(argv)
 
-    plan = dict(CORE)
-    if args.do_global:
-        for cc, spec in GLOBAL.items():
-            plan[spec["m2"]] = f"m2_{cc}"
-            plan[spec["fx"]] = f"fx_{cc}"
+    plan = build_plan(args.do_global)
 
     if args.list:
         print("받을 FRED 시리즈 (id → 열):")
-        for fid, col in plan.items():
-            print(f"  {fid:<16} → {col}")
+        for fid, cols in plan.items():
+            print(f"  {fid:<16} → {', '.join(cols)}")
         print("\nFRED 에서 ID 를 확인하려면: https://fred.stlouisfed.org/series/<ID>")
         return 0
 
@@ -479,11 +497,12 @@ def main(argv: Optional[list[str]] = None) -> int:
     if want_fred:
         fred: dict[str, dict[date, float]] = {}
         try:
-            for fid, col in plan.items():
-                print(f"받는 중 {fid} → {col}")
+            for fid, cols in plan.items():
+                print(f"받는 중 {fid} → {', '.join(cols)}")
                 s = fetch_series(fid)
                 if s:
-                    fred[col] = s
+                    for col in cols:
+                        fred[col] = dict(s)
                     print(f"        {len(s)}행 ({min(s)} ~ {max(s)})")
         except PolicyBlocked as blk:
             # FRED 가 정책상 막혔다. **이미 받은 GitHub·CSV 데이터는 버리지 않는다** —

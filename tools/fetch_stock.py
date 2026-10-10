@@ -62,20 +62,26 @@ SYMBOLS = {
     "mstr": ("mstr.us", "MSTR"),
 }
 STOOQ_URL = "https://stooq.com/q/d/l/?s={sym}&i=d"
-YAHOO_URL = ("https://query1.finance.yahoo.com/v8/finance/chart/"
+# 야후는 두 호스트가 같은 API 를 준다. CI 러너에서 query1 이 매번 429(요청 과다)를
+# 냈다(2026-08-03 ~ 10-10 표본 전부) — 한 번 쉬고 다른 호스트로 다시 묻는다.
+YAHOO_HOSTS = ("query1", "query2")
+YAHOO_URL = ("https://{host}.finance.yahoo.com/v8/finance/chart/"
              "{sym}?range=max&interval=1d")
+# 야후는 curl UA 를 특히 빨리 429 로 막는다. 정체를 숨기지 않는 일반 UA 를 쓴다.
+YAHOO_UA = "Mozilla/5.0 (compatible; bitcoin-core-strategies/1.0)"
+YAHOO_RETRY_WAIT = 5.0
 
 # 연속 관측 사이 |단순수익률| 이 이걸 넘으면 분할 미조정 의심. MSTR 10:1 분할이
 # 미조정이면 하루 −90% 라 확실히 걸리고, 조정가의 큰 변동일(±20~30%)은 안 걸린다.
 MAX_DAILY_MOVE = 0.60
 
 
-def _get(url: str, timeout: int = 40) -> Optional[str]:
+def _get(url: str, timeout: int = 40, ua: str = UA) -> Optional[str]:
     """URL 하나. 정책 차단(403/407)이면 PolicyBlocked, 그 외 실패는 None.
 
     fetch_macro.fetch_series 와 같은 구분 — 프록시가 직접 403(HTTPError)을 주거나
     CONNECT 터널을 403 으로 거절(URLError, reason 에 "403")하거나 둘 다 잡는다."""
-    req = urllib.request.Request(url, headers={"User-Agent": UA})
+    req = urllib.request.Request(url, headers={"User-Agent": ua})
     try:
         with urllib.request.urlopen(req, timeout=timeout) as resp:
             return resp.read().decode("utf-8")
@@ -134,14 +140,37 @@ def parse_yahoo(text: str) -> Optional[dict[date, float]]:
     return out or None
 
 
+def _peek(text: str, n: int = 160) -> str:
+    return " ".join(text.split())[:n]
+
+
 def fetch_stooq(sym: str, timeout: int = 40) -> Optional[dict[date, float]]:
     text = _get(STOOQ_URL.format(sym=sym), timeout=timeout)
-    return parse_stooq(text) if text else None
+    if not text:
+        return None
+    out = parse_stooq(text)
+    if out is None:
+        # 오류 없이 200 인데 CSV 가 아니다(한도 안내·키 요구 등). 예전엔 이걸 말없이
+        # 야후로 넘겨, 두 달 동안 '! stooq' 줄 하나 없이 매번 실패했다. 본문을 보인다.
+        print(f"  ! stooq: CSV 가 아닌 응답 — {_peek(text)!r}", file=sys.stderr)
+    return out
 
 
-def fetch_yahoo(sym: str, timeout: int = 40) -> Optional[dict[date, float]]:
-    text = _get(YAHOO_URL.format(sym=sym), timeout=timeout)
-    return parse_yahoo(text) if text else None
+def fetch_yahoo(sym: str, timeout: int = 40, sleep=None) -> Optional[dict[date, float]]:
+    import time
+    sleep = sleep or time.sleep
+    for i, host in enumerate(YAHOO_HOSTS):
+        if i:
+            sleep(YAHOO_RETRY_WAIT)
+            print(f"  다시 {sym} ← yahoo {host}")
+        text = _get(YAHOO_URL.format(host=host, sym=sym), timeout=timeout, ua=YAHOO_UA)
+        if not text:
+            continue
+        out = parse_yahoo(text)
+        if out:
+            return out
+        print(f"  ! yahoo {host}: 읽을 수 없는 응답 — {_peek(text)!r}", file=sys.stderr)
+    return None
 
 
 def check_integrity(series: dict[date, float], col: str = "mstr",

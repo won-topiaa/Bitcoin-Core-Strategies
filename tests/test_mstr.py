@@ -296,3 +296,60 @@ def test_parse_yahoo_null_timestamp_and_all_null_adjclose():
     out = fs.parse_yahoo(body)          # 죽지 않아야 한다
     assert out is not None and len(out) == 2, out
     assert sorted(out.values()) == [10.0, 12.0], "close 폴백이 안 됐다"
+
+
+# --------------------------------------------------------------------------
+# 실패를 숨기지 않는다 — 2026-08-03 부터 두 달 넘게 매번 실패했는데 아무도 몰랐다
+# --------------------------------------------------------------------------
+def test_a_non_csv_stooq_reply_is_shown_not_swallowed(monkeypatch, capsys):
+    """stooq 가 200 으로 CSV 아닌 본문을 주면 예전엔 '! stooq' 줄 하나 없이 넘어갔다."""
+    monkeypatch.setattr(fs, "_get", lambda url, timeout=40, ua=None: "Exceeded the daily hits limit")
+    assert fs.fetch_stooq("mstr.us") is None
+    err = capsys.readouterr().err
+    assert "! stooq" in err and "Exceeded the daily hits limit" in err
+
+
+def test_yahoo_tries_the_second_host_after_a_refusal(monkeypatch):
+    """CI 러너에서 query1 이 매번 429 였다 — 쉬었다가 query2 로 다시 묻는다."""
+    calls, waits = [], []
+    good = json.dumps({"chart": {"result": [{"timestamp": [1700000000, 1700086400],
+            "indicators": {"quote": [{"close": [300.0, 310.0]}]}}]}})
+
+    def get(url, timeout=40, ua=None):
+        calls.append((url.split("/")[2], ua))
+        return None if url.startswith("https://query1.") else good
+    monkeypatch.setattr(fs, "_get", get)
+    out = fs.fetch_yahoo("MSTR", sleep=waits.append)
+    assert out and len(out) == 2
+    assert [h for h, _ in calls] == ["query1.finance.yahoo.com", "query2.finance.yahoo.com"]
+    assert waits == [fs.YAHOO_RETRY_WAIT]
+    assert all(ua and "curl" not in ua for _h, ua in calls), "야후는 curl UA 를 특히 빨리 막는다"
+
+
+def test_yahoo_stops_at_the_first_good_answer(monkeypatch):
+    good = json.dumps({"chart": {"result": [{"timestamp": [1700000000],
+            "indicators": {"quote": [{"close": [300.0]}]}}]}})
+    calls = []
+    monkeypatch.setattr(fs, "_get", lambda url, timeout=40, ua=None: calls.append(url) or good)
+    assert fs.fetch_yahoo("MSTR", sleep=lambda s: None)
+    assert len(calls) == 1
+
+
+def test_the_workflow_does_not_swallow_a_stock_failure():
+    import yaml
+    doc = yaml.safe_load((ROOT / ".github" / "workflows" / "refresh-data.yml").read_text(encoding="utf-8"))
+    steps = [s for j in doc["jobs"].values() for s in j["steps"]]
+    stock = next(s for s in steps if "fetch_stock.py" in str(s.get("run", "")))
+    run = str(stock["run"])
+    assert "|| true" not in run, "실패를 말없이 삼킵니다"
+    assert "::warning::" in run, "실패가 실행 요약에 남지 않습니다"
+
+
+def test_the_page_says_the_appendix_is_empty_instead_of_hiding_silently():
+    import re
+    body = (ROOT / "viz" / "relationship.body.html").read_text(encoding="utf-8")
+    js = (ROOT / "viz" / "_script.html").read_text(encoding="utf-8")
+    assert 'id="mstr-missing"' in body
+    m = re.search(r"function drawMstr\(\)\{(.*?)\n\}", js, re.S)
+    assert m and 'setText("mstr-missing", t("mstrMissing"))' in m.group(1)
+    assert len(re.findall(r"mstrMissing: \"", js)) == 2, "두 언어 모두 있어야 합니다"

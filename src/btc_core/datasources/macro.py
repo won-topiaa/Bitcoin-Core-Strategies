@@ -80,13 +80,32 @@ def _yoy(series: dict[date, float], months: int = 12) -> dict[date, float]:
     return out
 
 
+# 중국 M2 는 달 첫날 날짜로 실리고(2026-05 → 2026-05-01) 다음 달 중순에 나온다. 그래서
+# 정상일 때도 가장 새 값은 기준일보다 45~75일 앞이다(춘절이 끼면 조금 더). 100일을
+# 넘으면 원본이 멈춘 것이다 — 2026-05 에서 멈춘 값을 10월에 '지금 임펄스'라 부르며
+# 유동성 레짐(LRS)을 매겼고, 원본이 멈춘 뒤로 그 값은 움직일 수가 없었다(2026-10 감사).
+M2_MAX_AGE_DAYS = 100
+
+
+def china_m2_last(path: str | Path, *, reference: Optional[date] = None) -> Optional[date]:
+    """reference 이하에서 전년비를 낼 수 있는 가장 새 달(달 첫날). 없으면 None."""
+    m2 = _yoy(_month_end(_load_column(Path(path), "m2_cn")))
+    ds = [d for d in m2 if reference is None or d <= reference]
+    return max(ds) if ds else None
+
+
 def china_m2_impulse(path: str | Path, *, reference: Optional[date] = None,
-                     window: int = IMPULSE_WINDOW) -> Optional[float]:
+                     window: int = IMPULSE_WINDOW,
+                     max_age_days: Optional[int] = M2_MAX_AGE_DAYS) -> Optional[float]:
     """중국 M2 전년비 − 직전 `window`개월 평균(가속도, %p). reference 이하 최신값.
 
     reference 미래의 데이터는 절대 보지 않는다(과거 스냅샷 정직성). **정확히 `window`
     개월치가 없으면 None** — 짧은 과거 스냅샷마다 창이 12~24 로 들쭉날쭉하면 임펄스
     크기를 스냅샷끼리 비교할 수 없기 때문이다(모듈 설명이 '24개월 평균'을 약속한다).
+
+    가장 새 값이 reference 보다 ``max_age_days`` 넘게 오래됐으면 None — 멈춘 원본의
+    마지막 값을 '지금'이라 부르지 않는다. reference 가 없으면 나이를 잴 수 없어
+    검사하지 않는다(호출부가 '지금'을 뜻하면 오늘을 넘겨야 한다).
     """
     m2 = _yoy(_month_end(_load_column(Path(path), "m2_cn")))
     if not m2:
@@ -95,6 +114,9 @@ def china_m2_impulse(path: str | Path, *, reference: Optional[date] = None,
     if not ds:
         return None
     last = ds[-1]
+    if (reference is not None and max_age_days is not None
+            and (reference - last).days > max_age_days):
+        return None
     # 창은 **달력 기준**으로 last 직전 window개월이다. 위치로 잡으면(ds[-25:-1])
     # 중간에 한 달이 비었을 때 창이 조용히 25~26개월로 늘어나 임펄스 크기가
     # 스냅샷끼리 비교 불가능해진다 — _yoy 와 같은 이유로 달력으로 센다.

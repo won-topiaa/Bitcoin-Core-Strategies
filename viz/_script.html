@@ -221,8 +221,10 @@ ko: {
   m2Btc: "비트코인 가격",
   m2Cn: "중국 M2 전년비",
   m2Shift: n => `${n}개월 당김(측정값)`,
-  m2Read: (imp, lrs, band) =>
-    `지금 중국 M2 임펄스 ${imp}%p → 유동성 레짐 LRS ${lrs} · ‘${band}’. 실행 방향이 아니라 크기(속도)에만 반영됩니다.`,
+  m2Read: (imp, lrs, band, ym) =>
+    `지금 중국 M2 임펄스 ${imp}%p${ym ? ` (${ym} 자료)` : ""} → 유동성 레짐 LRS ${lrs} · ‘${band}’. 실행 방향이 아니라 크기(속도)에만 반영됩니다.`,
+  m2Stale: ym =>
+    `중국 M2 자료가 ${ym} 이후로 들어오지 않아, 지금 임펄스와 유동성 레짐은 비워 둡니다 — 몇 달 지난 값을 '지금'이라 부르지 않습니다.`,
   altM2: (lead, corr, imp, band) =>
     `비트코인 로그가격(검정)에 중국 M2 전년비(파랑)를 측정된 선행 ${lead}개월만큼 앞으로 당겨 ` +
     `겹친 그림. 왼쪽 축은 가격, 오른쪽 축은 M2 증가율입니다. 중국 M2 가 비트코인을 약 ` +
@@ -245,6 +247,7 @@ ko: {
   relShortT: "표본이 한 국면뿐입니다",
   // -- 05 부록 MSTR
   mstrRatio: "상대성과 (MSTR ÷ BTC, 시작=1)",
+  mstrMissing: "부록 — 스트래티지(MSTR) 상대성과는 주가 데이터를 받지 못해 지금 비어 있습니다.",
   mstrShade: "따뜻한 음영 = MSTR 가 크게 앞선 구간",
   mstrShadeDown: "차가운 음영 = 크게 뒤진 구간",
   mstrRead: (k, days) =>
@@ -407,8 +410,10 @@ en: {
   m2Btc: "Bitcoin price",
   m2Cn: "China M2 (YoY)",
   m2Shift: n => `pulled ${n}mo forward (measured)`,
-  m2Read: (imp, lrs, band) =>
-    `China M2 impulse now ${imp}pp → liquidity regime LRS ${lrs} · '${band}'. Scales execution size, not direction.`,
+  m2Read: (imp, lrs, band, ym) =>
+    `China M2 impulse now ${imp}pp${ym ? ` (${ym} data)` : ""} → liquidity regime LRS ${lrs} · '${band}'. Scales execution size, not direction.`,
+  m2Stale: ym =>
+    `No China M2 data has arrived since ${ym}, so the current impulse and liquidity regime are left blank — a months-old value isn't called "now".`,
   altM2: (lead, corr, imp, band) =>
     `Bitcoin log price (black) overlaid with China M2 year-on-year growth (blue) pulled ${lead} ` +
     `months forward — the measured lead. Left axis is price, right axis is M2 growth. China M2 ` +
@@ -431,6 +436,7 @@ en: {
     `read on the same scale as the other rows. The upstream source itself starts only that recently.`,
   relShortT: "The sample covers a single regime",
   mstrRatio: "Relative performance (MSTR \u00f7 BTC, start = 1)",
+  mstrMissing: "Appendix — Strategy (MSTR) relative performance is empty for now: the stock price data couldn't be fetched.",
   mstrShade: "warm shade = MSTR far ahead",
   mstrShadeDown: "cool shade = far behind",
   mstrRead: (k, days) =>
@@ -1046,8 +1052,10 @@ function drawM2Lead(){
     `<span><i style="background:var(--cool-3);height:2px;border-radius:0;margin-bottom:3px"></i>` +
     `${t("m2Cn")} · ${t("m2Shift", M.lead)}</span>`);
   // 임펄스가 없으면(짧은 이력) 읽기 줄은 비우고, 대체텍스트도 "+null" 대신 "—".
+  // 원본이 멈춰 비운 경우는 그 사실을 적는다 — 조용히 비우면 고장인지 모른다.
   setHTML("m2-read", (M.impulse != null)
-    ? t("m2Read", impTxt, (M.lrs >= 0 ? "+" : "") + Math.round(M.lrs), BW) : "");
+    ? t("m2Read", impTxt, (M.lrs >= 0 ? "+" : "") + Math.round(M.lrs), BW, M.m2Month)
+    : (M.m2Stale && M.m2Month ? t("m2Stale", M.m2Month) : ""));
 
   describe(svg, t("altM2", M.lead, M.corr, impTxt, BW));
 }
@@ -1189,16 +1197,20 @@ function relRows(){
 }
 
 /* =====================================================================
-   05 부록. MSTR 상대성과 — 데이터가 없으면 섹션 전체를 숨긴다
+   05 부록. MSTR 상대성과 — 데이터가 없으면 섹션을 숨기고 '비었다'고 한 줄 남긴다
    ===================================================================== */
 function drawMstr(){
   const host = $("mstr-host"), svg = $("mstr");
   if (!host || !svg) return;
   const M = D.rel && D.rel.mstr;
   const blocks = ["mstr-head", "mstr-fig"];
-  const hideAll = () => blocks.forEach(i => { const e = $(i); if (e) e.style.display = "none"; });
+  const hideAll = () => {
+    blocks.forEach(i => { const e = $(i); if (e) e.style.display = "none"; });
+    setText("mstr-missing", t("mstrMissing"));
+  };
   if (!M || !M.series || M.series.length < 10){ hideAll(); return; }
   blocks.forEach(i => { const e = $(i); if (e) e.style.display = ""; });
+  setText("mstr-missing", "");
   const S = M.series.filter(pt => pt[1] > 0);       // [[base 기준 일수, 비율]]
   if (S.length < 10){ hideAll(); return; }
   const W = host.clientWidth || 900;

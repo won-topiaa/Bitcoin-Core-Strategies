@@ -126,3 +126,65 @@ def test_no_future_reference(tmp_path):
     late = china_m2_impulse(p, reference=date(2017, 12, 31))
     assert early is not None and late is not None
     assert late > early                 # 미래를 봤다면 early 도 커졌을 것
+
+
+# --------------------------------------------------------------------------
+# 멈춘 원본의 낡은 값을 '지금'이라 부르지 않는다 (2026-10 감사)
+# --------------------------------------------------------------------------
+def _until(last_ym, n=60):
+    """last_ym 에서 끝나는 월간 n개."""
+    y, m = last_ym
+    for _ in range(n - 1):
+        m -= 1
+        if m == 0:
+            m, y = 12, y - 1
+    return _monthly(n, start=(y, m), growth=0.006)
+
+
+def test_a_stalled_china_m2_is_not_called_now(tmp_path):
+    """chinadata.live 가 2026-05 에서 멈춘 채, 10월 화면이 그 값을 '지금 임펄스'라
+    부르고 유동성 레짐을 매겼다. 원본이 멈춘 뒤로 그 값은 움직일 수가 없었다."""
+    from btc_core.datasources.macro import M2_MAX_AGE_DAYS, china_m2_last
+    p = tmp_path / "m.csv"
+    _write(p, _until((2026, 5)))
+    assert china_m2_last(p) == date(2026, 5, 1)
+    # 정상 지연(다음 달 중순 발표) — 7월 말에 5월 값은 아직 '지금'이다
+    assert china_m2_impulse(p, reference=date(2026, 7, 31)) is not None
+    # 넉 달 넘게 멈춤 — 10월에 5월 값은 '지금'이 아니다
+    assert china_m2_impulse(p, reference=date(2026, 10, 9)) is None
+    assert load_macro_signals(p, reference=date(2026, 10, 9)) == {}
+    # 경계: 정확히 M2_MAX_AGE_DAYS 일은 아직 쓴다, 하루 넘으면 안 쓴다
+    from datetime import timedelta
+    edge = date(2026, 5, 1) + timedelta(days=M2_MAX_AGE_DAYS)
+    assert china_m2_impulse(p, reference=edge) is not None
+    assert china_m2_impulse(p, reference=edge + timedelta(days=1)) is None
+    # 정상 발표 지연(최대 ~75일)을 덮을 만큼 여유가 있어야 한다
+    assert 80 <= M2_MAX_AGE_DAYS <= 120
+
+
+def test_the_cli_judges_now_against_today(monkeypatch):
+    """CLI 의 '지금' 계산이 reference=None 으로 부르면 나이를 잴 수 없다."""
+    import inspect
+    from btc_core import cli
+    src = inspect.getsource(cli)
+    assert "load_macro_signals(args.macro, reference=as_of)" not in src
+    assert "load_macro_signals(args.macro, reference=as_of or date.today())" in src
+
+
+def test_the_liquidity_payload_says_which_month_and_whether_it_is_stale(tmp_path):
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
+    import export_viz
+    from btc_core.config import load_config
+
+    p = tmp_path / "m.csv"
+    _write(p, _until((2026, 5)))
+    rows = [{"d": "2025-01-01", "price": 90000.0}, {"d": "2026-10-09", "price": 82000.0}]
+    stale = export_viz.macro_lead(load_config(), str(p), rows, date(2026, 10, 9))
+    assert stale["m2Month"] == "2026-05" and stale["m2Stale"] is True
+    assert stale["impulse"] is None and stale["lrs"] is None
+
+    fresh = export_viz.macro_lead(load_config(), str(p), rows, date(2026, 7, 31))
+    assert fresh["m2Month"] == "2026-05" and fresh["m2Stale"] is False
+    assert fresh["impulse"] is not None

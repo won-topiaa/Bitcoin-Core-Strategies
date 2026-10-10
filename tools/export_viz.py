@@ -38,7 +38,7 @@ from btc_core.datasources.derive import backfill_bundle  # noqa: E402
 from btc_core.indicators import HALVINGS, days_since_halving  # noqa: E402
 from btc_core.models import Reading  # noqa: E402
 from btc_core.datasources.macro import (  # noqa: E402
-    _load_column, _month_end, _yoy, china_m2_impulse,
+    M2_MAX_AGE_DAYS, _load_column, _month_end, _yoy, china_m2_impulse, china_m2_last,
 )
 from btc_core.score import (  # noqa: E402
     compute_bcs,
@@ -233,7 +233,12 @@ def macro_lead(cfg: StrategyConfig, macro_csv: str, rows: list, reference: date)
     lrs = band = None
     if imp is not None:
         lrs, _, band = compute_lrs(cfg, {"m2_impulse": imp})
+    # 임펄스가 어느 달 값인지 화면에 적는다. 예전엔 달을 안 적어, 2026-05 에서 멈춘
+    # 값을 10월에 '지금'이라 불렀다. 너무 낡았으면 임펄스를 비우고 그 사실을 적는다.
+    last = china_m2_last(path, reference=reference)
     return {
+        "m2Month": last.isoformat()[:7] if last else None,
+        "m2Stale": bool(last and (reference - last).days > M2_MAX_AGE_DAYS),
         "lead": 11,                     # 측정된 선행(개월) — 화면에서 M2 를 이만큼 당긴다
         "btc": btc, "m2": m2,
         "impulse": None if imp is None else round(imp, 2),
