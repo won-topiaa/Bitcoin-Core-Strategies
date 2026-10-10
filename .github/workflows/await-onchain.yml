@@ -1,0 +1,94 @@
+# 헤드라인이 보류된 날의 온체인 지표가 원본에 올라오면 **바로** 갱신을 부른다.
+#
+# 왜 있나 — 원본은 가격을 UTC 자정 직후, 실현시총을 2~5.5시간 뒤에 낸다. 그 사이
+# 갱신이 돌면 그 날은 헤드라인에서 빠지고(지표 9개가 다 있는 날만 헤드라인이다)
+# 화면은 하루 전에 머문다. 다음 예약 갱신이 따라잡아야 하는데, GitHub 은 매시간
+# 예약을 실측 하루 4~5회만 돌렸고 **02:06~05:27 UTC 에는 한 번도 안 돌렸다** —
+# 실현시총이 나오는 바로 그 시간대다. 그래서 매일 아침 '데이터 2일 전'이 떴다.
+#
+# 예약은 못 믿지만 workflow_dispatch 는 12초 안에 뜬다(실측). 그래서:
+#
+#   데이터 갱신 ──(헤드라인 보류)──▶ 이 작업 ──(원본에 올라옴)──▶ 데이터 갱신
+#                                                         (from_poller=true)
+#
+# ⚠️ 고리 방지 — 이 작업이 부른 갱신(from_poller=true)은 이 작업을 다시 부르지
+#    않는다. 보류 원인이 원본 지연이 아니면(다른 지표가 빠짐) 원본은 이미 '있다'고
+#    답하므로, 그 표식이 없으면 갱신 ↔ 대기가 몇 분마다 서로를 부른다.
+#    tests/test_workflows.py 가 이 표식을 지킨다.
+#
+# 판정은 tools/await_onchain.py 가 하고(tests/test_await_onchain.py), 여기서는
+# 10분마다 그 판정을 되풀이하기만 한다. 공개 저장소라 대기 시간에 과금은 없다.
+name: 온체인 지표 기다리기
+
+on:
+  # 예약은 없다 — 갱신이 헤드라인을 보류했을 때만 불린다. 손으로도 부를 수 있다.
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: write   # 원본에 올라오면 '데이터 갱신'을 부른다
+
+concurrency:
+  group: await-onchain
+  # 새로 불리면 기다리던 것을 버린다. 둘 다 같은 것을 기다리고, 새것이 더 최신
+  # 페이지를 보고 시작한다. 잃는 것은 기다린 시간뿐이고 새것이 처음부터 다시 잰다.
+  cancel-in-progress: true
+
+jobs:
+  wait:
+    runs-on: ubuntu-latest
+    # 원본 지연 최대 실측 5.47h. 대기 루프(320분)가 이보다 먼저 스스로 끝낸다.
+    # 그래도 못 잡으면 다음 정기 갱신이 보류를 보고 다시 부른다.
+    timeout-minutes: 340
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # 원본 질의가 btc_core 를 들이고, 그건 PyYAML 이 없으면 죽는다(감시자가 그래서
+      # 36일 동안 죽었다).
+      - name: 의존성
+        run: pip install -r requirements.txt
+
+      - name: 원본에 올라올 때까지 묻기
+        run: |
+          DEADLINE=$(( $(date +%s) + 320 * 60 ))
+          FAILS=0
+          while :; do
+            # 매번 원격 tip 의 페이지를 본다 — 기다리는 사이 정기 갱신이 먼저
+            # 따라잡았으면 부를 필요가 없다.
+            { git fetch -q --depth 1 origin "${GITHUB_REF_NAME}" 2>/dev/null \
+                && git show FETCH_HEAD:viz/site/index.html > /tmp/site.html; } \
+              || cp viz/site/index.html /tmp/site.html
+            set +e
+            python3 tools/await_onchain.py --site /tmp/site.html
+            RC=$?
+            set -e
+            case "$RC" in
+              0)
+                echo "원본에 올라왔습니다 — 데이터 갱신을 부릅니다."
+                gh workflow run refresh-data.yml --ref "${GITHUB_REF_NAME}" -f from_poller=true
+                exit 0 ;;
+              3)
+                echo "보류된 날이 없습니다 — 기다릴 것이 없습니다."
+                exit 0 ;;
+              1)
+                FAILS=0 ;;
+              *)
+                FAILS=$((FAILS + 1))
+                echo "::warning::판정 불가 ($FAILS 회 연속)"
+                if [ "$FAILS" -ge 3 ]; then
+                  echo "::error::세 번 연달아 판정하지 못했습니다 — 대기 작업을 고쳐야 합니다."
+                  exit 1
+                fi ;;
+            esac
+            if [ "$(date +%s)" -ge "$DEADLINE" ]; then
+              echo "::warning::320분을 기다려도 원본에 올라오지 않았습니다. 다음 정기 갱신이 다시 부릅니다."
+              exit 0
+            fi
+            sleep 600
+          done

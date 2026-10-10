@@ -399,3 +399,72 @@ def test_the_rollback_guard_watches_the_headline_too():
     run = str(guard[0].get("run", ""))
     assert run.count("--field current") >= 2, "헤드라인 기준일을 새것·옛것 둘 다 읽지 않습니다"
     assert re.search(r'"\$NEWC"\s*<\s*"\$OLDC"', run), "헤드라인 후퇴를 비교하지 않습니다"
+
+
+# --------------------------------------------------------------------------
+# 5. 헤드라인 보류 → 원본 대기 → 갱신 (매일 아침 '2일 전'의 원인)
+# --------------------------------------------------------------------------
+POLL = WF / "await-onchain.yml"
+
+
+def _poller_dispatch_step(doc: dict) -> dict:
+    found = [s for s in steps_of(doc) if "gh workflow run await-onchain.yml" in str(s.get("run", ""))]
+    assert found, "refresh-data 가 헤드라인 보류 때 원본 대기 작업을 부르지 않습니다"
+    return found[0]
+
+
+def test_a_held_headline_arms_the_onchain_poller():
+    """실현시총이 늦어 헤드라인이 보류되면, 다음 예약(02~05 UTC 엔 거의 안 돈다)을
+    기다리지 않고 원본에 올라오는 순간 다시 돈다."""
+    step = _poller_dispatch_step(load(DATA))
+    run = str(step.get("run", ""))
+    assert "--field current" in run, "헤드라인 기준일을 읽지 않습니다"
+    assert re.search(r'"\$CUR"\s*<\s*"\$LAT"', run), "보류 여부(헤드라인 < 자료 마지막)를 보지 않습니다"
+
+
+def test_the_poller_and_the_refresh_cannot_call_each_other_forever():
+    """대기 작업이 부른 갱신은 대기 작업을 다시 부르지 않는다.
+
+    보류 원인이 원본 지연이 아니면 원본은 '이미 있다'고 답한다. 표식이 없으면
+    갱신 → 대기(즉시 준비됨) → 갱신 → … 이 몇 분마다 돈다.
+    """
+    data = load(DATA)
+    on = data.get("on") or data.get(True)
+    inputs = (on.get("workflow_dispatch") or {}).get("inputs") or {}
+    assert "from_poller" in inputs, "refresh-data 에 from_poller 입력이 없습니다"
+    cond = str(_poller_dispatch_step(data).get("if", ""))
+    assert "from_poller != true" in cond, f"대기 작업 호출이 from_poller 로 막혀 있지 않습니다: {cond!r}"
+    assert "dry_run != true" in cond
+
+    poll = run_text(load(POLL))
+    assert re.search(r"gh workflow run refresh-data\.yml[^\n]*-f from_poller=true", poll), (
+        "대기 작업이 갱신을 부를 때 from_poller=true 를 붙이지 않습니다 — 고리가 됩니다")
+
+
+def test_the_poller_is_dispatched_before_the_deploy_check():
+    """배포 확인이 실패하면 뒤 단계가 건너뛰어진다 — 대기는 그 앞에 걸려야 한다."""
+    names = [str(s.get("name", "")) for s in steps_of(load(DATA))]
+    poll = next(i for i, s in enumerate(steps_of(load(DATA)))
+                if "gh workflow run await-onchain.yml" in str(s.get("run", "")))
+    verify = next(i for i, n in enumerate(names) if "떴는지" in n)
+    commit = next(i for i, s in enumerate(steps_of(load(DATA))) if s.get("id") == "commit")
+    assert commit < poll < verify
+
+
+def test_the_poller_is_bounded_and_on_demand_only():
+    doc = load(POLL)
+    on = doc.get("on") or doc.get(True)
+    assert set(on) == {"workflow_dispatch"}, f"대기 작업은 불릴 때만 돌아야 합니다: {list(on)}"
+    assert (doc.get("permissions") or {}).get("actions") == "write"
+    assert doc["concurrency"]["group"] == "await-onchain"
+    job = next(iter(doc["jobs"].values()))
+    assert 0 < int(job["timeout-minutes"]) <= 360, "GitHub 러너 한도(6시간)를 넘습니다"
+    run = run_text(doc)
+    assert "DEADLINE" in run and "sleep" in run, "대기 루프에 끝이 없습니다"
+    m = re.search(r"\+\s*(\d+)\s*\*\s*60", run)
+    assert m and int(m.group(1)) < int(job["timeout-minutes"]), (
+        "루프 기한이 작업 시간 제한보다 길어 스스로 끝내기 전에 잘립니다")
+    assert int(m.group(1)) >= 300, "원본 지연 최대 실측(5.47h)을 못 덮습니다"
+    assert _dep_install_index(steps_of(doc)) is not None, (
+        "원본 질의가 btc_core 를 들이는데 의존성을 설치하지 않습니다")
+    assert "tools/await_onchain.py" in run
