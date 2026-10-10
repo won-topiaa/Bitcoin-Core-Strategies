@@ -179,19 +179,41 @@ def test_the_deploy_call_only_fires_when_something_was_pushed(path):
 
 @pytest.mark.parametrize("path", [DATA, NEWS], ids=lambda p: p.name)
 def test_the_deploy_call_is_verified_not_assumed(path):
-    """부르는 것과 뜨는 것은 다르다 — 5차 사고가 정확히 '불렀는데 안 떴다'였다.
+    """부르는 것과 뜨는 것, 뜨는 것과 **성공하는 것**은 다르다.
 
-    화면 내용까지 확인하면 CDN 캐시 때문에 헛알람이 나므로, **배포 실행이
-    생겼는지**만 본다. 그건 흔들리지 않는 신호다.
+    5차 사고는 '불렀는데 안 떴다', 2026-10-10 은 '떴는데 실패했다'였다. 예전
+    확인은 실행이 생겼는지만 봐서 후자를 통과시켰다. 이제 성공까지 보고, 실패하면
+    한 번 다시 돌린다(tools/await_deploy.py, tests/test_await_deploy.py).
     """
     doc = load(path)
-    verify = [s for s in steps_of(doc)
-              if "gh run list --workflow pages.yml" in str(s.get("run", ""))]
+    steps = steps_of(doc)
+    verify = [s for s in steps if "tools/await_deploy.py" in str(s.get("run", ""))]
     assert verify, (
-        f"{path.name}: 배포를 부르기만 하고 떴는지 확인하지 않습니다. "
-        "'불렀는데 안 떴다'가 바로 화면이 사흘 멈춘 이유였습니다.")
-    assert "::error::" in str(verify[0].get("run", "")), (
-        f"{path.name}: 배포가 안 떴을 때 실패시키지 않습니다 — 조용히 넘어갑니다")
+        f"{path.name}: 배포를 부르기만 하고 성공했는지 확인하지 않습니다. "
+        "'불렀는데 안 떴다'와 '떴는데 실패했다'가 둘 다 화면을 멈춘 이유였습니다.")
+    run = str(verify[0].get("run", ""))
+    assert '--since "${STARTED}"' in run, f"{path.name}: 부른 시각 이후의 배포만 세야 합니다"
+    assert "pushed" in str(verify[0].get("if", "")), f"{path.name}: 밀었을 때만 확인해야 합니다"
+    call = next(i for i, s in enumerate(steps) if "gh workflow run pages.yml" in str(s.get("run", "")))
+    assert "STARTED=" in str(steps[call].get("run", "")), "부르기 직전 시각을 남기지 않습니다"
+    assert call < steps.index(verify[0])
+    job = next(iter(doc["jobs"].values()))
+    import await_deploy
+    assert int(job["timeout-minutes"]) * 60 > 480 + 5 * 60, (
+        f"{path.name}: 작업 시간 제한이 배포 확인(최대 8분)을 담을 만큼 길지 않습니다")
+    assert await_deploy.wait.__kwdefaults__["timeout"] == 480
+    assert await_deploy.wait.__kwdefaults__["retries"] == 1
+
+
+def test_pages_does_not_use_configure_pages():
+    """configure-pages(enablement:true)는 상태 조회가 한 번 실패하면 Pages 를 새로
+    만들려다 403 으로 죽는다 — 2026-10-10 배포 실패의 원인이다."""
+    for s in steps_of(load(PAGES)):
+        assert "configure-pages" not in str(s.get("uses", "")), (
+            "pages.yml 에 configure-pages 가 돌아왔습니다 — 일시적 조회 실패가 배포 실패가 됩니다")
+    uses = [str(s.get("uses", "")) for s in steps_of(load(PAGES))]
+    assert any(u.startswith("actions/upload-pages-artifact@") for u in uses)
+    assert any(u.startswith("actions/deploy-pages@") for u in uses)
 
 
 def test_the_data_refresh_runs_more_than_once_a_day():
@@ -443,10 +465,10 @@ def test_the_poller_and_the_refresh_cannot_call_each_other_forever():
 
 def test_the_poller_is_dispatched_before_the_deploy_check():
     """배포 확인이 실패하면 뒤 단계가 건너뛰어진다 — 대기는 그 앞에 걸려야 한다."""
-    names = [str(s.get("name", "")) for s in steps_of(load(DATA))]
-    poll = next(i for i, s in enumerate(steps_of(load(DATA)))
+    steps = steps_of(load(DATA))
+    poll = next(i for i, s in enumerate(steps)
                 if "gh workflow run await-onchain.yml" in str(s.get("run", "")))
-    verify = next(i for i, n in enumerate(names) if "떴는지" in n)
+    verify = next(i for i, s in enumerate(steps) if "tools/await_deploy.py" in str(s.get("run", "")))
     commit = next(i for i, s in enumerate(steps_of(load(DATA))) if s.get("id") == "commit")
     assert commit < poll < verify
 

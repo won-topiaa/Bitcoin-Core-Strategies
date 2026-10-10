@@ -30,9 +30,14 @@
 #   workflow_run 은 그대로 둔다 — 겹쳐도 concurrency 가 정리하고, 직접 호출이
 #   막히는 날의 두 번째 겹이 된다.
 #
-# 최초 1회: configure-pages 가 enablement:true 로 Pages 를 자동으로 켜 본다. 조직/
-# 저장소 정책이 막으면 Settings → Pages → Source 를 'GitHub Actions' 로 한 번만
-# 바꾼 뒤 이 워크플로를 다시 돌리면 된다.
+# ⚠️ configure-pages 를 쓰지 않는다 (2026-10-10 배포 실패).
+#   enablement:true 는 Pages 상태 조회(GET)가 **한 번이라도** 실패하면 Pages 를
+#   새로 만들려(POST) 들고, 그건 GITHUB_TOKEN 으로는 403 이다. 일시적인 조회
+#   실패 하나가 배포 실패가 됐고, 화면은 하루 전 헤드라인으로 남았다. Pages 는
+#   이미 켜져 있고(Source = GitHub Actions), 이 사이트는 다 구운 정적 파일이라
+#   configure-pages 가 내주는 base_url 도 필요 없다 — deploy-pages 만으로 충분하다.
+#   새 저장소에 옮길 때만 Settings → Pages → Source 를 'GitHub Actions' 로 한 번
+#   바꾸면 된다. tests/test_workflows.py 가 이 단계가 돌아오지 않게 지킨다.
 name: Pages 배포
 
 on:
@@ -67,11 +72,6 @@ jobs:
       # workflow_run 은 기본 브랜치의 tip 을 체크아웃한다. 앞 갱신이 방금 커밋한
       # 신선한 viz/site 가 거기 있다.
       - uses: actions/checkout@v4
-
-      - name: Pages 설정 (없으면 자동으로 켜기)
-        uses: actions/configure-pages@v5
-        with:
-          enablement: true
 
       - name: 구운 사이트 업로드 (viz/site)
         uses: actions/upload-pages-artifact@v3
