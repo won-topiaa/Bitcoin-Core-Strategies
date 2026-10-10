@@ -116,6 +116,16 @@ jobs:
         id: live
         continue-on-error: true
         run: |
+          # 마지막 Pages 배포의 결론은 **되살리기가 새 배포를 부르기 전에** 읽어 둔다.
+          # 뒤에서 읽으면 방금 부른(아직 결론 없는) 실행을 읽어 '배포 실패' 알림이
+          # 영영 안 울린다. 건너뛴(skipped: 앞 갱신 실패로 workflow_run 이 건너뜀)·
+          # 취소된(대기 중 더 새 것에 밀림) 실행은 배포를 시도한 적이 없으니 뺀다.
+          LAST_PAGES=$(gh run list --workflow pages.yml --status completed --limit 10 \
+                         --json conclusion \
+                         --jq '[.[] | select(.conclusion != "skipped" and .conclusion != "cancelled")][0].conclusion // ""' \
+                         2>/dev/null || true)
+          echo "마지막 Pages 배포 결론: ${LAST_PAGES:-모름}"
+          echo "last_pages=$LAST_PAGES" >> "$GITHUB_OUTPUT"
           URL=$(gh api "repos/${GITHUB_REPOSITORY}/pages" --jq .html_url 2>/dev/null || true)
           if [ -z "$URL" ]; then
             echo "Pages 주소를 읽지 못했습니다 — 이 검사는 건너뜁니다."
@@ -184,6 +194,7 @@ jobs:
           DATA_STALE: ${{ steps.check.outputs.data_stale }}
           BEHIND_DAYS: ${{ steps.check.outputs.behind_days }}
           DRIFT: ${{ steps.live.outputs.drift }}
+          LAST_PAGES: ${{ steps.live.outputs.last_pages }}
           FAILED: ${{ job.status == 'failure' }}
         run: |
           NOTIFY=no; WHY=""
@@ -194,7 +205,6 @@ jobs:
           elif [ "${BEHIND_DAYS:-0}" -ge 2 ]; then
             NOTIFY=yes; WHY="원본보다 ${BEHIND_DAYS}일 뒤처졌습니다 — 정상 지연(하루)을 넘었습니다."
           elif [ "$DRIFT" = "true" ]; then
-            LAST_PAGES=$(gh run list --workflow pages.yml --limit 1 --json conclusion --jq '.[0].conclusion' 2>/dev/null || true)
             if [ "$LAST_PAGES" = "failure" ]; then
               NOTIFY=yes; WHY="배포된 페이지가 저장소와 다르고, 마지막 Pages 배포가 실패로 끝났습니다."
             fi

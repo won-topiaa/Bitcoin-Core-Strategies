@@ -406,3 +406,53 @@ def test_the_committed_stock_file_is_daily_if_present():
                 ser[date.fromisoformat(r["date"])] = float(r["mstr"])
     gap = fs.median_gap_days(ser)
     assert gap is not None and gap <= fs.MAX_MEDIAN_GAP_DAYS, f"data/stocks.csv 가 일봉이 아닙니다(간격 {gap}일)"
+
+
+def test_a_403_from_one_yahoo_host_does_not_skip_the_other(monkeypatch):
+    good = json.dumps({"chart": {"result": [{"timestamp": [1700000000, 1700086400],
+            "indicators": {"quote": [{"close": [300.0, 310.0]}]}}]}})
+
+    def get(url, timeout=40, ua=None):
+        if url.startswith("https://query1."):
+            raise fs.PolicyBlocked("query1.finance.yahoo.com")
+        return good
+    monkeypatch.setattr(fs, "_get", get)
+    assert fs.fetch_yahoo("MSTR", sleep=lambda s: None)
+
+    def both(url, timeout=40, ua=None):
+        raise fs.PolicyBlocked(url.split("/")[2])
+    monkeypatch.setattr(fs, "_get", both)
+    import pytest
+    with pytest.raises(fs.PolicyBlocked):
+        fs.fetch_yahoo("MSTR", sleep=lambda s: None)
+
+
+def test_a_403_on_the_ci_runner_is_a_failure_not_the_sandbox_policy(tmp_path, monkeypatch):
+    """러너엔 프록시가 없다 — 거기서 403 은 원서버가 우리를 막은 것이고, 0 으로 끝나면
+    워크플로의 경고가 안 뜬다(2026-10 검토)."""
+    def blocked(*a, **k):
+        raise fs.PolicyBlocked("query1.finance.yahoo.com")
+    monkeypatch.setattr(fs, "fetch_stooq", lambda *a, **k: None)
+    monkeypatch.setattr(fs, "fetch_yahoo", blocked)
+    monkeypatch.setenv("GITHUB_ACTIONS", "true")
+    assert fs.main(["--out", str(tmp_path / "s.csv")]) == 1
+    monkeypatch.delenv("GITHUB_ACTIONS")
+    assert fs.main(["--out", str(tmp_path / "s.csv")]) == 0
+
+
+def test_the_committed_stock_file_has_no_weekend_rows():
+    """월봉(매달 1일)이 일봉 파일에 섞이면 주말 날짜가 생긴다 — 중앙 간격으로는 안 보인다."""
+    p = ROOT / "data" / "stocks.csv"
+    if not p.exists():
+        return
+    with p.open(encoding="utf-8", newline="") as fh:
+        weekend = [r["date"] for r in csv.DictReader(fh)
+                   if r.get("mstr") and date.fromisoformat(r["date"]).weekday() >= 5]
+    assert not weekend, f"주말 날짜가 있습니다(월봉이 섞였을 수 있음): {weekend[:5]}"
+
+
+def test_the_no_data_branch_actually_calls_hide_all():
+    import re
+    js = (ROOT / "viz" / "_script.html").read_text(encoding="utf-8")
+    body = re.search(r"function drawMstr\(\)\{(.*?)\n\}", js, re.S).group(1)
+    assert re.search(r"if \(!M \|\| !M\.series \|\| M\.series\.length < 10\)\{ hideAll\(\); return; \}", body)

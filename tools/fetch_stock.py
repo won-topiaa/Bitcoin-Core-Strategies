@@ -175,18 +175,26 @@ def fetch_stooq(sym: str, timeout: int = 40) -> Optional[dict[date, float]]:
 def fetch_yahoo(sym: str, timeout: int = 40, sleep=None) -> Optional[dict[date, float]]:
     import time
     sleep = sleep or time.sleep
+    blocked: Optional[PolicyBlocked] = None
     for i, host in enumerate(YAHOO_HOSTS):
         if i:
             sleep(YAHOO_RETRY_WAIT)
             print(f"  다시 {sym} ← yahoo {host}")
         url = YAHOO_URL.format(host=host, sym=sym, end=int(time.time()))
-        text = _get(url, timeout=timeout, ua=YAHOO_UA)
+        try:
+            text = _get(url, timeout=timeout, ua=YAHOO_UA)
+        except PolicyBlocked as blk:
+            # 한 호스트의 403 이 다른 호스트를 막지 않는다 — 야후는 호스트마다 따로 막는다.
+            blocked = blk
+            continue
         if not text:
             continue
         out = parse_yahoo(text)
         if out:
             return out
         print(f"  ! yahoo {host}: 읽을 수 없는 응답 — {_peek(text)!r}", file=sys.stderr)
+    if blocked is not None:
+        raise blocked
     return None
 
 
@@ -269,7 +277,11 @@ def main(argv: Optional[list[str]] = None) -> int:
 
     if not columns:
         # 완전 실패 — merge_to_csv 를 부르지 않으므로 기존 파일은 그대로다.
-        if policy:
+        # 403 을 '환경의 정상 동작'(종료 0)으로 보는 것은 **이 에이전트 환경**에서만
+        # 맞다. GitHub Actions 러너에는 프록시가 없어, 거기서 403 은 원서버(야후·스투크)
+        # 가 우리를 막은 것이다 — 실패로 내야 워크플로의 경고가 뜬다.
+        import os
+        if policy and os.environ.get("GITHUB_ACTIONS") != "true":
             print("\n  ! 프록시 egress 정책이 소스를 막았다(403): "
                   + ", ".join(policy) + "\n"
                   "    이 환경의 정상 동작이다 — 기존 파일은 그대로 둔다.\n"

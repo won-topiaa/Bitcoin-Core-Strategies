@@ -680,6 +680,10 @@ console.log(JSON.stringify([
     assert "heldRow(r) ?" in body and 't("ttHeld"' in body, "툴팁이 보류된 날을 점수로 보여 줍니다"
     assert "!heldRow(r)" in re.search(r"const rows = S\.filter\(([^)]*\))", js).group(1), (
         "계열 차트가 보류된 날의 일부 지표 계열값을 그립니다")
+    price = re.search(r"function drawPrice\(\)\{(.*?)\n\}", js, re.S)
+    assert price, "drawPrice() 를 못 찾았습니다"
+    assert re.search(r'heldRow\(r\) \? t\("ttHeld", r\[9\]\) : nf\(r\[2\],1\)', price.group(1)), (
+        "가격 차트 툴팁이 보류된 날의 부분 점수를 보여 줍니다")
 
 
 def test_sub_dollar_prices_are_not_shown_as_zero():
@@ -708,3 +712,18 @@ def test_the_compact_series_keeps_2010_prices_to_four_significant_figures():
     assert build_viz._price(None) is None
     for v in (0.0499, 0.0651179, 0.08584, 0.3, 0.999):
         assert abs(build_viz._price(v) - v) / v < 0.001, v
+
+
+
+def test_2010_prices_survive_the_whole_export_not_just_compact():
+    """compact 만 고치면 소용없었다 — export_viz 가 그 앞에서 둘째 자리로 자르고 있었다
+    (2026-10 검토). 두 단계가 같은 규칙을 써야 원가 0.0651179 가 0.06512 로 남는다."""
+    import inspect
+    import export_viz
+    assert export_viz.price_round(0.0651179) == 0.06512
+    assert export_viz.price_round(82562.564) == 82562.56
+    assert export_viz.price_round(0.0) == 0.0
+    src = inspect.getsource(export_viz.daily_rows)
+    assert '"price": price_round(' in src, "일별 행의 가격이 다시 둘째 자리로 잘립니다"
+    for v in (0.0499, 0.0651179, 0.08584, 0.999, 1.5, 123.456, 82562.564):
+        assert build_viz._price(export_viz.price_round(v)) == export_viz.price_round(v), v

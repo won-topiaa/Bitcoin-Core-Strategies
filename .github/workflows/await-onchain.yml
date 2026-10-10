@@ -27,6 +27,7 @@ on:
 permissions:
   contents: read
   actions: write   # 원본에 올라오면 '데이터 갱신'을 부른다
+  issues: write    # 이 작업 자체가 고장 나면 사람을 부른다
 
 concurrency:
   group: await-onchain
@@ -76,11 +77,16 @@ jobs:
               3)
                 echo "보류된 날이 없습니다 — 기다릴 것이 없습니다."
                 exit 0 ;;
-              1)
+              4)
                 FAILS=0 ;;
+              5)
+                # 원본 쪽 일시 장애 — 이 작업의 고장이 아니니 세지 않고 기다린다.
+                FAILS=0
+                echo "::warning::원본(CoinMetrics)에 못 물었습니다 — 계속 기다립니다." ;;
               *)
+                # 2(페이지를 못 읽음) 또는 1(도구가 예외로 죽음) — 이 작업의 고장이다.
                 FAILS=$((FAILS + 1))
-                echo "::warning::판정 불가 ($FAILS 회 연속)"
+                echo "::warning::판정 불가 (종료코드 $RC, $FAILS 회 연속)"
                 if [ "$FAILS" -ge 3 ]; then
                   echo "::error::세 번 연달아 판정하지 못했습니다 — 대기 작업을 고쳐야 합니다."
                   exit 1
@@ -92,3 +98,34 @@ jobs:
             fi
             sleep 600
           done
+
+      - name: 실패 알림 (조용히 멈추지 않게)
+        # 대기 작업이 고장 나면 아침마다 '2일 전'이 몇 시간씩 돌아온다. 갱신 실패와
+        # 같은 이슈 형식으로 사람을 부른다.
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const title = `⚠️ 자동 갱신 실패 — ${context.workflow}`;
+            const runUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            const body = [
+              `\`${context.workflow}\` 워크플로가 실패했습니다.`,
+              ``,
+              `- 실행 로그: ${runUrl}`,
+              ``,
+              `온체인 지표가 올라와도 헤드라인이 다음 정기 갱신까지 하루 전에 머물 수 있습니다.`,
+            ].join('\n');
+            const found = await github.rest.search.issuesAndPullRequests({
+              q: `repo:${context.repo.owner}/${context.repo.repo} is:issue is:open in:title ${JSON.stringify(title)}`,
+            });
+            const existing = found.data.items.find(i => i.title === title);
+            if (existing) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner, repo: context.repo.repo,
+                issue_number: existing.number, body,
+              });
+            } else {
+              await github.rest.issues.create({
+                owner: context.repo.owner, repo: context.repo.repo, title, body,
+              });
+            }

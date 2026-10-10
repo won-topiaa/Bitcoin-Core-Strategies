@@ -241,30 +241,6 @@ jobs:
           echo "::error::데이터 갱신 커밋을 원격에 밀지 못했습니다."
           exit 1
 
-      # 헤드라인이 보류됐으면(자료 마지막 날 > 헤드라인 기준일) 원본에 온체인 지표가
-      # 올라오는 순간 다시 돌도록 대기 작업을 부른다. 실현시총은 가격보다 2~5.5시간
-      # 늦고, GitHub 은 그 시간대(02~05 UTC)에 예약 실행을 거의 안 돌린다 — 그래서
-      # 매일 아침 몇 시간씩 '2일 전'이 떴다. 배포 확인보다 **앞에** 둔다: 배포 확인이
-      # 실패해도 대기는 걸려야 한다.
-      #
-      # ⚠️ 대기 작업이 부른 실행(from_poller)은 다시 부르지 않는다. 보류 원인이
-      #    원본 지연이 아니면 원본은 이미 '있다'고 답하므로, 이 조건이 없으면 둘이
-      #    몇 분마다 서로를 부른다.
-      - name: 헤드라인이 보류됐으면 원본 기다리기 호출
-        if: ${{ inputs.dry_run != true && inputs.from_poller != true }}
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          CUR=$(python3 tools/site_asof.py --field current viz/site/index.html || true)
-          LAT=$(python3 tools/site_asof.py viz/site/index.html || true)
-          echo "헤드라인 ${CUR:-?} · 자료 마지막 ${LAT:-?}"
-          if [ -n "$CUR" ] && [ -n "$LAT" ] && [[ "$CUR" < "$LAT" ]]; then
-            echo "$LAT 은 온체인 지표가 아직이라 헤드라인에서 빠졌습니다 — 원본을 기다리는 작업을 부릅니다."
-            gh workflow run await-onchain.yml --ref "${GITHUB_REF_NAME}"
-          else
-            echo "보류된 날이 없습니다."
-          fi
-
       # ⚠️ **배포를 직접 부른다.** pages.yml 은 workflow_run 으로도 이어 붙어 있지만,
       #    그 경로는 이 실행이 schedule 로 시작했을 때만 작동한다. 감시자가
       #    GITHUB_TOKEN 으로 부른 workflow_dispatch 실행은 완료돼도 workflow_run
@@ -284,13 +260,42 @@ jobs:
           echo "STARTED=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_ENV"
           gh workflow run pages.yml --ref "${GITHUB_REF_NAME}"
 
+      # 헤드라인이 보류됐으면(자료 마지막 날 > 헤드라인 기준일) 원본에 온체인 지표가
+      # 올라오는 순간 다시 돌도록 대기 작업을 부른다. 실현시총은 가격보다 2~5.5시간
+      # 늦고, GitHub 은 그 시간대(02~05 UTC)에 예약 실행을 거의 안 돌린다 — 그래서
+      # 매일 아침 몇 시간씩 '2일 전'이 떴다.
+      #
+      # 자리: 배포 **호출 뒤, 확인 앞**. 호출보다 앞에 두면 이 단계가 실패했을 때
+      # (API 5xx, 대기 작업이 꺼져 있음) 배포 호출까지 건너뛰어, 밀어 놓은 커밋이
+      # 화면에 안 올라간다(2026-10 검토). 확인보다 앞이라야 배포 확인이 실패해도
+      # 대기는 걸린다.
+      #
+      # ⚠️ 대기 작업이 부른 실행(from_poller)은 다시 부르지 않는다. 보류 원인이
+      #    원본 지연이 아니면 원본은 이미 '있다'고 답하므로, 이 조건이 없으면 둘이
+      #    몇 분마다 서로를 부른다.
+      - name: 헤드라인이 보류됐으면 원본 기다리기 호출
+        if: ${{ inputs.dry_run != true && inputs.from_poller != true }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          CUR=$(python3 tools/site_asof.py --field current viz/site/index.html || true)
+          LAT=$(python3 tools/site_asof.py viz/site/index.html || true)
+          echo "헤드라인 ${CUR:-?} · 자료 마지막 ${LAT:-?}"
+          if [ -n "$CUR" ] && [ -n "$LAT" ] && [[ "$CUR" < "$LAT" ]]; then
+            echo "$LAT 은 온체인 지표가 아직이라 헤드라인에서 빠졌습니다 — 원본을 기다리는 작업을 부릅니다."
+            gh workflow run await-onchain.yml --ref "${GITHUB_REF_NAME}"
+          else
+            echo "보류된 날이 없습니다."
+          fi
+
       # 부른다고 끝이 아니다 — **성공으로 끝났는지**까지 본다. 5차 사고는 '불렀는데
       # 안 떴다'였고, 2026-10-10 에는 '떴는데 실패했다'였다. 예전 확인은 실행이
       # 생겼는지만 봐서 후자를 통과시켰고, 화면은 하루 전 헤드라인으로 남았다.
       # 실패하면 한 번 다시 돌린다(그날 실패는 일시적이었고 재실행이 성공했다).
       # 화면 내용까지 보지는 않는다 — CDN 캐시 때문에 헛알람이 난다.
       - name: 배포가 성공했는지 확인 (실패하면 한 번 다시)
-        if: steps.commit.outputs.pushed == 'true'
+        # !cancelled(): 앞의 대기 호출이 실패해도 배포 확인은 한다.
+        if: ${{ !cancelled() && steps.commit.outputs.pushed == 'true' }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python3 tools/await_deploy.py --since "${STARTED}"

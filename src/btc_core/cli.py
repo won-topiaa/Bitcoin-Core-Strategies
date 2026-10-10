@@ -31,6 +31,22 @@ DEFAULT_MANUAL = Path("data/manual_input.yaml")
 DEFAULT_MACRO = Path("data/macro.csv")
 
 
+def _warn_stale_m2(path, reference: date, signals: dict) -> None:
+    """멈춘 중국 M2 를 빼고 계산했으면 **말한다.** 말없이 빼면 LRS 가 수동 입력으로만
+    다시 가중돼 구간·트랜치 배수가 바뀌는데, 사용자는 이유를 모른다(2026-10 검토)."""
+    if "m2_impulse" in signals:
+        return
+    from .datasources.macro import M2_MAX_AGE_DAYS, china_m2_last
+    try:
+        last = china_m2_last(path, reference=reference)
+    except Exception:  # noqa: BLE001 — 경고용 조회가 계산을 막으면 안 된다
+        return
+    if last is not None and (reference - last).days > M2_MAX_AGE_DAYS:
+        print(f"! 중국 M2 자료가 {last:%Y-%m} 이후로 없어 임펄스를 빼고 계산합니다 "
+              f"({(reference - last).days}일 전 — 허용 {M2_MAX_AGE_DAYS}일). "
+              "유동성 레짐(LRS)은 나머지 입력으로만 정해집니다.", file=sys.stderr)
+
+
 def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(
         prog="btc-core",
@@ -167,6 +183,7 @@ def _cmd_score(args, cfg) -> int:
     manual = load_manual(args.manual, reference=as_of or date.today())
     # '지금'이면 오늘을 넘긴다 — 그래야 멈춘 원본의 낡은 M2 를 지금 값으로 안 쓴다.
     macro_signals = load_macro_signals(args.macro, reference=as_of or date.today())
+    _warn_stale_m2(args.macro, as_of or date.today(), macro_signals)
     state = ExecutionState.load(args.state)
 
     snap, state = evaluate(
@@ -225,6 +242,7 @@ def _cmd_commit(args, cfg) -> int:
 
     manual = load_manual(args.manual, reference=on)
     macro_signals = load_macro_signals(args.macro, reference=on)
+    _warn_stale_m2(args.macro, on, macro_signals)
     state = ExecutionState.load(args.state)
     snap, state = evaluate(cfg, bundle=bundle, manual=manual, state=state, as_of=on,
                            macro_signals=macro_signals)

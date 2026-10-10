@@ -43,8 +43,13 @@ def runs_since(since: str, run: Runner) -> list[dict]:
     out = run(["run", "list", "--workflow", "pages.yml", "--limit", "20",
                "--json", FIELDS])
     rows = json.loads(out or "[]")
-    # createdAt 과 since 는 둘 다 '...Z' 로 끝나는 ISO 라 문자열 비교가 곧 시각 비교다.
-    return sorted((r for r in rows if str(r.get("createdAt", "")) > since),
+    # createdAt 과 since 는 둘 다 '...Z' 로 끝나는 초 단위 ISO 라 문자열 비교가 곧 시각
+    # 비교다. **>=** 인 이유: since 를 찍은 그 초 안에 실행이 생기면 createdAt == since 다.
+    # skipped 는 빼다: workflow_run 으로 왔다가 앞 갱신이 실패·취소돼 job 이 건너뛴
+    # 실행이라 배포를 시도한 적이 없다. 그걸 '실패'로 세면 단 한 번의 재시도를 거기
+    # 써 버린다(2026-10 검토).
+    return sorted((r for r in rows
+                   if str(r.get("createdAt", "")) >= since and r.get("conclusion") != "skipped"),
                   key=lambda r: r.get("createdAt", ""))
 
 
@@ -85,7 +90,9 @@ def wait(since: str, *, timeout: float = 480, interval: float = 15,
                 # 그걸 '재시도도 실패'로 읽으면 재실행이 돌기도 전에 포기한다.
                 state = "pending"
             if state == "failed":
-                last = rows[-1]
+                # 다시 돌릴 것은 **실제로 배포를 시도했다가 실패한** 가장 새 실행이다.
+                tried = [r for r in rows if r.get("conclusion") not in ("cancelled",)]
+                last = (tried or rows)[-1]
                 if left > 0:
                     left -= 1
                     print(f"배포 실행 {last.get('databaseId')} 이(가) "
@@ -93,8 +100,17 @@ def wait(since: str, *, timeout: float = 480, interval: float = 15,
                     try:
                         run(["run", "rerun", str(last.get("databaseId"))])
                     except (subprocess.SubprocessError, OSError) as exc:
-                        print(f"::error::재실행을 못 했습니다: {exc}")
-                        return 1
+                        # 뉴스 갱신과 데이터 갱신이 같은 실패를 동시에 다시 돌리면 둘째는
+                        # '이미 도는 중'으로 거절된다. 그건 실패가 아니다 — 다시 보고
+                        # 돌고 있으면 기다린다.
+                        try:
+                            again = judge(runs_since(since, run))
+                        except (subprocess.SubprocessError, OSError, ValueError):
+                            again = "failed"
+                        if again not in ("pending", "success"):
+                            print(f"::error::재실행을 못 했습니다: {exc}")
+                            return 1
+                        print(f"재실행 요청은 거절됐지만 이미 다시 돌고 있습니다({exc}).")
                     rerun_at = clock()
                     sleep(interval)
                     continue

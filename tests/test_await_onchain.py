@@ -44,14 +44,19 @@ def test_a_newer_complete_day_than_the_headline_is_enough():
 
 def test_unknown_inputs_are_unjudgeable_not_ready():
     """못 물었는데 '준비됨'이라 하면 갱신을 헛부르고, '아직'이라 하면 원인을 숨긴다."""
-    assert ao.decide("2026-10-08", "2026-10-09", None) == ao.UNKNOWN
+    # 원본에 못 물은 것은 원본 장애다 — 대기 작업의 고장(UNKNOWN)과 따로 센다
+    assert ao.decide("2026-10-08", "2026-10-09", None) == ao.SOURCE_DOWN
     assert ao.decide(None, "2026-10-09", "2026-10-09") == ao.UNKNOWN
     assert ao.decide("2026-10-08", None, "2026-10-09") == ao.UNKNOWN
 
 
 def test_the_exit_codes_are_distinct():
-    assert len({ao.READY, ao.WAIT, ao.UNKNOWN, ao.NOTHING_HELD}) == 4
+    codes = {ao.READY, ao.WAIT, ao.UNKNOWN, ao.NOTHING_HELD, ao.SOURCE_DOWN}
+    assert len(codes) == 5
     assert ao.READY == 0, "워크플로가 0 을 '갱신을 불러라'로 읽는다"
+    # 1 은 파이썬이 잡히지 않은 예외로 죽을 때의 코드다. '아직'이 1 이면 죽은 도구가
+    # '아직'으로 읽혀 320분을 헛돌고 초록불로 끝난다.
+    assert 1 not in codes
 
 
 def test_cli_reads_both_dates_from_the_page(tmp_path, capsys):
@@ -80,7 +85,7 @@ def test_cli_asks_the_source_when_held(tmp_path, monkeypatch):
     monkeypatch.setattr(ao, "ask_source", lambda: "2026-10-09")
     assert ao.main(["--site", str(f)]) == ao.READY
     monkeypatch.setattr(ao, "ask_source", lambda: None)
-    assert ao.main(["--site", str(f)]) == ao.UNKNOWN
+    assert ao.main(["--site", str(f)]) == ao.SOURCE_DOWN
 
 
 def test_cli_a_missing_page_is_unjudgeable(tmp_path):
@@ -93,3 +98,17 @@ def test_the_real_page_parses():
     import site_asof
     html = (ROOT / "viz" / "site" / "index.html").read_text(encoding="utf-8")
     assert site_asof.as_of(html, "current") and site_asof.as_of(html, "latest")
+
+
+def test_a_crash_is_not_read_as_wait(tmp_path):
+    """도구가 예외로 죽으면 종료코드 1 — 워크플로는 그걸 '판정 불가'로 세야 한다."""
+    import subprocess
+    r = subprocess.run([sys.executable, str(ROOT / "tools" / "await_onchain.py"), "--site", "/dev/null/x"],
+                       capture_output=True, text=True, timeout=60)
+    assert r.returncode == ao.UNKNOWN
+    import yaml
+    doc = yaml.safe_load((ROOT / ".github/workflows/await-onchain.yml").read_text(encoding="utf-8"))
+    run = "\n".join(str(s.get("run", "")) for j in doc["jobs"].values() for s in j["steps"])
+    assert f"      {ao.WAIT})" in run or f"{ao.WAIT})" in run, "워크플로가 '아직'(WAIT) 코드를 다루지 않습니다"
+    assert f"{ao.SOURCE_DOWN})" in run, "워크플로가 원본 장애를 따로 다루지 않습니다"
+    assert "\n              1)" not in run, "1 을 '아직'으로 읽습니다 — 죽은 도구가 헛돕니다"

@@ -530,3 +530,18 @@ def test_vix_comes_from_fred_with_the_mirror_as_fallback():
 
     assert fm.CORE.get("VIXCLS") == "vix"
     assert any("vix" in cols.values() for _u, _d, cols in fm.GITHUB_SOURCES), "폴백이 사라졌습니다"
+
+
+def test_fred_vix_wins_over_the_stalled_mirror(tmp_path, monkeypatch):
+    """같은 열이면 FRED 가 미러를 덮는다 — 미러는 FRED 가 막힌 환경에서만 남는다."""
+    import fetch_macro as fm
+
+    old, new = date(2026, 9, 22), date(2026, 10, 8)
+    monkeypatch.setattr(fm, "fetch_github", lambda *a, **k: {"vix": {old: 14.21}})
+    monkeypatch.setattr(fm, "fetch_series",
+                        lambda fid, timeout=40: {old: 14.21, new: 15.41} if fid == "VIXCLS" else None)
+    monkeypatch.setattr(fm, "fetch_csv_api", lambda *a, **k: {})
+    saved = {}
+    monkeypatch.setattr(fm, "merge_to_csv", lambda cols, path: saved.update(cols))
+    assert fm.main(["--github", "--global", "--out", str(tmp_path / "m.csv")]) == 0
+    assert saved["vix"] == {old: 14.21, new: 15.41}, "FRED VIX 가 미러를 덮지 않습니다"

@@ -203,6 +203,10 @@ def test_the_deploy_call_is_verified_not_assumed(path):
         f"{path.name}: 작업 시간 제한이 배포 확인(최대 8분)을 담을 만큼 길지 않습니다")
     assert await_deploy.wait.__kwdefaults__["timeout"] == 480
     assert await_deploy.wait.__kwdefaults__["retries"] == 1
+    # 워크플로는 CLI 로 부른다 — CLI 기본값이 실제로 쓰이는 값이다
+    src = Path(await_deploy.__file__).read_text(encoding="utf-8")
+    assert re.search(r'"--timeout", type=float, default=480\b', src)
+    assert re.search(r'"--retries", type=int, default=1\b', src)
 
 
 def test_pages_does_not_use_configure_pages():
@@ -376,7 +380,8 @@ def test_the_watchdog_tells_unjudgeable_from_behind():
     judge = next(s for s in steps if "tools/site_stale.py" in str(s.get("run", "")))
     run = str(judge.get("run", ""))
     assert "set +e" in run, "종료코드를 읽기 전에 셸이 먼저 죽습니다(set -e)"
-    assert re.search(r'"\$RC"\s*-eq\s*2', run), "판정 불가(2)를 따로 다루지 않습니다"
+    assert re.search(r'"\$RC"\s*-eq\s*2\s*\]\s*;\s*then\s*\n(?:[^\n]*\n){0,2}?\s*exit 1', run), (
+        "판정 불가(2)를 실패로 올리지 않습니다 — 감시가 조용히 눈먼다")
     assert "--summary" in run, "판정 결과(stale/behind_days)를 출력으로 내보내지 않습니다"
 
 
@@ -390,6 +395,10 @@ def test_freshness_is_judged_on_the_headline_date(path):
     text = run_text(load(path))
     assert "site_asof.py --field current" in text, (
         f"{path.name}: 헤드라인 기준일(current)로 재지 않습니다")
+    judge = next(s for s in steps_of(load(path)) if "tools/site_stale.py" in str(s.get("run", "")))
+    m = re.search(r"ASOF=\$\(([^)]*)\)", str(judge.get("run", "")))
+    assert m and "--field current" in m.group(1), (
+        f"판정에 넘기는 기준일이 헤드라인이 아닙니다: {m and m.group(1)!r}")
     live = next(s for s in steps_of(load(path)) if "live.html" in str(s.get("run", "")))
     assert "--field current /tmp/live.html" in str(live.get("run", "")), (
         "배포 어긋남 검사가 배포된 페이지의 헤드라인을 보지 않습니다")
@@ -409,6 +418,15 @@ def test_the_watchdog_only_pages_a_human_for_an_obvious_failure():
     assert re.search(r"BEHIND_DAYS.*-ge\s*2", run), "이틀 이상 뒤처짐을 문턱으로 쓰지 않습니다"
     assert "DATA_STALE" in run and "FAILED" in run
     assert "behind_days" in str((verdict.get("env") or {}).get("BEHIND_DAYS", ""))
+    # 배포 실패 판정은 되살리기가 새 배포를 부르기 **전에** 읽어 둔 값으로 한다. 뒤에서
+    # 읽으면 방금 부른(결론 없는) 실행을 읽어 '배포 실패' 알림이 영영 안 울린다.
+    assert "gh run list --workflow pages.yml" not in run, "알림 판정이 배포를 뒤늦게 읽습니다"
+    assert "last_pages" in str((verdict.get("env") or {}).get("LAST_PAGES", ""))
+    live = next(s for s in steps if s.get("id") == "live")
+    redeploy = next(s for s in steps if "gh workflow run pages.yml" in str(s.get("run", "")))
+    assert steps.index(live) < steps.index(redeploy)
+    lr = str(live.get("run", ""))
+    assert "last_pages=" in lr and "--status completed" in lr and "skipped" in lr
     assert str(verdict.get("if", "")).startswith("always()"), (
         "판정이 실패한 실행에서는 알림 판정이 건너뛰어집니다")
 
@@ -463,14 +481,23 @@ def test_the_poller_and_the_refresh_cannot_call_each_other_forever():
         "대기 작업이 갱신을 부를 때 from_poller=true 를 붙이지 않습니다 — 고리가 됩니다")
 
 
-def test_the_poller_is_dispatched_before_the_deploy_check():
-    """배포 확인이 실패하면 뒤 단계가 건너뛰어진다 — 대기는 그 앞에 걸려야 한다."""
+def test_the_poller_is_armed_after_the_deploy_call_and_before_the_deploy_check():
+    """배포 **호출 뒤, 확인 앞.**
+
+    호출보다 앞이면 대기 호출이 실패할 때(API 5xx, 대기 작업이 꺼짐) 배포 호출까지
+    건너뛰어 밀어 놓은 커밋이 화면에 안 올라간다(2026-10 검토). 확인보다 앞이라야
+    배포 확인이 실패해도 대기는 걸린다. 확인 단계는 !cancelled() 라 앞의 대기 호출이
+    실패해도 돈다.
+    """
     steps = steps_of(load(DATA))
     poll = next(i for i, s in enumerate(steps)
                 if "gh workflow run await-onchain.yml" in str(s.get("run", "")))
     verify = next(i for i, s in enumerate(steps) if "tools/await_deploy.py" in str(s.get("run", "")))
-    commit = next(i for i, s in enumerate(steps_of(load(DATA))) if s.get("id") == "commit")
-    assert commit < poll < verify
+    commit = next(i for i, s in enumerate(steps) if s.get("id") == "commit")
+    call = next(i for i, s in enumerate(steps) if "gh workflow run pages.yml" in str(s.get("run", "")))
+    assert commit < call < poll < verify, (commit, call, poll, verify)
+    assert "!cancelled()" in str(steps[verify].get("if", "")), (
+        "배포 확인이 앞 단계 실패에 끌려 건너뛰어집니다")
 
 
 def test_the_poller_is_bounded_and_on_demand_only():
@@ -490,3 +517,7 @@ def test_the_poller_is_bounded_and_on_demand_only():
     assert _dep_install_index(steps_of(doc)) is not None, (
         "원본 질의가 btc_core 를 들이는데 의존성을 설치하지 않습니다")
     assert "tools/await_onchain.py" in run
+    # 고장 나면 사람을 부른다 — 대기가 죽으면 아침 '2일 전'이 조용히 돌아온다
+    assert (doc.get("permissions") or {}).get("issues") == "write"
+    assert any(str(s.get("if", "")) == "failure()" and "issues" in str((s.get("with") or {}).get("script", ""))
+               for s in steps_of(doc)), "대기 작업이 실패해도 아무도 모릅니다"

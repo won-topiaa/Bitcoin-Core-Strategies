@@ -18,9 +18,15 @@
 종료코드 — 워크플로가 이것만 보고 움직인다.
 
     0  지금 갱신하면 헤드라인이 앞으로 간다(원본에 더 새로운 완전한 날이 있다)
-    1  아직이다 — 원본에도 그 날 지표가 다 없다
+    4  아직이다 — 원본에도 그 날 지표가 다 없다
+    5  원본에 못 물었다 — 원본 쪽 일시 장애. 계속 기다린다
     3  기다릴 것이 없다 — 보류된 날이 없다(헤드라인 = 자료 마지막 날)
-    2  판정 불가 — 페이지를 못 읽었거나 원본에 못 물었다
+    2  판정 불가 — 페이지를 못 읽었다. 이 작업이 고장 난 것이다
+
+'아직'을 1 로 두지 않는 이유: 파이썬이 잡히지 않은 예외로 죽어도 1 이다. 둘이 같으면
+도구가 죽은 채 '아직'으로 읽혀 320분을 헛돌고 초록불로 끝난다(2026-10 검토).
+원본 장애(5)와 페이지 고장(2)을 가르는 이유: 원본은 몇 분씩 막히기도 하는데, 둘을
+같이 세면 그 사이에 대기를 포기해 버린다.
 """
 
 from __future__ import annotations
@@ -34,7 +40,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import site_asof  # noqa: E402
 
-READY, WAIT, UNKNOWN, NOTHING_HELD = 0, 1, 2, 3
+READY, UNKNOWN, NOTHING_HELD, WAIT, SOURCE_DOWN = 0, 2, 3, 4, 5
 
 
 def decide(current: Optional[str], latest: Optional[str],
@@ -50,7 +56,7 @@ def decide(current: Optional[str], latest: Optional[str],
     if current >= latest:
         return NOTHING_HELD
     if not source_complete:
-        return UNKNOWN
+        return SOURCE_DOWN
     # 보류된 날(latest) 전체가 아니라 '헤드라인보다 새로운 완전한 날'이면 충분하다.
     # 그 날까지만 와도 헤드라인이 앞으로 간다.
     return READY if source_complete > current else WAIT
@@ -91,6 +97,7 @@ def main(argv: Optional[list[str]] = None) -> int:
         READY: "지금 갱신하면 헤드라인이 앞으로 갑니다",
         WAIT: "아직 — 원본에도 그 날 온체인 지표가 없습니다",
         UNKNOWN: "판정 불가",
+        SOURCE_DOWN: "원본에 못 물었습니다 — 계속 기다립니다",
         NOTHING_HELD: "기다릴 것 없음",
     }[rc])
     return rc

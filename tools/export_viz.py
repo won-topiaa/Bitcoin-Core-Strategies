@@ -146,7 +146,7 @@ def daily_rows(cfg: StrategyConfig, market) -> list[dict]:
 
         rows.append({
             "d": d.isoformat(),
-            "price": round(prices.get(d) or 0.0, 2),
+            "price": price_round(prices.get(d) or 0.0),
             "bcs": round(bcs, 1),
             "low": round(iv.low, 1) if iv else round(bcs, 1),
             "high": round(iv.high, 1) if iv else round(bcs, 1),
@@ -205,6 +205,17 @@ def interval_stats(rows: list[dict]) -> dict:
         "stable_days": stable,
         "stable_pct": round(stable / len(rows) * 100, 1),
     }
+
+
+def price_round(p: float) -> float:
+    """가격은 둘째 자리면 충분하다 — 1달러 미만만 빼고(유효숫자 넷).
+
+    2010 년 가격(0.05~0.09달러)을 둘째 자리에서 자르면 최대 7.5% 어긋났다
+    (2010-08-15 0.0651 → 0.07). build_viz.compact 도 같은 규칙을 쓰지만, 그 앞의
+    여기서 먼저 잘리면 거기서는 되살릴 수 없다(2026-10 검토에서 실제로 그랬다)."""
+    if p and abs(p) < 1:
+        return float(f"{p:.4g}")
+    return round(p, 2)
 
 
 def macro_lead(cfg: StrategyConfig, macro_csv: str, rows: list, reference: date) -> Optional[dict]:

@@ -143,3 +143,46 @@ def test_our_deploy_succeeded_even_if_a_later_one_failed():
     fake = Fake(frames)
     assert go(fake) == 0
     assert not fake.reruns
+
+
+# --------------------------------------------------------------------------
+# 2026-10 검토에서 확인된 경계
+# --------------------------------------------------------------------------
+def test_a_run_created_in_the_same_second_counts():
+    """since 를 찍은 그 초 안에 실행이 생기면 createdAt == since 다."""
+    fake = Fake([[run_row(1, t=SINCE)]])
+    assert go(fake) == 0
+
+
+def test_a_skipped_workflow_run_deploy_is_not_a_failure():
+    """앞 갱신이 실패·취소돼 job 을 건너뛴 workflow_run 실행은 배포를 시도한 적이 없다.
+    그걸 실패로 세면 단 한 번의 재시도를 거기 쓴다."""
+    skipped = run_row(9, conclusion="skipped", t="2026-10-10T07:00:20Z")
+    frames = [[run_row(1, "in_progress", None), skipped], [run_row(1), skipped]]
+    fake = Fake(frames)
+    assert go(fake) == 0
+    assert not fake.reruns
+
+
+def test_the_retry_goes_to_the_run_that_actually_failed():
+    """마지막 행이 취소된 실행(대기 중 밀림)이면 그게 아니라 실패한 실행을 다시 돌린다."""
+    rows = [run_row(1, conclusion="failure"), run_row(2, conclusion="cancelled", t="2026-10-10T07:00:30Z")]
+    fake = Fake([rows, [run_row(1, "queued", None), rows[1]], [run_row(1), rows[1]]])
+    assert go(fake) == 0
+    assert fake.reruns == [["run", "rerun", "1"]]
+
+
+def test_a_rerun_already_started_by_someone_else_is_waited_on():
+    """뉴스 갱신과 데이터 갱신이 같은 실패를 동시에 다시 돌리면 둘째 요청은 거절된다."""
+    fail = [run_row(1, conclusion="failure")]
+    running = [run_row(1, "in_progress", None)]
+    fake = Fake([fail, running, [run_row(1)]], fail_rerun=True)
+    assert go(fake) == 0
+
+
+def test_a_newer_skipped_run_does_not_steal_the_retry():
+    """실패한 우리 배포 뒤에 건너뛴 workflow_run 실행이 붙으면, 재시도는 우리 것에 가야 한다."""
+    rows = [run_row(1, conclusion="failure"), run_row(9, conclusion="skipped", t="2026-10-10T07:00:40Z")]
+    fake = Fake([rows, [run_row(1, "queued", None), rows[1]], [run_row(1), rows[1]]])
+    assert go(fake) == 0
+    assert fake.reruns == [["run", "rerun", "1"]]

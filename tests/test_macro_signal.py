@@ -188,3 +188,24 @@ def test_the_liquidity_payload_says_which_month_and_whether_it_is_stale(tmp_path
     fresh = export_viz.macro_lead(load_config(), str(p), rows, date(2026, 7, 31))
     assert fresh["m2Month"] == "2026-05" and fresh["m2Stale"] is False
     assert fresh["impulse"] is not None
+
+
+def test_the_cli_says_so_when_it_drops_a_stale_m2(tmp_path, capsys):
+    """말없이 빼면 LRS 가 수동 입력으로만 다시 가중돼 구간·트랜치 배수가 바뀐다."""
+    from btc_core.cli import _warn_stale_m2
+    p = tmp_path / "m.csv"
+    _write(p, _until((2026, 5)))
+    _warn_stale_m2(p, date(2026, 10, 9), {})
+    err = capsys.readouterr().err
+    assert "중국 M2" in err and "2026-05" in err
+    _warn_stale_m2(p, date(2026, 7, 31), {"m2_impulse": 0.5})
+    assert capsys.readouterr().err == ""
+    _warn_stale_m2(tmp_path / "nope.csv", date(2026, 10, 9), {})   # 파일 없음 — 조용히
+    assert capsys.readouterr().err == ""
+
+
+def test_both_cli_paths_warn_about_a_stale_m2():
+    import inspect
+    from btc_core import cli
+    assert inspect.getsource(cli).count("_warn_stale_m2(args.macro,") == 2, (
+        "score 와 record 둘 다 멈춘 M2 를 알려야 합니다")
