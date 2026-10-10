@@ -1110,11 +1110,22 @@ const S = D.S;                                   // [dayOffset, price, bcs, low,
 const BASE = new Date(D.base + "T00:00:00Z");
 const DAY = 86400000;
 const dateOf = o => new Date(BASE.getTime() + o * DAY);
+/* 헤드라인 기준일 **뒤에** 붙은, 지표가 빠진 날. 원본이 가격은 자정 직후, 원가
+   지표(실현시총→MVRV·NUPL)는 몇 시간 뒤에 내므로 그 사이에 구우면 마지막 날이
+   일부 지표로만 계산된다. 헤드라인은 그 날을 빼고 current 를 쓰는데, 예전에는
+   차트가 그 점을 그대로 그려 마지막 점이 많게는 17~20점 높게 — 다른 구간으로 —
+   보였다(2026-10-05~07 실측). 점수를 그리는 곳은 이 날을 뺀다. 가격은 온전하다.
+   기준일 **앞**의 결측(2010~ 초기, 이력이 짧은 지표)은 원래 그런 것이라 그대로 둔다. */
+const CUR_OFF = (D.current && D.current.d)
+  ? (Date.parse(D.current.d + "T00:00:00Z") - BASE.getTime()) / DAY : Infinity;
+const heldRow = r => r[9] > 0 && r[0] > CUR_OFF;
 const iso = d => d.toISOString().slice(0, 10);
 const nf = (v, d) => (v === null || v === undefined || !Number.isFinite(v)) ? "—"
   : (v >= 0 ? "+" : "") + v.toFixed(d);
 const money = v => (v === null || v === undefined || !Number.isFinite(+v)) ? "—"
-  : "$" + Math.round(v).toLocaleString("en-US");
+  : (+v < 1 ? "$" + (+v).toPrecision(3)          // 2010 년: $0.0651 — 반올림하면 $0
+    : +v < 100 ? "$" + (+v).toFixed(2)
+    : "$" + Math.round(v).toLocaleString("en-US"));
 
 /* =====================================================================
    언어 — 한국어가 원본이고 영어는 사전에서 온다
@@ -1168,6 +1179,7 @@ ko: {
   legNow: "오늘 수준 (점선)",
   legTop: "과거 고점", legBottom: "과거 바닥",
   ttRange: "BCS 구간", ttPoint: "대표값", ttBand: "구간", ttPrice: "가격",
+  ttHeld: n => `지표 ${n}개가 아직 — 점수에서 뺌`,
   ttGate: "둘 이상 동의", gatePass: "충족", gateFail: "미달",
   histCap: (n, med, mean) =>
     `지금 보이는 구간을 점 ${n}개로 그렸습니다 ` +
@@ -1235,7 +1247,8 @@ ko: {
   freshStale: (n, d) => `데이터 ${d} 종가 · ${n}일 전 — 갱신이 멈췄을 수 있습니다`,
   // 받아는 왔지만 지표가 덜 들어와 점수에서 뺀 날. 이게 없으면 머리글의
   // 날짜(기준일)와 위 '2010-07-18 → 2026-09-08' 의 끝 날짜가 하루 어긋나 보인다.
-  freshHeld: d => ` · ${d} 은 원가 데이터가 아직이라 점수에서 뺐습니다`,
+  freshHeld: d => ` · ${d} 은 이 페이지를 만들 때 원가 데이터가 아직 안 나와 점수에서 뺐습니다`,
+  freshHeldLate: d => ` · ${d} 원가 데이터가 원본에 나왔을 시각이 지났는데 아직 반영되지 않았습니다 — 갱신이 밀렸을 수 있습니다`,
   // **"지금도 돌고 있나"에 화면이 직접 답한다.** 자세한 근거는 freshness() 주석.
   freshAtSource: " — 원본도 이 날까지",
   asOf: (d, p) => `기준 ${d} · ${p}`,
@@ -1366,6 +1379,7 @@ en: {
   legNow: "today's level (dashed)",
   legTop: "past peak", legBottom: "past bottom",
   ttRange: "BCS range", ttPoint: "headline", ttBand: "band", ttPrice: "price",
+  ttHeld: n => `${n} indicator${n === 1 ? "" : "s"} not in yet — not scored`,
   ttGate: "two agree", gatePass: "met", gateFail: "not met",
   histCap: (n, med, mean) =>
     `Drawn from ${n} points over the range shown ` +
@@ -1421,7 +1435,8 @@ en: {
   freshToday: "data as of today",
   freshDays: (n, d) => `data: ${d} close`,
   freshStale: (n, d) => `data: ${d} close · ${n} days old — the refresh may have stopped`,
-  freshHeld: d => ` · ${d} held back — cost-basis data not in yet`,
+  freshHeld: d => ` · ${d} held back — its cost-basis data wasn't out when this page was built`,
+  freshHeldLate: d => ` · ${d} still held back, though its cost-basis data should be out by now — updates may be delayed`,
   freshAtSource: " — the source has nothing newer",
   asOf: (d, p) => `as of ${d} · ${p}`,
   dLabels: {d1: "yesterday", d7: "last week", d30: "last month"},
@@ -1901,15 +1916,19 @@ function drawHist(){
   // 연도 눈금
   yearTicksOf(V).forEach(k => txt(svg, X(k.off), H-9, String(k.y), {anchor:"middle", size:10}));
 
+  // 점수는 보류된 날(heldRow)을 빼고 그린다. x 축은 V 그대로 둔다 — 아래 가격
+  // 차트와 날짜 축이 맞아야 한다.
+  const VS = V.filter(r => !heldRow(r));
+
   // 구간 리본
   let up = "", dn = "";
-  V.forEach((r,i) => { up += (i?" L":"M") + X(r[0]) + "," + Y(r[4]); });
-  for (let i=V.length-1; i>=0; i--) dn += " L" + X(V[i][0]) + "," + Y(V[i][3]);
+  VS.forEach((r,i) => { up += (i?" L":"M") + X(r[0]) + "," + Y(r[4]); });
+  for (let i=VS.length-1; i>=0; i--) dn += " L" + X(VS[i][0]) + "," + Y(VS[i][3]);
   el("path", {d:up+dn+" Z", fill:"var(--cool-2)", opacity:.30}, svg);
 
   // 대표값
   let mid = "";
-  V.forEach((r,i) => { mid += (i?" L":"M") + X(r[0]) + "," + Y(r[2]); });
+  VS.forEach((r,i) => { mid += (i?" L":"M") + X(r[0]) + "," + Y(r[2]); });
   el("path", {d:mid, fill:"none", stroke:"var(--ink)", "stroke-width":1.6,
     "stroke-linejoin":"round"}, svg);
 
@@ -1952,7 +1971,10 @@ function drawHist(){
   txt(svg, PL+iw-6, PT+ih-6, t("keyCheap"),
     {anchor:"end", size:10, fill:"var(--muted)", mono:false});
 
-  attachCrosshair(svg, "hist-tt", host, X, PL, iw, PT, ih, r => ([
+  attachCrosshair(svg, "hist-tt", host, X, PL, iw, PT, ih, r => heldRow(r) ? ([
+    [t("ttPoint"), t("ttHeld", r[9])],
+    [t("ttPrice"), money(r[1])]
+  ]) : ([
     [t("ttRange"), nf(r[3],1) + " ~ " + nf(r[4],1)],
     [t("ttPoint"), nf(r[2],1)],
     [t("ttBand"), labelOf(bandOf(r[2]).key)],
@@ -2689,7 +2711,7 @@ function drawFam(){
   const iw = W - PL - PR, ih = H - PT - PB;
 
   const cutoff = S[S.length-1][0] - 1461;
-  const rows = S.filter(r => r[0] >= cutoff);
+  const rows = S.filter(r => r[0] >= cutoff && !heldRow(r));
   const d0 = rows[0][0], d1 = rows[rows.length-1][0];
   const X = v => PL + (v - d0) / ((d1 - d0) || 1) * iw;
   const Y = v => PT + (1 - v) / 2 * ih;
@@ -2959,7 +2981,13 @@ function freshness(){
     (Date.now() - Date.parse(asof + "T00:00:00Z")) / DAY));
   const stale = days > 3;
   const held = (l.d && l.d > asof) ? l.d : null;
-  host.className = stale ? "stale" : "";
+  /* 보류는 **만들 때의** 사실이다. 원본은 원가 지표를 그 날이 끝나고 많게는
+     9시간 뒤에 낸다(실측 최대 +8.99h). 그 날 끝 + 12시간이 지났는데도 보류가
+     남아 있으면 원본 탓이 아니라 우리 갱신·배포가 밀린 것이다 — 예전 문구는
+     그때도 '원가 데이터가 아직'이라 말해 원인을 원본에 돌렸다(2026-10-10). */
+  const heldLate = !!held &&
+    Date.now() > Date.parse(held + "T00:00:00Z") + DAY + 12 * 3600000;
+  host.className = (stale || heldLate) ? "stale" : "";
   /* **"지금도 돌고 있나"에 화면이 직접 답한다.**
      원본이 일일 종가라 UTC 자정 전에는 그저께 날짜가 최선인데, 한국 달력으로
      세면 이틀 차이라 멈춘 것처럼 보인다. 실제로 그 이유로 "자동 갱신이 안 된다"는
@@ -2976,7 +3004,7 @@ function freshness(){
   const atSource = (!held && days <= 1) ? t("freshAtSource") : "";
   host.textContent = (days === 0 ? t("freshToday")
     : (stale ? t("freshStale", days, asof) : t("freshDays", days, asof)))
-    + (held ? t("freshHeld", held) : atSource)
+    + (held ? t(heldLate ? "freshHeldLate" : "freshHeld", held) : atSource)
 ;
 }
 
@@ -3256,4 +3284,4 @@ if (window.matchMedia) {
 }
 })();
 </script>
-<!-- bcs-source: ea5ef92437ec20145fb5a149fdbfb372fe091aba -->
+<!-- bcs-source: 8cf41ce9e6ebf42e101bc71157c4ac40ab6625b3 -->
