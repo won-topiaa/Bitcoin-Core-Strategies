@@ -74,6 +74,17 @@ def _n(v, digits: int = 2):
     return int(r) if r == int(r) else r
 
 
+def _price(v):
+    """가격은 소수 둘째 자리면 충분하다 — **1달러 미만만 빼고.** 2010 년 가격
+    (0.05~0.09달러)을 둘째 자리에서 자르면 최대 7.5% 어긋났다(0.0651 → 0.07).
+    그 구간만 유효숫자 넷으로 둔다. 1달러 미만 행은 40개 남짓이라 크기는 그대로다."""
+    if v is None:
+        return None
+    if abs(v) < 1:
+        return float(f"{v:.4g}")
+    return _n(v, 2)
+
+
 def compact(payload: dict) -> dict:
     """리포트용 JSON 을 페이지용으로 압축한다.
 
@@ -89,7 +100,7 @@ def compact(payload: dict) -> dict:
         f = r["fam"]
         rows.append([
             (date.fromisoformat(r["d"]) - base).days,
-            _n(r["price"], 2), _n(r["bcs"], 1), _n(r["low"], 1), _n(r["high"], 1),
+            _price(r["price"]), _n(r["bcs"], 1), _n(r["low"], 1), _n(r["high"], 1),
             _n(f.get("valuation"), 2), _n(f.get("price"), 2), _n(f.get("supply"), 2),
             1 if r["gate"] else 0, r["nmiss"],
         ])

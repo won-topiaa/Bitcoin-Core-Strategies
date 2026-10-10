@@ -438,6 +438,57 @@ def test_a_held_back_day_is_explained_where_the_dates_differ():
     assert len(held) == 2, f"보류 설명이 두 언어에 다 있어야 합니다: {held}"
     assert "점수에서 뺐" in held[0], f"한국어 설명이 이상합니다: {held[0]!r}"
     assert "held back" in held[1], f"영어 설명이 이상합니다: {held[1]!r}"
+    # 만들 때의 사실로 말한다 — 보는 시점에 '원가 데이터가 아직'이라 하면 원본이
+    # 이미 냈는데도 원인을 원본에 돌린다(2026-10-10 실제로 그랬다).
+    assert "만들 때" in held[0] and "built" in held[1], held
+    late = re.findall(r"freshHeldLate: d => `([^`]*)`", js)
+    assert len(late) == 2, f"보류가 너무 길 때의 설명이 두 언어에 다 있어야 합니다: {late}"
+
+
+def test_a_held_day_that_outlives_the_source_delay_is_flagged_as_ours():
+    """원본은 원가 지표를 그 날이 끝나고 많게는 9시간 뒤에 낸다. 그 날 끝 + 12시간이
+    지나도 보류면 우리 갱신·배포가 밀린 것이다 — 그때는 경고로 바꿔 말한다."""
+    harness = r"""
+const DAY = 86400000;
+const T = {
+  freshToday: "오늘",
+  freshDays: (n, d) => `데이터 ${d} 종가`,
+  freshStale: (n, d) => `데이터 ${d} 종가 · ${n}일 전 — 멈춤`,
+  freshHeld: d => ` · ${d} 보류`,
+  freshHeldLate: d => ` · ${d} 보류가 너무 김`,
+  freshAtSource: " — 원본도 이 날까지",
+};
+function t(k){ const v = T[k];
+  return typeof v === "function" ? v.apply(null, [].slice.call(arguments, 1)) : v; }
+let OUT = "", CLS = "";
+const $ = () => ({ set textContent(v){ OUT = v; }, set className(v){ CLS = v; } });
+let D;
+function run(cur, lat, nowIso){
+  D = { current: {d: cur}, latest: {d: lat} };
+  const real = Date.now; Date.now = () => Date.parse(nowIso);
+  try { freshness(); } finally { Date.now = real; }
+  return [OUT, CLS];
+}
+"""
+    cases = r"""
+console.log(JSON.stringify([
+  run("2026-10-08", "2026-10-09", "2026-10-10T01:46:00Z"),  // 원본이 아직 — 정상
+  run("2026-10-08", "2026-10-09", "2026-10-10T11:59:00Z"),  // 아직 유예 안
+  run("2026-10-08", "2026-10-09", "2026-10-10T12:01:00Z"),  // 원본은 냈을 시각 — 우리 탓
+]));
+"""
+    body = "function freshness(){" + freshness_body() + "\n}"
+    try:
+        r = subprocess.run(["node", "-e", harness + body + cases],
+                           capture_output=True, text=True, timeout=30)
+    except (FileNotFoundError, subprocess.TimeoutExpired, OSError):
+        pytest.skip("node 없음")
+    assert r.returncode == 0, r.stderr[:800]
+    (early, c1), (edge, c2), (late, c3) = json.loads(r.stdout.strip())
+    assert early.endswith("2026-10-09 보류") and c1 == "", early
+    assert edge.endswith("2026-10-09 보류") and c2 == "", edge
+    assert late.endswith("2026-10-09 보류가 너무 김"), late
+    assert c3 == "stale", "보류가 너무 길면 눈에 띄어야 합니다"
 
 
 def test_the_as_of_date_actually_matches_what_is_displayed():
@@ -453,6 +504,7 @@ const T = {
   freshDays: (n, d) => `데이터 ${d} 종가`,
   freshStale: (n, d) => `데이터 ${d} 종가 · ${n}일 전 — 멈춤`,
   freshHeld: d => ` · ${d} 보류`,
+  freshHeldLate: d => ` · ${d} 보류가 너무 김`,
   freshAtSource: " — 원본도 이 날까지",
 };
 function t(k){ const v = T[k];
@@ -514,6 +566,7 @@ const T = {
   freshDays: (n, d) => `데이터 ${d} 종가`,
   freshStale: (n, d) => `데이터 ${d} 종가 · ${n}일 전 — 멈춤`,
   freshHeld: d => ` · ${d} 보류`,
+  freshHeldLate: d => ` · ${d} 보류가 너무 김`,
   freshAtSource: " — 원본도 이 날까지",
 };
 function t(k){ const v = T[k];
@@ -576,3 +629,82 @@ def test_rebuilding_the_same_data_produces_the_same_bytes():
         diff = [n for n in a if a[n] != b[n]]
         assert not diff, (
             f"같은 데이터로 두 번 구웠는데 달라진 장: {diff} — 시간마다 커밋·배포가 납니다")
+
+
+# --------------------------------------------------------------------------
+# 보류된 날을 차트가 점수로 그리지 않는다 (2026-10 감사)
+# --------------------------------------------------------------------------
+def _helpers_js() -> str:
+    js = js_of("_script.html")
+    parts = []
+    for pat in (r"const CUR_OFF = .*?;\n", r"const heldRow = .*?;\n", r"const money = .*?;\n"):
+        m = re.search(pat, js, re.S)
+        assert m, f"{pat} 를 못 찾았습니다"
+        parts.append(m.group(0))
+    return "".join(parts)
+
+
+def test_the_chart_does_not_score_the_held_back_day():
+    """헤드라인 기준일 뒤의 결측 행은 일부 지표로만 계산된 점수다.
+
+    예전엔 그 점을 그대로 그려 마지막 점이 17~20점 높게 — 다른 구간으로 — 보였다
+    (10-06: 부분 −1.7 '중간' vs 확정 −21.7 '싼 편'). 헤드라인의 '지금' 선보다 위에서
+    끝나 없는 급등처럼 보였다. 기준일 **앞**의 결측(2010~ 초기)은 그대로 그린다.
+    """
+    harness = r"""
+const D = {current: {d: "2026-10-08"}};
+const BASE = new Date("2026-10-01T00:00:00Z");
+const DAY = 86400000;
+""" + _helpers_js() + r"""
+console.log(JSON.stringify([
+  heldRow([0, 1, -30, -40, -20, 0, 0, 0, 1, 3]),   // 기준일 앞, 결측 — 원래 그런 것
+  heldRow([7, 1, -32, -40, -20, 0, 0, 0, 1, 0]),   // 기준일 당일
+  heldRow([8, 1, -23, -38, -9, 0, 0, 0, 1, 2]),    // 기준일 다음 날, 결측 — 보류
+  heldRow([8, 1, -29, -42, -15, 0, 0, 0, 1, 0]),   // 기준일 다음 날, 온전 — 그린다
+]));
+"""
+    try:
+        r = subprocess.run(["node", "-e", harness], capture_output=True, text=True, timeout=30)
+    except (FileNotFoundError, subprocess.TimeoutExpired, OSError):
+        pytest.skip("node 없음")
+    assert r.returncode == 0, r.stderr[:800]
+    assert json.loads(r.stdout.strip()) == [False, False, True, False]
+
+    js = js_of("_script.html")
+    hist = re.search(r"function drawHist\(\)\{(.*?)\n\}", js, re.S)
+    assert hist, "drawHist() 를 못 찾았습니다"
+    body = hist.group(1)
+    assert "V.filter(r => !heldRow(r))" in body, "히스토리 차트가 보류된 날을 거르지 않습니다"
+    assert re.search(r"VS\.forEach\(\(r,i\) => \{ mid \+=", body), "대표값 선이 거른 행을 쓰지 않습니다"
+    assert re.search(r"VS\.forEach\(\(r,i\) => \{ up \+=", body), "구간 리본이 거른 행을 쓰지 않습니다"
+    assert "heldRow(r) ?" in body and 't("ttHeld"' in body, "툴팁이 보류된 날을 점수로 보여 줍니다"
+    assert "!heldRow(r)" in re.search(r"const rows = S\.filter\(([^)]*\))", js).group(1), (
+        "계열 차트가 보류된 날의 일부 지표 계열값을 그립니다")
+
+
+def test_sub_dollar_prices_are_not_shown_as_zero():
+    """money() 가 반올림만 하면 2010 년 가격(0.05~0.09달러)이 전부 '$0' 이었다."""
+    harness = r"""
+const D = {current: {d: "2026-10-08"}};
+const BASE = new Date("2026-10-01T00:00:00Z");
+const DAY = 86400000;
+""" + _helpers_js() + r"""
+console.log(JSON.stringify([money(0.0651179), money(4.5), money(82562.56), money(null)]));
+"""
+    try:
+        r = subprocess.run(["node", "-e", harness], capture_output=True, text=True, timeout=30)
+    except (FileNotFoundError, subprocess.TimeoutExpired, OSError):
+        pytest.skip("node 없음")
+    assert r.returncode == 0, r.stderr[:800]
+    assert json.loads(r.stdout.strip()) == ["$0.0651", "$4.50", "$82,563", "—"]
+
+
+def test_the_compact_series_keeps_2010_prices_to_four_significant_figures():
+    """둘째 자리에서 자르면 2010-08-15 의 0.0651 이 0.07(+7.5%)이 됐다."""
+    assert build_viz._price(0.0651179) == 0.06512
+    assert build_viz._price(0.08584) == 0.08584
+    assert build_viz._price(82562.564) == 82562.56
+    assert build_viz._price(1.0) == 1
+    assert build_viz._price(None) is None
+    for v in (0.0499, 0.0651179, 0.08584, 0.3, 0.999):
+        assert abs(build_viz._price(v) - v) / v < 0.001, v
