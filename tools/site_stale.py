@@ -203,6 +203,28 @@ def source_sha() -> Optional[str]:
     return _git(["git", "log", "-1", "--format=%H", "--", *SOURCE_SPEC])
 
 
+def ask_source() -> Optional[str]:
+    """원본에 헤드라인 지표 넷이 다 있는 가장 최신 날짜. 못 물어보면 None.
+
+    가격만 묻지 않는다 — 가격은 자정 직후, 실현시총은 몇 시간 뒤에 나오므로
+    가격만 보면 헤드라인이 하루 뒤처진 상태를 '최신'이라 부른다.
+
+    ``except (Exception, SystemExit)`` 인 이유: btc_core 를 들이면 설정 모듈이
+    PyYAML 없을 때 SystemExit 를 던진다. 그건 Exception 이 아니라서 예전 코드의
+    ``except Exception`` 을 빠져나가 스크립트를 통째로 죽였다.
+    """
+    try:
+        import sys as _sys
+        root = __import__("pathlib").Path(__file__).resolve().parents[1]
+        _sys.path.insert(0, str(root / "src"))
+        from btc_core.datasources.coinmetrics import latest_complete
+        d = latest_complete()
+    except (Exception, SystemExit) as exc:   # noqa: BLE001
+        print(f"원본 질의 실패 — 원본 대조는 건너뜁니다 ({type(exc).__name__}: {exc})")
+        return None
+    return d.isoformat() if d else None
+
+
 def main(argv: Optional[list[str]] = None) -> int:
     ap = argparse.ArgumentParser(description="배포된 사이트가 뒤처졌는지 판정")
     ap.add_argument("--asof", default=None, help="구운 페이지의 기준일 (YYYY-MM-DD)")
@@ -213,10 +235,29 @@ def main(argv: Optional[list[str]] = None) -> int:
     ap.add_argument("--last-refresh", type=int, default=None,
                     help="마지막으로 성공한 정기 갱신의 epoch 초. 주지 않으면 이 검사를 건너뛴다")
     ap.add_argument("--now", type=int, default=None, help="현재 시각 epoch 초 (기본: 시스템)")
+    ap.add_argument("--summary", default=None,
+                    help="판정 결과를 key=value 줄로 이 파일에 덧붙인다($GITHUB_OUTPUT 용). "
+                         "워크플로가 '어느 검사가 걸렸는지'로 되살리기와 알림을 가른다")
     ap.add_argument("--source-latest", default=None,
-                    help="원본이 갖고 있는 가장 최신 날짜(YYYY-MM-DD). "
-                         "'ask' 를 주면 직접 물어본다")
+                    help="원본에 헤드라인 지표가 다 있는 가장 최신 날짜(YYYY-MM-DD). "
+                         "'ask' 를 주면 직접 물어본다. --asof 는 헤드라인 기준일"
+                         "(site_asof --field current)이어야 짝이 맞는다")
     args = ap.parse_args(argv)
+    # **판정을 못 했다는 것은 '뒤처졌다'가 아니다.** 예전에는 이 스크립트가 어떤
+    # 이유로든 죽으면 종료코드 1 이 나왔고, 감시자는 그걸 '뒤처짐'으로 읽었다.
+    # 실제로 2026-09-04 부터 감시자 실행 환경에 PyYAML 이 없어 원본 질의가 매번
+    # 죽었는데(SystemExit 는 Exception 이 아니라 except 를 빠져나간다), 그게
+    # 36일 동안 '뒤처짐'으로 읽혀 무조건 재빌드·헛알림(이슈 #2 에 108건)을 냈다.
+    # 이제 0=최신, 1=뒤처짐, 2=판정 불가. 워크플로는 2 를 '감시 자체의 고장'으로
+    # 실패시킨다.
+    try:
+        return _judge(args)
+    except (Exception, SystemExit) as exc:   # noqa: BLE001 — 판정 불가를 따로 알린다
+        print(f"판정 불가 — 감시 스크립트가 죽었습니다: {type(exc).__name__}: {exc}")
+        return 2
+
+
+def _judge(args) -> int:
 
     today = date.fromisoformat(args.today) if args.today else date.today()
     stale_data, why_data = data_is_stale(args.asof, today, args.max_age)
@@ -229,15 +270,14 @@ def main(argv: Optional[list[str]] = None) -> int:
 
     src_latest = args.source_latest
     if src_latest == "ask":
-        try:
-            import sys as _sys
-            _sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parents[1] / "src"))
-            from btc_core.datasources.coinmetrics import latest_available
-            d = latest_available()
-            src_latest = d.isoformat() if d else None
-        except Exception:
-            src_latest = None
+        src_latest = ask_source()
     stale_behind, why_behind = behind_source(args.asof, src_latest)
+    behind_days = 0
+    if stale_behind:
+        try:
+            behind_days = (date.fromisoformat(src_latest) - date.fromisoformat(args.asof)).days
+        except (TypeError, ValueError):
+            behind_days = 0
 
     print(f"데이터  {why_data}")
     print(f"원본    {why_behind}")
@@ -249,7 +289,18 @@ def main(argv: Optional[list[str]] = None) -> int:
         stale_run, why_run = refresh_is_overdue(args.last_refresh, now)
         print(f"정기실행 {why_run}")
 
-    if stale_data or stale_src or stale_run or stale_behind:
+    stale = stale_data or stale_src or stale_run or stale_behind
+    if args.summary:
+        # 워크플로가 읽는 기계용 요약. '뒤처짐' 하나로 뭉뚱그리면 정상적인 아침
+        # 지연(원본보다 하루)과 진짜 고장(이틀 이상·사흘 낡음)을 구별할 수 없다.
+        with open(args.summary, "a", encoding="utf-8") as fh:
+            fh.write(f"stale={'true' if stale else 'false'}\n")
+            fh.write(f"data_stale={'true' if stale_data else 'false'}\n")
+            fh.write(f"behind={'true' if stale_behind else 'false'}\n")
+            fh.write(f"behind_days={behind_days}\n")
+            fh.write(f"source_changed={'true' if stale_src else 'false'}\n")
+            fh.write(f"run_overdue={'true' if stale_run else 'false'}\n")
+    if stale:
         print("판정: 뒤처짐 — 재빌드가 필요합니다")
         return 1
     print("판정: 최신")

@@ -323,3 +323,79 @@ def test_the_stale_alarm_is_not_wired_to_step_failure():
         cond = str(s.get("if", ""))
         assert cond and cond != "failure()", (
             f"알림이 `if: {cond}` 로 걸려 있습니다 — 뒤처짐만으로는 절대 안 울립니다")
+
+
+# --------------------------------------------------------------------------
+# 4. 감시자 자체가 살아 있는가 — 6차 사고(2026-09-04 ~ 10-10)
+# --------------------------------------------------------------------------
+def _dep_install_index(steps: list[dict]) -> int | None:
+    for i, s in enumerate(steps):
+        if "pip install -r requirements.txt" in str(s.get("run", "")):
+            return i
+    return None
+
+
+def test_the_watchdog_installs_what_its_judgement_imports():
+    """원본 질의는 btc_core 를 들이고, btc_core 는 PyYAML 이 없으면 SystemExit 한다.
+
+    감시자에 의존성 설치가 없어 36일 동안 매번 죽었고, 그 종료코드 1 이 '뒤처짐'
+    으로 읽혀 무조건 재빌드와 헛알림 108건을 냈다. 설치가 판정보다 **먼저** 와야 한다.
+    """
+    steps = steps_of(load(DOG))
+    dep = _dep_install_index(steps)
+    assert dep is not None, "감시자가 requirements.txt 를 설치하지 않습니다 — 원본 질의가 죽습니다"
+    judge = next(i for i, s in enumerate(steps) if "tools/site_stale.py" in str(s.get("run", "")))
+    assert dep < judge, "의존성 설치가 판정 뒤에 있습니다"
+
+
+def test_the_watchdog_tells_unjudgeable_from_behind():
+    """0=최신 1=뒤처짐 2=판정 불가. 2 를 1 과 섞으면 고장 난 감시가 '뒤처짐'을 외친다."""
+    steps = steps_of(load(DOG))
+    judge = next(s for s in steps if "tools/site_stale.py" in str(s.get("run", "")))
+    run = str(judge.get("run", ""))
+    assert "set +e" in run, "종료코드를 읽기 전에 셸이 먼저 죽습니다(set -e)"
+    assert re.search(r'"\$RC"\s*-eq\s*2', run), "판정 불가(2)를 따로 다루지 않습니다"
+    assert "--summary" in run, "판정 결과(stale/behind_days)를 출력으로 내보내지 않습니다"
+
+
+@pytest.mark.parametrize("path", [DOG], ids=lambda p: p.name)
+def test_freshness_is_judged_on_the_headline_date(path):
+    """span 끝(latest)은 실현시총이 늦어 헤드라인만 뒤처진 상태를 '최신'으로 읽는다.
+
+    2026-10-10 에 배포된 페이지는 헤드라인 10-08, 저장소는 10-09 였는데 둘 다
+    span 끝이 10-09 라 배포 어긋남 검사가 '같다'고 했다.
+    """
+    text = run_text(load(path))
+    assert "site_asof.py --field current" in text, (
+        f"{path.name}: 헤드라인 기준일(current)로 재지 않습니다")
+    live = next(s for s in steps_of(load(path)) if "live.html" in str(s.get("run", "")))
+    assert "--field current /tmp/live.html" in str(live.get("run", "")), (
+        "배포 어긋남 검사가 배포된 페이지의 헤드라인을 보지 않습니다")
+
+
+def test_the_watchdog_only_pages_a_human_for_an_obvious_failure():
+    """정상적인 아침(원본보다 하루 뒤처짐)마다 이슈가 울리면 아무도 안 본다.
+
+    예전 조건 '정기 갱신이 3시간 안에 성공했는데도 뒤처짐'은 실현시총이 아직 안
+    나온 매일 아침에 참이다. 이틀 이상 뒤처짐·데이터 사흘 낡음·감시 실패·배포 실패
+    로만 부른다.
+    """
+    steps = steps_of(load(DOG))
+    verdict = next(s for s in steps if s.get("id") == "verdict")
+    run = str(verdict.get("run", ""))
+    assert "10800" not in run and "3 * 3600" not in run, "3시간 휴리스틱이 남아 있습니다"
+    assert re.search(r"BEHIND_DAYS.*-ge\s*2", run), "이틀 이상 뒤처짐을 문턱으로 쓰지 않습니다"
+    assert "DATA_STALE" in run and "FAILED" in run
+    assert "behind_days" in str((verdict.get("env") or {}).get("BEHIND_DAYS", ""))
+    assert str(verdict.get("if", "")).startswith("always()"), (
+        "판정이 실패한 실행에서는 알림 판정이 건너뛰어집니다")
+
+
+def test_the_rollback_guard_watches_the_headline_too():
+    """자료 마지막 날은 그대로인데 헤드라인만 물러나는 경우도 배포하지 않는다."""
+    steps = steps_of(load(DATA))
+    guard = [s for s in steps if "후퇴" in str(s.get("run", ""))]
+    assert guard, "refresh-data 에 후퇴 방지 단계가 없습니다"
+    run = str(guard[0].get("run", ""))
+    assert run.count("--field current") >= 2, "헤드라인 기준일을 새것·옛것 둘 다 읽지 않습니다"
+    assert re.search(r'"\$NEWC"\s*<\s*"\$OLDC"', run), "헤드라인 후퇴를 비교하지 않습니다"

@@ -240,3 +240,106 @@ def test_cli_skips_the_run_check_when_no_history_is_given():
     """이력을 못 읽었다고 뒤처짐이라고 우기지 않는다."""
     assert ss.main(["--asof", "2026-08-06", "--today", "2026-08-07",
                     "--site", "does-not-exist.html"]) == 0
+
+
+# --------------------------------------------------------------------------
+# 5. 감시자가 죽지 않는다 — 2026-09-04 ~ 10-10, 36일 동안 매번 죽었다
+# --------------------------------------------------------------------------
+def test_a_missing_yaml_does_not_kill_the_judgement(monkeypatch, capsys):
+    """감시자 실행 환경에 PyYAML 이 없어 원본 질의가 매번 죽었던 상태를 재현한다.
+
+    btc_core 를 들이면 설정 모듈이 SystemExit 를 던진다. 그건 Exception 이 아니라
+    예전 ``except Exception`` 을 빠져나가 스크립트를 통째로 죽였고, 종료코드 1 이
+    '뒤처짐'으로 읽혀 36일 동안 무조건 재빌드와 헛알림(이슈 #2 에 108건)을 냈다.
+    """
+    import sys as _sys
+    for k in [k for k in _sys.modules if k == "btc_core" or k.startswith("btc_core.")]:
+        monkeypatch.delitem(_sys.modules, k)
+    monkeypatch.setitem(_sys.modules, "yaml", None)
+
+    rc = ss.main(["--asof", "2026-10-08", "--today", "2026-10-09",
+                  "--source-latest", "ask", "--site", "does-not-exist.html"])
+    out = capsys.readouterr().out
+    assert rc in (0, 1), f"판정 대신 종료코드 {rc} — 감시가 또 죽습니다"
+    assert "판정:" in out, f"판정 줄이 없습니다:\n{out}"
+    assert "원본 질의 실패" in out, "원본 질의가 실패했다는 사실을 숨깁니다"
+
+
+def test_an_internal_failure_is_reported_as_unjudgeable_not_stale(monkeypatch, capsys):
+    """판정을 못 했다는 것은 '뒤처졌다'가 아니다 — 0/1 과 다른 2 를 낸다.
+
+    워크플로는 2 를 '감시 자체의 고장'으로 실패시켜 사람에게 알린다. 1 로 섞이면
+    고장 난 감시가 '뒤처짐'을 외치며 무조건 재빌드를 부르는 상태가 다시 생긴다.
+    """
+    def boom(*a, **k):
+        raise RuntimeError("일부러 터뜨림")
+    monkeypatch.setattr(ss, "data_is_stale", boom)
+    rc = ss.main(["--asof", "2026-10-08", "--site", "does-not-exist.html"])
+    assert rc == 2
+    assert "판정 불가" in capsys.readouterr().out
+
+
+def test_systemexit_inside_the_judgement_is_also_unjudgeable(monkeypatch, capsys):
+    def leave(*a, **k):
+        raise SystemExit("설정 모듈이 하던 짓")
+    monkeypatch.setattr(ss, "data_is_stale", leave)
+    assert ss.main(["--asof", "2026-10-08", "--site", "does-not-exist.html"]) == 2
+
+
+def test_the_summary_tells_a_normal_morning_lag_from_a_real_failure(tmp_path):
+    """하루 뒤처짐은 기다리는 중이고, 이틀 이상은 고장이다 — 워크플로가 가를 수 있어야."""
+    out = tmp_path / "out.txt"
+    ss.main(["--asof", "2026-10-08", "--today", "2026-10-09",
+             "--source-latest", "2026-10-09", "--site", "does-not-exist.html",
+             "--summary", str(out)])
+    kv = dict(l.split("=", 1) for l in out.read_text(encoding="utf-8").split())
+    assert kv["stale"] == "true" and kv["behind"] == "true"
+    assert kv["behind_days"] == "1" and kv["data_stale"] == "false"
+
+    out2 = tmp_path / "out2.txt"
+    ss.main(["--asof", "2026-10-06", "--today", "2026-10-09",
+             "--source-latest", "2026-10-09", "--site", "does-not-exist.html",
+             "--summary", str(out2)])
+    kv2 = dict(l.split("=", 1) for l in out2.read_text(encoding="utf-8").split())
+    assert kv2["behind_days"] == "3"
+
+    out3 = tmp_path / "out3.txt"
+    ss.main(["--asof", "2026-10-09", "--today", "2026-10-10",
+             "--source-latest", "2026-10-09", "--site", "does-not-exist.html",
+             "--summary", str(out3)])
+    kv3 = dict(l.split("=", 1) for l in out3.read_text(encoding="utf-8").split())
+    assert kv3["stale"] == "false" and kv3["behind_days"] == "0"
+
+
+def test_the_source_question_asks_for_the_headline_metrics_not_just_price():
+    """가격은 자정 직후, 실현시총은 2~9시간 뒤에 나온다(실측).
+
+    가격만 물으면 헤드라인이 하루 뒤처진 상태를 '원본과 같다'고 부른다 — 이번
+    장애에서 감시자가 실제로 그렇게 읽었을 상태다.
+    """
+    import inspect
+    from btc_core.datasources import coinmetrics as cm
+    assert "latest_complete" in inspect.getsource(ss.ask_source)
+    for m in ("PriceUSD", "CapMrktCurUSD", "CapMVRVCur", "HashRate"):
+        assert m in cm.HEADLINE_METRICS, f"{m} 없이는 헤드라인이 그 날로 못 간다"
+    assert set(cm.HEADLINE_METRICS) <= set(cm.METRICS), "받지도 않는 지표를 요구합니다"
+
+
+def test_latest_complete_requires_every_metric(monkeypatch):
+    """한 지표라도 비면 그 날은 '완전한 날'이 아니다."""
+    from datetime import date as _date
+    from btc_core.datasources import coinmetrics as cm
+    rows = [
+        {"time": "2026-10-08T00:00:00.000Z", "PriceUSD": "1", "CapMrktCurUSD": "1",
+         "CapMVRVCur": "1", "HashRate": "1"},
+        {"time": "2026-10-09T00:00:00.000Z", "PriceUSD": "1", "CapMrktCurUSD": "1",
+         "HashRate": "1"},                                   # MVRV 아직
+    ]
+    monkeypatch.setattr(cm, "_fetch_all_pages", lambda *a, **k: rows)
+    assert cm.latest_complete() == _date(2026, 10, 8)
+    assert cm.latest_available.__doc__                  # 가격 전용은 그대로 남아 있다
+
+    def down(*a, **k):
+        raise cm.FetchError("막힘")
+    monkeypatch.setattr(cm, "_fetch_all_pages", down)
+    assert cm.latest_complete() is None

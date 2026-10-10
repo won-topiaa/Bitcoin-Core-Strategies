@@ -52,6 +52,15 @@ METRICS: Mapping[str, str] = {
     "FlowOutExNtv": "exchange_outflow",
 }
 
+# 헤드라인(기준일)이 그 날로 나아가려면 원본에 **이 넷이 다 있어야** 한다.
+# 나머지(공급·발행량·시총 일부)는 반감기 일정으로 계산해 채우지만, 이 넷은
+# 대신할 수 없다 — 실현시총은 CapMrktCurUSD ÷ CapMVRVCur 로만 나오고(MVRV Z·
+# NUPL), 해시레이트는 Hash Ribbons 의 입력이다. 실측으로 PriceUSD 는 UTC 자정
+# 직후 나오지만 CapMVRVCur 는 2~9시간 늦다. 그래서 '원본이 D 까지 있다'를
+# 가격만 보고 판정하면, 헤드라인이 아직 D-1 인데도 최신이라고 말하게 된다
+# (2026-10 감사에서 실제로 그 상태를 놓쳤다).
+HEADLINE_METRICS: tuple[str, ...] = ("PriceUSD", "CapMrktCurUSD", "CapMVRVCur", "HashRate")
+
 PAGE_SIZE = 10000
 # 서멀캡의 분모는 **창세 이래** 누적 채굴수익이라, 창을 자르면 배수가 부풀려진다
 # (8년 창이면 +10%, 4년 창이면 +84%). 200주 이동평균만 보면 5년이면 충분하지만
@@ -167,6 +176,32 @@ def latest_available(timeout: int = 30) -> Optional[date]:
         except ValueError:
             continue
     return max(days) if days else None
+
+
+def latest_complete(metrics: Iterable[str] = HEADLINE_METRICS,
+                    timeout: int = 30) -> Optional[date]:
+    """원본에 ``metrics`` 가 **전부** 있는 가장 최신 날짜. 못 물어보면 None.
+
+    latest_available 은 가격만 본다. 그건 '원본이 살아 있나'에는 맞지만 '헤드라인이
+    그 날로 갈 수 있나'에는 틀린 답이다 — 가격은 자정 직후, 실현시총은 몇 시간 뒤에
+    나오기 때문이다. 감시자와 대기 작업(await-onchain)은 이쪽을 써야 한다.
+    """
+    want = list(metrics)
+    end = date.today()
+    start = end - timedelta(days=10)
+    try:
+        rows = _fetch_all_pages(want, start, end, timeout)
+    except FetchError:
+        return None
+    full = []
+    for r in rows:
+        try:
+            d = date.fromisoformat((r.get("time") or "")[:10])
+        except ValueError:
+            continue
+        if all(r.get(m) not in (None, "") for m in want):
+            full.append(d)
+    return max(full) if full else None
 
 
 def _fetch_all_pages(metrics: list[str], start: date, end: date, timeout: int) -> list[dict]:

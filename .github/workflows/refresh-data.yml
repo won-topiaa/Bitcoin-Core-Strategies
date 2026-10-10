@@ -161,12 +161,23 @@ jobs:
         # 반드시 index.html 만 본다 — news.html 은 남의 기사 텍스트가 구워지는
         # 장이라, 그 텍스트가 우연히 "span":[...] 모양이면 site_asof.py 가
         # 가짜 날짜를 집을 수 있다(tools/site_asof.py 상단 경고 참고).
+        #
+        # 날짜는 둘이다(tools/site_asof.py). 자료의 마지막 날(latest)과 헤드라인
+        # 기준일(current) — 어느 쪽도 뒤로 가면 안 된다. 헤드라인은 지표 9개가 다
+        # 있는 날이라, 원본이 실현시총을 거둬들이면(재집계) 자료는 그대로인데
+        # 헤드라인만 하루 물러날 수 있다. 그것도 조용히 배포할 일이 아니다.
         run: |
           NEW=$(python3 tools/site_asof.py viz/site/index.html || true)
           OLD=$(git show HEAD:viz/site/index.html 2>/dev/null | python3 tools/site_asof.py - || true)
-          echo "새 기준일=${NEW:-?}  이미 배포된 기준일=${OLD:-없음}"
+          NEWC=$(python3 tools/site_asof.py --field current viz/site/index.html || true)
+          OLDC=$(git show HEAD:viz/site/index.html 2>/dev/null | python3 tools/site_asof.py --field current - || true)
+          echo "새 자료 마지막=${NEW:-?} 헤드라인=${NEWC:-?}  ·  이미 배포된 자료 마지막=${OLD:-없음} 헤드라인=${OLDC:-없음}"
           if [ -n "$NEW" ] && [ -n "$OLD" ] && [[ "$NEW" < "$OLD" ]]; then
             echo "::error::받은 데이터($NEW)가 이미 배포된 것($OLD)보다 오래됐습니다 — 후퇴를 막고 중단합니다."
+            exit 1
+          fi
+          if [ -n "$NEWC" ] && [ -n "$OLDC" ] && [[ "$NEWC" < "$OLDC" ]]; then
+            echo "::error::헤드라인 기준일($NEWC)이 이미 배포된 것($OLDC)보다 물러났습니다 — 원본이 지표를 거둬들였는지 확인하세요."
             exit 1
           fi
 

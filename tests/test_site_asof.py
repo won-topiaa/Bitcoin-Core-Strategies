@@ -117,3 +117,83 @@ def test_a_poisoned_news_title_cannot_forge_the_asof_date():
         assert "9999-01-01" not in index_html and "9999-12-31" not in index_html
         got = site_asof.as_of(index_html)
         assert got is not None and got.startswith("20")
+
+
+# ---------------------------------------------------------------------------
+# 날짜가 둘이다 — 자료의 마지막 날(latest)과 헤드라인 기준일(current)
+# ---------------------------------------------------------------------------
+# 2026-10-10 장애 때의 두 페이지를 줄인 것. 배포된 쪽은 헤드라인 10-08,
+# 저장소 쪽은 10-09 인데 span 끝은 **둘 다** 10-09 였다.
+LIVE_STUCK = ('window.__BCS__ = /*__DATA__*/{"base":"2010-07-18","span":["2010-07-18",'
+              '"2026-10-09"],"current":{"d":"2026-10-08","bcs":-32.2},'
+              '"latest":{"d":"2026-10-09","nmiss":2}}/*__DATA__*/;')
+REPO_FRESH = ('window.__BCS__ = /*__DATA__*/{"base":"2010-07-18","span":["2010-07-18",'
+              '"2026-10-09"],"current":{"d":"2026-10-09","bcs":-29.1},'
+              '"latest":{"d":"2026-10-09","nmiss":0}}/*__DATA__*/;')
+
+
+def test_span_end_cannot_tell_a_stuck_headline_apart():
+    """**이 전제가 이번 장애의 원인이었다.** span 끝만 보면 두 페이지가 같다.
+
+    감시자는 그 값으로 배포 어긋남과 원본 대비 신선도를 쟀고, 그래서 헤드라인이
+    하루 밀린 배포를 '어긋남 없음, 최신'으로 읽었다. 이 테스트는 '그래서 span 만
+    봐서는 안 된다'는 이유를 고정해 둔다.
+    """
+    assert site_asof.as_of(LIVE_STUCK) == site_asof.as_of(REPO_FRESH) == "2026-10-09"
+
+
+def test_the_headline_field_tells_them_apart():
+    assert site_asof.as_of(LIVE_STUCK, "current") == "2026-10-08"
+    assert site_asof.as_of(REPO_FRESH, "current") == "2026-10-09"
+
+
+def test_latest_stays_the_default_for_the_rollback_guard():
+    """후퇴 방지(자료가 뒤로 가지 않게)는 latest 로 잰다 — 기본값을 바꾸면 안 된다."""
+    assert site_asof.as_of(LIVE_STUCK) == site_asof.as_of(LIVE_STUCK, "latest")
+
+
+def test_an_unknown_field_is_refused():
+    with pytest.raises(ValueError):
+        site_asof.as_of(LIVE_STUCK, "headline")
+    assert site_asof.main(["--field", "headline", "-"]) == 2
+
+
+def test_cli_field_current_reads_from_file_and_stdin():
+    with tempfile.TemporaryDirectory() as tmp:
+        p = Path(tmp) / "index.html"
+        p.write_text(LIVE_STUCK, encoding="utf-8")
+        r = subprocess.run(["python3", str(ROOT / "tools" / "site_asof.py"),
+                            "--field", "current", str(p)],
+                           capture_output=True, text=True, timeout=30)
+        assert r.returncode == 0 and r.stdout.strip() == "2026-10-08", r
+        r = subprocess.run(["python3", str(ROOT / "tools" / "site_asof.py"),
+                            "--field", "current", "-"],
+                           input=LIVE_STUCK, capture_output=True, text=True, timeout=30)
+        assert r.returncode == 0 and r.stdout.strip() == "2026-10-08", r
+
+
+def test_a_freshly_baked_page_has_exactly_one_headline_date():
+    """정규식은 첫 번째 "current" 를 믿는다 — 페이지에 하나뿐이어야 안전하다."""
+    import re
+    with tempfile.TemporaryDirectory() as tmp:
+        page = build_viz.build(_csv(), Path(tmp))[0].read_text(encoding="utf-8")
+    assert len(re.findall(r'"current"\s*:\s*\{\s*"d"', page)) == 1
+    got = site_asof.as_of(page, "current")
+    assert got and got <= site_asof.as_of(page), "헤드라인이 자료 마지막 날보다 늦습니다"
+
+
+def test_a_poisoned_news_title_cannot_forge_the_headline_date():
+    """span 과 같은 이유로 — 뉴스 텍스트는 index.html 에 들어가지 않는다."""
+    with tempfile.TemporaryDirectory() as tmp:
+        t = Path(tmp)
+        poison = '"current":{"d":"9999-01-01"} Bitcoin news'
+        news = _write_news(t, [
+            {"title": poison, "url": "https://a.example/y", "source": "t",
+             "published": "2026-08-02T00:00:00+00:00", "summary": "", "score": 1},
+        ])
+        paths = {p.name: p for p in build_viz.build(_csv(), t, news_json=str(news))}
+        assert "9999-01-01" in paths["news.html"].read_text(encoding="utf-8")
+        index_html = paths["index.html"].read_text(encoding="utf-8")
+        assert "9999-01-01" not in index_html
+        got = site_asof.as_of(index_html, "current")
+        assert got is not None and got.startswith("20")

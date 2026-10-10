@@ -9,8 +9,18 @@
 
 그래서 배포 워크플로가 '더 오래된 데이터로 덮지 않기'를 강제하려면, 지금 구운
 페이지와 이미 배포된 페이지가 각각 며칠 자 데이터인지 기계가 읽을 수 있어야
-한다. 그 값은 페이지에 굽는 JSON 페이로드 안 ``"span":[처음, 마지막]`` 의
-마지막 날짜다 — build_viz 가 ``payload["current"]["d"]`` 로 넣는다.
+한다. 페이지에는 날짜가 **둘** 있다.
+
+  latest   ``"span":[처음, 마지막]`` 의 마지막 날짜 = 자료의 마지막 날
+           (export_viz 의 rows[-1]). 기본값이다.
+  current  ``"current":{"d":…}`` = 헤드라인 기준일 = 지표 9개가 다 있는 마지막 날.
+           ``--field current`` 로 꺼낸다.
+
+⚠️ 이 둘을 헷갈리면 안 된다. 예전 독스트링은 span 끝이 current 라고 적었는데
+틀렸다. 그 착각 때문에 감시자가 span 끝(latest)으로 신선도를 재서, 실현시총이
+늦게 와 헤드라인만 하루 뒤처진 상태와 헤드라인 배포만 실패한 상태를 **둘 다
+'최신'으로 읽었다**(2026-10 감사, 실제 장애에서 확인). 후퇴 방지(데이터가
+뒤로 가지 않게)는 latest 로, 헤드라인 신선도와 배포 어긋남은 current 로 잰다.
 
 여기서는 그 마지막 날짜만 정규식으로 꺼낸다. 마커 사이 데이터가 아무리 커도
 전체 JSON 을 파싱하지 않는다(그리고 파싱하려 해도 다른 뉴스 마커가 섞여 있어
@@ -26,8 +36,9 @@ news.html 에만 살고(마커 격리, inject_news.py), index.body.html 에는 �
 ``test_a_poisoned_news_title_cannot_forge_the_asof_date`` 가 못 박는다 — 이
 도구를 news.html 에도 돌리는 쪽으로 확장하려면 그 배치부터 다시 생각할 것.
 
-    python3 tools/site_asof.py viz/site/index.html   # 파일에서
-    ... | python3 tools/site_asof.py -               # 표준입력에서 (git show 용)
+    python3 tools/site_asof.py viz/site/index.html                 # latest
+    python3 tools/site_asof.py --field current viz/site/index.html # 헤드라인
+    ... | python3 tools/site_asof.py -                             # 표준입력 (git show 용)
 
 기준일을 찾으면 그 날짜(YYYY-MM-DD)를 한 줄 찍고 0, 못 찾으면 아무것도 안 찍고
 1 로 끝난다. 워크플로가 그 종료코드와 문자열 비교로 후퇴를 판정한다.
@@ -47,25 +58,45 @@ _SPAN = re.compile(
 )
 
 
-def as_of(html: str) -> Optional[str]:
-    """페이지 HTML 문자열에서 데이터 마지막 날짜를 꺼낸다(없으면 None)."""
+# 헤드라인 기준일. compact() 가 current 를 {"d": …} 로 시작하게 굽는다.
+_CURRENT = re.compile(r'"current"\s*:\s*\{\s*"d"\s*:\s*"(\d{4}-\d{2}-\d{2})"')
+
+FIELDS = ("latest", "current")
+
+
+def as_of(html: str, field: str = "latest") -> Optional[str]:
+    """페이지 HTML 에서 날짜를 꺼낸다(없으면 None).
+
+    field="latest" 는 자료의 마지막 날(span 끝), "current" 는 헤드라인 기준일.
+    """
+    if field not in FIELDS:
+        raise ValueError(f"field 는 {FIELDS} 중 하나여야 합니다: {field!r}")
+    if field == "current":
+        m = _CURRENT.search(html)
+        return m.group(1) if m else None
     m = _SPAN.search(html)
     return m.group(2) if m else None
 
 
-def as_of_file(path) -> Optional[str]:
-    """파일 경로에서 기준일을 꺼낸다. 파일이 없거나 못 읽으면 None."""
+def as_of_file(path, field: str = "latest") -> Optional[str]:
+    """파일 경로에서 날짜를 꺼낸다. 파일이 없거나 못 읽으면 None."""
     p = Path(path)
     if not p.exists():
         return None
     try:
-        return as_of(p.read_text(encoding="utf-8"))
+        return as_of(p.read_text(encoding="utf-8"), field)
     except OSError:
         return None
 
 
 def main(argv: Optional[list[str]] = None) -> int:
     argv = list(sys.argv[1:] if argv is None else argv)
+    field = "latest"
+    if argv[:1] == ["--field"]:
+        if len(argv) < 2 or argv[1] not in FIELDS:
+            print(f"--field 는 {FIELDS} 중 하나여야 합니다", file=sys.stderr)
+            return 2
+        field, argv = argv[1], argv[2:]
     src = argv[0] if argv else "-"
     if src == "-":
         html = sys.stdin.read()
@@ -74,7 +105,7 @@ def main(argv: Optional[list[str]] = None) -> int:
         if not p.exists():
             return 1
         html = p.read_text(encoding="utf-8")
-    d = as_of(html)
+    d = as_of(html, field)
     if not d:
         return 1
     print(d)
