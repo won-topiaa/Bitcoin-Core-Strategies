@@ -515,7 +515,7 @@ def test_a_shared_fred_series_fills_every_column_it_feeds(tmp_path, monkeypatch)
 
     d = date(2026, 10, 2)
     monkeypatch.setattr(fm, "fetch_series", lambda fid, timeout=40: {d: 157.81 if fid == "DEXJPUS" else 1.0})
-    monkeypatch.setattr(fm, "fetch_csv_api", lambda *a, **k: {})
+    monkeypatch.setattr(fm, "fetch_china_m2", lambda *a, **k: {})
     saved = {}
     monkeypatch.setattr(fm, "merge_to_csv", lambda cols, path: saved.update(cols))
     assert fm.main(["--global", "--out", str(tmp_path / "m.csv")]) == 0
@@ -540,7 +540,7 @@ def test_fred_vix_wins_over_the_stalled_mirror(tmp_path, monkeypatch):
     monkeypatch.setattr(fm, "fetch_github", lambda *a, **k: {"vix": {old: 14.21}})
     monkeypatch.setattr(fm, "fetch_series",
                         lambda fid, timeout=40: {old: 14.21, new: 15.41} if fid == "VIXCLS" else None)
-    monkeypatch.setattr(fm, "fetch_csv_api", lambda *a, **k: {})
+    monkeypatch.setattr(fm, "fetch_china_m2", lambda *a, **k: {})
     saved = {}
     monkeypatch.setattr(fm, "merge_to_csv", lambda cols, path: saved.update(cols))
     assert fm.main(["--github", "--global", "--out", str(tmp_path / "m.csv")]) == 0

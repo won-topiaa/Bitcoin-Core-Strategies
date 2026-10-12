@@ -585,8 +585,8 @@ python3 tools/audit_config.py
 |---|---|---|---|
 | 가격·실현시총·해시레이트·주소수·거래소 흐름 | **[Coin Metrics](https://coinmetrics.io)** 커뮤니티 | **[CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/)** | ❌ 불가 |
 | 나스닥·M2·DXY·실질금리·연준 유동성·국채·원자재 | **[FRED](https://fred.stlouisfed.org)** (세인트루이스 연준) | 미국 정부 저작물(퍼블릭 도메인) | ✅ 가능 |
-| S&P500·VIX·금(LBMA) | GitHub 공개 데이터셋 | 데이터셋별 상이 | ⚠️ 확인 |
-| 중국 M2 | **[China Data Portal](https://chinadata.live)** (PBoC 미러) | 명시 없음 | ⚠️ 확인 |
+| S&P500·금(LBMA) | GitHub 공개 데이터셋(VIX 는 FRED) | 데이터셋별 상이 | ⚠️ 확인 |
+| 중국 M2 | **[중국인민은행](https://www.pbc.gov.cn/diaochatongjisi/116219/116319/index.html)** 货币供应量 (예비: 国家统计局 · OECD) | 공식 통계 · 출처 표기 시 전재 허용 · CC BY 4.0 | ✅ 출처 표기 |
 
 기각된 거시 열(dxy·realyield·net_liq·kospi·hy_spread 등)은 **전부 FRED**라 퍼블릭
 도메인이고, 점수·사이트에는 들어가지 않는다. 자세한 내용과 상업적 이용 시 대안은

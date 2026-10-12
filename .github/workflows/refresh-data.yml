@@ -126,9 +126,9 @@ jobs:
         run: python3 tools/refresh_data.py --full
 
       - name: 거시 데이터 (중국 M2·나스닥·전세계 M2·VIX)
-        # GitHub 러너는 에이전트 프록시가 없어 FRED·chinadata·GitHub 모두 열려 있다.
+        # GitHub 러너는 에이전트 프록시가 없어 FRED·GitHub·인민은행·통계국·OECD 모두 열려 있다.
         # fetch_macro 는 기존 macro.csv 와 **열 단위로 병합**하고 원자적으로 쓴다 —
-        # 한 소스(chinadata·FRED 일부)가 잠깐 막혀도 그 열/값은 기존 것이 그대로
+        # 한 소스(중국 M2 원본·FRED 일부)가 잠깐 막혀도 그 열/값은 기존 것이 그대로
         # 남는다(예전 임시파일+grep m2_cn 가드가 하던 일을 병합이 일반적으로 보장).
         # 완전 실패면 fetch_macro 가 파일을 건드리지 않고 비정상 종료하므로 넘긴다.
         run: python3 tools/fetch_macro.py --github --global --out data/macro.csv || true

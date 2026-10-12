@@ -17,11 +17,11 @@
 |---|---|---|---|
 | 비트코인 가격·실현시총·해시레이트·주소수·거래소 흐름 (`data/market.csv`) | **[Coin Metrics](https://coinmetrics.io)** 커뮤니티 티어 | **[CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/)** | ❌ **불가** |
 | 나스닥·M2·DXY·실질금리·연준 유동성·국채·원자재 등 거시 전반 (`data/macro.csv`) | **[FRED](https://fred.stlouisfed.org)** (세인트루이스 연준) | 미국 정부 저작물 — 사실상 퍼블릭 도메인 | ✅ 가능 |
-| S&P500 · VIX · 금(LBMA) | GitHub 공개 데이터셋(datahub 계열) | 데이터셋별 상이(대개 ODC-PDDL/CC0) | ⚠️ 개별 확인 |
-| 중국 M2 (`m2_cn`) | **[China Data Portal](https://chinadata.live)** (PBoC 미러) | 명시 없음 | ⚠️ 확인 필요 |
+| S&P500 · 금(LBMA) · VIX 예비 | GitHub 공개 데이터셋(datahub 계열). VIX 는 FRED(VIXCLS)가 주 | 데이터셋별 상이(대개 ODC-PDDL/CC0) | ⚠️ 개별 확인 |
+| 중국 M2 (`m2_cn`) | **[중국인민은행 조사통계사](https://www.pbc.gov.cn/diaochatongjisi/116219/116319/index.html)** 货币供应量 표(주). 예비: **[国家统计局](https://data.stats.gov.cn)**("国家统计局(中国统计信息网)" 출처 표기), **[OECD](https://data-explorer.oecd.org)** 통화총량 | 공식 통계 공표(인민은행) · 출처 표기 시 전재 허용(통계국 이용약관) · [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)(OECD) | ✅ 출처 표기 시 가능 (인민은행 약관 원문은 미확인) |
 | 펀딩비(검정 전용, `--extended`) | **[supervik/historical-funding-rates-fetcher](https://github.com/supervik/historical-funding-rates-fetcher)** | **MIT** | ✅ 가능 |
 | 온체인 확장 지표(검정 전용, `--extended`) | **[coinmetrics/data](https://github.com/coinmetrics/data)** | **CC BY-NC 4.0** | ❌ 불가 |
-| MSTR 주가 종가 (`data/stocks.csv`) | **[Stooq](https://stooq.com)** (폴백: Yahoo Finance) | 개인·교육 용도 무료 제공, 라이선스 명문 없음 | ⚠️ 개인·비상업 범위로 한정 |
+| MSTR 주가 종가 (`data/stocks.csv`) | **Yahoo Finance** (Stooq 는 2026-08 부터 봇 확인 페이지로 막혀 사실상 야후) | 개인·교육 용도 무료 제공, 라이선스 명문 없음 | ⚠️ 개인·비상업 범위로 한정 |
 | 뉴스 제목·요약·링크 (`data/news.json`) | CoinDesk · Cointelegraph · Bitcoin Magazine · Decrypt 공개 RSS | 각사 저작물 — **제목·짧은 발췌 + 원문 링크**만 싣는다(전문 복제 없음) | ⚠️ 발췌+링크 한정 |
 
 ## 무엇이 어디에 쓰이나
@@ -40,7 +40,10 @@
 2. 또는 `market.csv` 의 `price`·`realized_cap` 을 **상업 이용이 허용된 다른 소스**로
    교체한다. 대안 목록은 [docs/18 무료 데이터 경로](docs/18-무료-데이터-경로.md) 참고.
    나머지 열(supply·issuance 등)은 반감기 스케줄로 **계산**되므로 라이선스 문제가 없다.
-3. 중국 M2 출처(chinadata) 조건도 함께 확인한다.
+3. 중국 M2 는 공식 원본(인민은행 → 국가통계국 → OECD)이라 출처 표기를 지키면 된다.
+   인민은행 사이트의 법률 고지 원문은 확인하지 못했다. 예전 원본 chinadata.live 는
+   2026-05 에서 멈춰 2026-10 에 뺐다(tools/china_m2.py 설명). 값이 같은 TradingView·
+   东方财富 는 약관이 기계적 수집·재배포를 금지해 쓰지 않는다.
 
 ## 면책
 

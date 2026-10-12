@@ -30,9 +30,9 @@ FRED(및 앞단 WAF)는 **낯선 User-Agent 요청의 본문 전송을 멈춰 �
 **광의통화 MABMM301*M189S**(US·JP·GB·EU, ~2023-11)로 통일하고, 각국 자국통화를
 달러로 환산해 `m2_global`(US+JP+GB+EU 합)을 만든다(개별 열은 자국통화 원값 유지).
 
-  - **중국 M2** 는 OECD 시리즈가 2018 에 끊겨, PBoC 를 직접 미러하는 **China Data
-    Portal**(chinadata.live, 키 불필요 CSV API)에서 받는다 — 월간 2015~현재, 단위
-    亿元. 겹치는 2015~2018 에서 OECD 값과 1% 안으로 일치 확인. `CSV_API_SOURCES`.
+  - **중국 M2** 는 tools/china_m2.py 가 **공식 원본**에서 받는다 — 인민은행 통계표
+    → 국가통계국 데이터 → OECD(새 달만) 순서, 단위 亿元, 2015~현재. 예전 원본
+    chinadata.live 가 2026-05 에서 멈춰 2026-10 에 바꿨다(그 모듈 설명 참고).
   - **중국 M1**(FRED MANMM101CNM189N, ~2023-11)도 별도로 둔다 — 더 긴 역사(2010~)의
     교차검증용. 셋(중국 M2 2010~18·2015~26, 중국 M1 2010~23)이 같은 ~9~11개월 선행.
   - `m2_global` 은 중국을 빼고(커버리지·단위 상이) US+JP+GB+EU 로만. 개별국 열로
@@ -40,8 +40,8 @@ FRED(및 앞단 WAF)는 **낯선 User-Agent 요청의 본문 전송을 멈춰 �
 
 ## 호스트 허용목록
 
-`--global`(FRED)·`--github`·CSV API(중국) 소스는 각각 fred.stlouisfed.org·
-raw.githubusercontent.com·chinadata.live 로 나간다. 이 환경 프록시 egress
+`--global`(FRED)·`--github`·중국 M2 소스는 각각 fred.stlouisfed.org·
+raw.githubusercontent.com·pbc.gov.cn(→ data.stats.gov.cn → sdmx.oecd.org)으로 나간다. 이 환경 프록시 egress
 허용목록에 없는 호스트는 받다가 조용히 건너뛴다(그 열만 빠지고 나머지는 진행).
 """
 
@@ -156,17 +156,6 @@ GLOBAL = {
     "eu": {"m2": "MABMM301EZM189S", "fx": "DEXUSEU", "fx_is_usd_per_unit": True, "agg": True},
 }
 
-# 키 불필요 CSV API 소스 — **호스트가 이 환경 허용목록에 있어야 받아진다.**
-# 중국 M2 는 FRED 광의통화가 2018 에 끊겨, PBoC 를 직접 미러하는 China Data Portal
-# 에서 받는다(월간 2015~, 단위 亿元; YoY 는 척도무관이라 단위 그대로 둔다). 이 값이
-# FRED 광의통화와 겹치는 2015~2018 에서 1% 안으로 일치함을 확인했다.
-#   (url, 날짜열, 값열, 우리열)
-CSV_API_SOURCES = [
-    ("https://chinadata.live/api/v2/data/china-m2-money-supply?format=csv",
-     "date", "value", "m2_cn"),
-]
-
-
 class PolicyBlocked(Exception):
     """프록시 egress 정책이 호스트를 막았다(403/407). 호출부가 잡아서, 이미 받은
     다른 소스는 버리지 않고 저장하도록 한다."""
@@ -251,35 +240,18 @@ def fetch_github(timeout: int = 40) -> dict[str, dict[date, float]]:
     return columns
 
 
-def fetch_csv_api(timeout: int = 40) -> dict[str, dict[date, float]]:
-    """CSV_API_SOURCES(키 불필요 CSV API). 호스트가 허용목록에 없으면 프록시가
-    막아 조용히 건너뛴다. 날짜는 YYYY-MM 또는 YYYY-MM-DD 둘 다 받는다."""
-    columns: dict[str, dict[date, float]] = {}
-    for url, dcol, vcol, target in CSV_API_SOURCES:
-        req = urllib.request.Request(url, headers={"User-Agent": UA})
-        try:
-            with urllib.request.urlopen(req, timeout=timeout) as resp:
-                text = resp.read().decode("utf-8")
-        except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError) as exc:
-            host = url.split("/")[2]
-            print(f"  ! {target} ({host}): {exc} — 건너뜀 "
-                  f"(호스트가 허용목록에 있는지 확인)", file=sys.stderr)
-            continue
-        series: dict[date, float] = {}
-        for row in csv.DictReader(io.StringIO(text)):
-            raw = (row.get(dcol) or "").strip()
-            val = (row.get(vcol) or "").strip()
-            d = _parse_ymd(raw) if raw else None
-            if d is None or not val:
-                continue
-            try:
-                series[d] = float(val)
-            except ValueError:
-                continue
-        if series:
-            columns[target] = series
-            print(f"  {target:<10} {len(series)}행 ({min(series)} ~ {max(series)})")
-    return columns
+def fetch_china_m2(out_path: Path, today: Optional[date] = None) -> dict[str, dict[date, float]]:
+    """중국 M2 — tools/china_m2.py 가 공식 원본을 차례로 묻고 검증한다.
+
+    저장된 m2_cn 을 넘기는 이유: 개정 가드(오래된 달이 0.05% 넘게 바뀌면 거부)와
+    후퇴 금지, 그리고 이미 최신이면 묻지 않기 위해서다. 돌려준 날짜만 병합에서 덮인다."""
+    import china_m2
+    stored = _read_existing(out_path).get("m2_cn", {})
+    got, src = china_m2.collect(stored, today or date.today())
+    if not got:
+        print(f"  중국 M2: {src}")
+        return {}
+    return {"m2_cn": got}
 
 
 def _read_existing(path: Path) -> dict[str, dict[date, float]]:
@@ -526,10 +498,9 @@ def main(argv: Optional[list[str]] = None) -> int:
         fred = {k: v for k, v in fred.items() if not k.startswith("_")}
         columns.update(fred)     # FRED 가 GitHub 을 덮어쓴다(열 충돌 시)
 
-    # CSV API 소스(중국 M2 등). 허용목록에 없으면 조용히 건너뛴다.
-    if CSV_API_SOURCES:
-        print("CSV API 에서 받는 중…")
-        columns.update(fetch_csv_api())
+    # 중국 M2 — 공식 원본(인민은행 → 국가통계국 → OECD). tools/china_m2.py
+    print("중국 M2 받는 중…")
+    columns.update(fetch_china_m2(Path(args.out)))
 
     if not columns:
         raise SystemExit("받은 시리즈가 없습니다.")

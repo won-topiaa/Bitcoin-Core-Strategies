@@ -59,7 +59,7 @@ def test_every_column_fetch_macro_can_produce_is_classified():
     import fetch_macro as fm
     produced = set(fm.CORE.values()) | {f"m2_{cc}" for cc in fm.GLOBAL} | {"m2_global", "net_liq"}
     produced |= {col for _u, _d, cols in fm.GITHUB_SOURCES for col in cols.values()}
-    produced |= {col for *_x, col in fm.CSV_API_SOURCES}
+    produced |= {"m2_cn"}          # tools/china_m2.py
     produced = {c for c in produced if not c.startswith("_")}
     missing = sorted(c for c in produced if c not in mf.WATCH and c not in mf.ENDED)
     assert not missing, f"fetch_macro 가 만드는데 신선도 감시에 없는 열: {missing}"
@@ -73,3 +73,9 @@ def test_the_refresh_runs_the_check():
     i_macro = next(i for i, s in enumerate(steps) if "fetch_macro.py" in str(s.get("run", "")))
     i_check = next(i for i, s in enumerate(steps) if "macro_freshness.py" in str(s.get("run", "")))
     assert i_macro < i_check, "받기 전에 재면 지난 실행의 파일을 잽니다"
+
+
+def test_m2_warns_before_the_impulse_is_dropped():
+    from btc_core.datasources.macro import M2_MAX_AGE_DAYS
+    assert 75 < mf.WATCH["m2_cn"] < M2_MAX_AGE_DAYS, (
+        "중국 M2 경고가 정상 발표 지연(최대 ~75일)과 임펄스 제외(100일) 사이에 있어야 합니다")
