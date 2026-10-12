@@ -66,6 +66,16 @@ def runs_per_day(crons: list[str]) -> int:
     return sum(cron_hours(c.split()[1]) for c in crons)
 
 
+# 다른 워크플로 호출은 tools/gh_dispatch.sh 를 거친다(일시 오류 재시도). 예전 형태
+# (`gh workflow run X`)도 같은 '호출'로 센다 — 검사는 '부르는가'를 보지 형태를 보지 않는다.
+_DISPATCH = r"(?:gh workflow run|tools/gh_dispatch\.sh)"
+
+
+def dispatches(text: str, target: str = "") -> bool:
+    pat = _DISPATCH + (r"\s+" + re.escape(target) if target else "")
+    return re.search(pat, text) is not None
+
+
 def load(p: Path) -> dict:
     return yaml.safe_load(p.read_text(encoding="utf-8"))
 
@@ -158,7 +168,7 @@ def test_workflows_that_commit_must_call_the_deploy_themselves(path):
     """
     doc = load(path)
     text = run_text(doc)
-    assert "gh workflow run pages.yml" in text, (
+    assert dispatches(text, "pages.yml"), (
         f"{path.name}: 푸시 뒤 `gh workflow run pages.yml` 호출이 없습니다. "
         "workflow_run 만으로는 dispatch 로 시작한 실행에서 배포가 뜨지 않습니다.")
 
@@ -167,7 +177,7 @@ def test_workflows_that_commit_must_call_the_deploy_themselves(path):
 def test_the_deploy_call_only_fires_when_something_was_pushed(path):
     """아무것도 안 밀었는데 배포를 부르면 같은 것을 하루에 여러 번 올린다."""
     doc = load(path)
-    dispatch = [s for s in steps_of(doc) if "gh workflow run pages.yml" in str(s.get("run", ""))]
+    dispatch = [s for s in steps_of(doc) if dispatches(str(s.get("run", "")), "pages.yml")]
     assert dispatch, f"{path.name}: 배포 호출 단계가 없습니다"
     for s in dispatch:
         cond = str(s.get("if", ""))
@@ -194,7 +204,7 @@ def test_the_deploy_call_is_verified_not_assumed(path):
     run = str(verify[0].get("run", ""))
     assert '--since "${STARTED}"' in run, f"{path.name}: 부른 시각 이후의 배포만 세야 합니다"
     assert "pushed" in str(verify[0].get("if", "")), f"{path.name}: 밀었을 때만 확인해야 합니다"
-    call = next(i for i, s in enumerate(steps) if "gh workflow run pages.yml" in str(s.get("run", "")))
+    call = next(i for i, s in enumerate(steps) if dispatches(str(s.get("run", "")), "pages.yml"))
     assert "STARTED=" in str(steps[call].get("run", "")), "부르기 직전 시각을 남기지 않습니다"
     assert call < steps.index(verify[0])
     job = next(iter(doc["jobs"].values()))
@@ -277,7 +287,7 @@ def test_a_deploy_in_flight_is_never_cancelled():
 def test_calling_another_workflow_needs_actions_write(path):
     """`gh workflow run` 은 actions: write 없이는 조용히 403 으로 죽는다."""
     doc = load(path)
-    if "gh workflow run" not in run_text(doc):
+    if not dispatches(run_text(doc)):
         pytest.skip(f"{path.name} 은 다른 워크플로를 부르지 않습니다")
     perms = doc.get("permissions") or {}
     assert perms.get("actions") == "write", (
@@ -309,7 +319,7 @@ def test_the_watchdog_matches_the_remedy_to_the_symptom():
     for s in steps:
         run = str(s.get("run", ""))
         for target in ("refresh-data.yml", "pages.yml"):
-            if f"gh workflow run {target}" in run:
+            if dispatches(run, target):
                 calls[target] = str(s.get("if", ""))
     assert "refresh-data.yml" in calls, "감시자가 데이터 갱신을 부르지 않습니다"
     assert "pages.yml" in calls, (
@@ -423,7 +433,7 @@ def test_the_watchdog_only_pages_a_human_for_an_obvious_failure():
     assert "gh run list --workflow pages.yml" not in run, "알림 판정이 배포를 뒤늦게 읽습니다"
     assert "last_pages" in str((verdict.get("env") or {}).get("LAST_PAGES", ""))
     live = next(s for s in steps if s.get("id") == "live")
-    redeploy = next(s for s in steps if "gh workflow run pages.yml" in str(s.get("run", "")))
+    redeploy = next(s for s in steps if dispatches(str(s.get("run", "")), "pages.yml"))
     assert steps.index(live) < steps.index(redeploy)
     lr = str(live.get("run", ""))
     assert "last_pages=" in lr and "--status completed" in lr and "skipped" in lr
@@ -448,7 +458,7 @@ POLL = WF / "await-onchain.yml"
 
 
 def _poller_dispatch_step(doc: dict) -> dict:
-    found = [s for s in steps_of(doc) if "gh workflow run await-onchain.yml" in str(s.get("run", ""))]
+    found = [s for s in steps_of(doc) if dispatches(str(s.get("run", "")), "await-onchain.yml")]
     assert found, "refresh-data 가 헤드라인 보류 때 원본 대기 작업을 부르지 않습니다"
     return found[0]
 
@@ -477,7 +487,7 @@ def test_the_poller_and_the_refresh_cannot_call_each_other_forever():
     assert "dry_run != true" in cond
 
     poll = run_text(load(POLL))
-    assert re.search(r"gh workflow run refresh-data\.yml[^\n]*-f from_poller=true", poll), (
+    assert re.search(_DISPATCH + r"\s+refresh-data\.yml[^\n]*-f from_poller=true", poll), (
         "대기 작업이 갱신을 부를 때 from_poller=true 를 붙이지 않습니다 — 고리가 됩니다")
 
 
@@ -491,10 +501,10 @@ def test_the_poller_is_armed_after_the_deploy_call_and_before_the_deploy_check()
     """
     steps = steps_of(load(DATA))
     poll = next(i for i, s in enumerate(steps)
-                if "gh workflow run await-onchain.yml" in str(s.get("run", "")))
+                if dispatches(str(s.get("run", "")), "await-onchain.yml"))
     verify = next(i for i, s in enumerate(steps) if "tools/await_deploy.py" in str(s.get("run", "")))
     commit = next(i for i, s in enumerate(steps) if s.get("id") == "commit")
-    call = next(i for i, s in enumerate(steps) if "gh workflow run pages.yml" in str(s.get("run", "")))
+    call = next(i for i, s in enumerate(steps) if dispatches(str(s.get("run", "")), "pages.yml"))
     assert commit < call < poll < verify, (commit, call, poll, verify)
     assert "!cancelled()" in str(steps[verify].get("if", "")), (
         "배포 확인이 앞 단계 실패에 끌려 건너뛰어집니다")

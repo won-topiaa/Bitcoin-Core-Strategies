@@ -98,7 +98,11 @@ jobs:
         run: |
           echo "커밋을 밀었습니다 — Pages 배포를 직접 부릅니다."
           echo "STARTED=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_ENV"
-          gh workflow run pages.yml --ref "${GITHUB_REF_NAME}"
+          # 일시 오류(5xx)는 tools/gh_dispatch.sh 가 다시 부른다. 그래도 실패하면 이 단계는
+          # 실패시키지 않는다 — 2026-10-12 에 500 을 받은 호출이 실제로는 받아들여져
+          # 배포가 떴다. '배포가 실제로 떴고 성공했는가'는 다음 단계가 판정한다.
+          bash tools/gh_dispatch.sh pages.yml \
+            || echo "::warning::배포 호출이 실패했습니다 — 다음 단계가 배포가 실제로 떴는지 확인합니다."
 
       # 부른다고 끝이 아니다 — **성공으로 끝났는지**까지 본다. 5차 사고는 '불렀는데
       # 안 떴다'였고, 2026-10-10 에는 '떴는데 실패했다'였다. 예전 확인은 실행이

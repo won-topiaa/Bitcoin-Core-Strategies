@@ -72,7 +72,7 @@ jobs:
             case "$RC" in
               0)
                 echo "원본에 올라왔습니다 — 데이터 갱신을 부릅니다."
-                gh workflow run refresh-data.yml --ref "${GITHUB_REF_NAME}" -f from_poller=true
+                bash tools/gh_dispatch.sh refresh-data.yml -f from_poller=true
                 exit 0 ;;
               3)
                 echo "보류된 날이 없습니다 — 기다릴 것이 없습니다."
