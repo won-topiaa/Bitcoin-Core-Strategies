@@ -53,6 +53,7 @@ import io
 import sys
 import urllib.error
 import urllib.request
+from http.client import HTTPException
 from datetime import date
 from pathlib import Path
 from typing import Optional
@@ -179,7 +180,10 @@ def fetch_series(fred_id: str, timeout: int = 40) -> Optional[dict[date, float]]
     try:
         with urllib.request.urlopen(req, timeout=timeout) as resp:
             text = resp.read().decode("utf-8")
-    except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError) as exc:
+    # OSError·HTTPException: 본문을 읽다 끊기면(연결 리셋·IncompleteRead) urllib 이
+    # 감싸지 않고 그대로 던진다 — 그 한 소스 때문에 실행 전체가 죽지 않게.
+    except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError, OSError,
+            HTTPException, UnicodeDecodeError) as exc:
         # 정책 차단은 두 모습으로 온다: 프록시가 직접 403(HTTPError), 또는
         # CONNECT 터널을 403 으로 거절(URLError, reason 에 "403"). 둘 다 잡는다.
         code = getattr(exc, "code", None)
@@ -215,7 +219,10 @@ def fetch_github(timeout: int = 40) -> dict[str, dict[date, float]]:
         try:
             with urllib.request.urlopen(req, timeout=timeout) as resp:
                 text = resp.read().decode("utf-8")
-        except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError) as exc:
+        # OSError·HTTPException: 본문을 읽다 끊기면(연결 리셋·IncompleteRead) urllib 이
+        # 감싸지 않고 그대로 던진다 — 그 한 소스 때문에 실행 전체가 죽지 않게.
+        except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError, OSError,
+                HTTPException, UnicodeDecodeError) as exc:
             print(f"  ! {url.rsplit('/', 3)[-1]}: {exc} — 건너뜀", file=sys.stderr)
             continue
         reader = csv.DictReader(io.StringIO(text))
@@ -500,7 +507,10 @@ def main(argv: Optional[list[str]] = None) -> int:
 
     # 중국 M2 — 공식 원본(인민은행 → 국가통계국 → OECD). tools/china_m2.py
     print("중국 M2 받는 중…")
-    columns.update(fetch_china_m2(Path(args.out)))
+    try:
+        columns.update(fetch_china_m2(Path(args.out)))
+    except Exception as exc:  # noqa: BLE001 — 중국 M2 의 어떤 실패도 다른 열의 병합을 막지 않는다
+        print(f"::warning::중국 M2 수집 중 예외 {type(exc).__name__}: {exc} — 저장된 값을 그대로 둡니다.")
 
     if not columns:
         raise SystemExit("받은 시리즈가 없습니다.")

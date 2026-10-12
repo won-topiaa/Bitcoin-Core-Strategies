@@ -62,6 +62,8 @@ import time
 import urllib.error
 import urllib.request
 from datetime import date
+# `import http.client` 는 안 된다 — 이 모듈의 http() 함수가 그 이름을 가린다.
+from http.client import HTTPException
 from pathlib import Path
 from typing import Callable, Optional
 
@@ -150,37 +152,46 @@ def pboc_supply_table_link(overview_html: str) -> Optional[str]:
     i = overview_html.find("货币供应量")
     if i < 0:
         return None
-    m = re.search(r"href=['\"]([^'\"]+\.htm)['\"]", overview_html[i:i + 1500])
+    # 그 행이 든 표 안에서만 찾는다 — 그 행에 htm 이 없으면 다음 표(汇率报表)의 것을
+    # 집게 된다.
+    end = overview_html.find("</table>", i)
+    m = re.search(r"href=['\"]([^'\"]+\.htm)['\"]", overview_html[i:end if end > 0 else i + 1500])
     return m.group(1) if m else None
 
 
+def _cells(row_html: str) -> list[str]:
+    out = []
+    for c in re.findall(r"<t[dh][^>]*>(.*?)</t[dh]>", row_html, re.S | re.I):
+        c = html.unescape(re.sub(r"<[^>]+>", " ", c)).replace("\u3000", " ")
+        out.append(re.sub(r"\s+", " ", c).strip())
+    return out
+
+
 def parse_pboc_table(text: str) -> Series:
-    """货币供应量 표 → {달: M2(亿元)}. 머리행의 'YYYY.MM' 순서대로 M2 행의 숫자를 짝짓는다."""
-    cells = [html.unescape(c).strip() for c in re.split(r"<[^>]+>", text)]
-    cells = [re.sub(r"\s+", " ", c) for c in cells if c and c.strip()]
-    months = []
-    for c in cells:
-        m = re.fullmatch(r"(\d{4})\.(\d{1,2})", c)
-        if m:
-            months.append(date(int(m.group(1)), int(m.group(2)), 1))
-        if c.startswith("货币和准货币"):
-            break
-    try:
-        k = next(i for i, c in enumerate(cells) if c.startswith("货币和准货币"))
-    except StopIteration:
+    """货币供应量 표 → {달: M2(亿元)}.
+
+    **행과 칸 위치로** 짝짓는다. 머리행(YYYY.MM 이 있는 행)의 j 번째 칸의 달에 M2 행의 j
+    번째 칸 값을 붙인다. 예전처럼 빈 칸을 버리고 순서로 짝지으면, 중간 달 하나가 비었을
+    때 뒤의 값이 전부 한 달씩 밀리고 개정 가드(최근 13개월은 안 본다)도 못 잡는다.
+    """
+    rows = [_cells(r) for r in re.findall(r"<tr[^>]*>(.*?)</tr>", text, re.S | re.I)]
+    header = next((r for r in rows if sum(bool(re.fullmatch(r"\d{4}\.\d{1,2}", c)) for c in r) >= 2), None)
+    m2 = next((r for r in rows if r and r[0].startswith("货币和准货币")), None)
+    if m2 is None:
         raise SourceError("PBoC: '货币和准货币（M2）' 행이 없습니다")
-    if not months:
+    if header is None:
         raise SourceError("PBoC: 월 머리행(YYYY.MM)이 없습니다")
-    values = []
-    for c in cells[k + 1:]:
-        v = c.replace(",", "")
+    out: Series = {}
+    for j, h in enumerate(header):
+        mm = re.fullmatch(r"(\d{4})\.(\d{1,2})", h)
+        if not mm or j >= len(m2):
+            continue
+        v = m2[j].replace(",", "")
         if re.fullmatch(r"-?\d+(\.\d+)?", v):
-            values.append(float(v))
-        else:
-            break
-    if len(values) > len(months):
-        raise SourceError(f"PBoC: 값 {len(values)}개가 달 {len(months)}개보다 많습니다")
-    return {months[i]: round(values[i], 2) for i in range(len(values))}
+            out[date(int(mm.group(1)), int(mm.group(2)), 1)] = round(float(v), 2)
+    if not out:
+        raise SourceError("PBoC: M2 행에 값이 없습니다")
+    return out
 
 
 def fetch_pboc(today: date, get: Getter = http) -> Series:
@@ -192,22 +203,27 @@ def fetch_pboc(today: date, get: Getter = http) -> Series:
     if not want:
         raise SourceError(f"PBoC: {today.year}·{today.year - 1} 년 통계 메뉴가 없습니다 ({sorted(years)[-3:]})")
     out: Series = {}
+    errors = []
     for y in want:
-        year_html = _decode(get(PBOC_ROOT + years[y]))
-        _check_not_challenge(year_html, f"PBoC {y} 년")
-        ov = pboc_overview_link(year_html)
-        if not ov:
-            continue
-        ov_html = _decode(get(PBOC_ROOT + ov))
-        _check_not_challenge(ov_html, f"PBoC {y} 货币统计概览")
-        link = pboc_supply_table_link(ov_html)
-        if not link:
-            continue
-        table = _decode(get(PBOC_ROOT + link))
-        _check_not_challenge(table, f"PBoC {y} 货币供应量")
-        out.update(parse_pboc_table(table))
+        # 해마다 따로 받는다 — 한 해의 페이지 오류가 다른 해의 멀쩡한 표를 버리게 하지 않는다.
+        try:
+            year_html = _decode(get(PBOC_ROOT + years[y]))
+            _check_not_challenge(year_html, f"PBoC {y} 년")
+            ov = pboc_overview_link(year_html)
+            if not ov:
+                raise SourceError(f"{y} 년 페이지에 货币统计概览 링크가 없습니다")
+            ov_html = _decode(get(PBOC_ROOT + ov))
+            _check_not_challenge(ov_html, f"PBoC {y} 货币统计概览")
+            link = pboc_supply_table_link(ov_html)
+            if not link:
+                raise SourceError(f"{y} 年 货币统计概览 에 货币供应量 htm 이 없습니다")
+            table = _decode(get(PBOC_ROOT + link))
+            _check_not_challenge(table, f"PBoC {y} 货币供应量")
+            out.update(parse_pboc_table(table))
+        except Exception as exc:  # noqa: BLE001 — 그 해만 버리고 다른 해는 지킨다
+            errors.append(f"{y}: {type(exc).__name__}: {exc}")
     if not out:
-        raise SourceError("PBoC: 货币供应量 표를 하나도 못 찾았습니다")
+        raise SourceError("PBoC: 货币供应量 표를 하나도 못 읽었습니다 — " + " / ".join(errors))
     return out
 
 
@@ -226,15 +242,21 @@ def nbs_body(today: date) -> bytes:
     }, ensure_ascii=False).encode("utf-8")
 
 
-def parse_nbs(obj: dict) -> Series:
+def parse_nbs(obj) -> Series:
+    if not isinstance(obj, dict):
+        raise SourceError(f"NBS: 응답이 객체가 아닙니다({type(obj).__name__})")
     if not obj.get("success") or not isinstance(obj.get("data"), list):
         raise SourceError(f"NBS: 실패 응답 ({obj.get('state')}, {obj.get('message')})")
     out: Series = {}
     for row in obj["data"]:
+        if not isinstance(row, dict):
+            raise SourceError("NBS: data 의 행이 객체가 아닙니다")
         m = re.fullmatch(r"(\d{4})(\d{2})MM", str(row.get("code", "")))
         if not m:
             continue
         for v in row.get("values") or []:
+            if not isinstance(v, dict):
+                raise SourceError("NBS: values 의 항목이 객체가 아닙니다")
             if v.get("_id") != NBS_M2_ID:
                 continue
             if v.get("du_name") not in (None, "亿元"):
@@ -256,7 +278,9 @@ def fetch_nbs(today: date, get: Getter = http, tries: int = 3,
             text = raw.decode("utf-8", errors="replace")
             _check_not_challenge(text, "NBS")
             return parse_nbs(json.loads(text))
-        except (urllib.error.URLError, TimeoutError, ConnectionError, OSError, ValueError) as exc:
+        except (urllib.error.URLError, TimeoutError, ConnectionError, OSError, ValueError,
+                HTTPException) as exc:
+            # HTTPException: 본문이 중간에 끊기면(IncompleteRead) urllib 은 이것을 그대로 던진다.
             last = exc
     raise last
 
@@ -334,18 +358,49 @@ def _months(a: date, b: date) -> list[date]:
 # --------------------------------------------------------------------------
 # 고르기
 # --------------------------------------------------------------------------
+def continuity(new: Series, stored: Series) -> list[str]:
+    """일부 구간만 주는 원본(인민은행 2년치·OECD 새 달)이 저장값과 **이어지는가**.
+
+    이어지지 않으면 달은 최신인데 24개월 임펄스는 몇 해 동안 None 이 된다 — 화면은
+    '최신'이라 하면서 읽기 줄만 조용히 빈다. 그런 값은 들이지 않고 전 구간 원본을 묻는다.
+    """
+    if not stored:
+        return ["저장된 이력이 없어 일부 구간 원본으로는 채울 수 없습니다 — 전 구간 원본(국가통계국)이 필요합니다"]
+    nxt = _month_add(max(stored), 1)
+    if min(new) > nxt:
+        return [f"저장값과 이어지지 않습니다 — {nxt:%Y-%m} ~ {_month_add(min(new), -1):%Y-%m} 이 빕니다"]
+    holes = [d for d in _months(START, max(stored)) if d not in stored and d not in new]
+    if holes:
+        return [f"저장 이력에 빈 달이 있습니다 — {holes[0]:%Y-%m} 등 {len(holes)}개"]
+    return []
+
+
+ALL_FAILED = "::warning::중국 M2 를 어느 원본(인민은행·국가통계국·OECD)에서도 받지 못했습니다 — 저장된 값을 그대로 둡니다."
+
+
 def collect(stored: Series, today: date, *, get: Getter = http, log=print,
             sleep: Callable[[float], None] = time.sleep, force: bool = False) -> tuple[Series, str]:
     """(m2_cn 에 병합할 값, 원본 이름). 쓸 것이 없으면 ({}, 이유).
 
     병합은 fetch_macro.merge_to_csv 가 한다 — 이번에 준 날짜만 덮고 나머지는 저장값을
     지킨다. 그래서 여기서 돌려주는 값이 곧 '덮어쓸 범위'다.
-    """
-    stored = {d: v for d, v in stored.items() if v is not None}
-    want = expected_latest(today)
-    if stored and max(stored) >= want and not force:
-        return {}, f"이미 최신({max(stored):%Y-%m}) — 다음 발표 전이라 묻지 않습니다"
 
+    어떤 원본이 검증은 통과했지만 **새 달이 없으면** 성공으로 치지 않고 다음 원본도
+    묻는다. 인민은행 표가 낡은 파일을 계속 가리키면 그것을 '성공'으로 받아 국가통계국은
+    영영 묻지 않게 되는데, 그게 chinadata 가 다섯 달 멈춘 것과 같은 꼴이다.
+    """
+    this_month = date(today.year, today.month, 1)
+    future = sorted(d for d in stored if d > this_month)
+    if future:
+        # 미래 날짜 한 칸이 '이미 최신'으로 읽혀 영영 묻지 않게 되는 것을 막는다.
+        log(f"::warning::중국 M2 저장값에 미래 달이 있습니다({future[0]:%Y-%m}) — 무시하고 판정합니다")
+    stored = {d: v for d, v in stored.items() if v is not None and d <= this_month}
+    want = expected_latest(today)
+    base = max(stored) if stored else None
+    if base and base >= want and not force:
+        return {}, f"이미 최신({base:%Y-%m}) — 다음 발표 전이라 묻지 않습니다"
+
+    candidate: Optional[tuple[Series, str]] = None   # 통과했지만 새 달이 없는 결과(개정분은 쓴다)
     attempts = (
         ("PBoC", lambda: fetch_pboc(today, get), False),
         ("NBS", lambda: fetch_nbs(today, get, sleep=sleep), True),
@@ -353,37 +408,47 @@ def collect(stored: Series, today: date, *, get: Getter = http, log=print,
     for name, fetch, full in attempts:
         try:
             got = fetch()
-        except (SourceError, urllib.error.URLError, TimeoutError, OSError, ValueError) as exc:
+        except Exception as exc:  # noqa: BLE001 — 한 원본의 어떤 실패도 다음 원본을 막지 않는다
             log(f"  ! 중국 M2 {name}: {type(exc).__name__}: {exc}")
             continue
         got = {d: v for d, v in got.items() if d >= START}
         why = problems(got, stored, full_history=full)
+        if not why and not full:
+            why = continuity(got, stored)
         if why:
             log(f"  ! 중국 M2 {name}: 거부 — " + "; ".join(why))
+            continue
+        if base and max(got) <= base and not force:
+            log(f"  중국 M2 {name}: {max(got):%Y-%m} 까지뿐 — 새 달이 없어 다음 원본도 묻습니다")
+            candidate = candidate or (got, name)
             continue
         log(f"  중국 M2 ← {name}: {len(got)}개월 ({min(got):%Y-%m} ~ {max(got):%Y-%m})")
         return got, name
 
-    # 마지막: OECD — 한 달 늦고 2017 년이 재작성 전 값이라 **새 달만** 보탠다.
+    # 마지막: OECD — 한 달 늦고 2017 년이 재작성 전 값이라 **저장값 뒤의 새 달만** 보탠다.
+    # 저장 이력이 없으면 쓰지 않는다(재작성 전 2017 년으로 과거를 채우게 된다).
     try:
-        got = fetch_oecd(get)
-    except (SourceError, urllib.error.URLError, TimeoutError, OSError, ValueError) as exc:
+        oecd = fetch_oecd(get)
+    except Exception as exc:  # noqa: BLE001
         log(f"  ! 중국 M2 OECD: {type(exc).__name__}: {exc}")
-        log("::warning::중국 M2 를 어느 원본(인민은행·국가통계국·OECD)에서도 받지 못했습니다 — 저장된 값을 그대로 둡니다.")
-        return {}, "모든 원본 실패"
-    last = max(stored) if stored else START
-    newer = {d: v for d, v in got.items() if d > last}
-    if not newer:
-        return {}, f"OECD 에도 {last:%Y-%m} 뒤의 달이 없습니다"
-    chain = dict(stored)
-    chain.update(newer)
-    why = problems({d: chain[d] for d in sorted(chain) if d >= _month_add(last, -1)}, {}, full_history=False)
-    if why:
-        log("  ! 중국 M2 OECD: 거부 — " + "; ".join(why))
-        log("::warning::중국 M2 를 어느 원본(인민은행·국가통계국·OECD)에서도 받지 못했습니다 — 저장된 값을 그대로 둡니다.")
-        return {}, "모든 원본 실패"
-    log(f"  중국 M2 ← OECD(새 달만): {len(newer)}개월 ({min(newer):%Y-%m} ~ {max(newer):%Y-%m})")
-    return newer, "OECD"
+        oecd = None
+    if oecd is not None and base:
+        newer = {d: v for d, v in oecd.items() if d > base}
+        if newer:
+            why = problems(newer, stored, full_history=False) or continuity(newer, stored)
+            if why:
+                log("  ! 중국 M2 OECD: 거부 — " + "; ".join(why))
+            else:
+                log(f"  중국 M2 ← OECD(새 달만): {len(newer)}개월 ({min(newer):%Y-%m} ~ {max(newer):%Y-%m})")
+                return newer, "OECD"
+    if candidate:
+        got, name = candidate
+        if today.day >= 20:
+            # 인민은행은 보통 10~15일에 낸다. 20일이 넘도록 어느 원본도 새 달이 없으면 알린다.
+            log(f"::warning::중국 M2 가 {base:%Y-%m} 에서 나아가지 않습니다 — {want:%Y-%m} 이 나왔어야 할 때입니다")
+        return got, f"{name}(새 달 없음)"
+    log(ALL_FAILED)
+    return {}, "모든 원본 실패"
 
 
 def main(argv: Optional[list[str]] = None) -> int:

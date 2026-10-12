@@ -279,3 +279,139 @@ def test_the_cli_prints_without_writing(tmp_path):
                         "import sys; sys.path.insert(0,'tools'); import china_m2 as c; print(c.__doc__[:20])"],
                        cwd=ROOT, capture_output=True, text=True, timeout=60)
     assert r.returncode == 0
+
+
+# --------------------------------------------------------------------------
+# 2026-10 검토에서 확인된 경계
+# --------------------------------------------------------------------------
+def test_a_truncated_reply_is_caught_and_the_next_source_is_asked(monkeypatch):
+    """IncompleteRead 는 OSError 가 아니다 — 예전엔 collect 밖으로 새어 fetch_macro 를 통째로
+    죽여, 이미 받은 FRED·GitHub 열까지 그 실행에서 버렸다."""
+    from http.client import IncompleteRead
+    stored = stored_until(date(2026, 5, 1))
+    full = dict(stored)
+    full.update(PBOC_2026)
+
+    def get(url, **kw):
+        if "pbc.gov.cn" in url:
+            raise IncompleteRead(b"x" * 24, 976)
+        raise cm.SourceError("막힘")
+    monkeypatch.setattr(cm, "fetch_nbs", lambda today, g, sleep=None: dict(full))
+    got, src = cm.collect(stored, TODAY, get=get, log=lambda *a: None)
+    assert src == "NBS"
+
+
+def test_nbs_retries_a_truncated_body():
+    from http.client import IncompleteRead
+    body = (FX / "nbs_esdata.json").read_bytes()
+    n = {"i": 0}
+
+    def get(url, **kw):
+        n["i"] += 1
+        if n["i"] == 1:
+            raise IncompleteRead(b"x", 10)
+        return body
+    assert cm.fetch_nbs(TODAY, get, sleep=lambda s: None)[date(2026, 8, 1)] == 3568083.60
+
+
+@pytest.mark.parametrize("body", [b"null", b"[]", b'{"success":true,"data":[null]}',
+                                  b'{"success":true,"data":[{"code":"202608MM","values":[null]}]}'])
+def test_odd_nbs_shapes_are_source_errors(body):
+    with pytest.raises(cm.SourceError):
+        cm.parse_nbs(json.loads(body))
+
+
+def test_a_china_m2_crash_never_loses_the_other_macro_columns(tmp_path, monkeypatch):
+    import fetch_macro as fm
+    d = date(2026, 10, 9)
+    monkeypatch.setattr(fm, "fetch_github", lambda *a, **k: {"vix": {d: 99.0}})
+    monkeypatch.setattr(fm, "fetch_series", lambda fid, timeout=40: None)
+
+    def boom(*a, **k):
+        raise RuntimeError("예상 못 한 실패")
+    monkeypatch.setattr(fm, "fetch_china_m2", boom)
+    saved = {}
+    monkeypatch.setattr(fm, "merge_to_csv", lambda cols, path: saved.update(cols))
+    assert fm.main(["--github", "--global", "--out", str(tmp_path / "m.csv")]) == 0
+    assert saved.get("vix") == {d: 99.0}, "중국 M2 실패가 다른 열의 병합을 막았습니다"
+
+
+def test_a_source_with_no_new_month_does_not_stop_the_chain(monkeypatch):
+    """인민은행 표가 낡은 파일을 계속 가리켜도 '성공'으로 받으면 국가통계국은 영영 묻지
+    않는다 — chinadata 가 다섯 달 멈춘 것과 같은 꼴이다."""
+    stored = stored_until(date(2026, 8, 1))
+    stale_pboc = {d: v for d, v in PBOC_2026.items()}            # 2026-08 까지뿐
+    full = dict(stored)
+    full[date(2026, 9, 1)] = 3580000.0                            # 국가통계국에는 9월이 있다
+    monkeypatch.setattr(cm, "fetch_pboc", lambda today, get: dict(stale_pboc))
+    monkeypatch.setattr(cm, "fetch_nbs", lambda today, get, sleep=None: dict(full))
+    got, src = cm.collect(stored, TODAY, get=Web({}), log=lambda *a: None)
+    assert src == "NBS" and date(2026, 9, 1) in got
+
+
+def test_when_nobody_has_the_new_month_the_answer_is_kept_and_late_is_flagged(monkeypatch):
+    stored = stored_until(date(2026, 8, 1))
+    monkeypatch.setattr(cm, "fetch_pboc", lambda today, get: dict(PBOC_2026))
+    monkeypatch.setattr(cm, "fetch_nbs", lambda today, get, sleep=None: (_ for _ in ()).throw(cm.SourceError("x")))
+    monkeypatch.setattr(cm, "fetch_oecd", lambda get: {date(2026, 7, 1): 3555077.0})
+    early, late = [], []
+    got, src = cm.collect(stored, date(2026, 10, 12), get=Web({}), log=early.append)
+    assert src == "PBoC(새 달 없음)" and got == PBOC_2026
+    assert not any(l.startswith("::warning::") for l in early), "발표 창(10~15일)에 매시간 울립니다"
+    cm.collect(stored, date(2026, 10, 21), get=Web({}), log=late.append)
+    assert any("나아가지 않습니다" in l for l in late), "20일이 넘도록 새 달이 없는데 조용합니다"
+
+
+def test_a_partial_source_that_leaves_a_hole_is_refused(monkeypatch):
+    """저장값이 2024-10 에서 끝났는데 인민은행 2년치(2025-01~)만 들이면 달은 최신인데
+    임펄스는 몇 해 동안 None 이 된다 — 화면은 '최신'이라 하면서 읽기 줄만 빈다."""
+    stored = stored_until(date(2024, 10, 1))
+    pboc = {d: v for d, v in stored_until(date(2026, 8, 1)).items() if d >= date(2025, 1, 1)}
+    pboc.update(PBOC_2026)
+    lines = []
+    monkeypatch.setattr(cm, "fetch_pboc", lambda today, get: dict(pboc))
+    monkeypatch.setattr(cm, "fetch_nbs", lambda today, get, sleep=None: (_ for _ in ()).throw(cm.SourceError("x")))
+    monkeypatch.setattr(cm, "fetch_oecd", lambda get: (_ for _ in ()).throw(cm.SourceError("x")))
+    got, src = cm.collect(stored, TODAY, get=Web({}), log=lines.append)
+    assert got == {} and any("이어지지 않습니다" in l for l in lines), lines
+
+
+def test_with_no_history_only_a_full_history_source_is_used(monkeypatch):
+    monkeypatch.setattr(cm, "fetch_pboc", lambda today, get: dict(PBOC_2026))
+    monkeypatch.setattr(cm, "fetch_nbs", lambda today, get, sleep=None: (_ for _ in ()).throw(cm.SourceError("x")))
+    monkeypatch.setattr(cm, "fetch_oecd", lambda get: dict(PBOC_2026))
+    got, src = cm.collect({}, TODAY, get=Web({}), log=lambda *a: None)
+    assert got == {}, "2년치·OECD 로 빈 이력을 채웠습니다(재작성 전 2017 년·24개월 창 부족)"
+
+
+def test_a_future_dated_cell_does_not_freeze_the_fetch(monkeypatch):
+    stored = stored_until(date(2026, 5, 1))
+    stored[date(2031, 1, 1)] = 3600000.0
+    lines = []
+    monkeypatch.setattr(cm, "fetch_pboc", lambda today, get: dict(PBOC_2026))
+    got, src = cm.collect(stored, TODAY, get=Web({}), log=lines.append)
+    assert src == "PBoC" and date(2026, 8, 1) in got
+    assert any("미래 달" in l for l in lines)
+
+
+def test_a_blank_middle_cell_does_not_shift_later_months():
+    """빈 칸을 버리고 순서로 짝지으면 뒤의 값이 전부 한 달씩 밀린다."""
+    raw = cm._decode((FX / "pbc_m2_2026.htm").read_bytes())
+    i = raw.index("3492159.91")
+    holed = raw[:i] + raw[i + len("3492159.91"):]                 # 2026-02 칸만 비운다
+    got = cm.parse_pboc_table(holed)
+    assert date(2026, 2, 1) not in got
+    assert got[date(2026, 3, 1)] == PBOC_2026[date(2026, 3, 1)]
+    assert got[date(2026, 8, 1)] == PBOC_2026[date(2026, 8, 1)]
+
+
+def test_the_supply_link_search_stays_inside_its_table():
+    ov = (FX / "pbc_2026_hbtjgl.html").read_text(encoding="utf-8")
+    no_htm = ov.replace('2026091417313352505.htm', '2026091417313352505.pdf')
+    assert cm.pboc_supply_table_link(no_htm) is None, "옆 표(汇率报表)의 htm 을 집었습니다"
+
+
+def test_one_year_page_failing_keeps_the_other_years_table():
+    routes = pboc_routes()
+    routes["/5570903/index.html"] = lambda: (_ for _ in ()).throw(ConnectionResetError(104, "reset"))
+    assert cm.fetch_pboc(TODAY, Web(routes)) == PBOC_2026

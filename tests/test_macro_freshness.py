@@ -77,5 +77,5 @@ def test_the_refresh_runs_the_check():
 
 def test_m2_warns_before_the_impulse_is_dropped():
     from btc_core.datasources.macro import M2_MAX_AGE_DAYS
-    assert 75 < mf.WATCH["m2_cn"] < M2_MAX_AGE_DAYS, (
-        "중국 M2 경고가 정상 발표 지연(최대 ~75일)과 임펄스 제외(100일) 사이에 있어야 합니다")
+    assert 80 < mf.WATCH["m2_cn"] < M2_MAX_AGE_DAYS, (
+        "중국 M2 경고가 정상 발표 지연(춘절 포함 최대 ~80일)과 임펄스 제외(100일) 사이에 있어야 합니다")

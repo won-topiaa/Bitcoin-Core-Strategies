@@ -48,6 +48,7 @@ import json
 import sys
 import urllib.error
 import urllib.request
+from http.client import HTTPException
 from datetime import date, datetime, timezone
 from pathlib import Path
 from typing import Optional
@@ -101,7 +102,10 @@ def _get(url: str, timeout: int = 40, ua: str = UA) -> Optional[str]:
     try:
         with urllib.request.urlopen(req, timeout=timeout) as resp:
             return resp.read().decode("utf-8")
-    except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError) as exc:
+    # OSError·HTTPException: 본문을 읽다 끊기면(연결 리셋·IncompleteRead) urllib 이
+    # 감싸지 않고 그대로 던진다 — 그 한 소스 때문에 실행 전체가 죽지 않게.
+    except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError, OSError,
+            HTTPException, UnicodeDecodeError) as exc:
         code = getattr(exc, "code", None)
         blocked = code in (403, 407) or "403" in str(getattr(exc, "reason", exc))
         if blocked:
