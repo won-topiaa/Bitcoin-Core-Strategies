@@ -1,5 +1,5 @@
 {
- "fetched": "2026-10-14T02:56:45+00:00",
+ "fetched": "2026-10-14T07:31:42+00:00",
  "sources_ok": [
   "CoinDesk",
   "Cointelegraph",
@@ -14,7 +14,7 @@
    "source": "Decrypt",
    "published": "2026-10-13T19:38:12+00:00",
    "summary": "A wallet that received 4,581 BTC in March 2020, worth about $40 million then, moved its stash today when it was worth about $377 million.",
-   "score": 3.2394
+   "score": 3.032
   },
   {
    "title": "Bitcoin whale that sat through the March 2020 crash moves $378 million",
@@ -22,7 +22,7 @@
    "source": "CoinDesk",
    "published": "2026-10-13T05:45:10+00:00",
    "summary": "",
-   "score": 2.6509
+   "score": 2.4811
   },
   {
    "title": "Morning Minute: Bitcoin Gets Spooked as ‘Uptober’ Lets Down",
@@ -30,15 +30,15 @@
    "source": "Decrypt",
    "published": "2026-10-13T11:40:51+00:00",
    "summary": "Crypto majors are red, alts are down bad and onchain is facing capitulation. This was not the ‘Uptober’ that was promised…",
-   "score": 2.3102
+   "score": 2.1623
   },
   {
-   "title": "Strive reports $208M in warrant exercises as Bitcoin holdings jump 11%",
-   "url": "https://cointelegraph.com/news/strive-bitcoin-holdings-32773-btc-warrant-exercises?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "title": "Here’s what happened in crypto today",
+   "url": "https://cointelegraph.com/news/what-happened-in-crypto-today?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
    "source": "Cointelegraph",
-   "published": "2026-10-13T15:57:55+00:00",
-   "summary": "Strive is now the fifth-largest publicly traded corporate Bitcoin holder, with 32,773 BTC, as it continues to expand its treasury through equity financing.",
-   "score": 2.1334
+   "published": "2026-10-14T05:35:52+00:00",
+   "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
+   "score": 2.1395
   },
   {
    "title": "Strive Buys More Bitcoin, Crosses 30,000 BTC Mark",
@@ -46,15 +46,23 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-13T15:48:14+00:00",
    "summary": "Bitcoin Magazine Strive Buys More Bitcoin, Crosses 30,000 BTC Mark The bitcoin treasury company is still the fifth biggest in the space. This post Strive Buys More Bitcoin, Crosses 30,000 BTC Mark first appeared on Bitcoin Magazine and is written by Mathew Di Salvo .",
-   "score": 2.1284
+   "score": 1.9922
   },
   {
-   "title": "Here’s what happened in crypto today",
-   "url": "https://cointelegraph.com/news/what-happened-in-crypto-today?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "title": "Bitcoin climbs toward $84,000 after Fed’s Williams sees no rate hikes in 2027",
+   "url": "https://www.coindesk.com/markets/2026/10/14/bitcoin-climbs-toward-usd84-000-after-fed-s-williams-sees-no-rate-hikes-in-2027",
+   "source": "CoinDesk",
+   "published": "2026-10-14T03:50:54+00:00",
+   "summary": "",
+   "score": 1.8965
+  },
+  {
+   "title": "Strive reports $208M in warrant exercises as Bitcoin holdings jump 11%",
+   "url": "https://cointelegraph.com/news/strive-bitcoin-holdings-32773-btc-warrant-exercises?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
    "source": "Cointelegraph",
-   "published": "2026-10-13T19:33:57+00:00",
-   "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
-   "score": 1.5821
+   "published": "2026-10-13T15:57:55+00:00",
+   "summary": "Strive is now the fifth-largest publicly traded corporate Bitcoin holder, with 32,773 BTC, as it continues to expand its treasury through equity financing.",
+   "score": 1.5974
   },
   {
    "title": "Strategy Smash Buys $21.5M in BTC as It Continues Bitcoin Accumulation",
@@ -62,7 +70,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-12T15:56:59+00:00",
    "summary": "Bitcoin Magazine Strategy Smash Buys $21.5M in BTC as It Continues Bitcoin Accumulation Bitcoin juggernaut Strategy has bought more BTC as it pivots back to accumulating on a weekly basis. The Nasdaq-listed bitcoin treasury spent $21.5 million on 250 bitcoins from October 5 and…",
-   "score": 1.4961
+   "score": 1.4003
   },
   {
    "title": "Bitcoin Spooked? Crypto Fear and Greed Index Drops to Pre-Rally August Lows",
@@ -70,15 +78,7 @@
    "source": "Decrypt",
    "published": "2026-10-12T16:41:34+00:00",
    "summary": "The Crypto Fear and Greed Index has dropped to 56 from an August peak of 82, as oil, bond yields, and ETF outflows hit Bitcoin in October.",
-   "score": 1.483
-  },
-  {
-   "title": "Bitcoin pulls back from $84,000 as oil recovers, ETFs bleed over $600 million",
-   "url": "https://www.coindesk.com/markets/2026/10/12/bitcoin-shrugs-off-etf-outflows-to-trade-above-usd84-000-as-oil-falls",
-   "source": "CoinDesk",
-   "published": "2026-10-12T04:49:30+00:00",
-   "summary": "",
-   "score": 1.233
+   "score": 1.3881
   },
   {
    "title": "Saylor teases Strategy Bitcoin buying after ending September with STRC buybacks",
@@ -86,7 +86,7 @@
    "source": "Cointelegraph",
    "published": "2026-10-11T17:11:00+00:00",
    "summary": "Investors will have to wait an extra day to find out if and how much Strategy added to its Bitcoin treasury in the first week of October.",
-   "score": 1.1951
+   "score": 1.1185
   },
   {
    "title": "Willem Middelkoop: Bitcoin is the Fastest Horse – Why the Debasement Trade Takes it to $1M",
@@ -94,7 +94,15 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-12T15:00:28+00:00",
    "summary": "Bitcoin Magazine Willem Middelkoop: Bitcoin is the Fastest Horse – Why the Debasement Trade Takes it to $1M Central banks buy record gold, so why not Bitcoin? Willem Middelkoop explains why authority favors controllable assets while institutions turn to ETFs. This post Willem Mi…",
-   "score": 1.1427
+   "score": 1.0695
+  },
+  {
+   "title": "Bitcoin pulls back from $84,000 as oil recovers, ETFs bleed over $600 million",
+   "url": "https://www.coindesk.com/markets/2026/10/12/bitcoin-shrugs-off-etf-outflows-to-trade-above-usd84-000-as-oil-falls",
+   "source": "CoinDesk",
+   "published": "2026-10-12T04:49:30+00:00",
+   "summary": "",
+   "score": 0.9232
   },
   {
    "title": "Binance Is Shutting Down Its Bitcoin Mining Pool After Six Years",
@@ -102,15 +110,7 @@
    "source": "Decrypt",
    "published": "2026-10-13T20:16:03+00:00",
    "summary": "Binance will discontinue Binance Pool, Pool Savings, Cloud Mining, and other related services in a retreat from mining infrastructure.",
-   "score": 0.9299
-  },
-  {
-   "title": "Stacks' STX, a Bitcoin layer-2 token, has surged by 50% in four weeks",
-   "url": "https://www.coindesk.com/daybook-us/2026/10/13/stacks-stx-a-bitcoin-layer-2-token-has-surged-by-50-in-four-weeks",
-   "source": "CoinDesk",
-   "published": "2026-10-13T11:26:45+00:00",
-   "summary": "",
-   "score": 0.921
+   "score": 0.8703
   },
   {
    "title": "Ledger implant tests Bitcoin ETFs as safer custodial solutions than hardware wallets",
@@ -118,7 +118,7 @@
    "source": "Cointelegraph",
    "published": "2026-10-12T14:07:00+00:00",
    "summary": "The discovery of an unauthorized Ledger hardware implant reignited debate on whether Bitcoin ETFs are safer than self-custodying Bitcoin via hardware wallet devices.",
-   "score": 0.9024
+   "score": 0.8447
   },
   {
    "title": "The Amount of Bitcoin on Exchanges Is Shrinking. Is a Rally Imminent?",
@@ -126,7 +126,15 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-13T17:05:39+00:00",
    "summary": "Bitcoin Magazine The Amount of Bitcoin on Exchanges Is Shrinking. Is a Rally Imminent? A CryptoQuant researcher has said that bitcoin’s supply dynamics could soon help its price. This post The Amount of Bitcoin on Exchanges Is Shrinking. Is a Rally Imminent? first appeared on Bi…",
-   "score": 0.7994
+   "score": 0.7482
+  },
+  {
+   "title": "Stacks' STX, a Bitcoin layer-2 token, has surged by 50% in four weeks",
+   "url": "https://www.coindesk.com/daybook-us/2026/10/13/stacks-stx-a-bitcoin-layer-2-token-has-surged-by-50-in-four-weeks",
+   "source": "CoinDesk",
+   "published": "2026-10-13T11:26:45+00:00",
+   "summary": "",
+   "score": 0.6896
   },
   {
    "title": "Strategy adds 250 Bitcoin as holdings reach 848,250 BTC",
@@ -134,7 +142,7 @@
    "source": "Cointelegraph",
    "published": "2026-10-12T12:31:51+00:00",
    "summary": "Michael Saylor’s Strategy said Bitcoin holdings reached 848,250 BTC after its latest purchase, while maintaining a $4.88 billion cash reserve.",
-   "score": 0.6586
+   "score": 0.6164
   },
   {
    "title": "Bitcoin Ranges Near $83K as Traders Look to US Inflation Data",
@@ -142,7 +150,7 @@
    "source": "Decrypt",
    "published": "2026-10-12T11:41:50+00:00",
    "summary": "October rate-hike odds have slumped, but analysts say Treasury yields at two-decade highs are still keeping a lid on risk appetite.",
-   "score": 0.581
+   "score": 0.5438
   },
   {
    "title": "SWI raises $894 million to repurpose former FTX bitcoin miner Genesis Digital to AI",
@@ -150,7 +158,7 @@
    "source": "CoinDesk",
    "published": "2026-10-12T10:27:00+00:00",
    "summary": "",
-   "score": 0.5706
+   "score": 0.4273
   },
   {
    "title": "Bitcoin, Ethereum and Solana ETFs All in the Red for October",
@@ -158,15 +166,7 @@
    "source": "Decrypt",
    "published": "2026-10-11T16:01:03+00:00",
    "summary": "Bitcoin ETFs have seen $386.3 million in net outflows through the first seven trading days of October, while Ethereum funds have now posted nine straight days of losses.",
-   "score": 0.4198
-  },
-  {
-   "title": "Altcoins rally on thin trading as bitcoin holds below $83,500",
-   "url": "https://www.coindesk.com/markets/2026/10/12/altcoins-rally-on-thin-trading-as-bitcoin-holds-near-usd84-000",
-   "source": "CoinDesk",
-   "published": "2026-10-12T10:20:54+00:00",
-   "summary": "",
-   "score": 0.4102
+   "score": 0.3929
   },
   {
    "title": "Bitcoin miners face widening AI financing costs as lenders scrutinize deals",
@@ -174,7 +174,7 @@
    "source": "Cointelegraph",
    "published": "2026-10-12T16:51:05+00:00",
    "summary": "The Bitcoin mining industry needs roughly $50 billion to complete planned AI infrastructure projects, with IREN, Riot Platforms and HIVE Digital facing major funding gaps.",
-   "score": 0.4006
+   "score": 0.3749
   },
   {
    "title": "Kraken Parent Payward Wins Full Dubai License, Plans UAE Launch",
@@ -182,15 +182,15 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-13T22:52:10+00:00",
    "summary": "Bitcoin Magazine Kraken Parent Payward Wins Full Dubai License, Plans UAE Launch Kraken currently has more than 100 licenses and registrations worldwide. This post Kraken Parent Payward Wins Full Dubai License, Plans UAE Launch first appeared on Bitcoin Magazine and is written b…",
-   "score": 0.3862
+   "score": 0.3615
   },
   {
-   "title": "Strive raising $500 million to buy additional bitcoin with new preferred share class",
-   "url": "https://www.coindesk.com/markets/2026/10/13/strive-to-ipo-second-preferred-share-class-as-it-looks-to-further-build-bitcoin-treasury",
+   "title": "Coinbase, which holds 5% of all bitcoin, wants the quantum fix started now",
+   "url": "https://www.coindesk.com/tech/2026/10/14/coinbase-which-holds-5-of-all-bitcoin-wants-the-quantum-fix-started-now",
    "source": "CoinDesk",
-   "published": "2026-10-13T23:23:05+00:00",
+   "published": "2026-10-14T05:44:51+00:00",
    "summary": "",
-   "score": 0.3113
+   "score": 0.3194
   },
   {
    "title": "Researchers Build First Working Post-Quantum Defense for Bitcoin’s Lightning Network",
@@ -198,7 +198,15 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-13T22:49:07+00:00",
    "summary": "Bitcoin Magazine Researchers Build First Working Post-Quantum Defense for Bitcoin’s Lightning Network Second-layer solutions like Lightning may also need protection from quantum computers. Here’s how a research team appears to have cracked it. This post Researchers Build First W…",
-   "score": 0.3087
+   "score": 0.289
+  },
+  {
+   "title": "Altcoins rally on thin trading as bitcoin holds below $83,500",
+   "url": "https://www.coindesk.com/markets/2026/10/12/altcoins-rally-on-thin-trading-as-bitcoin-holds-near-usd84-000",
+   "source": "CoinDesk",
+   "published": "2026-10-12T10:20:54+00:00",
+   "summary": "",
+   "score": 0.2457
   },
   {
    "title": "Strategy Scoops Up $21.5M in Bitcoin, Buys Back $192M in STRC",
@@ -206,7 +214,7 @@
    "source": "Decrypt",
    "published": "2026-10-12T12:39:35+00:00",
    "summary": "The purchase lifts Strategy's holdings to 848,250 BTC and follows a $176 million repurchase of STRC preferred stock the week before.",
-   "score": 0.2413
+   "score": 0.2258
   },
   {
    "title": "Trezor Reduces Number of Resellers Following Ledger Drainage Incident",
@@ -214,7 +222,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-13T16:01:03+00:00",
    "summary": "Bitcoin Magazine Trezor Reduces Number of Resellers Following Ledger Drainage Incident Hardware manufacturer Trezor has said it is checking which vendors it works with following reports of lost funds from Ledger models. This post Trezor Reduces Number of Resellers Following Ledg…",
-   "score": 0.2239
+   "score": 0.2095
   },
   {
    "title": "Bitcoin keeps up pressure on $84K as US stocks skirt Korea tech sell-off",
@@ -222,15 +230,15 @@
    "source": "Cointelegraph",
    "published": "2026-10-13T15:27:32+00:00",
    "summary": "Bitcoin price action preserved overnight gains as US stocks quickly rebounded after opening lower on the back of Korea’s tech-stock rout.",
-   "score": 0.2221
+   "score": 0.2079
   },
   {
-   "title": "One year after 10/10 flash crash, bitcoin and ether liquidity have rebuilt, but altcoins still face risks",
-   "url": "https://www.coindesk.com/markets/2026/10/10/one-year-after-10-10-bitcoin-and-ether-liquidity-have-rebuilt-but-other-altcoins-still-face-risks",
+   "title": "Strive raising $500 million to buy additional bitcoin with new preferred share class",
+   "url": "https://www.coindesk.com/markets/2026/10/13/strive-to-ipo-second-preferred-share-class-as-it-looks-to-further-build-bitcoin-treasury",
    "source": "CoinDesk",
-   "published": "2026-10-10T12:00:00+00:00",
+   "published": "2026-10-13T23:23:05+00:00",
    "summary": "",
-   "score": 0.2091
+   "score": 0.1864
   },
   {
    "title": "Alex Gladstein: How The Bitcoin-AI Convergence Impacts the Fight for Freedom",
@@ -238,7 +246,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-13T13:24:43+00:00",
    "summary": "Bitcoin Magazine Alex Gladstein: How The Bitcoin-AI Convergence Impacts the Fight for Freedom AI risk isn't human extinction, says HRF’s Alex Gladstein—it’s centralized control. He explains why local, open-source AI is vital for protecting freedom. This post Alex Gladstein: How…",
-   "score": 0.1725
+   "score": 0.1614
   },
   {
    "title": "Russia clears Sberbank for crypto trading ahead of December launch",
@@ -246,15 +254,7 @@
    "source": "Cointelegraph",
    "published": "2026-10-13T12:22:24+00:00",
    "summary": "Russia’s largest bank, Sberbank, has secured crypto exchange authorization as it prepares to offer Bitcoin, Ether and Tether USDt trading.",
-   "score": 0.1699
-  },
-  {
-   "title": "Bitcoin, ether slip and rebound as South Korean stocks slide on AI-related concerns",
-   "url": "https://www.coindesk.com/markets/2026/10/13/bitcoin-ether-slip-and-rebound-as-south-korean-stocks-slide-on-ai-related-concerns",
-   "source": "CoinDesk",
-   "published": "2026-10-13T11:06:39+00:00",
-   "summary": "",
-   "score": 0.1668
+   "score": 0.159
   },
   {
    "title": "Bitcoin ETFs Suffer Worst Loss Since June as Uptober Turns Red",
@@ -262,7 +262,7 @@
    "source": "Decrypt",
    "published": "2026-10-08T17:46:05+00:00",
    "summary": "Investors yanked $484.9 million out of spot Bitcoin ETFs in a single day. Oil is near $100, bond yields are at their highest since 2002, and the Fed isn't done hiking.",
-   "score": 0.1461
+   "score": 0.1368
   },
   {
    "title": "Matt Dines: Why a Rising Dollar is Bullish for Bitcoin",
@@ -270,15 +270,23 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-13T13:17:03+00:00",
    "summary": "Bitcoin Magazine Matt Dines: Why a Rising Dollar is Bullish for Bitcoin The dollar and Bitcoin are both rising—a bullish sign, says Build Asset Management's Matt Dines. He breaks down the shift to a new US-led monetary order. This post Matt Dines: Why a Rising Dollar is Bullish…",
-   "score": 0.1377
+   "score": 0.1289
   },
   {
-   "title": "Bitcoin's $19 billion wake-up call: One-year after flash crash, has crypto learned anything?",
-   "url": "https://www.coindesk.com/markets/2026/10/10/bitcoin-s-usd19-billion-wake-up-call-one-year-later-has-crypto-learned-anything",
+   "title": "One year after 10/10 flash crash, bitcoin and ether liquidity have rebuilt, but altcoins still face risks",
+   "url": "https://www.coindesk.com/markets/2026/10/10/one-year-after-10-10-bitcoin-and-ether-liquidity-have-rebuilt-but-other-altcoins-still-face-risks",
    "source": "CoinDesk",
-   "published": "2026-10-10T11:00:00+00:00",
+   "published": "2026-10-10T12:00:00+00:00",
    "summary": "",
-   "score": 0.1319
+   "score": 0.1253
+  },
+  {
+   "title": "Bitcoin, ether slip and rebound as South Korean stocks slide on AI-related concerns",
+   "url": "https://www.coindesk.com/markets/2026/10/13/bitcoin-ether-slip-and-rebound-as-south-korean-stocks-slide-on-ai-related-concerns",
+   "source": "CoinDesk",
+   "published": "2026-10-13T11:06:39+00:00",
+   "summary": "",
+   "score": 0.0999
   },
   {
    "title": "Now Accepting Bitcoin: Moonflower Coffee and 300+ Colorado Bitcoin Merchants",
@@ -286,7 +294,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-13T11:00:00+00:00",
    "summary": "Bitcoin Magazine Now Accepting Bitcoin: Moonflower Coffee and 300+ Colorado Bitcoin Merchants Delicious Bitcoin Latte at Moonflower, Steak and Eggs at Butcher Block Cafe, and Navigating 300+ Colorado Bitcoin Merchants. This post Now Accepting Bitcoin: Moonflower Coffee and 300+…",
-   "score": 0.1066
+   "score": 0.0998
   },
   {
    "title": "Bitcoin drops 2.2% as Ukraine, Iran strikes send oil toward one-month high",
@@ -294,15 +302,7 @@
    "source": "Cointelegraph",
    "published": "2026-10-12T16:30:21+00:00",
    "summary": "Bitcoin price action stayed rangebound after failing to sustain above $84,000 into the Wall Street open on rising oil prices.",
-   "score": 0.102
-  },
-  {
-   "title": "Bitcoin's volatility has plunged, but extreme price swings are more frequent than in 2018",
-   "url": "https://www.coindesk.com/markets/2026/10/09/bitcoin-s-volatility-has-plunged-but-extreme-price-swings-are-more-frequent-than-in-2018",
-   "source": "CoinDesk",
-   "published": "2026-10-10T05:43:00+00:00",
-   "summary": "",
-   "score": 0.0978
+   "score": 0.0955
   },
   {
    "title": "UK Freezes $12M London Penthouse of Alleged Prince Group Finance Chief",
@@ -310,7 +310,15 @@
    "source": "Decrypt",
    "published": "2026-10-12T10:12:48+00:00",
    "summary": "Thet Li is accused of running the finances of a scam empire tied to $14 billion in Bitcoin the U.S. has moved to seize.",
-   "score": 0.0932
+   "score": 0.0872
+  },
+  {
+   "title": "Bitcoin's $19 billion wake-up call: One-year after flash crash, has crypto learned anything?",
+   "url": "https://www.coindesk.com/markets/2026/10/10/bitcoin-s-usd19-billion-wake-up-call-one-year-later-has-crypto-learned-anything",
+   "source": "CoinDesk",
+   "published": "2026-10-10T11:00:00+00:00",
+   "summary": "",
+   "score": 0.079
   },
   {
    "title": "Calamos Investments CEO John Koudounis: Bitcoin Will Hit $1M by 2030",
@@ -318,15 +326,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-09T13:28:10+00:00",
    "summary": "Bitcoin Magazine Calamos Investments CEO John Koudounis: Bitcoin Will Hit $1M by 2030 Is Bitcoin headed for a $1M awakening by 2030? Calamos CEO John Koudounis explains why institutional bank lending and ETF access will drive the surge. This post Calamos Investments CEO John Kou…",
-   "score": 0.084
-  },
-  {
-   "title": "Bitcoin, Ether ETFs’ October outflows swell toward $1B",
-   "url": "https://cointelegraph.com/markets/bitcoin-ether-etfs-october-outflows-billion?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-10-09T07:34:44+00:00",
-   "summary": "Bitcoin ETFs lost $244 million on Thursday, while Ether funds extended their outflow streak to eight sessions, shedding $641 million.",
-   "score": 0.0761
+   "score": 0.0786
   }
  ]
 }
