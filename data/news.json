@@ -1,5 +1,5 @@
 {
- "fetched": "2026-10-16T09:44:30+00:00",
+ "fetched": "2026-10-16T12:22:29+00:00",
  "sources_ok": [
   "CoinDesk",
   "Cointelegraph",
@@ -14,7 +14,15 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-15T13:28:48+00:00",
    "summary": "Bitcoin Magazine Charles Edwards: Why Quantum Risk Could Be MASSIVE BTC Upside Catalyst What will push Bitcoin to new highs? Charles Edwards breaks down key catalysts, from Fed policy shifts and government adoption to ETF institutional inflows. This post Charles Edwards: Why Qua…",
-   "score": 3.3585
+   "score": 3.2332
+  },
+  {
+   "title": "Morning Minute: Google Clears a Major Quantum Hurdle, Bitcoin Still Safe",
+   "url": "https://decrypt.co/381138/morning-minute-google-clears-a-major-quantum-hurdle-bitcoin-still-safe",
+   "source": "Decrypt",
+   "published": "2026-10-16T11:46:54+00:00",
+   "summary": "Plus, crypto majors rebound despite hot PPI and Saylor’s Strategy is at risk of removal from a major index.",
+   "score": 2.7761
   },
   {
    "title": "Bitcoin wilts as Fed rate uncertainty weighs. Kospi plunges 8%",
@@ -22,7 +30,7 @@
    "source": "CoinDesk",
    "published": "2026-10-15T03:57:45+00:00",
    "summary": "",
-   "score": 2.7971
+   "score": 2.6927
   },
   {
    "title": "Scammer loses $4.8M stored on tampered Ledgers: Asia Express",
@@ -30,15 +38,15 @@
    "source": "Cointelegraph",
    "published": "2026-10-15T22:42:58+00:00",
    "summary": "A scammer reportedly lost $4.8M of stolen money after storing the funds on tampered Ledgers. Bitcoin and Ether ETFs launch trading in Thailand and South Korea blocks 27 exchanges.",
-   "score": 2.5584
+   "score": 2.463
   },
   {
-   "title": "Bitcoin Falls as Hot Inflation Puts a Fed Hike Back on the Table",
-   "url": "https://decrypt.co/380950/bitcoin-falls-hot-inflation-fed-hike-odds",
-   "source": "Decrypt",
-   "published": "2026-10-14T14:51:44+00:00",
-   "summary": "September CPI hit 3.7%, above forecasts, sending Treasury yields higher and dragging crypto down with stocks.",
-   "score": 2.1535
+   "title": "Live updates: Bitcoin steady near $82,000 after Fed Chair Warsh's comments",
+   "url": "https://www.coindesk.com/markets/2026/10/16/live-updates-bitcoin-back-above-usd82-000-zec-jumps-11-as-etf-outflows-continue",
+   "source": "CoinDesk",
+   "published": "2026-10-16T09:48:14+00:00",
+   "summary": "",
+   "score": 1.9271
   },
   {
    "title": "Bitcoin miners plunge up to 13% in Wall Street’s worst selloff since July",
@@ -46,7 +54,15 @@
    "source": "Cointelegraph",
    "published": "2026-10-15T03:29:22+00:00",
    "summary": "TeraWulf, Core Scientific, Cipher Mining and IREN each lost more than 12% as hotter inflation hit AI infrastructure companies.",
-   "score": 1.964
+   "score": 1.8907
+  },
+  {
+   "title": "Bitcoin Falls as Hot Inflation Puts a Fed Hike Back on the Table",
+   "url": "https://decrypt.co/380950/bitcoin-falls-hot-inflation-fed-hike-odds",
+   "source": "Decrypt",
+   "published": "2026-10-14T14:51:44+00:00",
+   "summary": "September CPI hit 3.7%, above forecasts, sending Treasury yields higher and dragging crypto down with stocks.",
+   "score": 1.6585
   },
   {
    "title": "Capital B reports $78M H1 loss driven by Bitcoin impairment charge",
@@ -54,15 +70,7 @@
    "source": "Cointelegraph",
    "published": "2026-10-16T07:59:46+00:00",
    "summary": "Europe’s second-largest Bitcoin treasury raised $30 million and increased its Bitcoin holdings by 11% in the first half of 2026, despite reporting a $75 million Bitcoin impairment loss.",
-   "score": 1.5602
-  },
-  {
-   "title": "Bitcoin Whipsaws as Crypto Liquidations Near $1 Billion",
-   "url": "https://decrypt.co/381044/bitcoin-whipsaws-crypto-liquidations-near-1-billion",
-   "source": "Decrypt",
-   "published": "2026-10-15T15:20:41+00:00",
-   "summary": "Hot inflation data revived Fed rate-hike bets, and leveraged bulls paid the bill as nearly $1 billion in crypto positions were liquidated.",
-   "score": 1.5334
+   "score": 1.502
   },
   {
    "title": "Latin America’s MSTR: How OranjeBTC is Running the Saylor Playbook in Brazil | Gui Gomes",
@@ -70,15 +78,23 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-15T13:34:18+00:00",
    "summary": "Bitcoin Magazine Latin America’s MSTR: How OranjeBTC is Running the Saylor Playbook in Brazil | Gui Gomes Bitcoin is the best collateral, says OranjeBTC CEO Gui Gomes. He breaks down BTC-backed loans, Brazil's adoption, and the path to global reserve status. This post Latin Amer…",
-   "score": 1.3153
+   "score": 1.2662
   },
   {
-   "title": "Bitcoin Tests $81,000 as Rate Hike Fears Linger After Hot Inflation Data",
-   "url": "https://decrypt.co/381008/bitcoin-tests-81000-as-rate-hike-fears-linger-after-hot-inflation-data",
+   "title": "Scammer gets scammed in Ledger spy-chip exploit, loses almost $5 million in bitcoin",
+   "url": "https://www.coindesk.com/business/2026/10/16/scammer-gets-scammed-in-ledger-spy-chip-exploit-loses-almost-usd5-million-in-bitcoin",
+   "source": "CoinDesk",
+   "published": "2026-10-16T10:24:30+00:00",
+   "summary": "",
+   "score": 1.2442
+  },
+  {
+   "title": "Bitcoin Whipsaws as Crypto Liquidations Near $1 Billion",
+   "url": "https://decrypt.co/381044/bitcoin-whipsaws-crypto-liquidations-near-1-billion",
    "source": "Decrypt",
-   "published": "2026-10-15T11:48:42+00:00",
-   "summary": "Odds of an October Fed hike have climbed to 29% from 18% a week ago, and analysts see Bitcoin range-bound until the picture clears.",
-   "score": 1.1657
+   "published": "2026-10-15T15:20:41+00:00",
+   "summary": "Hot inflation data revived Fed rate-hike bets, and leveraged bulls paid the bill as nearly $1 billion in crypto positions were liquidated.",
+   "score": 1.1809
   },
   {
    "title": "Thailand crypto ETFs may see slow start despite new rules: CoinShares",
@@ -86,15 +102,15 @@
    "source": "Cointelegraph",
    "published": "2026-10-15T09:36:20+00:00",
    "summary": "Thailand’s new Bitcoin and Ether ETF rules take effect Friday, but CoinShares expects modest initial inflows as existing investment options compete for demand.",
-   "score": 1.084
+   "score": 1.0435
   },
   {
-   "title": "Bitcoin mining pool once handling 2.3% of network shuts after hashrate falls 65%",
-   "url": "https://www.coindesk.com/markets/2026/10/15/bitcoin-mining-pool-once-handling-2-3-of-network-shuts-after-hashrate-falls-65",
-   "source": "CoinDesk",
-   "published": "2026-10-15T04:13:56+00:00",
-   "summary": "",
-   "score": 1.0448
+   "title": "Bitcoin Tests $81,000 as Rate Hike Fears Linger After Hot Inflation Data",
+   "url": "https://decrypt.co/381008/bitcoin-tests-81000-as-rate-hike-fears-linger-after-hot-inflation-data",
+   "source": "Decrypt",
+   "published": "2026-10-15T11:48:42+00:00",
+   "summary": "Odds of an October Fed hike have climbed to 29% from 18% a week ago, and analysts see Bitcoin range-bound until the picture clears.",
+   "score": 0.8978
   },
   {
    "title": "Here’s what happened in crypto today",
@@ -102,7 +118,7 @@
    "source": "Cointelegraph",
    "published": "2026-10-16T06:21:30+00:00",
    "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
-   "score": 0.8582
+   "score": 0.8261
   },
   {
    "title": "Blue Coin Capital CIO: MSTR’S BTC Buying Engine is About to IGNITE | Mike Treidl",
@@ -110,23 +126,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-14T14:14:59+00:00",
    "summary": "Bitcoin Magazine Blue Coin Capital CIO: MSTR’S BTC Buying Engine is About to IGNITE | Mike Treidl Bitcoin treasury firms switch to perpetual preferred equity. Mike Treidl explains how preferreds prevent default and create a second BTC-buying engine. This post Blue Coin Capital C…",
-   "score": 0.8538
-  },
-  {
-   "title": "Bitcoin whale that sat through the March 2020 crash moves $378 million",
-   "url": "https://www.coindesk.com/markets/2026/10/13/bitcoin-whale-that-sat-through-the-march-2020-crash-moves-usd378-million",
-   "source": "CoinDesk",
-   "published": "2026-10-13T05:45:10+00:00",
-   "summary": "",
-   "score": 0.769
-  },
-  {
-   "title": "Bitcoin Whale That Sat Through Every Crash Since 2020 Just Moved $377M",
-   "url": "https://decrypt.co/380867/bitcoin-whale-every-crash-2020-moves-377m",
-   "source": "Decrypt",
-   "published": "2026-10-13T19:38:12+00:00",
-   "summary": "A wallet that received 4,581 BTC in March 2020, worth about $40 million then, moved its stash today when it was worth about $377 million.",
-   "score": 0.7518
+   "score": 0.822
   },
   {
    "title": "Bitcoin ETFs shed $261M as XRP funds buck weekly outflow trend",
@@ -134,23 +134,23 @@
    "source": "Cointelegraph",
    "published": "2026-10-15T07:23:43+00:00",
    "summary": "Bitcoin ETFs have recorded $151 million in net outflows since Monday, after investors withdrew $681 million the previous week.",
-   "score": 0.672
+   "score": 0.6469
   },
   {
-   "title": "Bitcoin climbs toward $84,000 after Fed’s Williams sees no rate hikes in 2027",
-   "url": "https://www.coindesk.com/markets/2026/10/14/bitcoin-climbs-toward-usd84-000-after-fed-s-williams-sees-no-rate-hikes-in-2027",
+   "title": "Bitcoin mining pool once handling 2.3% of network shuts after hashrate falls 65%",
+   "url": "https://www.coindesk.com/markets/2026/10/15/bitcoin-mining-pool-once-handling-2-3-of-network-shuts-after-hashrate-falls-65",
    "source": "CoinDesk",
-   "published": "2026-10-14T03:50:54+00:00",
+   "published": "2026-10-15T04:13:56+00:00",
    "summary": "",
-   "score": 0.5878
+   "score": 0.6438
   },
   {
-   "title": "Morning Minute: Bitcoin Gets Spooked as ‘Uptober’ Lets Down",
-   "url": "https://decrypt.co/380828/morning-minute-bitcoin-gets-spooked-as-uptober-lets-down",
+   "title": "Bitcoin Whale That Sat Through Every Crash Since 2020 Just Moved $377M",
+   "url": "https://decrypt.co/380867/bitcoin-whale-every-crash-2020-moves-377m",
    "source": "Decrypt",
-   "published": "2026-10-13T11:40:51+00:00",
-   "summary": "Crypto majors are red, alts are down bad and onchain is facing capitulation. This was not the ‘Uptober’ that was promised…",
-   "score": 0.5361
+   "published": "2026-10-13T19:38:12+00:00",
+   "summary": "A wallet that received 4,581 BTC in March 2020, worth about $40 million then, moved its stash today when it was worth about $377 million.",
+   "score": 0.579
   },
   {
    "title": "Strive Buys More Bitcoin, Crosses 30,000 BTC Mark",
@@ -158,23 +158,31 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-13T15:48:14+00:00",
    "summary": "Bitcoin Magazine Strive Buys More Bitcoin, Crosses 30,000 BTC Mark The bitcoin treasury company is still the fifth biggest in the space. This post Strive Buys More Bitcoin, Crosses 30,000 BTC Mark first appeared on Bitcoin Magazine and is written by Mathew Di Salvo .",
-   "score": 0.494
+   "score": 0.4755
   },
   {
-   "title": "Standard Chartered Opens Bitcoin and Ethereum Trading to Wealthy UAE Clients",
-   "url": "https://decrypt.co/380967/standard-chartered-bitcoin-ethereum-trading",
-   "source": "Decrypt",
-   "published": "2026-10-14T17:46:05+00:00",
-   "summary": "The British bank won Dubai regulatory approval to let affluent clients buy BTC and ETH straight from their bank accounts, with custody and settlement kept in-house.",
-   "score": 0.4047
-  },
-  {
-   "title": "XRP has failed to make holders rich like bitcoin and ether. Here’s why",
-   "url": "https://www.coindesk.com/markets/2026/10/16/xrp-has-failed-to-make-holders-rich-like-bitcoin-and-ether-here-s-why",
+   "title": "Bitcoin whale that sat through the March 2020 crash moves $378 million",
+   "url": "https://www.coindesk.com/markets/2026/10/13/bitcoin-whale-that-sat-through-the-march-2020-crash-moves-usd378-million",
    "source": "CoinDesk",
-   "published": "2026-10-16T05:53:58+00:00",
+   "published": "2026-10-13T05:45:10+00:00",
    "summary": "",
-   "score": 0.3875
+   "score": 0.4738
+  },
+  {
+   "title": "Morning Minute: Bitcoin Gets Spooked as ‘Uptober’ Lets Down",
+   "url": "https://decrypt.co/380828/morning-minute-bitcoin-gets-spooked-as-uptober-lets-down",
+   "source": "Decrypt",
+   "published": "2026-10-13T11:40:51+00:00",
+   "summary": "Crypto majors are red, alts are down bad and onchain is facing capitulation. This was not the ‘Uptober’ that was promised…",
+   "score": 0.4129
+  },
+  {
+   "title": "Bitcoin climbs toward $84,000 after Fed’s Williams sees no rate hikes in 2027",
+   "url": "https://www.coindesk.com/markets/2026/10/14/bitcoin-climbs-toward-usd84-000-after-fed-s-williams-sees-no-rate-hikes-in-2027",
+   "source": "CoinDesk",
+   "published": "2026-10-14T03:50:54+00:00",
+   "summary": "",
+   "score": 0.3621
   },
   {
    "title": "Brooklyn DA Pulls the Plug on Crypto Scam Network",
@@ -182,15 +190,15 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-15T23:03:27+00:00",
    "summary": "Bitcoin Magazine Brooklyn DA Pulls the Plug on Crypto Scam Network 112 servers and 241 fake sites knocked offline in one of the largest cyber takedowns ever by a local prosecutor. This post Brooklyn DA Pulls the Plug on Crypto Scam Network first appeared on Bitcoin Magazine and…",
-   "score": 0.351
+   "score": 0.3379
   },
   {
-   "title": "Bitcoin buyers snap up a brief drop below $80,000 as Asian stocks rebound",
-   "url": "https://www.coindesk.com/markets/2026/10/16/bitcoin-buyers-snap-up-a-brief-drop-below-usd80-000-as-asian-stocks-rebound",
-   "source": "CoinDesk",
-   "published": "2026-10-16T04:14:22+00:00",
-   "summary": "",
-   "score": 0.3027
+   "title": "Standard Chartered Opens Bitcoin and Ethereum Trading to Wealthy UAE Clients",
+   "url": "https://decrypt.co/380967/standard-chartered-bitcoin-ethereum-trading",
+   "source": "Decrypt",
+   "published": "2026-10-14T17:46:05+00:00",
+   "summary": "The British bank won Dubai regulatory approval to let affluent clients buy BTC and ETH straight from their bank accounts, with custody and settlement kept in-house.",
+   "score": 0.3117
   },
   {
    "title": "Strategy Smash Buys $21.5M in BTC as It Continues Bitcoin Accumulation",
@@ -198,15 +206,15 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-12T15:56:59+00:00",
    "summary": "Bitcoin Magazine Strategy Smash Buys $21.5M in BTC as It Continues Bitcoin Accumulation Bitcoin juggernaut Strategy has bought more BTC as it pivots back to accumulating on a weekly basis. The Nasdaq-listed bitcoin treasury spent $21.5 million on 250 bitcoins from October 5 and…",
-   "score": 0.2778
+   "score": 0.2674
   },
   {
-   "title": "Bitcoin Spooked? Crypto Fear and Greed Index Drops to Pre-Rally August Lows",
-   "url": "https://decrypt.co/380708/bitcoin-spooked-crypto-fear-greed-drops",
-   "source": "Decrypt",
-   "published": "2026-10-12T16:41:34+00:00",
-   "summary": "The Crypto Fear and Greed Index has dropped to 56 from an August peak of 82, as oil, bond yields, and ETF outflows hit Bitcoin in October.",
-   "score": 0.2753
+   "title": "Quantum Alliance forms amid warnings 6.4 million bitcoin face future quantum threat",
+   "url": "https://www.coindesk.com/tech/2026/10/16/experts-agree-quantum-computers-could-put-satoshi-s-bitcoin-at-risk-but-not-on-what-s-next",
+   "source": "CoinDesk",
+   "published": "2026-10-16T10:52:26+00:00",
+   "summary": "",
+   "score": 0.2565
   },
   {
    "title": "Strive reports $208M in warrant exercises as Bitcoin holdings jump 11%",
@@ -214,7 +222,15 @@
    "source": "Cointelegraph",
    "published": "2026-10-13T15:57:55+00:00",
    "summary": "Strive is now the fifth-largest publicly traded corporate Bitcoin holder, with 32,773 BTC, as it continues to expand its treasury through equity financing.",
-   "score": 0.2535
+   "score": 0.244
+  },
+  {
+   "title": "Bitcoin Spooked? Crypto Fear and Greed Index Drops to Pre-Rally August Lows",
+   "url": "https://decrypt.co/380708/bitcoin-spooked-crypto-fear-greed-drops",
+   "source": "Decrypt",
+   "published": "2026-10-12T16:41:34+00:00",
+   "summary": "The Crypto Fear and Greed Index has dropped to 56 from an August peak of 82, as oil, bond yields, and ETF outflows hit Bitcoin in October.",
+   "score": 0.212
   },
   {
    "title": "Bitcoin’s Volatility Has Fallen Within S&P 500 Ranks, Study Shows",
@@ -222,7 +238,15 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-15T20:30:46+00:00",
    "summary": "Bitcoin Magazine Bitcoin’s Volatility Has Fallen Within S&P 500 Ranks, Study Shows Grayscale research shows that bitcoin’s realized volatility is in the same range as a number of S&P 500 stocks. This post Bitcoin’s Volatility Has Fallen Within S&P 500 Ranks, Study Shows first ap…",
-   "score": 0.2166
+   "score": 0.2085
+  },
+  {
+   "title": "Altcoins outpace bitcoin as celestia jumps 16%, Warsh silent on interest-rate plans",
+   "url": "https://www.coindesk.com/markets/2026/10/16/altcoins-outpace-bitcoin-as-celestia-jumps-16-warsh-silent-on-interest-rate-plans",
+   "source": "CoinDesk",
+   "published": "2026-10-16T10:41:03+00:00",
+   "summary": "",
+   "score": 0.2047
   },
   {
    "title": "CryptoQuant’s 3 charts keeping Bitcoin’s ‘Uptober’ thesis valid",
@@ -230,23 +254,7 @@
    "source": "Cointelegraph",
    "published": "2026-10-14T10:38:22+00:00",
    "summary": "Bitcoin onchain analysis eyed a “potential bottom” for BTC price action in early October as demand weathered external headwinds.",
-   "score": 0.1912
-  },
-  {
-   "title": "Bitcoin, copper, stocks, yields all fall; gold rises",
-   "url": "https://www.coindesk.com/daybook-us/2026/10/15/bitcoin-copper-stocks-yields-all-fall-gold-rises",
-   "source": "CoinDesk",
-   "published": "2026-10-15T11:15:00+00:00",
-   "summary": "",
-   "score": 0.1894
-  },
-  {
-   "title": "Binance Is Shutting Down Its Bitcoin Mining Pool After Six Years",
-   "url": "https://decrypt.co/380870/binance-shutting-down-bitcoin-mining-pool",
-   "source": "Decrypt",
-   "published": "2026-10-13T20:16:03+00:00",
-   "summary": "Binance will discontinue Binance Pool, Pool Savings, Cloud Mining, and other related services in a retreat from mining infrastructure.",
-   "score": 0.1726
+   "score": 0.1841
   },
   {
    "title": "Willem Middelkoop: Bitcoin is the Fastest Horse – Why the Debasement Trade Takes it to $1M",
@@ -254,15 +262,15 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-12T15:00:28+00:00",
    "summary": "Bitcoin Magazine Willem Middelkoop: Bitcoin is the Fastest Horse – Why the Debasement Trade Takes it to $1M Central banks buy record gold, so why not Bitcoin? Willem Middelkoop explains why authority favors controllable assets while institutions turn to ETFs. This post Willem Mi…",
-   "score": 0.1697
+   "score": 0.1634
   },
   {
-   "title": "Altcoins lead crypto declines as Asian stocks drop; bitcoin little changed since midnight",
-   "url": "https://www.coindesk.com/markets/2026/10/15/bitcoin-holds-above-usd80-000-as-an-asian-stock-rout-drags-altcoins-lower",
+   "title": "XRP has failed to make holders rich like bitcoin and ether. Here’s why",
+   "url": "https://www.coindesk.com/markets/2026/10/16/xrp-has-failed-to-make-holders-rich-like-bitcoin-and-ether-here-s-why",
    "source": "CoinDesk",
-   "published": "2026-10-15T10:52:11+00:00",
+   "published": "2026-10-16T05:53:58+00:00",
    "summary": "",
-   "score": 0.1507
+   "score": 0.1528
   },
   {
    "title": "Saylor teases Strategy Bitcoin buying after ending September with STRC buybacks",
@@ -270,7 +278,15 @@
    "source": "Cointelegraph",
    "published": "2026-10-11T17:11:00+00:00",
    "summary": "Investors will have to wait an extra day to find out if and how much Strategy added to its Bitcoin treasury in the first week of October.",
-   "score": 0.142
+   "score": 0.1367
+  },
+  {
+   "title": "Binance Is Shutting Down Its Bitcoin Mining Pool After Six Years",
+   "url": "https://decrypt.co/380870/binance-shutting-down-bitcoin-mining-pool",
+   "source": "Decrypt",
+   "published": "2026-10-13T20:16:03+00:00",
+   "summary": "Binance will discontinue Binance Pool, Pool Savings, Cloud Mining, and other related services in a retreat from mining infrastructure.",
+   "score": 0.133
   },
   {
    "title": "US Hoovers up Bitcoin While the World Runs on Its Digital Dollars: Report",
@@ -278,23 +294,15 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-15T18:28:34+00:00",
    "summary": "Bitcoin Magazine US Hoovers up Bitcoin While the World Runs on Its Digital Dollars: Report Chainalysis research shows that the U.S. is HODLing hard. This post US Hoovers up Bitcoin While the World Runs on Its Digital Dollars: Report first appeared on Bitcoin Magazine and is writ…",
-   "score": 0.1346
+   "score": 0.1296
   },
   {
-   "title": "Live updates: Bitcoin bounces back to $82,000 after first fall below $80,000 in one month",
-   "url": "https://www.coindesk.com/business/2026/10/15/live-updates-bitcoin-back-under-usd81-000-as-ai-selloff-worsens",
+   "title": "Bitcoin buyers snap up a brief drop below $80,000 as Asian stocks rebound",
+   "url": "https://www.coindesk.com/markets/2026/10/16/bitcoin-buyers-snap-up-a-brief-drop-below-usd80-000-as-asian-stocks-rebound",
    "source": "CoinDesk",
-   "published": "2026-10-15T10:16:15+00:00",
+   "published": "2026-10-16T04:14:22+00:00",
    "summary": "",
-   "score": 0.1195
-  },
-  {
-   "title": "Bitcoin Ranges Near $83K as Traders Look to US Inflation Data",
-   "url": "https://decrypt.co/380669/bitcoin-ranges-near-83k-as-traders-look-to-us-inflation-data",
-   "source": "Decrypt",
-   "published": "2026-10-12T11:41:50+00:00",
-   "summary": "October rate-hike odds have slumped, but analysts say Treasury yields at two-decade highs are still keeping a lid on risk appetite.",
-   "score": 0.1079
+   "score": 0.1193
   },
   {
    "title": "Ledger implant tests Bitcoin ETFs as safer custodial solutions than hardware wallets",
@@ -302,7 +310,7 @@
    "source": "Cointelegraph",
    "published": "2026-10-12T14:07:00+00:00",
    "summary": "The discovery of an unauthorized Ledger hardware implant reignited debate on whether Bitcoin ETFs are safer than self-custodying Bitcoin via hardware wallet devices.",
-   "score": 0.1072
+   "score": 0.1032
   },
   {
    "title": "Ledger Says Organized Crime Group Spent Millions Targeting Hardware Wallet Users",
@@ -310,23 +318,15 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-15T15:58:08+00:00",
    "summary": "Bitcoin Magazine Ledger Says Organized Crime Group Spent Millions Targeting Hardware Wallet Users Hardware wallet manufacturer Ledger has released a statement following a “sophisticated” supply chain attack. This post Ledger Says Organized Crime Group Spent Millions Targeting Ha…",
-   "score": 0.1038
+   "score": 0.1
   },
   {
-   "title": "Bitcoin pulls back from $84,000 as oil recovers, ETFs bleed over $600 million",
-   "url": "https://www.coindesk.com/markets/2026/10/12/bitcoin-shrugs-off-etf-outflows-to-trade-above-usd84-000-as-oil-falls",
-   "source": "CoinDesk",
-   "published": "2026-10-12T04:49:30+00:00",
-   "summary": "",
-   "score": 0.0938
-  },
-  {
-   "title": "Bitcoin Briefly Slides Below $80,000 On More Hot Inflation Data",
-   "url": "https://bitcoinmagazine.com/markets/bitcoin-price-briefly-dips-below-80000",
-   "source": "Bitcoin Magazine",
-   "published": "2026-10-15T15:53:12+00:00",
-   "summary": "Bitcoin Magazine Bitcoin Briefly Slides Below $80,000 On More Hot Inflation Data Bitcoin has recovered slightly despite its price getting hit again by hotter-than-expected inflation data. This post Bitcoin Briefly Slides Below $80,000 On More Hot Inflation Data first appeared on…",
-   "score": 0.083
+   "title": "Bitcoin Ranges Near $83K as Traders Look to US Inflation Data",
+   "url": "https://decrypt.co/380669/bitcoin-ranges-near-83k-as-traders-look-to-us-inflation-data",
+   "source": "Decrypt",
+   "published": "2026-10-12T11:41:50+00:00",
+   "summary": "October rate-hike odds have slumped, but analysts say Treasury yields at two-decade highs are still keeping a lid on risk appetite.",
+   "score": 0.0831
   }
  ]
 }
