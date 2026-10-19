@@ -1,5 +1,5 @@
 {
- "fetched": "2026-10-19T10:42:40+00:00",
+ "fetched": "2026-10-19T15:32:47+00:00",
  "sources_ok": [
   "CoinDesk",
   "Cointelegraph",
@@ -9,12 +9,44 @@
  "sources_failed": [],
  "items": [
   {
+   "title": "$20B AUM Siebert Analyst: Bitcoin to $175K in 2027",
+   "url": "https://bitcoinmagazine.com/videos/20b-aum-siebert-analyst-bitcoin-to-175k-in-2027",
+   "source": "Bitcoin Magazine",
+   "published": "2026-10-19T12:35:37+00:00",
+   "summary": "Bitcoin Magazine $20B AUM Siebert Analyst: Bitcoin to $175K in 2027 Siebert Financial targets $175K Bitcoin and $350 Strategy. Brian Vieten details the path from the $58K low, ETF demand, and Strategy's digital credit engine. This post $20B AUM Siebert Analyst: Bitcoin to $175K…",
+   "score": 3.4497
+  },
+  {
+   "title": "Strategy Buys $22M in Bitcoin, Buys Back $193M of STRC",
+   "url": "https://decrypt.co/381302/strategy-buys-22m-in-bitcoin-buys-back-193m-of-strc",
+   "source": "Decrypt",
+   "published": "2026-10-19T13:04:48+00:00",
+   "summary": "The Bitcoin treasury firm raised its preferred stock buyback cap to $3 billion and now holds 848,517 BTC, bought at an average of $75,446.",
+   "score": 2.9915
+  },
+  {
    "title": "Bitcoin, Ether ETFs shed $549M as October ETH outflows near $1B",
    "url": "https://cointelegraph.com/markets/bitcoin-ether-etfs-549-million-weekly-outflows?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
    "source": "Cointelegraph",
    "published": "2026-10-19T07:54:13+00:00",
    "summary": "US spot Ether ETFs recorded around $955 million in October net outflows so far, while Bitcoin funds extended their weekly withdrawal streak to two weeks.",
-   "score": 2.8808
+   "score": 2.6865
+  },
+  {
+   "title": "Bitcoin mining offshoot Nscale loses Microsoft AI deal as power delay stretches into 2030s",
+   "url": "https://www.coindesk.com/tech/2026/10/19/bitcoin-mining-offshoot-nscale-loses-microsoft-ai-deal-as-power-delay-stretches-into-2030s",
+   "source": "CoinDesk",
+   "published": "2026-10-19T09:15:00+00:00",
+   "summary": "",
+   "score": 1.8262
+  },
+  {
+   "title": "Here’s what happened in crypto today",
+   "url": "https://cointelegraph.com/news/what-happened-in-crypto-today?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-10-19T13:19:50+00:00",
+   "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
+   "score": 1.7046
   },
   {
    "title": "Bitcoin ETFs Shed Nearly $1 Billion in Two Weeks as Uptober Stays Red",
@@ -22,7 +54,7 @@
    "source": "Decrypt",
    "published": "2026-10-18T15:01:04+00:00",
    "summary": "Bitcoin ETFs lost a net $228.6 million this week, following a $681.1 million drain the week before and pushing October deep into the red.",
-   "score": 2.2574
+   "score": 1.6841
   },
   {
    "title": "Bitcoin whale moves $34 million in BTC it got in 2013 when coins traded at $131",
@@ -30,15 +62,15 @@
    "source": "CoinDesk",
    "published": "2026-10-19T06:23:16+00:00",
    "summary": "",
-   "score": 1.6911
+   "score": 1.2616
   },
   {
-   "title": "Here’s what happened in crypto today",
-   "url": "https://cointelegraph.com/news/what-happened-in-crypto-today?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-10-19T05:48:07+00:00",
-   "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
-   "score": 1.6395
+   "title": "Jeff Park: What The AI Pain Trade Means For Bitcoin",
+   "url": "https://bitcoinmagazine.com/videos/jeff-park-what-the-ai-pain-trade-means-for-bitcoin",
+   "source": "Bitcoin Magazine",
+   "published": "2026-10-19T12:30:46+00:00",
+   "summary": "Bitcoin Magazine Jeff Park: What The AI Pain Trade Means For Bitcoin From Strategy to Google, firms adopt preferred securities. Jeff Park explains why digital credit is the future of income and valuation. This post Jeff Park: What The AI Pain Trade Means For Bitcoin first appear…",
+   "score": 1.2251
   },
   {
    "title": "Bitcoin, Korea’s Kospi and Nasdaq futures rally as China GDP beats estimates",
@@ -46,15 +78,15 @@
    "source": "CoinDesk",
    "published": "2026-10-19T03:36:58+00:00",
    "summary": "",
-   "score": 1.2998
+   "score": 0.9697
   },
   {
-   "title": "MSCI To Move Forward With Proposal That Could Exclude Strategy From Index",
-   "url": "https://bitcoinmagazine.com/news/msci-could-exclude-strategy-from-index",
-   "source": "Bitcoin Magazine",
-   "published": "2026-10-16T16:32:41+00:00",
-   "summary": "Bitcoin Magazine MSCI To Move Forward With Proposal That Could Exclude Strategy From Index MSCI has adopted new rules that could push Bitcoin treasury Strategy out of its global equity benchmarks. This post MSCI To Move Forward With Proposal That Could Exclude Strategy From Inde…",
-   "score": 1.1923
+   "title": "Strategy's price chart is about to flash a major bullish signal weeks after bitcoin did",
+   "url": "https://www.coindesk.com/daybook-us/2026/10/19/strategy-on-verge-of-golden-cross-just-weeks-after-bitcoin-flashed-same-bullish-signal",
+   "source": "CoinDesk",
+   "published": "2026-10-19T11:15:00+00:00",
+   "summary": "",
+   "score": 0.7699
   },
   {
    "title": "Bitcoin Treasury Giant Strategy Faces Index Removal Under Finalized MSCI Rules",
@@ -62,39 +94,15 @@
    "source": "Decrypt",
    "published": "2026-10-16T18:16:04+00:00",
    "summary": "The index provider will classify “non-operating companies” as ineligible starting Nov. 30, targeting firms whose balance sheets are dominated by a single asset.",
-   "score": 0.9779
+   "score": 0.7296
   },
   {
-   "title": "Charles Edwards: Why Quantum Risk Could Be MASSIVE BTC Upside Catalyst",
-   "url": "https://bitcoinmagazine.com/videos/charles-edwards-why-quantum-risk-could-be-massive-btc-upside-catalyst",
+   "title": "MSCI To Move Forward With Proposal That Could Exclude Strategy From Index",
+   "url": "https://bitcoinmagazine.com/news/msci-could-exclude-strategy-from-index",
    "source": "Bitcoin Magazine",
-   "published": "2026-10-15T13:28:48+00:00",
-   "summary": "Bitcoin Magazine Charles Edwards: Why Quantum Risk Could Be MASSIVE BTC Upside Catalyst What will push Bitcoin to new highs? Charles Edwards breaks down key catalysts, from Fed policy shifts and government adoption to ETF institutional inflows. This post Charles Edwards: Why Qua…",
-   "score": 0.9367
-  },
-  {
-   "title": "BFFS26 Denver: Joseph Kelly on Bitcoin Custody and Credit; Alan Lane on Banking Lessons",
-   "url": "https://bitcoinmagazine.com/press-releases/bffs26-denver-joseph-kelly-on-bitcoin-custody-and-credit-alan-lane-on-banking-lessons",
-   "source": "Bitcoin Magazine",
-   "published": "2026-10-16T19:44:29+00:00",
-   "summary": "Bitcoin Magazine BFFS26 Denver: Joseph Kelly on Bitcoin Custody and Credit; Alan Lane on Banking Lessons CPAs, wealth advisors, and lenders gather in Denver for BFFS26, featuring Patrick Lowry on public-company Bitcoin treasury reserves and Wyoming Deputy Secretary of State Coli…",
-   "score": 0.6445
-  },
-  {
-   "title": "Morning Minute: Google Clears a Major Quantum Hurdle, Bitcoin Still Safe",
-   "url": "https://decrypt.co/381138/morning-minute-google-clears-a-major-quantum-hurdle-bitcoin-still-safe",
-   "source": "Decrypt",
-   "published": "2026-10-16T11:46:54+00:00",
-   "summary": "Plus, crypto majors rebound despite hot PPI and Saylor’s Strategy is at risk of removal from a major index.",
-   "score": 0.6434
-  },
-  {
-   "title": "Bitcoin extends bounce above $82,000 as stocks rebound, DeFi tokens lead altcoin gains",
-   "url": "https://www.coindesk.com/markets/2026/10/19/bitcoin-extends-bounce-above-usd82-000-as-stocks-rebound-defi-tokens-lead-altcoin-gains",
-   "source": "CoinDesk",
-   "published": "2026-10-19T10:26:33+00:00",
-   "summary": "",
-   "score": 0.6375
+   "published": "2026-10-16T16:32:41+00:00",
+   "summary": "Bitcoin Magazine MSCI To Move Forward With Proposal That Could Exclude Strategy From Index MSCI has adopted new rules that could push Bitcoin treasury Strategy out of its global equity benchmarks. This post MSCI To Move Forward With Proposal That Could Exclude Strategy From Inde…",
+   "score": 0.7116
   },
   {
    "title": "Stocks rebound into key tech earnings: Three things to know in Bitcoin this week",
@@ -102,15 +110,23 @@
    "source": "Cointelegraph",
    "published": "2026-10-19T10:20:00+00:00",
    "summary": "Analysts expect Bitcoin to retest $80,000 support again as stock markets attempt to recover last week’s losses.",
-   "score": 0.6365
+   "score": 0.5936
   },
   {
-   "title": "CME’s bitcoin cash, uniswap futures, global PMIs: Crypto Week Ahead",
-   "url": "https://www.coindesk.com/markets/2026/10/19/cme-s-bitcoin-cash-uniswap-futures-global-pmis-crypto-week-ahead",
-   "source": "CoinDesk",
-   "published": "2026-10-19T09:12:39+00:00",
-   "summary": "",
-   "score": 0.501
+   "title": "Charles Edwards: Why Quantum Risk Could Be MASSIVE BTC Upside Catalyst",
+   "url": "https://bitcoinmagazine.com/videos/charles-edwards-why-quantum-risk-could-be-massive-btc-upside-catalyst",
+   "source": "Bitcoin Magazine",
+   "published": "2026-10-15T13:28:48+00:00",
+   "summary": "Bitcoin Magazine Charles Edwards: Why Quantum Risk Could Be MASSIVE BTC Upside Catalyst What will push Bitcoin to new highs? Charles Edwards breaks down key catalysts, from Fed policy shifts and government adoption to ETF institutional inflows. This post Charles Edwards: Why Qua…",
+   "score": 0.5591
+  },
+  {
+   "title": "Morning Minute: Google Clears a Major Quantum Hurdle, Bitcoin Still Safe",
+   "url": "https://decrypt.co/381138/morning-minute-google-clears-a-major-quantum-hurdle-bitcoin-still-safe",
+   "source": "Decrypt",
+   "published": "2026-10-16T11:46:54+00:00",
+   "summary": "Plus, crypto majors rebound despite hot PPI and Saylor’s Strategy is at risk of removal from a major index.",
+   "score": 0.48
   },
   {
    "title": "Bitcoin price steadies around $82K after Fed’s Warsh avoids rate-hike hints",
@@ -118,31 +134,23 @@
    "source": "Cointelegraph",
    "published": "2026-10-16T15:45:43+00:00",
    "summary": "Bitcoin held above $80,000 as South Korean tech stocks recovered from a sell-off and traders lowered their expectations for a Federal Reserve interest-rate hike.",
-   "score": 0.4868
+   "score": 0.454
   },
   {
-   "title": "Sazmining Now Sells Jack Dorsey’s Proto Immersion Hashboards",
-   "url": "https://bitcoinmagazine.com/news/sazmining-now-sells-proto-hashboards",
+   "title": "Financial Repression in the Age of AI",
+   "url": "https://bitcoinmagazine.com/videos/financial-repression-in-the-age-of-ai",
    "source": "Bitcoin Magazine",
-   "published": "2026-10-16T19:19:40+00:00",
-   "summary": "Bitcoin Magazine Sazmining Now Sells Jack Dorsey’s Proto Immersion Hashboards Block’s Proto mining hashboards are now available on Sazmining’s mining-as-a-service platform. This post Sazmining Now Sells Jack Dorsey’s Proto Immersion Hashboards first appeared on Bitcoin Magazine…",
-   "score": 0.41
+   "published": "2026-10-19T12:47:13+00:00",
+   "summary": "Bitcoin Magazine Financial Repression in the Age of AI Offshoring left the U.S. dependent on rivals for critical tech, says Craig Tindale. Drawing on Hamilton & Eisenhower, he frames AI as a defense mandate. This post Financial Repression in the Age of AI first appeared on Bitco…",
+   "score": 0.3936
   },
   {
-   "title": "Bitcoin wilts as Fed rate uncertainty weighs. Kospi plunges 8%",
-   "url": "https://www.coindesk.com/markets/2026/10/15/bitcoin-is-back-below-usd81-000-as-fed-rate-uncertainty-weighs",
+   "title": "Live updates: Bitcoin holds near $82,000 as Nasdaq rebounds more than 1%",
+   "url": "https://www.coindesk.com/markets/2026/10/19/live-updates-bitcoin-tags-usd83-000-and-slips-back-as-chip-stocks-lead-a-rebound",
    "source": "CoinDesk",
-   "published": "2026-10-15T03:57:45+00:00",
+   "published": "2026-10-19T11:05:54+00:00",
    "summary": "",
-   "score": 0.3994
-  },
-  {
-   "title": "Bitcoin Falls as Hot Inflation Puts a Fed Hike Back on the Table",
-   "url": "https://decrypt.co/380950/bitcoin-falls-hot-inflation-fed-hike-odds",
-   "source": "Decrypt",
-   "published": "2026-10-14T14:51:44+00:00",
-   "summary": "September CPI hit 3.7%, above forecasts, sending Treasury yields higher and dragging crypto down with stocks.",
-   "score": 0.3844
+   "score": 0.3841
   },
   {
    "title": "Scammer loses $4.8M stored on tampered Ledgers: Asia Express",
@@ -150,15 +158,31 @@
    "source": "Cointelegraph",
    "published": "2026-10-15T22:42:58+00:00",
    "summary": "A scammer reportedly lost $4.8M of stolen money after storing the funds on tampered Ledgers. Bitcoin and Ether ETFs launch trading in Thailand and South Korea blocks 27 exchanges.",
-   "score": 0.3653
+   "score": 0.3407
   },
   {
-   "title": "Math Professor Warns of Threat to Bitcoin from AI Pivot",
-   "url": "https://bitcoinmagazine.com/videos/math-professor-warns-of-threat-to-bitcoin-from-ai-pivot",
+   "title": "Richard Byworth: Bitcoin’s Next Run “Just a Mater of Time” thanks to Seller Exhaustion",
+   "url": "https://bitcoinmagazine.com/videos/richard-byworth-bitcoins-next-run-just-a-mater-of-time-thanks-to-seller-exhaustion",
    "source": "Bitcoin Magazine",
-   "published": "2026-10-16T13:25:44+00:00",
-   "summary": "Bitcoin Magazine Math Professor Warns of Threat to Bitcoin from AI Pivot Could anyone actually break Bitcoin? Math professor Micah Warren applies game theory to explain why miner incentives and strong security prevent attacks. This post Math Professor Warns of Threat to Bitcoin…",
-   "score": 0.3012
+   "published": "2026-10-19T12:41:42+00:00",
+   "summary": "Bitcoin Magazine Richard Byworth: Bitcoin’s Next Run “Just a Mater of Time” thanks to Seller Exhaustion Can you earn yield on Bitcoin safely? Richard Byworth warns against covered calls in rallies, making the case for basis trades for market-neutral yield. This post Richard Bywo…",
+   "score": 0.3145
+  },
+  {
+   "title": "Bitcoin extends bounce above $82,000 as stocks rebound, DeFi tokens lead altcoin gains",
+   "url": "https://www.coindesk.com/markets/2026/10/19/bitcoin-extends-bounce-above-usd82-000-as-stocks-rebound-defi-tokens-lead-altcoin-gains",
+   "source": "CoinDesk",
+   "published": "2026-10-19T10:26:33+00:00",
+   "summary": "",
+   "score": 0.3044
+  },
+  {
+   "title": "Bitcoin Falls as Hot Inflation Puts a Fed Hike Back on the Table",
+   "url": "https://decrypt.co/380950/bitcoin-falls-hot-inflation-fed-hike-odds",
+   "source": "Decrypt",
+   "published": "2026-10-14T14:51:44+00:00",
+   "summary": "September CPI hit 3.7%, above forecasts, sending Treasury yields higher and dragging crypto down with stocks.",
+   "score": 0.2868
   },
   {
    "title": "Bitcoin miners plunge up to 13% in Wall Street’s worst selloff since July",
@@ -166,31 +190,23 @@
    "source": "Cointelegraph",
    "published": "2026-10-15T03:29:22+00:00",
    "summary": "TeraWulf, Core Scientific, Cipher Mining and IREN each lost more than 12% as hotter inflation hit AI infrastructure companies.",
-   "score": 0.2805
+   "score": 0.2616
   },
   {
-   "title": "Bitcoin Whipsaws as Crypto Liquidations Near $1 Billion",
-   "url": "https://decrypt.co/381044/bitcoin-whipsaws-crypto-liquidations-near-1-billion",
-   "source": "Decrypt",
-   "published": "2026-10-15T15:20:41+00:00",
-   "summary": "Hot inflation data revived Fed rate-hike bets, and leveraged bulls paid the bill as nearly $1 billion in crypto positions were liquidated.",
-   "score": 0.2737
-  },
-  {
-   "title": "Wall Street freaked out Friday, but VIX and bitcoin trades say the fear may fade Monday.",
-   "url": "https://www.coindesk.com/markets/2026/10/18/wall-street-freaked-out-friday-vix-and-bitcoin-say-it-may-not-last",
-   "source": "CoinDesk",
-   "published": "2026-10-18T16:33:00+00:00",
-   "summary": "",
-   "score": 0.2521
-  },
-  {
-   "title": "Sazmining Brings Proto’s Immersion Hashboards to Individual Owners, With 0% Financing From $1,397 Down",
-   "url": "https://bitcoinmagazine.com/press-releases/sazmining-brings-protos-immersion-hashboards-to-individual-owners-with-0-financing-from-1397-down",
+   "title": "Fundstrat Analyst Sean Farrell: Bitcoin to $100k by Year End + MSTR MSCI Exclusion",
+   "url": "https://bitcoinmagazine.com/videos/fundstrat-analyst-sean-farrell-bitcoin-to-100k-by-year-end-mstr-msci-exclusion",
    "source": "Bitcoin Magazine",
-   "published": "2026-10-16T12:42:22+00:00",
-   "summary": "Bitcoin Magazine Sazmining Brings Proto’s Immersion Hashboards to Individual Owners, With 0% Financing From $1,397 Down Proto immersion hashboards, built for efficiency and long service life, are now available for outright purchase through Sazmining’s mining-as-a-service platfor…",
-   "score": 0.2385
+   "published": "2026-10-19T12:22:41+00:00",
+   "summary": "Bitcoin Magazine Fundstrat Analyst Sean Farrell: Bitcoin to $100k by Year End + MSTR MSCI Exclusion Where is Bitcoin headed by year-end? Fundstrat's Sean Farrell sees $95K–$100K as possible, explaining bond volatility impacts and the broader regime shift. This post Fundstrat Ana…",
+   "score": 0.2504
+  },
+  {
+   "title": "CME’s bitcoin cash, uniswap futures, global PMIs: Crypto Week Ahead",
+   "url": "https://www.coindesk.com/markets/2026/10/19/cme-s-bitcoin-cash-uniswap-futures-global-pmis-crypto-week-ahead",
+   "source": "CoinDesk",
+   "published": "2026-10-19T09:12:39+00:00",
+   "summary": "",
+   "score": 0.2392
   },
   {
    "title": "Capital B reports $78M H1 loss driven by Bitcoin impairment charge",
@@ -198,7 +214,31 @@
    "source": "Cointelegraph",
    "published": "2026-10-16T07:59:46+00:00",
    "summary": "Europe’s second-largest Bitcoin treasury raised $30 million and increased its Bitcoin holdings by 11% in the first half of 2026, despite reporting a $75 million Bitcoin impairment loss.",
-   "score": 0.2228
+   "score": 0.2078
+  },
+  {
+   "title": "Bitcoin Whipsaws as Crypto Liquidations Near $1 Billion",
+   "url": "https://decrypt.co/381044/bitcoin-whipsaws-crypto-liquidations-near-1-billion",
+   "source": "Decrypt",
+   "published": "2026-10-15T15:20:41+00:00",
+   "summary": "Hot inflation data revived Fed rate-hike bets, and leveraged bulls paid the bill as nearly $1 billion in crypto positions were liquidated.",
+   "score": 0.2042
+  },
+  {
+   "title": "BFFS26 Denver: Joseph Kelly on Bitcoin Custody and Credit; Alan Lane on Banking Lessons",
+   "url": "https://bitcoinmagazine.com/press-releases/bffs26-denver-joseph-kelly-on-bitcoin-custody-and-credit-alan-lane-on-banking-lessons",
+   "source": "Bitcoin Magazine",
+   "published": "2026-10-16T19:44:29+00:00",
+   "summary": "Bitcoin Magazine BFFS26 Denver: Joseph Kelly on Bitcoin Custody and Credit; Alan Lane on Banking Lessons CPAs, wealth advisors, and lenders gather in Denver for BFFS26, featuring Patrick Lowry on public-company Bitcoin treasury reserves and Wyoming Deputy Secretary of State Coli…",
+   "score": 0.1969
+  },
+  {
+   "title": "Bitcoin wilts as Fed rate uncertainty weighs. Kospi plunges 8%",
+   "url": "https://www.coindesk.com/markets/2026/10/15/bitcoin-is-back-below-usd81-000-as-fed-rate-uncertainty-weighs",
+   "source": "CoinDesk",
+   "published": "2026-10-15T03:57:45+00:00",
+   "summary": "",
+   "score": 0.1907
   },
   {
    "title": "Bitcoin Tests $81,000 as Rate Hike Fears Linger After Hot Inflation Data",
@@ -206,23 +246,7 @@
    "source": "Decrypt",
    "published": "2026-10-15T11:48:42+00:00",
    "summary": "Odds of an October Fed hike have climbed to 29% from 18% a week ago, and analysts see Bitcoin range-bound until the picture clears.",
-   "score": 0.2081
-  },
-  {
-   "title": "Bitcoin’s $100,000 year-end hope divides analysts as inflation clouds outlook",
-   "url": "https://www.coindesk.com/markets/2026/10/18/bitcoin-s-usd100-000-year-end-hope-divides-analysts-as-inflation-clouds-outlook",
-   "source": "CoinDesk",
-   "published": "2026-10-18T13:00:00+00:00",
-   "summary": "",
-   "score": 0.1916
-  },
-  {
-   "title": "Crypto Analyst Lark Davis: The Bitcoin Bull Run has Begun",
-   "url": "https://bitcoinmagazine.com/videos/crypto-analyst-lark-davis-the-bitcoin-bull-run-has-begun",
-   "source": "Bitcoin Magazine",
-   "published": "2026-10-16T13:48:18+00:00",
-   "summary": "Bitcoin Magazine Crypto Analyst Lark Davis: The Bitcoin Bull Run has Begun Bitcoin trades sideways in $80Ks, but Lark Davis sees a major cycle ahead. He explains on-chain signals, whale accumulation, and a $57K market bottom. This post Crypto Analyst Lark Davis: The Bitcoin Bull…",
-   "score": 0.1744
+   "score": 0.1552
   },
   {
    "title": "Crypto Biz: Wall Street closes at 4. Tokenized stocks keep trading",
@@ -230,23 +254,23 @@
    "source": "Cointelegraph",
    "published": "2026-10-16T15:52:28+00:00",
    "summary": "Tokenized stocks are drawing trading activity beyond Wall Street hours, while Bitcoin miners confront costly AI expansion and new accounting rules could benefit stablecoins.",
-   "score": 0.1598
+   "score": 0.149
   },
   {
-   "title": "Scammer gets scammed in Ledger spy-chip exploit, loses almost $5 million in bitcoin",
-   "url": "https://www.coindesk.com/business/2026/10/16/scammer-gets-scammed-in-ledger-spy-chip-exploit-loses-almost-usd5-million-in-bitcoin",
+   "title": "Sazmining Now Sells Jack Dorsey’s Proto Immersion Hashboards",
+   "url": "https://bitcoinmagazine.com/news/sazmining-now-sells-proto-hashboards",
+   "source": "Bitcoin Magazine",
+   "published": "2026-10-16T19:19:40+00:00",
+   "summary": "Bitcoin Magazine Sazmining Now Sells Jack Dorsey’s Proto Immersion Hashboards Block’s Proto mining hashboards are now available on Sazmining’s mining-as-a-service platform. This post Sazmining Now Sells Jack Dorsey’s Proto Immersion Hashboards first appeared on Bitcoin Magazine…",
+   "score": 0.1253
+  },
+  {
+   "title": "Wall Street freaked out Friday, but VIX and bitcoin trades say the fear may fade Monday.",
+   "url": "https://www.coindesk.com/markets/2026/10/18/wall-street-freaked-out-friday-vix-and-bitcoin-say-it-may-not-last",
    "source": "CoinDesk",
-   "published": "2026-10-16T10:24:30+00:00",
+   "published": "2026-10-18T16:33:00+00:00",
    "summary": "",
-   "score": 0.1476
-  },
-  {
-   "title": "Crypto Firms Launch Quantum Alliance as 6 Million Bitcoin Sit Exposed",
-   "url": "https://decrypt.co/381236/crypto-firms-launch-quantum-alliance-as-6-million-bitcoin-sit-exposed",
-   "source": "Decrypt",
-   "published": "2026-10-17T16:01:03+00:00",
-   "summary": "The nine-member group, modeled on the Internet Engineering Task Force, aims to set open standards for testing quantum-resistance claims as forecasts place the first practical attack in the late 2020s.",
-   "score": 0.1415
+   "score": 0.1204
   },
   {
    "title": "Thailand crypto ETFs may see slow start despite new rules: CoinShares",
@@ -254,31 +278,31 @@
    "source": "Cointelegraph",
    "published": "2026-10-15T09:36:20+00:00",
    "summary": "Thailand’s new Bitcoin and Ether ETF rules take effect Friday, but CoinShares expects modest initial inflows as existing investment options compete for demand.",
-   "score": 0.1238
+   "score": 0.1155
   },
   {
-   "title": "Latin America’s MSTR: How OranjeBTC is Running the Saylor Playbook in Brazil | Gui Gomes",
-   "url": "https://bitcoinmagazine.com/videos/latin-americas-mstr-how-oranjebtc-is-running-the-saylor-playbook-in-brazil-gui-gomes",
-   "source": "Bitcoin Magazine",
-   "published": "2026-10-15T13:34:18+00:00",
-   "summary": "Bitcoin Magazine Latin America’s MSTR: How OranjeBTC is Running the Saylor Playbook in Brazil | Gui Gomes Bitcoin is the best collateral, says OranjeBTC CEO Gui Gomes. He breaks down BTC-backed loans, Brazil's adoption, and the path to global reserve status. This post Latin Amer…",
-   "score": 0.1202
-  },
-  {
-   "title": "Bitcoin Whale That Sat Through Every Crash Since 2020 Just Moved $377M",
-   "url": "https://decrypt.co/380867/bitcoin-whale-every-crash-2020-moves-377m",
+   "title": "Crypto Firms Launch Quantum Alliance as 6 Million Bitcoin Sit Exposed",
+   "url": "https://decrypt.co/381236/crypto-firms-launch-quantum-alliance-as-6-million-bitcoin-sit-exposed",
    "source": "Decrypt",
-   "published": "2026-10-13T19:38:12+00:00",
-   "summary": "A wallet that received 4,581 BTC in March 2020, worth about $40 million then, moved its stash today when it was worth about $377 million.",
-   "score": 0.1074
+   "published": "2026-10-17T16:01:03+00:00",
+   "summary": "The nine-member group, modeled on the Internet Engineering Task Force, aims to set open standards for testing quantum-resistance claims as forecasts place the first practical attack in the late 2020s.",
+   "score": 0.1056
   },
   {
-   "title": "Live updates: Bitcoin dips to $81,000 as stocks slide, VIX soars ahead of Black Monday anniversary",
-   "url": "https://www.coindesk.com/markets/2026/10/16/live-updates-bitcoin-back-above-usd82-000-zec-jumps-11-as-etf-outflows-continue",
+   "title": "Math Professor Warns of Threat to Bitcoin from AI Pivot",
+   "url": "https://bitcoinmagazine.com/videos/math-professor-warns-of-threat-to-bitcoin-from-ai-pivot",
+   "source": "Bitcoin Magazine",
+   "published": "2026-10-16T13:25:44+00:00",
+   "summary": "Bitcoin Magazine Math Professor Warns of Threat to Bitcoin from AI Pivot Could anyone actually break Bitcoin? Math professor Micah Warren applies game theory to explain why miner incentives and strong security prevent attacks. This post Math Professor Warns of Threat to Bitcoin…",
+   "score": 0.092
+  },
+  {
+   "title": "Bitcoin’s $100,000 year-end hope divides analysts as inflation clouds outlook",
+   "url": "https://www.coindesk.com/markets/2026/10/18/bitcoin-s-usd100-000-year-end-hope-divides-analysts-as-inflation-clouds-outlook",
    "source": "CoinDesk",
-   "published": "2026-10-16T09:48:14+00:00",
+   "published": "2026-10-18T13:00:00+00:00",
    "summary": "",
-   "score": 0.1054
+   "score": 0.0915
   },
   {
    "title": "Bitcoin ETFs shed $261M as XRP funds buck weekly outflow trend",
@@ -286,47 +310,23 @@
    "source": "Cointelegraph",
    "published": "2026-10-15T07:23:43+00:00",
    "summary": "Bitcoin ETFs have recorded $151 million in net outflows since Monday, after investors withdrew $681 million the previous week.",
-   "score": 0.096
+   "score": 0.0895
   },
   {
-   "title": "Blue Coin Capital CIO: MSTR’S BTC Buying Engine is About to IGNITE | Mike Treidl",
-   "url": "https://bitcoinmagazine.com/videos/blue-coin-capital-cio-mstrs-btc-buying-engine-is-about-to-ignite-mike-treidl",
-   "source": "Bitcoin Magazine",
-   "published": "2026-10-14T14:14:59+00:00",
-   "summary": "Bitcoin Magazine Blue Coin Capital CIO: MSTR’S BTC Buying Engine is About to IGNITE | Mike Treidl Bitcoin treasury firms switch to perpetual preferred equity. Mike Treidl explains how preferreds prevent default and create a second BTC-buying engine. This post Blue Coin Capital C…",
-   "score": 0.078
-  },
-  {
-   "title": "Morning Minute: Bitcoin Gets Spooked as ‘Uptober’ Lets Down",
-   "url": "https://decrypt.co/380828/morning-minute-bitcoin-gets-spooked-as-uptober-lets-down",
+   "title": "Bitcoin Whale That Sat Through Every Crash Since 2020 Just Moved $377M",
+   "url": "https://decrypt.co/380867/bitcoin-whale-every-crash-2020-moves-377m",
    "source": "Decrypt",
-   "published": "2026-10-13T11:40:51+00:00",
-   "summary": "Crypto majors are red, alts are down bad and onchain is facing capitulation. This was not the ‘Uptober’ that was promised…",
-   "score": 0.0766
+   "published": "2026-10-13T19:38:12+00:00",
+   "summary": "A wallet that received 4,581 BTC in March 2020, worth about $40 million then, moved its stash today when it was worth about $377 million.",
+   "score": 0.0801
   },
   {
-   "title": "Bitcoin mining pool once handling 2.3% of network shuts after hashrate falls 65%",
-   "url": "https://www.coindesk.com/markets/2026/10/15/bitcoin-mining-pool-once-handling-2-3-of-network-shuts-after-hashrate-falls-65",
-   "source": "CoinDesk",
-   "published": "2026-10-15T04:13:56+00:00",
-   "summary": "",
-   "score": 0.0611
-  },
-  {
-   "title": "Standard Chartered Opens Bitcoin and Ethereum Trading to Wealthy UAE Clients",
-   "url": "https://decrypt.co/380967/standard-chartered-bitcoin-ethereum-trading",
-   "source": "Decrypt",
-   "published": "2026-10-14T17:46:05+00:00",
-   "summary": "The British bank won Dubai regulatory approval to let affluent clients buy BTC and ETH straight from their bank accounts, with custody and settlement kept in-house.",
-   "score": 0.0578
-  },
-  {
-   "title": "Deutsche Bank To Debut Bitcoin Custody Within Weeks: Report",
-   "url": "https://bitcoinmagazine.com/news/deutsche-bank-will-debut-bitcoin-custody",
+   "title": "Sazmining Brings Proto’s Immersion Hashboards to Individual Owners, With 0% Financing From $1,397 Down",
+   "url": "https://bitcoinmagazine.com/press-releases/sazmining-brings-protos-immersion-hashboards-to-individual-owners-with-0-financing-from-1397-down",
    "source": "Bitcoin Magazine",
-   "published": "2026-10-16T16:35:55+00:00",
-   "summary": "Bitcoin Magazine Deutsche Bank To Debut Bitcoin Custody Within Weeks: Report The German lender is moving fast with its crypto custody service. This post Deutsche Bank To Debut Bitcoin Custody Within Weeks: Report first appeared on Bitcoin Magazine and is written by Mathew Di Sal…",
-   "score": 0.0517
+   "published": "2026-10-16T12:42:22+00:00",
+   "summary": "Bitcoin Magazine Sazmining Brings Proto’s Immersion Hashboards to Individual Owners, With 0% Financing From $1,397 Down Proto immersion hashboards, built for efficiency and long service life, are now available for outright purchase through Sazmining’s mining-as-a-service platfor…",
+   "score": 0.0729
   }
  ]
 }
