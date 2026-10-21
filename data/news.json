@@ -1,5 +1,5 @@
 {
- "fetched": "2026-10-21T10:04:11+00:00",
+ "fetched": "2026-10-21T15:13:24+00:00",
  "sources_ok": [
   "CoinDesk",
   "Cointelegraph",
@@ -14,7 +14,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-20T16:26:29+00:00",
    "summary": "Bitcoin Magazine BlackRock Files for Bitcoin ETF With Downside Buffer and Capped Upside A new filing with the SEC shows BlackRock wants to release an exchange-traded fund that offers downside protection but also caps gains. This post BlackRock Files for Bitcoin ETF With Downside…",
-   "score": 3.4886
+   "score": 3.2384
   },
   {
    "title": "What Is Strategy (MSTR)? The Bitcoin Treasury Company",
@@ -22,15 +22,15 @@
    "source": "Decrypt",
    "published": "2026-10-20T16:17:02+00:00",
    "summary": "Strategy’s co-founder Michael Saylor pioneered the Bitcoin treasury playbook. Here’s what you need to know.",
-   "score": 3.326
+   "score": 3.0875
   },
   {
-   "title": "FINMA approves Switzerland’s first Bitcoin ETF for retail investors",
-   "url": "https://cointelegraph.com/news/finma-approves-switzerlands-first-bitcoin-etf-retail?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "title": "5 alternatives to Ledger to store your Bitcoin",
+   "url": "https://cointelegraph.com/magazine/5-alternatives-to-ledger-to-store-your-bitcoin?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
    "source": "Cointelegraph",
-   "published": "2026-10-20T13:10:00+00:00",
-   "summary": "The Swiss regulator cited a growing appetite for cryptocurrency investments and said that multiple fund providers have submitted Bitcoin ETF applications.",
-   "score": 3.1057
+   "published": "2026-10-21T13:30:00+00:00",
+   "summary": "Hardware wallets aren’t the only way to protect your crypto, but from ETFs and passkeys to multisig accounts, each alternative has its own risks and trade-offs.",
+   "score": 2.9263
   },
   {
    "title": "Swiss Financial Regulator Gives Green Light to Country’s First Bitcoin ETF",
@@ -38,15 +38,15 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-20T20:53:32+00:00",
    "summary": "Bitcoin Magazine Swiss Financial Regulator Gives Green Light to Country’s First Bitcoin ETF Bitcoin exchange-traded funds were only available to institutional investors — until now. This post Swiss Financial Regulator Gives Green Light to Country’s First Bitcoin ETF first appear…",
-   "score": 2.7778
+   "score": 2.5786
   },
   {
-   "title": "Ether ETF outflows continue, pass $1B in October so far",
-   "url": "https://cointelegraph.com/markets/ether-etf-outflows-near-1-1-billion-october?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "title": "FINMA approves Switzerland’s first Bitcoin ETF for retail investors",
+   "url": "https://cointelegraph.com/news/finma-approves-switzerlands-first-bitcoin-etf-retail?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
    "source": "Cointelegraph",
-   "published": "2026-10-21T08:11:50+00:00",
-   "summary": "US spot Ether ETFs have shed $1.08 billion so far in October, the biggest monthly outflow of 2026, while Bitcoin ETF inflows slowed after Monday’s spike.",
-   "score": 2.336
+   "published": "2026-10-20T13:10:00+00:00",
+   "summary": "The Swiss regulator cited a growing appetite for cryptocurrency investments and said that multiple fund providers have submitted Bitcoin ETF applications.",
+   "score": 2.3063
   },
   {
    "title": "Equity weakness could damp demand for bitcoin after biggest ETF inflows in a month",
@@ -54,7 +54,15 @@
    "source": "CoinDesk",
    "published": "2026-10-20T11:14:21+00:00",
    "summary": "",
-   "score": 2.1574
+   "score": 2.0027
+  },
+  {
+   "title": "“Massively Undervalued” – Samson Mow on MSTR & Bitcoin Treasuries",
+   "url": "https://bitcoinmagazine.com/videos/massively-undervalued-samson-mow-on-mstr-bitcoin-treasuries",
+   "source": "Bitcoin Magazine",
+   "published": "2026-10-21T13:43:51+00:00",
+   "summary": "📺 Watch Video Bitcoin Magazine “Massively Undervalued” – Samson Mow on MSTR & Bitcoin Treasuries JAN3 CEO Samson Mow argues Bitcoin treasury firms like Strategy are undervalued, explaining their role as buyers of last resort driving a global scarcity race. This post “Massively U…",
+   "score": 1.9417
   },
   {
    "title": "Bitcoin ETFs Post Their Best Day in Nearly a Month as BlackRock Does All the Buying",
@@ -62,7 +70,15 @@
    "source": "Decrypt",
    "published": "2026-10-20T18:31:04+00:00",
    "summary": "U.S. spot Bitcoin ETFs took in $526.7 million on Monday, their biggest day since Sept. 22. BlackRock's IBIT supplied all of it while Fidelity and Grayscale funds bled.",
-   "score": 1.9172
+   "score": 1.7797
+  },
+  {
+   "title": "Ether ETF outflows continue, pass $1B in October so far",
+   "url": "https://cointelegraph.com/markets/ether-etf-outflows-near-1-1-billion-october?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-10-21T08:11:50+00:00",
+   "summary": "US spot Ether ETFs have shed $1.08 billion so far in October, the biggest monthly outflow of 2026, while Bitcoin ETF inflows slowed after Monday’s spike.",
+   "score": 1.7347
   },
   {
    "title": "BlackRock seeks to shield bitcoin investors from losses after rival fund weathers 50% crash",
@@ -70,15 +86,7 @@
    "source": "CoinDesk",
    "published": "2026-10-20T14:28:39+00:00",
    "summary": "",
-   "score": 1.688
-  },
-  {
-   "title": "BlackRock files for third Bitcoin ETF, still no Solana or XRP",
-   "url": "https://cointelegraph.com/news/blackrock-ishares-bitcoin-managed-protection-etf-pbit?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-10-20T08:12:57+00:00",
-   "summary": "BlackRock’s proposed Bitcoin fund would use options to limit potential losses and gains, adding another strategy to its existing Bitcoin and Ether ETF lineup.",
-   "score": 1.5861
+   "score": 1.5669
   },
   {
    "title": "Zcash Leads Crypto Bounce, Surging 8.5% as Bitcoin Reclaims $83,000",
@@ -86,7 +94,7 @@
    "source": "Decrypt",
    "published": "2026-10-20T17:03:26+00:00",
    "summary": "Zcash jumped 8.5% in 24 hours to $1,215.85 as the broader crypto market rebounded, with Bitcoin up 1.6% and ETF money flowing back in.",
-   "score": 1.5018
+   "score": 1.3941
   },
   {
    "title": "Bitcoin ETFs just saw their biggest day in a month thanks entirely to BlackRock",
@@ -94,15 +102,15 @@
    "source": "CoinDesk",
    "published": "2026-10-20T08:24:01+00:00",
    "summary": "",
-   "score": 1.3253
+   "score": 1.2303
   },
   {
-   "title": "Bitcoin Treasury Strive Debuts New Preferred Stock With 15% Dividend",
-   "url": "https://bitcoinmagazine.com/news/strive-debuts-new-preferred-stock",
-   "source": "Bitcoin Magazine",
-   "published": "2026-10-20T20:13:19+00:00",
-   "summary": "Bitcoin Magazine Bitcoin Treasury Strive Debuts New Preferred Stock With 15% Dividend Strive’s second preferred stock offering, SATS, debuted Tuesday on the Nasdaq. This post Bitcoin Treasury Strive Debuts New Preferred Stock With 15% Dividend first appeared on Bitcoin Magazine…",
-   "score": 1.31
+   "title": "BlackRock files for third Bitcoin ETF, still no Solana or XRP",
+   "url": "https://cointelegraph.com/news/blackrock-ishares-bitcoin-managed-protection-etf-pbit?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-10-20T08:12:57+00:00",
+   "summary": "BlackRock’s proposed Bitcoin fund would use options to limit potential losses and gains, adding another strategy to its existing Bitcoin and Ether ETF lineup.",
+   "score": 1.1779
   },
   {
    "title": "BlackRock Files for 'Buffer' Bitcoin ETF as IBIT Draws $665M in a Day",
@@ -110,15 +118,23 @@
    "source": "Decrypt",
    "published": "2026-10-20T09:13:30+00:00",
    "summary": "The iShares Bitcoin Managed Protection ETF would use options on IBIT to limit losses, in exchange for giving up some upside.",
-   "score": 1.0729
+   "score": 0.996
+  },
+  {
+   "title": "Bitcoin Treasury Strive Debuts New Preferred Stock With 15% Dividend",
+   "url": "https://bitcoinmagazine.com/news/strive-debuts-new-preferred-stock",
+   "source": "Bitcoin Magazine",
+   "published": "2026-10-20T20:13:19+00:00",
+   "summary": "Bitcoin Magazine Bitcoin Treasury Strive Debuts New Preferred Stock With 15% Dividend Strive’s second preferred stock offering, SATS, debuted Tuesday on the Nasdaq. This post Bitcoin Treasury Strive Debuts New Preferred Stock With 15% Dividend first appeared on Bitcoin Magazine…",
+   "score": 0.9728
   },
   {
    "title": "Here’s what happened in crypto today",
    "url": "https://cointelegraph.com/news/what-happened-in-crypto-today?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
    "source": "Cointelegraph",
-   "published": "2026-10-21T06:00:00+00:00",
+   "published": "2026-10-21T13:34:54+00:00",
    "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
-   "score": 1.0621
+   "score": 0.88
   },
   {
    "title": "$20B AUM Siebert Analyst: Bitcoin to $175K in 2027",
@@ -126,23 +142,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-19T12:35:37+00:00",
    "summary": "Bitcoin Magazine $20B AUM Siebert Analyst: Bitcoin to $175K in 2027 Siebert Financial targets $175K Bitcoin and $350 Strategy. Brian Vieten details the path from the $58K low, ETF demand, and Strategy's digital credit engine. This post $20B AUM Siebert Analyst: Bitcoin to $175K…",
-   "score": 0.9558
-  },
-  {
-   "title": "Bitcoin rally could revive treasury buying, but easy-money days over",
-   "url": "https://cointelegraph.com/markets/bitcoin-rally-could-revive-treasury-buying-but-easy-money-days-over?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-10-20T01:35:00+00:00",
-   "summary": "“A return to last year’s indiscriminate capital raising looks unlikely,” said Bitfinex head of derivatives Jag Kooner.",
-   "score": 0.8455
-  },
-  {
-   "title": "Sam Callahan: Bitcoin Doesn’t Need Rate Cuts to Succeed",
-   "url": "https://bitcoinmagazine.com/videos/sam-callahan-bitcoin-doesnt-need-rate-cuts-to-succeed",
-   "source": "Bitcoin Magazine",
-   "published": "2026-10-20T12:40:11+00:00",
-   "summary": "📺 Watch Video Bitcoin Magazine Sam Callahan: Bitcoin Doesn’t Need Rate Cuts to Succeed The USD lost 20% purchasing power in 5 years. Sam Callahan breaks down financial repression, core PCE spikes, and the U.S. bond market's historic drawdown. This post Sam Callahan: Bitcoin Does…",
-   "score": 0.7518
+   "score": 0.7098
   },
   {
    "title": "Swiss Regulator Approves First Retail Fund That Holds Bitcoin Directly",
@@ -150,23 +150,23 @@
    "source": "Decrypt",
    "published": "2026-10-20T19:31:04+00:00",
    "summary": "FINMA waived the diversification rules for the fund but leaned hard on custody and investor-protection safeguards.",
-   "score": 0.7303
+   "score": 0.678
   },
   {
-   "title": "US Bitcoin ETFs draw $527M in biggest showing since September",
-   "url": "https://cointelegraph.com/markets/bitcoin-etfs-527m-inflows-biggest-since-september?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "title": "Bitcoin rally could revive treasury buying, but easy-money days over",
+   "url": "https://cointelegraph.com/markets/bitcoin-rally-could-revive-treasury-buying-but-easy-money-days-over?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
    "source": "Cointelegraph",
-   "published": "2026-10-20T05:39:20+00:00",
-   "summary": "BlackRock’s IBIT led the gains with $665.2 million in inflows, offsetting withdrawals from Fidelity and Grayscale, while other funds recorded no net flows.",
-   "score": 0.6522
+   "published": "2026-10-20T01:35:00+00:00",
+   "summary": "“A return to last year’s indiscriminate capital raising looks unlikely,” said Bitfinex head of derivatives Jag Kooner.",
+   "score": 0.6279
   },
   {
-   "title": "Strategy Keeps Buying: Third Purchase This Month Brings October Spending to $73 Million",
-   "url": "https://bitcoinmagazine.com/news/strategy-third-october-bitcoin-buy",
+   "title": "Sam Callahan: Bitcoin Doesn’t Need Rate Cuts to Succeed",
+   "url": "https://bitcoinmagazine.com/videos/sam-callahan-bitcoin-doesnt-need-rate-cuts-to-succeed",
    "source": "Bitcoin Magazine",
-   "published": "2026-10-19T16:14:02+00:00",
-   "summary": "Bitcoin Magazine Strategy Keeps Buying: Third Purchase This Month Brings October Spending to $73 Million The bitcoin treasury company notched its third buy of October last week. This post Strategy Keeps Buying: Third Purchase This Month Brings October Spending to $73 Million fir…",
-   "score": 0.5552
+   "published": "2026-10-20T12:40:11+00:00",
+   "summary": "📺 Watch Video Bitcoin Magazine Sam Callahan: Bitcoin Doesn’t Need Rate Cuts to Succeed The USD lost 20% purchasing power in 5 years. Sam Callahan breaks down financial repression, core PCE spikes, and the U.S. bond market's historic drawdown. This post Sam Callahan: Bitcoin Does…",
+   "score": 0.5583
   },
   {
    "title": "Strategy Buys $22M in Bitcoin, Buys Back $193M of STRC",
@@ -174,7 +174,31 @@
    "source": "Decrypt",
    "published": "2026-10-19T13:04:48+00:00",
    "summary": "The Bitcoin treasury firm raised its preferred stock buyback cap to $3 billion and now holds 848,517 BTC, bought at an average of $75,446.",
-   "score": 0.5305
+   "score": 0.4924
+  },
+  {
+   "title": "US Bitcoin ETFs draw $527M in biggest showing since September",
+   "url": "https://cointelegraph.com/markets/bitcoin-etfs-527m-inflows-biggest-since-september?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-10-20T05:39:20+00:00",
+   "summary": "BlackRock’s IBIT led the gains with $665.2 million in inflows, offsetting withdrawals from Fidelity and Grayscale, while other funds recorded no net flows.",
+   "score": 0.4843
+  },
+  {
+   "title": "Bitcoin risk management grows more popular as the 'just bet on price' era fades",
+   "url": "https://www.coindesk.com/daybook-us/2026/10/21/bitcoin-risk-management-grows-more-popular-as-the-just-bet-on-price-era-fades",
+   "source": "CoinDesk",
+   "published": "2026-10-21T11:15:00+00:00",
+   "summary": "",
+   "score": 0.4834
+  },
+  {
+   "title": "Strategy Keeps Buying: Third Purchase This Month Brings October Spending to $73 Million",
+   "url": "https://bitcoinmagazine.com/news/strategy-third-october-bitcoin-buy",
+   "source": "Bitcoin Magazine",
+   "published": "2026-10-19T16:14:02+00:00",
+   "summary": "Bitcoin Magazine Strategy Keeps Buying: Third Purchase This Month Brings October Spending to $73 Million The bitcoin treasury company notched its third buy of October last week. This post Strategy Keeps Buying: Third Purchase This Month Brings October Spending to $73 Million fir…",
+   "score": 0.4123
   },
   {
    "title": "Strive closes $630M SATS IPO, leaves Bitcoin allocation unspecified",
@@ -182,15 +206,15 @@
    "source": "Cointelegraph",
    "published": "2026-10-20T17:40:00+00:00",
    "summary": "The Bitcoin treasury company could acquire an estimated 7,372 BTC with its net proceeds, potentially surpassing Metaplanet’s holdings if it allocates the full amount.",
-   "score": 0.5171
+   "score": 0.384
   },
   {
-   "title": "Bitcoin mining offshoot Nscale loses Microsoft AI deal as power delay stretches into 2030s",
-   "url": "https://www.coindesk.com/tech/2026/10/19/bitcoin-mining-offshoot-nscale-loses-microsoft-ai-deal-as-power-delay-stretches-into-2030s",
+   "title": "Live updates: Bitcoin rises to $84,000 as SpaceX leads markets higher",
+   "url": "https://www.coindesk.com/markets/2026/10/21/live-updates-bitcoin-clings-to-usd82-500-as-spacex-results-lift-stock-futures",
    "source": "CoinDesk",
-   "published": "2026-10-19T09:15:00+00:00",
+   "published": "2026-10-21T10:30:40+00:00",
    "summary": "",
-   "score": 0.506
+   "score": 0.3827
   },
   {
    "title": "Liquid Network Announces Final Stages of Recovery Following Massive Hack",
@@ -198,31 +222,15 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-20T21:10:58+00:00",
    "summary": "Bitcoin Magazine Liquid Network Announces Final Stages of Recovery Following Massive Hack One month after hackers pinched 4,000 bitcoins, the Liquid Network is up and running again. This post Liquid Network Announces Final Stages of Recovery Following Massive Hack first appeared…",
-   "score": 0.4353
+   "score": 0.3232
   },
   {
-   "title": "Bitcoin whale moves $34 million in BTC it got in 2013 when coins traded at $131",
-   "url": "https://www.coindesk.com/markets/2026/10/19/bitcoin-whale-moves-usd34-million-in-btc-it-got-in-2013-when-coins-traded-at-usd131",
+   "title": "Bitcoin mining offshoot Nscale loses Microsoft AI deal as power delay stretches into 2030s",
+   "url": "https://www.coindesk.com/tech/2026/10/19/bitcoin-mining-offshoot-nscale-loses-microsoft-ai-deal-as-power-delay-stretches-into-2030s",
    "source": "CoinDesk",
-   "published": "2026-10-19T06:23:16+00:00",
+   "published": "2026-10-19T09:15:00+00:00",
    "summary": "",
-   "score": 0.3496
-  },
-  {
-   "title": "No ‘Uptober’ Yet: Bitcoin Slips 2% in a Month That’s Historically Bullish",
-   "url": "https://bitcoinmagazine.com/markets/no-uptober-yet-as-bitcoin-slips",
-   "source": "Bitcoin Magazine",
-   "published": "2026-10-19T16:18:41+00:00",
-   "summary": "Bitcoin Magazine No ‘Uptober’ Yet: Bitcoin Slips 2% in a Month That’s Historically Bullish Bitcoin’s price is currently down so far in October — albeit slightly — as speculators last week cashed out of ETFs. Will investors change course? This post No ‘Uptober’ Yet: Bitcoin Slips…",
-   "score": 0.3442
-  },
-  {
-   "title": "Bitcoin, Ether ETFs shed $549M as October ETH outflows near $1B",
-   "url": "https://cointelegraph.com/markets/bitcoin-ether-etfs-549-million-weekly-outflows?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-10-19T07:54:13+00:00",
-   "summary": "US spot Ether ETFs recorded around $955 million in October net outflows so far, while Bitcoin funds extended their weekly withdrawal streak to two weeks.",
-   "score": 0.3049
+   "score": 0.3006
   },
   {
    "title": "Bitcoin ETFs Shed Nearly $1 Billion in Two Weeks as Uptober Stays Red",
@@ -230,15 +238,31 @@
    "source": "Decrypt",
    "published": "2026-10-18T15:01:04+00:00",
    "summary": "Bitcoin ETFs lost a net $228.6 million this week, following a $681.1 million drain the week before and pushing October deep into the red.",
-   "score": 0.2986
+   "score": 0.2772
   },
   {
-   "title": "Bitcoin, Korea’s Kospi and Nasdaq futures rally as China GDP beats estimates",
-   "url": "https://www.coindesk.com/markets/2026/10/19/bitcoin-korea-s-kospi-and-nasdaq-futures-rally-as-china-gdp-beats-estimates",
+   "title": "No ‘Uptober’ Yet: Bitcoin Slips 2% in a Month That’s Historically Bullish",
+   "url": "https://bitcoinmagazine.com/markets/no-uptober-yet-as-bitcoin-slips",
+   "source": "Bitcoin Magazine",
+   "published": "2026-10-19T16:18:41+00:00",
+   "summary": "Bitcoin Magazine No ‘Uptober’ Yet: Bitcoin Slips 2% in a Month That’s Historically Bullish Bitcoin’s price is currently down so far in October — albeit slightly — as speculators last week cashed out of ETFs. Will investors change course? This post No ‘Uptober’ Yet: Bitcoin Slips…",
+   "score": 0.2556
+  },
+  {
+   "title": "Bitcoin, Ether ETFs shed $549M as October ETH outflows near $1B",
+   "url": "https://cointelegraph.com/markets/bitcoin-ether-etfs-549-million-weekly-outflows?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-10-19T07:54:13+00:00",
+   "summary": "US spot Ether ETFs recorded around $955 million in October net outflows so far, while Bitcoin funds extended their weekly withdrawal streak to two weeks.",
+   "score": 0.2264
+  },
+  {
+   "title": "Bitcoin whale moves $34 million in BTC it got in 2013 when coins traded at $131",
+   "url": "https://www.coindesk.com/markets/2026/10/19/bitcoin-whale-moves-usd34-million-in-btc-it-got-in-2013-when-coins-traded-at-usd131",
    "source": "CoinDesk",
-   "published": "2026-10-19T03:36:58+00:00",
+   "published": "2026-10-19T06:23:16+00:00",
    "summary": "",
-   "score": 0.2687
+   "score": 0.2077
   },
   {
    "title": "Strive buys $335M in Bitcoin, boosting holdings to 36,818 BTC",
@@ -246,15 +270,15 @@
    "source": "Cointelegraph",
    "published": "2026-10-19T16:30:18+00:00",
    "summary": "The Bitcoin treasury company added another 1,223 BTC after an earlier purchase pushed it past MARA Holdings, while continuing to expand its reserves through equity financing.",
-   "score": 0.2301
+   "score": 0.1709
   },
   {
-   "title": "Strategy's price chart is about to flash a major bullish signal weeks after bitcoin did",
-   "url": "https://www.coindesk.com/daybook-us/2026/10/19/strategy-on-verge-of-golden-cross-just-weeks-after-bitcoin-flashed-same-bullish-signal",
+   "title": "Bitcoin, Korea’s Kospi and Nasdaq futures rally as China GDP beats estimates",
+   "url": "https://www.coindesk.com/markets/2026/10/19/bitcoin-korea-s-kospi-and-nasdaq-futures-rally-as-china-gdp-beats-estimates",
    "source": "CoinDesk",
-   "published": "2026-10-19T11:15:00+00:00",
+   "published": "2026-10-19T03:36:58+00:00",
    "summary": "",
-   "score": 0.2133
+   "score": 0.1596
   },
   {
    "title": "Mt. Gox Pushes Repayment Deadline to 2027 With $2.8B in Bitcoin Still to Distribute",
@@ -262,23 +286,23 @@
    "source": "Decrypt",
    "published": "2026-10-20T10:55:48+00:00",
    "summary": "The defunct exchange's trustee said many creditors still have not completed the procedures needed to get their Bitcoin back.",
-   "score": 0.1501
+   "score": 0.1394
   },
   {
-   "title": "Jeff Park: What The AI Pain Trade Means For Bitcoin",
-   "url": "https://bitcoinmagazine.com/videos/jeff-park-what-the-ai-pain-trade-means-for-bitcoin",
+   "title": "President Trump to Highlight Crackdown on Overseas Crypto Scams",
+   "url": "https://bitcoinmagazine.com/news/president-trump-to-highlight-crackdown",
    "source": "Bitcoin Magazine",
-   "published": "2026-10-19T12:30:46+00:00",
-   "summary": "Bitcoin Magazine Jeff Park: What The AI Pain Trade Means For Bitcoin From Strategy to Google, firms adopt preferred securities. Jeff Park explains why digital credit is the future of income and valuation. This post Jeff Park: What The AI Pain Trade Means For Bitcoin first appear…",
-   "score": 0.139
+   "published": "2026-10-21T14:52:06+00:00",
+   "summary": "Bitcoin Magazine President Trump to Highlight Crackdown on Overseas Crypto Scams Trump to tout seizures of fraudulent crypto sites at White House cybercrime event as FBI data shows $11.3 billion in U.S. crypto fraud losses in 2025. This post President Trump to Highlight Crackdow…",
+   "score": 0.1335
   },
   {
-   "title": "Live updates: Bitcoin holds near $82,000 as Nasdaq rebounds more than 1%",
-   "url": "https://www.coindesk.com/markets/2026/10/19/live-updates-bitcoin-tags-usd83-000-and-slips-back-as-chip-stocks-lead-a-rebound",
+   "title": "Strategy's price chart is about to flash a major bullish signal weeks after bitcoin did",
+   "url": "https://www.coindesk.com/daybook-us/2026/10/19/strategy-on-verge-of-golden-cross-just-weeks-after-bitcoin-flashed-same-bullish-signal",
    "source": "CoinDesk",
-   "published": "2026-10-19T11:05:54+00:00",
+   "published": "2026-10-19T11:15:00+00:00",
    "summary": "",
-   "score": 0.1064
+   "score": 0.1267
   },
   {
    "title": "Bitcoin Treasury Giant Strategy Faces Index Removal Under Finalized MSCI Rules",
@@ -286,23 +310,15 @@
    "source": "Decrypt",
    "published": "2026-10-16T18:16:04+00:00",
    "summary": "The index provider will classify “non-operating companies” as ineligible starting Nov. 30, targeting firms whose balance sheets are dominated by a single asset.",
-   "score": 0.1035
+   "score": 0.0961
   },
   {
-   "title": "Michael Howell: Bitcoin as the Apex Liquidity Asset",
-   "url": "https://bitcoinmagazine.com/videos/michael-howell-bitcoin-as-the-apex-liquidity-asset",
+   "title": "Jeff Park: What The AI Pain Trade Means For Bitcoin",
+   "url": "https://bitcoinmagazine.com/videos/jeff-park-what-the-ai-pain-trade-means-for-bitcoin",
    "source": "Bitcoin Magazine",
-   "published": "2026-10-20T12:33:35+00:00",
-   "summary": "📺 Watch Video Bitcoin Magazine Michael Howell: Bitcoin as the Apex Liquidity Asset CrossBorder Capital's Michael Howell explains why global liquidity drives markets and why Bitcoin is emerging as the apex asset in a debasement world. This post Michael Howell: Bitcoin as the Apex…",
-   "score": 0.0984
-  },
-  {
-   "title": "Bitcoin extends bounce above $82,000 as stocks rebound, DeFi tokens lead altcoin gains",
-   "url": "https://www.coindesk.com/markets/2026/10/19/bitcoin-extends-bounce-above-usd82-000-as-stocks-rebound-defi-tokens-lead-altcoin-gains",
-   "source": "CoinDesk",
-   "published": "2026-10-19T10:26:33+00:00",
-   "summary": "",
-   "score": 0.0843
+   "published": "2026-10-19T12:30:46+00:00",
+   "summary": "Bitcoin Magazine Jeff Park: What The AI Pain Trade Means For Bitcoin From Strategy to Google, firms adopt preferred securities. Jeff Park explains why digital credit is the future of income and valuation. This post Jeff Park: What The AI Pain Trade Means For Bitcoin first appear…",
+   "score": 0.0826
   },
   {
    "title": "Strive Buys $335 Million in Bitcoin After Investors Pour In $369 Million",
@@ -310,23 +326,7 @@
    "source": "Decrypt",
    "published": "2026-10-19T21:46:05+00:00",
    "summary": "The Nasdaq-listed bitcoin holder bought as warrant holders exercised, bringing in $369 million, and it now plans a $630 million sale of 15% preferred stock.",
-   "score": 0.0795
-  },
-  {
-   "title": "Metaplanet to take 93.7% stake in Super League through 2,100 BTC deal",
-   "url": "https://cointelegraph.com/news/metaplanet-super-league-2100-btc-us-bitcoin-treasury-deal?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-10-19T16:41:55+00:00",
-   "summary": "The transaction would give Metaplanet access to US capital markets, where it plans to use preferred stock offerings to finance additional Bitcoin purchases.",
-   "score": 0.0739
-  },
-  {
-   "title": "Now Accepting Bitcoin: Gyros, Cocas, and 219 Arizona Bitcoin Merchants",
-   "url": "https://bitcoinmagazine.com/culture/pita-cafe-arizona-bitcoin",
-   "source": "Bitcoin Magazine",
-   "published": "2026-10-20T03:54:15+00:00",
-   "summary": "Bitcoin Magazine Now Accepting Bitcoin: Gyros, Cocas, and 219 Arizona Bitcoin Merchants Setting up a Lightning wallet took seconds, so we sent first-time users in Scottsdale to see how Arizona Bitcoin spending really works. This post Now Accepting Bitcoin: Gyros, Cocas, and 219…",
-   "score": 0.0695
+   "score": 0.0738
   }
  ]
 }
