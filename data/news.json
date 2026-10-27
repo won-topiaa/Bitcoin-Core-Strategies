@@ -1,5 +1,5 @@
 {
- "fetched": "2026-10-27T16:31:44+00:00",
+ "fetched": "2026-10-27T16:34:50+00:00",
  "sources_ok": [
   "CoinDesk",
   "Cointelegraph",
@@ -14,7 +14,7 @@
    "source": "CoinDesk",
    "published": "2026-10-27T11:32:45+00:00",
    "summary": "",
-   "score": 3.0709
+   "score": 3.0686
   },
   {
    "title": "Bitcoin Dips Below $80,000 Ahead of Fed Decision, Midterms",
@@ -22,7 +22,7 @@
    "source": "Decrypt",
    "published": "2026-10-26T13:02:43+00:00",
    "summary": "Analysts point to a sell-off in AI stocks and ETF outflows, with HashKey's Tim Sun flagging $75,000 as the next key support level.",
-   "score": 3.0259
+   "score": 3.0236
   },
   {
    "title": "Bitcoin ETFs claw back $110M after $774M exit",
@@ -30,7 +30,7 @@
    "source": "Cointelegraph",
    "published": "2026-10-27T07:35:37+00:00",
    "summary": "US spot Bitcoin ETFs remained in the red for October, with about $202 million in net outflows for the month despite Monday’s rebound.",
-   "score": 2.6368
+   "score": 2.6349
   },
   {
    "title": "UTXO’s Duke Waldrop: Bank of Japan “Liquidity Shock” Could Impact Bitcoin",
@@ -38,7 +38,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-27T13:12:45+00:00",
    "summary": "▶ Bitcoin Magazine UTXO’s Duke Waldrop: Bank of Japan “Liquidity Shock” Could Impact Bitcoin Ahead of Fed and BOJ rate calls, Duke Waldrop explains how yen carry unwinds hit 24/7 Bitcoin liquidity and why Metaplanet trading below NAV is an opportunity. This post UTXO’s Duke Wald…",
-   "score": 2.3831
+   "score": 2.3813
   },
   {
    "title": "Here’s what happened in crypto today",
@@ -46,7 +46,7 @@
    "source": "Cointelegraph",
    "published": "2026-10-27T13:17:24+00:00",
    "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
-   "score": 1.6796
+   "score": 1.6783
   },
   {
    "title": "Strategy Pauses Bitcoin Buying, Spends $205M Buying Back STRC",
@@ -54,7 +54,7 @@
    "source": "Decrypt",
    "published": "2026-10-26T13:24:38+00:00",
    "summary": "The Bitcoin treasury firm's USD Cash balance fell to $242.4 million after its biggest weekly STRC buyback in more than a month.",
-   "score": 1.6764
+   "score": 1.6752
   },
   {
    "title": "Bitcoin Mining Firm Luxor Raises $16 Million to Scale AI Compute Trading and Hardware",
@@ -62,7 +62,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-27T13:53:32+00:00",
    "summary": "Bitcoin Magazine Bitcoin Mining Firm Luxor Raises $16 Million to Scale AI Compute Trading and Hardware Luxor, a bitcoin miner turned AI compute firm, raised $16 million led by CMT Digital to expand its AI hardware brokerage and compute trading business. This post Bitcoin Mining…",
-   "score": 1.5402
+   "score": 1.5391
   },
   {
    "title": "Bitcoin miners' move into AI is creating a new market for trading computing power",
@@ -70,7 +70,7 @@
    "source": "CoinDesk",
    "published": "2026-10-27T13:13:50+00:00",
    "summary": "",
-   "score": 1.5256
+   "score": 1.5244
   },
   {
    "title": "Bitcoin Security Expert Jameson Lopp: Cyberattacks on “Exponential” Path",
@@ -78,7 +78,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-27T13:16:56+00:00",
    "summary": "▶ Bitcoin Magazine Bitcoin Security Expert Jameson Lopp: Cyberattacks on “Exponential” Path Bitcoin Core updates security as AI automates bug hunting. Jameson Lopp explains the shift to real-time defense, uncensored exploit models, and the PHP flaw. This post Bitcoin Security Ex…",
-   "score": 1.2214
+   "score": 1.2205
   },
   {
    "title": "Luxor raises $16M from CMT Digital amid AI-Bitcoin miner convergence",
@@ -86,7 +86,7 @@
    "source": "Cointelegraph",
    "published": "2026-10-27T13:01:00+00:00",
    "summary": "Luxor aims to use the proceeds to scale its existing AI infrastructure business and expand its GPU sourcing services as global chip supply chains become constrained.",
-   "score": 1.2167
+   "score": 1.2158
   },
   {
    "title": "Why This Team of Ninjas Is Tripling Down on Mining Bitcoin",
@@ -94,7 +94,7 @@
    "source": "Decrypt",
    "published": "2026-10-27T11:46:51+00:00",
    "summary": "NIP Group says Bitcoin mining has “earned its place” as the esports giant swaps 247 million shares for more machines.",
-   "score": 1.1952
+   "score": 1.1943
   },
   {
    "title": "Bitcoin holds near $80,000 as oil retreats and the Fed decision looms",
@@ -102,7 +102,7 @@
    "source": "CoinDesk",
    "published": "2026-10-26T11:24:33+00:00",
    "summary": "",
-   "score": 1.0507
+   "score": 1.05
   },
   {
    "title": "Bitcoin ETFs break 2-week outflow streak with $301M comeback",
@@ -110,7 +110,7 @@
    "source": "Cointelegraph",
    "published": "2026-10-26T08:20:49+00:00",
    "summary": "US spot Bitcoin ETFs finished the week with $301 million in net inflows after a strong three-day start gave way to heavy withdrawals.",
-   "score": 0.9651
+   "score": 0.9644
   },
   {
    "title": "Bitcoin Price Hovers Near $80,000 as Traders Await Fed Decision",
@@ -118,7 +118,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-26T17:43:18+00:00",
    "summary": "Bitcoin Magazine Bitcoin Price Hovers Near $80,000 as Traders Await Fed Decision Bitcoin price hovers near $80,000 as traders wait on this week’s Fed decision, with geopolitical tensions and Anthropic’s possible IPO adding to the uncertainty. This post Bitcoin Price Hovers Near…",
-   "score": 0.9208
+   "score": 0.9201
   },
   {
    "title": "Morning Minute: Bitcoin Breaks Below $80,000 as Iran Fears Hit the Weekend",
@@ -126,7 +126,7 @@
    "source": "Decrypt",
    "published": "2026-10-26T12:16:12+00:00",
    "summary": "Some relief is appearing this morning as oil and rates fall, with a big macro week ahead featuring major earnings, FOMC and key data drops.",
-   "score": 0.8511
+   "score": 0.8505
   },
   {
    "title": "Bitcoin slips under $80,000 as traders de-risk ahead of Fed meeting",
@@ -134,7 +134,7 @@
    "source": "CoinDesk",
    "published": "2026-10-26T04:37:02+00:00",
    "summary": "",
-   "score": 0.7621
+   "score": 0.7615
   },
   {
    "title": "SoFi Stock (SOFI) Soars 15% on Record Quarter, Crypto Reaches 503,000 Products",
@@ -142,7 +142,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-27T15:56:57+00:00",
    "summary": "Bitcoin Magazine SoFi Stock (SOFI) Soars 15% on Record Quarter, Crypto Reaches 503,000 Products SoFi shares jumped 14.6% to $16.56 after a record third quarter, with crypto reaching 503,070 products and adjusted EPS of $0.18 beating estimates. This post SoFi Stock (SOFI) Soars 1…",
-   "score": 0.7311
+   "score": 0.7306
   },
   {
    "title": "Bitcoin price analysis sees ‘strong rally’ as old coins become dormant",
@@ -150,7 +150,7 @@
    "source": "Cointelegraph",
    "published": "2026-10-27T12:18:24+00:00",
    "summary": "A decline in the share of Bitcoin’s realized cap held by coins unmoved for 18 months or longer points to the ‘early stages’ of a bull market, analysis says.",
-   "score": 0.6937
+   "score": 0.6932
   },
   {
    "title": "Bitcoin ETFs Snap Two-Week Losing Streak Despite Late-Week Slide",
@@ -158,7 +158,7 @@
    "source": "Decrypt",
    "published": "2026-10-25T14:01:03+00:00",
    "summary": "Spot Bitcoin ETFs finished the week with about $301 million in net inflows, ending a two-week losing streak, even as two straight days of outflows kept October in the red.",
-   "score": 0.5925
+   "score": 0.5921
   },
   {
    "title": "Bitcoin Treasury Analyst: MSTR, ASST & Metaplanet Digital Credit Outlook",
@@ -166,7 +166,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-26T13:16:07+00:00",
    "summary": "▶ Bitcoin Magazine Bitcoin Treasury Analyst: MSTR, ASST & Metaplanet Digital Credit Outlook Metaplanet moves to the U.S. to issue preferreds. Allard Peng breaks down the capital pool, parent support questions, and why it's accretive to common shares. This post Bitcoin Treasury A…",
-   "score": 0.5526
+   "score": 0.5522
   },
   {
    "title": "BTC price risks $80K loss into FOMC, earnings: Three things to know in Bitcoin this week",
@@ -174,7 +174,7 @@
    "source": "Cointelegraph",
    "published": "2026-10-26T10:49:55+00:00",
    "summary": "Bitcoin bulls fought for $80,000 support over the weekend ahead of a heavy week of US tech earnings and inflation data.",
-   "score": 0.5335
+   "score": 0.5331
   },
   {
    "title": "Live news: Bitcoin dips below $80,000 as stocks rally following Anthropic IPO filing",
@@ -182,7 +182,7 @@
    "source": "CoinDesk",
    "published": "2026-10-26T11:05:31+00:00",
    "summary": "",
-   "score": 0.482
+   "score": 0.4816
   },
   {
    "title": "Bitcoin Wallet Fixes Critical Flaw That Redirected Funds to Attackers",
@@ -190,7 +190,7 @@
    "source": "Decrypt",
    "published": "2026-10-26T17:41:21+00:00",
    "summary": "A confirmed exploit let rogue servers replace Electrum’s pending transactions, tricking users into redirecting Bitcoin to attacker addresses.",
-   "score": 0.4712
+   "score": 0.4709
   },
   {
    "title": "PHP Hack: How Bitcoin Will Respond to the “Cyber Pandemic”",
@@ -198,7 +198,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-26T13:21:59+00:00",
    "summary": "▶ Bitcoin Magazine PHP Hack: How Bitcoin Will Respond to the “Cyber Pandemic” As global sites go offline over PHP flaws, Bitcoin Magazine's Shinobi explains memory bugs, AI-driven hacking speeds, and whether Bitcoin faces any exposure. This post PHP Hack: How Bitcoin Will Respon…",
-   "score": 0.3542
+   "score": 0.3539
   },
   {
    "title": "Now is the time to accumulate bitcoin, Galaxy says",
@@ -206,7 +206,7 @@
    "source": "CoinDesk",
    "published": "2026-10-27T09:42:46+00:00",
    "summary": "",
-   "score": 0.297
+   "score": 0.2967
   },
   {
    "title": "AI agents help rescue ETH’s Glamsterdam fork, ‘Steal My Bitcoin’ site: Hodler’s Digest",
@@ -214,7 +214,7 @@
    "source": "Cointelegraph",
    "published": "2026-10-25T22:48:40+00:00",
    "summary": "Similar to the Hugging Face hack, Ethereum researchers have set up an AI Agent message board to help rescue the Glamsterdam fork. ‘Steal My Bitcoin’ site successfully hacked.",
-   "score": 0.287
+   "score": 0.2868
   },
   {
    "title": "Strategy (MSTR) Pauses Bitcoin Buying and Spends $205 Million on Preferred Stock",
@@ -222,7 +222,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-26T15:39:53+00:00",
    "summary": "Bitcoin Magazine Strategy (MSTR) Pauses Bitcoin Buying and Spends $205 Million on Preferred Stock Strategy skipped bitcoin buys for the week of October 19–25 and spent $204.9 million buying back its STRC preferred stock. This post Strategy (MSTR) Pauses Bitcoin Buying and Spends…",
-   "score": 0.2343
+   "score": 0.2341
   },
   {
    "title": "Strategy skips Bitcoin purchases, spends $205M on STRC buybacks",
@@ -230,7 +230,7 @@
    "source": "Cointelegraph",
    "published": "2026-10-26T13:27:38+00:00",
    "summary": "Strategy made no Bitcoin purchases or sales last week, as its STRC preferred stock buybacks reduced its USD Cash balance by 46% to $242.4 million.",
-   "score": 0.227
+   "score": 0.2268
   },
   {
    "title": "Bitcoin ETFs Bleed $636 Million as October Turns Red Again",
@@ -238,7 +238,7 @@
    "source": "Decrypt",
    "published": "2026-10-23T15:50:41+00:00",
    "summary": "Spot Bitcoin ETFs lost $635.6 million on Thursday, their biggest outflow of the month, pushing October flows back to a loss of about $176 million as Ethereum and Solana funds also bled.",
-   "score": 0.1947
+   "score": 0.1945
   },
   {
    "title": "Bloomberg’s Mike McGlone: AI Risk Could Force Bitcoin Drawdown to $10,000",
@@ -246,7 +246,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-23T13:18:04+00:00",
    "summary": "▶ Bitcoin Magazine Bloomberg’s Mike McGlone: AI Risk Could Force Bitcoin Drawdown to $10,000 Bloomberg's Mike McGlone warns Bitcoin could drop to $10K, citing ETF exhaustion, stock correlation, Fed rate hikes, and macro headwinds across assets. This post Bloomberg’s Mike McGlone…",
-   "score": 0.1801
+   "score": 0.18
   },
   {
    "title": "A $68 million bitcoin bet is targeting a post-midterm election breakout to $90,000",
@@ -254,7 +254,7 @@
    "source": "CoinDesk",
    "published": "2026-10-26T11:53:07+00:00",
    "summary": "",
-   "score": 0.1733
+   "score": 0.1732
   },
   {
    "title": "Crypto Midterm Election Spending Reaches $176 Million as Industry Builds for the Next Congress",
@@ -262,7 +262,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-27T14:34:47+00:00",
    "summary": "Bitcoin Magazine Crypto Midterm Election Spending Reaches $176 Million as Industry Builds for the Next Congress The crypto industry has spent about $176 million on more than 100 midterm races to build a bipartisan bloc in Congress that can protect its interests after Trump leave…",
-   "score": 0.1305
+   "score": 0.1304
   },
   {
    "title": "Over 11 million bitcoin has no known owner. Here's what it means",
@@ -270,7 +270,7 @@
    "source": "CoinDesk",
    "published": "2026-10-26T07:18:24+00:00",
    "summary": "",
-   "score": 0.1298
+   "score": 0.1297
   },
   {
    "title": "Bitcoin ETFs Erase October Losses With $1 Billion in Three Days",
@@ -278,7 +278,7 @@
    "source": "Decrypt",
    "published": "2026-10-22T16:31:07+00:00",
    "summary": "Spot Bitcoin ETFs have drawn about $1.07 billion over three sessions, pushing October flows to a gain of roughly $460 million, even as Bitcoin and Ethereum prices slipped.",
-   "score": 0.1112
+   "score": 0.1111
   },
   {
    "title": "Bitcoin ETFs bleed $635M as October slides back into the red",
@@ -286,7 +286,7 @@
    "source": "Cointelegraph",
    "published": "2026-10-23T07:09:39+00:00",
    "summary": "Thursday’s withdrawals ended a three-day inflow streak and left US spot Bitcoin ETFs with $175 million in net outflows for October.",
-   "score": 0.1099
+   "score": 0.1098
   },
   {
    "title": "Bitcoin wallet bug let rogue servers steal funds when users tried to speed up payments",
@@ -294,7 +294,7 @@
    "source": "CoinDesk",
    "published": "2026-10-26T05:15:20+00:00",
    "summary": "",
-   "score": 0.1008
+   "score": 0.1007
   },
   {
    "title": "Cold Storage Goes South: bitcoin++ Announces Antarctica Edition",
@@ -302,7 +302,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-27T00:00:04+00:00",
    "summary": "Bitcoin Magazine Cold Storage Goes South: bitcoin++ Announces Antarctica Edition bitcoin++ is planning its first cold-storage edition on a 13-day expedition to the Antarctic Peninsula. This post Cold Storage Goes South: bitcoin++ Announces Antarctica Edition first appeared on Bi…",
-   "score": 0.0846
+   "score": 0.0845
   },
   {
    "title": "Switzerland’s first retail spot Bitcoin ETF targets November launch",
@@ -326,7 +326,7 @@
    "source": "CoinDesk",
    "published": "2026-10-22T04:41:59+00:00",
    "summary": "",
-   "score": 0.076
+   "score": 0.0759
   }
  ]
 }
