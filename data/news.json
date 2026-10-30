@@ -1,5 +1,5 @@
 {
- "fetched": "2026-10-29T21:46:07+00:00",
+ "fetched": "2026-10-30T00:54:47+00:00",
  "sources_ok": [
   "CoinDesk",
   "Cointelegraph",
@@ -14,7 +14,7 @@
    "source": "Decrypt",
    "published": "2026-10-29T16:32:47+00:00",
    "summary": "Bitcoin is trading close to the average price paid by U.S. spot ETF holders, a day after the Federal Reserve held rates steady.",
-   "score": 4.1731
+   "score": 3.9879
   },
   {
    "title": "Bitcoin ETFs add $137M, pushing October back into the green",
@@ -22,7 +22,7 @@
    "source": "Cointelegraph",
    "published": "2026-10-29T07:32:20+00:00",
    "summary": "Bitcoin ETFs drew $424 million over three days, lifting October net inflows to $111 million despite a hawkish Federal Reserve decision and weaker crypto sentiment.",
-   "score": 3.6641
+   "score": 3.5015
   },
   {
    "title": "Senator Bill Hagerty: Expanding the U.S. Strategic Bitcoin Reserve, & the Future of Dollar Hegemony",
@@ -30,7 +30,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-29T12:46:00+00:00",
    "summary": "▶ Bitcoin Magazine Senator Bill Hagerty: Expanding the U.S. Strategic Bitcoin Reserve, & the Future of Dollar Hegemony Sen. Bill Hagerty explains why CBDCs threaten freedom, how regulatory ambiguity enabled SEC overreach, and what Congress can accomplish before January. This pos…",
-   "score": 3.249
+   "score": 3.1047
   },
   {
    "title": "Why Switzerland’s first genuine spot bitcoin ETF could soon attract overseas banks and brokers",
@@ -38,7 +38,7 @@
    "source": "CoinDesk",
    "published": "2026-10-29T14:15:46+00:00",
    "summary": "",
-   "score": 2.6918
+   "score": 2.5723
   },
   {
    "title": "Fed’s hawkish rate hold keeps pressure on Bitcoin: Analysts",
@@ -46,7 +46,7 @@
    "source": "Cointelegraph",
    "published": "2026-10-29T01:12:01+00:00",
    "summary": "Traders are pricing in a 78% chance of a December rate hike, while analysts say Treasury yields, the US dollar and upcoming inflation data could determine Bitcoin’s next move.",
-   "score": 2.3777
+   "score": 2.2721
   },
   {
    "title": "Franklin Templeton Officially Launches 2 Bitcoin DRIP ETFs That Turn Dividends Into Bitcoin",
@@ -54,7 +54,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-29T16:26:24+00:00",
    "summary": "Bitcoin Magazine Franklin Templeton Officially Launches 2 Bitcoin DRIP ETFs That Turn Dividends Into Bitcoin Franklin Templeton’s two Bitcoin DRIP ETFs, FBEQ and FIBT, started trading today on the Nasdaq. This post Franklin Templeton Officially Launches 2 Bitcoin DRIP ETFs That…",
-   "score": 2.2222
+   "score": 2.1236
   },
   {
    "title": "Morning Minute: Hedge Funds Left the BTC ETF Trade and Sovereign Wealth Stepped In",
@@ -62,7 +62,7 @@
    "source": "Decrypt",
    "published": "2026-10-29T12:30:38+00:00",
    "summary": "Now the BTC ETFs have flipped green for the month after $400M+ inflows this week, setting the stage for a big November.",
-   "score": 2.0997
+   "score": 2.0064
   },
   {
    "title": "Bitcoin treasury Datavault AI plunges 50% after firm says it can’t access its BTC",
@@ -70,7 +70,7 @@
    "source": "CoinDesk",
    "published": "2026-10-28T05:28:13+00:00",
    "summary": "",
-   "score": 1.9223
+   "score": 1.837
   },
   {
    "title": "$11 Billion in Bitcoin Options Expire Tomorrow—Here's What It Means",
@@ -78,7 +78,7 @@
    "source": "Decrypt",
    "published": "2026-10-29T17:15:11+00:00",
    "summary": "A third of Deribit's Bitcoin options settle Friday, a day after the Fed held rates with two officials voting to hike. Here's why that matters for Bitcoin's price.",
-   "score": 1.499
+   "score": 1.4324
   },
   {
    "title": "U.S. Treasury Sanctions Crypto Launderers Behind North Korea’s Fake Workers",
@@ -86,7 +86,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-29T14:37:46+00:00",
    "summary": "Bitcoin Magazine U.S. Treasury Sanctions Crypto Launderers Behind North Korea’s Fake Workers The U.S. Treasury sanctioned ten people and one entity, including two Russian crypto middlemen, for laundering money from North Korean fake IT worker schemes that fund its weapons progra…",
-   "score": 1.4433
+   "score": 1.3792
   },
   {
    "title": "AI found a way to crash bitcoin nodes on Windows and Macs. It's now public",
@@ -94,7 +94,7 @@
    "source": "CoinDesk",
    "published": "2026-10-29T05:54:39+00:00",
    "summary": "",
-   "score": 1.4252
+   "score": 1.362
   },
   {
    "title": "Here’s what happened in crypto today",
@@ -102,7 +102,7 @@
    "source": "Cointelegraph",
    "published": "2026-10-29T19:58:57+00:00",
    "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
-   "score": 1.3721
+   "score": 1.3112
   },
   {
    "title": "Bitcoin drops to $80,000 on Fed dissent, Samsung, Alphabet earnings; AI tokens slump",
@@ -110,7 +110,7 @@
    "source": "CoinDesk",
    "published": "2026-10-29T11:11:48+00:00",
    "summary": "",
-   "score": 1.0988
+   "score": 1.05
   },
   {
    "title": "Strategy shareholders approve daily dividends for four preferred stocks",
@@ -118,15 +118,15 @@
    "source": "Cointelegraph",
    "published": "2026-10-28T18:00:54+00:00",
    "summary": "The largest Bitcoin treasury company will begin daily dividend payments on STRC in November, with three other preferred securities following in January 2027.",
-   "score": 1.0631
+   "score": 1.0159
   },
   {
-   "title": "Russia Approves Securities Group to Oversee Crypto Exchanges",
-   "url": "https://bitcoinmagazine.com/news/russia-approves-securities-oversee-crypto",
+   "title": "Bitcoin Price Slides Below $79,000 as Binance Loses $5.8 Billion in Massive Hack",
+   "url": "https://bitcoinmagazine.com/news/bitcoin-price-slides-binance",
    "source": "Bitcoin Magazine",
-   "published": "2026-10-29T15:03:46+00:00",
-   "summary": "Bitcoin Magazine Russia Approves Securities Group to Oversee Crypto Exchanges The Bank of Russia approved NAUFOR as the country’s first self-regulatory organization for crypto exchanges and digital depositories. This post Russia Approves Securities Group to Oversee Crypto Exchan…",
-   "score": 1.0224
+   "published": "2026-10-29T23:06:37+00:00",
+   "summary": "Bitcoin Magazine Bitcoin Price Slides Below $79,000 as Binance Loses $5.8 Billion in Massive Hack Bitcoin price fell below $79,000 as reports of a suspected Binance hack, with outflows of up to $5.8 billion, prompted Tether and Circle to freeze roughly $1.8 to $2.4 billion in st…",
+   "score": 0.9977
   },
   {
    "title": "Wall Street’s Fast Money Fled Bitcoin ETFs, Sovereign Funds Stepped In",
@@ -134,7 +134,23 @@
    "source": "Decrypt",
    "published": "2026-10-28T16:15:02+00:00",
    "summary": "Galaxy Research found that nine hedge funds and banks cut 68,000 BTC worth of spot ETF exposure as the cash-and-carry trade dried up, while wealth platforms and sovereign funds added.",
-   "score": 1.0029
+   "score": 0.9584
+  },
+  {
+   "title": "Binance hack rattles crypto markets as BNB falls 7%, Bitcoin slides",
+   "url": "https://cointelegraph.com/markets/binance-hack-rattles-crypto-markets-bnb-bitcoin-slide?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-10-29T23:24:21+00:00",
+   "summary": "Bitcoin and Ether tumbled as the broader crypto market fell 3.3%, with reports of suspicious multibillion-dollar transfers from Binance-linked wallets fueling uncertainty.",
+   "score": 0.8016
+  },
+  {
+   "title": "Russia Approves Securities Group to Oversee Crypto Exchanges",
+   "url": "https://bitcoinmagazine.com/news/russia-approves-securities-oversee-crypto",
+   "source": "Bitcoin Magazine",
+   "published": "2026-10-29T15:03:46+00:00",
+   "summary": "Bitcoin Magazine Russia Approves Securities Group to Oversee Crypto Exchanges The Bank of Russia approved NAUFOR as the country’s first self-regulatory organization for crypto exchanges and digital depositories. This post Russia Approves Securities Group to Oversee Crypto Exchan…",
+   "score": 0.7816
   },
   {
    "title": "Bitcoin briefly dips below $80,000 as tech jitters and hawkish Fed weigh on crypto",
@@ -142,7 +158,7 @@
    "source": "CoinDesk",
    "published": "2026-10-29T03:32:43+00:00",
    "summary": "",
-   "score": 0.7871
+   "score": 0.7521
   },
   {
    "title": "FutureBit Apollo Solo Miner Finds Bitcoin Block 973262, Earning 3.154 BTC",
@@ -150,7 +166,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-29T17:57:52+00:00",
    "summary": "Bitcoin Magazine FutureBit Apollo Solo Miner Finds Bitcoin Block 973262, Earning 3.154 BTC A miner running FutureBit’s Apollo Solo setup found Bitcoin block 973,262 on Oct. 26, collecting the full 3.154 BTC subsidy-plus-fees reward from 2,477 transactions. This post FutureBit Ap…",
-   "score": 0.7754
+   "score": 0.5928
   },
   {
    "title": "Bitcoin ETF inflows climb to $176M as BTC rebounds above $80K",
@@ -158,15 +174,7 @@
    "source": "Cointelegraph",
    "published": "2026-10-28T07:57:18+00:00",
    "summary": "US spot Bitcoin ETFs drew $286 million over two days, narrowing October’s net outflows to $26 million as the Crypto Fear & Greed Index remained neutral.",
-   "score": 0.7118
-  },
-  {
-   "title": "Bitcoin Price Trades Above $81,500 as Fed Keeps Rates Steady in Split Vote",
-   "url": "https://bitcoinmagazine.com/markets/bitcoin-price-trades-near-81500-fed",
-   "source": "Bitcoin Magazine",
-   "published": "2026-10-28T20:03:08+00:00",
-   "summary": "Bitcoin Magazine Bitcoin Price Trades Above $81,500 as Fed Keeps Rates Steady in Split Vote Bitcoin price held near $81,000 after the Federal Reserve kept rates at 3.75% to 4% in a 10-2 vote. This post Bitcoin Price Trades Above $81,500 as Fed Keeps Rates Steady in Split Vote fi…",
-   "score": 0.5651
+   "score": 0.5441
   },
   {
    "title": "Fed Stands Pat, Bitcoin Holds Steady—But a December Rate Hike Is in Play",
@@ -174,15 +182,7 @@
    "source": "Decrypt",
    "published": "2026-10-28T18:25:18+00:00",
    "summary": "The Federal Reserve left rates unchanged Wednesday in a 10-2 vote, with Governor Lisa Cook and Cleveland Fed President Beth Hammack favoring a hike.",
-   "score": 0.5519
-  },
-  {
-   "title": "Bitcoin price bounce rejected at 50-day trend line ahead of FOMC, earnings",
-   "url": "https://cointelegraph.com/markets/bitcoin-price-bounce-rejected-at-50-day-trend-line-ahead-of-fomc-earnings?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-10-28T16:53:26+00:00",
-   "summary": "Bitcoin failed to move past its 50-day simple moving average as market participants awaited the outcome of the FOMC meeting and key tech earnings.",
-   "score": 0.5399
+   "score": 0.5274
   },
   {
    "title": "Live updates: Bitcoin trading just above $81,000 as Fed delivers hold on rates",
@@ -190,7 +190,23 @@
    "source": "CoinDesk",
    "published": "2026-10-28T11:23:34+00:00",
    "summary": "",
-   "score": 0.4987
+   "score": 0.4765
+  },
+  {
+   "title": "Bitcoin Price Trades Above $81,500 as Fed Keeps Rates Steady in Split Vote",
+   "url": "https://bitcoinmagazine.com/markets/bitcoin-price-trades-near-81500-fed",
+   "source": "Bitcoin Magazine",
+   "published": "2026-10-28T20:03:08+00:00",
+   "summary": "Bitcoin Magazine Bitcoin Price Trades Above $81,500 as Fed Keeps Rates Steady in Split Vote Bitcoin price held near $81,000 after the Federal Reserve kept rates at 3.75% to 4% in a 10-2 vote. This post Bitcoin Price Trades Above $81,500 as Fed Keeps Rates Steady in Split Vote fi…",
+   "score": 0.432
+  },
+  {
+   "title": "Bitcoin price bounce rejected at 50-day trend line ahead of FOMC, earnings",
+   "url": "https://cointelegraph.com/markets/bitcoin-price-bounce-rejected-at-50-day-trend-line-ahead-of-fomc-earnings?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-10-28T16:53:26+00:00",
+   "summary": "Bitcoin failed to move past its 50-day simple moving average as market participants awaited the outcome of the FOMC meeting and key tech earnings.",
+   "score": 0.4127
   },
   {
    "title": "Fed Rate Decision: What Markets and Bitcoin Traders Can Expect",
@@ -198,23 +214,7 @@
    "source": "Decrypt",
    "published": "2026-10-28T15:15:34+00:00",
    "summary": "The Federal Reserve decides today at 2 p.m. ET and traders see a hold as near certain. Here's what it means for Bitcoin and stock markets.",
-   "score": 0.4218
-  },
-  {
-   "title": "U.S. Treasury Says U.S. ‘Will Win in the Digital Asset Stack’ as Clarity Act Stalls",
-   "url": "https://bitcoinmagazine.com/news/treasury-says-win-in-the-digital-asset",
-   "source": "Bitcoin Magazine",
-   "published": "2026-10-28T14:14:36+00:00",
-   "summary": "Bitcoin Magazine U.S. Treasury Says U.S. ‘Will Win in the Digital Asset Stack’ as Clarity Act Stalls Treasury Secretary Scott Bessent said that U.S. leadership in digital assets could reinforce the dollar’s global reach even as the stalled CLARITY Act leaves regulators to fill t…",
-   "score": 0.4157
-  },
-  {
-   "title": "VanEck launches diversified ETF combining stocks, bonds and Bitcoin exposure",
-   "url": "https://cointelegraph.com/news/vaneck-launches-diversified-etf-combining-stocks-bonds-and-bitcoin-exposure?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-10-27T21:28:22+00:00",
-   "summary": "VanEck’s new Wealth Builder ETF targets a 2% Bitcoin allocation, with a permitted range of 1% to 5%, gaining exposure through a spot Bitcoin ETP.",
-   "score": 0.3915
+   "score": 0.4031
   },
   {
    "title": "Bitcoin drops below $80,000 as crypto ignores Asian tech rally, Fed meeting begins",
@@ -222,15 +222,23 @@
    "source": "CoinDesk",
    "published": "2026-10-27T11:32:45+00:00",
    "summary": "",
-   "score": 0.3732
+   "score": 0.3566
   },
   {
-   "title": "Samara Asset Group CEO: Bitcoin Treasury Companies a “Disservice to Shareholders”",
-   "url": "https://bitcoinmagazine.com/videos/samara-asset-group-ceo-bitcoin-treasury-companies-a-disservice-to-shareholders",
+   "title": "U.S. Treasury Says U.S. ‘Will Win in the Digital Asset Stack’ as Clarity Act Stalls",
+   "url": "https://bitcoinmagazine.com/news/treasury-says-win-in-the-digital-asset",
    "source": "Bitcoin Magazine",
-   "published": "2026-10-28T13:30:12+00:00",
-   "summary": "▶ Bitcoin Magazine Samara Asset Group CEO: Bitcoin Treasury Companies a “Disservice to Shareholders” Patrick Lowry argues 'digital gold' was flawed marketing, explaining why the market rejects pure treasury plays and how Samara deploys BTC as working capital. This post Samara As…",
-   "score": 0.329
+   "published": "2026-10-28T14:14:36+00:00",
+   "summary": "Bitcoin Magazine U.S. Treasury Says U.S. ‘Will Win in the Digital Asset Stack’ as Clarity Act Stalls Treasury Secretary Scott Bessent said that U.S. leadership in digital assets could reinforce the dollar’s global reach even as the stalled CLARITY Act leaves regulators to fill t…",
+   "score": 0.3178
+  },
+  {
+   "title": "VanEck launches diversified ETF combining stocks, bonds and Bitcoin exposure",
+   "url": "https://cointelegraph.com/news/vaneck-launches-diversified-etf-combining-stocks-bonds-and-bitcoin-exposure?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-10-27T21:28:22+00:00",
+   "summary": "VanEck’s new Wealth Builder ETF targets a 2% Bitcoin allocation, with a permitted range of 1% to 5%, gaining exposure through a spot Bitcoin ETP.",
+   "score": 0.2993
   },
   {
    "title": "Bitcoin Dips Below $80,000 Ahead of Fed Decision, Midterms",
@@ -238,7 +246,7 @@
    "source": "Decrypt",
    "published": "2026-10-26T13:02:43+00:00",
    "summary": "Analysts point to a sell-off in AI stocks and ETF outflows, with HashKey's Tim Sun flagging $75,000 as the next key support level.",
-   "score": 0.2942
+   "score": 0.2811
   },
   {
    "title": "Bitcoin nears $81,000 ahead of Fed decision as ZEC jumps 8%",
@@ -246,23 +254,15 @@
    "source": "CoinDesk",
    "published": "2026-10-28T04:15:20+00:00",
    "summary": "",
-   "score": 0.2879
+   "score": 0.2751
   },
   {
-   "title": "Bitcoin ETFs claw back $110M after $774M exit",
-   "url": "https://cointelegraph.com/markets/bitcoin-etf-rebound-110-million-btc-dip-below-80k?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-10-27T07:35:37+00:00",
-   "summary": "US spot Bitcoin ETFs remained in the red for October, with about $202 million in net outflows for the month despite Monday’s rebound.",
-   "score": 0.2563
-  },
-  {
-   "title": "VanEck Launches All-in-One Wealth Builder ETF With Bitcoin Exposure",
-   "url": "https://bitcoinmagazine.com/news/vaneck-builder-etf-with-bitcoin-exposure",
+   "title": "Samara Asset Group CEO: Bitcoin Treasury Companies a “Disservice to Shareholders”",
+   "url": "https://bitcoinmagazine.com/videos/samara-asset-group-ceo-bitcoin-treasury-companies-a-disservice-to-shareholders",
    "source": "Bitcoin Magazine",
-   "published": "2026-10-27T19:18:06+00:00",
-   "summary": "Bitcoin Magazine VanEck Launches All-in-One Wealth Builder ETF With Bitcoin Exposure VanEck launched its Wealth Builder ETF (WBMO) on the NYSE, bundling stocks, bonds, gold and indirect bitcoin exposure into one fund for 0.26% a year. This post VanEck Launches All-in-One Wealth…",
-   "score": 0.2429
+   "published": "2026-10-28T13:30:12+00:00",
+   "summary": "▶ Bitcoin Magazine Samara Asset Group CEO: Bitcoin Treasury Companies a “Disservice to Shareholders” Patrick Lowry argues 'digital gold' was flawed marketing, explaining why the market rejects pure treasury plays and how Samara deploys BTC as working capital. This post Samara As…",
+   "score": 0.2515
   },
   {
    "title": "Live updates: Bitcoin clings to $80,000 as Strategy’s cushion thins before earnings",
@@ -270,15 +270,23 @@
    "source": "CoinDesk",
    "published": "2026-10-29T10:41:39+00:00",
    "summary": "",
-   "score": 0.2288
+   "score": 0.2186
   },
   {
-   "title": "Centralized Exchange and DeFi Losses Dominate 2026 Crypto Hacks Despite Hardware Wallet Failures",
-   "url": "https://bitcoinmagazine.com/technical/centralized-exchange-and-defi-losses-dominate-2026-crypto-hacks-despite-hardware-wallet-failures",
+   "title": "Bitcoin ETFs claw back $110M after $774M exit",
+   "url": "https://cointelegraph.com/markets/bitcoin-etf-rebound-110-million-btc-dip-below-80k?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-10-27T07:35:37+00:00",
+   "summary": "US spot Bitcoin ETFs remained in the red for October, with about $202 million in net outflows for the month despite Monday’s rebound.",
+   "score": 0.196
+  },
+  {
+   "title": "VanEck Launches All-in-One Wealth Builder ETF With Bitcoin Exposure",
+   "url": "https://bitcoinmagazine.com/news/vaneck-builder-etf-with-bitcoin-exposure",
    "source": "Bitcoin Magazine",
-   "published": "2026-10-28T17:43:02+00:00",
-   "summary": "Bitcoin Magazine Centralized Exchange and DeFi Losses Dominate 2026 Crypto Hacks Despite Hardware Wallet Failures Lightning.news data shared with Bitcoin Magazine puts net 2026 crypto hack losses at roughly $2.35 billion after freezes and returns. September alone accounted for a…",
-   "score": 0.179
+   "published": "2026-10-27T19:18:06+00:00",
+   "summary": "Bitcoin Magazine VanEck Launches All-in-One Wealth Builder ETF With Bitcoin Exposure VanEck launched its Wealth Builder ETF (WBMO) on the NYSE, bundling stocks, bonds, gold and indirect bitcoin exposure into one fund for 0.26% a year. This post VanEck Launches All-in-One Wealth…",
+   "score": 0.1857
   },
   {
    "title": "Strategy Pauses Bitcoin Buying, Spends $205M Buying Back STRC",
@@ -286,15 +294,7 @@
    "source": "Decrypt",
    "published": "2026-10-26T13:24:38+00:00",
    "summary": "The Bitcoin treasury firm's USD Cash balance fell to $242.4 million after its biggest weekly STRC buyback in more than a month.",
-   "score": 0.163
-  },
-  {
-   "title": "Luxor raises $16M from CMT Digital amid AI-Bitcoin miner convergence",
-   "url": "https://cointelegraph.com/news/luxor-raises-16m-ai-bitcoin-miner-convergence?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-10-27T13:01:00+00:00",
-   "summary": "Luxor aims to use the proceeds to scale its existing AI infrastructure business and expand its GPU sourcing services as global chip supply chains become constrained.",
-   "score": 0.1479
+   "score": 0.1557
   },
   {
    "title": "Bitcoin rebounds above $81,000 as Asian chip rally spills into crypto, pepe jumps 9%",
@@ -302,15 +302,15 @@
    "source": "CoinDesk",
    "published": "2026-10-28T11:32:31+00:00",
    "summary": "",
-   "score": 0.1474
+   "score": 0.1408
   },
   {
-   "title": "Luxor Announces $16M Funding Round to Scale AI Compute, Derivatives",
-   "url": "https://bitcoinmagazine.com/videos/luxor-announces-16m-funding-round-to-scale-ai-compute-derivatives",
+   "title": "Centralized Exchange and DeFi Losses Dominate 2026 Crypto Hacks Despite Hardware Wallet Failures",
+   "url": "https://bitcoinmagazine.com/technical/centralized-exchange-and-defi-losses-dominate-2026-crypto-hacks-despite-hardware-wallet-failures",
    "source": "Bitcoin Magazine",
-   "published": "2026-10-28T13:42:18+00:00",
-   "summary": "▶ Bitcoin Magazine Luxor Announces $16M Funding Round to Scale AI Compute, Derivatives Luxor raises $16M to scale AI GPU compute. Ethan Vera and CMT Digital's Sam Hallene explain why Bitcoin mining expertise translates so well to the AI boom. This post Luxor Announces $16M Fundi…",
-   "score": 0.1352
+   "published": "2026-10-28T17:43:02+00:00",
+   "summary": "Bitcoin Magazine Centralized Exchange and DeFi Losses Dominate 2026 Crypto Hacks Despite Hardware Wallet Failures Lightning.news data shared with Bitcoin Magazine puts net 2026 crypto hack losses at roughly $2.35 billion after freezes and returns. September alone accounted for a…",
+   "score": 0.1369
   },
   {
    "title": "Bitcoin Mining Firm Luxor Raises $16 Million to Scale Its AI Compute Push",
@@ -318,15 +318,15 @@
    "source": "Decrypt",
    "published": "2026-10-27T13:01:08+00:00",
    "summary": "The CMT Digital-led round, which drew mining-hardware makers Canaan and MicroBT, will fund Luxor’s expansion into AI compute trading, hardware and derivatives.",
-   "score": 0.1183
+   "score": 0.113
   },
   {
-   "title": "Bitcoin ETFs break 2-week outflow streak with $301M comeback",
-   "url": "https://cointelegraph.com/markets/bitcoin-etfs-rebound-weekly-inflow-301-million?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "title": "Luxor raises $16M from CMT Digital amid AI-Bitcoin miner convergence",
+   "url": "https://cointelegraph.com/news/luxor-raises-16m-ai-bitcoin-miner-convergence?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
    "source": "Cointelegraph",
-   "published": "2026-10-26T08:20:49+00:00",
-   "summary": "US spot Bitcoin ETFs finished the week with $301 million in net inflows after a strong three-day start gave way to heavy withdrawals.",
-   "score": 0.1173
+   "published": "2026-10-27T13:01:00+00:00",
+   "summary": "Luxor aims to use the proceeds to scale its existing AI infrastructure business and expand its GPU sourcing services as global chip supply chains become constrained.",
+   "score": 0.113
   }
  ]
 }
