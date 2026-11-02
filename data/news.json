@@ -1,5 +1,5 @@
 {
- "fetched": "2026-11-01T23:33:38+00:00",
+ "fetched": "2026-11-02T02:27:23+00:00",
  "sources_ok": [
   "CoinDesk",
   "Cointelegraph",
@@ -14,7 +14,7 @@
    "source": "Decrypt",
    "published": "2026-11-01T16:01:02+00:00",
    "summary": "Bitcoin ETFs saw $643.2 million in outflows Friday, the first full trading session after the $6.4 billion Binance hack, ending October with roughly $516 million in net outflows.",
-   "score": 3.5872
+   "score": 3.4403
   },
   {
    "title": "Tyler Evans: Bitcoin ETF Flows Flipped From “Highly Negative” to “Strong Accumulation”",
@@ -22,7 +22,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-30T13:31:15+00:00",
    "summary": "▶ Bitcoin Magazine Tyler Evans: Bitcoin ETF Flows Flipped From “Highly Negative” to “Strong Accumulation” Tyler Evans breaks down Bitcoin's post-bear setup: Fed policy, bond yields, surging ETF accumulation, and why U.S. midterms are pivotal heading into 2027. This post Tyler Ev…",
-   "score": 1.9463
+   "score": 1.8666
   },
   {
    "title": "Here’s what happened in crypto today",
@@ -30,7 +30,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-01T14:17:00+00:00",
    "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
-   "score": 1.9242
+   "score": 1.8454
   },
   {
    "title": "Binance opens crypto withdrawals in phases starting with bitcoin following $6.3 billion hack",
@@ -38,7 +38,7 @@
    "source": "CoinDesk",
    "published": "2026-11-01T10:35:42+00:00",
    "summary": "",
-   "score": 1.6585
+   "score": 1.5906
   },
   {
    "title": "Binance Hack: Why Bitcoin Didn't Crash Like It Did in 2018",
@@ -46,7 +46,7 @@
    "source": "Decrypt",
    "published": "2026-10-30T18:45:03+00:00",
    "summary": "Binance lost about $6.4 billion, the largest crypto hack on record, yet Bitcoin fell about 3%, against nearly 11% in 2018 when the exchange was last attacked.",
-   "score": 1.418
+   "score": 1.3599
   },
   {
    "title": "Mike Flaum: MSTR Performance “Massively” to the Upside During Next BTC Bull Run",
@@ -54,7 +54,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-31T01:02:04+00:00",
    "summary": "▶ Bitcoin Magazine Mike Flaum: MSTR Performance “Massively” to the Upside During Next BTC Bull Run Log Scale CEO Mike Flaum discusses Strategy's Stretch, daily dividends, BTC preferreds vs. Treasuries for retirees, and separating volatility from true risk. This post Mike Flaum:…",
-   "score": 1.2667
+   "score": 1.2148
   },
   {
    "title": "FBI confirms North Korea's role in $6 billion Binance hack, asks DeFi community to block BTC, ETH, SOL addresses",
@@ -62,7 +62,7 @@
    "source": "CoinDesk",
    "published": "2026-11-01T01:10:05+00:00",
    "summary": "",
-   "score": 1.1579
+   "score": 1.1105
   },
   {
    "title": "Crypto Biz: Bitcoin’s quantum threat is becoming an economic problem",
@@ -70,7 +70,7 @@
    "source": "Cointelegraph",
    "published": "2026-10-30T17:09:31+00:00",
    "summary": "Bitcoin faces mounting quantum security concerns as Ripple secures a US banking charter, USDC gains ground in Europe and VanEck adds BTC to a new ETF.",
-   "score": 1.094
+   "score": 1.0492
   },
   {
    "title": "4M Bitcoin Bought Above $85K Could Cap Recovery: Glassnode",
@@ -78,7 +78,7 @@
    "source": "Decrypt",
    "published": "2026-10-29T16:32:47+00:00",
    "summary": "Bitcoin is trading close to the average price paid by U.S. spot ETF holders, a day after the Federal Reserve held rates steady.",
-   "score": 0.9201
+   "score": 0.8825
   },
   {
    "title": "MSTR Q3 2026 Earnings Call: Analyst Q&A",
@@ -86,7 +86,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-31T01:08:31+00:00",
    "summary": "▶ Bitcoin Magazine MSTR Q3 2026 Earnings Call: Analyst Q&A Strategy's MSTR Q3 earnings Q&A: Michael Saylor and Phong Le answer analysts on digital credit, Stretch (STRC) at par, preferreds, and Bitcoin's financialization. This post MSTR Q3 2026 Earnings Call: Analyst Q&A first a…",
-   "score": 0.9167
+   "score": 0.8792
   },
   {
    "title": "Bitcoin ETFs add $137M, pushing October back into the green",
@@ -94,7 +94,7 @@
    "source": "Cointelegraph",
    "published": "2026-10-29T07:32:20+00:00",
    "summary": "Bitcoin ETFs drew $424 million over three days, lifting October net inflows to $111 million despite a hawkish Federal Reserve decision and weaker crypto sentiment.",
-   "score": 0.8079
+   "score": 0.7748
   },
   {
    "title": "As big bitcoin miners chase AI profits, individuals get another shot at the rewards",
@@ -102,7 +102,7 @@
    "source": "CoinDesk",
    "published": "2026-10-31T14:00:00+00:00",
    "summary": "",
-   "score": 0.7884
+   "score": 0.7561
   },
   {
    "title": "Alexandre Laizet on The French Debt Crisis: “Europe is in Need of Bitcoin”",
@@ -110,7 +110,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-30T13:17:11+00:00",
    "summary": "▶ Bitcoin Magazine Alexandre Laizet on The French Debt Crisis: “Europe is in Need of Bitcoin” France hits 120% debt-to-GDP. Capital B's Alexandre Laizet explains why misspent debt and currency debasement make the case for a Bitcoin treasury strategy. This post Alexandre Laizet o…",
-   "score": 0.6842
+   "score": 0.6562
   },
   {
    "title": "Bitcoin held up better than expected after Binance hack, Strive CEO says",
@@ -118,7 +118,7 @@
    "source": "Cointelegraph",
    "published": "2026-10-31T15:26:46+00:00",
    "summary": "Strive CEO Matt Cole says the Binance hack has not changed his long-term case for Bitcoin, but cautions it is too early to call a market bottom.",
-   "score": 0.644
+   "score": 0.6176
   },
   {
    "title": "A Nasdaq-listed company may sell $450 million bitcoin, citing Binance hack and quantum fears",
@@ -126,7 +126,7 @@
    "source": "CoinDesk",
    "published": "2026-10-31T12:49:47+00:00",
    "summary": "",
-   "score": 0.6201
+   "score": 0.5947
   },
   {
    "title": "Bitcoin turns 18: Has the original rebel grown up?",
@@ -134,7 +134,7 @@
    "source": "Cointelegraph",
    "published": "2026-10-31T14:27:52+00:00",
    "summary": "In typical Bitcoin style, the number one cryptocurrency turns 18 today, amid AI-driven security threats, quantum fears and the biggest exchange hack in crypto history.",
-   "score": 0.508
+   "score": 0.4872
   },
   {
    "title": "Morning Minute: Hedge Funds Left the BTC ETF Trade and Sovereign Wealth Stepped In",
@@ -142,7 +142,7 @@
    "source": "Decrypt",
    "published": "2026-10-29T12:30:38+00:00",
    "summary": "Now the BTC ETFs have flipped green for the month after $400M+ inflows this week, setting the stage for a big November.",
-   "score": 0.463
+   "score": 0.444
   },
   {
    "title": "Senator Bill Hagerty: Expanding the U.S. Strategic Bitcoin Reserve, & the Future of Dollar Hegemony",
@@ -150,7 +150,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-29T12:46:00+00:00",
    "summary": "▶ Bitcoin Magazine Senator Bill Hagerty: Expanding the U.S. Strategic Bitcoin Reserve, & the Future of Dollar Hegemony Sen. Bill Hagerty explains why CBDCs threaten freedom, how regulatory ambiguity enabled SEC overreach, and what Congress can accomplish before January. This pos…",
-   "score": 0.4585
+   "score": 0.4397
   },
   {
    "title": "Tether’s excess reserves nearly double to $8B as Q3 profit hits $1.5B",
@@ -158,7 +158,7 @@
    "source": "Cointelegraph",
    "published": "2026-10-30T19:01:58+00:00",
    "summary": "The stablecoin issuer’s US Treasury holdings are comparable to those of major foreign holders, while its Bitcoin reserves were valued at $8.37 billion at the end of September.",
-   "score": 0.3837
+   "score": 0.368
   },
   {
    "title": "Why Switzerland’s first genuine spot bitcoin ETF could soon attract overseas banks and brokers",
@@ -166,7 +166,7 @@
    "source": "CoinDesk",
    "published": "2026-10-29T14:15:46+00:00",
    "summary": "",
-   "score": 0.3799
+   "score": 0.3643
   },
   {
    "title": "SEC Charges Two Companies in $130 Million Crypto Trading Scheme",
@@ -174,7 +174,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-30T14:38:43+00:00",
    "summary": "Bitcoin Magazine SEC Charges Two Companies in $130 Million Crypto Trading Scheme The SEC has charged two companies with defrauding investors of over $130 million through a crypto Ponzi-like scheme. This post SEC Charges Two Companies in $130 Million Crypto Trading Scheme first a…",
-   "score": 0.3601
+   "score": 0.3454
   },
   {
    "title": "$11 Billion in Bitcoin Options Expire Tomorrow—Here's What It Means",
@@ -182,7 +182,7 @@
    "source": "Decrypt",
    "published": "2026-10-29T17:15:11+00:00",
    "summary": "A third of Deribit's Bitcoin options settle Friday, a day after the Fed held rates with two officials voting to hike. Here's why that matters for Bitcoin's price.",
-   "score": 0.3305
+   "score": 0.317
   },
   {
    "title": "Strategy eyes more Bitcoin buys as Saylor touts $30B credit capacity",
@@ -190,7 +190,7 @@
    "source": "Cointelegraph",
    "published": "2026-10-30T05:53:07+00:00",
    "summary": "Michael Saylor says Strategy could create up to $30 billion in digital credit without new common-stock fundraising or further Bitcoin price gains, as the company plans more BTC purchases.",
-   "score": 0.2843
+   "score": 0.2727
   },
   {
    "title": "Doomberg: US Treasury Sanctions are “Wildly Bullish” for Bitcoin & Gold",
@@ -198,7 +198,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-30T13:26:43+00:00",
    "summary": "▶ Bitcoin Magazine Doomberg: US Treasury Sanctions are “Wildly Bullish” for Bitcoin & Gold U.S. pressure to hold Treasuries forces central banks to sell what they can, says Doomberg, setting up a wildly bullish long-term case for gold and Bitcoin. This post Doomberg: US Treasury…",
-   "score": 0.2831
+   "score": 0.2716
   },
   {
    "title": "Here's how big bitcoin traders responded after the Binance hack hit",
@@ -206,7 +206,7 @@
    "source": "CoinDesk",
    "published": "2026-10-30T11:51:26+00:00",
    "summary": "",
-   "score": 0.2767
+   "score": 0.2654
   },
   {
    "title": "Worried About Crypto Hacks? Buy Bitcoin Proxies in Stock Market Instead, Say Wall Street Firms",
@@ -214,7 +214,7 @@
    "source": "Decrypt",
    "published": "2026-10-30T20:06:03+00:00",
    "summary": "Analysts at Cantor Fitzgerald, TD Cowen and Compass Point say the record $6.4 billion theft is a Binance security failure, not a crypto-wide threat, pointing clients toward proxies like Coinbase, Robinhood, and Strategy.",
-   "score": 0.2494
+   "score": 0.2392
   },
   {
    "title": "Bitcoin Price Briefly Slides to $76,300 as Binance Confirms Hack Estimated at $6.3 Billion",
@@ -222,7 +222,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-30T04:05:40+00:00",
    "summary": "Bitcoin Magazine Bitcoin Price Briefly Slides to $76,300 as Binance Confirms Hack Estimated at $6.3 Billion Binance says the attacker reportedly gained access through a compromised employee laptop, and about $3 billion has been frozen onchain. This post Bitcoin Price Briefly Sli…",
-   "score": 0.2217
+   "score": 0.2126
   },
   {
    "title": "Crypto liquidations jump to $1.57 billion as Binance hack sends bitcoin, ether lower",
@@ -230,7 +230,7 @@
    "source": "CoinDesk",
    "published": "2026-10-30T11:09:24+00:00",
    "summary": "",
-   "score": 0.2192
+   "score": 0.2102
   },
   {
    "title": "Binance hacker’s Bitcoin haul tops Coinbase’s corporate treasury",
@@ -238,7 +238,7 @@
    "source": "Cointelegraph",
    "published": "2026-10-30T10:54:30+00:00",
    "summary": "The attackers held 18,270 BTC early Friday, topping Coinbase’s reported corporate holdings, and an Ether stash exceeding 500,000 ETH.",
-   "score": 0.2184
+   "score": 0.2094
   },
   {
    "title": "Wall Street’s Fast Money Fled Bitcoin ETFs, Sovereign Funds Stepped In",
@@ -246,7 +246,7 @@
    "source": "Decrypt",
    "published": "2026-10-28T16:15:02+00:00",
    "summary": "Galaxy Research found that nine hedge funds and banks cut 68,000 BTC worth of spot ETF exposure as the cash-and-carry trade dried up, while wealth platforms and sovereign funds added.",
-   "score": 0.1769
+   "score": 0.1697
   },
   {
    "title": "Bitcoin treasury Datavault AI plunges 50% after firm says it can’t access its BTC",
@@ -254,7 +254,7 @@
    "source": "CoinDesk",
    "published": "2026-10-28T05:28:13+00:00",
    "summary": "",
-   "score": 0.1736
+   "score": 0.1665
   },
   {
    "title": "Fed’s hawkish rate hold keeps pressure on Bitcoin: Analysts",
@@ -262,7 +262,7 @@
    "source": "Cointelegraph",
    "published": "2026-10-29T01:12:01+00:00",
    "summary": "Traders are pricing in a 78% chance of a December rate hike, while analysts say Treasury yields, the US dollar and upcoming inflation data could determine Bitcoin’s next move.",
-   "score": 0.1718
+   "score": 0.1648
   },
   {
    "title": "Franklin Templeton Officially Launches 2 Bitcoin DRIP ETFs That Turn Dividends Into Bitcoin",
@@ -270,7 +270,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-29T16:26:24+00:00",
    "summary": "Bitcoin Magazine Franklin Templeton Officially Launches 2 Bitcoin DRIP ETFs That Turn Dividends Into Bitcoin Franklin Templeton’s two Bitcoin DRIP ETFs, FBEQ and FIBT, started trading today on the Nasdaq. This post Franklin Templeton Officially Launches 2 Bitcoin DRIP ETFs That…",
-   "score": 0.1606
+   "score": 0.154
   },
   {
    "title": "Live updates: Bitcoin falls below $77,000 as Binance exploit combines with tech woes",
@@ -278,7 +278,7 @@
    "source": "CoinDesk",
    "published": "2026-10-30T08:36:52+00:00",
    "summary": "",
-   "score": 0.1352
+   "score": 0.1297
   },
   {
    "title": "Fed Stands Pat, Bitcoin Holds Steady—But a December Rate Hike Is in Play",
@@ -286,7 +286,7 @@
    "source": "Decrypt",
    "published": "2026-10-28T18:25:18+00:00",
    "summary": "The Federal Reserve left rates unchanged Wednesday in a 10-2 vote, with Governor Lisa Cook and Cleveland Fed President Beth Hammack favoring a hike.",
-   "score": 0.1217
+   "score": 0.1167
   },
   {
    "title": "Blockchain Firms Link North Korea to $6.3 Billion Binance Hack",
@@ -294,7 +294,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-30T14:13:15+00:00",
    "summary": "Bitcoin Magazine Blockchain Firms Link North Korea to $6.3 Billion Binance Hack Chainalysis and TRM Labs have linked yesterday’s $6.3 billion Binance hack to North Korea’s TraderTraitor group. This post Blockchain Firms Link North Korea to $6.3 Billion Binance Hack first appeare…",
-   "score": 0.1173
+   "score": 0.1125
   },
   {
    "title": "Bitcoin price metrics hint at rebound as $1.6B liquidations follow Binance hack",
@@ -302,7 +302,7 @@
    "source": "Cointelegraph",
    "published": "2026-10-30T11:29:23+00:00",
    "summary": "Bitcoin held above $76,000 after a $6.3 billion Binance hack and a tech-stock sell-off, as momentum indicators pointed to a possible rebound.",
-   "score": 0.1127
+   "score": 0.1081
   },
   {
    "title": "AI found a way to crash bitcoin nodes on Windows and Macs. It's now public",
@@ -310,7 +310,7 @@
    "source": "CoinDesk",
    "published": "2026-10-29T05:54:39+00:00",
    "summary": "",
-   "score": 0.103
+   "score": 0.0988
   },
   {
    "title": "Fed Rate Decision: What Markets and Bitcoin Traders Can Expect",
@@ -318,7 +318,7 @@
    "source": "Decrypt",
    "published": "2026-10-28T15:15:34+00:00",
    "summary": "The Federal Reserve decides today at 2 p.m. ET and traders see a hold as near certain. Here's what it means for Bitcoin and stock markets.",
-   "score": 0.093
+   "score": 0.0892
   },
   {
    "title": "U.S. Treasury Sanctions Crypto Launderers Behind North Korea’s Fake Workers",
@@ -326,7 +326,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-29T14:37:46+00:00",
    "summary": "Bitcoin Magazine U.S. Treasury Sanctions Crypto Launderers Behind North Korea’s Fake Workers The U.S. Treasury sanctioned ten people and one entity, including two Russian crypto middlemen, for laundering money from North Korean fake IT worker schemes that fund its weapons progra…",
-   "score": 0.0834
+   "score": 0.08
   }
  ]
 }
