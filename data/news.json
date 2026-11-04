@@ -1,5 +1,5 @@
 {
- "fetched": "2026-11-04T03:00:01+00:00",
+ "fetched": "2026-11-04T09:03:47+00:00",
  "sources_ok": [
   "CoinDesk",
   "Cointelegraph",
@@ -14,7 +14,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-03T13:46:39+00:00",
    "summary": "Bitcoin Magazine Bitcoin Price Trades Near $77,500 as Midterm Voting Begins Bitcoin price trades near $77,500 as midterm voting begins, pressured by a record $6.3 billion Binance hack, ETF outflows, a Fed leaning toward a December hike and oil above $100 on Iran tensions. This p…",
-   "score": 4.544
+   "score": 4.1631
   },
   {
    "title": "Morning Minute: Tom Lee Calls the Binance Hack Bullish for Ethereum",
@@ -22,7 +22,15 @@
    "source": "Decrypt",
    "published": "2026-11-03T13:11:47+00:00",
    "summary": "Meanwhile, both the BTC ETFs and ETH ETFs bleed outflows in the Binance hack aftermath, dragging down prices.",
-   "score": 3.2771
+   "score": 3.0024
+  },
+  {
+   "title": "Jack Dorsey's Block faces $764 million DOJ settlement as bitcoin profit plunges 50%",
+   "url": "https://www.coindesk.com/markets/2026/11/04/jack-dorsey-s-block-faces-usd764-million-doj-settlement-as-bitcoin-profit-plunges-50",
+   "source": "CoinDesk",
+   "published": "2026-11-04T06:06:04+00:00",
+   "summary": "",
+   "score": 2.6828
   },
   {
    "title": "Wall Street killed Bitcoin’s wild rallies: 10x’s Markus Thielen",
@@ -30,7 +38,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-03T16:47:01+00:00",
    "summary": "Markus Thielen sees Bitcoin reaching $90,000 by year-end, questions institutional ETF demand and says Ethereum must do more for holders.",
-   "score": 2.5885
+   "score": 2.3715
   },
   {
    "title": "Bitcoin steadies after dip to $76,300 as ETF outflows and midterm elections weigh on crypto",
@@ -38,15 +46,15 @@
    "source": "CoinDesk",
    "published": "2026-11-03T11:28:00+00:00",
    "summary": "",
-   "score": 2.3972
+   "score": 1.757
   },
   {
-   "title": "BlackRock’s IBIT sees biggest Bitcoin ETF outflows since June",
-   "url": "https://cointelegraph.com/markets/blackrocks-ibit-biggest-bitcoin-etf-outflow-june?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "title": "Here’s what happened in crypto today",
+   "url": "https://cointelegraph.com/news/what-happened-in-crypto-today?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
    "source": "Cointelegraph",
-   "published": "2026-11-03T07:49:51+00:00",
-   "summary": "BlackRock’s Bitcoin ETF shed $405.3 million on Monday as US spot Bitcoin funds opened November with nearly $399 million in net outflows.",
-   "score": 1.8197
+   "published": "2026-11-04T06:03:33+00:00",
+   "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
+   "score": 1.6853
   },
   {
    "title": "Andrew Hohns: Why Bitcoin Can Fix America’s Debt Spiral",
@@ -54,7 +62,15 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-03T15:17:11+00:00",
    "summary": "▶ Bitcoin Magazine Andrew Hohns: Why Bitcoin Can Fix America’s Debt Spiral Battery Finance’s Andrew Hohns explains why taxes won’t fix the $40T debt, how a Bitcoin reserve defeases it, and why Treasury should pilot BitBonds. This post Andrew Hohns: Why Bitcoin Can Fix America’s…",
-   "score": 1.6888
+   "score": 1.5472
+  },
+  {
+   "title": "BlackRock’s IBIT sees biggest Bitcoin ETF outflows since June",
+   "url": "https://cointelegraph.com/markets/blackrocks-ibit-biggest-bitcoin-etf-outflow-june?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-11-03T07:49:51+00:00",
+   "summary": "BlackRock’s Bitcoin ETF shed $405.3 million on Monday as US spot Bitcoin funds opened November with nearly $399 million in net outflows.",
+   "score": 1.3337
   },
   {
    "title": "Strategy Resumes Bitcoin Buys With $66M Purchase",
@@ -62,23 +78,15 @@
    "source": "Decrypt",
    "published": "2026-11-02T13:19:36+00:00",
    "summary": "The Bitcoin treasury firm also spent $208.2 million buying back its STRC preferred stock, cutting its USD Cash balance to $132.7 million.",
-   "score": 1.4394
+   "score": 1.3187
   },
   {
-   "title": "Bitcoin ETFs sink into October outflows with $643M exit after Binance hack",
-   "url": "https://cointelegraph.com/markets/bitcoin-etfs-october-red-binance-hack-outflows?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-11-02T07:50:36+00:00",
-   "summary": "US spot Bitcoin ETFs ended October with $515 million in net withdrawals, while Ether funds posted a record $1.61 billion in monthly outflows.",
-   "score": 1.3727
-  },
-  {
-   "title": "Liquid’s bitcoin IOUs are fully backed again after a $320 million exploit",
-   "url": "https://www.coindesk.com/markets/2026/11/03/liquid-s-bitcoin-ious-are-fully-backed-again-after-a-usd320-million-exploit",
+   "title": "Bitcoin surges to $78,300 in V-shaped comeback as midterm election uncertainty fades",
+   "url": "https://www.coindesk.com/markets/2026/11/04/bitcoin-knocks-on-usd78-000-in-v-shaped-comeback-as-midterm-uncertainty-fades",
    "source": "CoinDesk",
-   "published": "2026-11-03T11:12:12+00:00",
+   "published": "2026-11-04T06:16:40+00:00",
    "summary": "",
-   "score": 1.2736
+   "score": 1.1066
   },
   {
    "title": "New Jersey Drops Coinbase Staking Order After Three Years",
@@ -86,7 +94,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-03T14:26:13+00:00",
    "summary": "Bitcoin Magazine New Jersey Drops Coinbase Staking Order After Three Years New Jersey’s securities regulator has rescinded its 2023 cease-and-desist order and $5 million penalty against Coinbase’s staking service. This post New Jersey Drops Coinbase Staking Order After Three Yea…",
-   "score": 1.1744
+   "score": 1.0759
   },
   {
    "title": "Brazil's Biggest Bitcoin Exchange Says It Will Refund Users After a $40 Million Hack",
@@ -94,23 +102,15 @@
    "source": "Decrypt",
    "published": "2026-11-03T18:16:03+00:00",
    "summary": "Mercado Bitcoin says customers won't pay for a hack that drained tens of millions. Withdrawals on the exchange remain frozen with no restart date.",
-   "score": 1.1283
+   "score": 1.0338
   },
   {
-   "title": "Here’s what happened in crypto today",
-   "url": "https://cointelegraph.com/news/what-happened-in-crypto-today?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "title": "Bitcoin ETFs sink into October outflows with $643M exit after Binance hack",
+   "url": "https://cointelegraph.com/markets/bitcoin-etfs-october-red-binance-hack-outflows?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
    "source": "Cointelegraph",
-   "published": "2026-11-03T22:39:18+00:00",
-   "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
-   "score": 1.0579
-  },
-  {
-   "title": "Bitcoin ETFs lost $643 million in outflows Friday, and 2026 is barely green now",
-   "url": "https://www.coindesk.com/markets/2026/11/02/bitcoin-etfs-lost-usd643-million-in-outflows-friday-and-2026-is-barely-green-now",
-   "source": "CoinDesk",
-   "published": "2026-11-02T06:46:41+00:00",
-   "summary": "",
-   "score": 1.0138
+   "published": "2026-11-02T07:50:36+00:00",
+   "summary": "US spot Bitcoin ETFs ended October with $515 million in net withdrawals, while Ether funds posted a record $1.61 billion in monthly outflows.",
+   "score": 1.0061
   },
   {
    "title": "Binance Says $6.34 Billion Hack Began With Fake Job Interview",
@@ -118,7 +118,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-03T16:44:20+00:00",
    "summary": "Bitcoin Magazine Binance Says $6.34 Billion Hack Began With Fake Job Interview Binance’s incident report says the $6.34 billion Oct. 29 theft was a five-month campaign that began with a fake job interview and a poisoned developer tool. This post Binance Says $6.34 Billion Hack B…",
-   "score": 0.883
+   "score": 0.809
   },
   {
    "title": "Bitcoin ETF Investors Head for the Exits After Record Binance Hack",
@@ -126,15 +126,15 @@
    "source": "Decrypt",
    "published": "2026-11-01T16:01:02+00:00",
    "summary": "Bitcoin ETFs saw $643.2 million in outflows Friday, the first full trading session after the $6.4 billion Binance hack, ending October with roughly $516 million in net outflows.",
-   "score": 0.8738
+   "score": 0.8006
   },
   {
-   "title": "Mercado Bitcoin pledges to cover all user losses after near $40 million hack",
-   "url": "https://www.coindesk.com/business/2026/11/03/mercado-bitcoin-pledges-to-cover-all-user-losses-after-near-usd40-million-hack",
+   "title": "Liquid’s bitcoin IOUs are fully backed again after a $320 million exploit",
+   "url": "https://www.coindesk.com/markets/2026/11/03/liquid-s-bitcoin-ious-are-fully-backed-again-after-a-usd320-million-exploit",
    "source": "CoinDesk",
-   "published": "2026-11-03T08:56:48+00:00",
+   "published": "2026-11-03T11:12:12+00:00",
    "summary": "",
-   "score": 0.789
+   "score": 0.7468
   },
   {
    "title": "Bitcoin Firm Strive Climbs Up the Treasury Ranks With Another Big Buy",
@@ -142,7 +142,15 @@
    "source": "Decrypt",
    "published": "2026-11-02T22:16:02+00:00",
    "summary": "Strive added 124 Bitcoin for about $10 million and now trails Twenty One Capital by 390 BTC for third place among Treasury companies.",
-   "score": 0.6762
+   "score": 0.6196
+  },
+  {
+   "title": "Bitcoin ETFs lost $643 million in outflows Friday, and 2026 is barely green now",
+   "url": "https://www.coindesk.com/markets/2026/11/02/bitcoin-etfs-lost-usd643-million-in-outflows-friday-and-2026-is-barely-green-now",
+   "source": "CoinDesk",
+   "published": "2026-11-02T06:46:41+00:00",
+   "summary": "",
+   "score": 0.5945
   },
   {
    "title": "Nvidia, Nike Join 50 Companies Blocking OKX–ICE Stock Token Push",
@@ -150,15 +158,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-02T18:30:00+00:00",
    "summary": "Bitcoin Magazine Nvidia, Nike Join 50 Companies Blocking OKX–ICE Stock Token Push Fifty companies, including Nvidia, Microsoft and JPMorgan, have blocked OKX and ICE from tokenizing their shares under the SEC’s new Innovation Exemption. This post Nvidia, Nike Join 50 Companies B…",
-   "score": 0.6404
-  },
-  {
-   "title": "Bitcoin miner Cipher posts $31 million profit as AI pivot begins",
-   "url": "https://www.coindesk.com/markets/2026/11/03/bitcoin-miner-cipher-posts-usd31-million-profit-as-ai-pivot-begins",
-   "source": "CoinDesk",
-   "published": "2026-11-03T05:29:48+00:00",
-   "summary": "",
-   "score": 0.6005
+   "score": 0.5867
   },
   {
    "title": "AI poses greater threat to Bitcoin than quantum computing, Swan founder says",
@@ -166,7 +166,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-02T21:54:41+00:00",
    "summary": "The Swan Bitcoin founder warned that hackers are using large language models to exploit security flaws with just a few prompts.",
-   "score": 0.5382
+   "score": 0.4931
   },
   {
    "title": "Liquid Network Restores Full Bitcoin Backing Two Months After $320M Exploit",
@@ -174,7 +174,15 @@
    "source": "Decrypt",
    "published": "2026-11-03T11:22:10+00:00",
    "summary": "Blockstream CEO Adam Back said the sidechain's defenses have been hardened, and warned developers not to trust AI-suggested fixes blindly.",
-   "score": 0.5229
+   "score": 0.4791
+  },
+  {
+   "title": "Mercado Bitcoin pledges to cover all user losses after near $40 million hack",
+   "url": "https://www.coindesk.com/business/2026/11/03/mercado-bitcoin-pledges-to-cover-all-user-losses-after-near-usd40-million-hack",
+   "source": "CoinDesk",
+   "published": "2026-11-03T08:56:48+00:00",
+   "summary": "",
+   "score": 0.4626
   },
   {
    "title": "Bitwise’s André Dragosch: Bitcoin’s “Fair Value” of $197,000",
@@ -182,7 +190,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-02T14:36:15+00:00",
    "summary": "▶ Bitcoin Magazine Bitwise’s André Dragosch: Bitcoin’s “Fair Value” of $197,000 André Dragosch details Bitcoin as a liquidity canary, its $197K model fair value, Fed policy shifts, recession risks, and capital rotation from precious metals. This post Bitwise’s André Dragosch: Bi…",
-   "score": 0.4843
+   "score": 0.4437
   },
   {
    "title": "Mercado Bitcoin wallets show post-hack transfers after $46M theft",
@@ -190,15 +198,15 @@
    "source": "Cointelegraph",
    "published": "2026-11-02T19:05:35+00:00",
    "summary": "Brazil’s exchange Mercado Bitcoin paused deposits and withdrawals after a security breach, saying customer funds and data were safe.",
-   "score": 0.4134
+   "score": 0.3787
   },
   {
-   "title": "Bitcoin traders eye post-election rally as exchange outflows point to supply squeeze",
-   "url": "https://www.coindesk.com/markets/2026/11/02/bitcoin-traders-eye-post-election-rally-as-exchange-outflows-point-to-supply-squeeze",
+   "title": "Bitcoin miner Cipher posts $31 million profit as AI pivot begins",
+   "url": "https://www.coindesk.com/markets/2026/11/03/bitcoin-miner-cipher-posts-usd31-million-profit-as-ai-pivot-begins",
    "source": "CoinDesk",
-   "published": "2026-11-02T18:13:57+00:00",
+   "published": "2026-11-03T05:29:48+00:00",
    "summary": "",
-   "score": 0.3675
+   "score": 0.3521
   },
   {
    "title": "Brazil's Largest Exchange Mercado Bitcoin Halts Withdrawals After $40 Million Hack",
@@ -206,7 +214,7 @@
    "source": "Decrypt",
    "published": "2026-11-02T16:46:03+00:00",
    "summary": "Brazil's largest crypto exchange paused deposits and withdrawals after a security incident. Tether froze more than 4.5 million USDT tied to the attack.",
-   "score": 0.3198
+   "score": 0.293
   },
   {
    "title": "Binance Reopens Withdrawals as Hack Recovery Enters Second Week",
@@ -214,7 +222,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-02T14:57:34+00:00",
    "summary": "Bitcoin Magazine Binance Reopens Withdrawals as Hack Recovery Enters Second Week Binance has reopened withdrawals after its $6.3 billion North Korea hack, covered 95% of losses, and has reserves for the remaining 5%, with post-mortem reviews to stay open. This post Binance Reope…",
-   "score": 0.3116
+   "score": 0.2854
   },
   {
    "title": "Binance taps half its SAFU Bitcoin holdings, releases reserve proof",
@@ -222,15 +230,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-02T13:21:47+00:00",
    "summary": "Binance’s SAFU Bitcoin wallet now holds about 7,500 BTC after a 7,499 BTC transfer linked to the hack, with no timeline for restoring the $1 billion fund.",
-   "score": 0.3045
-  },
-  {
-   "title": "Live updates: Bitcoin bounce fades as Binance exploit, AI unwind continue to weigh",
-   "url": "https://www.coindesk.com/markets/2026/11/02/live-updates-binance-records-usd6-billion-outflows-after-starting-withdrawals-less-then-4-of-total-holdings",
-   "source": "CoinDesk",
-   "published": "2026-11-02T08:49:30+00:00",
-   "summary": "",
-   "score": 0.2851
+   "score": 0.2789
   },
   {
    "title": "Bitcoin risks drop below $76K as 7% oil slide fails to spark BTC price rally",
@@ -238,15 +238,15 @@
    "source": "Cointelegraph",
    "published": "2026-11-02T19:27:58+00:00",
    "summary": "Bitcoin fell around 1.7% on Monday as stocks pared early gains fueled by hopes of a diplomatic resolution to the US-Iran war.",
-   "score": 0.2394
+   "score": 0.2193
   },
   {
-   "title": "Bitcoin claws back toward $79,000 as markets shake off crypto's biggest hack",
-   "url": "https://www.coindesk.com/markets/2026/11/02/bitcoin-claws-back-toward-usd79-000-as-markets-shake-off-crypto-s-biggest-hack",
+   "title": "Bitcoin traders eye post-election rally as exchange outflows point to supply squeeze",
+   "url": "https://www.coindesk.com/markets/2026/11/02/bitcoin-traders-eye-post-election-rally-as-exchange-outflows-point-to-supply-squeeze",
    "source": "CoinDesk",
-   "published": "2026-11-02T04:42:22+00:00",
+   "published": "2026-11-02T18:13:57+00:00",
    "summary": "",
-   "score": 0.2149
+   "score": 0.2155
   },
   {
    "title": "Strategy (MSTR) Adds 811 Bitcoin, Strive (ASST) Follows Suit With 124 as Both Keep Stacking",
@@ -254,7 +254,23 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-02T13:50:53+00:00",
    "summary": "Bitcoin Magazine Strategy (MSTR) Adds 811 Bitcoin, Strive (ASST) Follows Suit With 124 as Both Keep Stacking Strategy bought 811 bitcoin for $65.5 million and Strive added 124 BTC last week, with the two firms together adding 935 coins and Strategy now holding 849,327 BTC. This…",
-   "score": 0.1962
+   "score": 0.1798
+  },
+  {
+   "title": "Live updates: Bitcoin bounce fades as Binance exploit, AI unwind continue to weigh",
+   "url": "https://www.coindesk.com/markets/2026/11/02/live-updates-binance-records-usd6-billion-outflows-after-starting-withdrawals-less-then-4-of-total-holdings",
+   "source": "CoinDesk",
+   "published": "2026-11-02T08:49:30+00:00",
+   "summary": "",
+   "score": 0.1672
+  },
+  {
+   "title": "Bitcoin bounces from 7-week low under $76K as Democrats sweep Congress",
+   "url": "https://cointelegraph.com/markets/bitcoin-bounces-from-7-week-low-under-76k-as-democrats-eye-congress-sweep?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-11-04T07:25:47+00:00",
+   "summary": "Bitcoin price downside reached a seven-week-low of $75,618 as 24-hour crypto long liquidations neared $300 million.",
+   "score": 0.1639
   },
   {
    "title": "Binance Hack: Why Bitcoin Didn't Crash Like It Did in 2018",
@@ -262,15 +278,7 @@
    "source": "Decrypt",
    "published": "2026-10-30T18:45:03+00:00",
    "summary": "Binance lost about $6.4 billion, the largest crypto hack on record, yet Bitcoin fell about 3%, against nearly 11% in 2018 when the exchange was last attacked.",
-   "score": 0.1769
-  },
-  {
-   "title": "Strategy spends triple its weekly Bitcoin outlay on STRC buybacks",
-   "url": "https://cointelegraph.com/news/strategy-repurchases-208m-strc-65m-bitcoin?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-11-02T13:48:28+00:00",
-   "summary": "Strategy spent $208.2 million buying back STRC preferred shares and $65.5 million on Bitcoin, while allocating $98.5 million to its USD Cash balance.",
-   "score": 0.1569
+   "score": 0.162
   },
   {
    "title": "Tyler Evans: Bitcoin ETF Flows Flipped From “Highly Negative” to “Strong Accumulation”",
@@ -278,15 +286,23 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-30T13:31:15+00:00",
    "summary": "▶ Bitcoin Magazine Tyler Evans: Bitcoin ETF Flows Flipped From “Highly Negative” to “Strong Accumulation” Tyler Evans breaks down Bitcoin's post-bear setup: Fed policy, bond yields, surging ETF accumulation, and why U.S. midterms are pivotal heading into 2027. This post Tyler Ev…",
-   "score": 0.1554
+   "score": 0.1423
   },
   {
-   "title": "Binance opens crypto withdrawals in phases starting with bitcoin following $6.3 billion hack",
-   "url": "https://www.coindesk.com/markets/2026/11/01/binance-opens-crypto-withdrawals-in-phases-starting-with-bitcoin-following-usd6-3-billion-hack",
+   "title": "U.S.-sanctioned Moscow Exchange to list bitcoin and Tether’s USDT in December",
+   "url": "https://www.coindesk.com/markets/2026/11/04/u-s-sanctioned-moscow-exchange-to-list-bitcoin-and-tether-s-usdt-in-december",
    "source": "CoinDesk",
-   "published": "2026-11-01T10:35:42+00:00",
+   "published": "2026-11-04T05:14:12+00:00",
    "summary": "",
-   "score": 0.1324
+   "score": 0.127
+  },
+  {
+   "title": "Strategy spends triple its weekly Bitcoin outlay on STRC buybacks",
+   "url": "https://cointelegraph.com/news/strategy-repurchases-208m-strc-65m-bitcoin?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-11-02T13:48:28+00:00",
+   "summary": "Strategy spent $208.2 million buying back STRC preferred shares and $65.5 million on Bitcoin, while allocating $98.5 million to its USD Cash balance.",
+   "score": 0.115
   },
   {
    "title": "4M Bitcoin Bought Above $85K Could Cap Recovery: Glassnode",
@@ -294,7 +310,15 @@
    "source": "Decrypt",
    "published": "2026-10-29T16:32:47+00:00",
    "summary": "Bitcoin is trading close to the average price paid by U.S. spot ETF holders, a day after the Federal Reserve held rates steady.",
-   "score": 0.1148
+   "score": 0.1051
+  },
+  {
+   "title": "Bitcoin claws back toward $79,000 as markets shake off crypto's biggest hack",
+   "url": "https://www.coindesk.com/markets/2026/11/02/bitcoin-claws-back-toward-usd79-000-as-markets-shake-off-crypto-s-biggest-hack",
+   "source": "CoinDesk",
+   "published": "2026-11-02T04:42:22+00:00",
+   "summary": "",
+   "score": 0.1008
   },
   {
    "title": "Mike Flaum: MSTR Performance “Massively” to the Upside During Next BTC Bull Run",
@@ -302,31 +326,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-10-31T01:02:04+00:00",
    "summary": "▶ Bitcoin Magazine Mike Flaum: MSTR Performance “Massively” to the Upside During Next BTC Bull Run Log Scale CEO Mike Flaum discusses Strategy's Stretch, daily dividends, BTC preferreds vs. Treasuries for retirees, and separating volatility from true risk. This post Mike Flaum:…",
-   "score": 0.1011
-  },
-  {
-   "title": "Binance has spent half its SAFU bitcoin, about $580 million worth, data shows",
-   "url": "https://www.coindesk.com/markets/2026/11/03/binance-has-spent-half-its-safu-bitcoin-about-usd580-million-worth-data-shows",
-   "source": "CoinDesk",
-   "published": "2026-11-03T05:36:56+00:00",
-   "summary": "",
-   "score": 0.0986
-  },
-  {
-   "title": "Crypto Biz: Bitcoin’s quantum threat is becoming an economic problem",
-   "url": "https://cointelegraph.com/news/bitcoin-quantum-threat-ripple-bank-usdc-vaneck-crypto-biz?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-10-30T17:09:31+00:00",
-   "summary": "Bitcoin faces mounting quantum security concerns as Ripple secures a US banking charter, USDC gains ground in Europe and VanEck adds BTC to a new ETF.",
-   "score": 0.0873
-  },
-  {
-   "title": "BTCPay Tells Merchants to Switch Off Servers Amid Hot Wallet Attack Reports",
-   "url": "https://decrypt.co/382324/btcpay-tells-merchants-to-switch-off-servers-amid-hot-wallet-attack-reports",
-   "source": "Decrypt",
-   "published": "2026-11-02T12:24:18+00:00",
-   "summary": "The Bitcoin payment software says attacks targeted versions 2.4.1 and older, days after it shipped an emergency fix for a critical flaw.",
-   "score": 0.0769
+   "score": 0.0926
   }
  ]
 }
