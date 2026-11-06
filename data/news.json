@@ -1,5 +1,5 @@
 {
- "fetched": "2026-11-06T10:45:16+00:00",
+ "fetched": "2026-11-06T12:54:18+00:00",
  "sources_ok": [
   "CoinDesk",
   "Cointelegraph",
@@ -9,20 +9,20 @@
  "sources_failed": [],
  "items": [
   {
+   "title": "Bitcoin holds $75K as AI regulation fears see KOSPI halted after 8% crash",
+   "url": "https://cointelegraph.com/markets/bitcoin-holds-ai-regulation-fears-kospi-halted?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-11-06T11:16:53+00:00",
+   "summary": "Bitcoin consolidated as fears over US AI regulation spread to Asia, causing South Korea to announce measures to calm stock-market volatility.",
+   "score": 3.9073
+  },
+  {
    "title": "Bitcoin recovers $76,000 level as ETFs shed $430 million after tech rout",
    "url": "https://www.coindesk.com/markets/2026/11/06/bitcoin-recovers-usd76-000-level-as-etfs-shed-usd430-million-after-tech-rout",
    "source": "CoinDesk",
    "published": "2026-11-06T09:53:27+00:00",
    "summary": "",
-   "score": 2.9628
-  },
-  {
-   "title": "Bitcoin, Ether ETFs post $530M outflows as election gains evaporate",
-   "url": "https://cointelegraph.com/markets/bitcoin-ether-etfs-lose-post-election-gains-erased?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-11-06T08:19:18+00:00",
-   "summary": "US spot Bitcoin and Ether ETFs shed a combined $530 million Thursday as Bitcoin fell below $76,000 and US stocks tumbled.",
-   "score": 2.8964
+   "score": 2.8722
   },
   {
    "title": "Bitcoin Erases Election Rally as AI Stocks Plunge, $428 Million in Crypto Longs Get Wiped Out",
@@ -30,7 +30,7 @@
    "source": "Decrypt",
    "published": "2026-11-05T16:29:11+00:00",
    "summary": "Bitcoin plunged nearly 5% as AI stocks sank, Democratic midterm wins raised fresh policy questions, and forced liquidations erased a Wednesday rally that had been fueled partly by short covering.",
-   "score": 2.7652
+   "score": 2.6807
   },
   {
    "title": "Fed and OCC Quiz U.S. Banks After $6.3 Billion Binance Hack",
@@ -38,15 +38,15 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-05T15:25:00+00:00",
    "summary": "Bitcoin Magazine Fed and OCC Quiz U.S. Banks After $6.3 Billion Binance Hack Federal Reserve and OCC supervisors contacted U.S. banks this week to check for vulnerabilities after the Binance hack. This post Fed and OCC Quiz U.S. Banks After $6.3 Billion Binance Hack first appear…",
-   "score": 2.6472
+   "score": 2.5663
   },
   {
-   "title": "Core Scientific to quit Bitcoin mining by year-end as AI business surges",
-   "url": "https://cointelegraph.com/news/core-scientific-to-quit-bitcoin-mining-by-year-end-as-ai-business-surges?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "title": "Bitcoin, Ether ETFs post $530M outflows as election gains evaporate",
+   "url": "https://cointelegraph.com/markets/bitcoin-ether-etfs-lose-post-election-gains-erased?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
    "source": "Cointelegraph",
-   "published": "2026-11-06T00:19:49+00:00",
-   "summary": "The former Bitcoin mining heavyweight plans to become a pure-play data center provider in 2027, with mining now accounting for just 7.5% of quarterly revenue.",
-   "score": 1.927
+   "published": "2026-11-06T08:19:18+00:00",
+   "summary": "US spot Bitcoin and Ether ETFs shed a combined $530 million Thursday as Bitcoin fell below $76,000 and US stocks tumbled.",
+   "score": 2.2463
   },
   {
    "title": "Bitcoin Price Trades Near $76,000 as Nasdaq Tumbles into Correction",
@@ -54,7 +54,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-05T21:46:35+00:00",
    "summary": "Bitcoin Magazine Bitcoin Price Trades Near $76,000 as Nasdaq Tumbles into Correction Bitcoin price held near $76,000 Thursday afternoon as the Nasdaq sank deeper into a correction, crypto liquidations topped $1 billion and Strategy, Coinbase and bitcoin miners sold off in double…",
-   "score": 1.7245
+   "score": 1.6718
   },
   {
    "title": "Bitcoin holds above $80,000 after Wednesday’s jump as injective rallies on staked ETF listing",
@@ -62,15 +62,15 @@
    "source": "CoinDesk",
    "published": "2026-11-05T11:30:00+00:00",
    "summary": "",
-   "score": 1.7154
+   "score": 1.663
   },
   {
-   "title": "Here’s what happened in crypto today",
-   "url": "https://cointelegraph.com/news/what-happened-in-crypto-today?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "title": "Core Scientific to quit Bitcoin mining by year-end as AI business surges",
+   "url": "https://cointelegraph.com/news/core-scientific-to-quit-bitcoin-mining-by-year-end-as-ai-business-surges?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
    "source": "Cointelegraph",
-   "published": "2026-11-06T06:04:41+00:00",
-   "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
-   "score": 1.3161
+   "published": "2026-11-06T00:19:49+00:00",
+   "summary": "The former Bitcoin mining heavyweight plans to become a pure-play data center provider in 2027, with mining now accounting for just 7.5% of quarterly revenue.",
+   "score": 1.4944
   },
   {
    "title": "Bitcoin Price Trades Near $77,500 as Midterm Voting Begins",
@@ -78,7 +78,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-03T13:46:39+00:00",
    "summary": "Bitcoin Magazine Bitcoin Price Trades Near $77,500 as Midterm Voting Begins Bitcoin price trades near $77,500 as midterm voting begins, pressured by a record $6.3 billion Binance hack, ETF outflows, a Fed leaning toward a December hike and oil above $100 on Iran tensions. This p…",
-   "score": 1.3
+   "score": 1.2603
   },
   {
    "title": "Mercado Bitcoin Said Its Hack Was Contained, But Blockchain Data Tells a Different Story",
@@ -86,15 +86,15 @@
    "source": "Decrypt",
    "published": "2026-11-05T20:16:03+00:00",
    "summary": "Fresh forensic analysis traces $48.6 million across 11 blockchains and finds thousands of customer deposit addresses drained hours after the Brazilian exchange said it had stopped the breach on Monday.",
-   "score": 1.298
+   "score": 1.2583
   },
   {
-   "title": "Bitcoin, Ether ETFs draw $128M as crypto rebounds after midterms",
-   "url": "https://cointelegraph.com/markets/bitcoin-ether-etfs-turn-green-post-election-rebound?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "title": "Here’s what happened in crypto today",
+   "url": "https://cointelegraph.com/news/what-happened-in-crypto-today?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
    "source": "Cointelegraph",
-   "published": "2026-11-05T08:22:30+00:00",
-   "summary": "Fidelity led Bitcoin ETF inflows, while BlackRock’s IBIT shed another $201 million, extending its outflow streak to four trading sessions.",
-   "score": 1.0494
+   "published": "2026-11-06T06:04:41+00:00",
+   "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
+   "score": 1.0207
   },
   {
    "title": "Trump-Backed American Bitcoin Turns a Profit as Bitcoin Rise Lifts Books",
@@ -102,7 +102,7 @@
    "source": "Decrypt",
    "published": "2026-11-05T18:25:31+00:00",
    "summary": "The Hut 8-backed miner reversed a second-quarter loss, driven largely by a $197 million gain on its Bitcoin holdings.",
-   "score": 1.0111
+   "score": 0.9802
   },
   {
    "title": "Keel (KEEL) Sells Entire Bitcoin Treasury for $192 Million, Will Sell BTC Daily",
@@ -110,7 +110,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-05T16:45:00+00:00",
    "summary": "Bitcoin Magazine Keel (KEEL) Sells Entire Bitcoin Treasury for $192 Million, Will Sell BTC Daily Keel sold 2,520 bitcoin in the third quarter, left its treasury near zero and said Quebec-mined coins will now be sold every day as it pivots to AI data centers. This post Keel (KEEL…",
-   "score": 0.9869
+   "score": 0.9568
   },
   {
    "title": "Google could take stake in bitcoin miner TeraWulf’s $19 billion AI project if Anthropic defaults",
@@ -118,7 +118,15 @@
    "source": "CoinDesk",
    "published": "2026-11-05T13:29:40+00:00",
    "summary": "",
-   "score": 0.9416
+   "score": 0.9128
+  },
+  {
+   "title": "Bitcoin, Ether ETFs draw $128M as crypto rebounds after midterms",
+   "url": "https://cointelegraph.com/markets/bitcoin-ether-etfs-turn-green-post-election-rebound?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-11-05T08:22:30+00:00",
+   "summary": "Fidelity led Bitcoin ETF inflows, while BlackRock’s IBIT shed another $201 million, extending its outflow streak to four trading sessions.",
+   "score": 0.8139
   },
   {
    "title": "Morning Minute: Tom Lee Calls the Binance Hack Bullish for Ethereum",
@@ -126,7 +134,7 @@
    "source": "Decrypt",
    "published": "2026-11-03T13:11:47+00:00",
    "summary": "Meanwhile, both the BTC ETFs and ETH ETFs bleed outflows in the Binance hack aftermath, dragging down prices.",
-   "score": 0.7501
+   "score": 0.7271
   },
   {
    "title": "Bitcoin miners are oversold following 35% October rout, VanEck says",
@@ -134,15 +142,7 @@
    "source": "CoinDesk",
    "published": "2026-11-05T11:49:23+00:00",
    "summary": "",
-   "score": 0.7353
-  },
-  {
-   "title": "American Bitcoin’s $126M profit masks mining pressure as rivals turn to AI",
-   "url": "https://cointelegraph.com/news/american-bitcoins-126m-profit-masks-mining-pressure-ai?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-11-05T22:43:18+00:00",
-   "summary": "The Eric Trump-backed miner reported $126 million in quarterly net income, largely driven by gains on its Bitcoin holdings, despite rising mining costs and shrinking margins.",
-   "score": 0.6885
+   "score": 0.7129
   },
   {
    "title": "Core Scientific (CORZ) to Exit Bitcoin Mining by Year-End as Colocation Hits $215 Million",
@@ -150,7 +150,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-05T20:39:27+00:00",
    "summary": "Bitcoin Magazine Core Scientific (CORZ) to Exit Bitcoin Mining by Year-End as Colocation Hits $215 Million Core Scientific will finish winding down bitcoin mining in the fourth quarter and enter 2027 as a pure-play AI colocation landlord, with self-mining revenue already down to…",
-   "score": 0.6683
+   "score": 0.6479
   },
   {
    "title": "Mercado Bitcoin hack continued hours after exchange said attack was contained, report finds",
@@ -158,15 +158,15 @@
    "source": "CoinDesk",
    "published": "2026-11-05T10:44:54+00:00",
    "summary": "",
-   "score": 0.5792
+   "score": 0.5615
   },
   {
-   "title": "Riot shares surge on $28B AI lease as Hut 8 sinks on revenue miss",
-   "url": "https://cointelegraph.com/news/riots-28b-ai-deal-lifts-shares-as-hut-8-faces-transition-costs?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "title": "American Bitcoin’s $126M profit masks mining pressure as rivals turn to AI",
+   "url": "https://cointelegraph.com/news/american-bitcoins-126m-profit-masks-mining-pressure-ai?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
    "source": "Cointelegraph",
-   "published": "2026-11-04T18:47:56+00:00",
-   "summary": "Bitcoin miner Riot sold BTC to finance its AI expansion, while Hut 8 reported falling revenue and rising costs before its major data center leases generate income.",
-   "score": 0.5153
+   "published": "2026-11-05T22:43:18+00:00",
+   "summary": "The Eric Trump-backed miner reported $126 million in quarterly net income, largely driven by gains on its Bitcoin holdings, despite rising mining costs and shrinking margins.",
+   "score": 0.534
   },
   {
    "title": "Tether and Tron Quietly Scrapped T3 Crime Unit Two Months Before $6.3 Billion Binance Hack",
@@ -174,7 +174,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-05T13:57:43+00:00",
    "summary": "Bitcoin Magazine Tether and Tron Quietly Scrapped T3 Crime Unit Two Months Before $6.3 Billion Binance Hack The T3 Financial Crime Unit, which said it froze more than $450 million in illicit USDT with authorities in 23 jurisdictions, wound down in late August. This post Tether a…",
-   "score": 0.4854
+   "score": 0.4705
   },
   {
    "title": "Bitcoin miner Riot could pay Anthropic 12% interest under $28 billion AI deal",
@@ -182,15 +182,15 @@
    "source": "CoinDesk",
    "published": "2026-11-05T09:36:32+00:00",
    "summary": "",
-   "score": 0.4558
+   "score": 0.4419
   },
   {
-   "title": "Bitcoin ETFs lose $1.16B as Bitwise calls selling ‘short-term’",
-   "url": "https://cointelegraph.com/markets/bitcoin-etf-shed-1-16-billion-bitwise-short-term-risk-off?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "title": "Riot shares surge on $28B AI lease as Hut 8 sinks on revenue miss",
+   "url": "https://cointelegraph.com/news/riots-28b-ai-deal-lifts-shares-as-hut-8-faces-transition-costs?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
    "source": "Cointelegraph",
-   "published": "2026-11-04T09:38:07+00:00",
-   "summary": "Bitwise’s André Dragosch attributed Bitcoin ETF outflows to weaker market sentiment, saying institutions have largely maintained their exposure.",
-   "score": 0.3869
+   "published": "2026-11-04T18:47:56+00:00",
+   "summary": "Bitcoin miner Riot sold BTC to finance its AI expansion, while Hut 8 reported falling revenue and rising costs before its major data center leases generate income.",
+   "score": 0.3996
   },
   {
    "title": "House Democrats Eye Their Own Crypto Market Structure Bill With a Bigger SEC Role After Sweep",
@@ -198,7 +198,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-04T20:52:54+00:00",
    "summary": "Bitcoin Magazine House Democrats Eye Their Own Crypto Market Structure Bill With a Bigger SEC Role After Sweep House Democrats are discussing a crypto market structure bill built on Rep. Maxine Waters' rejected Clarity Act amendments, with a bigger SEC role, a smaller CFTC role…",
-   "score": 0.3793
+   "score": 0.3677
   },
   {
    "title": "Jack Dorsey's Block faces $764 million DOJ settlement as bitcoin profit plunges 50%",
@@ -206,7 +206,7 @@
    "source": "CoinDesk",
    "published": "2026-11-04T06:06:04+00:00",
    "summary": "",
-   "score": 0.3431
+   "score": 0.3327
   },
   {
    "title": "Bitcoin Fixes This? Paraguay President Resigns After Bank Lockout Hits 60% of Country",
@@ -214,7 +214,15 @@
    "source": "Decrypt",
    "published": "2026-11-05T22:16:03+00:00",
    "summary": "Ueno’s collapse trapped millions of Paraguayan depositors and triggered a president’s resignation, reviving Bitcoin’s argument for self-custody.",
-   "score": 0.342
+   "score": 0.3316
+  },
+  {
+   "title": "Bitcoin ETFs lose $1.16B as Bitwise calls selling ‘short-term’",
+   "url": "https://cointelegraph.com/markets/bitcoin-etf-shed-1-16-billion-bitwise-short-term-risk-off?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-11-04T09:38:07+00:00",
+   "summary": "Bitwise’s André Dragosch attributed Bitcoin ETF outflows to weaker market sentiment, saying institutions have largely maintained their exposure.",
+   "score": 0.3001
   },
   {
    "title": "Bull Bitcoin Becomes First Exchange to Add Payjoin Privacy Deposits, Withdrawals, and Payjoin-by-Default Trading",
@@ -222,7 +230,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-05T18:00:00+00:00",
    "summary": "Bitcoin Magazine Bull Bitcoin Becomes First Exchange to Add Payjoin Privacy Deposits, Withdrawals, and Payjoin-by-Default Trading Bull Bitcoin is the first Bitcoin exchange to offer Payjoin privacy as a deposit and withdrawal option. Every on-chain buy or sell via BULL Wallet is…",
-   "score": 0.2964
+   "score": 0.2873
   },
   {
    "title": "Live updates: Bitcoin edges lower as markets cool following yesterday's rally",
@@ -230,7 +238,7 @@
    "source": "CoinDesk",
    "published": "2026-11-05T10:57:11+00:00",
    "summary": "",
-   "score": 0.2677
+   "score": 0.2595
   },
   {
    "title": "Strategy Resumes Bitcoin Buys With $66M Purchase",
@@ -238,15 +246,7 @@
    "source": "Decrypt",
    "published": "2026-11-02T13:19:36+00:00",
    "summary": "The Bitcoin treasury firm also spent $208.2 million buying back its STRC preferred stock, cutting its USD Cash balance to $132.7 million.",
-   "score": 0.2636
-  },
-  {
-   "title": "BitMart founder says security team ‘severely understaffed’ after new hack",
-   "url": "https://cointelegraph.com/news/bitmart-hack-security-staffing-crypto-exchange-restructuring?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-11-04T22:31:58+00:00",
-   "summary": "The crypto exchange’s founder warned of security staffing shortages amid restructuring as analysts flagged suspicious transfers potentially linked to the Mercado Bitcoin hack.",
-   "score": 0.2486
+   "score": 0.2555
   },
   {
    "title": "Brazil's Biggest Bitcoin Exchange Says It Will Refund Users After a $40 Million Hack",
@@ -254,7 +254,7 @@
    "source": "Decrypt",
    "published": "2026-11-03T18:16:03+00:00",
    "summary": "Mercado Bitcoin says customers won't pay for a hack that drained tens of millions. Withdrawals on the exchange remain frozen with no restart date.",
-   "score": 0.2066
+   "score": 0.2003
   },
   {
    "title": "Live updates: Bitcoin and stocks reverse overnight plunge following Blue Wave landslide",
@@ -262,15 +262,15 @@
    "source": "CoinDesk",
    "published": "2026-11-04T00:00:00+00:00",
    "summary": "",
-   "score": 0.2011
+   "score": 0.1949
   },
   {
-   "title": "Wall Street killed Bitcoin’s wild rallies: 10x’s Markus Thielen",
-   "url": "https://cointelegraph.com/magazine/wall-street-killed-bitcoins-wild-rallies-markus-thielen?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "title": "BitMart founder says security team ‘severely understaffed’ after new hack",
+   "url": "https://cointelegraph.com/news/bitmart-hack-security-staffing-crypto-exchange-restructuring?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
    "source": "Cointelegraph",
-   "published": "2026-11-03T16:47:01+00:00",
-   "summary": "Markus Thielen sees Bitcoin reaching $90,000 by year-end, questions institutional ETF demand and says Ethereum must do more for holders.",
-   "score": 0.1941
+   "published": "2026-11-04T22:31:58+00:00",
+   "summary": "The crypto exchange’s founder warned of security staffing shortages amid restructuring as analysts flagged suspicious transfers potentially linked to the Mercado Bitcoin hack.",
+   "score": 0.1928
   },
   {
    "title": "Bitcoin Price Holds Near $80,000 as Democratic Sweep Sparks Short Squeeze",
@@ -278,7 +278,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-04T20:32:51+00:00",
    "summary": "Bitcoin Magazine Bitcoin Price Holds Near $80,000 as Democratic Sweep Sparks Short Squeeze Bitcoin price holds near $80,000 after rebounding from an election-night low of $75,600, as a short squeeze, a stock rally and a 9% drop in oil follow the Democratic sweep of Congress. Thi…",
-   "score": 0.1739
+   "score": 0.1686
   },
   {
    "title": "Bitcoin ETF Investors Head for the Exits After Record Binance Hack",
@@ -286,7 +286,15 @@
    "source": "Decrypt",
    "published": "2026-11-01T16:01:02+00:00",
    "summary": "Bitcoin ETFs saw $643.2 million in outflows Friday, the first full trading session after the $6.4 billion Binance hack, ending October with roughly $516 million in net outflows.",
-   "score": 0.16
+   "score": 0.1551
+  },
+  {
+   "title": "Wall Street killed Bitcoin’s wild rallies: 10x’s Markus Thielen",
+   "url": "https://cointelegraph.com/magazine/wall-street-killed-bitcoins-wild-rallies-markus-thielen?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-11-03T16:47:01+00:00",
+   "summary": "Markus Thielen sees Bitcoin reaching $90,000 by year-end, questions institutional ETF demand and says Ethereum must do more for holders.",
+   "score": 0.1506
   },
   {
    "title": "Bitcoin steadies after dip to $76,300 as ETF outflows and midterm elections weigh on crypto",
@@ -294,15 +302,7 @@
    "source": "CoinDesk",
    "published": "2026-11-03T11:28:00+00:00",
    "summary": "",
-   "score": 0.1438
-  },
-  {
-   "title": "BlackRock’s IBIT sees biggest Bitcoin ETF outflows since June",
-   "url": "https://cointelegraph.com/markets/blackrocks-ibit-biggest-bitcoin-etf-outflow-june?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-11-03T07:49:51+00:00",
-   "summary": "BlackRock’s Bitcoin ETF shed $405.3 million on Monday as US spot Bitcoin funds opened November with nearly $399 million in net outflows.",
-   "score": 0.1365
+   "score": 0.1394
   },
   {
    "title": "Bitcoin Price Soars Above $79,000 After Democratic Sweep of Congress",
@@ -310,7 +310,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-04T14:21:35+00:00",
    "summary": "Bitcoin Magazine Bitcoin Price Soars Above $79,000 After Democratic Sweep of Congress Bitcoin trades near $79,000 after a dip to $75,600 as Democrats sweep both chambers of Congress. This post Bitcoin Price Soars Above $79,000 After Democratic Sweep of Congress first appeared on…",
-   "score": 0.1273
+   "score": 0.1234
   },
   {
    "title": "Bitcoin Firm Strive Climbs Up the Treasury Ranks With Another Big Buy",
@@ -318,15 +318,15 @@
    "source": "Decrypt",
    "published": "2026-11-02T22:16:02+00:00",
    "summary": "Strive added 124 Bitcoin for about $10 million and now trails Twenty One Capital by 390 BTC for third place among Treasury companies.",
-   "score": 0.1238
+   "score": 0.12
   },
   {
-   "title": "Bitcoin hits $80.5K as US stocks rally on midterm election results",
-   "url": "https://cointelegraph.com/markets/bitcoin-price-us-stocks-rally-midterm-election-result?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "title": "BlackRock’s IBIT sees biggest Bitcoin ETF outflows since June",
+   "url": "https://cointelegraph.com/markets/blackrocks-ibit-biggest-bitcoin-etf-outflow-june?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
    "source": "Cointelegraph",
-   "published": "2026-11-04T15:29:23+00:00",
-   "summary": "Bitcoin climbed toward $80,500 as risk assets rallied on Democrats’ midterm election gains and oil prices fell.",
-   "score": 0.1035
+   "published": "2026-11-03T07:49:51+00:00",
+   "summary": "BlackRock’s Bitcoin ETF shed $405.3 million on Monday as US spot Bitcoin funds opened November with nearly $399 million in net outflows.",
+   "score": 0.1058
   }
  ]
 }
