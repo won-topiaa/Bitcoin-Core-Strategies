@@ -1,5 +1,5 @@
 {
- "fetched": "2026-11-10T09:41:28+00:00",
+ "fetched": "2026-11-10T13:25:40+00:00",
  "sources_ok": [
   "CoinDesk",
   "Cointelegraph",
@@ -9,12 +9,20 @@
  "sources_failed": [],
  "items": [
   {
+   "title": "Bitcoin breaks with stocks, declines as ETF outflows mount, MARA reduces holdings",
+   "url": "https://www.coindesk.com/daybook-us/2026/11/10/bitcoin-breaks-with-stocks-declines-as-etf-outflows-mount-mara-sells-holdings",
+   "source": "CoinDesk",
+   "published": "2026-11-10T12:15:00+00:00",
+   "summary": "",
+   "score": 2.9494
+  },
+  {
    "title": "BlackRock Bitcoin ETF outflows hit $1.66B over seven trading sessions",
    "url": "https://cointelegraph.com/markets/blackrock-ibit-bitcoin-etf-outflows?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
    "source": "Cointelegraph",
    "published": "2026-11-10T08:02:05+00:00",
    "summary": "US spot Bitcoin ETFs shed $201 million Monday, with seven straight sessions of net withdrawals from BlackRock’s IBIT totaling $1.66 billion.",
-   "score": 2.9291
+   "score": 2.7752
   },
   {
    "title": "Strategy Buys $82M in Bitcoin, Buys Back $188M of STRC",
@@ -22,15 +30,23 @@
    "source": "Decrypt",
    "published": "2026-11-09T13:24:29+00:00",
    "summary": "The Bitcoin treasury firm sold $284 million of MSTR stock to fund the moves, days before MSCI names companies facing index removal.",
-   "score": 2.3129
+   "score": 2.1914
   },
   {
-   "title": "Bitcoin bulls can't rely on ETF flows",
-   "url": "https://www.coindesk.com/daybook-us/2026/11/09/bitcoin-bulls-can-t-rely-on-etf-flows",
+   "title": "Bitcoin may benefit as global tightening slows, Binance Research says",
+   "url": "https://cointelegraph.com/markets/bitcoin-price-global-tightening-binance-research?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-11-10T13:15:59+00:00",
+   "summary": "Binance Research says Bitcoin could find support as global monetary tightening slows, even as markets price in a December Fed rate hike.",
+   "score": 1.9953
+  },
+  {
+   "title": "Bitcoin slips before U.S. inflation report as traders price in Fed rate increase",
+   "url": "https://www.coindesk.com/markets/2026/11/10/bitcoin-slips-before-u-s-inflation-report-as-traders-price-in-fed-rate-increase",
    "source": "CoinDesk",
-   "published": "2026-11-09T12:30:00+00:00",
+   "published": "2026-11-10T10:48:37+00:00",
    "summary": "",
-   "score": 2.2091
+   "score": 1.9258
   },
   {
    "title": "U.S. Regulators Drop $250 Travel Rule Plan, Crypto Language Too",
@@ -38,15 +54,15 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-09T15:00:00+00:00",
    "summary": "Bitcoin Magazine U.S. Regulators Drop $250 Travel Rule Plan, Crypto Language Too FinCEN and the Federal Reserve formally withdrew a 2020 proposal that would have cut the cross-border funds-transfer threshold from $3,000 to $250 and spelled out that the rules cover crypto, saying…",
-   "score": 1.9086
+   "score": 1.8084
   },
   {
-   "title": "Strategy buys 1,036 Bitcoin as BTC holdings climb to 850,364",
-   "url": "https://cointelegraph.com/news/strategy-buy-1036-bitcoin-holdings-850364-btc?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-11-09T13:29:47+00:00",
-   "summary": "Strategy bought $81.9 million in Bitcoin last week while spending $188.3 million repurchasing STRC preferred shares, according to its latest SEC filing.",
-   "score": 1.8527
+   "title": "Live news: Bitcoin falls back to $74,000 ahead of CPI as traders fully price in Fed rate hike",
+   "url": "https://www.coindesk.com/markets/2026/11/10/live-news-traders-price-in-fed-rate-hike-for-december-as-bitcoin-and-gold-retreat",
+   "source": "CoinDesk",
+   "published": "2026-11-10T10:41:45+00:00",
+   "summary": "",
+   "score": 1.5381
   },
   {
    "title": "Bitcoin in Limbo as Stocks Rebound Ahead of US Inflation Report",
@@ -54,23 +70,15 @@
    "source": "Decrypt",
    "published": "2026-11-09T19:06:03+00:00",
    "summary": "U.S. stocks rallied as oil fell, but Bitcoin hovered near $75,000 after a wave of liquidations, with Tuesday’s inflation report set to test bets on a December Fed rate hike.",
-   "score": 1.62
+   "score": 1.5349
   },
   {
-   "title": "Bitcoin miner MARA sold 13,597 BTC for $1.1 billion in six weeks, plans to sell more",
-   "url": "https://www.coindesk.com/markets/2026/11/10/bitcoin-miner-mara-sold-13-597-btc-for-usd1-1-billion-in-six-weeks-plans-to-sell-more",
-   "source": "CoinDesk",
-   "published": "2026-11-10T05:18:31+00:00",
-   "summary": "",
-   "score": 1.5019
-  },
-  {
-   "title": "Here’s what happened in crypto today",
-   "url": "https://cointelegraph.com/news/what-happened-in-crypto-today?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "title": "Bitcoin price eyes $74K as Fed rate-hike bets hit 96% after Waller speech",
+   "url": "https://cointelegraph.com/markets/bitcoin-price-eyes-74k-fed-rate-hike-expected-after-waller-speech?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
    "source": "Cointelegraph",
-   "published": "2026-11-10T06:00:00+00:00",
-   "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
-   "score": 1.3349
+   "published": "2026-11-10T10:08:22+00:00",
+   "summary": "Bitcoin price action and stock futures trended lower after Fed governor Christopher Waller said that he would vote to raise interest rates by 0.25% at the December FOMC meeting.",
+   "score": 1.5258
   },
   {
    "title": "Bitcoin Price Drops Below $74,000 as Nvidia Probe and Regulation Fears Spark $1 Billion in Liquidations",
@@ -78,15 +86,23 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-09T13:52:22+00:00",
    "summary": "Bitcoin Magazine Bitcoin Price Drops Below $74,000 as Nvidia Probe and Regulation Fears Spark $1 Billion in Liquidations Bitcoin price fell to $73,477 overnight, its lowest since August, before bouncing to about $74,700 Monday morning as a Nvidia probe, Democratic regulation fea…",
-   "score": 1.322
+   "score": 1.2525
   },
   {
-   "title": "Bitcoin ETFs shed $1.3B in biggest weekly outflow since late June",
-   "url": "https://cointelegraph.com/markets/bitcoin-etfs-13b-biggest-weekly-outflow-late-june?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "title": "Strategy buys 1,036 Bitcoin as BTC holdings climb to 850,364",
+   "url": "https://cointelegraph.com/news/strategy-buy-1036-bitcoin-holdings-850364-btc?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
    "source": "Cointelegraph",
-   "published": "2026-11-09T08:17:35+00:00",
-   "summary": "Investors pulled a net $1.21 billion from BlackRock’s IBIT last week as Bitcoin fell below $76,000 and US technology stocks sold off.",
-   "score": 1.0644
+   "published": "2026-11-09T13:29:47+00:00",
+   "summary": "Strategy bought $81.9 million in Bitcoin last week while spending $188.3 million repurchasing STRC preferred shares, according to its latest SEC filing.",
+   "score": 1.1234
+  },
+  {
+   "title": "Bitcoin bulls can't rely on ETF flows",
+   "url": "https://www.coindesk.com/daybook-us/2026/11/09/bitcoin-bulls-can-t-rely-on-etf-flows",
+   "source": "CoinDesk",
+   "published": "2026-11-09T12:30:00+00:00",
+   "summary": "",
+   "score": 1.0717
   },
   {
    "title": "North Korea Is Minting Its Own Meme Coins to Launder Binance Hack Loot",
@@ -94,23 +110,23 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-09T17:26:28+00:00",
    "summary": "Bitcoin Magazine North Korea Is Minting Its Own Meme Coins to Launder Binance Hack Loot Elliptic says North Korean launderers created six throwaway meme tokens on NEAR between Nov. 5 and 7, moving about $430,000 of stolen Binance funds through homemade liquidity pools. This post…",
-   "score": 1.0123
+   "score": 0.9591
   },
   {
-   "title": "Binance's bitcoin mining pool finds just one block in a week as shutdown nears",
-   "url": "https://www.coindesk.com/tech/2026/11/09/binance-s-bitcoin-mining-pool-finds-just-one-block-in-a-week-as-shutdown-nears",
-   "source": "CoinDesk",
-   "published": "2026-11-09T04:54:39+00:00",
-   "summary": "",
-   "score": 0.8447
-  },
-  {
-   "title": "HIVE, MARA mine more Bitcoin but earn less as crypto prices fall",
-   "url": "https://cointelegraph.com/markets/hives-bitcoin-output-jumps-49-but-mining-revenue-falls?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "title": "Here’s what happened in crypto today",
+   "url": "https://cointelegraph.com/news/what-happened-in-crypto-today?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
    "source": "Cointelegraph",
-   "published": "2026-11-10T00:42:39+00:00",
-   "summary": "Both miners reported higher Bitcoin production but lower mining revenue and rising electricity costs as they expanded their AI infrastructure businesses.",
-   "score": 0.7196
+   "published": "2026-11-10T06:00:00+00:00",
+   "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
+   "score": 0.8095
+  },
+  {
+   "title": "Bitcoin miner MARA sold 13,597 BTC for $1.1 billion in six weeks, plans to sell more",
+   "url": "https://www.coindesk.com/markets/2026/11/10/bitcoin-miner-mara-sold-13-597-btc-for-usd1-1-billion-in-six-weeks-plans-to-sell-more",
+   "source": "CoinDesk",
+   "published": "2026-11-10T05:18:31+00:00",
+   "summary": "",
+   "score": 0.7286
   },
   {
    "title": "BlackRock: Security Fears Are Driving Bitcoin Whales Into IBIT",
@@ -118,23 +134,15 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-09T16:30:00+00:00",
    "summary": "Bitcoin Magazine BlackRock: Security Fears Are Driving Bitcoin Whales Into IBIT BlackRock's Robbie Mitchnick told Barron's demand to swap directly held bitcoin for IBIT shares is at its highest yet, with \"security and peace of mind\" the top reason as kidnappings and hacks rise.…",
-   "score": 0.719
+   "score": 0.6812
   },
   {
-   "title": "Live news: Bitcoin narrows loss as Nasdaq surges more than 2%",
-   "url": "https://www.coindesk.com/tech/2026/11/09/live-news-nvidia-slides-on-ceo-allegations-as-bitcoin-hovers-just-above-its-200-day-average",
-   "source": "CoinDesk",
-   "published": "2026-11-09T10:51:48+00:00",
-   "summary": "",
-   "score": 0.6628
-  },
-  {
-   "title": "HIVE’s Bitcoin output jumps 49%, but mining revenue still falls",
-   "url": "https://cointelegraph.com/news/hives-bitcoin-output-jumps-49-but-mining-revenue-falls?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "title": "Bitcoin ETFs shed $1.3B in biggest weekly outflow since late June",
+   "url": "https://cointelegraph.com/markets/bitcoin-etfs-13b-biggest-weekly-outflow-late-june?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
    "source": "Cointelegraph",
-   "published": "2026-11-10T00:42:39+00:00",
-   "summary": "HIVE’s mining revenue fell 7.4% despite higher production, while its AI hosting business grew 71%.",
-   "score": 0.5757
+   "published": "2026-11-09T08:17:35+00:00",
+   "summary": "Investors pulled a net $1.21 billion from BlackRock’s IBIT last week as Bitcoin fell below $76,000 and US technology stocks sold off.",
+   "score": 0.6454
   },
   {
    "title": "Bitcoin ETFs Bleed $430 Million as Tech Rout Tests Wall Street Buyers",
@@ -142,7 +150,7 @@
    "source": "Decrypt",
    "published": "2026-11-06T18:36:03+00:00",
    "summary": "Fidelity and BlackRock led Thursday's Bitcoin ETF withdrawals as a technology-stock selloff rattled risk assets.",
-   "score": 0.5459
+   "score": 0.5172
   },
   {
    "title": "Amundi Boosts Strategy (MSTR) Stake 44% to $291 Million as Shares Slide",
@@ -150,23 +158,23 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-09T20:39:56+00:00",
    "summary": "Bitcoin Magazine Amundi Boosts Strategy (MSTR) Stake 44% to $291 Million as Shares Slide Europe's largest asset manager raised its Strategy holding to 1.9 million shares in the third quarter, a 13F shows, even as MSTR has since fallen about 18% from quarter-end. This post Amundi…",
-   "score": 0.543
+   "score": 0.5145
   },
   {
-   "title": "These Finland homes get free heat from bitcoin miners (as long as BTC stays above $70,000)",
-   "url": "https://www.coindesk.com/markets/2026/11/08/these-finland-homes-get-free-heat-from-bitcoin-miners-as-long-as-btc-stays-above-usd70-000",
-   "source": "CoinDesk",
-   "published": "2026-11-08T12:55:59+00:00",
-   "summary": "",
-   "score": 0.4292
-  },
-  {
-   "title": "Mercado Bitcoin begins post-hack reopening without a timeline for withdrawals",
-   "url": "https://cointelegraph.com/news/mercado-bitcoin-reopening-withdrawals-hack-suspended?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "title": "HIVE, MARA mine more Bitcoin but earn less as crypto prices fall",
+   "url": "https://cointelegraph.com/markets/hives-bitcoin-output-jumps-49-but-mining-revenue-falls?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
    "source": "Cointelegraph",
-   "published": "2026-11-09T18:25:29+00:00",
-   "summary": "Customers can view their pre-hack balances as access returns in phases. The exchange has yet to say when withdrawals will resume.",
-   "score": 0.4206
+   "published": "2026-11-10T00:42:39+00:00",
+   "summary": "Both miners reported higher Bitcoin production but lower mining revenue and rising electricity costs as they expanded their AI infrastructure businesses.",
+   "score": 0.4363
+  },
+  {
+   "title": "Binance's bitcoin mining pool finds just one block in a week as shutdown nears",
+   "url": "https://www.coindesk.com/tech/2026/11/09/binance-s-bitcoin-mining-pool-finds-just-one-block-in-a-week-as-shutdown-nears",
+   "source": "CoinDesk",
+   "published": "2026-11-09T04:54:39+00:00",
+   "summary": "",
+   "score": 0.4098
   },
   {
    "title": "Crypto Liquidations Top $1 Billion as Bitcoin Tests 11-Week Low",
@@ -174,7 +182,7 @@
    "source": "Decrypt",
    "published": "2026-11-06T16:34:07+00:00",
    "summary": "Bitcoin fell toward $75,500 after AI stocks plunged, and over $1 billion in the crypto derivatives market has been wiped out.",
-   "score": 0.3958
+   "score": 0.375
   },
   {
    "title": "Strategy (MSTR) Adds 1,036 Bitcoin for $81.9 Million as Holdings Slip Below Cost",
@@ -182,15 +190,23 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-09T13:49:18+00:00",
    "summary": "Bitcoin Magazine Strategy (MSTR) Adds 1,036 Bitcoin for $81.9 Million as Holdings Slip Below Cost Strategy bought 1,036 bitcoin last week for $81.9 million at an average of $79,012, lifting its stack to 850,364 BTC. This post Strategy (MSTR) Adds 1,036 Bitcoin for $81.9 Million…",
-   "score": 0.3935
+   "score": 0.3728
   },
   {
-   "title": "Bitcoin faces U.S. CPI test as analysts warn inflation relief may not be enough",
-   "url": "https://www.coindesk.com/markets/2026/11/10/bitcoin-faces-u-s-cpi-test-as-analysts-warn-inflation-relief-may-not-be-enough",
+   "title": "HIVE’s Bitcoin output jumps 49%, but mining revenue still falls",
+   "url": "https://cointelegraph.com/news/hives-bitcoin-output-jumps-49-but-mining-revenue-falls?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-11-10T00:42:39+00:00",
+   "summary": "HIVE’s mining revenue fell 7.4% despite higher production, while its AI hosting business grew 71%.",
+   "score": 0.3491
+  },
+  {
+   "title": "Live news: Bitcoin narrows loss as Nasdaq surges more than 2%",
+   "url": "https://www.coindesk.com/tech/2026/11/09/live-news-nvidia-slides-on-ceo-allegations-as-bitcoin-hovers-just-above-its-200-day-average",
    "source": "CoinDesk",
-   "published": "2026-11-10T03:22:26+00:00",
+   "published": "2026-11-09T10:51:48+00:00",
    "summary": "",
-   "score": 0.2991
+   "score": 0.3215
   },
   {
    "title": "Bitcoin Erases Election Rally as AI Stocks Plunge, $428 Million in Crypto Longs Get Wiped Out",
@@ -198,7 +214,23 @@
    "source": "Decrypt",
    "published": "2026-11-05T16:29:11+00:00",
    "summary": "Bitcoin plunged nearly 5% as AI stocks sank, Democratic midterm wins raised fresh policy questions, and forced liquidations erased a Wednesday rally that had been fueled partly by short covering.",
-   "score": 0.2875
+   "score": 0.2724
+  },
+  {
+   "title": "Mercado Bitcoin begins post-hack reopening without a timeline for withdrawals",
+   "url": "https://cointelegraph.com/news/mercado-bitcoin-reopening-withdrawals-hack-suspended?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-11-09T18:25:29+00:00",
+   "summary": "Customers can view their pre-hack balances as access returns in phases. The exchange has yet to say when withdrawals will resume.",
+   "score": 0.255
+  },
+  {
+   "title": "These Finland homes get free heat from bitcoin miners (as long as BTC stays above $70,000)",
+   "url": "https://www.coindesk.com/markets/2026/11/08/these-finland-homes-get-free-heat-from-bitcoin-miners-as-long-as-btc-stays-above-usd70-000",
+   "source": "CoinDesk",
+   "published": "2026-11-08T12:55:59+00:00",
+   "summary": "",
+   "score": 0.2082
   },
   {
    "title": "Elizabeth Warren Plans Prediction Market Crackdown as She Prepares to Chair Senate Banking",
@@ -206,23 +238,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-09T20:31:38+00:00",
    "summary": "Bitcoin Magazine Elizabeth Warren Plans Prediction Market Crackdown as She Prepares to Chair Senate Banking A Warren banking aide says the incoming Senate Banking chair will target prediction markets' \"Wild West-style lack of oversight,\" after she and Sen. John Curtis pressed Ka…",
-   "score": 0.2168
-  },
-  {
-   "title": "Bitcoin holds $75K as AI regulation fears see KOSPI halted after 8% crash",
-   "url": "https://cointelegraph.com/markets/bitcoin-holds-ai-regulation-fears-kospi-halted?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-11-06T11:16:53+00:00",
-   "summary": "Bitcoin consolidated as fears over US AI regulation spread to Asia, causing South Korea to announce measures to calm stock-market volatility.",
-   "score": 0.2146
-  },
-  {
-   "title": "A Bitcoin block just neared a 2015 transaction record, but paid only $180 in fees",
-   "url": "https://www.coindesk.com/tech/2026/11/09/a-bitcoin-block-just-neared-a-2015-transaction-record-but-paid-only-usd180-in-fees",
-   "source": "CoinDesk",
-   "published": "2026-11-09T16:19:45+00:00",
-   "summary": "",
-   "score": 0.204
+   "score": 0.2054
   },
   {
    "title": "This Bitcoin Developer’s Idea Would Make Quantum Attacks a Losing Bet",
@@ -230,7 +246,7 @@
    "source": "Decrypt",
    "published": "2026-11-08T14:01:03+00:00",
    "summary": "Cory Fields wants future quantum attackers to post Bitcoin as collateral before touching vulnerable wallets, giving prepared owners a chance to recover their coins and collect a potentially costly penalty.",
-   "score": 0.1744
+   "score": 0.1652
   },
   {
    "title": "TD Cowen Gives Stablecoin Yield Ban 10% Odds as Banks Plan Push in Democrat-Led Congress",
@@ -238,23 +254,23 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-09T17:06:36+00:00",
    "summary": "Bitcoin Magazine TD Cowen Gives Stablecoin Yield Ban 10% Odds as Banks Plan Push in Democrat-Led Congress TD Cowen's Jaret Seiberg puts only a 10% chance on a congressional ban on platform stablecoin yield over the next two years, even as banks renew their push after Democratic…",
-   "score": 0.1651
+   "score": 0.1564
   },
   {
-   "title": "Bitcoin recovers $76,000 level as ETFs shed $430 million after tech rout",
-   "url": "https://www.coindesk.com/markets/2026/11/06/bitcoin-recovers-usd76-000-level-as-etfs-shed-usd430-million-after-tech-rout",
+   "title": "Bitcoin faces U.S. CPI test as analysts warn inflation relief may not be enough",
+   "url": "https://www.coindesk.com/markets/2026/11/10/bitcoin-faces-u-s-cpi-test-as-analysts-warn-inflation-relief-may-not-be-enough",
    "source": "CoinDesk",
-   "published": "2026-11-06T09:53:27+00:00",
+   "published": "2026-11-10T03:22:26+00:00",
    "summary": "",
-   "score": 0.1577
+   "score": 0.1451
   },
   {
-   "title": "Bitcoin, tech stocks brush off Nvidia nerves as analyst mulls $68K target",
-   "url": "https://cointelegraph.com/markets/bitcoin-stocks-nvidia-analyst-68k-target?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "title": "Bitcoin holds $75K as AI regulation fears see KOSPI halted after 8% crash",
+   "url": "https://cointelegraph.com/markets/bitcoin-holds-ai-regulation-fears-kospi-halted?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
    "source": "Cointelegraph",
-   "published": "2026-11-09T17:13:25+00:00",
-   "summary": "Bitcoin rebounded from an 11-week low near $73,500 as the Nasdaq Composite rallied despite sell-off in Nvidia shares.",
-   "score": 0.1323
+   "published": "2026-11-06T11:16:53+00:00",
+   "summary": "Bitcoin consolidated as fears over US AI regulation spread to Asia, causing South Korea to announce measures to calm stock-market volatility.",
+   "score": 0.1301
   },
   {
    "title": "Binance to Close Accounts in Four EU Countries Dec. 31, Charging Idle Balances From Nov. 29",
@@ -262,7 +278,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-09T15:53:23+00:00",
    "summary": "Bitcoin Magazine Binance to Close Accounts in Four EU Countries Dec. 31, Charging Idle Balances From Nov. 29 Binance told users in France, Spain, Italy and Poland to withdraw their crypto, with deposits blocked, accounts closing Dec. 31 and a monthly fee starting Nov. 29, as the…",
-   "score": 0.1297
+   "score": 0.1229
   },
   {
    "title": "Morning Minute: Bitcoin Erases Election Rally as AI Stocks Crater",
@@ -270,15 +286,15 @@
    "source": "Decrypt",
    "published": "2026-11-06T13:29:20+00:00",
    "summary": "Thursday marked a massive reversal and historic selloff for AI stocks, and crypto was not immune. What held up the strongest?",
-   "score": 0.1246
+   "score": 0.1181
   },
   {
-   "title": "Bitcoin drops as Nvidia cheating scandal and failed Iran talks trigger volatility",
-   "url": "https://www.coindesk.com/markets/2026/11/09/bitcoin-drops-then-pops-as-nvidia-cheating-scandal-and-failed-iran-talks-trigger-volatility",
+   "title": "A Bitcoin block just neared a 2015 transaction record, but paid only $180 in fees",
+   "url": "https://www.coindesk.com/tech/2026/11/09/a-bitcoin-block-just-neared-a-2015-transaction-record-but-paid-only-usd180-in-fees",
    "source": "CoinDesk",
-   "published": "2026-11-09T03:21:49+00:00",
+   "published": "2026-11-09T16:19:45+00:00",
    "summary": "",
-   "score": 0.1083
+   "score": 0.099
   },
   {
    "title": "U.S. Treasury Cuts Off MEXC From U.S. Financial System Over Alleged $16 Billion in Illicit Flows",
@@ -286,15 +302,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-06T21:28:56+00:00",
    "summary": "Bitcoin Magazine U.S. Treasury Cuts Off MEXC From U.S. Financial System Over Alleged $16 Billion in Illicit Flows FinCEN issued a final order under section 9714(a) that will bar U.S. financial institutions from sending or receiving funds with MEXC Global 30 days after Federal Re…",
-   "score": 0.0995
-  },
-  {
-   "title": "Bitcoin, Ether ETFs post $530M outflows as election gains evaporate",
-   "url": "https://cointelegraph.com/markets/bitcoin-ether-etfs-lose-post-election-gains-erased?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-11-06T08:19:18+00:00",
-   "summary": "US spot Bitcoin and Ether ETFs shed a combined $530 million Thursday as Bitcoin fell below $76,000 and US stocks tumbled.",
-   "score": 0.0987
+   "score": 0.0942
   },
   {
    "title": "Mercado Bitcoin Said Its Hack Was Contained, But Blockchain Data Tells a Different Story",
@@ -302,31 +310,23 @@
    "source": "Decrypt",
    "published": "2026-11-05T20:16:03+00:00",
    "summary": "Fresh forensic analysis traces $48.6 million across 11 blockchains and finds thousands of customer deposit addresses drained hours after the Brazilian exchange said it had stopped the breach on Monday.",
-   "score": 0.0864
+   "score": 0.0818
   },
   {
-   "title": "BTC price eyes $73K amid Nvidia volatility: Three things to know in Bitcoin this week",
-   "url": "https://cointelegraph.com/markets/btc-price-nvidia-volatility-three-things-bitcoin-this-week?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "title": "Bitcoin, tech stocks brush off Nvidia nerves as analyst mulls $68K target",
+   "url": "https://cointelegraph.com/markets/bitcoin-stocks-nvidia-analyst-68k-target?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
    "source": "Cointelegraph",
-   "published": "2026-11-09T10:03:40+00:00",
-   "summary": "Bitcoin price action fell to its lowest levels since mid-August as Nvidia reports added to sell-side pressure across stock-market futures.",
-   "score": 0.0763
+   "published": "2026-11-09T17:13:25+00:00",
+   "summary": "Bitcoin rebounded from an 11-week low near $73,500 as the Nasdaq Composite rallied despite sell-off in Nvidia shares.",
+   "score": 0.0802
   },
   {
-   "title": "Thailand SEC Files Criminal Complaint Against Bitget Ahead of Dec. 5 Access Block",
-   "url": "https://bitcoinmagazine.com/news/thailand-sec-bitget-criminal-dec-5",
-   "source": "Bitcoin Magazine",
-   "published": "2026-11-06T17:30:00+00:00",
-   "summary": "Bitcoin Magazine Thailand SEC Files Criminal Complaint Against Bitget Ahead of Dec. 5 Access Block Thailand's SEC filed a criminal complaint against Bitget operator BG Limited for unlicensed Thai trading from 2022 to 2025. This post Thailand SEC Files Criminal Complaint Against…",
-   "score": 0.0751
-  },
-  {
-   "title": "Bitcoin holds above $80,000 after Wednesday’s jump as injective rallies on staked ETF listing",
-   "url": "https://www.coindesk.com/markets/2026/11/05/bitcoin-holds-above-usd80-000-after-wednesday-s-jump-as-injective-rallies-on-staked-etf-listing",
+   "title": "Bitcoin recovers $76,000 level as ETFs shed $430 million after tech rout",
+   "url": "https://www.coindesk.com/markets/2026/11/06/bitcoin-recovers-usd76-000-level-as-etfs-shed-usd430-million-after-tech-rout",
    "source": "CoinDesk",
-   "published": "2026-11-05T11:30:00+00:00",
+   "published": "2026-11-06T09:53:27+00:00",
    "summary": "",
-   "score": 0.0731
+   "score": 0.0765
   }
  ]
 }
