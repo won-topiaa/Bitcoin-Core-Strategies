@@ -1,5 +1,5 @@
 {
- "fetched": "2026-11-10T22:20:06+00:00",
+ "fetched": "2026-11-10T23:13:20+00:00",
  "sources_ok": [
   "CoinDesk",
   "Cointelegraph",
@@ -14,7 +14,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-10T13:30:00+00:00",
    "summary": "Bitcoin Opportunity Fund co-founder Mark Moss says that with banks and ETFs widening access to Bitcoin he expects a new record high in 2027.",
-   "score": 2.6407
+   "score": 2.607
   },
   {
    "title": "Bitcoin breaks with stocks, declines as ETF outflows mount, MARA reduces holdings",
@@ -22,7 +22,7 @@
    "source": "CoinDesk",
    "published": "2026-11-10T12:15:00+00:00",
    "summary": "",
-   "score": 2.5934
+   "score": 2.5604
   },
   {
    "title": "Bitcoin Falls as Hot US Inflation Fuels Fears of Bigger Fed Rate Hike",
@@ -30,7 +30,7 @@
    "source": "Decrypt",
    "published": "2026-11-10T16:27:57+00:00",
    "summary": "Bitcoin fell below $74,000 after October inflation beat forecasts, increasing pressure on the Federal Reserve to raise rates again at its December meeting.",
-   "score": 2.2968
+   "score": 2.2676
   },
   {
    "title": "Hyperscale Data (GPUS) Sells Its Last Bitcoin for AI Data Center, Months After Chasing $100 Million Treasury",
@@ -38,7 +38,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-10T14:45:00+00:00",
    "summary": "Bitcoin Magazine Hyperscale Data (GPUS) Sells Its Last Bitcoin for AI Data Center, Months After Chasing $100 Million Treasury Hyperscale Data sold its remaining 211.56 bitcoin for about $16 million by Nov. 8, bringing sales since late July to about 1,113 BTC as it races to energ…",
-   "score": 2.2406
+   "score": 2.2121
   },
   {
    "title": "BlackRock Bitcoin ETF outflows hit $1.66B over seven trading sessions",
@@ -46,7 +46,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-10T08:02:05+00:00",
    "summary": "US spot Bitcoin ETFs shed $201 million Monday, with seven straight sessions of net withdrawals from BlackRock’s IBIT totaling $1.66 billion.",
-   "score": 1.9522
+   "score": 1.9274
   },
   {
    "title": "Onramp Launches Business Bitcoin Accounts With Two-Person Withdrawal Approvals as Wrench Attacks Climb",
@@ -54,7 +54,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-10T14:43:54+00:00",
    "summary": "Bitcoin Magazine Onramp Launches Business Bitcoin Accounts With Two-Person Withdrawal Approvals as Wrench Attacks Climb The Austin firm rolled out a free company account with named users and second-person withdrawal approvals, plus a higher Treasury tier that splits keys across…",
-   "score": 1.792
+   "score": 1.7692
   },
   {
    "title": "Bitcoin slips before U.S. inflation report as traders price in Fed rate increase",
@@ -62,15 +62,15 @@
    "source": "CoinDesk",
    "published": "2026-11-10T10:48:37+00:00",
    "summary": "",
-   "score": 1.6934
+   "score": 1.6718
   },
   {
-   "title": "Strategy Buys $82M in Bitcoin, Buys Back $188M of STRC",
-   "url": "https://decrypt.co/382820/strategy-buys-82m-in-bitcoin-buys-back-188m-of-strc",
+   "title": "Bitcoin Miner HIVE Eyes $45 Million in Annual Revenue From AI Deal",
+   "url": "https://decrypt.co/382982/bitcoin-miner-hive-eyes-45-million-ai-data-center",
    "source": "Decrypt",
-   "published": "2026-11-09T13:24:29+00:00",
-   "summary": "The Bitcoin treasury firm sold $284 million of MSTR stock to fund the moves, days before MSCI names companies facing index removal.",
-   "score": 1.5415
+   "published": "2026-11-10T22:46:02+00:00",
+   "summary": "The Bitcoin miner says its Boden facility could generate $45 million annually, but a June letter of intent remains nonbinding as executives negotiate financing and customer protections for the project.",
+   "score": 1.5895
   },
   {
    "title": "Bitcoin nears 11-week low after ‘discouraging’ US CPI inflation beat",
@@ -78,7 +78,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-10T16:25:03+00:00",
    "summary": "Bitcoin and US stocks initially fall after October inflation tops forecasts, with traders expecting a quarter-point Fed rate hike in December.",
-   "score": 1.469
+   "score": 1.4503
   },
   {
    "title": "Bitcoin Price Trades Down Near $73,500 After Hot CPI Print Lifts Fed Hike Bets",
@@ -86,7 +86,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-10T14:27:49+00:00",
    "summary": "Bitcoin Magazine Bitcoin Price Trades Down Near $73,500 After Hot CPI Print Lifts Fed Hike Bets Bitcoin price slipped to $73,500 Tuesday morning after October consumer prices rose 0.4%, topping forecasts and pushing traders toward a bigger Federal Reserve rate hike in December.…",
-   "score": 1.4281
+   "score": 1.4099
   },
   {
    "title": "Live news: Bitcoin falls back to $74,000 ahead of CPI as traders fully price in Fed rate hike",
@@ -94,7 +94,15 @@
    "source": "CoinDesk",
    "published": "2026-11-10T10:41:45+00:00",
    "summary": "",
-   "score": 1.3525
+   "score": 1.3352
+  },
+  {
+   "title": "Strategy Buys $82M in Bitcoin, Buys Back $188M of STRC",
+   "url": "https://decrypt.co/382820/strategy-buys-82m-in-bitcoin-buys-back-188m-of-strc",
+   "source": "Decrypt",
+   "published": "2026-11-09T13:24:29+00:00",
+   "summary": "The Bitcoin treasury firm sold $284 million of MSTR stock to fund the moves, days before MSCI names companies facing index removal.",
+   "score": 1.2175
   },
   {
    "title": "Bitcoin may benefit as global tightening slows, Binance Research says",
@@ -102,15 +110,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-10T13:15:59+00:00",
    "summary": "Binance Research says Bitcoin could find support as global monetary tightening slows, even as markets price in a December Fed rate hike.",
-   "score": 1.1229
-  },
-  {
-   "title": "Bitcoin in Limbo as Stocks Rebound Ahead of US Inflation Report",
-   "url": "https://decrypt.co/382861/bitcoin-limbo-stocks-rebound-us-inflation",
-   "source": "Decrypt",
-   "published": "2026-11-09T19:06:03+00:00",
-   "summary": "U.S. stocks rallied as oil fell, but Bitcoin hovered near $75,000 after a wave of liquidations, with Tuesday’s inflation report set to test bets on a December Fed rate hike.",
-   "score": 1.0797
+   "score": 1.1086
   },
   {
    "title": "Canaan (CAN) Swings to an $8 Million Profit on Bitcoin Gains as Rig Sales Collapse 96%",
@@ -118,7 +118,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-10T17:15:25+00:00",
    "summary": "Bitcoin Magazine Canaan (CAN) Swings to an $8 Million Profit on Bitcoin Gains as Rig Sales Collapse 96% Canaan's mining-machine sales fell to $4.8 million from $118.6 million a year earlier, but a $51.9 million fair-value gain turned an operating loss into $8.0 million of net in…",
-   "score": 0.9516
+   "score": 0.9395
   },
   {
    "title": "Bitcoin bulls can't rely on ETF flows",
@@ -126,7 +126,7 @@
    "source": "CoinDesk",
    "published": "2026-11-09T12:30:00+00:00",
    "summary": "",
-   "score": 0.9423
+   "score": 0.9303
   },
   {
    "title": "Here’s what happened in crypto today",
@@ -134,7 +134,15 @@
    "source": "Cointelegraph",
    "published": "2026-11-10T22:04:47+00:00",
    "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
-   "score": 0.8978
+   "score": 0.8864
+  },
+  {
+   "title": "Bitcoin in Limbo as Stocks Rebound Ahead of US Inflation Report",
+   "url": "https://decrypt.co/382861/bitcoin-limbo-stocks-rebound-us-inflation",
+   "source": "Decrypt",
+   "published": "2026-11-09T19:06:03+00:00",
+   "summary": "U.S. stocks rallied as oil fell, but Bitcoin hovered near $75,000 after a wave of liquidations, with Tuesday’s inflation report set to test bets on a December Fed rate hike.",
+   "score": 0.8528
   },
   {
    "title": "Bitcoin price eyes $74K as Fed rate-hike bets hit 96% after Waller speech",
@@ -142,7 +150,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-10T10:08:22+00:00",
    "summary": "Bitcoin price action and stock futures trended lower after Fed governor Christopher Waller said that he would vote to raise interest rates by 0.25% at the December FOMC meeting.",
-   "score": 0.6869
+   "score": 0.6782
   },
   {
    "title": "U.S. Regulators Drop $250 Travel Rule Plan, Crypto Language Too",
@@ -150,7 +158,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-09T15:00:00+00:00",
    "summary": "Bitcoin Magazine U.S. Regulators Drop $250 Travel Rule Plan, Crypto Language Too FinCEN and the Federal Reserve formally withdrew a 2020 proposal that would have cut the cross-border funds-transfer threshold from $3,000 to $250 and spelled out that the rules cover crypto, saying…",
-   "score": 0.6513
+   "score": 0.643
   },
   {
    "title": "Bitcoin miner MARA sold 13,597 BTC for $1.1 billion in six weeks, plans to sell more",
@@ -158,15 +166,7 @@
    "source": "CoinDesk",
    "published": "2026-11-10T05:18:31+00:00",
    "summary": "",
-   "score": 0.6406
-  },
-  {
-   "title": "Trump Media Posts $410 Million Profit. Bitcoin Gains Did the Heavy Lifting",
-   "url": "https://decrypt.co/382967/trump-media-posts-410-million-profit-bitcoin-gains",
-   "source": "Decrypt",
-   "published": "2026-11-10T21:36:03+00:00",
-   "summary": "Truth Social’s parent booked $409.7 million in quarterly income largely from crypto investments, even as its stock remained more than 94% below its March 2024 peak.",
-   "score": 0.5066
+   "score": 0.6325
   },
   {
    "title": "Strategy buys 1,036 Bitcoin as BTC holdings climb to 850,364",
@@ -174,7 +174,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-09T13:29:47+00:00",
    "summary": "Strategy bought $81.9 million in Bitcoin last week while spending $188.3 million repurchasing STRC preferred shares, according to its latest SEC filing.",
-   "score": 0.5058
+   "score": 0.4993
   },
   {
    "title": "Bitcoin Price Drops Below $74,000 as Nvidia Probe and Regulation Fears Spark $1 Billion in Liquidations",
@@ -182,7 +182,15 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-09T13:52:22+00:00",
    "summary": "Bitcoin Magazine Bitcoin Price Drops Below $74,000 as Nvidia Probe and Regulation Fears Spark $1 Billion in Liquidations Bitcoin price fell to $73,477 overnight, its lowest since August, before bouncing to about $74,700 Monday morning as a Nvidia probe, Democratic regulation fea…",
-   "score": 0.4511
+   "score": 0.4454
+  },
+  {
+   "title": "Trump Media Posts $410 Million Profit. Bitcoin Gains Did the Heavy Lifting",
+   "url": "https://decrypt.co/382967/trump-media-posts-410-million-profit-bitcoin-gains",
+   "source": "Decrypt",
+   "published": "2026-11-10T21:36:03+00:00",
+   "summary": "Truth Social’s parent booked $409.7 million in quarterly income largely from crypto investments, even as its stock remained more than 94% below its March 2024 peak.",
+   "score": 0.4001
   },
   {
    "title": "Mercado Bitcoin to resume cash withdrawals after $49M hack",
@@ -190,7 +198,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-10T18:12:07+00:00",
    "summary": "Starting next week, customers can deposit and withdraw money through Brazil’s instant payment system. Crypto transfers remain suspended.",
-   "score": 0.3951
+   "score": 0.3901
   },
   {
    "title": "Binance's bitcoin mining pool finds just one block in a week as shutdown nears",
@@ -198,7 +206,7 @@
    "source": "CoinDesk",
    "published": "2026-11-09T04:54:39+00:00",
    "summary": "",
-   "score": 0.3603
+   "score": 0.3557
   },
   {
    "title": "North Korea Is Minting Its Own Meme Coins to Launder Binance Hack Loot",
@@ -206,15 +214,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-09T17:26:28+00:00",
    "summary": "Bitcoin Magazine North Korea Is Minting Its Own Meme Coins to Launder Binance Hack Loot Elliptic says North Korean launderers created six throwaway meme tokens on NEAR between Nov. 5 and 7, moving about $430,000 of stolen Binance funds through homemade liquidity pools. This post…",
-   "score": 0.3454
-  },
-  {
-   "title": "Bitcoin ETFs Bleed $430 Million as Tech Rout Tests Wall Street Buyers",
-   "url": "https://decrypt.co/382733/bitcoin-etfs-bleed-430-million-tech-rout-tests-wall-street",
-   "source": "Decrypt",
-   "published": "2026-11-06T18:36:03+00:00",
-   "summary": "Fidelity and BlackRock led Thursday's Bitcoin ETF withdrawals as a technology-stock selloff rattled risk assets.",
-   "score": 0.2911
+   "score": 0.341
   },
   {
    "title": "Bitcoin ETFs shed $1.3B in biggest weekly outflow since late June",
@@ -222,7 +222,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-09T08:17:35+00:00",
    "summary": "Investors pulled a net $1.21 billion from BlackRock’s IBIT last week as Bitcoin fell below $76,000 and US technology stocks sold off.",
-   "score": 0.2906
+   "score": 0.2869
   },
   {
    "title": "Live news: Bitcoin narrows loss as Nasdaq surges more than 2%",
@@ -230,7 +230,7 @@
    "source": "CoinDesk",
    "published": "2026-11-09T10:51:48+00:00",
    "summary": "",
-   "score": 0.2827
+   "score": 0.2791
   },
   {
    "title": "BlackRock: Security Fears Are Driving Bitcoin Whales Into IBIT",
@@ -238,15 +238,15 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-09T16:30:00+00:00",
    "summary": "Bitcoin Magazine BlackRock: Security Fears Are Driving Bitcoin Whales Into IBIT BlackRock's Robbie Mitchnick told Barron's demand to swap directly held bitcoin for IBIT shares is at its highest yet, with \"security and peace of mind\" the top reason as kidnappings and hacks rise.…",
-   "score": 0.2454
+   "score": 0.2422
   },
   {
-   "title": "Crypto Liquidations Top $1 Billion as Bitcoin Tests 11-Week Low",
-   "url": "https://decrypt.co/382717/bitcoin-price-11-week-low-crypto-liquidations-ai-stock",
+   "title": "Bitcoin ETFs Bleed $430 Million as Tech Rout Tests Wall Street Buyers",
+   "url": "https://decrypt.co/382733/bitcoin-etfs-bleed-430-million-tech-rout-tests-wall-street",
    "source": "Decrypt",
-   "published": "2026-11-06T16:34:07+00:00",
-   "summary": "Bitcoin fell toward $75,500 after AI stocks plunged, and over $1 billion in the crypto derivatives market has been wiped out.",
-   "score": 0.211
+   "published": "2026-11-06T18:36:03+00:00",
+   "summary": "Fidelity and BlackRock led Thursday's Bitcoin ETF withdrawals as a technology-stock selloff rattled risk assets.",
+   "score": 0.2299
   },
   {
    "title": "HIVE, MARA mine more Bitcoin but earn less as crypto prices fall",
@@ -254,7 +254,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-10T00:42:39+00:00",
    "summary": "Both miners reported higher Bitcoin production but lower mining revenue and rising electricity costs as they expanded their AI infrastructure businesses.",
-   "score": 0.1964
+   "score": 0.1939
   },
   {
    "title": "Amundi Boosts Strategy (MSTR) Stake 44% to $291 Million as Shares Slide",
@@ -262,7 +262,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-09T20:39:56+00:00",
    "summary": "Bitcoin Magazine Amundi Boosts Strategy (MSTR) Stake 44% to $291 Million as Shares Slide Europe's largest asset manager raised its Strategy holding to 1.9 million shares in the third quarter, a 13F shows, even as MSTR has since fallen about 18% from quarter-end. This post Amundi…",
-   "score": 0.1853
+   "score": 0.1829
   },
   {
    "title": "These Finland homes get free heat from bitcoin miners (as long as BTC stays above $70,000)",
@@ -270,7 +270,15 @@
    "source": "CoinDesk",
    "published": "2026-11-08T12:55:59+00:00",
    "summary": "",
-   "score": 0.1831
+   "score": 0.1808
+  },
+  {
+   "title": "Crypto Liquidations Top $1 Billion as Bitcoin Tests 11-Week Low",
+   "url": "https://decrypt.co/382717/bitcoin-price-11-week-low-crypto-liquidations-ai-stock",
+   "source": "Decrypt",
+   "published": "2026-11-06T16:34:07+00:00",
+   "summary": "Bitcoin fell toward $75,500 after AI stocks plunged, and over $1 billion in the crypto derivatives market has been wiped out.",
+   "score": 0.1667
   },
   {
    "title": "HIVE’s Bitcoin output jumps 49%, but mining revenue still falls",
@@ -278,15 +286,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-10T00:42:39+00:00",
    "summary": "HIVE’s mining revenue fell 7.4% despite higher production, while its AI hosting business grew 71%.",
-   "score": 0.1572
-  },
-  {
-   "title": "Bitcoin Erases Election Rally as AI Stocks Plunge, $428 Million in Crypto Longs Get Wiped Out",
-   "url": "https://decrypt.co/382612/bitcoin-erases-election-rally-ai-stocks-plunge-428-million-crypto-longs",
-   "source": "Decrypt",
-   "published": "2026-11-05T16:29:11+00:00",
-   "summary": "Bitcoin plunged nearly 5% as AI stocks sank, Democratic midterm wins raised fresh policy questions, and forced liquidations erased a Wednesday rally that had been fueled partly by short covering.",
-   "score": 0.1533
+   "score": 0.1551
   },
   {
    "title": "Bitcoin lags stock rebound in advance of U.S. inflation report",
@@ -294,7 +294,7 @@
    "source": "CoinDesk",
    "published": "2026-11-10T11:24:10+00:00",
    "summary": "",
-   "score": 0.1433
+   "score": 0.1414
   },
   {
    "title": "Strategy (MSTR) Adds 1,036 Bitcoin for $81.9 Million as Holdings Slip Below Cost",
@@ -302,7 +302,15 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-09T13:49:18+00:00",
    "summary": "Bitcoin Magazine Strategy (MSTR) Adds 1,036 Bitcoin for $81.9 Million as Holdings Slip Below Cost Strategy bought 1,036 bitcoin last week for $81.9 million at an average of $79,012, lifting its stack to 850,364 BTC. This post Strategy (MSTR) Adds 1,036 Bitcoin for $81.9 Million…",
-   "score": 0.1343
+   "score": 0.1326
+  },
+  {
+   "title": "Bitcoin Erases Election Rally as AI Stocks Plunge, $428 Million in Crypto Longs Get Wiped Out",
+   "url": "https://decrypt.co/382612/bitcoin-erases-election-rally-ai-stocks-plunge-428-million-crypto-longs",
+   "source": "Decrypt",
+   "published": "2026-11-05T16:29:11+00:00",
+   "summary": "Bitcoin plunged nearly 5% as AI stocks sank, Democratic midterm wins raised fresh policy questions, and forced liquidations erased a Wednesday rally that had been fueled partly by short covering.",
+   "score": 0.1211
   },
   {
    "title": "Mercado Bitcoin begins post-hack reopening without a timeline for withdrawals",
@@ -310,7 +318,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-09T18:25:29+00:00",
    "summary": "Customers can view their pre-hack balances as access returns in phases. The exchange has yet to say when withdrawals will resume.",
-   "score": 0.1148
+   "score": 0.1133
   },
   {
    "title": "LNbits Releases 1.7.0 Urgent Security Update After November 8 Attacks Drain Funds",
@@ -318,15 +326,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-10T21:32:45+00:00",
    "summary": "Bitcoin Magazine LNbits Releases 1.7.0 Urgent Security Update After November 8 Attacks Drain Funds LNbits released version 1.7.0 on November 10 as an urgent security update following active attacks that began November 8. Operators must upgrade before restarting servers as prior…",
-   "score": 0.1062
-  },
-  {
-   "title": "Bitcoin faces U.S. CPI test as analysts warn inflation relief may not be enough",
-   "url": "https://www.coindesk.com/markets/2026/11/10/bitcoin-faces-u-s-cpi-test-as-analysts-warn-inflation-relief-may-not-be-enough",
-   "source": "CoinDesk",
-   "published": "2026-11-10T03:22:26+00:00",
-   "summary": "",
-   "score": 0.1021
+   "score": 0.1048
   }
  ]
 }
