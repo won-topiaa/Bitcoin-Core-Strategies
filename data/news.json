@@ -1,5 +1,5 @@
 {
- "fetched": "2026-11-12T18:51:47+00:00",
+ "fetched": "2026-11-12T22:42:25+00:00",
  "sources_ok": [
   "CoinDesk",
   "Cointelegraph",
@@ -9,12 +9,28 @@
  "sources_failed": [],
  "items": [
   {
+   "title": "Binance Says It Has Fully Covered the $6.34 Billion Hack With Company Funds",
+   "url": "https://bitcoinmagazine.com/news/binance-covers-6-34-billion-hack",
+   "source": "Bitcoin Magazine",
+   "published": "2026-11-12T19:12:14+00:00",
+   "summary": "Bitcoin Magazine Binance Says It Has Fully Covered the $6.34 Billion Hack With Company Funds The exchange says users are whole after the Oct. 29 theft, paid for from SAFU, its futures insurance fund and treasury, and has published a 198-token proof-of-reserves snapshot that user…",
+   "score": 3.3273
+  },
+  {
+   "title": "Strategy Made $19.5 Billion in Profit. So Why Is MSCI Removing It From Stock Indexes?",
+   "url": "https://decrypt.co/383204/why-msci-removing-bitcoin-treasury-strategy-stock-indexes",
+   "source": "Decrypt",
+   "published": "2026-11-12T21:26:03+00:00",
+   "summary": "Michael Saylor’s Bitcoin giant is being excluded from major investment benchmarks, raising questions about what qualifies as a business—and whether the decision could slow its Bitcoin buying.",
+   "score": 2.749
+  },
+  {
    "title": "JPMorgan Lifts Its Strategy (MSTR) Stake 36% and Holds $540 Million in Bitcoin ETFs",
    "url": "https://bitcoinmagazine.com/markets/jpmorgan-lifts-strategy-mstr-stake-36",
    "source": "Bitcoin Magazine",
    "published": "2026-11-12T16:19:17+00:00",
    "summary": "Bitcoin Magazine JPMorgan Lifts Its Strategy (MSTR) Stake 36% and Holds $540 Million in Bitcoin ETFs A 13F filed Thursday shows JPMorgan held 848,932 Strategy shares, up 36% from June, and 11.4 million IBIT shares worth $540 million at Sept. 30, weeks before MSCI's index exit. T…",
-   "score": 3.4703
+   "score": 2.6263
   },
   {
    "title": "Bitcoin dips with Nvidia as ETF outflows reach day five",
@@ -22,15 +38,7 @@
    "source": "CoinDesk",
    "published": "2026-11-12T11:30:00+00:00",
    "summary": "",
-   "score": 2.6974
-  },
-  {
-   "title": "Bitcoin ETFs Bleed $1.4B in Five Days as Investors Cut Risk",
-   "url": "https://decrypt.co/383122/bitcoin-etfs-bleed-1-4b-in-five-days-as-investors-cut-risk",
-   "source": "Decrypt",
-   "published": "2026-11-12T11:24:19+00:00",
-   "summary": "U.S. spot Bitcoin exchange-traded funds have recorded five consecutive days of net outflows, as investors retreat from risk assets after a turbulent week for markets. The funds lost some $1.44 billion between November 5 and November 11, including $299.9 million on Wednesday, acc…",
-   "score": 2.6937
+   "score": 2.5517
   },
   {
    "title": "BlackRock Bitcoin ETF outflows hit $2B over nine sessions",
@@ -38,39 +46,31 @@
    "source": "Cointelegraph",
    "published": "2026-11-12T08:06:48+00:00",
    "summary": "US spot Bitcoin ETF outflows rose to nearly $300 million on Wednesday, up from $95 million a day earlier, as five-session withdrawals reached $1.44 billion.",
-   "score": 2.5686
+   "score": 2.4299
   },
   {
-   "title": "BlackRock’s IBIT Bleeds $2 Billion in Nine Straight Days of Outflows",
-   "url": "https://bitcoinmagazine.com/markets/blackrock-ibit-nine-days-outflows",
-   "source": "Bitcoin Magazine",
-   "published": "2026-11-12T14:24:00+00:00",
-   "summary": "Bitcoin Magazine BlackRock’s IBIT Bleeds $2 Billion in Nine Straight Days of Outflows U.S. spot bitcoin ETFs lost $299.8 million on Wednesday, their fifth straight day of outflows, with BlackRock's IBIT accounting for $269.7 million and about 94% of November's withdrawals. This…",
-   "score": 2.2502
-  },
-  {
-   "title": "Stablecoin Drain, ETF Outflows Leave Bitcoin 'Running on Empty'",
-   "url": "https://decrypt.co/383094/stablecoin-drain-etf-outflows-bitcoin-running-empty",
+   "title": "Bitcoin ETFs Bleed $1.4B in Five Days as Investors Cut Risk",
+   "url": "https://decrypt.co/383122/bitcoin-etfs-bleed-1-4b-in-five-days-as-investors-cut-risk",
    "source": "Decrypt",
-   "published": "2026-11-11T21:46:03+00:00",
-   "summary": "Stablecoin supply fell $14.2 billion in 30 days, the fastest contraction since June 2022, amid weak ETF demand.",
-   "score": 1.7697
+   "published": "2026-11-12T11:24:19+00:00",
+   "summary": "U.S. spot Bitcoin exchange-traded funds have recorded five consecutive days of net outflows, as investors retreat from risk assets after a turbulent week for markets. The funds lost some $1.44 billion between November 5 and November 11, including $299.9 million on Wednesday, acc…",
+   "score": 2.0386
   },
   {
-   "title": "SEC enforcement actions fall 24%, crypto cases in spotlight",
-   "url": "https://cointelegraph.com/news/sec-crypto-cases-enforcement-actions-fall-23-2025?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "title": "Here’s what happened in crypto today",
+   "url": "https://cointelegraph.com/news/what-happened-in-crypto-today?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
    "source": "Cointelegraph",
-   "published": "2026-11-11T08:43:30+00:00",
-   "summary": "The SEC filed 348 actions in fiscal 2026, down from 456 a year earlier. Cases included alleged Bitcoin mining fraud and an FTX audit settlement.",
-   "score": 1.7103
+   "published": "2026-11-12T22:11:41+00:00",
+   "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
+   "score": 1.747
   },
   {
-   "title": "ICE and OKX Set Nov. 23 Tokenized Stock Launch After 67 Companies Opt Out",
-   "url": "https://bitcoinmagazine.com/news/ice-okx-nov-23-tokenized-stock-launch",
+   "title": "Peter Schiff on the Bitcoin Crash: “Get the Hell Out”",
+   "url": "https://bitcoinmagazine.com/videos/peter-schiff-on-the-bitcoin-crash-get-the-hell-out",
    "source": "Bitcoin Magazine",
-   "published": "2026-11-11T15:49:04+00:00",
-   "summary": "Bitcoin Magazine ICE and OKX Set Nov. 23 Tokenized Stock Launch After 67 Companies Opt Out The joint venture will offer more than 70 assets, including tokenized shares of Strategy, Coinbase and Circle plus 59 Direxion ETFs, even after Tesla, Apple, Meta and Netflix objected. Thi…",
-   "score": 1.5591
+   "published": "2026-11-12T20:15:28+00:00",
+   "summary": "▶ Bitcoin Magazine Peter Schiff on the Bitcoin Crash: “Get the Hell Out” Challenged on why two or three down years would matter for Bitcoin when gold and the Nasdaq have had similar streaks before recoveries, Peter Schiff says the difference is the backdrop. This post Peter Schi…",
+   "score": 1.7297
   },
   {
    "title": "Bitcoin barely flinches at hot CPI as ETF selling slows",
@@ -78,15 +78,31 @@
    "source": "CoinDesk",
    "published": "2026-11-11T12:19:30+00:00",
    "summary": "",
-   "score": 1.5442
+   "score": 1.4608
   },
   {
-   "title": "Barclays boosts BlackRock Bitcoin ETF stake 48% as banks expand holdings",
-   "url": "https://cointelegraph.com/news/barclays-blackrock-ibit-boost-key-q3-filings?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "title": "BlackRock’s IBIT Bleeds $2 Billion in Nine Straight Days of Outflows",
+   "url": "https://bitcoinmagazine.com/markets/blackrock-ibit-nine-days-outflows",
+   "source": "Bitcoin Magazine",
+   "published": "2026-11-12T14:24:00+00:00",
+   "summary": "Bitcoin Magazine BlackRock’s IBIT Bleeds $2 Billion in Nine Straight Days of Outflows U.S. spot bitcoin ETFs lost $299.8 million on Wednesday, their fifth straight day of outflows, with BlackRock's IBIT accounting for $269.7 million and about 94% of November's withdrawals. This…",
+   "score": 1.3624
+  },
+  {
+   "title": "Stablecoin Drain, ETF Outflows Leave Bitcoin 'Running on Empty'",
+   "url": "https://decrypt.co/383094/stablecoin-drain-etf-outflows-bitcoin-running-empty",
+   "source": "Decrypt",
+   "published": "2026-11-11T21:46:03+00:00",
+   "summary": "Stablecoin supply fell $14.2 billion in 30 days, the fastest contraction since June 2022, amid weak ETF demand.",
+   "score": 1.3393
+  },
+  {
+   "title": "SEC enforcement actions fall 24%, crypto cases in spotlight",
+   "url": "https://cointelegraph.com/news/sec-crypto-cases-enforcement-actions-fall-23-2025?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
    "source": "Cointelegraph",
-   "published": "2026-11-11T11:56:23+00:00",
-   "summary": "Barclays reported a $187 million stake as of Sept. 30, while Citigroup disclosed a new $119 million position in Fidelity’s Bitcoin ETF.",
-   "score": 1.2285
+   "published": "2026-11-11T08:43:30+00:00",
+   "summary": "The SEC filed 348 actions in fiscal 2026, down from 456 a year earlier. Cases included alleged Bitcoin mining fraud and an FTX audit settlement.",
+   "score": 1.2943
   },
   {
    "title": "Bitcoin sits out stock rebound as ETF outflows extend to fourth day",
@@ -94,23 +110,23 @@
    "source": "CoinDesk",
    "published": "2026-11-11T11:37:04+00:00",
    "summary": "",
-   "score": 1.2228
+   "score": 1.1568
   },
   {
-   "title": "Stock ETF buyers pounce on dip as Bitcoin funds bleed $1.6 billion",
-   "url": "https://cointelegraph.com/markets/bitcoin-etf-outflows-persist-while-equity-investors-buy-the-dip?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "title": "ICE and OKX Set Nov. 23 Tokenized Stock Launch After 67 Companies Opt Out",
+   "url": "https://bitcoinmagazine.com/news/ice-okx-nov-23-tokenized-stock-launch",
+   "source": "Bitcoin Magazine",
+   "published": "2026-11-11T15:49:04+00:00",
+   "summary": "Bitcoin Magazine ICE and OKX Set Nov. 23 Tokenized Stock Launch After 67 Companies Opt Out The joint venture will offer more than 70 assets, including tokenized shares of Strategy, Coinbase and Circle plus 59 Direxion ETFs, even after Tesla, Apple, Meta and Netflix objected. Thi…",
+   "score": 0.9439
+  },
+  {
+   "title": "Barclays boosts BlackRock Bitcoin ETF stake 48% as banks expand holdings",
+   "url": "https://cointelegraph.com/news/barclays-blackrock-ibit-boost-key-q3-filings?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
    "source": "Cointelegraph",
-   "published": "2026-11-11T08:55:31+00:00",
-   "summary": "US spot Bitcoin ETFs have lost $1.6 billion in November, while stock funds attracted billions of dollars from investors buying the dip.",
-   "score": 0.9409
-  },
-  {
-   "title": "A High-Severity Bug Could Have Stalled Bitcoin Mining—Bitcoin Core Has a Fix",
-   "url": "https://decrypt.co/383044/bitcoin-core-patches-bug-could-have-stalled-btc-mining",
-   "source": "Decrypt",
-   "published": "2026-11-11T16:58:57+00:00",
-   "summary": "Three bugs—spanning denial-of-service and privacy issues rather than coin theft—have all been patched, with the most serious capable of halting a miner’s ability to build new blocks.",
-   "score": 0.8808
+   "published": "2026-11-11T11:56:23+00:00",
+   "summary": "Barclays reported a $187 million stake as of Sept. 30, while Citigroup disclosed a new $119 million position in Fidelity’s Bitcoin ETF.",
+   "score": 0.9297
   },
   {
    "title": "Canaan may sell more bitcoin for stock buybacks as mining-rig revenue falls 96%",
@@ -118,23 +134,23 @@
    "source": "CoinDesk",
    "published": "2026-11-12T07:41:18+00:00",
    "summary": "",
-   "score": 0.8714
+   "score": 0.8243
   },
   {
-   "title": "Bitcoin Price Falls Below $72,000 as Nvidia CEO Jensen Huang Steps Down and Strategy (MSTR) Slides",
-   "url": "https://bitcoinmagazine.com/markets/bitcoin-price-falls-below-72000",
-   "source": "Bitcoin Magazine",
-   "published": "2026-11-12T14:21:51+00:00",
-   "summary": "Bitcoin Magazine Bitcoin Price Falls Below $72,000 as Nvidia CEO Jensen Huang Steps Down and Strategy (MSTR) Slides Bitcoin price fell below $72,000 on Thursday, its lowest level since mid-August, after Nvidia said CEO Jensen Huang had resigned and Strategy shares slid on MSCI's…",
-   "score": 0.7677
-  },
-  {
-   "title": "Here’s what happened in crypto today",
-   "url": "https://cointelegraph.com/news/what-happened-in-crypto-today?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "title": "Stock ETF buyers pounce on dip as Bitcoin funds bleed $1.6 billion",
+   "url": "https://cointelegraph.com/markets/bitcoin-etf-outflows-persist-while-equity-investors-buy-the-dip?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
    "source": "Cointelegraph",
-   "published": "2026-11-12T06:00:00+00:00",
-   "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
-   "score": 0.7484
+   "published": "2026-11-11T08:55:31+00:00",
+   "summary": "US spot Bitcoin ETFs have lost $1.6 billion in November, while stock funds attracted billions of dollars from investors buying the dip.",
+   "score": 0.7121
+  },
+  {
+   "title": "A High-Severity Bug Could Have Stalled Bitcoin Mining—Bitcoin Core Has a Fix",
+   "url": "https://decrypt.co/383044/bitcoin-core-patches-bug-could-have-stalled-btc-mining",
+   "source": "Decrypt",
+   "published": "2026-11-11T16:58:57+00:00",
+   "summary": "Three bugs—spanning denial-of-service and privacy issues rather than coin theft—have all been patched, with the most serious capable of halting a miner’s ability to build new blocks.",
+   "score": 0.6666
   },
   {
    "title": "Live updates: Bitcoin slumps below $72,000 as Nvidia's Huang resigns, interest rates surge",
@@ -142,7 +158,15 @@
    "source": "CoinDesk",
    "published": "2026-11-12T09:15:04+00:00",
    "summary": "",
-   "score": 0.6417
+   "score": 0.6071
+  },
+  {
+   "title": "Strategy stock sheds 5% amid MSCI index removal, Bitcoin sell-off",
+   "url": "https://cointelegraph.com/markets/strategy-shares-fall-5-msci-index-removal-bitcoin?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-11-12T21:52:04+00:00",
+   "summary": "Strategy shares declined Thursday following MSCI’s decision to remove the company from its indexes, as Bitcoin also fell amid a broader crypto market decline.",
+   "score": 0.518
   },
   {
    "title": "Bitcoin Falls as Hot US Inflation Fuels Fears of Bigger Fed Rate Hike",
@@ -150,23 +174,15 @@
    "source": "Decrypt",
    "published": "2026-11-10T16:27:57+00:00",
    "summary": "Bitcoin fell below $74,000 after October inflation beat forecasts, increasing pressure on the Federal Reserve to raise rates again at its December meeting.",
-   "score": 0.6182
+   "score": 0.4679
   },
   {
-   "title": "Oil Selloff Sets Up “The Sweet Spot for Gold” and Bitcoin | Robbert van Batenburg",
-   "url": "https://bitcoinmagazine.com/videos/oil-selloff-sets-up-the-sweet-spot-for-gold-and-bitcoin-robbert-van-batenburg",
+   "title": "Bitcoin Price Falls Below $72,000 as Nvidia CEO Jensen Huang Steps Down and Strategy (MSTR) Slides",
+   "url": "https://bitcoinmagazine.com/markets/bitcoin-price-falls-below-72000",
    "source": "Bitcoin Magazine",
-   "published": "2026-11-10T21:57:34+00:00",
-   "summary": "▶ Bitcoin Magazine Oil Selloff Sets Up “The Sweet Spot for Gold” and Bitcoin | Robbert van Batenburg Oil is down almost 20% and gas is down 25% since the end of October, and Robbert van Batenburg, Global Strategist at The Bear Traps Report, says that sets up a dovish Fed and \"th…",
-   "score": 0.5354
-  },
-  {
-   "title": "US data center restrictions could give Bitcoin miners an edge in AI, though challenges remain",
-   "url": "https://cointelegraph.com/news/us-data-center-restrictions-bitcoin-miners-edge-ai?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-11-11T20:43:19+00:00",
-   "summary": "As US voters push back against new data centers, Bitcoin miners already expanding into AI could benefit from their existing facilities.",
-   "score": 0.476
+   "published": "2026-11-12T14:21:51+00:00",
+   "summary": "Bitcoin Magazine Bitcoin Price Falls Below $72,000 as Nvidia CEO Jensen Huang Steps Down and Strategy (MSTR) Slides Bitcoin price fell below $72,000 on Thursday, its lowest level since mid-August, after Nvidia said CEO Jensen Huang had resigned and Strategy shares slid on MSCI's…",
+   "score": 0.4648
   },
   {
    "title": "Bitcoin breaks with stocks, declines as ETF outflows mount, MARA reduces holdings",
@@ -174,31 +190,15 @@
    "source": "CoinDesk",
    "published": "2026-11-10T12:15:00+00:00",
    "summary": "",
-   "score": 0.4468
+   "score": 0.4226
   },
   {
-   "title": "Bitcoin Miner HIVE Eyes $45 Million in Annual Revenue From AI Deal",
-   "url": "https://decrypt.co/382982/bitcoin-miner-hive-eyes-45-million-ai-data-center",
-   "source": "Decrypt",
-   "published": "2026-11-10T22:46:02+00:00",
-   "summary": "The Bitcoin miner says its Boden facility could generate $45 million annually, but a June letter of intent remains nonbinding as executives negotiate financing and customer protections for the project.",
-   "score": 0.4334
-  },
-  {
-   "title": "MSCI Removes Strategy (MSTR) From Its USA Index, Forcing Index Funds to Sell by Nov. 30",
-   "url": "https://bitcoinmagazine.com/markets/msci-removes-strategy-mstr-usa-index",
-   "source": "Bitcoin Magazine",
-   "published": "2026-11-11T23:36:56+00:00",
-   "summary": "Bitcoin Magazine MSCI Removes Strategy (MSTR) From Its USA Index, Forcing Index Funds to Sell by Nov. 30 MSCI will take Strategy, Metaplanet, Yellow Cake, Skel and Upexi out of its global indexes as of the Nov. 30 close, after a new screen classified them as non-operating compan…",
-   "score": 0.3971
-  },
-  {
-   "title": "Bitcoin’s ‘best buying opportunity ever’ has arrived: Mark Moss",
-   "url": "https://cointelegraph.com/magazine/bitcoins-best-buying-opportunity-ever-has-arrived-mark-moss?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "title": "US data center restrictions could give Bitcoin miners an edge in AI, though challenges remain",
+   "url": "https://cointelegraph.com/news/us-data-center-restrictions-bitcoin-miners-edge-ai?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
    "source": "Cointelegraph",
-   "published": "2026-11-10T13:30:00+00:00",
-   "summary": "Bitcoin Opportunity Fund co-founder Mark Moss says that with banks and ETFs widening access to Bitcoin he expects a new record high in 2027.",
-   "score": 0.3639
+   "published": "2026-11-11T20:43:19+00:00",
+   "summary": "As US voters push back against new data centers, Bitcoin miners already expanding into AI could benefit from their existing facilities.",
+   "score": 0.3603
   },
   {
    "title": "MSCI is dropping Strategy from its index, and the exclusion could hit its bitcoin-buying machine",
@@ -206,7 +206,31 @@
    "source": "CoinDesk",
    "published": "2026-11-12T07:00:37+00:00",
    "summary": "",
-   "score": 0.3534
+   "score": 0.3344
+  },
+  {
+   "title": "Bitcoin Miner HIVE Eyes $45 Million in Annual Revenue From AI Deal",
+   "url": "https://decrypt.co/382982/bitcoin-miner-hive-eyes-45-million-ai-data-center",
+   "source": "Decrypt",
+   "published": "2026-11-10T22:46:02+00:00",
+   "summary": "The Bitcoin miner says its Boden facility could generate $45 million annually, but a June letter of intent remains nonbinding as executives negotiate financing and customer protections for the project.",
+   "score": 0.328
+  },
+  {
+   "title": "Oil Selloff Sets Up “The Sweet Spot for Gold” and Bitcoin | Robbert van Batenburg",
+   "url": "https://bitcoinmagazine.com/videos/oil-selloff-sets-up-the-sweet-spot-for-gold-and-bitcoin-robbert-van-batenburg",
+   "source": "Bitcoin Magazine",
+   "published": "2026-11-10T21:57:34+00:00",
+   "summary": "▶ Bitcoin Magazine Oil Selloff Sets Up “The Sweet Spot for Gold” and Bitcoin | Robbert van Batenburg Oil is down almost 20% and gas is down 25% since the end of October, and Robbert van Batenburg, Global Strategist at The Bear Traps Report, says that sets up a dovish Fed and \"th…",
+   "score": 0.3242
+  },
+  {
+   "title": "Bitcoin’s ‘best buying opportunity ever’ has arrived: Mark Moss",
+   "url": "https://cointelegraph.com/magazine/bitcoins-best-buying-opportunity-ever-has-arrived-mark-moss?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-11-10T13:30:00+00:00",
+   "summary": "Bitcoin Opportunity Fund co-founder Mark Moss says that with banks and ETFs widening access to Bitcoin he expects a new record high in 2027.",
+   "score": 0.2754
   },
   {
    "title": "Strategy Buys $82M in Bitcoin, Buys Back $188M of STRC",
@@ -214,31 +238,15 @@
    "source": "Decrypt",
    "published": "2026-11-09T13:24:29+00:00",
    "summary": "The Bitcoin treasury firm sold $284 million of MSTR stock to fund the moves, days before MSCI names companies facing index removal.",
-   "score": 0.3319
+   "score": 0.2512
   },
   {
-   "title": "Hyperscale Data (GPUS) Sells Its Last Bitcoin for AI Data Center, Months After Chasing $100 Million Treasury",
-   "url": "https://bitcoinmagazine.com/news/hyperscale-data-sells-last-bitcoin-ai",
+   "title": "MSCI Removes Strategy (MSTR) From Its USA Index, Forcing Index Funds to Sell by Nov. 30",
+   "url": "https://bitcoinmagazine.com/markets/msci-removes-strategy-mstr-usa-index",
    "source": "Bitcoin Magazine",
-   "published": "2026-11-10T14:45:00+00:00",
-   "summary": "Bitcoin Magazine Hyperscale Data (GPUS) Sells Its Last Bitcoin for AI Data Center, Months After Chasing $100 Million Treasury Hyperscale Data sold its remaining 211.56 bitcoin for about $16 million by Nov. 8, bringing sales since late July to about 1,113 BTC as it races to energ…",
-   "score": 0.3088
-  },
-  {
-   "title": "BlackRock Bitcoin ETF outflows hit $1.66B over seven trading sessions",
-   "url": "https://cointelegraph.com/markets/blackrock-ibit-bitcoin-etf-outflows?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-11-10T08:02:05+00:00",
-   "summary": "US spot Bitcoin ETFs shed $201 million Monday, with seven straight sessions of net withdrawals from BlackRock’s IBIT totaling $1.66 billion.",
-   "score": 0.269
-  },
-  {
-   "title": "Onramp Launches Business Bitcoin Accounts With Two-Person Withdrawal Approvals as Wrench Attacks Climb",
-   "url": "https://bitcoinmagazine.com/news/onramp-launches-business-bitcoin-accounts-approvals",
-   "source": "Bitcoin Magazine",
-   "published": "2026-11-10T14:43:54+00:00",
-   "summary": "Bitcoin Magazine Onramp Launches Business Bitcoin Accounts With Two-Person Withdrawal Approvals as Wrench Attacks Climb The Austin firm rolled out a free company account with named users and second-person withdrawal approvals, plus a higher Treasury tier that splits keys across…",
-   "score": 0.247
+   "published": "2026-11-11T23:36:56+00:00",
+   "summary": "Bitcoin Magazine MSCI Removes Strategy (MSTR) From Its USA Index, Forcing Index Funds to Sell by Nov. 30 MSCI will take Strategy, Metaplanet, Yellow Cake, Skel and Upexi out of its global indexes as of the Nov. 30 close, after a new screen classified them as non-operating compan…",
+   "score": 0.2404
   },
   {
    "title": "Bitcoin slips before U.S. inflation report as traders price in Fed rate increase",
@@ -246,31 +254,23 @@
    "source": "CoinDesk",
    "published": "2026-11-10T10:48:37+00:00",
    "summary": "",
-   "score": 0.2334
+   "score": 0.2208
   },
   {
-   "title": "Bitcoin in Limbo as Stocks Rebound Ahead of US Inflation Report",
-   "url": "https://decrypt.co/382861/bitcoin-limbo-stocks-rebound-us-inflation",
-   "source": "Decrypt",
-   "published": "2026-11-09T19:06:03+00:00",
-   "summary": "U.S. stocks rallied as oil fell, but Bitcoin hovered near $75,000 after a wave of liquidations, with Tuesday’s inflation report set to test bets on a December Fed rate hike.",
-   "score": 0.2325
-  },
-  {
-   "title": "Bitcoin nears 11-week low after ‘discouraging’ US CPI inflation beat",
-   "url": "https://cointelegraph.com/markets/bitcoin-11-week-low-discouraging-us-cpi-inflation?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "title": "BlackRock Bitcoin ETF outflows hit $1.66B over seven trading sessions",
+   "url": "https://cointelegraph.com/markets/blackrock-ibit-bitcoin-etf-outflows?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
    "source": "Cointelegraph",
-   "published": "2026-11-10T16:25:03+00:00",
-   "summary": "Bitcoin and US stocks initially fall after October inflation tops forecasts, with traders expecting a quarter-point Fed rate hike in December.",
-   "score": 0.2024
+   "published": "2026-11-10T08:02:05+00:00",
+   "summary": "US spot Bitcoin ETFs shed $201 million Monday, with seven straight sessions of net withdrawals from BlackRock’s IBIT totaling $1.66 billion.",
+   "score": 0.2036
   },
   {
-   "title": "Bitcoin Price Trades Down Near $73,500 After Hot CPI Print Lifts Fed Hike Bets",
-   "url": "https://bitcoinmagazine.com/markets/bitcoin-price-trades-near-73900-cpi",
+   "title": "Hyperscale Data (GPUS) Sells Its Last Bitcoin for AI Data Center, Months After Chasing $100 Million Treasury",
+   "url": "https://bitcoinmagazine.com/news/hyperscale-data-sells-last-bitcoin-ai",
    "source": "Bitcoin Magazine",
-   "published": "2026-11-10T14:27:49+00:00",
-   "summary": "Bitcoin Magazine Bitcoin Price Trades Down Near $73,500 After Hot CPI Print Lifts Fed Hike Bets Bitcoin price slipped to $73,500 Tuesday morning after October consumer prices rose 0.4%, topping forecasts and pushing traders toward a bigger Federal Reserve rate hike in December.…",
-   "score": 0.1968
+   "published": "2026-11-10T14:45:00+00:00",
+   "summary": "Bitcoin Magazine Hyperscale Data (GPUS) Sells Its Last Bitcoin for AI Data Center, Months After Chasing $100 Million Treasury Hyperscale Data sold its remaining 211.56 bitcoin for about $16 million by Nov. 8, bringing sales since late July to about 1,113 BTC as it races to energ…",
+   "score": 0.187
   },
   {
    "title": "Live news: Bitcoin falls back to $74,000 ahead of CPI as traders fully price in Fed rate hike",
@@ -278,31 +278,31 @@
    "source": "CoinDesk",
    "published": "2026-11-10T10:41:45+00:00",
    "summary": "",
-   "score": 0.1864
+   "score": 0.1763
   },
   {
-   "title": "Bitcoin Covenants Part 5: MATT and OP_CHECKCONTRACTVERIFY — How Bitcoin could carry state across transactions",
-   "url": "https://cointelegraph.com/research/bitcoin-covenants-part-5-matt-op-ccv?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-11-11T13:26:18+00:00",
-   "summary": "OP_CCV embeds contract state directly into Taproot output keys and enforces valid state transitions onchain. This makes it possible to achieve stateful contracts and compact fraud proofs.",
-   "score": 0.158
-  },
-  {
-   "title": "MSCI Rules Today on Cutting Strategy (MSTR) From Its Indexes After a Draft List Marks It Deleted",
-   "url": "https://bitcoinmagazine.com/markets/msci-rules-today-strategy-mstr-deleted",
-   "source": "Bitcoin Magazine",
-   "published": "2026-11-11T17:05:00+00:00",
-   "summary": "Bitcoin Magazine MSCI Rules Today on Cutting Strategy (MSTR) From Its Indexes After a Draft List Marks It Deleted MSCI publishes its November index review at 5 p.m. ET, the first under a new non-operating company screen. Its potential list, built on Sept. 30 filings, already mar…",
-   "score": 0.148
-  },
-  {
-   "title": "Morning Minute: What Anthropic’s $1.4 Trillion IPO Means for Crypto",
-   "url": "https://decrypt.co/383001/morning-minute-what-anthropics-1-4-trillion-ipo-means-for-crypto",
+   "title": "Bitcoin in Limbo as Stocks Rebound Ahead of US Inflation Report",
+   "url": "https://decrypt.co/382861/bitcoin-limbo-stocks-rebound-us-inflation",
    "source": "Decrypt",
-   "published": "2026-11-11T12:55:18+00:00",
-   "summary": "Hint: if it plays out similarly to the SpaceX IPO, it means the Bitcoin bottom is very close.",
-   "score": 0.1361
+   "published": "2026-11-09T19:06:03+00:00",
+   "summary": "U.S. stocks rallied as oil fell, but Bitcoin hovered near $75,000 after a wave of liquidations, with Tuesday’s inflation report set to test bets on a December Fed rate hike.",
+   "score": 0.176
+  },
+  {
+   "title": "Bitcoin nears 11-week low after ‘discouraging’ US CPI inflation beat",
+   "url": "https://cointelegraph.com/markets/bitcoin-11-week-low-discouraging-us-cpi-inflation?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-11-10T16:25:03+00:00",
+   "summary": "Bitcoin and US stocks initially fall after October inflation tops forecasts, with traders expecting a quarter-point Fed rate hike in December.",
+   "score": 0.1532
+  },
+  {
+   "title": "Onramp Launches Business Bitcoin Accounts With Two-Person Withdrawal Approvals as Wrench Attacks Climb",
+   "url": "https://bitcoinmagazine.com/news/onramp-launches-business-bitcoin-accounts-approvals",
+   "source": "Bitcoin Magazine",
+   "published": "2026-11-10T14:43:54+00:00",
+   "summary": "Bitcoin Magazine Onramp Launches Business Bitcoin Accounts With Two-Person Withdrawal Approvals as Wrench Attacks Climb The Austin firm rolled out a free company account with named users and second-person withdrawal approvals, plus a higher Treasury tier that splits keys across…",
+   "score": 0.1495
   },
   {
    "title": "Bitcoin bulls can't rely on ETF flows",
@@ -310,23 +310,23 @@
    "source": "CoinDesk",
    "published": "2026-11-09T12:30:00+00:00",
    "summary": "",
-   "score": 0.1299
+   "score": 0.1228
   },
   {
-   "title": "Bitcoin may benefit as global tightening slows, Binance Research says",
-   "url": "https://cointelegraph.com/markets/bitcoin-price-global-tightening-binance-research?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "title": "Bitcoin Covenants Part 5: MATT and OP_CHECKCONTRACTVERIFY — How Bitcoin could carry state across transactions",
+   "url": "https://cointelegraph.com/research/bitcoin-covenants-part-5-matt-op-ccv?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
    "source": "Cointelegraph",
-   "published": "2026-11-10T13:15:59+00:00",
-   "summary": "Binance Research says Bitcoin could find support as global monetary tightening slows, even as markets price in a December Fed rate hike.",
-   "score": 0.1238
+   "published": "2026-11-11T13:26:18+00:00",
+   "summary": "OP_CCV embeds contract state directly into Taproot output keys and enforces valid state transitions onchain. This makes it possible to achieve stateful contracts and compact fraud proofs.",
+   "score": 0.1195
   },
   {
-   "title": "Bitcoin Heated Hot Tubs and 278 Washington Bitcoin Merchants : Now Accepting Bitcoin",
-   "url": "https://bitcoinmagazine.com/news/washington-bitcoin-merchants-snorkel",
+   "title": "Bitcoin Price Trades Down Near $73,500 After Hot CPI Print Lifts Fed Hike Bets",
+   "url": "https://bitcoinmagazine.com/markets/bitcoin-price-trades-near-73900-cpi",
    "source": "Bitcoin Magazine",
-   "published": "2026-11-10T23:14:53+00:00",
-   "summary": "Bitcoin Magazine Bitcoin Heated Hot Tubs and 278 Washington Bitcoin Merchants : Now Accepting Bitcoin Washington Bitcoin merchants, from Seattle coffee shops to a Snorkel hot tub heated by bitcoin miners. This post Bitcoin Heated Hot Tubs and 278 Washington Bitcoin Merchants : N…",
-   "score": 0.1144
+   "published": "2026-11-10T14:27:49+00:00",
+   "summary": "Bitcoin Magazine Bitcoin Price Trades Down Near $73,500 After Hot CPI Print Lifts Fed Hike Bets Bitcoin price slipped to $73,500 Tuesday morning after October consumer prices rose 0.4%, topping forecasts and pushing traders toward a bigger Federal Reserve rate hike in December.…",
+   "score": 0.1192
   }
  ]
 }
