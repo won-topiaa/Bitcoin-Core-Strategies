@@ -1,5 +1,5 @@
 {
- "fetched": "2026-11-15T12:41:31+00:00",
+ "fetched": "2026-11-15T17:40:35+00:00",
  "sources_ok": [
   "CoinDesk",
   "Cointelegraph",
@@ -9,12 +9,20 @@
  "sources_failed": [],
  "items": [
   {
+   "title": "Bitcoin ETFs Lose $2.1 Billion in November as Outflow Streak Hits Seven Days",
+   "url": "https://decrypt.co/383282/bitcoin-etfs-lose-2-1-billion-november-outflow-streak-seven-days",
+   "source": "Decrypt",
+   "published": "2026-11-15T14:01:02+00:00",
+   "summary": "Spot Bitcoin ETFs shed $185.4 million on Friday, their seventh straight day of outflows, pushing November losses to about $2.1 billion as Bitcoin fell toward $64,000.",
+   "score": 2.8456
+  },
+  {
    "title": "Bitcoin Hits 12-Week Low as Fed Rate Fears Undo Most of Summer Rally",
    "url": "https://decrypt.co/383231/bitcoin-hits-12-week-low-fed-rate-fears-undo-summer-rally",
    "source": "Decrypt",
    "published": "2026-11-13T17:22:54+00:00",
    "summary": "Bitcoin is back near August levels as persistent inflation, growing expectations of another interest-rate hike and ETF withdrawals pressure prices.",
-   "score": 2.8357
+   "score": 2.111
   },
   {
    "title": "Here’s what happened in crypto today",
@@ -22,7 +30,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-15T11:18:48+00:00",
    "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
-   "score": 2.1566
+   "score": 2.0069
   },
   {
    "title": "Bitcoin crashes to 3-month low below $63,000 as analyst flags fourth capitulation wave",
@@ -30,7 +38,7 @@
    "source": "CoinDesk",
    "published": "2026-11-14T16:33:29+00:00",
    "summary": "",
-   "score": 2.0936
+   "score": 1.9482
   },
   {
    "title": "JPMorgan’s Bitcoin and Crypto-Linked Holdings Approach $1 Billion",
@@ -38,7 +46,7 @@
    "source": "Decrypt",
    "published": "2026-11-13T20:16:03+00:00",
    "summary": "The bank’s Q3 13F shows roughly $981 million across Bitcoin ETFs, Strategy and Coinbase—likely over $1 billion counting Robinhood and miners.",
-   "score": 2.0527
+   "score": 1.5281
   },
   {
    "title": "Bitcoin ETFs shed $2.35B in 2 weeks, BlackRock’s losing streak hits 11",
@@ -46,7 +54,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-14T06:33:13+00:00",
    "summary": "US spot Bitcoin ETFs recorded $185.4 million in net outflows Friday, with BlackRock’s IBIT accounting for $143.5 million and Fidelity’s FBTC shedding $41.9 million.",
-   "score": 1.5531
+   "score": 1.4452
   },
   {
    "title": "Binance Says It Has Fully Covered the $6.34 Billion Hack With Company Funds",
@@ -54,7 +62,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-12T19:12:14+00:00",
    "summary": "Bitcoin Magazine Binance Says It Has Fully Covered the $6.34 Billion Hack With Company Funds The exchange says users are whole after the Oct. 29 theft, paid for from SAFU, its futures insurance fund and treasury, and has published a 198-token proof-of-reserves snapshot that user…",
-   "score": 1.3594
+   "score": 1.265
   },
   {
    "title": "Bitcoin plunges to $68,000 as Anthropic IPO frenzy adds to market jitters",
@@ -62,7 +70,7 @@
    "source": "CoinDesk",
    "published": "2026-11-13T18:39:58+00:00",
    "summary": "",
-   "score": 1.2209
+   "score": 1.1361
   },
   {
    "title": "JPMorgan Lifts Its Strategy (MSTR) Stake 36% and Holds $540 Million in Bitcoin ETFs",
@@ -70,7 +78,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-12T16:19:17+00:00",
    "summary": "Bitcoin Magazine JPMorgan Lifts Its Strategy (MSTR) Stake 36% and Holds $540 Million in Bitcoin ETFs A 13F filed Thursday shows JPMorgan held 848,932 Strategy shares, up 36% from June, and 11.4 million IBIT shares worth $540 million at Sept. 30, weeks before MSCI's index exit. T…",
-   "score": 1.073
+   "score": 0.9985
   },
   {
    "title": "Jane Street boosts Fidelity Bitcoin ETF holdings nearly 8x, trims IBIT",
@@ -78,15 +86,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-13T09:05:10+00:00",
    "summary": "Jane Street ended Q3 with 19% fewer shares in BlackRock’s Bitcoin ETF, and a higher share price lifted the stake’s value to $957 million.",
-   "score": 0.9113
-  },
-  {
-   "title": "Fed Chair Warsh Wants Answers on AI Inflation—and Bitcoin May Feel the Impact",
-   "url": "https://decrypt.co/383259/fed-chair-warsh-wants-answers-ai-inflation-bitcoin",
-   "source": "Decrypt",
-   "published": "2026-11-13T18:36:02+00:00",
-   "summary": "The Federal Reserve is examining whether AI will lower prices or keep inflation elevated, a question that could shape interest rates and the outlook for crypto.",
-   "score": 0.8713
+   "score": 0.848
   },
   {
    "title": "Bitcoin ETFs are now down over $1.5 billion in net outflows for the year",
@@ -94,7 +94,7 @@
    "source": "CoinDesk",
    "published": "2026-11-13T05:45:26+00:00",
    "summary": "",
-   "score": 0.8685
+   "score": 0.8082
   },
   {
    "title": "President Trump Taps Two Democrats in Bipartisan Slate of SEC and CFTC Nominees as Both Agencies Run Short-Handed",
@@ -102,7 +102,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-13T14:45:00+00:00",
    "summary": "Bitcoin Magazine President Trump Taps Two Democrats in Bipartisan Slate of SEC and CFTC Nominees as Both Agencies Run Short-Handed The White House sent four SEC and CFTC nominees to the Senate on Thursday, including former CFTC Commissioner Kristin Johnson and two staffers who w…",
-   "score": 0.8241
+   "score": 0.7669
   },
   {
    "title": "Bitcoin slides below $70K amid thin liquidity, ETF outflows",
@@ -110,7 +110,15 @@
    "source": "Cointelegraph",
    "published": "2026-11-13T06:00:15+00:00",
    "summary": "Bitcoin fell below $70,000 as crypto sentiment hit its lowest level in more than four months, with analysts warning of institutional outflows, thinning liquidity and elevated leverage.",
-   "score": 0.6973
+   "score": 0.6489
+  },
+  {
+   "title": "Fed Chair Warsh Wants Answers on AI Inflation—and Bitcoin May Feel the Impact",
+   "url": "https://decrypt.co/383259/fed-chair-warsh-wants-answers-ai-inflation-bitcoin",
+   "source": "Decrypt",
+   "published": "2026-11-13T18:36:02+00:00",
+   "summary": "The Federal Reserve is examining whether AI will lower prices or keep inflation elevated, a question that could shape interest rates and the outlook for crypto.",
+   "score": 0.6486
   },
   {
    "title": "Bitcoin miners pay Paraguay $350 million a year, but AI is pushing them out",
@@ -118,15 +126,7 @@
    "source": "CoinDesk",
    "published": "2026-11-13T23:30:00+00:00",
    "summary": "",
-   "score": 0.5985
-  },
-  {
-   "title": "Strategy Made $19.5 Billion in Profit. So Why Is MSCI Removing It From Stock Indexes?",
-   "url": "https://decrypt.co/383204/why-msci-removing-bitcoin-treasury-strategy-stock-indexes",
-   "source": "Decrypt",
-   "published": "2026-11-12T21:26:03+00:00",
-   "summary": "Michael Saylor’s Bitcoin giant is being excluded from major investment benchmarks, raising questions about what qualifies as a business—and whether the decision could slow its Bitcoin buying.",
-   "score": 0.5751
+   "score": 0.5569
   },
   {
    "title": "Peter Schiff on the Bitcoin Crash: “Get the Hell Out”",
@@ -134,15 +134,15 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-12T20:15:28+00:00",
    "summary": "▶ Bitcoin Magazine Peter Schiff on the Bitcoin Crash: “Get the Hell Out” Challenged on why two or three down years would matter for Bitcoin when gold and the Nasdaq have had similar streaks before recoveries, Peter Schiff says the difference is the backdrop. This post Peter Schi…",
-   "score": 0.5654
+   "score": 0.5261
   },
   {
-   "title": "Dormant Bitcoin Wallets Wake Up After 16 Years, Moving $6.9 Million",
-   "url": "https://decrypt.co/383264/dormant-bitcoin-wallets-wake-up-after-16-years",
+   "title": "Strategy Made $19.5 Billion in Profit. So Why Is MSCI Removing It From Stock Indexes?",
+   "url": "https://decrypt.co/383204/why-msci-removing-bitcoin-treasury-strategy-stock-indexes",
    "source": "Decrypt",
-   "published": "2026-11-13T19:36:03+00:00",
-   "summary": "Two Bitcoin mining rewards from September 2010 moved minutes apart. The coins are worth nearly 1.15 million times their original market value.",
-   "score": 0.4526
+   "published": "2026-11-12T21:26:03+00:00",
+   "summary": "Michael Saylor’s Bitcoin giant is being excluded from major investment benchmarks, raising questions about what qualifies as a business—and whether the decision could slow its Bitcoin buying.",
+   "score": 0.4281
   },
   {
    "title": "BlackRock’s IBIT Bleeds $2 Billion in Nine Straight Days of Outflows",
@@ -150,7 +150,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-12T14:24:00+00:00",
    "summary": "Bitcoin Magazine BlackRock’s IBIT Bleeds $2 Billion in Nine Straight Days of Outflows U.S. spot bitcoin ETFs lost $299.8 million on Wednesday, their fifth straight day of outflows, with BlackRock's IBIT accounting for $269.7 million and about 94% of November's withdrawals. This…",
-   "score": 0.4453
+   "score": 0.4144
   },
   {
    "title": "Bitcoin dips with Nvidia as ETF outflows reach day five",
@@ -158,7 +158,7 @@
    "source": "CoinDesk",
    "published": "2026-11-12T11:30:00+00:00",
    "summary": "",
-   "score": 0.427
+   "score": 0.3974
   },
   {
    "title": "BlackRock Bitcoin ETF outflows hit $2B over nine sessions",
@@ -166,7 +166,15 @@
    "source": "Cointelegraph",
    "published": "2026-11-12T08:06:48+00:00",
    "summary": "US spot Bitcoin ETF outflows rose to nearly $300 million on Wednesday, up from $95 million a day earlier, as five-session withdrawals reached $1.44 billion.",
-   "score": 0.4067
+   "score": 0.3784
+  },
+  {
+   "title": "Dormant Bitcoin Wallets Wake Up After 16 Years, Moving $6.9 Million",
+   "url": "https://decrypt.co/383264/dormant-bitcoin-wallets-wake-up-after-16-years",
+   "source": "Decrypt",
+   "published": "2026-11-13T19:36:03+00:00",
+   "summary": "Two Bitcoin mining rewards from September 2010 moved minutes apart. The coins are worth nearly 1.15 million times their original market value.",
+   "score": 0.3369
   },
   {
    "title": "FutureBit’s Apollo III Bitcoin Miner Hits Micro Center Shelves in Its First Brick-and-Mortar Launch",
@@ -174,15 +182,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-13T16:39:33+00:00",
    "summary": "Bitcoin Magazine FutureBit’s Apollo III Bitcoin Miner Hits Micro Center Shelves in Its First Brick-and-Mortar Launch The Brooklyn company's compact home miner, rated at up to 18 TH/s and starting at $1,099.99, goes on sale Friday at four Micro Center stores, including the chain'…",
-   "score": 0.347
-  },
-  {
-   "title": "Bitcoin ETFs Bleed $1.4B in Five Days as Investors Cut Risk",
-   "url": "https://decrypt.co/383122/bitcoin-etfs-bleed-1-4b-in-five-days-as-investors-cut-risk",
-   "source": "Decrypt",
-   "published": "2026-11-12T11:24:19+00:00",
-   "summary": "Spot Bitcoin ETFs have lost almost half their peak assets, but analysts say the outflows don't yet show a collapse in demand.",
-   "score": 0.3412
+   "score": 0.3229
   },
   {
    "title": "Bitcoin falls to four-month low near $62K as crypto selloff deepens",
@@ -190,7 +190,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-15T10:23:17+00:00",
    "summary": "The global cryptocurrency market capitalization fell 4% to $2.26 trillion over 24 hours, while Ether and Solana posted double-digit weekly losses.",
-   "score": 0.317
+   "score": 0.2949
   },
   {
    "title": "Live updates: Bitcoin eyes bear market lows as late summer rally mostly wiped out",
@@ -198,7 +198,15 @@
    "source": "CoinDesk",
    "published": "2026-11-13T09:16:58+00:00",
    "summary": "",
-   "score": 0.2807
+   "score": 0.2612
+  },
+  {
+   "title": "Bitcoin ETFs Bleed $1.4B in Five Days as Investors Cut Risk",
+   "url": "https://decrypt.co/383122/bitcoin-etfs-bleed-1-4b-in-five-days-as-investors-cut-risk",
+   "source": "Decrypt",
+   "published": "2026-11-12T11:24:19+00:00",
+   "summary": "Spot Bitcoin ETFs have lost almost half their peak assets, but analysts say the outflows don't yet show a collapse in demand.",
+   "score": 0.254
   },
   {
    "title": "ICE and OKX Set Nov. 23 Tokenized Stock Launch After 67 Companies Opt Out",
@@ -206,15 +214,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-11T15:49:04+00:00",
    "summary": "Bitcoin Magazine ICE and OKX Set Nov. 23 Tokenized Stock Launch After 67 Companies Opt Out The joint venture will offer more than 70 assets, including tokenized shares of Strategy, Coinbase and Circle plus 59 Direxion ETFs, even after Tesla, Apple, Meta and Netflix objected. Thi…",
-   "score": 0.2468
-  },
-  {
-   "title": "Stablecoin Drain, ETF Outflows Leave Bitcoin 'Running on Empty'",
-   "url": "https://decrypt.co/383094/stablecoin-drain-etf-outflows-bitcoin-running-empty",
-   "source": "Decrypt",
-   "published": "2026-11-11T21:46:03+00:00",
-   "summary": "Stablecoin supply fell $14.2 billion in 30 days, the fastest contraction since June 2022, amid weak ETF demand.",
-   "score": 0.2241
+   "score": 0.2297
   },
   {
    "title": "SEC enforcement actions fall 24%, crypto cases in spotlight",
@@ -222,7 +222,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-11T08:43:30+00:00",
    "summary": "The SEC filed 348 actions in fiscal 2026, down from 456 a year earlier. Cases included alleged Bitcoin mining fraud and an FTX audit settlement.",
-   "score": 0.2166
+   "score": 0.2016
   },
   {
    "title": "Bitcoin barely flinches at hot CPI as ETF selling slows",
@@ -230,7 +230,15 @@
    "source": "CoinDesk",
    "published": "2026-11-11T12:19:30+00:00",
    "summary": "",
-   "score": 0.1956
+   "score": 0.182
+  },
+  {
+   "title": "Stablecoin Drain, ETF Outflows Leave Bitcoin 'Running on Empty'",
+   "url": "https://decrypt.co/383094/stablecoin-drain-etf-outflows-bitcoin-running-empty",
+   "source": "Decrypt",
+   "published": "2026-11-11T21:46:03+00:00",
+   "summary": "Stablecoin supply fell $14.2 billion in 30 days, the fastest contraction since June 2022, amid weak ETF demand.",
+   "score": 0.1669
   },
   {
    "title": "Barclays boosts BlackRock Bitcoin ETF stake 48% as banks expand holdings",
@@ -238,7 +246,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-11T11:56:23+00:00",
    "summary": "Barclays reported a $187 million stake as of Sept. 30, while Citigroup disclosed a new $119 million position in Fidelity’s Bitcoin ETF.",
-   "score": 0.1556
+   "score": 0.1448
   },
   {
    "title": "Bitcoin sits out stock rebound as ETF outflows extend to fourth day",
@@ -246,7 +254,7 @@
    "source": "CoinDesk",
    "published": "2026-11-11T11:37:04+00:00",
    "summary": "",
-   "score": 0.1549
+   "score": 0.1441
   },
   {
    "title": "Bitcoin Price Falls 14% in a Week to $65,000 as Weekend Selling Breaks Friday’s Low",
@@ -254,7 +262,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-14T15:27:33+00:00",
    "summary": "Bitcoin Magazine Bitcoin Price Falls 14% in a Week to $65,000 as Weekend Selling Breaks Friday’s Low Bitcoin price crashed about 13% over the past week and traded near $65,600 on Saturday. This post Bitcoin Price Falls 14% in a Week to $65,000 as Weekend Selling Breaks Friday’s…",
-   "score": 0.1543
+   "score": 0.1436
   },
   {
    "title": "Stock ETF buyers pounce on dip as Bitcoin funds bleed $1.6 billion",
@@ -262,15 +270,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-11T08:55:31+00:00",
    "summary": "US spot Bitcoin ETFs have lost $1.6 billion in November, while stock funds attracted billions of dollars from investors buying the dip.",
-   "score": 0.1192
-  },
-  {
-   "title": "A High-Severity Bug Could Have Stalled Bitcoin Mining—Bitcoin Core Has a Fix",
-   "url": "https://decrypt.co/383044/bitcoin-core-patches-bug-could-have-stalled-btc-mining",
-   "source": "Decrypt",
-   "published": "2026-11-11T16:58:57+00:00",
-   "summary": "Three bugs—spanning denial-of-service and privacy issues rather than coin theft—have all been patched, with the most serious capable of halting a miner’s ability to build new blocks.",
-   "score": 0.1116
+   "score": 0.1109
   },
   {
    "title": "Jane Street Lifts Its Strategy (MSTR) Stake 54% to 4.1 Million Shares",
@@ -278,7 +278,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-12T23:30:47+00:00",
    "summary": "Bitcoin Magazine Jane Street Lifts Its Strategy (MSTR) Stake 54% to 4.1 Million Shares A 13F filed Thursday shows Jane Street held 4,119,097 Strategy shares as of Sept. 30, up 53.8%. This post Jane Street Lifts Its Strategy (MSTR) Stake 54% to 4.1 Million Shares first appeared o…",
-   "score": 0.111
+   "score": 0.1033
   },
   {
    "title": "Canaan may sell more bitcoin for stock buybacks as mining-rig revenue falls 96%",
@@ -286,7 +286,15 @@
    "source": "CoinDesk",
    "published": "2026-11-12T07:41:18+00:00",
    "summary": "",
-   "score": 0.1104
+   "score": 0.1027
+  },
+  {
+   "title": "A High-Severity Bug Could Have Stalled Bitcoin Mining—Bitcoin Core Has a Fix",
+   "url": "https://decrypt.co/383044/bitcoin-core-patches-bug-could-have-stalled-btc-mining",
+   "source": "Decrypt",
+   "published": "2026-11-11T16:58:57+00:00",
+   "summary": "Three bugs—spanning denial-of-service and privacy issues rather than coin theft—have all been patched, with the most serious capable of halting a miner’s ability to build new blocks.",
+   "score": 0.083
   },
   {
    "title": "Strategy stock sheds 5% amid MSCI index removal, Bitcoin sell-off",
@@ -294,15 +302,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-12T21:52:04+00:00",
    "summary": "Strategy shares declined Thursday following MSCI’s decision to remove the company from its indexes, as Bitcoin also fell amid a broader crypto market decline.",
-   "score": 0.0867
-  },
-  {
-   "title": "Morning Minute: Crypto Plummets as Jensen Huang Exits Nvidia",
-   "url": "https://decrypt.co/383222/morning-minute-crypto-plummets-as-jensen-huang-exits-nvidia",
-   "source": "Decrypt",
-   "published": "2026-11-13T13:03:40+00:00",
-   "summary": "Bitcoin fell all the way to $68,000 overnight and hit a new three-month low. But are there reasons for hope?",
-   "score": 0.0843
+   "score": 0.0807
   },
   {
    "title": "Satoshi-era wallet served in a $260 billion lawsuit moves 75 BTC it held since 2011",
@@ -310,7 +310,7 @@
    "source": "CoinDesk",
    "published": "2026-11-14T04:30:00+00:00",
    "summary": "",
-   "score": 0.0843
+   "score": 0.0785
   },
   {
    "title": "Bitcoin Price Falls Below $72,000 as Nvidia CEO Jensen Huang Steps Down and Strategy (MSTR) Slides",
@@ -318,15 +318,15 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-12T14:21:51+00:00",
    "summary": "Bitcoin Magazine Bitcoin Price Falls Below $72,000 as Nvidia CEO Jensen Huang Steps Down and Strategy (MSTR) Slides Bitcoin price fell below $72,000 on Thursday, its lowest level since mid-August, after Nvidia said CEO Jensen Huang had resigned and Strategy shares slid on MSCI's…",
-   "score": 0.0778
+   "score": 0.0724
   },
   {
-   "title": "Bitcoin Drops to $69K On 'Concentrated Liquidation' and 'Weakening' Demand",
-   "url": "https://decrypt.co/383214/bitcoin-drops-to-69k-on-concentrated-liquidation-and-weakening-demand",
+   "title": "Morning Minute: Crypto Plummets as Jensen Huang Exits Nvidia",
+   "url": "https://decrypt.co/383222/morning-minute-crypto-plummets-as-jensen-huang-exits-nvidia",
    "source": "Decrypt",
-   "published": "2026-11-13T11:20:44+00:00",
-   "summary": "BTC dropped 5% on Friday, falling below $69,000. Experts say it was triggered by a \"concentrated liquidation\" and \"weakening\" demand.",
-   "score": 0.0658
+   "published": "2026-11-13T13:03:40+00:00",
+   "summary": "Bitcoin fell all the way to $68,000 overnight and hit a new three-month low. But are there reasons for hope?",
+   "score": 0.0628
   }
  ]
 }
