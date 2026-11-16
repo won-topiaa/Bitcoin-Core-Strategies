@@ -1,5 +1,5 @@
 {
- "fetched": "2026-11-16T02:42:18+00:00",
+ "fetched": "2026-11-16T02:41:54+00:00",
  "sources_ok": [
   "CoinDesk",
   "Cointelegraph",
@@ -14,7 +14,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-15T22:50:59+00:00",
    "summary": "Anchorage Digital data suggests the Bitcoin selloff is being driven by US investors. A “war room” has been set up by supporters to reinstate Nvidia boss Jensen Huang.",
-   "score": 2.6484
+   "score": 2.6486
   },
   {
    "title": "Bitcoin ETFs Lose $2.1 Billion in November as Outflow Streak Hits Seven Days",
@@ -22,7 +22,7 @@
    "source": "Decrypt",
    "published": "2026-11-15T14:01:02+00:00",
    "summary": "Spot Bitcoin ETFs shed $185.4 million on Friday, their seventh straight day of outflows, pushing November losses to about $2.1 billion as Bitcoin fell toward $64,000.",
-   "score": 2.4978
+   "score": 2.498
   },
   {
    "title": "Bitcoin Hits 12-Week Low as Fed Rate Fears Undo Most of Summer Rally",
@@ -30,7 +30,7 @@
    "source": "Decrypt",
    "published": "2026-11-13T17:22:54+00:00",
    "summary": "Bitcoin is back near August levels as persistent inflation, growing expectations of another interest-rate hike and ETF withdrawals pressure prices.",
-   "score": 1.853
+   "score": 1.8531
   },
   {
    "title": "Bitcoin crashes to 3-month low below $63,000 as analyst flags fourth capitulation wave",
@@ -38,7 +38,7 @@
    "source": "CoinDesk",
    "published": "2026-11-14T16:33:29+00:00",
    "summary": "",
-   "score": 1.71
+   "score": 1.7102
   },
   {
    "title": "Luxor CEO warns of AI ‘dark forest’ after Bitcoin miner hijack",
@@ -46,7 +46,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-16T02:33:07+00:00",
    "summary": "Attackers redirected customers’ Bitcoin mining power through Luxor’s Commander platform over the weekend, prompting its CEO to issue a warning to crypto businesses.",
-   "score": 1.5965
+   "score": 1.5966
   },
   {
    "title": "JPMorgan’s Bitcoin and Crypto-Linked Holdings Approach $1 Billion",
@@ -54,7 +54,7 @@
    "source": "Decrypt",
    "published": "2026-11-13T20:16:03+00:00",
    "summary": "The bank’s Q3 13F shows roughly $981 million across Bitcoin ETFs, Strategy and Coinbase—likely over $1 billion counting Robinhood and miners.",
-   "score": 1.3413
+   "score": 1.3415
   },
   {
    "title": "Here’s what happened in crypto today",
@@ -62,7 +62,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-15T11:18:48+00:00",
    "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
-   "score": 1.1274
+   "score": 1.1275
   },
   {
    "title": "Binance Says It Has Fully Covered the $6.34 Billion Hack With Company Funds",
@@ -70,7 +70,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-12T19:12:14+00:00",
    "summary": "Bitcoin Magazine Binance Says It Has Fully Covered the $6.34 Billion Hack With Company Funds The exchange says users are whole after the Oct. 29 theft, paid for from SAFU, its futures insurance fund and treasury, and has published a 198-token proof-of-reserves snapshot that user…",
-   "score": 1.1104
+   "score": 1.1105
   },
   {
    "title": "Bitcoin plunges to $68,000 as Anthropic IPO frenzy adds to market jitters",
@@ -78,7 +78,7 @@
    "source": "CoinDesk",
    "published": "2026-11-13T18:39:58+00:00",
    "summary": "",
-   "score": 0.9972
+   "score": 0.9973
   },
   {
    "title": "JPMorgan Lifts Its Strategy (MSTR) Stake 36% and Holds $540 Million in Bitcoin ETFs",
@@ -86,7 +86,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-12T16:19:17+00:00",
    "summary": "Bitcoin Magazine JPMorgan Lifts Its Strategy (MSTR) Stake 36% and Holds $540 Million in Bitcoin ETFs A 13F filed Thursday shows JPMorgan held 848,932 Strategy shares, up 36% from June, and 11.4 million IBIT shares worth $540 million at Sept. 30, weeks before MSCI's index exit. T…",
-   "score": 0.8764
+   "score": 0.8765
   },
   {
    "title": "Bitcoin ETFs shed $2.35B in 2 weeks, BlackRock’s losing streak hits 11",
@@ -94,7 +94,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-14T06:33:13+00:00",
    "summary": "US spot Bitcoin ETFs recorded $185.4 million in net outflows Friday, with BlackRock’s IBIT accounting for $143.5 million and Fidelity’s FBTC shedding $41.9 million.",
-   "score": 0.8119
+   "score": 0.812
   },
   {
    "title": "Bitcoin ETFs are now down over $1.5 billion in net outflows for the year",
@@ -102,7 +102,7 @@
    "source": "CoinDesk",
    "published": "2026-11-13T05:45:26+00:00",
    "summary": "",
-   "score": 0.7094
+   "score": 0.7095
   },
   {
    "title": "President Trump Taps Two Democrats in Bipartisan Slate of SEC and CFTC Nominees as Both Agencies Run Short-Handed",
@@ -118,7 +118,7 @@
    "source": "Decrypt",
    "published": "2026-11-13T18:36:02+00:00",
    "summary": "The Federal Reserve is examining whether AI will lower prices or keep inflation elevated, a question that could shape interest rates and the outlook for crypto.",
-   "score": 0.5693
+   "score": 0.5694
   },
   {
    "title": "Bitcoin miners pay Paraguay $350 million a year, but AI is pushing them out",
@@ -126,7 +126,7 @@
    "source": "CoinDesk",
    "published": "2026-11-13T23:30:00+00:00",
    "summary": "",
-   "score": 0.4888
+   "score": 0.4889
   },
   {
    "title": "Jane Street boosts Fidelity Bitcoin ETF holdings nearly 8x, trims IBIT",
@@ -158,7 +158,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-13T06:00:15+00:00",
    "summary": "Bitcoin fell below $70,000 as crypto sentiment hit its lowest level in more than four months, with analysts warning of institutional outflows, thinning liquidity and elevated leverage.",
-   "score": 0.3645
+   "score": 0.3646
   },
   {
    "title": "BlackRock’s IBIT Bleeds $2 Billion in Nine Straight Days of Outflows",
@@ -166,7 +166,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-12T14:24:00+00:00",
    "summary": "Bitcoin Magazine BlackRock’s IBIT Bleeds $2 Billion in Nine Straight Days of Outflows U.S. spot bitcoin ETFs lost $299.8 million on Wednesday, their fifth straight day of outflows, with BlackRock's IBIT accounting for $269.7 million and about 94% of November's withdrawals. This…",
-   "score": 0.3637
+   "score": 0.3638
   },
   {
    "title": "Bitcoin dips with Nvidia as ETF outflows reach day five",
@@ -182,7 +182,7 @@
    "source": "Decrypt",
    "published": "2026-11-13T19:36:03+00:00",
    "summary": "Two Bitcoin mining rewards from September 2010 moved minutes apart. The coins are worth nearly 1.15 million times their original market value.",
-   "score": 0.2957
+   "score": 0.2958
   },
   {
    "title": "FutureBit’s Apollo III Bitcoin Miner Hits Micro Center Shelves in Its First Brick-and-Mortar Launch",
@@ -190,7 +190,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-13T16:39:33+00:00",
    "summary": "Bitcoin Magazine FutureBit’s Apollo III Bitcoin Miner Hits Micro Center Shelves in Its First Brick-and-Mortar Launch The Brooklyn company's compact home miner, rated at up to 18 TH/s and starting at $1,099.99, goes on sale Friday at four Micro Center stores, including the chain'…",
-   "score": 0.2834
+   "score": 0.2835
   },
   {
    "title": "Live updates: Bitcoin eyes bear market lows as late summer rally mostly wiped out",
@@ -238,7 +238,7 @@
    "source": "CoinDesk",
    "published": "2026-11-11T12:19:30+00:00",
    "summary": "",
-   "score": 0.1597
+   "score": 0.1598
   },
   {
    "title": "Stablecoin Drain, ETF Outflows Leave Bitcoin 'Running on Empty'",
@@ -286,7 +286,7 @@
    "source": "CoinDesk",
    "published": "2026-11-12T07:41:18+00:00",
    "summary": "",
-   "score": 0.0901
+   "score": 0.0902
   },
   {
    "title": "Barclays boosts BlackRock Bitcoin ETF stake 48% as banks expand holdings",
