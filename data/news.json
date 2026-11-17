@@ -1,5 +1,5 @@
 {
- "fetched": "2026-11-17T14:19:23+00:00",
+ "fetched": "2026-11-17T22:15:39+00:00",
  "sources_ok": [
   "CoinDesk",
   "Cointelegraph",
@@ -9,12 +9,28 @@
  "sources_failed": [],
  "items": [
   {
-   "title": "Bitcoin Price Trades Near $64,000 After Weekend Plunge to $62,000",
-   "url": "https://bitcoinmagazine.com/markets/bitcoin-price-trades-near-64000-tech",
+   "title": "Wells Fargo More Than Doubles Its Bitcoin ETF Stake to $2.35 Billion",
+   "url": "https://bitcoinmagazine.com/news/wells-fargo-ibit-stake-doubles-strategy-cut",
    "source": "Bitcoin Magazine",
-   "published": "2026-11-16T13:42:14+00:00",
-   "summary": "Bitcoin Magazine Bitcoin Price Trades Near $64,000 After Weekend Plunge to $62,000 Bitcoin price traded near $64,000 on Monday morning after plunging to $62,000 over the weekend, as Nasdaq futures slid ahead of Nvidia's earnings and traders braced for a December Fed hike. This p…",
-   "score": 3.0135
+   "published": "2026-11-17T16:00:00+00:00",
+   "summary": "Bitcoin Magazine Wells Fargo More Than Doubles Its Bitcoin ETF Stake to $2.35 Billion Wells Fargo's third-quarter 13F shows 49.6 million IBIT shares worth $2.35 billion at Sept. 30, up from 24.4 million, while its Strategy stake fell about 33% to 1.34 million shares. This post W…",
+   "score": 3.2888
+  },
+  {
+   "title": "Bitcoin Investors Are Capitulating—That’s Historically Been a Bottom Signal",
+   "url": "https://decrypt.co/383466/bitcoin-investors-capitulating-historical-bottom-signal",
+   "source": "Decrypt",
+   "published": "2026-11-17T20:36:03+00:00",
+   "summary": "Glassnode says Bitcoin’s realized losses have reached levels seen only near the 2018, 2020, 2022 and early 2023 lows, as buyers defend the $62,000 to $66,000 range.",
+   "score": 2.7337
+  },
+  {
+   "title": "Goldman Sachs More Than Doubles Its Bitcoin ETF Holdings to $1.28 Billion",
+   "url": "https://bitcoinmagazine.com/news/goldman-sachs-bitcoin-etf-holdings",
+   "source": "Bitcoin Magazine",
+   "published": "2026-11-17T15:19:20+00:00",
+   "summary": "Bitcoin Magazine Goldman Sachs More Than Doubles Its Bitcoin ETF Holdings to $1.28 Billion Goldman Sachs' third-quarter 13F shows $1.28 billion in spot bitcoin ETFs at Sept. 30, up from about $580 million, led by a 52-fold jump in Fidelity's fund, while its Strategy stake fell a…",
+   "score": 2.6054
   },
   {
    "title": "Bitcoin remains penned in near $64,000 even as ETF outflow streak ends",
@@ -22,7 +38,7 @@
    "source": "CoinDesk",
    "published": "2026-11-17T11:36:07+00:00",
    "summary": "",
-   "score": 2.8844
+   "score": 2.572
   },
   {
    "title": "BlackRock’s Bitcoin ETF snaps $2.35B outflow streak amid extreme fear",
@@ -30,15 +46,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-17T11:18:18+00:00",
    "summary": "BlackRock’s Bitcoin ETF ended 11 sessions of withdrawals totaling $2.35 billion, but CryptoQuant says one day of inflows is too early to signal a recovery.",
-   "score": 2.8721
-  },
-  {
-   "title": "Bitcoin's $2 Billion Liquidation Weekend Leaves Traders Watching $60,000",
-   "url": "https://decrypt.co/383366/bitcoin-2-billion-liquidation-weekend-traders-watching-60000",
-   "source": "Decrypt",
-   "published": "2026-11-16T21:46:03+00:00",
-   "summary": "Bitcoin fell near $62,100 as forced liquidations swept crypto markets. ETF withdrawals and a crowded options trade offer a closer look at the damage left behind.",
-   "score": 2.3621
+   "score": 2.561
   },
   {
    "title": "Goldman Sachs reports $1.22B in Ether ETFs as ETHA share count jumps",
@@ -46,7 +54,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-17T09:08:32+00:00",
    "summary": "Goldman Sachs increased its Ether ETF shares in Q3, bringing its reported holdings to $1.22 billion, while reshuffling its Bitcoin ETF positions.",
-   "score": 2.227
+   "score": 1.9858
   },
   {
    "title": "Wells Fargo's reported BlackRock bitcoin ETF holdings double to $2.35 billion",
@@ -54,23 +62,23 @@
    "source": "CoinDesk",
    "published": "2026-11-17T05:37:23+00:00",
    "summary": "",
-   "score": 2.1166
+   "score": 1.8874
   },
   {
-   "title": "Harvard Holds 3.04 Million Bitcoin ETF Shares Steady",
-   "url": "https://bitcoinmagazine.com/news/harvard-holds-ibit-stake-steady-304-mil",
+   "title": "Bitcoin Price Trades Near $64,000 After Weekend Plunge to $62,000",
+   "url": "https://bitcoinmagazine.com/markets/bitcoin-price-trades-near-64000-tech",
    "source": "Bitcoin Magazine",
-   "published": "2026-11-16T16:00:10+00:00",
-   "summary": "Bitcoin Magazine Harvard Holds 3.04 Million Bitcoin ETF Shares Steady Harvard Management Company's latest 13F shows it still holds 3,044,612 shares of BlackRock's iShares Bitcoin Trust, unchanged since March, a stake now worth about $110.6 million after bitcoin's slide. This pos…",
-   "score": 1.7387
+   "published": "2026-11-16T13:42:14+00:00",
+   "summary": "Bitcoin Magazine Bitcoin Price Trades Near $64,000 After Weekend Plunge to $62,000 Bitcoin price traded near $64,000 on Monday morning after plunging to $62,000 over the weekend, as Nasdaq futures slid ahead of Nvidia's earnings and traders braced for a December Fed hike. This p…",
+   "score": 1.7198
   },
   {
-   "title": "Saylor’s Strategy Keeps Buying Bitcoin, Adding 'A Little Orange' Through the Dip",
-   "url": "https://decrypt.co/383347/saylor-strategy-buying-bitcoin-adding-little-orange-dip",
+   "title": "Bitcoin's $2 Billion Liquidation Weekend Leaves Traders Watching $60,000",
+   "url": "https://decrypt.co/383366/bitcoin-2-billion-liquidation-weekend-traders-watching-60000",
    "source": "Decrypt",
-   "published": "2026-11-16T17:20:26+00:00",
-   "summary": "The modest purchase lifted Strategy’s stash to 850,849 BTC as chairman Michael Saylor shrugged off a sharp downturn, posting that “this dip could use a little orange.”",
-   "score": 1.6545
+   "published": "2026-11-16T21:46:03+00:00",
+   "summary": "Bitcoin fell near $62,100 as forced liquidations swept crypto markets. ETF withdrawals and a crowded options trade offer a closer look at the damage left behind.",
+   "score": 1.685
   },
   {
    "title": "Bitmine edges toward 5% of ETH supply as treasuries report buys amid market slump",
@@ -78,7 +86,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-16T20:45:47+00:00",
    "summary": "Strategy, Strive, Bitmine and Cypherpunk disclosed fresh additions to their crypto treasuries, spanning Bitcoin, Ether and Zcash.",
-   "score": 1.5396
+   "score": 1.3729
   },
   {
    "title": "Bitcoin could slide into the $50,000s as Fed rate hike bets build, Wintermute says",
@@ -86,31 +94,39 @@
    "source": "CoinDesk",
    "published": "2026-11-17T07:38:07+00:00",
    "summary": "",
-   "score": 1.4527
+   "score": 1.2954
   },
   {
-   "title": "Morning Minute: Crypto Hits Extreme Fear as Bitcoin Plunges",
-   "url": "https://decrypt.co/383301/morning-minute-crypto-hits-extreme-fear-as-bitcoin-plunges",
+   "title": "Binance Hack Wallets Move $137 Million in Ethereum After Two Weeks of Silence",
+   "url": "https://decrypt.co/383446/binance-hack-wallets-move-ethereum-after-two-weeks",
    "source": "Decrypt",
-   "published": "2026-11-16T13:23:17+00:00",
-   "summary": "Why is crypto selling off so hard over the past few weeks? CZ chimes in with his thoughts, while confirming he and Binance aren’t selling.",
-   "score": 1.2501
-  },
-  {
-   "title": "Supreme Court Ends Custodia Bank’s Fight for a Fed Master Account, Leaving the Fed Free to Deny Crypto Banks Access",
-   "url": "https://bitcoinmagazine.com/news/supreme-court-ends-custodia-fed-master",
-   "source": "Bitcoin Magazine",
-   "published": "2026-11-16T15:24:11+00:00",
-   "summary": "Bitcoin Magazine Supreme Court Ends Custodia Bank’s Fight for a Fed Master Account, Leaving the Fed Free to Deny Crypto Banks Access The Supreme Court denied Custodia Bank's petition in No. 26-62 on Monday, leaving in place a Tenth Circuit ruling that Federal Reserve Banks may r…",
-   "score": 1.1492
+   "published": "2026-11-17T17:18:41+00:00",
+   "summary": "A wallet linked to October’s record Binance theft moved $63 million in ether, before analysts flagged a larger wave of transfers and reported Bitcoin swaps amid ongoing U.S. recovery efforts.",
+   "score": 1.1917
   },
   {
    "title": "Here’s what happened in crypto today",
    "url": "https://cointelegraph.com/news/what-happened-in-crypto-today?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
    "source": "Cointelegraph",
-   "published": "2026-11-17T06:00:00+00:00",
+   "published": "2026-11-17T14:54:40+00:00",
    "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
-   "score": 0.9988
+   "score": 1.013
+  },
+  {
+   "title": "Harvard Holds 3.04 Million Bitcoin ETF Shares Steady",
+   "url": "https://bitcoinmagazine.com/news/harvard-holds-ibit-stake-steady-304-mil",
+   "source": "Bitcoin Magazine",
+   "published": "2026-11-16T16:00:10+00:00",
+   "summary": "Bitcoin Magazine Harvard Holds 3.04 Million Bitcoin ETF Shares Steady Harvard Management Company's latest 13F shows it still holds 3,044,612 shares of BlackRock's iShares Bitcoin Trust, unchanged since March, a stake now worth about $110.6 million after bitcoin's slide. This pos…",
+   "score": 0.9923
+  },
+  {
+   "title": "Saylor’s Strategy Keeps Buying Bitcoin, Adding 'A Little Orange' Through the Dip",
+   "url": "https://decrypt.co/383347/saylor-strategy-buying-bitcoin-adding-little-orange-dip",
+   "source": "Decrypt",
+   "published": "2026-11-16T17:20:26+00:00",
+   "summary": "The modest purchase lifted Strategy’s stash to 850,849 BTC as chairman Michael Saylor shrugged off a sharp downturn, posting that “this dip could use a little orange.”",
+   "score": 0.9442
   },
   {
    "title": "Ex-OpenAI researcher fund dumps bitcoin miners, cuts IREN 94% after portfolio slump",
@@ -118,23 +134,23 @@
    "source": "CoinDesk",
    "published": "2026-11-17T12:00:55+00:00",
    "summary": "",
-   "score": 0.9904
+   "score": 0.8832
   },
   {
-   "title": "Sweden’s H100 Taps Coinbase Prime and Deribit for Its 3,506 Bitcoin Treasury as It Courts Family Offices",
-   "url": "https://bitcoinmagazine.com/news/h100-coinbase-prime-bitcoin-treasury",
+   "title": "Situational Awareness Dumps Bitcoin Miners After Citadel Sale",
+   "url": "https://bitcoinmagazine.com/news/aschenbrenner-fund-dumps-bitcoin-miners",
    "source": "Bitcoin Magazine",
-   "published": "2026-11-16T14:15:00+00:00",
-   "summary": "Bitcoin Magazine Sweden’s H100 Taps Coinbase Prime and Deribit for Its 3,506 Bitcoin Treasury as It Courts Family Offices H100 Group will use Coinbase Prime and Deribit for custody, trading and financing of its roughly 3,506 BTC, worth about $226 million, as it builds bitcoin se…",
-   "score": 0.9041
+   "published": "2026-11-17T18:15:00+00:00",
+   "summary": "Bitcoin Magazine Situational Awareness Dumps Bitcoin Miners After Citadel Sale Situational Awareness, the AI fund run by Leopold Aschenbrenner, cut IREN about 94% and exited Core Scientific, Riot and Hive in the third quarter, leaving $80.8 million in three miner stocks after a…",
+   "score": 0.7731
   },
   {
-   "title": "Hackers Redirected Bitcoin Miner Rewards via AI Attack, Luxor CEO Says",
-   "url": "https://decrypt.co/383392/hackers-redirected-bitcoin-miner-rewards-ai-attack-luxor",
+   "title": "Morning Minute: Crypto Hits Extreme Fear as Bitcoin Plunges",
+   "url": "https://decrypt.co/383301/morning-minute-crypto-hits-extreme-fear-as-bitcoin-plunges",
    "source": "Decrypt",
-   "published": "2026-11-16T21:16:03+00:00",
-   "summary": "Luxor said hackers redirected hashrate from just over a dozen client accounts through its Commander tool, and its CEO blamed a “sophisticated AI-enabled vector.”",
-   "score": 0.8005
+   "published": "2026-11-16T13:23:17+00:00",
+   "summary": "Why is crypto selling off so hard over the past few weeks? CZ chimes in with his thoughts, while confirming he and Binance aren’t selling.",
+   "score": 0.7134
   },
   {
    "title": "Harvard, Dartmouth keep Bitcoin ETF stakes steady as fund gains 42% in Q3",
@@ -142,7 +158,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-16T08:27:39+00:00",
    "summary": "Harvard’s gold ETF share count rose nearly 20-fold in Q3, while Dartmouth kept its positions in Solana and Ether staking ETFs unchanged.",
-   "score": 0.7984
+   "score": 0.7119
   },
   {
    "title": "Live updates: Bitcoin holding weekend plunge as November losses deepen to 17%",
@@ -150,15 +166,15 @@
    "source": "CoinDesk",
    "published": "2026-11-16T09:34:18+00:00",
    "summary": "",
-   "score": 0.7572
+   "score": 0.6752
   },
   {
-   "title": "Bitcoin ETFs Lose $2.1 Billion in November as Outflow Streak Hits Seven Days",
-   "url": "https://decrypt.co/383282/bitcoin-etfs-lose-2-1-billion-november-outflow-streak-seven-days",
-   "source": "Decrypt",
-   "published": "2026-11-15T14:01:02+00:00",
-   "summary": "Spot Bitcoin ETFs shed $185.4 million on Friday, their seventh straight day of outflows, pushing November losses to about $2.1 billion as Bitcoin fell toward $64,000.",
-   "score": 0.6117
+   "title": "Supreme Court Ends Custodia Bank’s Fight for a Fed Master Account, Leaving the Fed Free to Deny Crypto Banks Access",
+   "url": "https://bitcoinmagazine.com/news/supreme-court-ends-custodia-fed-master",
+   "source": "Bitcoin Magazine",
+   "published": "2026-11-16T15:24:11+00:00",
+   "summary": "Bitcoin Magazine Supreme Court Ends Custodia Bank’s Fight for a Fed Master Account, Leaving the Fed Free to Deny Crypto Banks Access The Supreme Court denied Custodia Bank's petition in No. 26-62 on Monday, leaving in place a Tenth Circuit ruling that Federal Reserve Banks may r…",
+   "score": 0.5246
   },
   {
    "title": "Bitcoin realized loss metric beats June high as open interest eyes 2-year low",
@@ -166,23 +182,23 @@
    "source": "Cointelegraph",
    "published": "2026-11-17T11:14:05+00:00",
    "summary": "Bitcoin short-term holders’ onchain spending notched the largest proportion of realized losses since February after BTC/USD dropped to $62,000.",
-   "score": 0.5641
+   "score": 0.503
   },
   {
-   "title": "Strategy (MSTR) Adds 485 Bitcoin for $33.4 Million as It Spends $228 Million Buying Back Preferred Stock",
-   "url": "https://bitcoinmagazine.com/news/strategy-mstr-adds-485-bitcoin-holdings",
-   "source": "Bitcoin Magazine",
-   "published": "2026-11-16T13:38:30+00:00",
-   "summary": "Bitcoin Magazine Strategy (MSTR) Adds 485 Bitcoin for $33.4 Million as It Spends $228 Million Buying Back Preferred Stock Strategy bought 485 bitcoin for $33.4 million at a $68,887 average, lifting holdings to 850,849 BTC, while spending $228.1 million buying back STRC preferred…",
-   "score": 0.4589
-  },
-  {
-   "title": "Bitcoin Hits 12-Week Low as Fed Rate Fears Undo Most of Summer Rally",
-   "url": "https://decrypt.co/383231/bitcoin-hits-12-week-low-fed-rate-fears-undo-summer-rally",
+   "title": "Hackers Redirected Bitcoin Miner Rewards via AI Attack, Luxor CEO Says",
+   "url": "https://decrypt.co/383392/hackers-redirected-bitcoin-miner-rewards-ai-attack-luxor",
    "source": "Decrypt",
-   "published": "2026-11-13T17:22:54+00:00",
-   "summary": "Bitcoin is back near August levels as persistent inflation, growing expectations of another interest-rate hike and ETF withdrawals pressure prices.",
-   "score": 0.4538
+   "published": "2026-11-16T21:16:03+00:00",
+   "summary": "Luxor said hackers redirected hashrate from just over a dozen client accounts through its Commander tool, and its CEO blamed a “sophisticated AI-enabled vector.”",
+   "score": 0.4568
+  },
+  {
+   "title": "Sweden’s H100 Taps Coinbase Prime and Deribit for Its 3,506 Bitcoin Treasury as It Courts Family Offices",
+   "url": "https://bitcoinmagazine.com/news/h100-coinbase-prime-bitcoin-treasury",
+   "source": "Bitcoin Magazine",
+   "published": "2026-11-16T14:15:00+00:00",
+   "summary": "Bitcoin Magazine Sweden’s H100 Taps Coinbase Prime and Deribit for Its 3,506 Bitcoin Treasury as It Courts Family Offices H100 Group will use Coinbase Prime and Deribit for custody, trading and financing of its roughly 3,506 BTC, worth about $226 million, as it builds bitcoin se…",
+   "score": 0.4128
   },
   {
    "title": "Bitcoin miners were hijacked and their BTC rewards redirected to an attacker",
@@ -190,7 +206,7 @@
    "source": "CoinDesk",
    "published": "2026-11-16T07:51:15+00:00",
    "summary": "",
-   "score": 0.4221
+   "score": 0.3764
   },
   {
    "title": "US sellers drive Bitcoin crash, Jensen plots Nvidia comeback: Hodler’s Digest",
@@ -198,15 +214,23 @@
    "source": "Cointelegraph",
    "published": "2026-11-15T22:50:59+00:00",
    "summary": "Anchorage Digital data suggests the Bitcoin selloff is being driven by US investors. A “war room” has been set up by supporters to reinstate Nvidia boss Jensen Huang.",
-   "score": 0.4151
+   "score": 0.3701
   },
   {
-   "title": "JPMorgan’s Bitcoin and Crypto-Linked Holdings Approach $1 Billion",
-   "url": "https://decrypt.co/383267/jpmorgan-bitcoin-crypto-linked-holdings-approach-1-billion",
+   "title": "Bitcoin ETFs Lose $2.1 Billion in November as Outflow Streak Hits Seven Days",
+   "url": "https://decrypt.co/383282/bitcoin-etfs-lose-2-1-billion-november-outflow-streak-seven-days",
    "source": "Decrypt",
-   "published": "2026-11-13T20:16:03+00:00",
-   "summary": "The bank’s Q3 13F shows roughly $981 million across Bitcoin ETFs, Strategy and Coinbase—likely over $1 billion counting Robinhood and miners.",
-   "score": 0.3285
+   "published": "2026-11-15T14:01:02+00:00",
+   "summary": "Spot Bitcoin ETFs shed $185.4 million on Friday, their seventh straight day of outflows, pushing November losses to about $2.1 billion as Bitcoin fell toward $64,000.",
+   "score": 0.3491
+  },
+  {
+   "title": "Bitcoin Price Slips Below $64,000 as Strategy (MSTR) Falls Below $100",
+   "url": "https://bitcoinmagazine.com/markets/bitcoin-price-slips-near-64000-strategy",
+   "source": "Bitcoin Magazine",
+   "published": "2026-11-17T21:02:06+00:00",
+   "summary": "Bitcoin Magazine Bitcoin Price Slips Below $64,000 as Strategy (MSTR) Falls Below $100 Bitcoin price slipped near $64,000 Tuesday afternoon as Strategy (MSTR) shares fell below the company's STRC preferred and Coinbase and other crypto stocks declined. This post Bitcoin Price Sl…",
+   "score": 0.3297
   },
   {
    "title": "Nvidia turmoil tests Bitcoin miners’ AI funding plans",
@@ -214,7 +238,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-16T18:07:49+00:00",
    "summary": "Nvidia’s leadership upheaval and Texas permit restrictions sharpen the divide between miners with funded projects and those still seeking capital and approvals.",
-   "score": 0.3133
+   "score": 0.2794
   },
   {
    "title": "Bitcoin’s biggest bet is now a drop below $60,000, not a rally above $100,000",
@@ -222,15 +246,15 @@
    "source": "CoinDesk",
    "published": "2026-11-16T05:01:17+00:00",
    "summary": "",
-   "score": 0.2917
+   "score": 0.2601
   },
   {
-   "title": "Why Bitcoin’s June Low May Not Be the Bottom — $58K the Key Test",
-   "url": "https://bitcoinmagazine.com/videos/why-bitcoins-june-low-may-not-be-the-bottom-58k-the-key-test",
-   "source": "Bitcoin Magazine",
-   "published": "2026-11-16T21:43:56+00:00",
-   "summary": "▶ Bitcoin Magazine Why Bitcoin’s June Low May Not Be the Bottom — $58K the Key Test Sean breaks down Bitcoin's MVRV on today's Chart of the Day. This post Why Bitcoin’s June Low May Not Be the Bottom — $58K the Key Test first appeared on Bitcoin Magazine and is written by Patric…",
-   "score": 0.2579
+   "title": "Bitcoin Hits 12-Week Low as Fed Rate Fears Undo Most of Summer Rally",
+   "url": "https://decrypt.co/383231/bitcoin-hits-12-week-low-fed-rate-fears-undo-summer-rally",
+   "source": "Decrypt",
+   "published": "2026-11-13T17:22:54+00:00",
+   "summary": "Bitcoin is back near August levels as persistent inflation, growing expectations of another interest-rate hike and ETF withdrawals pressure prices.",
+   "score": 0.259
   },
   {
    "title": "Bitcoin crashes to 3-month low below $63,000 as analyst flags fourth capitulation wave",
@@ -238,15 +262,15 @@
    "source": "CoinDesk",
    "published": "2026-11-14T16:33:29+00:00",
    "summary": "",
-   "score": 0.2144
+   "score": 0.1912
   },
   {
-   "title": "Bitcoin Price Holds Near $65,000 as Nvidia Turmoil Drags Nasdaq Down 2.5%",
-   "url": "https://bitcoinmagazine.com/markets/bitcoin-price-holds-near-65000-nvidia",
-   "source": "Bitcoin Magazine",
-   "published": "2026-11-16T21:20:36+00:00",
-   "summary": "Bitcoin Magazine Bitcoin Price Holds Near $65,000 as Nvidia Turmoil Drags Nasdaq Down 2.5% Bitcoin price held near $65,000 on Monday afternoon, shrugging off a 2.5% Nasdaq slide as Nvidia's board ruled out bringing back Jensen Huang and the dollar hit a 19-month high. This post…",
-   "score": 0.2051
+   "title": "JPMorgan’s Bitcoin and Crypto-Linked Holdings Approach $1 Billion",
+   "url": "https://decrypt.co/383267/jpmorgan-bitcoin-crypto-linked-holdings-approach-1-billion",
+   "source": "Decrypt",
+   "published": "2026-11-13T20:16:03+00:00",
+   "summary": "The bank’s Q3 13F shows roughly $981 million across Bitcoin ETFs, Strategy and Coinbase—likely over $1 billion counting Robinhood and miners.",
+   "score": 0.1875
   },
   {
    "title": "Luxor CEO warns of AI ‘dark forest’ following Bitcoin miner hijack",
@@ -254,15 +278,15 @@
    "source": "Cointelegraph",
    "published": "2026-11-16T02:33:07+00:00",
    "summary": "Attackers redirected customers’ Bitcoin mining power through Luxor’s Commander platform over the weekend, prompting its CEO to issue a warning to crypto businesses.",
-   "score": 0.2002
+   "score": 0.1785
   },
   {
-   "title": "Senate Agriculture Committee to Hear Trump’s CFTC Nominees Tuesday",
-   "url": "https://bitcoinmagazine.com/news/cftc-nominees-senate-hearing-tuesday",
+   "title": "Strategy (MSTR) Adds 485 Bitcoin for $33.4 Million as It Spends $228 Million Buying Back Preferred Stock",
+   "url": "https://bitcoinmagazine.com/news/strategy-mstr-adds-485-bitcoin-holdings",
    "source": "Bitcoin Magazine",
-   "published": "2026-11-16T20:44:23+00:00",
-   "summary": "Bitcoin Magazine Senate Agriculture Committee to Hear Trump’s CFTC Nominees Tuesday The Senate Agriculture Committee will hear Nathan Anonick and Matthew Rowland on Tuesday, President Trump's bipartisan picks to join CFTC Chairman Michael Selig, currently the agency's only sitti…",
-   "score": 0.1627
+   "published": "2026-11-16T13:38:30+00:00",
+   "summary": "Bitcoin Magazine Strategy (MSTR) Adds 485 Bitcoin for $33.4 Million as It Spends $228 Million Buying Back Preferred Stock Strategy bought 485 bitcoin for $33.4 million at a $68,887 average, lifting holdings to 850,849 BTC, while spending $228.1 million buying back STRC preferred…",
+   "score": 0.1676
   },
   {
    "title": "Strategy buys $33M in Bitcoin, spends $228M on STRC buybacks",
@@ -270,15 +294,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-16T13:29:11+00:00",
    "summary": "Strategy bought 485 Bitcoin for $33.4 million and spent $228.1 million repurchasing STRC preferred shares, largely funded by new common stock sales.",
-   "score": 0.15
-  },
-  {
-   "title": "Fed Chair Warsh Wants Answers on AI Inflation—and Bitcoin May Feel the Impact",
-   "url": "https://decrypt.co/383259/fed-chair-warsh-wants-answers-ai-inflation-bitcoin",
-   "source": "Decrypt",
-   "published": "2026-11-13T18:36:02+00:00",
-   "summary": "The Federal Reserve is examining whether AI will lower prices or keep inflation elevated, a question that could shape interest rates and the outlook for crypto.",
-   "score": 0.1394
+   "score": 0.1338
   },
   {
    "title": "Bitcoin risks falling below $60,000 as Nvidia earnings threaten to deepen crypto sell-off",
@@ -286,15 +302,15 @@
    "source": "CoinDesk",
    "published": "2026-11-16T20:35:21+00:00",
    "summary": "",
-   "score": 0.1299
+   "score": 0.1158
   },
   {
-   "title": "Binance Says It Has Fully Covered the $6.34 Billion Hack With Company Funds",
-   "url": "https://bitcoinmagazine.com/news/binance-covers-6-34-billion-hack",
+   "title": "Why Bitcoin’s June Low May Not Be the Bottom — $58K the Key Test",
+   "url": "https://bitcoinmagazine.com/videos/why-bitcoins-june-low-may-not-be-the-bottom-58k-the-key-test",
    "source": "Bitcoin Magazine",
-   "published": "2026-11-12T19:12:14+00:00",
-   "summary": "Bitcoin Magazine Binance Says It Has Fully Covered the $6.34 Billion Hack With Company Funds The exchange says users are whole after the Oct. 29 theft, paid for from SAFU, its futures insurance fund and treasury, and has published a 198-token proof-of-reserves snapshot that user…",
-   "score": 0.1114
+   "published": "2026-11-16T21:43:56+00:00",
+   "summary": "▶ Bitcoin Magazine Why Bitcoin’s June Low May Not Be the Bottom — $58K the Key Test Sean breaks down Bitcoin's MVRV on today's Chart of the Day. This post Why Bitcoin’s June Low May Not Be the Bottom — $58K the Key Test first appeared on Bitcoin Magazine and is written by Patric…",
+   "score": 0.0942
   },
   {
    "title": "Bitcoin ETFs shed $2.35B in 2 weeks, BlackRock’s losing streak hits 11",
@@ -302,7 +318,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-14T06:33:13+00:00",
    "summary": "US spot Bitcoin ETFs recorded $185.4 million in net outflows Friday, with BlackRock’s IBIT accounting for $143.5 million and Fidelity’s FBTC shedding $41.9 million.",
-   "score": 0.1018
+   "score": 0.0908
   },
   {
    "title": "Bitcoin plunges to $68,000 as Anthropic IPO frenzy adds to market jitters",
@@ -310,23 +326,7 @@
    "source": "CoinDesk",
    "published": "2026-11-13T18:39:58+00:00",
    "summary": "",
-   "score": 0.1
-  },
-  {
-   "title": "Strategy Made $19.5 Billion in Profit. So Why Is MSCI Removing It From Stock Indexes?",
-   "url": "https://decrypt.co/383204/why-msci-removing-bitcoin-treasury-strategy-stock-indexes",
-   "source": "Decrypt",
-   "published": "2026-11-12T21:26:03+00:00",
-   "summary": "Michael Saylor’s Bitcoin giant is being excluded from major investment benchmarks, raising questions about what qualifies as a business—and whether the decision could slow its Bitcoin buying.",
-   "score": 0.092
-  },
-  {
-   "title": "JPMorgan Lifts Its Strategy (MSTR) Stake 36% and Holds $540 Million in Bitcoin ETFs",
-   "url": "https://bitcoinmagazine.com/markets/jpmorgan-lifts-strategy-mstr-stake-36",
-   "source": "Bitcoin Magazine",
-   "published": "2026-11-12T16:19:17+00:00",
-   "summary": "Bitcoin Magazine JPMorgan Lifts Its Strategy (MSTR) Stake 36% and Holds $540 Million in Bitcoin ETFs A 13F filed Thursday shows JPMorgan held 848,932 Strategy shares, up 36% from June, and 11.4 million IBIT shares worth $540 million at Sept. 30, weeks before MSCI's index exit. T…",
-   "score": 0.0879
+   "score": 0.0892
   }
  ]
 }
