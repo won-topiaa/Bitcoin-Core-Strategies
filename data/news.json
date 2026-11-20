@@ -1,5 +1,5 @@
 {
- "fetched": "2026-11-19T23:33:11+00:00",
+ "fetched": "2026-11-20T03:05:20+00:00",
  "sources_ok": [
   "CoinDesk",
   "Cointelegraph",
@@ -14,7 +14,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-19T14:00:49+00:00",
    "summary": "Bitcoin Magazine Bitcoin Price Rebounds Near $64,000 as Anthropic IPO Lifts Tech Stocks The bitcoin price climbed back to near $63,700 on Thursday morning as Anthropic's record IPO lifted tech stocks, though ETF outflows and Fed hike risk kept gains in check. This post Bitcoin P…",
-   "score": 3.9209
+   "score": 3.7257
   },
   {
    "title": "Bitcoin Struggles to Hold $64,000 as ETF Outflows Hit $2.9B in November",
@@ -22,7 +22,7 @@
    "source": "Decrypt",
    "published": "2026-11-19T10:25:05+00:00",
    "summary": "Bitcoin is down 13% in a week as investors pull money from spot ETFs and brace for another Federal Reserve rate hike.",
-   "score": 3.7225
+   "score": 3.5372
   },
   {
    "title": "Bitcoin ETF outflows show waning crypto appetite ahead of Anthropic's Nasdaq debut",
@@ -30,7 +30,7 @@
    "source": "CoinDesk",
    "published": "2026-11-19T12:20:39+00:00",
    "summary": "",
-   "score": 2.5517
+   "score": 2.4247
   },
   {
    "title": "Bitcoin ETF assets fall to three-month low as 2026 net outflows top $2.5B",
@@ -38,7 +38,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-19T08:26:19+00:00",
    "summary": "US spot Bitcoin ETFs lost $306.4 million Wednesday, pushing their combined assets to $77.7 billion as Bitcoin briefly traded below $63,000.",
-   "score": 2.4117
+   "score": 2.2917
   },
   {
    "title": "Institutions are Piling Into Bitcoin ETFs, Pushing Holdings to a Record",
@@ -46,7 +46,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-19T19:30:00+00:00",
    "summary": "Bitcoin Magazine Institutions are Piling Into Bitcoin ETFs, Pushing Holdings to a Record Galaxy Research says 13F filers added 49,229 BTC through U.S. spot bitcoin ETPs in Q3, lifting institutional holdings to a record 356,491 BTC as Wells Fargo became the largest holder. This p…",
-   "score": 2.2636
+   "score": 2.1509
   },
   {
    "title": "Bitcoin carry trades could beat Treasury bills in 2027, Sygnum predicts",
@@ -54,7 +54,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-19T06:00:00+00:00",
    "summary": "Sygnum predicts that Bitcoin carry trades may offer higher returns than Treasury bills in 2027, following a sharp drop in funding rates that made the strategy less compelling in 2026.",
-   "score": 1.9247
+   "score": 1.8289
   },
   {
    "title": "Live updates: Bitcoin plunges to lowest since July as Anthropic gains, but broader markets tumble",
@@ -62,7 +62,7 @@
    "source": "CoinDesk",
    "published": "2026-11-19T10:48:26+00:00",
    "summary": "",
-   "score": 1.8634
+   "score": 1.7707
   },
   {
    "title": "Bitcoin Miners Are Selling Their Stacks to Fund the AI Boom",
@@ -70,7 +70,7 @@
    "source": "Decrypt",
    "published": "2026-11-18T18:46:03+00:00",
    "summary": "MARA sold 13,597 BTC after September and Riot sold 20,264 BTC through September to fund debt repayment and AI data center buildouts, as Glassnode flagged the pair as the main sellers among Bitcoin treasury firms.",
-   "score": 1.8477
+   "score": 1.7557
   },
   {
    "title": "Swiss Bank Sygnum Says Bitcoin Could Reach New High Near $128,000",
@@ -78,7 +78,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-19T17:45:00+00:00",
    "summary": "Bitcoin Magazine Swiss Bank Sygnum Says Bitcoin Could Reach New High Near $128,000 The Swiss bank estimates bitcoin could hit a new all-time high near $128,000 and calls the current downturn the shallowest bear market to date, as bitcoin moves into reserve portfolios. This post…",
-   "score": 1.6479
+   "score": 1.5659
   },
   {
    "title": "Why higher rates could slow Bitcoin buying at treasury firms",
@@ -86,7 +86,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-19T18:09:32+00:00",
    "summary": "A treasury company can have years of dividends covered and still struggle to sell new shares on terms that make another Bitcoin purchase worthwhile.",
-   "score": 1.4801
+   "score": 1.4064
   },
   {
    "title": "Bitcoin holds above $63,750 but Fed rate-hike threats loom large",
@@ -94,7 +94,7 @@
    "source": "CoinDesk",
    "published": "2026-11-19T12:08:06+00:00",
    "summary": "",
-   "score": 1.3568
+   "score": 1.2892
   },
   {
    "title": "Bitcoin Tanks Ahead of Anthropic’s IPO. Should We Really Blame AI?",
@@ -102,7 +102,7 @@
    "source": "Decrypt",
    "published": "2026-11-18T19:16:02+00:00",
    "summary": "Bitcoin slid toward $63,000 as Anthropic prepared its blockbuster debut. Analysts dispute whether the IPO is draining crypto liquidity, pointing instead to ETF outflows, forced selling and rising interest rates.",
-   "score": 1.2762
+   "score": 1.2126
   },
   {
    "title": "SEC Charges Eight Colorado Firms in $37 Million Fake Crypto Platform Scam",
@@ -110,7 +110,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-19T21:45:00+00:00",
    "summary": "Bitcoin Magazine SEC Charges Eight Colorado Firms in $37 Million Fake Crypto Platform Scam The SEC charged eight Colorado-based entities, likely run from overseas, with taking more than $37 million from U.S. investors through fake advisers, fake crypto trading platforms and fake…",
-   "score": 1.2471
+   "score": 1.185
   },
   {
    "title": "Here’s what happened in crypto today",
@@ -118,7 +118,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-19T21:42:20+00:00",
    "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
-   "score": 1.0967
+   "score": 1.0422
   },
   {
    "title": "Darius Dale: 2027 Should Be a “Great Year for Bitcoin” as Fed Rate Cuts Come",
@@ -126,7 +126,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-19T20:15:14+00:00",
    "summary": "▶ Bitcoin Magazine Darius Dale: 2027 Should Be a “Great Year for Bitcoin” as Fed Rate Cuts Come Darius Dale, Founder & CEO of 42 Macro, joins BMTV to answer whether the Fed is making a policy mistake with a December rate hike priced in. This post Darius Dale: 2027 Should Be a “G…",
-   "score": 0.9764
+   "score": 0.9278
   },
   {
    "title": "Bitcoin Enters Death Cross as Anthropic IPO Fails to Lift Wall Street",
@@ -134,7 +134,7 @@
    "source": "Decrypt",
    "published": "2026-11-19T19:08:24+00:00",
    "summary": "Anthropic shares surged on their Nasdaq debut, but stocks slid and Bitcoin fell lower. Its daily chart shows deeply oversold momentum, a strong downtrend, and fragile support.",
-   "score": 0.8647
+   "score": 0.8217
   },
   {
    "title": "Bitcoin miner that sold its last BTC warns it may run short of cash for $1.2 billion AI deal",
@@ -142,7 +142,7 @@
    "source": "CoinDesk",
    "published": "2026-11-19T04:46:10+00:00",
    "summary": "",
-   "score": 0.7807
+   "score": 0.7419
   },
   {
    "title": "Bloomberg’s James Seyffart: Wall Street Bought $4.2 BILLION BTC in Q3",
@@ -150,7 +150,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-19T00:30:11+00:00",
    "summary": "▶ Bitcoin Magazine Bloomberg’s James Seyffart: Wall Street Bought $4.2 BILLION BTC in Q3 Bloomberg Intelligence's James Seyffart breaks down the latest 13F filings for the spot Bitcoin ETFs. This post Bloomberg’s James Seyffart: Wall Street Bought $4.2 BILLION BTC in Q3 first ap…",
-   "score": 0.7047
+   "score": 0.6696
   },
   {
    "title": "Bitcoin ETFs lose $240M as CryptoQuant flags bearish market phase",
@@ -158,7 +158,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-18T08:09:23+00:00",
    "summary": "Bitcoin ETF outflows returned after a one-day pause as CryptoQuant warned that Bitcoin had returned to a bearish market phase.",
-   "score": 0.6957
+   "score": 0.661
   },
   {
    "title": "Bitcoin outpaces gold even as both assets tumble ahead of a likely Fed rate hike",
@@ -166,7 +166,7 @@
    "source": "CoinDesk",
    "published": "2026-11-18T10:58:36+00:00",
    "summary": "",
-   "score": 0.6038
+   "score": 0.5738
   },
   {
    "title": "Bitcoin Investors Are Capitulating—That’s Historically Been a Bottom Signal",
@@ -174,7 +174,7 @@
    "source": "Decrypt",
    "published": "2026-11-17T20:36:03+00:00",
    "summary": "Glassnode says Bitcoin’s realized losses have reached levels seen only near the 2018, 2020, 2022 and early 2023 lows, as buyers defend the $62,000 to $66,000 range.",
-   "score": 0.5495
+   "score": 0.5222
   },
   {
    "title": "Bitcoin, stocks wobble as Fed’s Waller talks of ‘shock’ 50-point rate hike",
@@ -182,7 +182,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-18T16:34:20+00:00",
    "summary": "Bitcoin price action dropped below $63,000 after fresh hawkish comments from the Fed as Nvidia earnings optimism faded.",
-   "score": 0.5237
+   "score": 0.4976
   },
   {
    "title": "Analyst: Bitcoin Below $70,000 is a ‘Gift From the Market’",
@@ -190,7 +190,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-18T17:30:00+00:00",
    "summary": "Bitcoin Magazine Analyst: Bitcoin Below $70,000 is a ‘Gift From the Market’ K33 Research said bitcoin is in \"deep value territory\" after a 14% weekly drop, as ETF outflows, liquidations and hedging demand reach levels seen near past bottoms. This post Analyst: Bitcoin Below $70,…",
-   "score": 0.5095
+   "score": 0.4842
   },
   {
    "title": "Bitcoin remains penned in near $64,000 even as ETF outflow streak ends",
@@ -198,7 +198,7 @@
    "source": "CoinDesk",
    "published": "2026-11-17T11:36:07+00:00",
    "summary": "",
-   "score": 0.4136
+   "score": 0.393
   },
   {
    "title": "MARA prices $185M debt offering after $1.1B Bitcoin sale",
@@ -206,7 +206,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-18T18:27:52+00:00",
    "summary": "The Bitcoin miner is taking on new debt to finance its AI infrastructure expansion, with the Long Ridge acquisition adding nearly $69 million in annual interest costs.",
-   "score": 0.3445
+   "score": 0.3273
   },
   {
    "title": "Bitcoin's $2 Billion Liquidation Weekend Leaves Traders Watching $60,000",
@@ -214,7 +214,7 @@
    "source": "Decrypt",
    "published": "2026-11-16T21:46:03+00:00",
    "summary": "Bitcoin fell near $62,100 as forced liquidations swept crypto markets. ETF withdrawals and a crowded options trade offer a closer look at the damage left behind.",
-   "score": 0.3387
+   "score": 0.3218
   },
   {
    "title": "Wells Fargo More Than Doubles Its Bitcoin ETF Stake to $2.35 Billion",
@@ -222,7 +222,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-17T16:00:00+00:00",
    "summary": "Bitcoin Magazine Wells Fargo More Than Doubles Its Bitcoin ETF Stake to $2.35 Billion Wells Fargo's third-quarter 13F shows 49.6 million IBIT shares worth $2.35 billion at Sept. 30, up from 24.4 million, while its Strategy stake fell about 33% to 1.34 million shares. This post W…",
-   "score": 0.3385
+   "score": 0.3216
   },
   {
    "title": "Bitcoin miner MARA raises $185 million in debt after selling $1 billion BTC to repay loans",
@@ -230,7 +230,7 @@
    "source": "CoinDesk",
    "published": "2026-11-18T12:53:34+00:00",
    "summary": "",
-   "score": 0.3178
+   "score": 0.302
   },
   {
    "title": "Goldman Sachs More Than Doubles Its Bitcoin ETF Holdings to $1.28 Billion",
@@ -238,7 +238,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-17T15:19:20+00:00",
    "summary": "Bitcoin Magazine Goldman Sachs More Than Doubles Its Bitcoin ETF Holdings to $1.28 Billion Goldman Sachs' third-quarter 13F shows $1.28 billion in spot bitcoin ETFs at Sept. 30, up from about $580 million, led by a 52-fold jump in Fidelity's fund, while its Strategy stake fell a…",
-   "score": 0.2681
+   "score": 0.2548
   },
   {
    "title": "BlackRock’s Bitcoin ETF snaps $2.35B outflow streak amid extreme fear",
@@ -246,7 +246,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-17T11:18:18+00:00",
    "summary": "BlackRock’s Bitcoin ETF ended 11 sessions of withdrawals totaling $2.35 billion, but CryptoQuant says one day of inflows is too early to signal a recovery.",
-   "score": 0.2636
+   "score": 0.2505
   },
   {
    "title": "Wells Fargo's reported BlackRock bitcoin ETF holdings double to $2.35 billion",
@@ -254,7 +254,7 @@
    "source": "CoinDesk",
    "published": "2026-11-17T05:37:23+00:00",
    "summary": "",
-   "score": 0.2428
+   "score": 0.2307
   },
   {
    "title": "Binance Hack Wallets Move $137 Million in Ethereum After Two Weeks of Silence",
@@ -262,7 +262,7 @@
    "source": "Decrypt",
    "published": "2026-11-17T17:18:41+00:00",
    "summary": "A wallet linked to October’s record Binance theft moved $63 million in ether, before analysts flagged a larger wave of transfers and reported Bitcoin swaps amid ongoing U.S. recovery efforts.",
-   "score": 0.2395
+   "score": 0.2276
   },
   {
    "title": "Strategy (MSTR) Shares Tumble for Sixth Straight Day to $86 as Bitcoin Slides",
@@ -270,7 +270,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-19T21:53:36+00:00",
    "summary": "Bitcoin Magazine Strategy (MSTR) Shares Tumble for Sixth Straight Day to $86 as Bitcoin Slides Strategy shares fell 4.6% to $86.13 on Thursday, their sixth straight decline, as bitcoin dipped below $62,000. The company's 850,849 BTC are now worth about $11 billion less than it p…",
-   "score": 0.2097
+   "score": 0.1992
   },
   {
    "title": "Goldman Sachs reports $1.22B in Ether ETFs as ETHA share count jumps",
@@ -278,7 +278,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-17T09:08:32+00:00",
    "summary": "Goldman Sachs increased its Ether ETF shares in Q3, bringing its reported holdings to $1.22 billion, while reshuffling its Bitcoin ETF positions.",
-   "score": 0.2044
+   "score": 0.1942
   },
   {
    "title": "Saylor’s Strategy Keeps Buying Bitcoin, Adding 'A Little Orange' Through the Dip",
@@ -286,7 +286,7 @@
    "source": "Decrypt",
    "published": "2026-11-16T17:20:26+00:00",
    "summary": "The modest purchase lifted Strategy’s stash to 850,849 BTC as chairman Michael Saylor shrugged off a sharp downturn, posting that “this dip could use a little orange.”",
-   "score": 0.1898
+   "score": 0.1803
   },
   {
    "title": "Bitcoin could slide into the $50,000s as Fed rate hike bets build, Wintermute says",
@@ -294,7 +294,7 @@
    "source": "CoinDesk",
    "published": "2026-11-17T07:38:07+00:00",
    "summary": "",
-   "score": 0.1666
+   "score": 0.1584
   },
   {
    "title": "Bitcoin Price Trades Near $64,000 as Fed’s Waller Floats Half-Point Hike",
@@ -302,7 +302,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-18T14:09:47+00:00",
    "summary": "Bitcoin Magazine Bitcoin Price Trades Near $64,000 as Fed’s Waller Floats Half-Point Hike Bitcoin price traded near $64,000 Wednesday morning as Fed Governor Christopher Waller floated a half-point December rate hike, offsetting a lift from Nvidia earnings. This post Bitcoin Pri…",
-   "score": 0.1657
+   "score": 0.1575
   },
   {
    "title": "Morning Minute: Crypto Hits Extreme Fear as Bitcoin Plunges",
@@ -310,7 +310,7 @@
    "source": "Decrypt",
    "published": "2026-11-16T13:23:17+00:00",
    "summary": "Why is crypto selling off so hard over the past few weeks? CZ chimes in with his thoughts, while confirming he and Binance aren’t selling.",
-   "score": 0.1434
+   "score": 0.1363
   },
   {
    "title": "Bitmine edges toward 5% of ETH supply as treasuries report buys amid market slump",
@@ -318,7 +318,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-16T20:45:47+00:00",
    "summary": "Strategy, Strive, Bitmine and Cypherpunk disclosed fresh additions to their crypto treasuries, spanning Bitcoin, Ether and Zcash.",
-   "score": 0.1413
+   "score": 0.1343
   },
   {
    "title": "Trump Media wants to clear $884 million of debt without selling its bitcoin",
@@ -326,7 +326,7 @@
    "source": "CoinDesk",
    "published": "2026-11-19T12:40:12+00:00",
    "summary": "",
-   "score": 0.1147
+   "score": 0.109
   }
  ]
 }
