@@ -1,5 +1,5 @@
 {
- "fetched": "2026-11-21T17:25:02+00:00",
+ "fetched": "2026-11-21T22:09:48+00:00",
  "sources_ok": [
   "CoinDesk",
   "Cointelegraph",
@@ -14,7 +14,7 @@
    "source": "Decrypt",
    "published": "2026-11-20T11:50:51+00:00",
    "summary": "Thursday's ETF outflow was the funds' biggest in three weeks, as rising Treasury yields and Fed rate hike bets weigh on crypto.",
-   "score": 3.9148
+   "score": 3.6554
   },
   {
    "title": "Bitcoin Price Crashes to $59,000 as Market Selloff Deepens",
@@ -22,7 +22,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-20T15:59:50+00:00",
    "summary": "Bitcoin Magazine Bitcoin Price Crashes to $59,000 as Market Selloff Deepens Bitcoin fell below $60,000 for the first time since early July on Friday as a tech stock rout, rate hike bets and record ETF outflows hit risk assets. This post Bitcoin Price Crashes to $59,000 as Market…",
-   "score": 3.1174
+   "score": 2.9109
   },
   {
    "title": "Bitcoin Price Slips to Lows Not Seen Since 2024, Nasdaq Plunges 5%",
@@ -30,7 +30,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-20T21:08:02+00:00",
    "summary": "Bitcoin Magazine Bitcoin Price Slips to Lows Not Seen Since 2024, Nasdaq Plunges 5% The bitcoin price slipped to near $58,300 on Friday afternoon, briefly dipping under its summer low, as a chip-led selloff sent the Nasdaq down about 5% and dragged crypto stocks and miners sharp…",
-   "score": 2.2681
+   "score": 2.1179
   },
   {
    "title": "Here’s what happened in crypto today",
@@ -38,7 +38,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-21T11:18:52+00:00",
    "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
-   "score": 2.0144
+   "score": 1.881
   },
   {
    "title": "Bitcoin plunges below $59,000 as rush to cash puts new bear market lows back in play",
@@ -46,7 +46,7 @@
    "source": "CoinDesk",
    "published": "2026-11-20T18:13:52+00:00",
    "summary": "",
-   "score": 2.0033
+   "score": 1.8706
   },
   {
    "title": "U.S. Treasury Secretary Pushes Back on Bigger Fed Hike",
@@ -54,7 +54,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-20T16:22:32+00:00",
    "summary": "Bitcoin Magazine U.S. Treasury Secretary Pushes Back on Bigger Fed Hike Treasury Secretary Scott Bessent urged the Fed not to embrace a bigger rate hike as Citi and traders still see a quarter-point move in December and bitcoin fell below $60,000. This post U.S. Treasury Secreta…",
-   "score": 1.7832
+   "score": 1.665
   },
   {
    "title": "Bitcoin Struggles to Hold $64,000 as ETF Outflows Hit $2.9B in November",
@@ -62,7 +62,7 @@
    "source": "Decrypt",
    "published": "2026-11-19T10:25:05+00:00",
    "summary": "Bitcoin is down 13% in a week as investors pull money from spot ETFs and brace for another Federal Reserve rate hike.",
-   "score": 1.627
+   "score": 1.5192
   },
   {
    "title": "VanEck drops Gemini as custodian of its bitcoin, ether and SOL ETFs",
@@ -70,7 +70,7 @@
    "source": "CoinDesk",
    "published": "2026-11-20T04:28:52+00:00",
    "summary": "",
-   "score": 1.4079
+   "score": 1.3146
   },
   {
    "title": "Institutions pile back into US Bitcoin ETFs in Q3 after selling streak",
@@ -78,7 +78,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-20T03:33:22+00:00",
    "summary": "Asset managers added the equivalent of 49,229 Bitcoin to their US Bitcoin ETF holdings in the third quarter, reversing three quarters of net selling.",
-   "score": 1.3892
+   "score": 1.2972
   },
   {
    "title": "Bitcoin Price Rebounds Near $64,000 as Anthropic IPO Lifts Tech Stocks",
@@ -86,7 +86,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-19T14:00:49+00:00",
    "summary": "Bitcoin Magazine Bitcoin Price Rebounds Near $64,000 as Anthropic IPO Lifts Tech Stocks The bitcoin price climbed back to near $63,700 on Thursday morning as Anthropic's record IPO lifted tech stocks, though ETF outflows and Fed hike risk kept gains in check. This post Bitcoin P…",
-   "score": 1.0967
+   "score": 1.0241
   },
   {
    "title": "Bitcoin ETF outflows show waning crypto appetite ahead of Anthropic's Nasdaq debut",
@@ -94,7 +94,7 @@
    "source": "CoinDesk",
    "published": "2026-11-19T12:20:39+00:00",
    "summary": "",
-   "score": 0.8922
+   "score": 0.8331
   },
   {
    "title": "Bitcoin ETF assets fall to three-month low as 2026 net outflows top $2.5B",
@@ -102,7 +102,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-19T08:26:19+00:00",
    "summary": "US spot Bitcoin ETFs lost $306.4 million Wednesday, pushing their combined assets to $77.7 billion as Bitcoin briefly traded below $63,000.",
-   "score": 0.8433
+   "score": 0.7874
   },
   {
    "title": "Bitcoin Miners Are Selling Their Stacks to Fund the AI Boom",
@@ -110,7 +110,7 @@
    "source": "Decrypt",
    "published": "2026-11-18T18:46:03+00:00",
    "summary": "MARA sold 13,597 BTC after September and Riot sold 20,264 BTC through September to fund debt repayment and AI data center buildouts, as Glassnode flagged the pair as the main sellers among Bitcoin treasury firms.",
-   "score": 0.8076
+   "score": 0.7541
   },
   {
    "title": "Tracy Schuchart: Bitcoin Trading “Like a Risk Asset” as Fed Hikes Loom",
@@ -118,7 +118,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-20T22:10:11+00:00",
    "summary": "▶ Bitcoin Magazine Tracy Schuchart: Bitcoin Trading “Like a Risk Asset” as Fed Hikes Loom Tracy Shuchart says Bitcoin's biggest long-term argument is its monetary scarcity, but investors need to separate the long-term thesis from how it's trading today. This post Tracy Schuchart…",
-   "score": 0.7755
+   "score": 0.7241
   },
   {
    "title": "Bitcoin carry trades could beat Treasury bills in 2027, Sygnum predicts",
@@ -126,7 +126,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-19T06:00:00+00:00",
    "summary": "Sygnum predicts that Bitcoin carry trades may offer higher returns than Treasury bills in 2027, following a sharp drop in funding rates that made the strategy less compelling in 2026.",
-   "score": 0.673
+   "score": 0.6284
   },
   {
    "title": "Live updates: Bitcoin plunges to lowest since July as Anthropic gains, but broader markets tumble",
@@ -134,7 +134,7 @@
    "source": "CoinDesk",
    "published": "2026-11-19T10:48:26+00:00",
    "summary": "",
-   "score": 0.6515
+   "score": 0.6084
   },
   {
    "title": "SEC Freezes Assets in $560 Million Crypto Trading Ponzi Scheme",
@@ -142,7 +142,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-20T19:15:56+00:00",
    "summary": "Bitcoin Magazine SEC Freezes Assets in $560 Million Crypto Trading Ponzi Scheme The SEC obtained an asset freeze against Backward Hat Capital and its founders, alleging a $560 million Ponzi scheme sold as AI-driven FX trading funded through crypto. Prosecutors and the CFTC filed…",
-   "score": 0.5949
+   "score": 0.5555
   },
   {
    "title": "Bitcoin Tanks Ahead of Anthropic’s IPO. Should We Really Blame AI?",
@@ -150,7 +150,7 @@
    "source": "Decrypt",
    "published": "2026-11-18T19:16:02+00:00",
    "summary": "Bitcoin slid toward $63,000 as Anthropic prepared its blockbuster debut. Analysts dispute whether the IPO is draining crypto liquidity, pointing instead to ETF outflows, forced selling and rising interest rates.",
-   "score": 0.5578
+   "score": 0.5208
   },
   {
    "title": "Why higher rates could slow Bitcoin buying at treasury firms",
@@ -158,7 +158,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-19T18:09:32+00:00",
    "summary": "A treasury company can have years of dividends covered and still struggle to sell new shares on terms that make another Bitcoin purchase worthwhile.",
-   "score": 0.5175
+   "score": 0.4832
   },
   {
    "title": "This Bitcoin miner sold 267 BTC to clear $22 million debt. It still may not survive",
@@ -166,7 +166,7 @@
    "source": "CoinDesk",
    "published": "2026-11-20T05:32:25+00:00",
    "summary": "",
-   "score": 0.488
+   "score": 0.4556
   },
   {
    "title": "Institutions are Piling Into Bitcoin ETFs, Pushing Holdings to a Record",
@@ -174,7 +174,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-19T19:30:00+00:00",
    "summary": "Bitcoin Magazine Institutions are Piling Into Bitcoin ETFs, Pushing Holdings to a Record Galaxy Research says 13F filers added 49,229 BTC through U.S. spot bitcoin ETPs in Q3, lifting institutional holdings to a record 356,491 BTC as Wells Fargo became the largest holder. This p…",
-   "score": 0.4052
+   "score": 0.3784
   },
   {
    "title": "Is the AI Bubble Finally Popping? Nvidia Crashes 48% as Wall Street Experts Sound the Alarm",
@@ -182,7 +182,7 @@
    "source": "Decrypt",
    "published": "2026-11-21T14:01:06+00:00",
    "summary": "Tech stocks are buckling after Anthropic’s historic IPO and Nvidia’s leadership crisis, while Bitcoin has slipped below $60,000. Experts disagree on whether AI faces a correction or a dot-com-style bust.",
-   "score": 0.39
+   "score": 0.3641
   },
   {
    "title": "Bitcoin holds above $63,750 but Fed rate-hike threats loom large",
@@ -190,7 +190,7 @@
    "source": "CoinDesk",
    "published": "2026-11-19T12:08:06+00:00",
    "summary": "",
-   "score": 0.3795
+   "score": 0.3544
   },
   {
    "title": "Bitcoin ETFs lose $240M as CryptoQuant flags bearish market phase",
@@ -198,7 +198,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-18T08:09:23+00:00",
    "summary": "Bitcoin ETF outflows returned after a one-day pause as CryptoQuant warned that Bitcoin had returned to a bearish market phase.",
-   "score": 0.3041
+   "score": 0.2839
   },
   {
    "title": "Bitcoin Enters Death Cross as Anthropic IPO Fails to Lift Wall Street",
@@ -206,7 +206,7 @@
    "source": "Decrypt",
    "published": "2026-11-19T19:08:24+00:00",
    "summary": "Anthropic shares surged on their Nasdaq debut, but stocks slid and Bitcoin fell lower. Its daily chart shows deeply oversold momentum, a strong downtrend, and fragile support.",
-   "score": 0.3023
+   "score": 0.2823
   },
   {
    "title": "Swiss Bank Sygnum Says Bitcoin Could Reach New High Near $128,000",
@@ -214,7 +214,15 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-19T17:45:00+00:00",
    "summary": "Bitcoin Magazine Swiss Bank Sygnum Says Bitcoin Could Reach New High Near $128,000 The Swiss bank estimates bitcoin could hit a new all-time high near $128,000 and calls the current downturn the shallowest bear market to date, as bitcoin moves into reserve portfolios. This post…",
-   "score": 0.295
+   "score": 0.2755
+  },
+  {
+   "title": "Bitcoin rebounds above $60,000 after $1.8 billion crypto liquidation wave",
+   "url": "https://www.coindesk.com/markets/2026/11/21/bitcoin-bounces-9-from-two-year-low-to-retake-usd60-000-as-traders-eye-monday-s-stock-open",
+   "source": "CoinDesk",
+   "published": "2026-11-21T17:50:00+00:00",
+   "summary": "",
+   "score": 0.2463
   },
   {
    "title": "Bitcoin, stocks wobble as Fed’s Waller talks of ‘shock’ 50-point rate hike",
@@ -222,7 +230,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-18T16:34:20+00:00",
    "summary": "Bitcoin price action dropped below $63,000 after fresh hawkish comments from the Fed as Nvidia earnings optimism faded.",
-   "score": 0.2289
+   "score": 0.2137
   },
   {
    "title": "SEC Charges Eight Colorado Firms in $37 Million Fake Crypto Platform Scam",
@@ -230,15 +238,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-19T21:45:00+00:00",
    "summary": "Bitcoin Magazine SEC Charges Eight Colorado Firms in $37 Million Fake Crypto Platform Scam The SEC charged eight Colorado-based entities, likely run from overseas, with taking more than $37 million from U.S. investors through fake advisers, fake crypto trading platforms and fake…",
-   "score": 0.2233
-  },
-  {
-   "title": "Bitcoin nodes could be stalled by repeating one ID 50,000 times. AI found the bug",
-   "url": "https://www.coindesk.com/markets/2026/11/21/bitcoin-nodes-could-be-stalled-by-repeating-one-id-50-000-times-ai-found-the-bug",
-   "source": "CoinDesk",
-   "published": "2026-11-21T06:16:42+00:00",
-   "summary": "",
-   "score": 0.2232
+   "score": 0.2085
   },
   {
    "title": "Bitcoin Investors Are Capitulating—That’s Historically Been a Bottom Signal",
@@ -246,7 +246,15 @@
    "source": "Decrypt",
    "published": "2026-11-17T20:36:03+00:00",
    "summary": "Glassnode says Bitcoin’s realized losses have reached levels seen only near the 2018, 2020, 2022 and early 2023 lows, as buyers defend the $62,000 to $66,000 range.",
-   "score": 0.1921
+   "score": 0.1794
+  },
+  {
+   "title": "Bitcoin nodes could be stalled by repeating one ID 50,000 times. AI found the bug",
+   "url": "https://www.coindesk.com/markets/2026/11/21/bitcoin-nodes-could-be-stalled-by-repeating-one-id-50-000-times-ai-found-the-bug",
+   "source": "CoinDesk",
+   "published": "2026-11-21T06:16:42+00:00",
+   "summary": "",
+   "score": 0.1667
   },
   {
    "title": "Darius Dale: 2027 Should Be a “Great Year for Bitcoin” as Fed Rate Cuts Come",
@@ -254,15 +262,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-19T20:15:14+00:00",
    "summary": "▶ Bitcoin Magazine Darius Dale: 2027 Should Be a “Great Year for Bitcoin” as Fed Rate Cuts Come Darius Dale, Founder & CEO of 42 Macro, joins BMTV to answer whether the Fed is making a policy mistake with a December rate hike priced in. This post Darius Dale: 2027 Should Be a “G…",
-   "score": 0.1748
-  },
-  {
-   "title": "Bitcoin miner that sold its last BTC warns it may run short of cash for $1.2 billion AI deal",
-   "url": "https://www.coindesk.com/markets/2026/11/19/bitcoin-miner-that-sold-its-last-btc-warns-it-may-run-short-of-cash-for-usd1-2-billion-ai-deal",
-   "source": "CoinDesk",
-   "published": "2026-11-19T04:46:10+00:00",
-   "summary": "",
-   "score": 0.1747
+   "score": 0.1632
   },
   {
    "title": "MARA prices $185M debt offering after $1.1B Bitcoin sale",
@@ -270,15 +270,23 @@
    "source": "Cointelegraph",
    "published": "2026-11-18T18:27:52+00:00",
    "summary": "The Bitcoin miner is taking on new debt to finance its AI infrastructure expansion, with the Long Ridge acquisition adding nearly $69 million in annual interest costs.",
-   "score": 0.1506
+   "score": 0.1406
   },
   {
-   "title": "Bitcoin tanks below $57,000 for the first time in two years, and its not alone",
-   "url": "https://www.coindesk.com/markets/2026/11/21/bitcoin-tanks-below-usd57-000-for-the-first-time-in-two-years-and-its-not-alone",
+   "title": "Bitcoin Breaks Below $60K as Crypto Fear Index Hits Worst Level Since February",
+   "url": "https://decrypt.co/383702/bitcoin-breaks-below-60k-crypto-fear-greed-index-lowest",
+   "source": "Decrypt",
+   "published": "2026-11-20T16:35:59+00:00",
+   "summary": "Bitcoin broke below $60,000 Friday as crypto sentiment collapsed and AI-linked stocks sank after Anthropic’s IPO.",
+   "score": 0.1368
+  },
+  {
+   "title": "Bitcoin miner that sold its last BTC warns it may run short of cash for $1.2 billion AI deal",
+   "url": "https://www.coindesk.com/markets/2026/11/19/bitcoin-miner-that-sold-its-last-btc-warns-it-may-run-short-of-cash-for-usd1-2-billion-ai-deal",
    "source": "CoinDesk",
-   "published": "2026-11-21T04:10:07+00:00",
+   "published": "2026-11-19T04:46:10+00:00",
    "summary": "",
-   "score": 0.1386
+   "score": 0.1305
   },
   {
    "title": "Bloomberg’s James Seyffart: Wall Street Bought $4.2 BILLION BTC in Q3",
@@ -286,15 +294,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-19T00:30:11+00:00",
    "summary": "▶ Bitcoin Magazine Bloomberg’s James Seyffart: Wall Street Bought $4.2 BILLION BTC in Q3 Bloomberg Intelligence's James Seyffart breaks down the latest 13F filings for the spot Bitcoin ETFs. This post Bloomberg’s James Seyffart: Wall Street Bought $4.2 BILLION BTC in Q3 first ap…",
-   "score": 0.1262
-  },
-  {
-   "title": "Bitcoin's $2 Billion Liquidation Weekend Leaves Traders Watching $60,000",
-   "url": "https://decrypt.co/383366/bitcoin-2-billion-liquidation-weekend-traders-watching-60000",
-   "source": "Decrypt",
-   "published": "2026-11-16T21:46:03+00:00",
-   "summary": "Bitcoin fell near $62,100 as forced liquidations swept crypto markets. ETF withdrawals and a crowded options trade offer a closer look at the damage left behind.",
-   "score": 0.1184
+   "score": 0.1178
   },
   {
    "title": "Bitcoin falls below $60K for first time since July amid broader market selloff",
@@ -302,15 +302,15 @@
    "source": "Cointelegraph",
    "published": "2026-11-20T16:55:51+00:00",
    "summary": "Bitcoin fell nearly 6% as US stocks declined, with the Nasdaq dropping more than 2% and Anthropic shares losing almost 10%.",
-   "score": 0.1178
+   "score": 0.11
   },
   {
-   "title": "Bitcoin outpaces gold even as both assets tumble ahead of a likely Fed rate hike",
-   "url": "https://www.coindesk.com/markets/2026/11/18/bitcoin-outpaces-gold-even-as-both-assets-tumble-ahead-of-a-likely-fed-rate-hike",
+   "title": "Bitcoin tanks below $57,000 for the first time in two years, and its not alone",
+   "url": "https://www.coindesk.com/markets/2026/11/21/bitcoin-tanks-below-usd57-000-for-the-first-time-in-two-years-and-its-not-alone",
    "source": "CoinDesk",
-   "published": "2026-11-18T10:58:36+00:00",
+   "published": "2026-11-21T04:10:07+00:00",
    "summary": "",
-   "score": 0.1081
+   "score": 0.1035
   },
   {
    "title": "MSTR Head of Investor Relations Addresses Bitcoin Pullback, Equity Performance",
@@ -318,15 +318,15 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-20T19:24:55+00:00",
    "summary": "▶ Bitcoin Magazine MSTR Head of Investor Relations Addresses Bitcoin Pullback, Equity Performance Chaitanya \"CJ\" Jain, Head of Investor Relations at Strategy, joins Bitcoin Magazine TV as Bitcoin trades below Strategy's average cost. This post MSTR Head of Investor Relations Add…",
-   "score": 0.1
+   "score": 0.0934
   },
   {
-   "title": "Bitcoin price drops to $60K as Anthropic drops to $87 in tech sell-off",
-   "url": "https://cointelegraph.com/markets/bitcoin-hits-new-20-week-low-anthropic-drops-87-tech-sell-off?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-11-20T15:52:06+00:00",
-   "summary": "Bitcoin price strength felt pressure from falling US equities as traders reassessed AI prospects after Anthropic’s IPO.",
-   "score": 0.0928
+   "title": "Bitcoin's $2 Billion Liquidation Weekend Leaves Traders Watching $60,000",
+   "url": "https://decrypt.co/383366/bitcoin-2-billion-liquidation-weekend-traders-watching-60000",
+   "source": "Decrypt",
+   "published": "2026-11-16T21:46:03+00:00",
+   "summary": "Bitcoin fell near $62,100 as forced liquidations swept crypto markets. ETF withdrawals and a crowded options trade offer a closer look at the damage left behind.",
+   "score": 0.0885
   }
  ]
 }
