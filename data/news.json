@@ -1,5 +1,5 @@
 {
- "fetched": "2026-11-25T04:52:18+00:00",
+ "fetched": "2026-11-25T09:08:44+00:00",
  "sources_ok": [
   "CoinDesk",
   "Cointelegraph",
@@ -14,7 +14,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-24T13:47:18+00:00",
    "summary": "Bitcoin Magazine Bitcoin Price Slips to $60,000 as November ETF Outflows Hit Record The bitcoin price slipped back to near $60,000 Tuesday as the Nvidia stock rally cooled and spot bitcoin ETFs pushed November outflows to a record $4.71 billion. This post Bitcoin Price Slips to…",
-   "score": 3.0562
+   "score": 2.8733
   },
   {
    "title": "Bitcoin Rebounds to $61K After Weekend Plunge to Two-Year Low",
@@ -22,7 +22,7 @@
    "source": "Decrypt",
    "published": "2026-11-23T11:14:22+00:00",
    "summary": "Bitcoin swung by more than $6,000 over the weekend as tech stocks slid and spot ETFs logged their biggest daily outflow since June.",
-   "score": 2.6312
+   "score": 2.4737
   },
   {
    "title": "Bitcoin drops as November spot ETF outflows increase to record $4.71 billion",
@@ -30,15 +30,15 @@
    "source": "CoinDesk",
    "published": "2026-11-24T12:36:28+00:00",
    "summary": "",
-   "score": 2.372
+   "score": 2.2301
   },
   {
-   "title": "Bitcoin ETFs keep bleeding as BlackRock’s IBIT shares gain nearly 5%",
-   "url": "https://cointelegraph.com/markets/bitcoin-etfs-bleed-ibit-shares-gain?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "title": "Here’s what happened in crypto today",
+   "url": "https://cointelegraph.com/news/what-happened-in-crypto-today?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
    "source": "Cointelegraph",
-   "published": "2026-11-24T07:41:50+00:00",
-   "summary": "BlackRock’s IBIT shares gained 4.85% on Monday despite continued Bitcoin ETF withdrawals that pushed November’s net outflows to $4.71 billion.",
-   "score": 2.2097
+   "published": "2026-11-25T05:50:43+00:00",
+   "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
+   "score": 2.0976
   },
   {
    "title": "Bitcoin Faces 6-Year Moving Average Test Only Seen During FTX Collapse",
@@ -46,15 +46,15 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-24T22:30:03+00:00",
    "summary": "▶ Bitcoin Magazine Bitcoin Faces 6-Year Moving Average Test Only Seen During FTX Collapse Since 2016, the only time Bitcoin closed below its six-year moving average was the FTX crash. This post Bitcoin Faces 6-Year Moving Average Test Only Seen During FTX Collapse first appeared…",
-   "score": 2.0431
+   "score": 1.9208
   },
   {
-   "title": "Here’s what happened in crypto today",
-   "url": "https://cointelegraph.com/news/what-happened-in-crypto-today?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "title": "Bitcoin ETFs keep bleeding as BlackRock’s IBIT shares gain nearly 5%",
+   "url": "https://cointelegraph.com/markets/bitcoin-etfs-bleed-ibit-shares-gain?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
    "source": "Cointelegraph",
-   "published": "2026-11-24T22:12:10+00:00",
-   "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
-   "score": 1.5984
+   "published": "2026-11-24T07:41:50+00:00",
+   "summary": "BlackRock’s IBIT shares gained 4.85% on Monday despite continued Bitcoin ETF withdrawals that pushed November’s net outflows to $4.71 billion.",
+   "score": 1.6619
   },
   {
    "title": "Coldcard Bitcoin Exploit, Revisited: How a Hidden Flaw Survived Years of Audits",
@@ -62,7 +62,7 @@
    "source": "Decrypt",
    "published": "2026-11-24T21:16:02+00:00",
    "summary": "Coinkite’s postmortem reveals a software random-number generator shipped in place of the hardware one for over five years, slipping past at least 15 reviews.",
-   "score": 1.4336
+   "score": 1.3478
   },
   {
    "title": "André Dragosch: Bitcoin at “Fire Sale” Valuations Heading Into Fed Pivot",
@@ -70,7 +70,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-24T20:20:57+00:00",
    "summary": "▶ Bitcoin Magazine André Dragosch: Bitcoin at “Fire Sale” Valuations Heading Into Fed Pivot André Dragosch says Fed language is already as hawkish as it was in 2022, and \"we are probably close to peak hawkishness. This post André Dragosch: Bitcoin at “Fire Sale” Valuations Headi…",
-   "score": 1.4147
+   "score": 1.33
   },
   {
    "title": "CleanSpark weighs selling more Bitcoin than it mines to de-risk books",
@@ -78,7 +78,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-25T01:40:59+00:00",
    "summary": "The Bitcoin miner sold 2,102 BTC while it produced just 1,708 BTC in the September quarter.",
-   "score": 1.2224
+   "score": 1.1492
   },
   {
    "title": "Bitcoin's 5-year return is nearly zero, great narratives are fading and what's left is the Fed",
@@ -86,7 +86,7 @@
    "source": "CoinDesk",
    "published": "2026-11-23T14:43:18+00:00",
    "summary": "",
-   "score": 1.1529
+   "score": 1.0839
   },
   {
    "title": "Nvidia Soars as Huang Returns, Lifting Stocks and Crypto Shares",
@@ -94,7 +94,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-23T15:50:22+00:00",
    "summary": "Bitcoin Magazine Nvidia Soars as Huang Returns, Lifting Stocks and Crypto Shares Nvidia shares jumped about 35% on Monday after the board reinstated Jensen Huang as CEO, lifting the Nasdaq, chip stocks, bitcoin, Coinbase, Strategy and miners. This post Nvidia Soars as Huang Retu…",
-   "score": 1.0198
+   "score": 0.9587
   },
   {
    "title": "Strategy Buys $30M in Bitcoin, Moves $1B From USD Reserve to Cash Pot",
@@ -102,7 +102,7 @@
    "source": "Decrypt",
    "published": "2026-11-23T13:25:35+00:00",
    "summary": "Michael Saylor's firm raised its preferred stock buyback program to $4 billion after repurchasing another $212 million of STRC last week.",
-   "score": 1.0138
+   "score": 0.9531
   },
   {
    "title": "Live updates: Bitcoin pulls back below $60,000, stock rally fades, as tariffs re-enter the picture",
@@ -110,7 +110,7 @@
    "source": "CoinDesk",
    "published": "2026-11-24T12:47:40+00:00",
    "summary": "",
-   "score": 0.9133
+   "score": 0.8587
   },
   {
    "title": "Bitcoin ETFs shed $1.8B in third-largest weekly outflow",
@@ -118,7 +118,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-23T08:08:52+00:00",
    "summary": "Bitcoin ETF outflows reached $4.14 billion in November through Friday, nearing June’s $4.51 billion total.",
-   "score": 0.8052
+   "score": 0.757
   },
   {
    "title": "Wall Street and Crypto Are in 'Extreme Fear'. What's Spooking Investors?",
@@ -126,7 +126,7 @@
    "source": "Decrypt",
    "published": "2026-11-24T18:16:02+00:00",
    "summary": "Fear and Greed indexes are flashing extreme fear across stocks and crypto as Nvidia’s relief rally fades, Bitcoin falls below $60,000, and investors brace for higher interest rates",
-   "score": 0.7907
+   "score": 0.7434
   },
   {
    "title": "South Korea Unveils Crypto Bill Capping Exchange Ownership at 20%",
@@ -134,7 +134,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-24T14:45:00+00:00",
    "summary": "Bitcoin Magazine South Korea Unveils Crypto Bill Capping Exchange Ownership at 20% South Korea’s financial regulator unveiled a bill that would cap major shareholders of crypto exchanges at 20%, allow domestic ICOs and let bank-led groups issue won stablecoins. This post South K…",
-   "score": 0.7349
+   "score": 0.6909
   },
   {
    "title": "Bitcoin falls below $60,000 as rally on Jensen Huang’s Nvidia return fades",
@@ -142,7 +142,7 @@
    "source": "CoinDesk",
    "published": "2026-11-24T10:08:38+00:00",
    "summary": "",
-   "score": 0.7032
+   "score": 0.6611
   },
   {
    "title": "BTC price gains 12% from $55K: Three things to know in Bitcoin this week",
@@ -150,7 +150,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-23T11:20:57+00:00",
    "summary": "Nasdaq-100 futures rose 3.1% before Monday’s open, while Wednesday’s US inflation report could shape expectations for a December rate hike.",
-   "score": 0.5622
+   "score": 0.5286
   },
   {
    "title": "Coldcard Postmortem Says Weak Seeds, Not Hacked Devices, Drove Bitcoin Thefts",
@@ -158,7 +158,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-24T16:20:00+00:00",
    "summary": "Bitcoin Magazine Coldcard Postmortem Says Weak Seeds, Not Hacked Devices, Drove Bitcoin Thefts Coinkite published its full Coldcard postmortem, saying a five-year firmware flaw weakened wallet seeds and that about 242 customer accounts have reported losses. This post Coldcard Po…",
-   "score": 0.5468
+   "score": 0.5141
   },
   {
    "title": "This Swedish bitcoin treasury firm lost 30 BTC trading part of its own stack",
@@ -166,7 +166,7 @@
    "source": "CoinDesk",
    "published": "2026-11-23T07:18:45+00:00",
    "summary": "",
-   "score": 0.5304
+   "score": 0.4986
   },
   {
    "title": "North Korea Moves $247 Million of Binance Hack Loot Through Bitcoin Mixers",
@@ -174,7 +174,7 @@
    "source": "Decrypt",
    "published": "2026-11-23T20:36:02+00:00",
    "summary": "Roughly a month after the $6.4 billion hack, Elliptic says nearly all of the coinjoin mixing was coordinated by one person who “refuses to block funds such as these.\"",
-   "score": 0.514
+   "score": 0.4833
   },
   {
    "title": "DOJ Moves to Forfeit $1.1 Billion in USDC Stolen in Binance Hack",
@@ -182,7 +182,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-24T14:30:00+00:00",
    "summary": "Bitcoin Magazine DOJ Moves to Forfeit $1.1 Billion in USDC Stolen in Binance Hack The Justice Department filed to forfeit more than $1.1 billion in USDC stolen from Binance by North Korean hackers, and Circle agreed to issue replacement tokens. This post DOJ Moves to Forfeit $1.…",
-   "score": 0.426
+   "score": 0.4005
   },
   {
    "title": "US seeks to recover $1.1B in crypto stolen in North Korea-linked Binance hack",
@@ -190,7 +190,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-23T21:04:03+00:00",
    "summary": "US prosecutors are seeking control of stolen USDC, while Elliptic says hackers have moved $247 million through Bitcoin mixers.",
-   "score": 0.414
+   "score": 0.3892
   },
   {
    "title": "Solo Bitcoin Miner Scores Again, Hitting $191,000 Jackpot Against the Odds",
@@ -198,7 +198,15 @@
    "source": "Decrypt",
    "published": "2026-11-23T18:16:25+00:00",
    "summary": "The lone miner solved block 977057 through Solo CKPool, pocketing 3.13 BTC (worth about $191,000) in a lottery-like feat that normally only industrial-scale mining farms pull off.",
-   "score": 0.3976
+   "score": 0.3738
+  },
+  {
+   "title": "Live updates: Bitcoin slips back under $60,000 as HYPE leads altcoins lower",
+   "url": "https://www.coindesk.com/business/2026/11/25/live-updates-bitcoin-slips-back-under-usd60-000-as-hype-leads-altcoins-lower",
+   "source": "CoinDesk",
+   "published": "2026-11-25T08:35:47+00:00",
+   "summary": "",
+   "score": 0.3251
   },
   {
    "title": "Bitcoin Price Surges Above $64,000 as Nvidia Reinstates CEO",
@@ -206,15 +214,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-23T14:33:18+00:00",
    "summary": "Bitcoin Magazine Bitcoin Price Surges Above $64,000 as Nvidia Reinstates CEO The bitcoin price surged to near $63,700 on Monday as Nvidia reinstated Jensen Huang as CEO, sending stocks, crypto equities and bitcoin miners sharply higher. This post Bitcoin Price Surges Above $64,0…",
-   "score": 0.3377
-  },
-  {
-   "title": "Live updates: Bitcoin climbs only modestly as Nasdaq soars 6% on Huang return",
-   "url": "https://www.coindesk.com/tech/2026/11/23/live-news-wall-street-rebounds-as-dollar-index-hits-highest-since-march-2025",
-   "source": "CoinDesk",
-   "published": "2026-11-23T13:01:20+00:00",
-   "summary": "",
-   "score": 0.3317
+   "score": 0.3175
   },
   {
    "title": "Bitcoin ETFs Shed $582M in a Day as BTC Drops Below $62K",
@@ -222,7 +222,7 @@
    "source": "Decrypt",
    "published": "2026-11-20T11:50:51+00:00",
    "summary": "Thursday's ETF outflow was the funds' biggest in three weeks, as rising Treasury yields and Fed rate hike bets weigh on crypto.",
-   "score": 0.3075
+   "score": 0.2891
   },
   {
    "title": "Trump-linked American Bitcoin secures $150M credit line from FalconX",
@@ -230,15 +230,15 @@
    "source": "Cointelegraph",
    "published": "2026-11-23T13:44:16+00:00",
    "summary": "The miner can borrow against its Bitcoin to fund operations and expansion after selling about 465 BTC to cover expenses in the third quarter.",
-   "score": 0.2979
+   "score": 0.2801
   },
   {
-   "title": "A year after buying bitcoin, Czech central bank won't say what it's worth",
-   "url": "https://www.coindesk.com/markets/2026/11/23/a-year-after-buying-bitcoin-czech-central-bank-won-t-say-what-it-s-worth",
+   "title": "Live updates: Bitcoin climbs only modestly as Nasdaq soars 6% on Huang return",
+   "url": "https://www.coindesk.com/tech/2026/11/23/live-news-wall-street-rebounds-as-dollar-index-hits-highest-since-march-2025",
    "source": "CoinDesk",
-   "published": "2026-11-25T04:50:08+00:00",
+   "published": "2026-11-23T13:01:20+00:00",
    "summary": "",
-   "score": 0.262
+   "score": 0.2495
   },
   {
    "title": "UK FCA Bars Crypto Exchanges From Market Making on Their Own Venues",
@@ -246,7 +246,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-23T14:20:29+00:00",
    "summary": "Bitcoin Magazine UK FCA Bars Crypto Exchanges From Market Making on Their Own Venues The FCA's final rules bar U.K. crypto exchange operators from trading against their own capital on venues they run from Oct. 25, 2027, while a Treasury order clears third-party market makers to…",
-   "score": 0.2404
+   "score": 0.2261
   },
   {
    "title": "Bitcoin rebounds 17% from $55K lows as Nvidia rally sparks $500M crypto liquidations",
@@ -254,7 +254,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-23T16:51:17+00:00",
    "summary": "Bitcoin price upside hit $64,500 as risk assets surged on Nvidia CEO Jensen Huang’s reinstatement, while crypto liquidations topped $500 million four hours.",
-   "score": 0.2244
+   "score": 0.211
   },
   {
    "title": "Bitcoin Rallies, Anthropic Sinks as Nvidia Surges 35% on Jensen Huang’s Return",
@@ -262,7 +262,15 @@
    "source": "Decrypt",
    "published": "2026-11-23T16:32:04+00:00",
    "summary": "Nvidia’s comeback sent chip shares soaring and gave Bitcoin a lift after a punishing selloff. Anthropic, fresh from its record IPO, missed the party.",
-   "score": 0.2234
+   "score": 0.21
+  },
+  {
+   "title": "A year after buying bitcoin, Czech central bank won't say what it's worth",
+   "url": "https://www.coindesk.com/markets/2026/11/23/a-year-after-buying-bitcoin-czech-central-bank-won-t-say-what-it-s-worth",
+   "source": "CoinDesk",
+   "published": "2026-11-25T04:50:08+00:00",
+   "summary": "",
+   "score": 0.1971
   },
   {
    "title": "Grant Cardone: Bitcoin to 5x – MSTR So Cheap “You Have to Buy it”",
@@ -270,7 +278,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-23T19:15:17+00:00",
    "summary": "▶ Bitcoin Magazine Grant Cardone: Bitcoin to 5x – MSTR So Cheap “You Have to Buy it” Grant Cardone says Michael Saylor \"is hated, frankly, by the Bitcoin community that needs him,\" and predicts Saylor will be proven one of the smartest individual thinkers. This post Grant Cardon…",
-   "score": 0.1817
+   "score": 0.1708
   },
   {
    "title": "Morning Minute: Crypto Rebounds after NVDA Drives Friday Selloff",
@@ -278,7 +286,7 @@
    "source": "Decrypt",
    "published": "2026-11-23T13:34:13+00:00",
    "summary": "The Nasdaq dropped 10% last week. Bitcoin lost 10% in a single day on Friday amidst cascading selloffs, though a relief rally is underway.",
-   "score": 0.1712
+   "score": 0.161
   },
   {
    "title": "Strategy buys 457 Bitcoin, spends $212M on preferred share buybacks",
@@ -286,7 +294,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-23T13:31:01+00:00",
    "summary": "Strategy raised its preferred stock buyback limit to $4 billion and authorized the transfer of up to $1 billion from its dollar reserve.",
-   "score": 0.1521
+   "score": 0.143
   },
   {
    "title": "Bitdeer Sells All 281 Bitcoin It Mined Last Week, Holds None",
@@ -294,15 +302,7 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-23T18:30:00+00:00",
    "summary": "Bitcoin Magazine Bitdeer Sells All 281 Bitcoin It Mined Last Week, Holds None Bitdeer mined 281.1 BTC last week and sold all of it, leaving the miner with no bitcoin of its own as of Nov. 20 while American Bitcoin borrows against its reserve instead. This post Bitdeer Sells All…",
-   "score": 0.1307
-  },
-  {
-   "title": "Bitcoin plunges below $59,000 as rush to cash puts new bear market lows back in play",
-   "url": "https://www.coindesk.com/markets/2026/11/20/bitcoin-plunges-below-usd59-000-as-rush-to-cash-puts-new-bear-market-lows-back-in-play",
-   "source": "CoinDesk",
-   "published": "2026-11-20T18:13:52+00:00",
-   "summary": "",
-   "score": 0.1259
+   "score": 0.1229
   },
   {
    "title": "Bitcoin sell-off driven by weak demand, forced liquidations: 21Shares",
@@ -310,7 +310,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-24T19:44:23+00:00",
    "summary": "The crypto asset manager warned that Bitcoin’s downturn could persist amid weak investor demand, while forecasting an uneven recovery across crypto sectors.",
-   "score": 0.1176
+   "score": 0.1106
   },
   {
    "title": "Solo Bitcoin Miner Wins $191,000 Block Reward With Just 11 TH/s",
@@ -318,15 +318,15 @@
    "source": "Bitcoin Magazine",
    "published": "2026-11-23T17:25:00+00:00",
    "summary": "Bitcoin Magazine Solo Bitcoin Miner Wins $191,000 Block Reward With Just 11 TH/s A solo miner with about 11.1 TH/s found Bitcoin block 977,057 through CKpool, collecting 3.1287 BTC. The CKpool developer put the odds at about 1 in 1,650 a year. This post Solo Bitcoin Miner Wins $…",
-   "score": 0.103
+   "score": 0.0968
   },
   {
-   "title": "Eric Trump-backed American Bitcoin secures $150 million loan against its bitcoin",
-   "url": "https://www.coindesk.com/business/2026/11/23/eric-trump-backed-american-bitcoin-secures-usd150-million-loan-against-its-bitcoin",
+   "title": "Bitcoin plunges below $59,000 as rush to cash puts new bear market lows back in play",
+   "url": "https://www.coindesk.com/markets/2026/11/20/bitcoin-plunges-below-usd59-000-as-rush-to-cash-puts-new-bear-market-lows-back-in-play",
    "source": "CoinDesk",
-   "published": "2026-11-23T15:02:32+00:00",
+   "published": "2026-11-20T18:13:52+00:00",
    "summary": "",
-   "score": 0.0972
+   "score": 0.0947
   }
  ]
 }
