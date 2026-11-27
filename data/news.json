@@ -1,5 +1,5 @@
 {
- "fetched": "2026-11-27T14:58:36+00:00",
+ "fetched": "2026-11-27T21:09:42+00:00",
  "sources_ok": [
   "CoinDesk",
   "Cointelegraph",
@@ -14,7 +14,7 @@
    "source": "CoinDesk",
    "published": "2026-11-26T12:14:46+00:00",
    "summary": "",
-   "score": 3.0589
+   "score": 2.7976
   },
   {
    "title": "Bitcoin supply metric hits 11-year low as new ‘capitulation’ signal arrives",
@@ -22,15 +22,15 @@
    "source": "Cointelegraph",
    "published": "2026-11-27T11:14:28+00:00",
    "summary": "The seven-day moving average of Bitcoin’s supply profit/loss ratio hit an 11-year low as BTC price losses month-to-date remain near 20%.",
-   "score": 2.653
+   "score": 2.4263
   },
   {
-   "title": "Bitcoin Price Trades Near $61,300 as Tech Stock Futures Rally",
-   "url": "https://bitcoinmagazine.com/markets/bitcoin-price-61300-tech-futures",
+   "title": "Peter St. Onge: “Massively Bullish” for Bitcoin if Fed Abandons 2% Inflation Target",
+   "url": "https://bitcoinmagazine.com/videos/peter-st-onge-massively-bullish-for-bitcoin-if-fed-abandons-2-inflation-target",
    "source": "Bitcoin Magazine",
-   "published": "2026-11-27T13:57:15+00:00",
-   "summary": "Bitcoin Magazine Bitcoin Price Trades Near $61,300 as Tech Stock Futures Rally The bitcoin price traded near $61,300 on Friday as tech stock futures jumped ahead of a shortened Wall Street session, putting bitcoin on track to snap a seven-week losing streak. This post Bitcoin Pr…",
-   "score": 1.7736
+   "published": "2026-11-27T14:45:09+00:00",
+   "summary": "▶ Bitcoin Magazine Peter St. Onge: “Massively Bullish” for Bitcoin if Fed Abandons 2% Inflation Target Inflation is back near 4%, the Fed is hiking, and Peter St. This post Peter St. Onge: “Massively Bullish” for Bitcoin if Fed Abandons 2% Inflation Target first appeared on Bitc…",
+   "score": 2.279
   },
   {
    "title": "Here’s what happened in crypto today",
@@ -38,7 +38,15 @@
    "source": "Cointelegraph",
    "published": "2026-11-27T13:28:26+00:00",
    "summary": "Need to know what happened in crypto today? Here is the latest news on daily trends and events impacting Bitcoin price, blockchain, DeFi, Web3 and crypto regulation.",
-   "score": 1.7222
+   "score": 1.5751
+  },
+  {
+   "title": "Binance Fully Lifts Withdrawal Suspension a Month After $6.3 Billion Hack",
+   "url": "https://bitcoinmagazine.com/news/binance-lifts-withdrawal-suspension-hack",
+   "source": "Bitcoin Magazine",
+   "published": "2026-11-27T18:00:00+00:00",
+   "summary": "Bitcoin Magazine Binance Fully Lifts Withdrawal Suspension a Month After $6.3 Billion Hack Binance said its withdrawal recovery work is complete and the suspension tied to the Oct. 29 hack has been fully lifted, as researchers track North Korean launderers moving the stolen fund…",
+   "score": 1.5286
   },
   {
    "title": "Hyperliquid Leads Altcoin Losses as Bitcoin Slips Below $59K",
@@ -46,7 +54,7 @@
    "source": "Decrypt",
    "published": "2026-11-25T11:23:57+00:00",
    "summary": "HYPE fell more than 8% after Abraxas Capital pulled out of Hyperliquid, while U.S. Bitcoin ETFs' November outflows passed $4.9 billion.",
-   "score": 1.4245
+   "score": 1.3028
   },
   {
    "title": "Bitcoin ETF November outflows top $5B, Morgan Stanley bucks trend",
@@ -54,15 +62,15 @@
    "source": "Cointelegraph",
    "published": "2026-11-26T09:42:34+00:00",
    "summary": "The Morgan Stanley Bitcoin Trust drew $114.1 million in monthly net inflows through Wednesday, while US spot Bitcoin ETF outflows reached $5.39 billion.",
-   "score": 1.2582
+   "score": 1.1507
   },
   {
-   "title": "Bitcoin Price Slips to $60,000 as November ETF Outflows Hit Record",
-   "url": "https://bitcoinmagazine.com/markets/bitcoin-price-slips-60000-etf-outflows",
+   "title": "Bitcoin Price Trades Near $61,300 as Tech Stock Futures Rally",
+   "url": "https://bitcoinmagazine.com/markets/bitcoin-price-61300-tech-futures",
    "source": "Bitcoin Magazine",
-   "published": "2026-11-24T13:47:18+00:00",
-   "summary": "Bitcoin Magazine Bitcoin Price Slips to $60,000 as November ETF Outflows Hit Record The bitcoin price slipped back to near $60,000 Tuesday as the Nvidia stock rally cooled and spot bitcoin ETFs pushed November outflows to a record $4.71 billion. This post Bitcoin Price Slips to…",
-   "score": 1.0565
+   "published": "2026-11-27T13:57:15+00:00",
+   "summary": "Bitcoin Magazine Bitcoin Price Trades Near $61,300 as Tech Stock Futures Rally The bitcoin price traded near $61,300 on Friday as tech stock futures jumped ahead of a shortened Wall Street session, putting bitcoin on track to snap a seven-week losing streak. This post Bitcoin Pr…",
+   "score": 1.0381
   },
   {
    "title": "Switzerland’s first spot Bitcoin ETF ticks up 0.6% in opening hour",
@@ -70,7 +78,7 @@
    "source": "Cointelegraph",
    "published": "2026-11-26T09:18:15+00:00",
    "summary": "The spot Bitcoin ETF will be backed by Bitcoin held in cold storage at a Swiss bank, unlike prior Bitcoin ETPs structured as debt securities.",
-   "score": 1.0007
+   "score": 0.9152
   },
   {
    "title": "Over 1,000 Bitcoin miners were tricked into working for a thief by a fake internet route",
@@ -78,7 +86,7 @@
    "source": "CoinDesk",
    "published": "2026-11-26T06:19:09+00:00",
    "summary": "",
-   "score": 0.9984
+   "score": 0.9131
   },
   {
    "title": "Bitcoin Rebounds to $61K After Weekend Plunge to Two-Year Low",
@@ -86,7 +94,15 @@
    "source": "Decrypt",
    "published": "2026-11-23T11:14:22+00:00",
    "summary": "Bitcoin swung by more than $6,000 over the weekend as tech stocks slid and spot ETFs logged their biggest daily outflow since June.",
-   "score": 0.9096
+   "score": 0.8318
+  },
+  {
+   "title": "Bitcoin whales pile into BTC despite shrinking profit cushion",
+   "url": "https://cointelegraph.com/markets/bitcoin-whales-pile-btc-despite-shrinking-profit-cushion?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-11-27T19:23:00+00:00",
+   "summary": "CryptoQuant data shows Bitcoin whales are breaking with historical fourth-quarter selling patterns despite a market downturn.",
+   "score": 0.7186
   },
   {
    "title": "Gold's haven status has lost its edge over bitcoin, and the Fed's to blame",
@@ -94,15 +110,23 @@
    "source": "CoinDesk",
    "published": "2026-11-25T11:30:32+00:00",
    "summary": "",
-   "score": 0.7609
+   "score": 0.6959
   },
   {
-   "title": "Bitcoin is Vanishing into “Deep Storage” Faster than Miners Make It",
-   "url": "https://bitcoinmagazine.com/videos/bitcoin-is-vanishing-into-deep-storage-faster-than-miners-make-it",
+   "title": "Could AI Break Bitcoin? Not Yet, Research Firm K33 Says",
+   "url": "https://decrypt.co/384218/could-ai-break-bitcoin-not-yet-research-firm-k33-says",
+   "source": "Decrypt",
+   "published": "2026-11-27T20:46:02+00:00",
+   "summary": "A draft AI-assisted proof of the Riemann Hypothesis renewed worries about the math securing Bitcoin, but K33 says no cryptographic compromise has been demonstrated.",
+   "score": 0.6364
+  },
+  {
+   "title": "Bitcoin Price Slips to $60,000 as November ETF Outflows Hit Record",
+   "url": "https://bitcoinmagazine.com/markets/bitcoin-price-slips-60000-etf-outflows",
    "source": "Bitcoin Magazine",
-   "published": "2026-11-25T23:30:12+00:00",
-   "summary": "▶ Bitcoin Magazine Bitcoin is Vanishing into “Deep Storage” Faster than Miners Make It Miners produce about 450 new Bitcoin a day, but over the past year about 630 a day moved into wallets dormant for 10 years. This post Bitcoin is Vanishing into “Deep Storage” Faster than Miner…",
-   "score": 0.7239
+   "published": "2026-11-24T13:47:18+00:00",
+   "summary": "Bitcoin Magazine Bitcoin Price Slips to $60,000 as November ETF Outflows Hit Record The bitcoin price slipped back to near $60,000 Tuesday as the Nvidia stock rally cooled and spot bitcoin ETFs pushed November outflows to a record $4.71 billion. This post Bitcoin Price Slips to…",
+   "score": 0.6184
   },
   {
    "title": "Another Bitcoin Mining Firm Flags 'Hashrate Hijacking' Attacks That Reroute Rewards",
@@ -110,23 +134,7 @@
    "source": "Decrypt",
    "published": "2026-11-25T20:36:03+00:00",
    "summary": "Braiins says an attacker exploited the unencrypted Stratum V1 protocol and internet route hijacking to impersonate mining pools, striking over 1,000 sites in a single second.",
-   "score": 0.6941
-  },
-  {
-   "title": "Binance completes withdrawal recovery four weeks after $6.3B hack",
-   "url": "https://cointelegraph.com/news/binance-completes-withdrawal-recovery-four-weeks-after-63b-hack?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-11-26T21:33:47+00:00",
-   "summary": "The announcement concludes a phased withdrawal recovery that began on Nov. 1, when Binance restored Bitcoin withdrawals following the record crypto theft.",
-   "score": 0.6371
-  },
-  {
-   "title": "Bitcoin Faces 6-Year Moving Average Test Only Seen During FTX Collapse",
-   "url": "https://bitcoinmagazine.com/videos/bitcoin-faces-6-year-moving-average-test-only-seen-during-ftx-collapse",
-   "source": "Bitcoin Magazine",
-   "published": "2026-11-24T22:30:03+00:00",
-   "summary": "▶ Bitcoin Magazine Bitcoin Faces 6-Year Moving Average Test Only Seen During FTX Collapse Since 2016, the only time Bitcoin closed below its six-year moving average was the FTX crash. This post Bitcoin Faces 6-Year Moving Average Test Only Seen During FTX Collapse first appeared…",
-   "score": 0.565
+   "score": 0.5079
   },
   {
    "title": "Bitcoin drops as November spot ETF outflows increase to record $4.71 billion",
@@ -134,31 +142,31 @@
    "source": "CoinDesk",
    "published": "2026-11-24T12:36:28+00:00",
    "summary": "",
-   "score": 0.5248
+   "score": 0.48
   },
   {
-   "title": "Bitcoin ETFs near $5B in record monthly outflows amid AI stock rout",
-   "url": "https://cointelegraph.com/markets/bitcoin-etfs-near-record-5-billion-monthly-outflows?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "title": "Binance completes withdrawal recovery four weeks after $6.3B hack",
+   "url": "https://cointelegraph.com/news/binance-completes-withdrawal-recovery-four-weeks-after-63b-hack?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
    "source": "Cointelegraph",
-   "published": "2026-11-25T11:12:26+00:00",
-   "summary": "US spot Bitcoin ETFs have recorded $4.94 billion in November net outflows, exceeding the previous monthly record of $4.51 billion set in June.",
-   "score": 0.4655
+   "published": "2026-11-26T21:33:47+00:00",
+   "summary": "The announcement concludes a phased withdrawal recovery that began on Nov. 1, when Binance restored Bitcoin withdrawals following the record crypto theft.",
+   "score": 0.4661
   },
   {
-   "title": "Bithumb Says October Hack Exposed Passports, Bank Accounts and Wallet Addresses",
-   "url": "https://bitcoinmagazine.com/news/bithumb-hack-exposed-passports-wallet-addresses",
+   "title": "Bitcoin is Vanishing into “Deep Storage” Faster than Miners Make It",
+   "url": "https://bitcoinmagazine.com/videos/bitcoin-is-vanishing-into-deep-storage-faster-than-miners-make-it",
    "source": "Bitcoin Magazine",
-   "published": "2026-11-25T18:15:00+00:00",
-   "summary": "Bitcoin Magazine Bithumb Says October Hack Exposed Passports, Bank Accounts and Wallet Addresses Bithumb said a follow-up review found its October breach exposed more people and data, including passports and wallet addresses, and lasted about 15 days. This post Bithumb Says Octo…",
-   "score": 0.4294
+   "published": "2026-11-25T23:30:12+00:00",
+   "summary": "▶ Bitcoin Magazine Bitcoin is Vanishing into “Deep Storage” Faster than Miners Make It Miners produce about 450 new Bitcoin a day, but over the past year about 630 a day moved into wallets dormant for 10 years. This post Bitcoin is Vanishing into “Deep Storage” Faster than Miner…",
+   "score": 0.4237
   },
   {
-   "title": "Coldcard Bitcoin Exploit, Revisited: How a Hidden Flaw Survived Years of Audits",
-   "url": "https://decrypt.co/383930/coldcard-bitcoin-exploit-how-hidden-flaw-survived-years-audits",
+   "title": "4 Scary Bitcoin Charts That Suggest This Bear Market Is Different",
+   "url": "https://decrypt.co/384177/bitcoin-4-scary-charts-crypto-winter-bear-market",
    "source": "Decrypt",
-   "published": "2026-11-24T21:16:02+00:00",
-   "summary": "Coinkite’s postmortem reveals a software random-number generator shipped in place of the hardware one for over five years, slipping past at least 15 reviews.",
-   "score": 0.3965
+   "published": "2026-11-27T19:46:02+00:00",
+   "summary": "Bitcoin is trading below several of its most popular long-term price models, breaking historical support levels that previously helped investors anticipate the cryptocurrency's eventual recovery from prolonged, painful bear markets.",
+   "score": 0.4014
   },
   {
    "title": "Bitcoin 'death cross' is coming. Here's what happened after previous 13.",
@@ -166,23 +174,31 @@
    "source": "CoinDesk",
    "published": "2026-11-27T12:16:07+00:00",
    "summary": "",
-   "score": 0.3939
+   "score": 0.3602
   },
   {
-   "title": "HRF Announces Funding of Seven Bitcoin Projects for People Living Under Authoritarian Regimes",
-   "url": "https://bitcoinmagazine.com/news/hrf-bitcoin-development-seven-projects",
-   "source": "Bitcoin Magazine",
-   "published": "2026-11-25T17:22:30+00:00",
-   "summary": "Bitcoin Magazine HRF Announces Funding of Seven Bitcoin Projects for People Living Under Authoritarian Regimes HRF's Bitcoin Development Fund backed seven projects for self-custody, privacy and education under repression, from phone wallets to solar mining in Nigeria. This post…",
-   "score": 0.3392
-  },
-  {
-   "title": "Bitcoin price eyes $61K as Talos warns of thin Thanksgiving liquidity",
-   "url": "https://cointelegraph.com/markets/bitcoin-price-talos-warns-thin-thanksgiving-liquidity?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "title": "Bitcoin ETFs near $5B in record monthly outflows amid AI stock rout",
+   "url": "https://cointelegraph.com/markets/bitcoin-etfs-near-record-5-billion-monthly-outflows?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
    "source": "Cointelegraph",
-   "published": "2026-11-26T11:22:59+00:00",
-   "summary": "Bitcoin joined US stock futures in a modest relief rally as Talos questioned crypto demand and the broader outlook for the AI trade.",
-   "score": 0.3168
+   "published": "2026-11-25T11:12:26+00:00",
+   "summary": "US spot Bitcoin ETFs have recorded $4.94 billion in November net outflows, exceeding the previous monthly record of $4.51 billion set in June.",
+   "score": 0.3406
+  },
+  {
+   "title": "Bitcoin Faces 6-Year Moving Average Test Only Seen During FTX Collapse",
+   "url": "https://bitcoinmagazine.com/videos/bitcoin-faces-6-year-moving-average-test-only-seen-during-ftx-collapse",
+   "source": "Bitcoin Magazine",
+   "published": "2026-11-24T22:30:03+00:00",
+   "summary": "▶ Bitcoin Magazine Bitcoin Faces 6-Year Moving Average Test Only Seen During FTX Collapse Since 2016, the only time Bitcoin closed below its six-year moving average was the FTX crash. This post Bitcoin Faces 6-Year Moving Average Test Only Seen During FTX Collapse first appeared…",
+   "score": 0.3307
+  },
+  {
+   "title": "$7 Billion in Bitcoin Options Just Expired: Here’s What It Means",
+   "url": "https://decrypt.co/384154/7-billion-bitcoin-options-just-expired-what-it-means",
+   "source": "Decrypt",
+   "published": "2026-11-27T18:16:03+00:00",
+   "summary": "Bitcoin’s largest options expiry this month comes as traders increasingly seek protection against further losses, with some hedging against a potential drop to $40,000 before the end of the year.",
+   "score": 0.3143
   },
   {
    "title": "Bitcoin on course to end seven-week losing streak while trailing stock rebound",
@@ -190,55 +206,47 @@
    "source": "CoinDesk",
    "published": "2026-11-27T11:45:47+00:00",
    "summary": "",
-   "score": 0.3128
+   "score": 0.2861
   },
   {
-   "title": "Bitcoin Holds Above $60K as Death Cross Clouds Thanksgiving Recovery",
-   "url": "https://decrypt.co/384079/bitcoin-holds-above-60k-as-death-cross-clouds-thanksgiving-recovery",
-   "source": "Decrypt",
-   "published": "2026-11-26T18:15:29+00:00",
-   "summary": "Bitcoin and major altcoins rose slightly on Thanksgiving, but a bearish death cross suggests crypto remains weaker than stocks.",
-   "score": 0.3037
-  },
-  {
-   "title": "CleanSpark Weighs Selling More Bitcoin Than It Mines After $987M Loss",
-   "url": "https://bitcoinmagazine.com/news/cleanspark-987-million-loss-fiscal-2026",
+   "title": "Bithumb Says October Hack Exposed Passports, Bank Accounts and Wallet Addresses",
+   "url": "https://bitcoinmagazine.com/news/bithumb-hack-exposed-passports-wallet-addresses",
    "source": "Bitcoin Magazine",
-   "published": "2026-11-25T17:13:10+00:00",
-   "summary": "Bitcoin Magazine CleanSpark Weighs Selling More Bitcoin Than It Mines After $987M Loss CleanSpark's CFO said the miner may sell more bitcoin than it mines to reduce risk after a $987.1 million fiscal 2026 loss, as its shares hit a new 52-week low. This post CleanSpark Weighs Sel…",
-   "score": 0.2708
+   "published": "2026-11-25T18:15:00+00:00",
+   "summary": "Bitcoin Magazine Bithumb Says October Hack Exposed Passports, Bank Accounts and Wallet Addresses Bithumb said a follow-up review found its October breach exposed more people and data, including passports and wallet addresses, and lasted about 15 days. This post Bithumb Says Octo…",
+   "score": 0.2513
   },
   {
-   "title": "Live updates: Bitcoin dips below $60,000 as Nasdaq 100 gives up most of its early gains",
+   "title": "Bitcoin price eyes $61K as Talos warns of thin Thanksgiving liquidity",
+   "url": "https://cointelegraph.com/markets/bitcoin-price-talos-warns-thin-thanksgiving-liquidity?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-11-26T11:22:59+00:00",
+   "summary": "Bitcoin joined US stock futures in a modest relief rally as Talos questioned crypto demand and the broader outlook for the AI trade.",
+   "score": 0.2318
+  },
+  {
+   "title": "Live updates: Bitcoin's Thanksgiving gains prove fleeting",
    "url": "https://www.coindesk.com/tech/2026/11/27/live-news-bitcoin-rebounds-above-usd61-000-as-ai-stocks-lead-premarket-gains",
    "source": "CoinDesk",
    "published": "2026-11-27T11:34:37+00:00",
    "summary": "",
-   "score": 0.2496
+   "score": 0.2283
   },
   {
-   "title": "Braiins warns of Bitcoin mining attacks affecting over 1,000 sites",
-   "url": "https://cointelegraph.com/news/braiins-warns-bitcoin-mining-attacks-affecting-1000-sites?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
-   "source": "Cointelegraph",
-   "published": "2026-11-25T21:22:19+00:00",
-   "summary": "Bitcoin mining pool operator Braiins warned that attackers are exploiting unsecured connections to hijack miners’ computing power and potentially steal rewards.",
-   "score": 0.23
-  },
-  {
-   "title": "Strategy Buys $30M in Bitcoin, Moves $1B From USD Reserve to Cash Pot",
-   "url": "https://decrypt.co/383779/strategy-buys-30m-in-bitcoin-moves-1b-from-usd-reserve-to-cash-pot",
-   "source": "Decrypt",
-   "published": "2026-11-23T13:25:35+00:00",
-   "summary": "Michael Saylor's firm raised its preferred stock buyback program to $4 billion after repurchasing another $212 million of STRC last week.",
-   "score": 0.2243
-  },
-  {
-   "title": "Galaxy Withdraws Call That Bitcoin’s Bear Market Ended in June",
-   "url": "https://bitcoinmagazine.com/markets/galaxy-withdraws-bitcoin-bear",
+   "title": "HRF Announces Funding of Seven Bitcoin Projects for People Living Under Authoritarian Regimes",
+   "url": "https://bitcoinmagazine.com/news/hrf-bitcoin-development-seven-projects",
    "source": "Bitcoin Magazine",
-   "published": "2026-11-27T13:30:00+00:00",
-   "summary": "Bitcoin Magazine Galaxy Withdraws Call That Bitcoin’s Bear Market Ended in June Galaxy Research withdrew its October call that bitcoin's bear market ended in June and said a daily close below $58,525 would signal a move to a materially lower low. This post Galaxy Withdraws Call…",
-   "score": 0.2053
+   "published": "2026-11-25T17:22:30+00:00",
+   "summary": "Bitcoin Magazine HRF Announces Funding of Seven Bitcoin Projects for People Living Under Authoritarian Regimes HRF's Bitcoin Development Fund backed seven projects for self-custody, privacy and education under repression, from phone wallets to solar mining in Nigeria. This post…",
+   "score": 0.1986
+  },
+  {
+   "title": "Coldcard Bitcoin Exploit, Revisited: How a Hidden Flaw Survived Years of Audits",
+   "url": "https://decrypt.co/383930/coldcard-bitcoin-exploit-how-hidden-flaw-survived-years-audits",
+   "source": "Decrypt",
+   "published": "2026-11-24T21:16:02+00:00",
+   "summary": "Coinkite’s postmortem reveals a software random-number generator shipped in place of the hardware one for over five years, slipping past at least 15 reviews.",
+   "score": 0.1856
   },
   {
    "title": "Next ECB chief favors tokenized bank deposits over stablecoins and bitcoin",
@@ -246,31 +254,23 @@
    "source": "CoinDesk",
    "published": "2026-11-27T11:22:42+00:00",
    "summary": "",
-   "score": 0.1991
+   "score": 0.1821
   },
   {
-   "title": "Galaxy Research Withdraws Call That Bitcoin's Bear Market Is Over",
-   "url": "https://decrypt.co/384030/galaxy-research-withdraws-call-that-bitcoins-bear-market-is-over",
-   "source": "Decrypt",
-   "published": "2026-11-26T12:26:08+00:00",
-   "summary": "A month after saying Bitcoin had bottomed in June, Galaxy now says a daily close below $58,525 would signal a materially lower low.",
-   "score": 0.1787
-  },
-  {
-   "title": "André Dragosch: Bitcoin at “Fire Sale” Valuations Heading Into Fed Pivot",
-   "url": "https://bitcoinmagazine.com/videos/andre-dragosch-bitcoin-at-fire-sale-valuations-heading-into-fed-pivot",
-   "source": "Bitcoin Magazine",
-   "published": "2026-11-24T20:20:57+00:00",
-   "summary": "▶ Bitcoin Magazine André Dragosch: Bitcoin at “Fire Sale” Valuations Heading Into Fed Pivot André Dragosch says Fed language is already as hawkish as it was in 2022, and \"we are probably close to peak hawkishness. This post André Dragosch: Bitcoin at “Fire Sale” Valuations Headi…",
-   "score": 0.1603
-  },
-  {
-   "title": "Bitcoin ETFs keep bleeding as BlackRock’s IBIT shares gain nearly 5%",
-   "url": "https://cointelegraph.com/markets/bitcoin-etfs-bleed-ibit-shares-gain?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "title": "Braiins warns of Bitcoin mining attacks affecting over 1,000 sites",
+   "url": "https://cointelegraph.com/news/braiins-warns-bitcoin-mining-attacks-affecting-1000-sites?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
    "source": "Cointelegraph",
-   "published": "2026-11-24T07:41:50+00:00",
-   "summary": "BlackRock’s IBIT shares gained 4.85% on Monday despite continued Bitcoin ETF withdrawals that pushed November’s net outflows to $4.71 billion.",
-   "score": 0.1602
+   "published": "2026-11-25T21:22:19+00:00",
+   "summary": "Bitcoin mining pool operator Braiins warned that attackers are exploiting unsecured connections to hijack miners’ computing power and potentially steal rewards.",
+   "score": 0.1683
+  },
+  {
+   "title": "CleanSpark Weighs Selling More Bitcoin Than It Mines After $987M Loss",
+   "url": "https://bitcoinmagazine.com/news/cleanspark-987-million-loss-fiscal-2026",
+   "source": "Bitcoin Magazine",
+   "published": "2026-11-25T17:13:10+00:00",
+   "summary": "Bitcoin Magazine CleanSpark Weighs Selling More Bitcoin Than It Mines After $987M Loss CleanSpark's CFO said the miner may sell more bitcoin than it mines to reduce risk after a $987.1 million fiscal 2026 loss, as its shares hit a new 52-week low. This post CleanSpark Weighs Sel…",
+   "score": 0.1585
   },
   {
    "title": "Bitcoin tops $61,000 as Nasdaq futures extend Wednesday’s rebound",
@@ -278,55 +278,55 @@
    "source": "CoinDesk",
    "published": "2026-11-27T09:49:55+00:00",
    "summary": "",
-   "score": 0.1558
+   "score": 0.1425
   },
   {
-   "title": "Wall Street and Crypto Are in 'Extreme Fear'. What's Spooking Investors?",
-   "url": "https://decrypt.co/383898/wall-street-crypto-extreme-whats-spooking-investors",
+   "title": "Bitcoin Holds Above $60K as Death Cross Clouds Thanksgiving Recovery",
+   "url": "https://decrypt.co/384079/bitcoin-holds-above-60k-as-death-cross-clouds-thanksgiving-recovery",
    "source": "Decrypt",
-   "published": "2026-11-24T18:16:02+00:00",
-   "summary": "Fear and Greed indexes are flashing extreme fear across stocks and crypto as Nvidia’s relief rally fades, Bitcoin falls below $60,000, and investors brace for higher interest rates",
-   "score": 0.14
+   "published": "2026-11-26T18:15:29+00:00",
+   "summary": "Bitcoin and major altcoins rose slightly on Thanksgiving, but a bearish death cross suggests crypto remains weaker than stocks.",
+   "score": 0.1422
   },
   {
-   "title": "Nvidia Soars as Huang Returns, Lifting Stocks and Crypto Shares",
-   "url": "https://bitcoinmagazine.com/markets/nvidia-soars-huang-returns-crypto",
+   "title": "Russia’s VTB Opens Bitcoin Trading as Central Bank Finalizes Crypto Test",
+   "url": "https://bitcoinmagazine.com/news/russia-vtb-bitcoin-trading-crypto-test",
    "source": "Bitcoin Magazine",
-   "published": "2026-11-23T15:50:22+00:00",
-   "summary": "Bitcoin Magazine Nvidia Soars as Huang Returns, Lifting Stocks and Crypto Shares Nvidia shares jumped about 35% on Monday after the board reinstated Jensen Huang as CEO, lifting the Nasdaq, chip stocks, bitcoin, Coinbase, Strategy and miners. This post Nvidia Soars as Huang Retu…",
-   "score": 0.1155
+   "published": "2026-11-27T17:06:12+00:00",
+   "summary": "Bitcoin Magazine Russia’s VTB Opens Bitcoin Trading as Central Bank Finalizes Crypto Test VTB began letting qualified investors trade bitcoin in its app on Friday, a day after the Bank of Russia approved the knowledge test every crypto buyer must pass. SPB Exchange plans to open…",
+   "score": 0.1266
   },
   {
-   "title": "CleanSpark weighs selling more Bitcoin than it mines to de-risk books",
-   "url": "https://cointelegraph.com/news/cleanspark-weighs-selling-more-bitcoin-than-it-mines-to-de-risk-books?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "title": "Bitcoin price drops below $59K as Anthropic joins tech stock rebound",
+   "url": "https://cointelegraph.com/markets/bitcoin-price-below-59k-anthropic-tech-stock-rebound?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
    "source": "Cointelegraph",
-   "published": "2026-11-25T01:40:59+00:00",
-   "summary": "The Bitcoin miner sold 2,102 BTC while it produced just 1,708 BTC in the September quarter.",
-   "score": 0.1108
+   "published": "2026-11-27T16:48:51+00:00",
+   "summary": "Bitcoin price volatility returned at the Wall Street open as BTC/USD dropped to local lows of $58,700 while stocks and gold headed higher.",
+   "score": 0.1261
   },
   {
-   "title": "A tiny payment can expose the IP address behind a bitcoin wallet, developer finds",
-   "url": "https://www.coindesk.com/tech/2026/11/26/a-tiny-payment-can-expose-the-ip-address-behind-a-bitcoin-wallet-developer-finds",
-   "source": "CoinDesk",
-   "published": "2026-11-26T17:30:00+00:00",
-   "summary": "",
-   "score": 0.0984
-  },
-  {
-   "title": "North Korea Moves $247 Million of Binance Hack Loot Through Bitcoin Mixers",
-   "url": "https://decrypt.co/383844/north-korea-247-million-binance-hack-bitcoin-mixers",
+   "title": "Strategy Buys $30M in Bitcoin, Moves $1B From USD Reserve to Cash Pot",
+   "url": "https://decrypt.co/383779/strategy-buys-30m-in-bitcoin-moves-1b-from-usd-reserve-to-cash-pot",
    "source": "Decrypt",
-   "published": "2026-11-23T20:36:02+00:00",
-   "summary": "Roughly a month after the $6.4 billion hack, Elliptic says nearly all of the coinjoin mixing was coordinated by one person who “refuses to block funds such as these.\"",
-   "score": 0.091
+   "published": "2026-11-23T13:25:35+00:00",
+   "summary": "Michael Saylor's firm raised its preferred stock buyback program to $4 billion after repurchasing another $212 million of STRC last week.",
+   "score": 0.105
   },
   {
-   "title": "South Korea Unveils Crypto Bill Capping Exchange Ownership at 20%",
-   "url": "https://bitcoinmagazine.com/news/south-korea-crypto-bill-exchange-ownership-cap",
+   "title": "Galaxy Withdraws Call That Bitcoin’s Bear Market Ended in June",
+   "url": "https://bitcoinmagazine.com/markets/galaxy-withdraws-bitcoin-bear",
    "source": "Bitcoin Magazine",
-   "published": "2026-11-24T14:45:00+00:00",
-   "summary": "Bitcoin Magazine South Korea Unveils Crypto Bill Capping Exchange Ownership at 20% South Korea’s financial regulator unveiled a bill that would cap major shareholders of crypto exchanges at 20%, allow domestic ICOs and let bank-led groups issue won stablecoins. This post South K…",
-   "score": 0.0832
+   "published": "2026-11-27T13:30:00+00:00",
+   "summary": "Bitcoin Magazine Galaxy Withdraws Call That Bitcoin’s Bear Market Ended in June Galaxy Research withdrew its October call that bitcoin's bear market ended in June and said a daily close below $58,525 would signal a move to a materially lower low. This post Galaxy Withdraws Call…",
+   "score": 0.0961
+  },
+  {
+   "title": "Bitcoin ETFs keep bleeding as BlackRock’s IBIT shares gain nearly 5%",
+   "url": "https://cointelegraph.com/markets/bitcoin-etfs-bleed-ibit-shares-gain?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "source": "Cointelegraph",
+   "published": "2026-11-24T07:41:50+00:00",
+   "summary": "BlackRock’s IBIT shares gained 4.85% on Monday despite continued Bitcoin ETF withdrawals that pushed November’s net outflows to $4.71 billion.",
+   "score": 0.0938
   }
  ]
 }
